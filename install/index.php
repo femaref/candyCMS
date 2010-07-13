@@ -57,9 +57,50 @@ switch ($_REQUEST['step']) {
   default:
   case '1':
 
-
     $sHTML  = $oSmarty->fetch('showStep1.tpl');
     $iNextStep = 2;
+
+    if(!is_dir('../backup'))
+      @mkdir('../backup', '0777');
+
+    if(!is_dir('../cache'))
+      @mkdir('../cache', '0777');
+
+    if(!is_dir('../compile'))
+      @mkdir('../compile', '0777');
+
+    if(!is_dir('../upload'))
+      @mkdir('../upload', '0777');
+
+    if(!is_dir('../upload/user/gallery'))
+      @mkdir('../upload/user/gallery', '0777');
+
+    if(!is_dir('../upload/user/media'))
+      @mkdir('../upload/user/media', '0777');
+
+    if(!is_dir('../upload/user/temp'))
+      @mkdir('../upload/user/temp', '0777');
+
+    if(!is_dir('../upload/user/18'))
+      @mkdir('../upload/user/18', '0777');
+
+    if(!is_dir('../upload/user/32'))
+      @mkdir('../upload/user/32', '0777');
+
+    if(!is_dir('../upload/user/64'))
+      @mkdir('../upload/user/64', '0777');
+
+    if(!is_dir('../upload/user/100'))
+      @mkdir('../upload/user/100', '0777');
+
+    if(!is_dir('../upload/user/' .THUMB_DEFAULT_X))
+      @mkdir('../upload/user/' .THUMB_DEFAULT_X, '0777');
+
+    if(!is_dir('../upload/user/' .POPUP_DEFAULT_X))
+      @mkdir('../upload/user/' .POPUP_DEFAULT_X, '0777');
+
+    if(!is_dir('../upload/user/original'))
+      @mkdir('../upload/user/original/', '0777');
 
     $sHTML .= "<ul>";
     $sColor = substr(decoct(fileperms("../backup")), 2) == '777' ? 'green' : 'red';
@@ -76,11 +117,6 @@ switch ($_REQUEST['step']) {
     $sHTML .= "<li style='color:" .$sColor.  "'>";
     $sHTML .= "compile/*";
     $sHTML .= "</li>";
-
-    /*$sColor = substr(decoct(fileperms("../install")), 2) == ('755' || '777') ? 'green' : 'red';
-    $sHTML .= "<li style='color:" .$sColor.  "'>";
-    $sHTML .= "install/*";
-    $sHTML .= "</li>";*/
 
     $sColor = substr(decoct(fileperms("../upload")), 2) == '777' ? 'green' : 'red';
     $sHTML .= "<li style='color:" .$sColor.  "'>";
@@ -134,9 +170,11 @@ switch ($_REQUEST['step']) {
     dumpData("sql/tables.sql");
 
     $sUrl = "sql/data.sql";
-    $oFo = fopen($sUrl, 'r');
-    $sData = fread($oFo, filesize ($sUrl));
-    $oSql = new Query($sData);
+    if(file_exists($sUrl)) {
+      $oFo = fopen($sUrl, 'r');
+      $sData = fread($oFo, filesize ($sUrl));
+      $oSql = new Query($sData);
+    }
 
     $_SESSION['install'] = $_POST;
     $sPassword = md5(RANDOM_HASH.$_SESSION['install']['password']);
@@ -185,3 +223,5 @@ $sCachedHTML = str_replace('%PATH_IMAGES%', PATH_IMAGES, $sCachedHTML);
 $sCachedHTML = str_replace('%PATH_PUBLIC%', PATH_PUBLIC, $sCachedHTML);
 
 echo $sCachedHTML;
+
+?>
