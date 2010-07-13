@@ -1,15 +1,11 @@
 <?php
 
 /*
-* This software is copyright protected. Use only allowed on licensed
-* websites. Contact author for further information or to receive a license.
-*
-* @link http://marcoraddatz.com
-* @copyright 2007 - 2008 Marco Raddatz
-* @author Marco Raddatz <mr at marcoraddatz dot com>
-* @package CMS
-* @version 1.0
-*/
+ * This software is licensed under GPL <http://www.gnu.org/licenses/gpl.html>.
+ *
+ * @link http://github.com/marcoraddatz/candyCMS
+ * @author Marco Raddatz <http://marcoraddatz.com>
+ */
 
 # List of userrights
 #--------------------------------------------------
