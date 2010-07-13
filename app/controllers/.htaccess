@@ -1,0 +1,3 @@
+ErrorDocument 403 http://localhost
+Order deny,allow
+Deny from all

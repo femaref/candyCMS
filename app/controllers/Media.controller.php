@@ -1,0 +1,125 @@
+<?php
+
+/*
+ * This software is copyright protected. Use only allowed on licensed
+ * websites. Contact author for further information or to receive a license.
+ *
+ * @link http://marcoraddatz.com
+ * @copyright 2007 - 2008 Marco Raddatz
+ * @author Marco Raddatz <mr at marcoraddatz dot com>
+ * @package CMS
+ * @version 1.0
+*/
+
+require_once 'app/helpers/Image.helper.php';
+require_once 'app/helpers/Upload.helper.php';
+
+class Media extends Main {
+  public function __init() {
+
+  }
+
+  public function create() {
+    if( USERRIGHT < 3 )
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+    else {
+      if( isset($this->m_aRequest['upload_file']) )
+        return $this->_proceedUpload();
+      else
+        return $this->_showUploadFileTemplate();
+    }
+  }
+
+  private function _showUploadFileTemplate() {
+    $oSmarty = new Smarty();
+
+    /* Language */
+    $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CHOOSE);
+    $oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_RENAME);
+    $oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
+    $oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE);
+
+    $oSmarty->template_dir = Helper::templateDir('media/create');
+    return $oSmarty->fetch('media/create.tpl');
+  }
+
+  private function _proceedUpload() {
+    $oUploadImage = new Upload($this->m_aRequest, $this->m_aFile, $this->m_aRequest['rename']);
+    $oUploadImage->uploadMediaFile();
+    Header('Location:'	.WEBSITE_URL.	'/Media');
+  }
+
+  public function show() {
+    if( USERRIGHT < 3 )
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
+    else {
+      $sOriginalPath = PATH_UPLOAD.	'/media';
+      $oDir = opendir($sOriginalPath);
+
+      while($sFile = readdir($oDir)) {
+        if($sFile == '.' || $sFile == '..' || $sFile == '.htaccess' || $sFile == '.svn')
+          continue;
+
+        $sPath = $sOriginalPath.	'/'	.$sFile;
+        $sFileType = strtolower(substr(strrchr($sPath, '.'), 1));
+        $iNameLen = strlen($sFile) - 4;
+
+        if( $sFileType == 'jpeg')
+          $iNameLen--;
+
+        $sFileName = substr($sFile, 0, $iNameLen);
+
+        if(	$sFileType == 'jpg' ||
+                $sFileType == 'jpeg' ||
+                $sFileType == 'png' ||
+                $sFileType == 'gif') {
+          $aImgDim = getImageSize($sPath);
+          if( ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'gif' || $sFileType == 'png') &&
+                  !is_file(PATH_UPLOAD.	'/temp/32/'	.$sFile)) {
+            $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
+            $oImage->resizeAndCut('32');
+          }
+        }
+        else
+          $aImgDim = '';
+
+        $aFiles[] = array(	'name' => $sFile,
+                'cdate' => Helper::formatTimestamp(filectime($sPath)),
+                'size' => Helper::getFileSize($sPath),
+                'type' => $sFileType,
+                'dim' => $aImgDim
+        );
+      }
+
+      closedir($oDir);
+
+      $oSmarty = new Smarty();
+      $oSmarty->assign('UR', USERRIGHT);
+      $oSmarty->assign('files', $aFiles);
+
+      # Language
+      $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY);
+      $oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
+      $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE);
+
+      $oSmarty->template_dir = Helper::templateDir('media/show');
+      return $oSmarty->fetch('media/show.tpl');
+    }
+  }
+
+  public function destroy() {
+    if( USERRIGHT < 3 )
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+    else {
+      if(is_file(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file'])) {
+        unlink(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file']);
+        Header('Location:'	.WEBSITE_URL.	'/Media');
+        /* return Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS).
+					$this->show(); */
+      }
+      else
+        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE);
+    }
+  }
+}

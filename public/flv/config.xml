@@ -1,0 +1,12 @@
+<config>
+	<autostart>false</autostart>
+	<backcolor>0x313131</backcolor>
+	<lightcolor>0x313131</lightcolor>
+	<frontcolor>0xCCCCCC</frontcolor>
+	<screencolor>0x000000</screencolor>
+	<volume>100</volume>
+	<displayheight>405</displayheight>
+
+    <!--<abouttxt></abouttxt>
+    <aboutlnk>http://marcoraddatz.com</aboutlnk>//-->
+</config>
