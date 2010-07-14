@@ -1,4 +1,5 @@
 <div id="js-ajax_reload">
+  {$commentPages}
   {foreach from=$comments item=c name=comments}
     <div class='comment {if $authorID == $c.authorID}from_author{/if}'>
       <div class='{if $authorID == $c.authorID}row1{/if} comment_header'>

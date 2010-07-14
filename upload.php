@@ -114,9 +114,9 @@ $aUser =& $oUpload->setUser();
 define( 'USERID',	(int)$aUser['id'] );
 define( 'USERRIGHT',(int)$aUser['userright'] );
 
-if(USERRIGHT < 3)
+if(USERRIGHT > 3)
 	echo $oUpload->validateAndUpload();
 else
-	die(LANG_ERROR_GLOBAL_NO_PERMISSION);
+	die('No Permission!'  .$aUser.print_r($aUser));
 
 ?>

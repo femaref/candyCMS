@@ -1,46 +1,37 @@
 /********************************************************************************/
 /* Show / Hide Element: ToDO: Nicer slideDown */
 /********************************************************************************/
-function showDiv(sDivId)
-{
-  $(sDivId).style.display = "block";
+function showDiv(sDivId) {
+  $(sDivId).setStyle('display', 'block');
 }
 
-function hideDiv(sDivId)
-{
+function hideDiv(sDivId) {
   new Fx.Slide(sDivId).toggle().hide();
 }
 
-/* Automatically hide success message */
-if($('success'))
-{
+if($('success')) {
   showDiv('flashMessage');
-  new Fx.Slide('success').hide().toggle();
 }
 
-if($('error'))
-{
+if($('error')) {
   showDiv('flashMessage');
-  new Fx.Slide('error').hide().toggle();
 }
 
 /********************************************************************************/
 /* Quote messages in Comments */
 /********************************************************************************/
-function quoteMessage(sNames, sDivId)
-{
-  var sMessage = document.getElementById(sDivId).innerHTML;
-  var sHTML = "[quote=" + sNames + "]" + sNewMessage + "[/quote]\n";
-
-  document.getElementById('createCommentText').value = sHTML;
+function quoteMessage(sName, sDivId) {
+  var sMessage = $(sDivId).get('html');
+  var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
+  var sOldMessage = $('createCommentText').get('value');
+  $('createCommentText').set('html', sOldMessage + sQuote);
   return false;
 }
 
 /********************************************************************************/
 /* global confirmations */
 /********************************************************************************/
-function confirmDelete(sTitle, sUrl)
-{
+function confirmDelete(sTitle, sUrl) {
   if( confirm("Are you sure to delete " + sTitle + "?") )
     parent.location.href = sUrl;
 }
@@ -49,30 +40,26 @@ function confirmDelete(sTitle, sUrl)
 /* Tooltips */
 /********************************************************************************/
 /* Show Tooltips on Blog */
-window.addEvent('domready', function() {
-  if($$('.tooltip'))
-  {
-    $$('.tooltip').each(function(element,index) {
-      var content = element.get('title').split('::');
-      element.store('tip:title', content[0]);
-      element.store('tip:text', content[1]);
-    });
+if($$('.tooltip')) {
+  $$('.tooltip').each(function(element,index) {
+    var content = element.get('title').split('::');
+    element.store('tip:title', content[0]);
+    element.store('tip:text', content[1]);
+  });
 
-    var myTips = new Tips('.tooltip');
-    myTips.addEvent('show', function(tip){
-      tip.fade('in');
-    });
-    myTips.addEvent('hide', function(tip){
-      tip.fade('out');
-    });
-  }
-})
+  var myTips = new Tips('.tooltip');
+  myTips.addEvent('show', function(tip){
+    tip.fade('in');
+  });
+  myTips.addEvent('hide', function(tip){
+    tip.fade('out');
+  });
+}
 
 /********************************************************************************/
 /* Avoid Alphachars in FileUpload */
 /********************************************************************************/
-function stripNoAlphaChars(sValue)
-{
+function stripNoAlphaChars(sValue) {
   sValue = sValue.replace(/ /g, "_");
   sValue = sValue.replace(/Ä/g, "Ae");
   sValue = sValue.replace(/ä/g, "ae");
@@ -85,14 +72,12 @@ function stripNoAlphaChars(sValue)
   return sValue;
 }
 
-function stripSlash(sValue)
-{
+function stripSlash(sValue) {
   sValue = sValue.replace(/\//g, "&frasl;");
   return sValue;
 }
 
-function reloadPage(sURL, sRoot)
-{
+function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
   $(sId).set('html', "<img src='" + sRoot + "/slimbox/loading.gif' alt='loading...' />");
   $(sId).load(sURL);

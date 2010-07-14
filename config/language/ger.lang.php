@@ -66,7 +66,7 @@ define( 'LANG_GLOBAL_RESET', 'Zur&#xFC;cksetzen' );
 define( 'LANG_GLOBAL_REQUIRED', 'ben&#xF6;tigt' );
 define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
-define( 'LANG_GLOBAL_SHARE', 'Teilen' ); #NEW
+define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' ); #NEW
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
@@ -94,7 +94,7 @@ define( 'LANG_MAIL_OWN_EMAIL', 'Eigene E-Mail Adresse' );
 define( 'LANG_MAIL_SUBJECT_BY_USER', 'Neue Nachricht von %u' );
 define( 'LANG_MAIL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="'	.WEBSITE_URL.	'">'	.WEBSITE_NAME.	'</a></p>' );
 
-# SECTIONS
+# SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_CREATE', 'Blogeintrag hinzuf&#xFC;gen' );
 define( 'LANG_BLOG_CREATE_TAG_INFO', 'Tags werden durch Komma und Leerzeichen getrennt, z.B (ohne Anf&#xFC;hrungszeichen): ", "' );
 define( 'LANG_BLOG_UPDATE', 'Editieren: %p' );
