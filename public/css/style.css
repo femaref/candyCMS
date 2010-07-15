@@ -37,18 +37,26 @@ legend
   font-size: 120%;
 }
 
+h2 {
+  font-size: 24px;
+  word-spacing: 0.1em;
+}
+
+h3 {
+  margin-top: 0px;
+  font-size: 16px;
+}
+
 /********************************************************************************/
 /* Container and main-HTML Settings */
 /********************************************************************************/
-#container
-{
+#container {
   margin:50px auto auto;
   width:805px;
   background:white;
 }
 
-#flashMessage
-{
+#flashMessage {
   display:none;
   cursor:pointer;
 }
@@ -97,39 +105,59 @@ ul
 /********************************************************************************/
 /* Input Styles */
 /********************************************************************************/
-input, textarea, select, option
-{
+.submit, .input, .textarea, .dropdown, .cancel, .checkbox, .button {
+  display:inline;
+}
+
+.input img {
+  padding:5px;
+}
+
+.submit input, .input input, .textarea textarea, .dropdown select, .dropdown option, .cancel input,
+.checkbox input, .button input {
   padding:3px;
   cursor:pointer;
 }
 
-.inputbutton
-{
-  font-size: 90%;
+.submit input, .cancel input, .button input {
   text-align:center;
   margin: 5px;
 }
 
-textarea
-{
-  width:98%;
-  cursor:auto;
+.cancel input {
+  color:red;
 }
 
-.inputtext, textarea
-{
+.input input, .dropdown select {
+  text-align:left;
   min-width:280px;
 }
 
-
-fieldset textarea
-{
-  width: 80%;
+.dropdown option {
+  padding:1px;
 }
 
-/* Used for Filemanager to select Link directly */
-.inputsmall
-{
+.textarea textarea {
+  width:98%;
+  cursor:auto;
+  min-width:280px;
+}
+
+fieldset .textarea textarea {
+  width:80%;
+}
+
+#login .submit, #lost_pwrd .submit, #newsletter .submit {
+  display:inline;
+  padding:5px;
+}
+
+#login .input input, #lost_pwrd .input input, #newsletter .input input {
+  min-width:100px;
+}
+
+/* Used for file manager to select link directly */
+.inputsmall {
   width: 250px;
   height: 12px;
   font-size:10px;
@@ -138,82 +166,53 @@ fieldset textarea
   color:black;
 }
 
-/* Simulate table */
-.left, .right
-{
-  margin: 10px 5px 5px 10px;
-  vertical-align:middle;
-  text-align:left;
-}
-
-.left
-{
-  font-weight:bold;
-  width: 25%;
-}
-
-.l
-{
-  text-align:left;
+.inputsmall:hover {
+  cursor:pointer;
 }
 
 /********************************************************************************/
 /* HTML Style */
 /********************************************************************************/
 /* Surround Image with Border */
-.image, .currentpagelink
-{
-  border: 1px solid #ababab;
-  padding: 2px;
+.image, .currentpagelink {
+  border:1px solid #ababab;
+  padding:2px;
   margin:1px;
 }
 
-.pagelink
-{
+.pagelink {
   padding:3px;
 }
 
-.currentpagelink
-{
+.currentpagelink {
   padding:5px;
 }
 
 /* Center Videoplayer */
-.media_player
-{
+.media_player {
   text-align:center;
   margin: 5px;
 }
 
 /* Shortcut to display small fonts */
-.small, .description, .element_header_date
-{
+.small, .description, .element .header .date {
   font-size: 85%;
 }
 
 /* Small Info on special functions etc. Used primary as help */
-.description
-{
+.description {
   color:#999;
   padding:3px;
 }
 
-/* Italic Shortcut */
-.i
-{
-  font-style:italic;
-}
-
 /* Colors of switching rows */
 /* Also change directly in tpl: mediaShowMedia.tpl, contentShowOverview.tpl */
-.row1, .row2
-{
+.row1, .row2 {
   background:transparent;
 }
 
 /* Quote Boxes, Success and Error Messages */
-.success, .error, .notice
-{
+.success, .error, .notice {
   border: 1px solid #41a62a;
   color: #006729;
   margin: 20px 30px 20px 30px;
@@ -221,62 +220,49 @@ fieldset textarea
   cursor:pointer;
 }
 
-.success p, .notice p
-{
+.success p, .notice p {
   margin: 0px;
 }
 
-.success h4, .notice h4
-{
+.success h4, .notice h4 {
   display: none;
 }
 
-.success
-{
+.success {
   padding:10px;
   background: #cbe472;
 }
 
-.notice
-{
+.notice {
   padding:10px;
   background:#FFFFCC;
   border:1px solid #FF0000;
 }
 
-.error
-{
+.error {
   background:#EED0D0;
   color:#333;
-  border: 1px solid red;
-  /*-moz-border-radius-bottomleft:10px;
-  -moz-border-radius-bottomright:10px;
-  -moz-border-radius-topleft:10px;
-  -moz-border-radius-topright:10px;*/
+  border:1px solid red;
 }
 
-.error h3
-{
-  margin: 0px;
+.error h3 {
+  margin:0px;
 }
 
-.error h4
-{
-  font-size: 125%;
+.error h4 {
+  font-size:125%;
 }
 
-.error h4:before
-{
+.error h4:before {
   content:"ERROR: ";
   color:red;
 }
 
-.quote, .box, .debug
-{
-  background: #d7d7d7;
-  width: 80%;
-  padding: 15px;
-  margin: 10px auto 10px auto;
+.quote, .box, .debug {
+  background:#d7d7d7;
+  width:80%;
+  padding:15px;
+  margin:10px auto 10px auto;
   text-align:left;
   -moz-border-radius-bottomleft:10px;
   -moz-border-radius-bottomright:10px;
@@ -284,60 +270,63 @@ fieldset textarea
   -moz-border-radius-topright:10px;
 }
 
-.quote h3
-{
+.quote h3 {
   margin-top:0px;
   margin-bottom:0px;
-  /*border-bottom:1px dotted #333;*/
 }
 
-.box
-{
+.box {
   padding: 10px;
   width:90%;
 }
 
-.debug
-{
-  border: 1px solid #121212;
-  width: 600px;
-  padding: 5px;
-  margin-bottom: 3px;
+.debug {
+  border:1px solid #121212;
+  width:600px;
+  padding:5px;
+  margin-bottom:3px;
   background:#fff;
   color:black;
 }
 
-.debug:before
-{
+.debug:before {
   content:"DEBUG: ";
   font-weight:bold;
 }
 
-.pointer
-{
+.pointer {
   cursor:pointer;
 }
 
 /********************************************************************************/
 /* Section independent */
 /********************************************************************************/
-table, fieldset, .element, .comment
-{
-  /*width:750px;*/
+table, fieldset, .element, .comment {
   margin:0px auto auto;
-  /*padding-left: 10px;
-  padding-right: 10px;*/
 }
 
-table
-{
+table {
   width: 90%;
 }
 
-table td
-{
-  padding: 5px;
-  font-size: 90%;
+table td {
+  padding:8px;
+}
+
+form table td {
+  padding:2px 5px 2px 5px;
+}
+
+/* Simulate table */
+.td_left, .td_right {
+  margin: 10px 5px 5px 10px;
+  vertical-align:middle;
+  text-align:left;
+}
+
+.td_left {
+  font-weight:bold;
+  width: 25%;
 }
 
 table th
@@ -348,22 +337,23 @@ table th
 }
 
 /* Main DIV container at blog, comments etc. */
-.element
-{
+.element {
   margin: 0px auto 15px auto;
   overflow: auto;
   text-align:left;
+  padding: 0px 12px 0px 12px;
+  overflow: hidden;
+  text-align:justify;
 }
 
-.comment
-{
+.comment {
   margin-top: 15px;
   margin-bottom: 10px;
   width: 85%;
+  text-align:left;
 }
 
-.from_author
-{
+.from_author {
   background:#efefef;
   padding:10px;
   -moz-border-radius-bottomleft:10px;
@@ -372,119 +362,67 @@ table th
   -moz-border-radius-topright:10px;
 }
 
-.element_header
-{
-  line-height: 150%;
-  padding: 0px 10px 0px 10px;
-  min-height: 25px;
-  word-spacing: 0.1em;
+.element h2, .gallery_album h2 {
+  margin: 3px 0px 0px 0px;
 }
 
-/* Big Headline */
-.element_header_title
-{
-  font-weight:bold;
-  font-size:200%;
+.element h2 img, .gallery_album h2 img {
+  vertical-align: baseline;
 }
-
-.element_header_date
-{
+.element .header .date {
   margin-left:15px;
-  margin-top:3px;
 }
 
-.comment_header
-{
-  font-weight: bold;
-  word-spacing: 0;
-  font-size:125%;
-  text-align:left;
-}
-
-.element_body, .comment_body
-{
-  padding: 0px 12px 0px 12px;
-  overflow:auto;
-  text-align:justify;
-}
-
-.element_body img
-{
+.element_body img {
   margin-right:4px;
   margin-left:4px;
 }
 
-.comment_body
-{
-  padding-top:5px;
-}
-
-.element_body .description
-{
+/*.element_body .description {
   text-align:center;
-}
+} */
 
-.element_footer, .comment_footer
-{
-  padding: 0px 15px 5px 15px;
+.footer {
   font-size: 90%;
   text-align: right;
   margin-top:3px;
 }
 
-.element_footer img, .comment_footer img
-{
+.footer img {
   vertical-align:bottom;
 }
 
-.element_footer a
-{
+.footer a {
   padding-left: 5px;
 }
 
-.gallery
-{
-  background:transparent;
-  border:none;
+.gallery_files h2 {
+  margin-top: 3px;
 }
 
-.gallery img
-{
+.gallery_files img {
   margin-bottom: 5px;
 }
 
-.gallery_album
-{
-  padding: 5px;
-  margin: 5px 0px 5px 0px;
+.gallery_album {
+  padding: 5px 12px 5px 12px;
   text-align:left;
 }
 
-.gallery_album img
-{
-  margin:2px;
+.gallery_album p {
+  margin-bottom: 8px;
 }
 
-.gallery_album h2
-{
-  margin:3px 3px 3px 0px;
-}
-
-.gallery_album a
-{
-  text-decoration:none;
-}
-
-/* Final Fixes */
-/*table
-{
-  width: 80%;
-}
-*/
-
-.center
-{
+.center {
   text-align:center;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
 }
 
 /********************************************************************************/

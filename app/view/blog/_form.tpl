@@ -22,62 +22,77 @@
       <th colspan='2'>{$lang_headline}</th>
     </tr>
     <tr class='row1'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='title'>{$lang_title}</label>
       </td>
-      <td class='right'>
-        <input name='title' value='{$title}' type='text'
-               id='title' class='inputtext' />
+      <td class='td_right'>
+        <div class="input">
+          <input name='title' value='{$title}' type='text'
+                 id='title' />
+        </div>
       </td>
     </tr>
     <tr class='row2'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='tags'>{$lang_tags}</label>
       </td>
-      <td class='right'>
-        <input name='tags' value='{$tags}' type='text'
-               id='tags' class='inputtext' />
+      <td class='td_right'>
+        <div class="input">
+          <input name='tags' value='{$tags}' type='text' id='tags' />
+        </div>
         <div class='description'>{$lang_create_tag_info}</div>
       </td>
     </tr>
     <tr class='row1'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
-      <td class='right'>
-        <textarea name='content'
-          id='content' rows='16' cols='50'>{$content}</textarea>
+      <td class='td_right'>
+        <div class="textarea">
+          <textarea name='content'
+            id='content' rows='16' cols='50'>{$content}</textarea>
+        </div>
         <div class='description'>
           <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
         </div>
       </td>
     </tr>
     <tr class='row2'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='published'>{$lang_published}</label>
       </td>
-      <td class='right'>
-        <input name='published' value='1' type='checkbox'
-               id='published' {if $published == true}checked='checked'{/if} />
+      <td class='td_right'>
+        <div class="checkbox">
+          <input name='published' value='1' type='checkbox'
+                 id='published' {if $published == true}checked='checked'{/if} />
+        </div>
       </td>
     </tr>
-		{if $smarty.get.action == 'update'}
-    <tr class='row1'>
-      <td class='left'>
-        <label for='showupdate'>{$lang_update_show}</label>
-      </td>
-      <td class='right'>
-        <input type='checkbox' id='showupdate'
-               name='showupdate' value='1' checked='checked' />
-      </td>
-    </tr>
-		{/if}
+    {if $smarty.get.action == 'update'}
+      <tr class='row1'>
+        <td class='td_left'>
+          <label for='showupdate'>{$lang_update_show}</label>
+        </td>
+        <td class='td_right'>
+          <div class="checkbox">
+            <input type='checkbox' id='showupdate'
+                   name='showupdate' value='1' checked='checked' />
+          </div>
+        </td>
+      </tr>
+    {/if}
   </table>
-  <input type='submit' class='inputbutton' value='{$lang_submit}' />
+  <div class="submit">
+    <input type='submit' value='{$lang_submit}' />
+  </div>
 	{if $smarty.get.action == 'update'}
-      <input type='reset' class='inputbutton' value='{$lang_reset}' />
-      <input type='button' class='inputbutton' value='{$lang_destroy_entry}' style='color:red'
-         onclick="confirmDelete('{$title}', '/Blog/destroy/{$id}')" />
+      <div class="button">
+        <input type='reset' value='{$lang_reset}' />
+      </div>
+      <div class="cancel">
+        <input type='button' value='{$lang_destroy_entry}'
+           onclick="confirmDelete('{$title}', '/Blog/destroy/{$id}')" />
+      </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />
   <input type='hidden' value='formdata' name='{$formdata}' />

@@ -21,25 +21,30 @@
       <th colspan='2'>{$lang_headline}</th>
     </tr>
     <tr class='row1'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='subject'>{$lang_subject}</label>
       </td>
-      <td class='right'>
-        <input name='subject' class='inputtext' id='subject'
-               value='{$subject}' type='text' />
+      <td class='td_right'>
+        <div class="input">
+          <input name='subject' id='subject' value='{$subject}' type='text' />
+        </div>
       </td>
     </tr>
     <tr class='row2'>
-      <td class='left'>
+      <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
-      <td class='right'>
-        <textarea name='content' rows='20' cols='50'
-                  id='content'>{$content}</textarea>
+      <td class='td_right'>
+        <div class="textarea">
+          <textarea name='content' rows='20' cols='50'
+                    id='content'>{$content}</textarea>
+        </div>
         <div class='description'>{$lang_content_info}</div>
       </td>
     </tr>
   </table>
-  <input type='submit' class='inputbutton' value='{$lang_submit}' />
+  <div class="submit">
+    <input type='submit' value='{$lang_submit}' />
+  </div>
   <input type='hidden' value='formdata' name='send_newsletter' />
 </form>

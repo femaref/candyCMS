@@ -19,26 +19,35 @@
   </script>
 {/literal}
 <form method='post' action='{$action}'>
-  <fieldset class="l">
-    <legend>{$lang_title}</legend>
-    <input type='text' class='inputtext' name='title'
-           title='{$lang_title}' value='{$c.title}' />
-    <div class='element_header_date'>
-      {if $smarty.get.action == 'edit'}
-        {$lang_last_update}: {$c.date}
-      {/if}
+  <fieldset class="left">
+    <legend>
+      {$lang_title}
+    </legend>
+    <div class="input">
+      <input type='text' name='title' title='{$lang_title}' value='{$c.title}' />
+    </div>
+    {if $smarty.get.action == 'update'}
+      {$lang_last_update}: {$c.date}
+    {/if}
+  </fieldset>
+  <fieldset class="left">
+    <legend>{$lang_content}</legend>
+    <div class="textarea">
+      <textarea name='content' title='{$lang_content}'
+                rows='20' cols='75'>{$c.content}</textarea>
     </div>
   </fieldset>
-  <fieldset class="l">
-    <legend>{$lang_content}</legend>
-    <textarea name='content' title='{$lang_content}'
-              rows='20' cols='75'>{$c.content}</textarea>
-  </fieldset>
-  <input type='submit' class='inputbutton' value='{$lang_submit}' />
-	{if $smarty.get.action == 'edit'}
-      <input type='reset' class='inputbutton' value='{$lang_reset}' />
-      <input type='button' class='inputbutton' value='{$lang_destroy}' style='color:red'
-             onclick="confirmDelete('{$c.title}', '/Content/destroy/{$id}')" />
+  <div class="submit">
+    <input type='submit' class='inputbutton' value='{$lang_submit}' />
+  </div>
+	{if $smarty.get.action == 'update'}
+      <div class="button">
+        <input type='reset' value='{$lang_reset}' />
+      </div>
+      <div class="cancel">
+        <input type='button' value='{$lang_destroy}'
+               onclick="confirmDelete('{$c.title}', '/Content/destroy/{$id}')" />
+      </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />
   <input type='hidden' value='formdata' name='{$formdata}' />

@@ -1,19 +1,10 @@
-{if $dev == true}
-  {literal}
-    <script language='javascript' src='%PATH_PUBLIC%/js/swfobject.js' type='text/javascript'></script>
-  {/literal}
-{else}
-  {literal}
-    <script language='javascript' src='%PATH_PUBLIC%/js/swfobject-min.js' type='text/javascript'></script>
-  {/literal}
-{/if}
 {if $UR > 3}
-<p>
-  <a href='/Blog/create'>
-    <img src='%PATH_IMAGES%/icons/create.png' alt='' />
-    {$lang_create_entry_headline}
-  </a>
-</p>
+  <p>
+    <a href='/Blog/create'>
+      <img src='%PATH_IMAGES%/icons/create.png' alt='' />
+      {$lang_create_entry_headline}
+    </a>
+  </p>
 {/if}
 {if !$blog}
   <div class='error' id='error' title='{$lang_no_entries}' onclick="hideDiv('error')">
@@ -22,10 +13,10 @@
 {else}
   {foreach from=$blog item=b}
     <div id='b{$b.id}' class='element'>
-      <div class='element_header'>
-        <div class='element_header_title'>
+      <div class='header'>
+        <h2>
           {if $b.published == false}
-              {$lang_not_published}
+            {$lang_not_published}
           {/if}
           <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
           {if $UR > 3}
@@ -34,26 +25,24 @@
                    title='{$lang_update}' />
             </a>
           {/if}
-        </div>
-        <div class='element_header_date'>
+        </h2>
+        <div class='date'>
           {$b.date} {$lang_by}
           <a href='/User/{$b.authorID}'>{$b.name} {$b.surname}</a>
           {if $b.date_modified != '01.01.1970 - 01:00'}
-              - {$lang_last_update}: {$b.date_modified}
+            - {$lang_last_update}: {$b.date_modified}
           {/if}
         </div>
       </div>
-      <div class='element_body'>
-        {$b.content}
-      </div>
-      <div class='element_footer'>
+      {$b.content}
+      <div class='footer'>
         {if $b.tags_sum > 0}
-            {$lang_tags}:
-            {foreach from=$b.tags item=t name=tags}
-              <a class='tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/tag/{$t}'>{$t}</a>
-              {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
-            {/foreach}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {$lang_tags}:
+          {foreach from=$b.tags item=t name=tags}
+            <a class='tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/tag/{$t}'>{$t}</a>
+            {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+          {/foreach}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         {/if}
         {$lang_share}:
         <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'

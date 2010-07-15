@@ -4,8 +4,8 @@
   </div>
 {else}
   <div id='c{$c.id}' class='element'>
-    <div class='element_header'>
-      <div class='element_header_title'>
+    <div class='header'>
+      <h2>
         {$c.title}
         {if $UR > 3}
           <a href='/Content/update/{$c.id}'>
@@ -13,16 +13,14 @@
                  title='{$lang_update}' />
           </a>
         {/if}
-      </div>
-      <div class='element_header_date'>
+      </h2>
+      <div class='date'>
         {$lang_last_update}: {$c.date} {$lang_by}
         <a href='/User/{$c.authorID}'>{$c.name} {$c.surname}</a>
       </div>
     </div>
-    <div class='element_body'>
-      {$c.content}
-    </div>
-    <div class='element_footer'>
+    {$c.content}
+    <div class='footer'>
       {$lang_share}:
       <a href='http://www.facebook.com/share.php?u={$URL}/Content/{$c.id}/{$c.eTitle}&amp;t={$c.eTitle}'
          class='tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>

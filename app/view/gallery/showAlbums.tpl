@@ -24,9 +24,6 @@
           {/if}
         </h2>
         <span class='small'>{$a.date} - {$a.files_sum} {$lang_files}</span>
-        {if $a.description !== ''}
-          <span class='small i'>{$a.description}</span>
-        {/if}
         <p>
           {if $a.files_sum > 0}
             <a href='/Gallery/{$a.id}'>

@@ -133,7 +133,7 @@ final class Helper {
     $sStr = preg_replace('/\[left\](.*)\[\/left]/isU', '<left>\1</left>', $sStr);
     $sStr = preg_replace('/\[right\](.*)\[\/right]/isU', '<right>\1</right>', $sStr);
     $sStr = preg_replace('/\[p\](.*)\[\/p]/isU', '<p>\1</p>', $sStr);
-    $sStr = preg_replace('=\[hl\](.*)\[/hl\]=Uis', '<span class="headline">\1</span><br />', $sStr);
+    $sStr = preg_replace('=\[hl\](.*)\[/hl\]=Uis', '<h3>\1</h3>', $sStr);
     $sStr = preg_replace('=\[b\](.*)\[/b\]=Uis', '<strong>\1</strong>', $sStr);
     $sStr = preg_replace('=\[i\](.*)\[/i\]=Uis', '<em>\1</em>', $sStr);
     $sStr = preg_replace('=\[u\](.*)\[/u\]=Uis', '<span style="text-decoration:underline">\1</span>', $sStr);

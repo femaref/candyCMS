@@ -30,6 +30,7 @@ class Model_User extends Model_Main {
 						'regdate'					=> Helper::formatTimestamp($aRow['regdate']),
 						'id'							=> $aRow['id'],
 						'avatar18'				=> Helper::getAvatar('user/18/', $aRow['id']),
+						'avatar32'				=> Helper::getAvatar('user/32/', $aRow['id']),
 						'avatarOriginal'	=> Helper::getAvatar('user/original/', $aRow['id'])
 				);
 			}

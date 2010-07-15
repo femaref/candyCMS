@@ -2,13 +2,19 @@
 <form action='{$action}' method='post'>
   <fieldset>
     <legend>{$lang_headline}</legend>
-    <textarea name='content' id='createCommentText' rows='8' cols='50'></textarea>
+    <div class="textarea">
+      <textarea name='content' id='createCommentText' rows='8' cols='50'></textarea>
+    </div>
     <div class='description'>
       <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
     </div>
   </fieldset>
-  <input class='inputbutton' type='submit' value='{$lang_submit}' />
-  <input class='inputbutton' type='button' value='{$lang_reset}'
-         onclick="destroyContent('createCommentText')" />
+  <div class="submit">
+    <input type='submit' value='{$lang_submit}' />
+  </div>
+  <div class="button">
+    <input type='button' value='{$lang_reset}'
+           onclick="destroyContent('createCommentText')" />
+  </div>
   <input type='hidden' value='formdata' name='create_comment' />
 </form>

@@ -6,7 +6,7 @@
     </a>
   </p>
 {/if}
-<div class='gallery'>
+<div class='gallery_files'>
 	{if !$files}
       <div class='error' id='error' title='{$lang_no_files_yet}' onclick="hideDiv('error')">
         <p>{$lang_no_files_yet}</p>
@@ -14,7 +14,7 @@
 	{else}
       <h2>{$gallery_name} ({$file_no} {$lang_files})</h2>
       {if $gallery_description !== ''}
-        <p class='quote i'>{$gallery_description}</p>
+        <div class='quote'>{$gallery_description}</div>
       {/if}
       {foreach from=$files item=f}
         <a href='{$f.full_path}/{$popup_path}/{$f.file}' rel='lightbox[]' title='
