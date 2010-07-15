@@ -139,16 +139,19 @@ class Mail extends Main {
 			# Redirect to User Profile
 			$oController = new User($this->m_aRequest, $this->m_oSession);
 
-			return Mail::send(	$sReceiversMail,
+			$bStatus = Mail::send(	$sReceiversMail,
 					$sMailSubject,
 					$sMailMessage,
 					true,
 					(string)$this->m_aRequest['email']).
 					$oController->show($this->_iID);
+
+      if($bStatus == true)
+        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
 		}
 	}
 
-	public static function send($sTo, $sSubject, $sMessage, $sNotify = true, $sReplyTo = WEBSITE_MAIL) {
+	public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL) {
 		# If you're developing, avoid Mails to User
 		if(WEBSITE_DEV == 0) {
 			$sHeader  =	"From:"	.WEBSITE_NAME.	" <"	.WEBSITE_MAIL.	">\n";
@@ -157,10 +160,8 @@ class Mail extends Main {
 			$sHeader .=	"X-Sender-IP: "	.$_SERVER['REMOTE_ADDR'].	"\n";
 			$sHeader .=	'Content-Type: text/html; charset=UTF-8';
 
-			if(@mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader)) {
-				if($sNotify == true)
-					return Helper::successMessage( LANG_SUCCESS_MAIL_SENT );
-			}
+			if(@mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader))
+        return true;
 			else
 				return false;
 

@@ -8,6 +8,7 @@
  */
 
 require_once 'app/controllers/Login.controller.php';
+require_once 'app/controllers/Mail.controller.php';
 require_once 'app/models/User.model.php';
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
@@ -318,14 +319,17 @@ class User extends Main {
 				$sMail = str_replace('%n', Helper::formatHTMLCode($this->m_aRequest['name']),
 						LANG_LOGIN_REGISTRATION_MAIL_BODY);
 
-				Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+				$bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
 						LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
 						$sMail,
 						false,
 						WEBSITE_MAIL_NOREPLY);
 
-				return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL).
-						$this->_oController->showCreateSessionTemplate();
+        if($bStatus == true)
+          return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL).
+              $this->_oController->showCreateSessionTemplate();
+        else
+          return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT);
 			}
 			else
 				return Helper::errorMessage(LANG_ERROR_DB_QUERY);

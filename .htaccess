@@ -71,7 +71,7 @@ RewriteRule ^Blog/([a-z]+)/([A-Za-z0-9]+)$ index.php?section=blog&action=$1&id=$
 RewriteRule ^Content/([a-z]+)$ index.php?section=content&action=$1&page=1 [L]
 RewriteRule ^Content/([a-z]+)/([0-9]+)$ index.php?section=content&action=$1&id=$2&page=1 [L]
 RewriteRule ^Gallery/([a-z]+)$ index.php?section=gallery&action=$1 [L]
-RewriteRule ^Gallery/upload/([0-9]+)$ upload.php?section=gallery&id=$1 [L]
+RewriteRule ^Gallery/upload/([0-9]+)/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L]
 RewriteRule ^Gallery/([a-z]+)/([0-9]+)$ index.php?section=gallery&action=$1&id=$2 [L]
 RewriteRule ^Media/([a-z]+)$ index.php?section=media&action=$1 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&file=$1 [L]

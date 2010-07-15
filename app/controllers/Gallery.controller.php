@@ -244,7 +244,7 @@ class Gallery extends Main {
       $oSmarty->assign('default', $sDefault);
       $oSmarty->assign('description', '');
       $oSmarty->assign('formdata', 'create_file');
-      $oSmarty->assign('action', '/Gallery/upload/'	.$this->_iID.	'');
+      $oSmarty->assign('action', '/Gallery/upload/'	.$this->_iID.	'/' .session_id());
 
       # Language
       $oSmarty->assign('lang_create_file_cut', LANG_GALLERY_CREATE_FILE_CUT);

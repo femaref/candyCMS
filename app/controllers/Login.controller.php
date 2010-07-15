@@ -5,75 +5,76 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 require_once 'app/models/Login.model.php';
 
 class Login extends Main {
-	protected $m_aRequest;
-	protected $m_oSession;
+  protected $m_aRequest;
+  protected $m_oSession;
 
-	public function __init() {
-		$this->_oModel = new Model_Login($this->m_aRequest, $this->m_oSession);
-	}
+  public function __init() {
+    $this->_oModel = new Model_Login($this->m_aRequest, $this->m_oSession);
+  }
 
-	public final function createSession() {
-		if( isset($this->m_aRequest['create_session']) &&
-				isset($this->m_aRequest['email']) &&
-				isset($this->m_aRequest['password']) &&
-				!empty($this->m_aRequest['email']) &&
-				!empty($this->m_aRequest['password']) )
-			return $this->_oModel->createSession();
-		else
-			return $this->showCreateSessionTemplate();
-	}
+  public final function createSession() {
+    if( isset($this->m_aRequest['create_session']) &&
+            isset($this->m_aRequest['email']) &&
+            isset($this->m_aRequest['password']) &&
+            !empty($this->m_aRequest['email']) &&
+            !empty($this->m_aRequest['password']) )
+      return $this->_oModel->createSession();
+    else
+      return $this->showCreateSessionTemplate();
+  }
 
-	public final function showCreateSessionTemplate() {
-		$oSmarty = new Smarty();
-		$oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-		$oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
-		$oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
+  public final function showCreateSessionTemplate() {
+    $oSmarty = new Smarty();
+    $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
+    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
+    $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
 
-		$oSmarty->template_dir = Helper::templateDir('login/createSession');
-		return $oSmarty->fetch('login/createSession.tpl');
-	}
+    $oSmarty->template_dir = Helper::templateDir('login/createSession');
+    return $oSmarty->fetch('login/createSession.tpl');
+  }
 
-	public final function createNewPassword() {
-		if( isset($this->m_aRequest['email']) && !empty($this->m_aRequest['email']) ) {
+  public final function createNewPassword() {
+    if( isset($this->m_aRequest['email']) && !empty($this->m_aRequest['email']) ) {
 
-			$sStatus =& $this->_oModel->createNewPassword();
-			if( $sStatus == true )
-				return Helper::successMessage(LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS).
-						$this->showCreateSessionTemplate();
-			else
-				return $sStatus.$this->_showCreateNewPasswordTemplate();
-		}
-		else
-			return $this->_showCreateNewPasswordTemplate();
-	}
+      $sStatus =& $this->_oModel->createNewPassword();
+      if( $sStatus == true )
+        return Helper::successMessage(LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS).
+                $this->showCreateSessionTemplate();
+      else
+        return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT).
+                $this->_showCreateNewPasswordTemplate();
+    }
+    else
+      return $this->_showCreateNewPasswordTemplate();
+  }
 
-	private final function _showCreateNewPasswordTemplate() {
-		$oSmarty = new Smarty();
+  private final function _showCreateNewPasswordTemplate() {
+    $oSmarty = new Smarty();
 
-		# Language
-		$oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
-		$oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
-		$oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
+    # Language
+    $oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
+    $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
+    $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
 
-		$oSmarty->template_dir = Helper::templateDir('login/createNewPassword');
-		return $oSmarty->fetch('login/createNewPassword.tpl');
-	}
+    $oSmarty->template_dir = Helper::templateDir('login/createNewPassword');
+    return $oSmarty->fetch('login/createNewPassword.tpl');
+  }
 
-	public final function destroySession($sMsg = true) {
-		$oStatus =& $this->_oModel->destroySession();
+  public final function destroySession($sMsg = true) {
+    $oStatus =& $this->_oModel->destroySession();
 
-		if( $sMsg == true )
-			return Helper::redirectTo('/Start');
-	}
+    if( $sMsg == true )
+      return Helper::redirectTo('/Start');
+  }
 
 #private final function _verifyEmail() {}
 # TODO: SHOULD BE MOVED TO V2
-	/*public final function createInvite() {
+  /*public final function createInvite() {
 		if( USERID == 0 )
 			return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
 		else {

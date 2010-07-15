@@ -239,7 +239,7 @@ class Model_Gallery extends Model_Main {
 		return $oGetImages;
 	}
 
-	public final function createFile() {
+	public final function createFile($iUserId = '') {
 		$oUploadFile = new Upload($this->m_aRequest, $this->m_aFile);
 		$sFilePath = $oUploadFile->uploadGalleryFile();
     $this->m_aRequest['description']  = (isset($this->m_aRequest['description']) && !empty($this->m_aRequest['description']))
@@ -247,9 +247,10 @@ class Model_Gallery extends Model_Main {
                                       : '';
 
 		new Query("	INSERT INTO
-									gallery_file(aid, file, extension, description, date)
+									gallery_file(aid, authorID, file, extension, description, date)
 								VALUES(
 									'"	.(int)$this->m_aRequest['id'].	"',
+									'"	.(int)$iUserId.	"',
 									'"	.$oUploadFile->getId().	"',
 									'"	.$oUploadFile->getExtension().	"',
 									'"	.Helper::formatHTMLCode($this->m_aRequest['description']).	"',

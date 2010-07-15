@@ -8,5 +8,7 @@
     </div>
   </fieldset>
   <input class='inputbutton' type='submit' value='{$lang_submit}' />
+  <input class='inputbutton' type='button' value='{$lang_reset}'
+         onclick="destroyContent('createCommentText')" />
   <input type='hidden' value='formdata' name='create_comment' />
 </form>

@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+require_once 'app/controllers/Mail.controller.php';
+
 class Model_Login extends Model_Main {
   public final function createSession() {
     $oCheckUser = new Query("	SELECT
@@ -86,22 +88,18 @@ class Model_Login extends Model_Main {
       $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
       $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-      $sStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+      $bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
               LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
               $sContent,
-              true,
               WEBSITE_MAIL_NOREPLY);
 
-      if( $sStatus == false )
-        return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT);
-
-      else {
+      if( $bStatus == true ) {
         return new Query("UPDATE
-														`user`
-													SET
-														password = '"	.$sNewPasswordSecure.	"'
-													WHERE
-														`email` = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'");
+                            `user`
+                          SET
+                            password = '"	.$sNewPasswordSecure.	"'
+                          WHERE
+                            `email` = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'");
       }
     }
   }

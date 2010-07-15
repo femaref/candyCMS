@@ -20,12 +20,20 @@ if($('error')) {
 /********************************************************************************/
 /* Quote messages in Comments */
 /********************************************************************************/
+if($('createCommentText')) {
+  $('createCommentText').focus();
+}
+
 function quoteMessage(sName, sDivId) {
   var sMessage = $(sDivId).get('html');
   var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
   var sOldMessage = $('createCommentText').get('value');
   $('createCommentText').set('html', sOldMessage + sQuote);
   return false;
+}
+
+function destroyContent(sDivId) {
+  $(sDivId).set('html', '');
 }
 
 /********************************************************************************/
@@ -81,4 +89,17 @@ function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
   $(sId).set('html', "<img src='" + sRoot + "/slimbox/loading.gif' alt='loading...' />");
   $(sId).load(sURL);
+}
+
+function checkPasswords(sPath) {
+  if($('password') && $('password2')) {
+    if( $('password').value == $('password2').value ) {
+      $('icon').src = sPath + 'success.png';
+      $('icon').alt = 'correct';
+    }
+    else {
+      $('icon').src = sPath + 'close.png';
+      $('icon').alt = 'denied';
+    }
+  }
 }

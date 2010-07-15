@@ -89,7 +89,7 @@ define( 'LANG_GLOBAL_WRITE_MODE_INFO', 'Du schreibst momentan im %m.::Klicke hie
 define( 'LANG_GLOBAL_WYSIWYG', 'Vorschaumodus' );
 define( 'LANG_GLOBAL_YESTERDAY', 'Gestern' );
 
-define( 'LANG_MAIL_NO_REPLY', '<p>Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!</p>' );
+define( 'LANG_MAIL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
 define( 'LANG_MAIL_OWN_EMAIL', 'Eigene E-Mail Adresse' );
 define( 'LANG_MAIL_SUBJECT_BY_USER', 'Neue Nachricht von %u' );
 define( 'LANG_MAIL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="'	.WEBSITE_URL.	'">'	.WEBSITE_NAME.	'</a></p>' );
@@ -118,12 +118,12 @@ define( 'LANG_LOGIN_LOGIN_SUCCESSFUL', 'Login erfolgreich!' );
 define( 'LANG_LOGIN_LOGOUT_SUCCESSFUL', 'Logout erfolgreich!' );
 define( 'LANG_LOGIN_PASSWORD_LOST', 'Password vergessen?' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_DESCRIPTION', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der n&auml;chsten Minuten zu.' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em>".LANG_MAIL_NO_REPLY.LANG_MAIL_SIGNATURE ); # NEW
+define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em>" .LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT', 'Dein neues Passwort' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_SEND', 'Password zuschicken' ); # NEW
 define( 'LANG_LOGIN_REGISTRATION_DISCLAIMER_READ', 'Nutzungsbedingungen gelesen?' );
-define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %n!\r\n\r\nVielen Dank f&#xFC;r deine Registration."	.LANG_MAIL_SIGNATURE.	"("	.LANG_MAIL_NO_REPLY.	")"  );
+define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %n!\r\n\r\nDanke f&#xFC;r deine Registration auf unserer Seite."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY);
 define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registration bei blog.eventize.de' );
 define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du hast dich erfolgreich registriert und kannst dich jetzt einloggen!' );
 

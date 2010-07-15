@@ -157,6 +157,7 @@ final class Comment extends Main {
       # Language
       $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
+      $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 
       $oSmarty->template_dir = Helper::templateDir('comment/_form');

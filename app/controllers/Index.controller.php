@@ -65,12 +65,15 @@ class Index {
     SQLCONNECT::selectDB(SQL_DB);
   }
 
-  public final function setUser() {
+  public final function setUser($SessionId = '') {
+    if(empty($SessionId))
+      $SessionId = session_id();
+      
     # TODO: Besser QueryModel
     $this->m_oSession['userdata'] = Model_Main::simpleQuery(
             '*',
             'user',
-            "session = '"	.session_id().	"' AND ip = '"	.$_SERVER['REMOTE_ADDR'].	"'",
+            "session = '"	.$SessionId.	"' AND ip = '"	.$_SERVER['REMOTE_ADDR'].	"'",
             '1');
     return $this->m_oSession['userdata'];
   }

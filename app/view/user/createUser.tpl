@@ -45,7 +45,8 @@
       </td>
       <td class='right'>
         <input name='password2' class='inputtext' id='password2'
-               value='' type='password' />
+               value='' type='password' onkeyup="checkPasswords('%PATH_IMAGES%/icons/')" />
+        <img id="icon" src="%PATH_IMAGES%/icons/close.png" alt="" style="padding:5px" />
       </td>
     </tr>
     <tr class='row2'>
