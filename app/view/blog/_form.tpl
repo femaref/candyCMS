@@ -1,6 +1,6 @@
 {literal}
   <script language='javascript' type='text/javascript'
-  src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
+    src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   <script language='javascript' type='text/javascript'>
     tinyMCE.init({
       mode : "textareas",
@@ -76,7 +76,7 @@
         <td class='td_right'>
           <div class="checkbox">
             <input type='checkbox' id='showupdate'
-                   name='showupdate' value='1' checked='checked' />
+                   name='showupdate' value='1' />
           </div>
         </td>
       </tr>

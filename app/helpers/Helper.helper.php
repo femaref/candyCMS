@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 final class Helper {
   public static final function successMessage($sMSG) {
@@ -184,15 +184,15 @@ final class Helper {
     $sHTML .= '</div>';
 
     $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\3",config:"%PATH_PUBLIC%/flv/config.xml",logo:"%PATH_IMAGES%/flv/logo.png"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\3",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
             $sStr);
 
     $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+) (.*)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\4",config:"%PATH_PUBLIC%/flv/config.xml",logo:"%PATH_IMAGES%/flv/logo.png",image:"\3"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\4",config:"%PATH_PUBLIC%/flv/config.xml",image:"\3"}});</script>',
             $sStr);
 
     $sStr = preg_replace(	'#\[media\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml",logo:"%PATH_IMAGES%/flv/logo.png"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
             $sStr);
 
     /* Quote */

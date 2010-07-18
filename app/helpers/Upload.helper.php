@@ -23,18 +23,18 @@ final class Upload {
   }
 
   public function uploadMediaFile() {
+    $this->_iID = $this->_replaceNonAlphachars(strtolower($this->m_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->m_aFile['file']['name'], '.'), 1) );
-
-    if($this->_sRename == '')
-      $this->_iID = time().	'_'	.rand(100,999);
-    else
-      $this->_iID =& $this->_replaceNonAlphachars($this->_sRename);
 
     $this->_sFormAction = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
-    $this->_sFinalPath = PATH_UPLOAD.	'/'	.$this->_sUploadFolder.	'/'	.$this->_iID.
-            '.'	.$this->_sFileExtension;
+    $this->_sFinalPath = PATH_UPLOAD.	'/'	.$this->_sUploadFolder.	'/'	.$this->_iID;
+
+    if(!empty($this->_sRename)) {
+      $this->_iID =& $this->_replaceNonAlphachars($this->_sRename);
+      $this->_sFinalPath = $this->sFinalPath. '.'	.$this->_sFileExtension;
+    }
 
     move_uploaded_file(	$this->m_aFile['file']['tmp_name'], $this->_sFinalPath);
     return $this->_sFinalPath;

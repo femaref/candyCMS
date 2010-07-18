@@ -6,7 +6,4 @@
 	<screencolor>0x000000</screencolor>
 	<volume>100</volume>
 	<displayheight>405</displayheight>
-
-    <!--<abouttxt></abouttxt>
-    <aboutlnk>http://marcoraddatz.com</aboutlnk>//-->
 </config>

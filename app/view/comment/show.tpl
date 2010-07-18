@@ -13,7 +13,9 @@
         {/if}
         {if $authorID == $c.authorID}({$lang_author}){/if}, {$c.date}
       </h3>
-      {$c.content}
+      <div id="c{$c.id}">
+        {$c.content}
+      </div>
       <div class='{if $authorID == $c.authorID}row1{/if} footer'>
         {if $uid > 0}
           <a href='#add'

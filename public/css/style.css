@@ -20,19 +20,16 @@ a:hover
   text-decoration:underline;
 }
 
-img
-{
+img {
   border: none;
   vertical-align:bottom;
 }
 
-a:hover img
-{
+a:hover img {
   text-decoration:none;
 }
 
-legend
-{
+legend {
   font-weight:bold;
   font-size: 120%;
 }
@@ -158,10 +155,10 @@ fieldset .textarea textarea {
 
 /* Used for file manager to select link directly */
 .inputsmall {
-  width: 250px;
-  height: 12px;
+  width:300px;
+  height:12px;
   font-size:10px;
-  background: transparent;
+  background:transparent;
   border:0px;
   color:black;
 }
@@ -190,7 +187,6 @@ fieldset .textarea textarea {
 
 /* Center Videoplayer */
 .media_player {
-  text-align:center;
   margin: 5px;
 }
 

@@ -8,8 +8,8 @@
  */
 
 /* GLOBAL STUFF */
-define( 'WEBSITE_TITLE', 'blog.raddatzbielefeld.de' );
-define( 'WEBSITE_SLOGAN', 'Der Blog der raddatzbielefeld GbR' );
+define( 'WEBSITE_TITLE', 'blog.marcoraddatz.com' );
+define( 'WEBSITE_SLOGAN', 'Gedanken und Erlebnisse von Marco Raddatz' );
 
 define( 'LANG_GLOBAL_ABOUT', '&#xDC;ber' );
 define( 'LANG_GLOBAL_ADD_BOOKMARK', 'Lesezeichen hinzuf&#xFC;gen' );

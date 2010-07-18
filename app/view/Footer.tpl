@@ -20,10 +20,6 @@
         <img src='%PATH_IMAGES%/icons/user.png' alt='' />
         {$lang_usermanager}
       </a>
-      <!-- <br />
-      <a href='/cron/cron.php' title='{$lang_cronjob_exec}' target='_blank'>
-          {$lang_cronjob_exec}
-      </a> //-->
     {else}
       <a href='/Newsletter' title='{$lang_newsletter_create_destroy}'>
         <img src='%PATH_IMAGES%/icons/email.png' alt='' />

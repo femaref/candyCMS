@@ -178,10 +178,17 @@ class Model_Blog extends Model_Main {
 	}
 
 	public function update($iID) {
-		$iDateModified = isset($this->m_aRequest['showupdate']) ? time() : '';
-		$sUpdateAuthor = isset($this->m_aRequest['showupdate']) ?
-				", authorID = '"	.USERID.	"'" :
-				'';
+		$iDateModified = (isset($this->m_aRequest['showupdate']) && $this->m_aRequest['showupdate'] == true) ?
+            time() :
+            '';
+
+		$iPublished = (isset($this->m_aRequest['published']) && $this->m_aRequest['published'] == true) ?
+            '1' :
+            '0';
+
+		$sUpdateAuthor = (isset($this->m_aRequest['showupdate']) && $this->m_aRequest['showupdate'] == true) ? 
+            ", authorID = '"	.USERID.	"'" :
+            '';
 
 		return new Query("UPDATE
 												`blog`
@@ -189,7 +196,7 @@ class Model_Blog extends Model_Main {
 												title = '"	.Helper::formatHTMLCode($this->m_aRequest['title'], false).	"',
 												tags = '"	.Helper::formatHTMLCode($this->m_aRequest['tags'], false).	"',
 												content = '"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
-												published = '"	.(int)$this->m_aRequest['published'].	"',
+												published = '"	.(int)$iPublished.	"',
 												date_modified = '"	.$iDateModified.	"'
 												"	.$sUpdateAuthor.	"
 											WHERE
@@ -201,6 +208,6 @@ class Model_Blog extends Model_Main {
 		new Query("DELETE FROM comment WHERE parentID = '"	.$iID.	"' AND parentCat = 'b'");
 
 		Helper::redirectTo('/Start');
-		#return Helper::successMessage(LANG_SUCCESS_DELETE);
+		return Helper::successMessage(LANG_SUCCESS_DELETE);
 	}
 }

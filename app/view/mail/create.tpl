@@ -9,7 +9,8 @@
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='email' id='email' value='{$email}' type='text' />
+          <input name='email' id='email' value='{$email}' type='text'
+                {if $email !== ''}disabled='disabled'{/if}/>
         </div>
       </td>
     </tr>
