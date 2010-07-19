@@ -47,6 +47,7 @@ class Blog extends Main {
 		$oSmarty->assign('lang_comments', LANG_GLOBAL_COMMENTS);
 		$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 		$oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
+		$oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
 		$oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 		$oSmarty->assign('lang_not_published', LANG_ERROR_GLOBAL_NOT_PUBLISHED);
 		$oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);

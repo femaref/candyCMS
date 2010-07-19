@@ -53,6 +53,7 @@ class Media extends Main {
       $sOriginalPath = PATH_UPLOAD.	'/media';
       $oDir = opendir($sOriginalPath);
 
+      $aFiles = array();
       while($sFile = readdir($oDir)) {
         if($sFile == '.' || $sFile == '..' || $sFile == '.htaccess' || $sFile == '.svn')
           continue;
@@ -98,6 +99,7 @@ class Media extends Main {
       $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY);
       $oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
       $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE);
+      $oSmarty->assign('lang_no_files', LANG_MEDIA_FILE_EMPTY_FOLDER);
 
       $oSmarty->template_dir = Helper::templateDir('media/show');
       return $oSmarty->fetch('media/show.tpl');

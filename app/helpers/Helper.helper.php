@@ -184,15 +184,15 @@ final class Helper {
     $sHTML .= '</div>';
 
     $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\3",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf",{id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\3",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
             $sStr);
 
     $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+) (.*)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\4",config:"%PATH_PUBLIC%/flv/config.xml",image:"\3"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\4",config:"%PATH_PUBLIC%/flv/config.xml",image:"\3"}});</script>',
             $sStr);
 
     $sStr = preg_replace(	'#\[media\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaPlayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
+            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
             $sStr);
 
     /* Quote */
@@ -200,6 +200,11 @@ final class Helper {
             preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<div class='quote'>\\1</div>", $sStr);
       $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<div class='quote'><h3>"	.LANG_GLOBAL_QUOTE_BY.	" \\1</h3>\\2</div>", $sStr);
+    }
+
+    while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
+      $iRand = rand(10000, 99999);
+      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\">\\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
     }
 
     /* Add a paragraph to create similar BB-Code for TinyMCE */

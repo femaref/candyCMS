@@ -138,11 +138,12 @@ define( 'LANG_GALLERY_UPDATE_FILE', 'Datei bearbeiten' ); # New
 define( 'LANG_MEDIA_FILE_CHOOSE', 'Datei ausw&#xE4;hlen' );
 define( 'LANG_MEDIA_FILE_DESTROY', 'Datei l&#xF6;schen' );
 define( 'LANG_MEDIA_FILE_DESTROY_SUCCESS', 'Datei wurde gel&#xF6;scht!' );
-define( 'LANG_MEDIA_FILE_RENAME', 'Datei benennen' );
 define( 'LANG_MEDIA_FILE_CREATE', 'Datei hochladen' );
 define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig f&#xFC;r Missbrauch verwendbare Dateien den Server ggf. zerst&#xF6;ren k&#xF6;nnen! Gleichnamige Dateien werden beim Upload &#xFC;berschrieben.' );
 define( 'LANG_MEDIA_FILE_CREATE_SUCCESS', 'Upload erfolgreich! Die Datei befindet sich jetzt unter <strong>%p</strong>.');
 define( 'LANG_MEDIA_IMAGE_CREATE_SUCCESS', 'Upload erfolgreich! Falls das Bild nicht korrekt angezeigt wird, leere bitte deinen Browsercache!');
+define( 'LANG_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien hochgeladen.' ); #NEW
+define( 'LANG_MEDIA_FILE_RENAME', 'Datei benennen' );
 
 define( 'LANG_NEWSLETTER_CONTENT_INFO', '%u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.' );
 define( 'LANG_NEWSLETTER_CREATE', 'Newsletter verfassen' );
