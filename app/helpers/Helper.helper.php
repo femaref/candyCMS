@@ -204,7 +204,7 @@ final class Helper {
 
     while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $iRand = rand(10000, 99999);
-      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\">\\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
+      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='"  .PATH_IMAGES.  "/icons/toggle_max.png' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
     }
 
     /* Add a paragraph to create similar BB-Code for TinyMCE */
@@ -213,7 +213,7 @@ final class Helper {
         $sStr = '<p>'	.$sStr.	'</p>';
     }
 
-    $sStr = nl2br($sStr);
+    #$sStr = nl2br($sStr);
     return $sStr;
   }
 

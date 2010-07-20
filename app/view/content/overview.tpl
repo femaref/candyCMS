@@ -25,8 +25,8 @@
       </td>
       <td style='width:10%'>
         {if $UR > 3}
-          <a href='/Content/edit/{$c.id}'>
-            <img src='%PATH_IMAGES%/icons/edit.png' alt='{$lang_update}'
+          <a href='/Content/update/{$c.id}'>
+            <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
               title='{$lang_update}' />
           </a>
           <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
