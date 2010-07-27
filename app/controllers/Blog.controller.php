@@ -36,6 +36,7 @@ class Blog extends Main {
 		$iCommentSum = 0;
 		if(!empty($this->_iID))
 			$iCommentSum = $this->_aData[1]['comment_sum'];
+
 		$oComments = new Comment($this->m_aRequest, $this->m_oSession);
 		$oComments->__init($iCommentSum, $this->_aData);
 		$oSmarty->assign('blogComments', $oComments->show());

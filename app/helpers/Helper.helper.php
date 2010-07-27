@@ -110,7 +110,6 @@ final class Helper {
     return $sStr;
   }
 
-  # TODO: What to do with this? Kick out in V2?
   public final static function formatBBCode($sStr, $bUseParagraph = false) {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
@@ -122,10 +121,6 @@ final class Helper {
 
     # Format SpecialChars
     $sStr = str_replace('&quot;', '"', $sStr);
-    /*$sStr = str_replace('&auml;', '�', $sStr);
-		$sStr = str_replace('&uuml;', '�', $sStr);
-		$sStr = str_replace('&ouml;', '�', $sStr);
-		$sStr = str_replace('&szlig;', '�', $sStr);*/
 
     # BB Code
     $sStr = str_replace('[hr]', '<hr />', $sStr);
@@ -145,7 +140,7 @@ final class Helper {
     $sStr = preg_replace('#\[size=(.*)\](.*)\[/size\]#Uis', '<span style="font-size:\1%">\2</span>', $sStr);
     $sStr = preg_replace('#\[site=(.*)\](.*)\[/site\]#Uis', '<a href="\1">\2</a>', $sStr);
     $sStr = preg_replace('#\[url=(.*)\](.*)\[/url\]#Uis',
-            '<img src="%PATH_IMAGES%/icons/redirect.png" alt="" style="vertical-align:middle" /> <a href="\1" target="_blank">\2</a>',
+            '<img src="%PATH_IMAGES%/icons/redirect.png" alt="" /> <a href="\1" target="_blank">\2</a>',
             $sStr);
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
     $sStr = preg_replace('#\[file:(.*)\]#Uis', '<img src="%PATH_IMAGES%/icons/file/\1.png" alt="\1" />', $sStr);

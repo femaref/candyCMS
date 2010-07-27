@@ -318,6 +318,7 @@ form table td {
   margin: 10px 5px 5px 10px;
   vertical-align:middle;
   text-align:left;
+  height: 30px;
 }
 
 .td_left {
@@ -374,10 +375,6 @@ table th
   margin-left:4px;
 }
 
-/*.element_body .description {
-  text-align:center;
-} */
-
 .footer {
   font-size: 90%;
   text-align: right;
@@ -420,6 +417,14 @@ table th
 .right {
   text-align: right;
 }
+
+#create_comment fieldset {
+  max-width: 700px;
+}
+
+/*#create_comment fieldset input, #create_comment fieldset textarea {
+  width: 400px;
+}*/
 
 /********************************************************************************/
 /* ToolTips */

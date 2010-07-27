@@ -1,0 +1,1 @@
+ALTER TABLE comment ADD author_name VARCHAR( 32 ) DEFAULT '' AFTER authorID;

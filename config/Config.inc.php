@@ -93,10 +93,10 @@ define('RANDOM_HASH', 'h7da87@#asd0io08');
 # To avoid spam, we use ReCaptcha (http://recaptcha.org). Get there, register
 # yourself and get an account
 # Enter given private key here:
-define('RECAPTCHA_PRIVATE', '');
+define('RECAPTCHA_PRIVATE', '242');
 
 # Enter given public key here:
-define('RECAPTCHA_PUBLIC', '');
+define('RECAPTCHA_PUBLIC', '24234');
 
 # ------------------------------------------------------------------------------
 

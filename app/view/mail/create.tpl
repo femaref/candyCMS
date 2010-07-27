@@ -1,22 +1,27 @@
 <form method='post' action='/Mail/{$id}'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>
     </tr>
     <tr class='row1'>
       <td class='td_left'>
         <label for='email'>{$lang_email}</label>
       </td>
       <td class='td_right'>
-        <div class="input">
-          <input name='email' id='email' value='{$email}' type='text'
-                {if $email !== ''}disabled='disabled'{/if}/>
-        </div>
+        {if $email == ''}
+          <div class="input">
+            <input name='email' id='email' value='{$email}' type='text' />
+          </div>
+        {else}
+          {$email}
+          <input name='email' id='email' value='{$email}' type='hidden' />
+        {/if}
       </td>
     </tr>
     <tr class='row2'>
       <td class='td_left'>
         <label for='subject'>{$lang_subject}</label>
+        ({$lang_optional})
       </td>
       <td class='td_right'>
         <div class="input">

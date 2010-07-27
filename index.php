@@ -71,7 +71,9 @@ $oIndex->connectDB();
 
 $aUser =& $oIndex->setUser();
 define( 'USERID',	(int)$aUser['id'] );
+define( 'USERNAME', (string)$aUser['name'] );
 define( 'USERRIGHT', (int)$aUser['userright'] );
+define( 'USERSURNAME', (string)$aUser['name'] );
 
 echo $oIndex->show();
 ?>

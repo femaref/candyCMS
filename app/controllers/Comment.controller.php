@@ -5,10 +5,11 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 require_once 'app/models/Comment.model.php';
 require_once 'app/helpers/Pages.helper.php';
+require_once 'lib/recaptcha/recaptchalib.php';
 
 final class Comment extends Main {
   private $_aParentData;
@@ -17,6 +18,11 @@ final class Comment extends Main {
   private $_sParentCat;
   private $_sParentSection;
   private $_sAction;
+
+  private $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
+  private $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
+  private $_sRecaptchaResponse = '';
+  private $_sRecaptchaError = '';
 
   public function __init($iEntries = '', $aParentData = '') {
     $this->_aParentData =& $aParentData;
@@ -52,11 +58,12 @@ final class Comment extends Main {
       $oSmarty = new Smarty();
       $oSmarty->assign('uid', USERID);
       $oSmarty->assign('UR', USERRIGHT);
+      $oSmarty->assign('parentID', $this->_iID);
 
       # Do only load comments, if they are avaiable
       $sReturn = '';
       if($this->_iEntries > 0) {
-        # __init here due to AJAX reasons
+        # @Override __init here due to AJAX reasons
         $this->_oPages = new Pages($this->m_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
         $this->_oModel->__init($this->_iEntries, $this->_oPages->getOffset(), $this->_oPages->getLimit());
         $this->_aData = $this->_oModel->getData($this->_iID, $this->_sParentCat);
@@ -88,26 +95,32 @@ final class Comment extends Main {
 
       # Does the user have enough rights to enter a comment?
       # Show createComment Template if we don't have an action - description below
-      if( ($this->_iID !== '' && USERID > 0 && !isset($this->m_aRequest['action']) ) ||
-              isset($this->m_aRequest['parentcat']) && $this->_iID !== '' && USERID > 0) {
+      if( ($this->_iID !== '' && !isset($this->m_aRequest['action']) ) ||
+              isset($this->m_aRequest['parentcat']) && $this->_iID !== '') {
         if(!isset($this->m_aRequest['ajax']))
           $sReturn .= $this->create('create_comment');
-      }
-      
-      # Due to privacy options, _showFormTemplate is forced to return
-      # a simple template instead of handling action requests
-      elseif($this->_iID !== '' || USERID == 0 ||
-              !(isset($this->m_aRequest['action']) && 'tags' ==
-                      isset($this->m_aRequest['action']) ) ) {
-        if(!isset($this->m_aRequest['ajax']))
-          $sReturn .= LANG_COMMENT_LOGIN_FIRST;
       }
 
       return $sReturn;
     }
   }
 
-  protected final function _create() {
+  public final function create($sInputName) {
+    if( isset($this->m_aRequest[$sInputName]) ) {
+      if( USERRIGHT == 0 )
+        return $this->_checkCaptcha(true);
+      else
+        return $this->_create(false);
+    }
+    else {
+      $bShowCaptcha = ( USERRIGHT == 0 ) ? true : false;
+      return $this->_showFormTemplate($bShowCaptcha);
+    }
+  }
+
+  protected final function _create($bShowCaptcha = false) {
+    $sError = '';
+
     if(	!isset($this->m_aRequest['parentcat']) ||
             empty($this->m_aRequest['parentcat']) )
       $sError .= LANG_GLOBAL_CATEGORY.	'<br />';
@@ -120,6 +133,12 @@ final class Comment extends Main {
             empty($this->m_aRequest['content']) )
       $sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
+    if( USERID < 1) {
+      if( !isset($this->m_aRequest['name']) ||
+              empty($this->m_aRequest['name']) )
+        $sError .= LANG_GLOBAL_NAME.	'<br />';
+    }
+
     /* Set new Action */
     $this->_sAction = '/CreateComment/'	.$this->m_aRequest['parentcat'].
             '/'	.(int)$this->m_aRequest['parentid']. '#'.
@@ -127,7 +146,7 @@ final class Comment extends Main {
 
     if( !empty($sError) ) {
       $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showFormTemplate();
+      $sReturn .= $this->_showFormTemplate($bShowCaptcha);
       return $sReturn;
     }
     else {
@@ -146,22 +165,66 @@ final class Comment extends Main {
               '/'	.(int)$this->m_aRequest['parentid']);
   }
 
-  protected final function _showFormTemplate($bEdit = false) {
+  protected final function _showFormTemplate($bShowCaptcha) {
     if( empty($this->_sAction) )
       return Helper::errorMessage(__CLASS__, LANG_ERROR_ACTION_NOT_SPECIFIED);
     else {
+      $sName = isset($this->m_aRequest['name']) ?
+              (string)$this->m_aRequest['name']:
+              '';
+
+      $sContent = isset($this->m_aRequest['content']) ?
+              (string)$this->m_aRequest['content']:
+              '';
+
+      $iParentId = isset($this->m_aRequest['parentID']) ?
+              (int)$this->m_aRequest['parentID']:
+              '';
+
       $oSmarty = new Smarty();
       $oSmarty->assign('UR', USERRIGHT);
-      $oSmarty->assign('action', $this->_sAction);
+      $oSmarty->assign('USERNAME', USERNAME);
+      $oSmarty->assign('USERSURNAME', USERSURNAME);
+      $oSmarty->assign('action', $this->_sAction.$iParentId);
+      $oSmarty->assign('content', $sContent);
+      $oSmarty->assign('name', $sName);
+
+      if( $bShowCaptcha == true )
+        $oSmarty->assign('captcha', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
+                $this->_sRecaptchaError) );
+      else
+        $oSmarty->assign('captcha', '');
 
       # Language
       $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
+      $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
+      $oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 
       $oSmarty->template_dir = Helper::templateDir('comment/_form');
       return $oSmarty->fetch('comment/_form.tpl');
     }
+  }
+
+  private function _checkCaptcha($bShowCaptcha = true) {
+    if( isset($this->m_aRequest['recaptcha_response_field']) ) {
+      $this->_sRecaptchaResponse = recaptcha_check_answer (
+              $this->_sRecaptchaPrivateKey,
+              $_SERVER['REMOTE_ADDR'],
+              $this->m_aRequest['recaptcha_challenge_field'],
+              $this->m_aRequest['recaptcha_response_field']);
+
+      if ($this->_sRecaptchaResponse->is_valid)
+        return $this->_create($bShowCaptcha);
+      else {
+        $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
+        return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT).
+                $this->_showFormTemplate($bShowCaptcha);
+      }
+    }
+    else
+      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
   }
 }
