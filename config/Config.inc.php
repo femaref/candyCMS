@@ -146,7 +146,7 @@ define('PATH_TPL_ADDON', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
-define('PATH_TPL_STATIC', 'public/skins/default/view/_static');
+define('PATH_TPL_STATIC', PATH_PUBLIC.  '/skins/default/view/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload

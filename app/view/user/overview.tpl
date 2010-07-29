@@ -15,10 +15,10 @@
       <td style='width:10%'>
         {if $UR == 4}
           <a href='/User/update/{$u.id}'>
-            <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
-          <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
+          <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                title='{$lang_destroy}'
                onclick="confirmDelete('{$u.name}', '/User/destroy/{$u.id}')" />
         {/if}

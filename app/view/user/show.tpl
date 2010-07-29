@@ -4,7 +4,7 @@
       {$user.name} {$user.surname}
       {if $UR == 4}
         <a href='/User/update/{$uid}'>
-          <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}' style='vertical-align:baseline' />
+          <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt='{$lang_update}' style='vertical-align:baseline' />
         </a>
       {/if}
     </th>
@@ -21,8 +21,7 @@
          title='{$user.name} ({$avatarPopupInfo[0]} x {$avatarPopupInfo[1]} px)'>
         <div style='background: transparent url(%PATH_UPLOAD%/{$avatar100}) no-repeat center'>
           <img src='%PATH_IMAGES%/spacer.gif' class='image' alt='{$user.name}'
-               {$avatarThumbInfo[3]}
-					style='background: transparent url(%PATH_IMAGES%/icons/popup.png) no-repeat bottom right' />
+               {$avatarThumbInfo[3]} />
       </a>
     </td>
   </tr>

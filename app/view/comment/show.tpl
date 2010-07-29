@@ -21,11 +21,11 @@
       <div class='{if $authorID == $c.authorID}row1{/if} footer'>
         <a href='#add'
            onclick="quoteMessage('{$c.name} {$c.surname}', 'c{$c.id}')">
-          <img src='%PATH_IMAGES%/icons/quote.png' alt='{$lang_quote}'
+          <img src='%PATH_IMAGES%/spacer.gif' class="icon-quote" alt='{$lang_quote}'
                title='{$lang_quote}' />
         </a>
         {if $UR > 3}
-          <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
+          <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                onclick="confirmDelete('#{$c.loop+$commentNumber}', '/DestroyComment/{$c.id}/{$c.parentID}')"
                class='pointer' title='{$lang_destroy}' />
         {/if}

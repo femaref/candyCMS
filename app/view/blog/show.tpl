@@ -1,7 +1,7 @@
 {if $UR > 3}
   <p>
     <a href='/Blog/create'>
-      <img src='%PATH_IMAGES%/icons/create.png' alt='' />
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -26,7 +26,7 @@
             <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
             {if $UR > 3}
               <a href='/Blog/update/{$b.id}'>
-                <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
               </a>
             {/if}
@@ -52,27 +52,27 @@
           {$lang_share}:
           <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'
              class='tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
-            <img src='%PATH_IMAGES%/icons/facebook.png' alt='Facebook' width='16' height='16' />
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-facebook" alt='Facebook' width='16' height='16' />
           </a>
           <a href='http://del.icio.us/post?url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;title={$b.eTitle}'
              class='tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
-            <img src='%PATH_IMAGES%/icons/delicious.png' alt='del.icio.us' width='16' height='16' />
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
           </a>
           <a href='http://technorati.com/cosmos/search.html?url={$URL}/Blog/{$b.id}/{$b.eTitle}'
              class='tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
-            <img src='%PATH_IMAGES%/icons/technorati.png' alt='Technorati' width='16' height='16' />
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-technorati" alt='Technorati' width='16' height='16' />
           </a>
           <a href='http://digg.com/submit?phase=2&amp;url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;title={$b.eTitle}'
              class='tooltip' title='{$lang_add_bookmark}::http://digg.com'>
-            <img src='%PATH_IMAGES%/icons/digg.png' alt='Digg' width='16' height='16' />
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-digg" alt='Digg' width='16' height='16' />
           </a>
           <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;bm_description={$b.eTitle}'
              class='tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
-            <img src='%PATH_IMAGES%/icons/mrwong.png' alt='MrWong' width='16' height='16' />
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <a href='/Blog/{$b.id}/{$b.eTitle}#comments'>
-            <img src='%PATH_IMAGES%/icons/comments.png' alt='' /> {$b.comment_sum} {$lang_comments}
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
           </a>
         </div>
       </div>

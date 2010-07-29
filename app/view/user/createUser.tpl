@@ -52,7 +52,7 @@
         <div class="input">
           <input name='password2' class='inputtext' id='password2'
                  value='' type='password' onkeyup="checkPasswords('%PATH_IMAGES%/icons/')" />
-          <img id="icon" src="%PATH_IMAGES%/icons/close.png" alt="" />
+          <img id="icon" src='%PATH_IMAGES%/spacer.gif' class="icon-close" alt="" />
         </div>
       </td>
     </tr>

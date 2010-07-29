@@ -205,6 +205,7 @@ class Index {
     header('Cache-Control: must-revalidate');
     header('Content-Type: text/html; charset=utf-8');
     header('Expires: '	.$sHeaderExpires);
+    header('ETag: '	.md5($sCachedHTML));
 
     return $sCachedHTML;
   }

@@ -1,7 +1,7 @@
 {if $UR > 3}
   <p>
     <a href='/Gallery/createfile/{$id}'>
-      <img src='%PATH_IMAGES%/icons/create.png' alt='' />
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
         {$lang_create_entry_headline}
     </a>
   </p>
@@ -22,10 +22,10 @@
             {$lang_uploaded_at}: {$f.date}
             <br />
             <a href="/Gallery/updatefile/{$f.id}">
-                <img src="%PATH_IMAGES%/icons/update.png" alt="{$lang_update}" />
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt="{$lang_update}" />
             </a>
             <a href="/Gallery/destroyfile/{$f.id}">
-                <img src="%PATH_IMAGES%/icons/destroy.png" alt="{$lang_destroy}" />
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt="{$lang_destroy}" />
             </a>
             <br />
             <input type="text" value="{$f.full_path}/{$popup_path}/{$f.file}" class="inputsmall"

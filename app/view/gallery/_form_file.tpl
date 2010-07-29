@@ -1,4 +1,4 @@
-<link href='%PATH_CSS%/fancyupload.css' rel='stylesheet' type='text/css' media='screen, projection' />
+<link href='%PATH_CSS%/fancyupload-min.css' rel='stylesheet' type='text/css' media='screen, projection' />
 {literal}
   <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.js"></script>
   <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Fx.ProgressBar.js"></script>

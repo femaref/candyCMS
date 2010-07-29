@@ -140,11 +140,10 @@ final class Helper {
     $sStr = preg_replace('#\[size=(.*)\](.*)\[/size\]#Uis', '<span style="font-size:\1%">\2</span>', $sStr);
     $sStr = preg_replace('#\[site=(.*)\](.*)\[/site\]#Uis', '<a href="\1">\2</a>', $sStr);
     $sStr = preg_replace('#\[url=(.*)\](.*)\[/url\]#Uis',
-            '<img src="%PATH_IMAGES%/icons/redirect.png" alt="" /> <a href="\1" target="_blank">\2</a>',
+            '<img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
             $sStr);
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
-    $sStr = preg_replace('#\[file:(.*)\]#Uis', '<img src="%PATH_IMAGES%/icons/file/\1.png" alt="\1" />', $sStr);
-    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/icons/\1.png" alt="\1" />', $sStr);
+    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.gif" class="icon-\1" alt="\1" />', $sStr);
 
     # replace the image tag
     while(preg_match('=\[img\](.*)\[/img\]=isU', $sStr, $sUrl)) {
@@ -199,7 +198,7 @@ final class Helper {
 
     while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $iRand = rand(10000, 99999);
-      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='"  .PATH_IMAGES.  "/icons/toggle_max.png' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
+      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
     }
 
     /* Add a paragraph to create similar BB-Code for TinyMCE */

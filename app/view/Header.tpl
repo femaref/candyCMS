@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content='{$meta_description}' />
-    <link href='%PATH_IMAGES%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
+
     <link href='{$url}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
       {if $dev == true}
         <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
