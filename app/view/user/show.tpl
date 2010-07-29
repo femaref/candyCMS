@@ -19,9 +19,7 @@
     <td rowspan='4' style='vertical-align:top'>
       <a href='%PATH_UPLOAD%/{$avatarPopup}' rel='lightbox'
          title='{$user.name} ({$avatarPopupInfo[0]} x {$avatarPopupInfo[1]} px)'>
-        <div style='background: transparent url(%PATH_UPLOAD%/{$avatar100}) no-repeat center'>
-          <img src='%PATH_IMAGES%/spacer.gif' class='image' alt='{$user.name}'
-               {$avatarThumbInfo[3]} />
+          <img class='image' alt='{$user.name}' src="%PATH_UPLOAD%/{$avatar100}" {$avatarThumbInfo[3]} />
       </a>
     </td>
   </tr>

@@ -44,6 +44,13 @@
   </table>
   <br />
   <center>
+    {literal}
+      <script type="text/javascript">
+        var RecaptchaOptions = {
+           lang : 'de'
+        };
+      </script>
+    {/literal}
     {$captcha}
   </center>
   <div class="submit">
