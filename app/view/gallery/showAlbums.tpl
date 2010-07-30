@@ -2,6 +2,7 @@
   <p>
     <a href='/Gallery/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>

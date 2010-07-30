@@ -87,7 +87,7 @@ function stripSlash(sValue) {
 
 function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
-  $(sId).set('html', "<img src='" + sRoot + "/slimbox/loading.gif' alt='loading...' />");
+  $(sId).set('html', "<img src='" + sRoot + "/loading.gif' alt='loading...' />");
   $(sId).load(sURL);
 }
 

@@ -360,9 +360,10 @@ table th
   margin: 3px 0px 0px 0px;
 }
 
-.element h2 img, .gallery_album h2 img {
+.element h2 img, .gallery_album h2 img, .gallery_files h2 img {
   vertical-align: baseline;
 }
+
 .element .header .date {
   margin-left:15px;
 }
@@ -473,7 +474,7 @@ table th
 }
 
 .lbLoading {
-  background: #fff url(../../images/slimbox/loading.gif) no-repeat center;
+  background: #fff url(../../images/loading.gif) no-repeat center;
 }
 
 #lbImage {

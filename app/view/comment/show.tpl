@@ -5,8 +5,7 @@
 {foreach from=$comments item=c name=comments}
   <div class='comment {if $authorID == $c.authorID}from_author{/if}'>
     <h3 class='{if $authorID == $c.authorID}row1{/if}'>
-      <a name='{$c.id}'></a>
-      <a href='/Blog/{$c.parentID}#{$c.id}'>#{$c.loop+$commentNumber}</a>
+      <a href='/Blog/{$c.parentID}#{$c.id}' name='{$c.id}'>#{$c.loop+$commentNumber}</a>
       &nbsp;
       {if $c.userID > 0}
         <a href='/User/{$c.userID}'>{$c.name} {$c.surname}</a>
