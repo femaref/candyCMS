@@ -322,7 +322,6 @@ class User extends Main {
 				$bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
 						LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
 						$sMail,
-						false,
 						WEBSITE_MAIL_NOREPLY);
 
         if($bStatus == true)

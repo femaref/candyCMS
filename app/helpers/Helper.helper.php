@@ -233,4 +233,11 @@ final class Helper {
       # TODO: MAIL TO ADMIN
     }
   }
+
+  public static final function checkEmailAddress($sMail) {
+    if(preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
+      return true;
+    else
+      return false;
+  }
 }

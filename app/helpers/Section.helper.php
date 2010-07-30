@@ -185,7 +185,7 @@ class Section extends Main {
         }
         else # CREATE and DESTROY functions
         {
-          parent::_setContent($this->_oObject->newsletter());
+          parent::_setContent($this->_oObject->handleNewsletter());
           parent::_setTitle(LANG_NEWSLETTER_CREATE_DESTROY);
         }
 

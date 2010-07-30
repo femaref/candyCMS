@@ -150,6 +150,8 @@ define( 'LANG_NEWSLETTER_CONTENT_INFO', '%u wird zum Usernamen!<br />Bedenke bit
 define( 'LANG_NEWSLETTER_CREATE', 'Newsletter verfassen' );
 define( 'LANG_NEWSLETTER_CREATE_DESTROY', 'Newsletter abonieren / abbestellen' ); #NEW
 define( 'LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du ben&ouml;tigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' ); #NEW
+define( 'LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT', 'Newsletters von '  .WEBSITE_NAME ); #NEW
+define( 'LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='"	.WEBSITE_URL.	"/Newsletter'>hier</a>."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY); #NEW
 define( 'LANG_NEWSLETTER_DEFAULT_ADDRESS', 'Newsletter Abonnenten' ); #NEW
 define( 'LANG_NEWSLETTER_SUBMIT', 'Newsletter verschicken' );
 define( 'LANG_NEWSLETTER_SUBSCRIPTION_SUCCESSFUL', 'Du hast dich erfolgreich f&uuml;r den Newsletter eingetragen.' ); #NEW
@@ -219,4 +221,5 @@ define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Bitte trage dein neues Passwort ein!
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_OLD', 'Bitte trage dein altes Passwort ein!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' ); # NEW
+define( 'LANG_ERROR_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse' ); #NEW
 ?>
