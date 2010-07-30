@@ -75,9 +75,16 @@ final class Helper {
     return $sReturn;
   }
 
-  public final static function getAvatar($sPath, $iUID) {
-    $iAvatar = is_file( PATH_UPLOAD.	'/'	.$sPath.$iUID.	'.jpg') ?  $iUID : 0;
-    return $sPath.$iAvatar.	'.jpg';
+  public final static function getAvatar($sPath, $iUID, $aGravatar = '') {
+    if(!empty($aGravatar)) {
+      $sMail  = $aGravatar['email'];
+      $iSize  = $aGravatar['size'];
+      return '';
+    }
+    else {
+      $iAvatar = is_file( PATH_UPLOAD.	'/'	.$sPath.$iUID.	'.jpg') ?  $iUID : 0;
+      return $sPath.$iAvatar.	'.jpg';
+    }
   }
 
   public final static function createRandomChar($iLength) {

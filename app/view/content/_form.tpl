@@ -27,6 +27,7 @@
       <input type='text' name='title' title='{$lang_title}' value='{$c.title}' />
     </div>
     {if $smarty.get.action == 'update'}
+      &nbsp;
       {$lang_last_update}: {$c.date}
     {/if}
   </fieldset>

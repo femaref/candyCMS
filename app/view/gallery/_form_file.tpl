@@ -95,8 +95,11 @@
               case 'flash': /* no flash 9+ :( */
                 alert('To enable the embedded uploader, install the latest Adobe Flash plugin.')
             }
-          }
+          },
 
+          /*onComplete: function () {
+            alert('tset');
+          }*/
         });
 
       });
