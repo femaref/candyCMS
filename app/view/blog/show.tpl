@@ -2,6 +2,7 @@
   <p>
     <a href='/Blog/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -22,9 +23,11 @@
           <h2>
             {if $b.published == false}
               {$lang_not_published}
+              &nbsp;
             {/if}
             <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
             {if $UR > 3}
+              &nbsp;
               <a href='/Blog/update/{$b.id}'>
                 <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
@@ -80,7 +83,5 @@
   {/foreach}
   {$blogPages}
   <a name='comments'></a>
-  <div id='reload'>
-    {$blogComments}
-  </div>
+  {$blogComments}
 {/if}

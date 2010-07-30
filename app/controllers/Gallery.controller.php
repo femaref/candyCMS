@@ -20,6 +20,7 @@ class Gallery extends Main {
   public final function show() {
     $oSmarty = new Smarty();
     $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('AJAX', AJAX);
 
     # Language
     $oSmarty->assign('lang_no_files_yet', LANG_GALLERY_NO_FILES_YET);

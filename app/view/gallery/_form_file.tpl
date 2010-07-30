@@ -83,16 +83,16 @@
 
           onFail: function(error) {
             switch (error) {
-              case 'hidden': // works after enabling the movie and clicking refresh
+              case 'hidden': /* works after enabling the movie and clicking refresh */
                 alert('To enable the embedded uploader, unblock it in your browser and refresh (see Adblock).');
                 break;
-              case 'blocked': // This no *full* fail, it works after the user clicks the button
+              case 'blocked': /* This no *full* fail, it works after the user clicks the button */
                 alert('To enable the embedded uploader, enable the blocked Flash movie (see Flashblock).');
                 break;
-              case 'empty': // Oh oh, wrong path
+              case 'empty': /* Oh oh, wrong path */
                 alert('A required file was not found, please be patient and we fix this.');
                 break;
-              case 'flash': // no flash 9+ :(
+              case 'flash': /* no flash 9+ :( */
                 alert('To enable the embedded uploader, install the latest Adobe Flash plugin.')
             }
           }

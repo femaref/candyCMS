@@ -20,9 +20,9 @@ if($('error')) {
 /********************************************************************************/
 /* Quote messages in Comments */
 /********************************************************************************/
-if($('createCommentText')) {
+/*if($('createCommentText')) {
   $('createCommentText').focus();
-}
+}*/
 
 function quoteMessage(sName, sDivId) {
   var sMessage = $(sDivId).get('html');

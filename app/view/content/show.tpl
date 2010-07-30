@@ -8,6 +8,7 @@
       <h2>
         {$c.title}
         {if $UR > 3}
+          &nbsp;
           <a href='/Content/update/{$c.id}'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
@@ -16,6 +17,7 @@
       </h2>
       <div class='date'>
         {$lang_last_update}: {$c.date} {$lang_by}
+        &nbsp;
         <a href='/User/{$c.authorID}'>{$c.name} {$c.surname}</a>
       </div>
     </div>

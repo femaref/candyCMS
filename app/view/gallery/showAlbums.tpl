@@ -17,6 +17,7 @@
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $UR > 3}
+            &nbsp;
             <a href='/Gallery/update/{$a.id}'>
               <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />

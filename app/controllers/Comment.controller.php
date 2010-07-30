@@ -56,8 +56,8 @@ final class Comment extends Main {
       }
 
       $oSmarty = new Smarty();
-      $oSmarty->assign('uid', USERID);
       $oSmarty->assign('UR', USERRIGHT);
+      $oSmarty->assign('AJAX', AJAX);
       $oSmarty->assign('parentID', $this->_iID);
 
       # Do only load comments, if they are avaiable

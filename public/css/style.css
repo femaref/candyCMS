@@ -177,11 +177,7 @@ fieldset .textarea textarea {
   margin:1px;
 }
 
-.pagelink {
-  padding:3px;
-}
-
-.currentpagelink {
+.pagelink, .currentpagelink {
   padding:5px;
 }
 
@@ -341,6 +337,7 @@ table th
   padding: 0px 12px 0px 12px;
   overflow: hidden;
   text-align:justify;
+  line-height: 140%;
 }
 
 .comment {
@@ -393,10 +390,6 @@ table th
   margin-top: 3px;
 }
 
-.gallery_files img {
-  margin-bottom: 5px;
-}
-
 .gallery_album {
   padding: 5px 12px 5px 12px;
   text-align:left;
@@ -404,6 +397,10 @@ table th
 
 .gallery_album p {
   margin-bottom: 8px;
+}
+
+.gallery_album .image, .gallery_files .image {
+  margin: 2px;
 }
 
 .center {
@@ -425,6 +422,10 @@ table th
 /*#create_comment fieldset input, #create_comment fieldset textarea {
   width: 400px;
 }*/
+
+.pointer {
+  cursor: pointer;
+}
 
 /********************************************************************************/
 /* ToolTips */

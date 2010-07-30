@@ -75,5 +75,8 @@ define( 'USERNAME', (string)$aUser['name'] );
 define( 'USERRIGHT', (int)$aUser['userright'] );
 define( 'USERSURNAME', (string)$aUser['surname'] );
 
+$iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
+define( 'AJAX', (int)$iAjax );
+
 echo $oIndex->show();
 ?>
