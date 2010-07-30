@@ -107,7 +107,7 @@ ul
 }
 
 .input img {
-  padding:5px;
+  margin:5px;
 }
 
 .submit input, .input input, .textarea textarea, .dropdown select, .dropdown option, .cancel input,

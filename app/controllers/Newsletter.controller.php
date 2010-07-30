@@ -27,7 +27,6 @@ class Newsletter extends Main {
       elseif($sQuery == 'INSERT') {
         $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
-        # TODO:
         Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
                 LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT,
                 LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE,

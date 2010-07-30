@@ -206,8 +206,7 @@ class Gallery extends Main {
       if($this->_oModel->destroyFile($this->_iID) == true) {
         unset($this->_iID);
         Helper::redirectTo('/Gallery');
-        # TODO: Success message
-        return $this->show().Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS);
+        return Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS).$this->show();
         ;
       }
     }

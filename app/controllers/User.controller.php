@@ -303,6 +303,9 @@ class User extends Main {
 		if( !isset($this->m_aRequest['disclaimer']) )
 			$sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER.	'<br />';
 
+		if( Helper::checkEmailAddress($this->m_aRequest['email']) == false  )
+			$sError .= LANG_ERROR_WRONG_EMAIL_FORMAT.	'<br />';
+
 		if( !empty($sError) ) {
 			$sReturn  = Helper::errorMessage($sError);
 			$sReturn .= $this->_showCreateUserTemplate();

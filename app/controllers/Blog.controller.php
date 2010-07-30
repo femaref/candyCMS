@@ -194,7 +194,7 @@ class Blog extends Main {
 
 	protected function _destroy() {
 		if( $this->_oModel->destroy((int)$this->m_aRequest['id']))
-			return Helper::successMessage(LANG_SUCCESS_UPDATE).
+			return Helper::successMessage(LANG_SUCCESS_DESTROY).
 					$this->show();
 		else
 			return Helper::errorMessage(LANG_ERROR_DB_QUERY);

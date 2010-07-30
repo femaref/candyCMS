@@ -94,12 +94,10 @@ function reloadPage(sURL, sRoot) {
 function checkPasswords(sPath) {
   if($('password') && $('password2')) {
     if( $('password').value == $('password2').value ) {
-      $('icon').src = sPath + 'success.png';
-      $('icon').alt = 'correct';
+      $('icon').set('class', 'icon-success');
     }
     else {
-      $('icon').src = sPath + 'close.png';
-      $('icon').alt = 'denied';
+      $('icon').set('class', 'icon-close');
     }
   }
 }
