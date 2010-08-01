@@ -56,16 +56,18 @@
         </div>
       </td>
     </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>
-      </td>
-      <td class='td_right'>
-        <div class="checkbox">
-          <input name='disclaimer' value='' type='checkbox' />
-        </div>
-      </td>
-    </tr>
+    {if $UR < 4}
+      <tr class='row2'>
+        <td class='td_left'>
+          <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>
+        </td>
+        <td class='td_right'>
+          <div class="checkbox">
+            <input name='disclaimer' value='' type='checkbox' />
+          </div>
+        </td>
+      </tr>
+    {/if}
   </table>
   <div class="submit">
     <input type='submit' class='inputbutton' value='{$lang_submit}' />

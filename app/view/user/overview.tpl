@@ -1,3 +1,12 @@
+{if $UR == 4}
+  <p>
+    <a href='/Register'>
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
+      {$lang_create}
+    </a>
+  </p>
+{/if}
 <table>
   <tr>
     <th colspan='5'>{$lang_headline}</th>

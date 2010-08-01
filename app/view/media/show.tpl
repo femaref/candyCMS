@@ -2,6 +2,7 @@
   <p>
     <a href='/Media/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-upload" alt='' />
+      &nbsp;
       {$lang_file_create}
     </a>
   </p>

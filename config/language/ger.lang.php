@@ -160,6 +160,7 @@ define( 'LANG_PAGES_NEXT_ENTRIES', '&#xC4;ltere Beitr&#xE4;ge' );
 define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beitr&#xE4;ge' );
 
 define( 'LANG_USER_ABOUT_HIMSELF', '%u &#xFC;ber sich' );
+define( 'LANG_USER_CREATE', 'Benutzer erstellen' ); #NEW
 define( 'LANG_USER_DETAILS', 'Userdetails' );
 define( 'LANG_USER_LAST_LOGIN', 'Letzter Login' );
 define( 'LANG_USER_OVERVIEW', 'Benutzer&#xFC;bersicht' );

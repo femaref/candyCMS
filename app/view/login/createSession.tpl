@@ -4,11 +4,13 @@
       <legend>{$lang_login}</legend>
       <div class="input">
         <label for='email'>{$lang_email}:</label>
+        &nbsp;
         <input name='email' type='text' id='email' value='' />
       </div>
       &nbsp;
       <div class="input">
         <label for='password'>{$lang_password}:</label>
+        &nbsp;
         <input name='password' type='password' id='password' value='' />
       </div>
       <div class="submit">

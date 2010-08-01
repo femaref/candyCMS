@@ -10,21 +10,21 @@
     </a>
   </p>
 {/if}
+<h2>
+  {$gallery_name} ({$file_no} {$lang_files})
+  {if $UR > 3}
+    &nbsp;
+    <a href='/Gallery/update/{$id}'>
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
+            title='{$lang_update}' />
+    </a>
+  {/if}
+</h2>
 {if !$files}
   <div class='error' id='error' title='{$lang_no_files_yet}' onclick="hideDiv('error')">
     <p>{$lang_no_files_yet}</p>
   </div>
 {else}
-  <h2>
-    {$gallery_name} ({$file_no} {$lang_files})
-    {if $UR > 3}
-      &nbsp;
-      <a href='/Gallery/update/{$id}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
-              title='{$lang_update}' />
-      </a>
-    {/if}
-  </h2>
   {if $gallery_description !== ''}
     <div class='quote'>{$gallery_description}</div>
   {/if}
