@@ -51,7 +51,7 @@
       <td class='td_right'>
         <div class="input">
           <input name='password2' class='inputtext' id='password2'
-                 value='' type='password' onkeyup="checkPasswords('%PATH_IMAGES%/icons/')" />
+                 value='' type='password' onkeyup="checkPasswords()" />
           <img id="icon" src='%PATH_IMAGES%/spacer.gif' class="icon-close" alt="" />
         </div>
       </td>

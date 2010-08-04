@@ -1,29 +1,24 @@
 /********************************************************************************/
 /* Show / Hide Element: ToDO: Nicer slideDown */
 /********************************************************************************/
-function showDiv(sDivId) {
-  $(sDivId).setStyle('display', 'block');
-}
-
 function hideDiv(sDivId) {
-  new Fx.Slide(sDivId).toggle().hide();
+  new Fx.Slide(sDivId).toggle();
 }
 
-if($('success')) {
-  showDiv('flashMessage');
+function showDiv(sDivId) {
+  window.addEvent('domready', function() {
+    $(sDivId).setStyle('display', 'inline');
+    (function(){ hideDiv(sDivId) }).delay(3000);
+  });
 }
 
-if($('error')) {
+if($('success') || $('error')) {
   showDiv('flashMessage');
 }
 
 /********************************************************************************/
 /* Quote messages in Comments */
 /********************************************************************************/
-/*if($('createCommentText')) {
-  $('createCommentText').focus();
-}*/
-
 function quoteMessage(sName, sDivId) {
   var sMessage = $(sDivId).get('html');
   var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
@@ -49,7 +44,7 @@ function confirmDelete(sTitle, sUrl) {
 /********************************************************************************/
 /* Show Tooltips on Blog */
 if($$('.tooltip')) {
-  $$('.tooltip').each(function(element,index) {
+  $$('.tooltip').each(function(element, index) {
     var content = element.get('title').split('::');
     element.store('tip:title', content[0]);
     element.store('tip:text', content[1]);
@@ -91,7 +86,7 @@ function reloadPage(sURL, sRoot) {
   $(sId).load(sURL);
 }
 
-function checkPasswords(sPath) {
+function checkPasswords() {
   if($('password') && $('password2')) {
     if( $('password').value == $('password2').value ) {
       $('icon').set('class', 'icon-success');

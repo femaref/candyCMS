@@ -42,17 +42,14 @@
 
     function checkPassword() {
         if( $('password').value == $('password2').value ) {
-          $('icon').src = '%PATH_IMAGES%/icons/success.png';
-          $('icon').alt = 'correct';
+          $$('icon').set('class', 'icon-success');
 
           if( $('email').value !== '' ) {
             $('nextstep').disabled = '';
           }
         }
         else {
-          $('icon').src = '%PATH_IMAGES%/icons/close.png';
-          $('icon').alt = 'denied';
-          $('nextstep').disabled = 'disabled';
+          $('icon').set('class', 'icon-close');
         }
       }
   </script>
