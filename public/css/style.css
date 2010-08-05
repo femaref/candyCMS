@@ -256,10 +256,8 @@ fieldset .textarea textarea {
   padding:15px;
   margin:10px auto 10px auto;
   text-align:left;
-  -moz-border-radius-bottomleft:10px;
-  -moz-border-radius-bottomright:10px;
-  -moz-border-radius-topleft:10px;
-  -moz-border-radius-topright:10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius: 10px;
 }
 
 .quote h3 {
