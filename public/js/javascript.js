@@ -12,8 +12,8 @@ function showDiv(sDivId) {
   });
 }
 
-if($('success') || $('error')) {
-  showDiv('flashMessage');
+if($('js-flash_success') || $('js-flash_error')) {
+  showDiv('js-flash_message');
 }
 
 /********************************************************************************/

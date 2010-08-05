@@ -31,9 +31,9 @@
         {/if}
       </div>
       <div id='body'>
-        <div id='flashMessage'>
-          <div class='%FLASH_TYPE% tooltip' id='%FLASH_TYPE%'
-            title="::" onclick="hideDiv('flashMessage')">
+        <div id='js-flash_message'>
+          <div class='%FLASH_TYPE% tooltip' id='js-flash_%FLASH_TYPE%'
+            title="::" onclick="hideDiv('js-flash_message')">
             <h4>%FLASH_HEADLINE%</h4>
             <p>%FLASH_MESSAGE%</p>
           </div>
