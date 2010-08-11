@@ -77,9 +77,6 @@ switch ($_REQUEST['step']) {
     if(!is_dir('../upload/temp'))
       @mkdir('../upload/temp', '0777', true);
 
-    if(!is_dir('../upload/user/18'))
-      @mkdir('../upload/user/18', '0777', true);
-
     if(!is_dir('../upload/user/32'))
       @mkdir('../upload/user/32', '0777', true);
 
