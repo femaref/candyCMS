@@ -44,7 +44,7 @@ class User extends Main {
 		else {
 			$oUpload = new Upload($this->m_aRequest, $this->m_aFile);
 			return $oUpload->uploadAvatarFile(false).
-					$this->_showFormTemplate();
+					$this->_show($this->_iID);
 		}
 	}
 
@@ -244,7 +244,7 @@ class User extends Main {
 	# @Override
 	public function destroy() {
 		if( USERRIGHT == 4) {
-			if($this->_oModel->delete($this->_iID) == true)
+			if($this->_oModel->destroy($this->_iID) == true)
 				return Helper::successMessage(LANG_SUCCESS_DESTROY).
 						$this->showOverview();
 			else

@@ -49,9 +49,7 @@ try {
 		# Smarty template parsing
 		require_once 'lib/smarty/Smarty.class.php';
 	}
-}
-catch (Exception $e)
-{
+} catch (Exception $e) {
 	die($e->getMessage());
 }
 
@@ -60,7 +58,7 @@ if (isset ($_FILES))
 else
 	$aFile = array();
 
-session_start();
+@session_start();
 
 $oIndex = new Index($_REQUEST, $_SESSION, $aFile, $_COOKIE);
 $oIndex->loadConfig();
