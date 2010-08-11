@@ -37,6 +37,10 @@
       <textarea name='content' title='{$lang_content}'
                 rows='20' cols='75'>{$c.content}</textarea>
     </div>
+    <div class='description center'>
+      <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
+      <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
+    </div>
   </fieldset>
   <div class="submit">
     <input type='submit' class='inputbutton' value='{$lang_submit}' />

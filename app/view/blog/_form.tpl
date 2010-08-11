@@ -52,6 +52,7 @@
             id='content' rows='16' cols='50'>{$content}</textarea>
         </div>
         <div class='description'>
+          <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
           <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
         </div>
       </td>
