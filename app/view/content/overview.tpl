@@ -2,7 +2,6 @@
   <p>
     <a href='/Content/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -30,7 +29,6 @@
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
               title='{$lang_update}' />
           </a>
-          &nbsp;
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
             title='{$lang_destroy}'
             onclick="confirmDelete('{$c.title}', '/Content/destroy/{$c.id}')" />

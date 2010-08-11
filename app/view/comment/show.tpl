@@ -6,7 +6,6 @@
   <div class='comment {if $authorID == $c.authorID}from_author{/if}'>
     <h3 class='{if $authorID == $c.authorID}row1{/if}'>
       <a href='/Blog/{$c.parentID}#{$c.id}' name='{$c.id}'>#{$c.loop+$commentNumber}</a>
-      &nbsp;
       {if $c.userID > 0}
         <a href='/User/{$c.userID}'>{$c.name} {$c.surname}</a>
       {elseif $c.author_name !== ''}
@@ -26,7 +25,6 @@
              title='{$lang_quote}' />
       </a>
       {if $UR > 3}
-        &nbsp;
         <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
              onclick="confirmDelete('#{$c.loop+$commentNumber}', '/DestroyComment/{$c.id}/{$c.parentID}')"
              class='pointer' title='{$lang_destroy}' />
