@@ -27,17 +27,18 @@ abstract class Model_Main {
 									"	.(string)$sWhere.	"
 								LIMIT
 									"	.(int)$iLimit);
+
 		if( $oQuery == true )
 			return $oQuery->fetch();
 		else
 			return $oQuery->getError();
 	}
 
-	public static function simpleCount($sFrom, $sWhere = '') {
+	public static function simpleCount($sFrom, $sWhere = '', $sWhat = '*') {
 		if( !empty($sWhere) )
 			$sForm = $sFrom.	" WHERE "	.(string)$sWhere;
 
-		$oQuery = new Query("SELECT COUNT(*) FROM "	.(string)$sFrom);
+		$oQuery = new Query("SELECT COUNT(" .$sWhat.  ") FROM "	.(string)$sFrom);
 		return $oQuery->count();
 	}
 

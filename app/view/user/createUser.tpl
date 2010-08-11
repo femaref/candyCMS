@@ -51,21 +51,23 @@
       <td class='td_right'>
         <div class="input">
           <input name='password2' class='inputtext' id='password2'
-                 value='' type='password' onkeyup="checkPasswords('%PATH_IMAGES%/icons/')" />
-          <img id="icon" src="%PATH_IMAGES%/icons/close.png" alt="" />
+                 value='' type='password' onkeyup="checkPasswords()" />
+          <img id="icon" src='%PATH_IMAGES%/spacer.gif' class="icon-close" alt="" />
         </div>
       </td>
     </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>
-      </td>
-      <td class='td_right'>
-        <div class="checkbox">
-          <input name='disclaimer' value='' type='checkbox' />
-        </div>
-      </td>
-    </tr>
+    {if $UR < 4}
+      <tr class='row2'>
+        <td class='td_left'>
+          <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>
+        </td>
+        <td class='td_right'>
+          <div class="checkbox">
+            <input name='disclaimer' value='' type='checkbox' />
+          </div>
+        </td>
+      </tr>
+    {/if}
   </table>
   <div class="submit">
     <input type='submit' class='inputbutton' value='{$lang_submit}' />

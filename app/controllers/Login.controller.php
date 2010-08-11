@@ -115,7 +115,6 @@ class Login extends Main {
 		Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
 				$sSubject,
 				$sMessage.LANG_MAIL_SIGNATURE,
-				false,
 				WEBSITE_MAIL_NOREPLY);
 
 		return Helper::successMessage(LANG_LOGIN_INVITATION_SUCCESSFUL);

@@ -1,7 +1,8 @@
 {if $UR > 3}
   <p>
     <a href='/Gallery/create'>
-      <img src='%PATH_IMAGES%/icons/create.png' alt='' />
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -17,8 +18,9 @@
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $UR > 3}
+            &nbsp;
             <a href='/Gallery/update/{$a.id}'>
-              <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
+              <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />
             </a>
           {/if}

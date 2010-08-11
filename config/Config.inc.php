@@ -93,10 +93,10 @@ define('RANDOM_HASH', 'h7da87@#asd0io08');
 # To avoid spam, we use ReCaptcha (http://recaptcha.org). Get there, register
 # yourself and get an account
 # Enter given private key here:
-define('RECAPTCHA_PRIVATE', '');
+define('RECAPTCHA_PRIVATE', '242');
 
 # Enter given public key here:
-define('RECAPTCHA_PUBLIC', '');
+define('RECAPTCHA_PUBLIC', '24234');
 
 # ------------------------------------------------------------------------------
 
@@ -146,7 +146,7 @@ define('PATH_TPL_ADDON', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
-define('PATH_TPL_STATIC', 'public/skins/default/view/_static');
+define('PATH_TPL_STATIC', PATH_PUBLIC.  '/skins/default/view/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload
@@ -157,7 +157,7 @@ define('PATH_UPLOAD', 'upload');
 # Define limit for pictures per page (3 in a row)
 # DEFAULT: 9
 define('LIMIT_ALBUM_IMAGES', 9);
-define('LIMIT_ALBUM_THUMBS', 16);
+define('LIMIT_ALBUM_THUMBS', 18);
 
 # Limit of blog entries per page
 # DEFAULT: 5

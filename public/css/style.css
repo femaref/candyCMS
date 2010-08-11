@@ -41,7 +41,7 @@ h2 {
 
 h3 {
   margin-top: 0px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /********************************************************************************/
@@ -107,7 +107,7 @@ ul
 }
 
 .input img {
-  padding:5px;
+  margin:5px;
 }
 
 .submit input, .input input, .textarea textarea, .dropdown select, .dropdown option, .cancel input,
@@ -177,11 +177,7 @@ fieldset .textarea textarea {
   margin:1px;
 }
 
-.pagelink {
-  padding:3px;
-}
-
-.currentpagelink {
+.pagelink, .currentpagelink {
   padding:5px;
 }
 
@@ -260,10 +256,8 @@ fieldset .textarea textarea {
   padding:15px;
   margin:10px auto 10px auto;
   text-align:left;
-  -moz-border-radius-bottomleft:10px;
-  -moz-border-radius-bottomright:10px;
-  -moz-border-radius-topleft:10px;
-  -moz-border-radius-topright:10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius: 10px;
 }
 
 .quote h3 {
@@ -318,6 +312,7 @@ form table td {
   margin: 10px 5px 5px 10px;
   vertical-align:middle;
   text-align:left;
+  height: 30px;
 }
 
 .td_left {
@@ -340,6 +335,7 @@ table th
   padding: 0px 12px 0px 12px;
   overflow: hidden;
   text-align:justify;
+  line-height: 140%;
 }
 
 .comment {
@@ -362,9 +358,10 @@ table th
   margin: 3px 0px 0px 0px;
 }
 
-.element h2 img, .gallery_album h2 img {
+.element h2 img, .gallery_album h2 img, .gallery_files h2 img {
   vertical-align: baseline;
 }
+
 .element .header .date {
   margin-left:15px;
 }
@@ -373,10 +370,6 @@ table th
   margin-right:4px;
   margin-left:4px;
 }
-
-/*.element_body .description {
-  text-align:center;
-} */
 
 .footer {
   font-size: 90%;
@@ -396,10 +389,6 @@ table th
   margin-top: 3px;
 }
 
-.gallery_files img {
-  margin-bottom: 5px;
-}
-
 .gallery_album {
   padding: 5px 12px 5px 12px;
   text-align:left;
@@ -407,6 +396,10 @@ table th
 
 .gallery_album p {
   margin-bottom: 8px;
+}
+
+.gallery_album .image, .gallery_files .image {
+  margin: 2px;
 }
 
 .center {
@@ -419,6 +412,18 @@ table th
 
 .right {
   text-align: right;
+}
+
+#create_comment fieldset {
+  max-width: 700px;
+}
+
+/*#create_comment fieldset input, #create_comment fieldset textarea {
+  width: 400px;
+}*/
+
+.pointer {
+  cursor: pointer;
 }
 
 /********************************************************************************/
@@ -467,7 +472,7 @@ table th
 }
 
 .lbLoading {
-  background: #fff url(../../images/slimbox/loading.gif) no-repeat center;
+  background: #fff url(../../images/loading.gif) no-repeat center;
 }
 
 #lbImage {
@@ -529,3 +534,61 @@ table th
 #lbCaption {
   font-weight: bold;
 }
+
+.icon-close { background: url(../../images/sprite_icons.png); background-position: 0 0; width: 16px; height: 16px; }
+.icon-comments { background: url(../../images/sprite_icons.png); background-position: 0 -66px; width: 16px; height: 16px; }
+.icon-create { background: url(../../images/sprite_icons.png); background-position: 0 -132px; width: 16px; height: 16px; }
+.icon-date { background: url(../../images/sprite_icons.png); background-position: 0 -198px; width: 16px; height: 16px; }
+.icon-delicious { background: url(../../images/sprite_icons.png); background-position: 0 -264px; width: 16px; height: 16px; }
+.icon-destroy { background: url(../../images/sprite_icons.png); background-position: 0 -330px; width: 16px; height: 16px; }
+.icon-digg { background: url(../../images/sprite_icons.png); background-position: 0 -396px; width: 16px; height: 16px; }
+.icon-email { background: url(../../images/sprite_icons.png); background-position: 0 -462px; width: 16px; height: 16px; }
+.icon-error { background: url(../../images/sprite_icons.png); background-position: 0 -528px; width: 16px; height: 16px; }
+.icon-facebook { background: url(../../images/sprite_icons.png); background-position: 0 -594px; width: 16px; height: 16px; }
+.icon-folder { background: url(../../images/sprite_icons.png); background-position: 0 -660px; width: 16px; height: 16px; }
+.icon-gmaps { background: url(../../images/sprite_icons.png); background-position: 0 -726px; width: 16px; height: 16px; }
+.icon-help { background: url(../../images/sprite_icons.png); background-position: 0 -792px; width: 16px; height: 16px; }
+.icon-info { background: url(../../images/sprite_icons.png); background-position: 0 -858px; width: 16px; height: 16px; }
+.icon-like { background: url(../../images/sprite_icons.png); background-position: 0 -924px; width: 17px; height: 16px; }
+.icon-manager { background: url(../../images/sprite_icons.png); background-position: 0 -990px; width: 16px; height: 16px; }
+.icon-mrwong { background: url(../../images/sprite_icons.png); background-position: 0 -1056px; width: 16px; height: 16px; }
+.icon-private { background: url(../../images/sprite_icons.png); background-position: 0 -1122px; width: 16px; height: 16px; }
+.icon-quote { background: url(../../images/sprite_icons.png); background-position: 0 -1188px; width: 16px; height: 16px; }
+.icon-redirect { background: url(../../images/sprite_icons.png); background-position: 0 -1254px; width: 16px; height: 16px; }
+.icon-rss { background: url(../../images/sprite_icons.png); background-position: 0 -1320px; width: 16px; height: 16px; }
+.icon-save { background: url(../../images/sprite_icons.png); background-position: 0 -1386px; width: 16px; height: 16px; }
+.icon-success { background: url(../../images/sprite_icons.png); background-position: 0 -1452px; width: 16px; height: 16px; }
+.icon-tags { background: url(../../images/sprite_icons.png); background-position: 0 -1518px; width: 16px; height: 16px; }
+.icon-technorati { background: url(../../images/sprite_icons.png); background-position: 0 -1584px; width: 16px; height: 15px; }
+.icon-time { background: url(../../images/sprite_icons.png); background-position: 0 -1649px; width: 16px; height: 16px; }
+.icon-toggle_max { background: url(../../images/sprite_icons.png); background-position: 0 -1715px; width: 16px; height: 16px; }
+.icon-toggle_min { background: url(../../images/sprite_icons.png); background-position: 0 -1781px; width: 16px; height: 16px; }
+.icon-update { background: url(../../images/sprite_icons.png); background-position: 0 -1847px; width: 16px; height: 16px; }
+.icon-upload { background: url(../../images/sprite_icons.png); background-position: 0 -1913px; width: 16px; height: 16px; }
+.icon-user { background: url(../../images/sprite_icons.png); background-position: -67px 0; width: 16px; height: 16px; }
+.icon-zoom { background: url(../../images/sprite_icons.png); background-position: -67px -66px; width: 16px; height: 16px; }
+
+.file-avi { background: url(../../images/sprite_files.png); background-position: 0 0; width: 16px; height: 16px; }
+.file-doc { background: url(../../images/sprite_files.png); background-position: 0 -66px; width: 16px; height: 16px; }
+.file-jpeg { background: url(../../images/sprite_files.png); background-position: 0 -132px; width: 15px; height: 17px; }
+.file-jpg { background: url(../../images/sprite_files.png); background-position: 0 -199px; width: 16px; height: 16px; }
+.file-mp3 { background: url(../../images/sprite_files.png); background-position: 0 -265px; width: 16px; height: 16px; }
+.file-mp4 { background: url(../../images/sprite_files.png); background-position: 0 -331px; width: 16px; height: 16px; }
+.file-mpg { background: url(../../images/sprite_files.png); background-position: 0 -397px; width: 16px; height: 16px; }
+.file-odt { background: url(../../images/sprite_files.png); background-position: 0 -463px; width: 16px; height: 16px; }
+.file-pdf { background: url(../../images/sprite_files.png); background-position: 0 -529px; width: 16px; height: 16px; }
+.file-png { background: url(../../images/sprite_files.png); background-position: 0 -595px; width: 16px; height: 16px; }
+.file-psd { background: url(../../images/sprite_files.png); background-position: 0 -661px; width: 16px; height: 16px; }
+.file-rar { background: url(../../images/sprite_files.png); background-position: 0 -727px; width: 16px; height: 16px; }
+.file-txt { background: url(../../images/sprite_files.png); background-position: 0 -793px; width: 16px; height: 16px; }
+.file-wmv { background: url(../../images/sprite_files.png); background-position: 0 -859px; width: 16px; height: 16px; }
+.file-zip { background: url(../../images/sprite_files.png); background-position: 0 -925px; width: 15px; height: 16px; }
+
+.filemanager-doc { background: url(../../images/sprite_filemanager.png); background-position: 0 0; width: 32px; height: 32px; }
+.filemanager-flv { background: url(../../images/sprite_filemanager.png); background-position: 0 -82px; width: 32px; height: 32px; }
+.filemanager-gz { background: url(../../images/sprite_filemanager.png); background-position: 0 -164px; width: 32px; height: 32px; }
+.filemanager-mp3 { background: url(../../images/sprite_filemanager.png); background-position: 0 -246px; width: 32px; height: 32px; }
+.filemanager-mp4 { background: url(../../images/sprite_filemanager.png); background-position: 0 -328px; width: 32px; height: 32px; }
+.filemanager-pdf { background: url(../../images/sprite_filemanager.png); background-position: 0 -410px; width: 32px; height: 32px; }
+.filemanager-txt { background: url(../../images/sprite_filemanager.png); background-position: 0 -492px; width: 32px; height: 32px; }
+.filemanager-zip { background: url(../../images/sprite_filemanager.png); background-position: 0 -574px; width: 32px; height: 32px; }

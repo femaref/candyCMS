@@ -16,14 +16,12 @@ class Mail extends Main {
   private $_sRecaptchaResponse = '';
   private $_sRecaptchaError = '';
 
-  public final function __init() {
-
-  }
+  public function __init() {}
 
   public final function createMail() {
     if( isset($this->m_aRequest['send_mail']) ) {
       if( USERRIGHT == 0 )
-        return $this->_captchaProtectedMail();
+        return $this->_checkCaptcha();
       else
         return $this->_standardMail(false);
     }
@@ -52,6 +50,7 @@ class Mail extends Main {
 
     $oSmarty = new Smarty();
     $oSmarty->assign('id', $this->_iID);
+    $oSmarty->assign('contact', Model_Main::simpleQuery('name, surname', 'user', "id='" .$this->_iID. "'", '1'));
     $oSmarty->assign('content', $sContent);
     $oSmarty->assign('email', $sEmail);
     $oSmarty->assign('subject', $sSubject);
@@ -63,9 +62,10 @@ class Mail extends Main {
       $oSmarty->assign('captcha', '');
 
     # Language
-    $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
     $oSmarty->assign('lang_email', LANG_MAIL_OWN_EMAIL);
+    $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
+    $oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
 
     if( isset( $this->m_aRequest['subject'] ) &&
@@ -78,7 +78,7 @@ class Mail extends Main {
     return $oSmarty->fetch('mail/create.tpl');
   }
 
-  private function _captchaProtectedMail() {
+  private function _checkCaptcha() {
     if( isset($this->m_aRequest['recaptcha_response_field']) ) {
       $this->_sRecaptchaResponse = recaptcha_check_answer (
               $this->_sRecaptchaPrivateKey,
@@ -126,30 +126,32 @@ class Mail extends Main {
       $aRow = $oGetUser->fetch();
       $sMailTo = $aRow['email'];
 
-      $sSendersMail = isset($this->m_aRequest['email']) &&
-                      !empty($this->m_aRequest['email']) ?
-              Helper::formatHTMLCode($this->m_aRequest['email']):
-              WEBSITE_MAIL_NOREPLY;
+      if(empty($sMailTo)) {
+        $sReplyTo = isset($this->m_aRequest['email']) &&
+                        !empty($this->m_aRequest['email']) ?
+                Helper::formatHTMLCode($this->m_aRequest['email']):
+                WEBSITE_MAIL_NOREPLY;
+      } else
+        $sReplyTo =& $sMailTo;
 
       $sSendersName = isset($this->m_oSession['userdata']['name']) ?
               $this->m_oSession['userdata']['name'] :
               LANG_GLOBAL_SYSTEMBOT;
 
-      $sMailSubject = isset($this->m_aRequest['subject']) &&
-                      !empty($this->m_aRequest['subject']) ?
+      $sSubject = isset($this->m_aRequest['subject']) && !empty($this->m_aRequest['subject']) ?
               Helper::formatHTMLCode($this->m_aRequest['subject']) :
               str_replace('%u', $sSendersName, LANG_MAIL_SUBJECT_BY_USER);
 
-      $sMailMessage = Helper::formatHTMLCode($this->m_aRequest['content']);
+      $sMessage = Helper::formatHTMLCode($this->m_aRequest['content']);
 
       # Redirect to User Profile
       #$oController = new User($this->m_aRequest, $this->m_oSession);
 
+      # Mail to, Subject, Message, Reply to
       $bStatus = Mail::send(	$sMailTo,
-              $sMailSubject,
-              $sMailMessage,
-              true,
-              $SendersMail);
+              $sSubject,
+              $sMessage,
+              $sReplyTo);
 
       if($bStatus == true)
         return Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
@@ -175,7 +177,7 @@ class Mail extends Main {
       # DEBUG MODE
       return Helper::errorMessage('<div style=\'text-align:left\'>'
               .LANG_GLOBAL_BY.	': '	.WEBSITE_NAME. '<br />'
-              .LANG_GLOBAL_EMAIL.	': '	.$sReplyTo. '<br />'
+              .LANG_GLOBAL_REPLY_TO.	': #'	.$sReplyTo. '<br />'
               .LANG_GLOBAL_SUBJECT.	': '	.$sSubject. '<br />'
               .LANG_GLOBAL_CONTENT.	': '	.$sMessage.	'</div>',
               'DEBUG MODE' );

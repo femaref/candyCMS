@@ -206,8 +206,7 @@ class Model_Blog extends Model_Main {
 	public final function destroy($iID) {
 		new Query("DELETE FROM blog WHERE id = '"	.$iID.	"' LIMIT 1");
 		new Query("DELETE FROM comment WHERE parentID = '"	.$iID.	"' AND parentCat = 'b'");
-
 		Helper::redirectTo('/Start');
-		return Helper::successMessage(LANG_SUCCESS_DELETE);
+		return true;
 	}
 }

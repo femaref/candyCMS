@@ -38,7 +38,7 @@ Usermanagement
 - Unterteilung in verschiedene Rechtegruppen, wie u.a. Gäste, Mitglieder, besondere Mitglieder, Moderatoren und Administratoren
 
 
-Allgemein
+Allgemeine Funktionen
 ---------------------------------------------------------------------------------
 - Newsletterfunktion
 - eingebauter Dateimanager
@@ -47,3 +47,20 @@ Allgemein
 - Übersichtliche URLs dank der Verwendung von mod_rewrite
 - mehr als 90% der Punkte bei YSLOW standardmäßig möglich, mit der Einrichtung eines CDNs sind sogar 99% erreichbar!
 - verfügbare Cronjob-Schnittstelle für Backups und Cleanups
+
+
+Voraussetzungen
+---------------------------------------------------------------------------------
+- PHP 5 & MySQL 4
+- mod_rewrite aktiviert
+- eine Registration bei http://recaptcha.org zur Verwendung von Captchas
+- min. 3 MB Webspace
+
+
+Installation
+---------------------------------------------------------------------------------
+
+1. Ggf. einen Account auf reCaptcha.org einrichten.
+2. Die Ordner "/backup", "/cache", "/compile" und "/upload" erstellen und mit den Rechten "0755" versehen.
+3. Die Config ("/config/Config.php.inc") anpassen.
+4. Installationsscript via "/install" aufrufen und die Schritte durchführen.

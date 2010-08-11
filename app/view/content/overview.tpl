@@ -1,7 +1,8 @@
 {if $UR > 3}
   <p>
     <a href='/Content/create'>
-      <img src='%PATH_IMAGES%/icons/create.png' alt='' />
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -26,10 +27,11 @@
       <td style='width:10%'>
         {if $UR > 3}
           <a href='/Content/update/{$c.id}'>
-            <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
               title='{$lang_update}' />
           </a>
-          <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
+          &nbsp;
+          <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
             title='{$lang_destroy}'
             onclick="confirmDelete('{$c.title}', '/Content/destroy/{$c.id}')" />
         {/if}

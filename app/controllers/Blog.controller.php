@@ -36,6 +36,7 @@ class Blog extends Main {
 		$iCommentSum = 0;
 		if(!empty($this->_iID))
 			$iCommentSum = $this->_aData[1]['comment_sum'];
+
 		$oComments = new Comment($this->m_aRequest, $this->m_oSession);
 		$oComments->__init($iCommentSum, $this->_aData);
 		$oSmarty->assign('blogComments', $oComments->show());
@@ -193,7 +194,7 @@ class Blog extends Main {
 
 	protected function _destroy() {
 		if( $this->_oModel->destroy((int)$this->m_aRequest['id']))
-			return Helper::successMessage(LANG_SUCCESS_UPDATE).
+			return Helper::successMessage(LANG_SUCCESS_DESTROY).
 					$this->show();
 		else
 			return Helper::errorMessage(LANG_ERROR_DB_QUERY);

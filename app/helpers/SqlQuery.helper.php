@@ -16,9 +16,6 @@ final class Query
 
 	public final function __construct($sSql)
 	{
-		if(WEBSITE_DEV == 1 && SQL_DEBUG == 1)
-			echo Helper::debugMessage($sSql);
-
 		$this->_sSql = trim($sSql);
 		$this->_oResult = mysql_query($this->_sSql);
 
@@ -28,6 +25,9 @@ final class Query
 			$this->_sError = mysql_error();
 			$this->getError();
 		}
+
+		if(WEBSITE_DEV == 1 && SQL_DEBUG == 1)
+			return Helper::debugMessage($sSql);
 	}
 
 	private final function _error()

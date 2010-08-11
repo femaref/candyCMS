@@ -198,6 +198,8 @@ class Index {
     # Tab as two spaces
     $sCachedHTML = str_replace('  ', '', $sCachedHTML);
 
+    #$sCachedHTML = preg_replace('/\r\n/', '', $sCachedHTML);
+
     # Compress Data
     if( extension_loaded('zlib') )
       @ob_start('ob_gzhandler');

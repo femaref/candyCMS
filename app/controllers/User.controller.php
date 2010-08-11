@@ -231,6 +231,7 @@ class User extends Main {
 		$oSmarty->assign('UR', USERRIGHT);
 
 		# Language
+		$oSmarty->assign('lang_create', LANG_USER_CREATE);
 		$oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
 		$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 		$oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
@@ -263,6 +264,8 @@ class User extends Main {
 
 	private function _showCreateUserTemplate() {
 		$oSmarty = new Smarty();
+
+    $oSmarty->assign('UR', USERRIGHT);
 
 		$sName = isset($this->m_aRequest['name']) ? Helper::formatHTMLCode($this->m_aRequest['name']) : '';
 		$oSmarty->assign('name', $sName);
@@ -300,8 +303,13 @@ class User extends Main {
 		if( $this->m_aRequest['password'] !== $this->m_aRequest['password2'] )
 			$sError .= LANG_ERROR_LOGIN_CHECK_PASSWORDS.	'<br />';
 
-		if( !isset($this->m_aRequest['disclaimer']) )
-			$sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER.	'<br />';
+    if( USERRIGHT < 4 ) {
+      if( !isset($this->m_aRequest['disclaimer']))
+        $sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER.	'<br />';
+    }
+
+		if( Helper::checkEmailAddress($this->m_aRequest['email']) == false  )
+			$sError .= LANG_ERROR_WRONG_EMAIL_FORMAT.	'<br />';
 
 		if( !empty($sError) ) {
 			$sReturn  = Helper::errorMessage($sError);
@@ -322,7 +330,6 @@ class User extends Main {
 				$bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
 						LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
 						$sMail,
-						false,
 						WEBSITE_MAIL_NOREPLY);
 
         if($bStatus == true)

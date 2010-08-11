@@ -1,29 +1,24 @@
 /********************************************************************************/
 /* Show / Hide Element: ToDO: Nicer slideDown */
 /********************************************************************************/
-function showDiv(sDivId) {
-  $(sDivId).setStyle('display', 'block');
-}
-
 function hideDiv(sDivId) {
-  new Fx.Slide(sDivId).toggle().hide();
+  new Fx.Slide(sDivId).toggle();
 }
 
-if($('success')) {
-  showDiv('flashMessage');
+function showDiv(sDivId) {
+  window.addEvent('domready', function() {
+    $(sDivId).setStyle('display', 'inline');
+    (function(){ hideDiv(sDivId) }).delay(3000);
+  });
 }
 
-if($('error')) {
-  showDiv('flashMessage');
+if($('js-flash_success') || $('js-flash_error')) {
+  showDiv('js-flash_message');
 }
 
 /********************************************************************************/
 /* Quote messages in Comments */
 /********************************************************************************/
-if($('createCommentText')) {
-  $('createCommentText').focus();
-}
-
 function quoteMessage(sName, sDivId) {
   var sMessage = $(sDivId).get('html');
   var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
@@ -49,7 +44,7 @@ function confirmDelete(sTitle, sUrl) {
 /********************************************************************************/
 /* Show Tooltips on Blog */
 if($$('.tooltip')) {
-  $$('.tooltip').each(function(element,index) {
+  $$('.tooltip').each(function(element, index) {
     var content = element.get('title').split('::');
     element.store('tip:title', content[0]);
     element.store('tip:text', content[1]);
@@ -87,19 +82,17 @@ function stripSlash(sValue) {
 
 function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
-  $(sId).set('html', "<img src='" + sRoot + "/slimbox/loading.gif' alt='loading...' />");
+  $(sId).set('html', "<img src='" + sRoot + "/loading.gif' alt='loading...' />");
   $(sId).load(sURL);
 }
 
-function checkPasswords(sPath) {
+function checkPasswords() {
   if($('password') && $('password2')) {
     if( $('password').value == $('password2').value ) {
-      $('icon').src = sPath + 'success.png';
-      $('icon').alt = 'correct';
+      $('icon').set('class', 'icon-success');
     }
     else {
-      $('icon').src = sPath + 'close.png';
-      $('icon').alt = 'denied';
+      $('icon').set('class', 'icon-close');
     }
   }
 }

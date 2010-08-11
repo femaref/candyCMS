@@ -1,7 +1,8 @@
 {if $UR > 3}
   <p>
     <a href='/Media/create'>
-      <img src='%PATH_IMAGES%/icons/upload.png' alt='' />
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-upload" alt='' />
+      &nbsp;
       {$lang_file_create}
     </a>
   </p>
@@ -25,7 +26,7 @@
               <img src='%PATH_UPLOAD%/temp/32/{$f.name}'
                    width='32' height='32' alt='{$f.type}' />
             {else}
-              <img src='%PATH_IMAGES%/icons/filemanager/{$f.type}.png'
+              <img src='%PATH_IMAGES%/spacer.gif' class="filemanager-{$f.type}"
                    width='32' height='32' alt='{$f.type}' />
             {/if}
           </td>
@@ -50,7 +51,7 @@
             {$f.cdate}
           </td>
           <td style='width:5%'>
-            <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                  title='{$lang_destroy}'
                  onclick="confirmDelete('{$f.name}', '/Media/destroy/{$f.name}')" />
           </td>

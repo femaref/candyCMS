@@ -1,3 +1,12 @@
+{if $UR == 4}
+  <p>
+    <a href='/Register'>
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      &nbsp;
+      {$lang_create}
+    </a>
+  </p>
+{/if}
 <table>
   <tr>
     <th colspan='5'>{$lang_headline}</th>
@@ -15,11 +24,12 @@
       <td style='width:10%'>
         {if $UR == 4}
           <a href='/User/update/{$u.id}'>
-            <img src='%PATH_IMAGES%/icons/update.png' alt='{$lang_update}'
+            <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
-          <img src='%PATH_IMAGES%/icons/destroy.png' alt='{$lang_destroy}'
-               title='{$lang_destroy}'
+        &nbsp;
+          <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
+               title='{$lang_destroy}' class="pointer"
                onclick="confirmDelete('{$u.name}', '/User/destroy/{$u.id}')" />
         {/if}
       </td>

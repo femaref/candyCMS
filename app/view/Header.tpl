@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content='{$meta_description}' />
-    <link href='%PATH_IMAGES%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
+
     <link href='{$url}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
       {if $dev == true}
         <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
@@ -31,9 +31,9 @@
         {/if}
       </div>
       <div id='body'>
-        <div id='flashMessage'>
-          <div class='%FLASH_TYPE% tooltip' id='%FLASH_TYPE%'
-            title="::" onclick="hideDiv('flashMessage')">
+        <div id='js-flash_message'>
+          <div class='%FLASH_TYPE% tooltip' id='js-flash_%FLASH_TYPE%'
+            title="::" onclick="hideDiv('js-flash_message')">
             <h4>%FLASH_HEADLINE%</h4>
             <p>%FLASH_MESSAGE%</p>
           </div>
