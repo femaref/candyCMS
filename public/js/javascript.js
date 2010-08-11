@@ -8,7 +8,9 @@ function hideDiv(sDivId) {
 function showDiv(sDivId) {
   window.addEvent('domready', function() {
     $(sDivId).setStyle('display', 'inline');
-    (function(){ hideDiv(sDivId) }).delay(3000);
+    if($('js-flash_success') || $('js-flash_error')) {
+      (function(){ hideDiv(sDivId) }).delay(3000);
+    }
   });
 }
 

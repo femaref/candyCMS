@@ -44,7 +44,7 @@ class User extends Main {
 		else {
 			$oUpload = new Upload($this->m_aRequest, $this->m_aFile);
 			return $oUpload->uploadAvatarFile(false).
-					$this->_show($this->_iID);
+					$this->show($this->_iID);
 		}
 	}
 
