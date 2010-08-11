@@ -144,9 +144,6 @@ class Mail extends Main {
 
       $sMessage = Helper::formatHTMLCode($this->m_aRequest['content']);
 
-      # Redirect to User Profile
-      #$oController = new User($this->m_aRequest, $this->m_oSession);
-
       # Mail to, Subject, Message, Reply to
       $bStatus = Mail::send(	$sMailTo,
               $sSubject,
@@ -159,21 +156,48 @@ class Mail extends Main {
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL) {
+    $oDate = date('r');
+
+    $sHeader  =	"From:"	.WEBSITE_NAME.	" <"	.WEBSITE_MAIL.	">\n";
+    $sHeader .=	"Reply-To: "	.$sReplyTo.	"\n";
+    $sHeader .=	"X-Mailer: PHP/" . phpversion(). "\n";
+    $sHeader .=	"X-Sender-IP: "	.$_SERVER['REMOTE_ADDR'].	"\n";
+    $sHeader .=	'Content-Type: text/html; charset=UTF-8';
+
     # If you're developing, avoid Mails to User
     if(WEBSITE_DEV == 0) {
-      $sHeader  =	"From:"	.WEBSITE_NAME.	" <"	.WEBSITE_MAIL.	">\n";
-      $sHeader .=	"Reply-To: "	.$sReplyTo.	"\n";
-      $sHeader .=	"X-Mailer: PHP/" . phpversion(). "\n";
-      $sHeader .=	"X-Sender-IP: "	.$_SERVER['REMOTE_ADDR'].	"\n";
-      $sHeader .=	'Content-Type: text/html; charset=UTF-8';
-
-      if(@mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader))
+      if(mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader))
         return true;
       else
         return false;
-
     }
-    else {
+    elseif(SMTP_ON == true) {
+      require_once 'lib/smtpmail/Smtp.class.php';
+
+      $sHeader = array(
+                  'Date' => $oDate,
+                  'From' => WEBSITE_NAME,
+                  'Subject' => $sSubject,
+                  'To' => $sTo,
+                  'Reply-To' => $sReplyTo,
+                  'Content-Type' => 'text/html; charset=utf-8');
+
+
+      $oSmtp = new SmtpConnect(SMTP_HOST, SMTP_PORT);
+      $oSmtp->connect();
+      $oSmtp->ehlo();
+
+      if(SMTP_USER !== '' && SMTP_PASSWORD !== '')
+        $oSmtp->auth('', '', 'PLAIN');
+
+      $oSmtp->from(WEBSITE_MAIL);
+      $oSmtp->rcpt($sReplyTo);
+      $oSmtp->data(nl2br($sMessage), $sHeader);
+      $oSmtp->quit();
+
+      return true;
+
+    } else {
       # DEBUG MODE
       return Helper::errorMessage('<div style=\'text-align:left\'>'
               .LANG_GLOBAL_BY.	': '	.WEBSITE_NAME. '<br />'

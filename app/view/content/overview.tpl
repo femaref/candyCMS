@@ -14,7 +14,7 @@
     <tr style='background:{cycle values="transparent,#eee"}'>
       <td style='width:45%' class="left">
         <a href='/Content/{$c.id}/{$c.eTitle}'>
-        {$c.title}
+          {$c.title}
         </a>
       </td>
       <td style='width:25%'>{$c.date}</td>

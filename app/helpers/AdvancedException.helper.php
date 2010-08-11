@@ -7,9 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-# TODO DONT LOAD TWO TIMES
-#require_once 'app/controllers/Mail.controller.php';
-
 class AdvancedException extends Exception
 {
 	public function __contruct($sMessage, $iCode)
@@ -22,9 +19,9 @@ class AdvancedException extends Exception
 
 	private function _sendAdminMail($sMessage, $iCode)
 	{
-		if(WEBSITE_DEV == false)
-			Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, false);
-		else
-			die($sMessage. ' -> '	.$iCode);
+    if(!class_exists('Mail'))
+      require_once 'app/controllers/Mail.controller.php';
+
+    Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, false);
 	}
 }

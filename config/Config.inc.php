@@ -24,6 +24,16 @@ define('SQL_DEBUG', '0');
 
 # ------------------------------------------------------------------------------
 
+# Do you want to use SMTP to send your mails instead of mail()?
+# DEFAULT: 0
+define('SMTP_ON', '1');
+define('SMTP_HOST', 'localhost');
+define('SMTP_USER', '');
+define('SMTP_PASSWORD', '');
+define('SMTP_PORT', '1025');
+
+# ------------------------------------------------------------------------------
+
 # Define ABSOLUTE path of website
 # EXAMPLE: http://www.google.com
 define('WEBSITE_URL', 'http://phpcms.localhost');

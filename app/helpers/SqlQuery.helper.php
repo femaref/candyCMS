@@ -43,10 +43,17 @@ final class Query
 		$sStr = '';
 		if($this->_error())
 		{
-			$sStr  = "<h3>Query:</h3>\n"	.$this->_sSql;
-			$sStr .= "<h3>Error:</h3>\n"	.$this->_sError;
-			$sStr .= "<h3>Code:</h3>\n"	.$this->_sErrno;
+			$sStr  = "<strong>Query:</strong>\n"	.$this->_sSql;
+			$sStr .= "\n<strong>Error:</strong>\n"	.$this->_sError;
+			$sStr .= "\n<strong>Code:</strong>\n"	.$this->_sErrno;
+			$sStr .= "\n<strong>URL:</strong>\n"	.$_SERVER['QUERY_STRING'];
+			$sStr .= "\n<strong>Time:</strong>\n"	.date("M d Y H:i:s", $_SERVER['REQUEST_TIME']);
 		}
+
+    if(!class_exists('Mail'))
+      require_once 'app/controllers/Mail.controller.php';
+
+    Mail::send(WEBSITE_MAIL, 'SQL-Exception', $sStr, false);
 
 		return $sStr;
 	}
