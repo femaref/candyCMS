@@ -176,20 +176,18 @@ class Index {
     $sCachedHTML = str_replace('%FLASH_HEADLINE%', $aFlashMessages['headline'], $sCachedHTML);
 
     # Build absolute Path because of Pretty URLs
-    $sCachedHTML = str_replace('%PATH_PUBLIC%', PATH_PUBLIC, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL. '/' .PATH_UPLOAD, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/' .PATH_PUBLIC, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL.  '/' .PATH_UPLOAD, $sCachedHTML);
 
     if( SKIN_CSS == '' )
-      $sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/' .PATH_PUBLIC.	'/css', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_CSS%',
-              'skins/'	.SKIN_CSS.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.  'skins/'	.SKIN_CSS.	'/css', $sCachedHTML);
 
     if( SKIN_IMAGES == '' )
-      $sCachedHTML = str_replace('%PATH_IMAGES%', PATH_IMAGES, $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/' .PATH_IMAGES, $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_IMAGES%',
-              PATH_IMAGES.	'/skins/'	.SKIN_GFX.	'/gfx', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', PATH_PUBLIC.	'/skins/'	.SKIN_GFX.	'/gfx', $sCachedHTML);
 
     # Cut spaces to minimize filesize
     # Normal tab
@@ -197,8 +195,6 @@ class Index {
 
     # Tab as two spaces
     $sCachedHTML = str_replace('  ', '', $sCachedHTML);
-
-    #$sCachedHTML = preg_replace('/\r\n/', '', $sCachedHTML);
 
     # Compress Data
     if( extension_loaded('zlib') )

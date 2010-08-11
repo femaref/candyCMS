@@ -24,8 +24,8 @@ if($('js-flash_success') || $('js-flash_error')) {
 function quoteMessage(sName, sDivId) {
   var sMessage = $(sDivId).get('html');
   var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
-  var sOldMessage = $('createCommentText').get('value');
-  $('createCommentText').set('html', sOldMessage + sQuote);
+  var sOldMessage = $('js-create_commment_text').get('value');
+  $('js-create_commment_text').set('html', sOldMessage + sQuote);
   return false;
 }
 
@@ -45,14 +45,14 @@ function confirmDelete(sTitle, sUrl) {
 /* Tooltips */
 /********************************************************************************/
 /* Show Tooltips on Blog */
-if($$('.tooltip')) {
-  $$('.tooltip').each(function(element, index) {
+if($$('.js-tooltip')) {
+  $$('.js-tooltip').each(function(element, index) {
     var content = element.get('title').split('::');
     element.store('tip:title', content[0]);
     element.store('tip:text', content[1]);
   });
 
-  var myTips = new Tips('.tooltip');
+  var myTips = new Tips('.js-tooltip');
   myTips.addEvent('show', function(tip){
     tip.fade('in');
   });

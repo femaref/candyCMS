@@ -69,7 +69,8 @@ class Login extends Main {
     $oStatus =& $this->_oModel->destroySession();
 
     if( $sMsg == true )
-      return Helper::redirectTo('/Start');
+      return Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL).
+              Helper::redirectTo('/Start');
   }
 
 #private final function _verifyEmail() {}

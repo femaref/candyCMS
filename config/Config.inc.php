@@ -40,6 +40,13 @@ define('WEBSITE_URL', 'http://phpcms.localhost');
 
 # ------------------------------------------------------------------------------
 
+# Define ABSOLUTE path of your cdn. If you don't use a cdn,
+# enter your website url.
+# EXAMPLE: http://www.google.com
+define('WEBSITE_CDN', 'http://phpcms.localhost');
+
+# ------------------------------------------------------------------------------
+
 # Enter full name of Website. This is, where the E-Mails are sent from.
 # NOTE: Also edit your website title and slogan in your language file of choice
 # in config/language/YOURLANG.php
@@ -50,11 +57,6 @@ define('WEBSITE_NAME', 'dev.planetk4.de');
 # Define an email, where user responses for mails and newsletters are going to
 # be sent to!
 define('WEBSITE_MAIL', 'info@dev.planetk4.de');
-
-# ------------------------------------------------------------------------------
-
-# Define, where the MySQL Backups will be sent to
-define('WEBSITE_MAIL_BACKUP', 'backup@dev.planetk4.de');
 
 # ------------------------------------------------------------------------------
 
@@ -144,11 +146,11 @@ define('SKIN_TPL', '');
 
 # Enter _absolute_ path of your public folder or CDN
 # DEFAULT: http://domain.tld/public
-define('PATH_PUBLIC', 'http://phpcms.localhost/public');
+define('PATH_PUBLIC', 'public');
 
 # Also do so on images folder
 # DEFAULT: http://domain.tld//images
-define('PATH_IMAGES', 'http://phpcms.localhost/images');
+define('PATH_IMAGES', 'images');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME/view/addon'
@@ -156,7 +158,7 @@ define('PATH_TPL_ADDON', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
-define('PATH_TPL_STATIC', PATH_PUBLIC.  '/skins/default/view/_static');
+define('PATH_TPL_STATIC', 'public/skins/default/view/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload
@@ -167,7 +169,7 @@ define('PATH_UPLOAD', 'upload');
 # Define limit for pictures per page (3 in a row)
 # DEFAULT: 9
 define('LIMIT_ALBUM_IMAGES', 9);
-define('LIMIT_ALBUM_THUMBS', 18);
+define('LIMIT_ALBUM_THUMBS', 9999);
 
 # Limit of blog entries per page
 # DEFAULT: 5

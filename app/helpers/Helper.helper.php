@@ -82,8 +82,11 @@ final class Helper {
       return '';
     }
     else {
-      $iAvatar = is_file( PATH_UPLOAD.	'/'	.$sPath.$iUID.	'.jpg') ?  $iUID : 0;
-      return $sPath.$iAvatar.	'.jpg';
+      $sFile = PATH_UPLOAD.	'/'	.$sPath.$iUID.	'.jpg';
+      if(is_file($sFile))
+        return WEBSITE_URL.  '/' .$sFile;
+      else
+        return WEBSITE_CDN.  '/' .PATH_IMAGES.  '/missing_avatar.jpg';
     }
   }
 

@@ -13,7 +13,7 @@
   {foreach from=$user item=u}
     <tr style='background:{cycle values="transparent,#eee"}'>
       <td style='width:5%'>
-        <img src='%PATH_UPLOAD%/{$u.avatar32}' width="18" height="18" alt='' />
+        <img src='{$u.avatar_32}' width="18" height="18" alt='' />
       </td>
       <td style='width:35%' class="left">
         <a href='/User/{$u.id}'>{$u.name} {$u.surname}</a>

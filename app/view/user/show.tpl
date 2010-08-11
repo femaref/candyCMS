@@ -17,9 +17,9 @@
       {$regdate}
     </td>
     <td rowspan='4' style='vertical-align:top'>
-      <a href='%PATH_UPLOAD%/{$avatarPopup}' rel='lightbox'
-         title='{$user.name} ({$avatarPopupInfo[0]} x {$avatarPopupInfo[1]} px)'>
-          <img class='image' alt='{$user.name}' src="%PATH_UPLOAD%/{$avatar100}" {$avatarThumbInfo[3]} />
+      <a href='{$avatar_popup}' rel='lightbox'
+         title='{$user.name} ({$avatar_popup_info[0]} x {$avatar_popup_info[1]} px)'>
+          <img class='image' alt='{$user.name}' src="{$avatar_100}" {$avatar_thumb_info[3]} />
       </a>
     </td>
   </tr>

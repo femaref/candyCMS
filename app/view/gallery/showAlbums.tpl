@@ -8,7 +8,7 @@
 {/if}
 <div class='gallery'>
   {if !$albums}
-    <div class='error' id='error' title='{$lang_no_entries}' onclick="hideDiv('error')">
+    <div class='error' id='js-error' title='{$lang_no_entries}' onclick="hideDiv('js-error')">
       <p>{$lang_no_entries}</p>
     </div>
   {else}

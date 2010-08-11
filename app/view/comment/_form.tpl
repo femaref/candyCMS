@@ -20,11 +20,11 @@
         </tr>
         <tr class='row2'>
           <td class='td_left'>
-            <label for='createCommmentText'>{$lang_content}</label>
+            <label for='js-create_commment_text'>{$lang_content}</label>
           </td>
           <td class='td_right'>
             <div class="textarea">
-              <textarea name='content' id='createCommentText' rows='10' cols='50'>{$content}</textarea>
+              <textarea name='content' id='js-create_commment_text' rows='10' cols='50'>{$content}</textarea>
             </div>
             <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
           </td>

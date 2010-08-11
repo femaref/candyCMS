@@ -29,9 +29,9 @@ class Model_User extends Model_Main {
 						'last_login'			=> Helper::formatTimestamp($aRow['last_login']),
 						'regdate'					=> Helper::formatTimestamp($aRow['regdate']),
 						'id'							=> $aRow['id'],
-						'avatar18'				=> Helper::getAvatar('user/18/', $aRow['id']),
-						'avatar32'				=> Helper::getAvatar('user/32/', $aRow['id']),
-						'avatarOriginal'	=> Helper::getAvatar('user/original/', $aRow['id'])
+						'avatar_18'				=> Helper::getAvatar('user/18/', $aRow['id']),
+						'avatar_32'				=> Helper::getAvatar('user/32/', $aRow['id']),
+						'avatar_original'	=> Helper::getAvatar('user/original/', $aRow['id'])
 				);
 			}
 		}

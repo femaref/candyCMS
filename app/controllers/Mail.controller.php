@@ -16,7 +16,9 @@ class Mail extends Main {
   private $_sRecaptchaResponse = '';
   private $_sRecaptchaError = '';
 
-  public function __init() {}
+  public function __init() {
+
+  }
 
   public final function createMail() {
     if( isset($this->m_aRequest['send_mail']) ) {
@@ -151,7 +153,8 @@ class Mail extends Main {
               $sReplyTo);
 
       if($bStatus == true)
-        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
+        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT).
+                Helper::redirectTo('/Start');
     }
   }
 
@@ -175,12 +178,12 @@ class Mail extends Main {
       require_once 'lib/smtpmail/Smtp.class.php';
 
       $sHeader = array(
-                  'Date' => $oDate,
-                  'From' => WEBSITE_NAME,
-                  'Subject' => $sSubject,
-                  'To' => $sTo,
-                  'Reply-To' => $sReplyTo,
-                  'Content-Type' => 'text/html; charset=utf-8');
+              'Date' => $oDate,
+              'From' => WEBSITE_NAME,
+              'Subject' => $sSubject,
+              'To' => $sTo,
+              'Reply-To' => $sReplyTo,
+              'Content-Type' => 'text/html; charset=utf-8');
 
 
       $oSmtp = new SmtpConnect(SMTP_HOST, SMTP_PORT);
