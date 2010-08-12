@@ -171,3 +171,5 @@ AddType font/x-woff                   woff
 
 # Custom error pages
 ErrorDocument 404 /public/404.html
+ErrorDocument 422 /public/422.html
+ErrorDocument 500 /public/500.html
