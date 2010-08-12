@@ -86,7 +86,7 @@ final class Helper {
       if(is_file($sFile))
         return WEBSITE_URL.  '/' .$sFile;
       else
-        return WEBSITE_CDN.  '/' .PATH_IMAGES.  '/missing_avatar.jpg';
+        return WEBSITE_CDN.  '/images/missing_avatar.jpg';
     }
   }
 
@@ -217,7 +217,6 @@ final class Helper {
         $sStr = '<p>'	.$sStr.	'</p>';
     }
 
-    #$sStr = nl2br($sStr);
     return $sStr;
   }
 

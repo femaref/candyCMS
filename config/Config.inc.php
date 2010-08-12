@@ -144,14 +144,6 @@ define('SKIN_TPL', '');
 
 # ------------------------------------------------------------------------------
 
-# Enter _absolute_ path of your public folder or CDN
-# DEFAULT: http://domain.tld/public
-define('PATH_PUBLIC', 'public');
-
-# Also do so on images folder
-# DEFAULT: http://domain.tld//images
-define('PATH_IMAGES', 'images');
-
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME/view/addon'
 define('PATH_TPL_ADDON', '');

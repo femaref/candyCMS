@@ -2,6 +2,12 @@
 RewriteEngine On
 
 #-------------------------------------------------------------------------------
+# REDIRECT FORM IMAGES/ FOLDER TO PUBLIC/IMAGES FOLDER
+#-------------------------------------------------------------------------------
+RewriteRule ^favicon.ico$ public/favicon.ico [L]
+RewriteRule ^robots.txt$ public/robots.txt [L]
+
+#-------------------------------------------------------------------------------
 # SIMPLE, MOST USED RULES
 #-------------------------------------------------------------------------------
 RewriteRule ^About$ index.php?section=content&id=3 [L]

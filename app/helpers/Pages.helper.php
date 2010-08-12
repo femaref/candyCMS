@@ -52,7 +52,7 @@ final class Pages {
     $oSmarty = new Smarty();
     $oSmarty->assign('current', $this->_iCurrentPage);
     $oSmarty->assign('URL', $sURL);
-    $oSmarty->assign('ROOT', WEBSITE_CDN. '/' .PATH_IMAGES);
+    $oSmarty->assign('ROOT', WEBSITE_CDN. '/images');
     $oSmarty->assign('RSS', $sRssAction);
     $oSmarty->assign('page', $this->_iPages);
 
