@@ -2,7 +2,6 @@
   <p>
     <a href='/Blog/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -23,11 +22,9 @@
           <h2>
             {if $b.published == false}
               {$lang_not_published}
-              &nbsp;
             {/if}
             <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
             {if $UR > 3}
-              &nbsp;
               <a href='/Blog/update/{$b.id}'>
                 <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
@@ -36,7 +33,6 @@
           </h2>
           <div class='date'>
             {$b.date} {$lang_by}
-            &nbsp;
             <a href='/User/{$b.authorID}'>{$b.name} {$b.surname}</a>
             {if $b.date_modified != '01.01.1970 - 01:00'}
               - {$lang_last_update}: {$b.date_modified}

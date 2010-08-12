@@ -188,6 +188,7 @@ final class Comment extends Main {
       $oSmarty->assign('action', $this->_sAction.$iParentId);
       $oSmarty->assign('content', $sContent);
       $oSmarty->assign('name', $sName);
+      $oSmarty->assign('parentID', $iParentId);
 
       if( $bShowCaptcha == true )
         $oSmarty->assign('captcha', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
