@@ -169,7 +169,7 @@ class Mail extends Main {
 
     # If you're developing, avoid Mails to User
     if(WEBSITE_DEV == 0) {
-      if(mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader))
+      if(mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader, '-f ' .WEBSITE_MAIL))
         return true;
       else
         return false;
@@ -183,8 +183,8 @@ class Mail extends Main {
               'Subject' => $sSubject,
               'To' => $sTo,
               'Reply-To' => $sReplyTo,
-              'Content-Type' => 'text/html; charset=utf-8');
-
+              'Content-Type' => 'text/html; charset=utf-8',
+              'Sender' => WEBSITE_MAIL);
 
       $oSmtp = new SmtpConnect(SMTP_HOST, SMTP_PORT);
       $oSmtp->connect();
