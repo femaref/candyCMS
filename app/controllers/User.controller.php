@@ -161,7 +161,8 @@ class User extends Main {
                     empty($this->m_aRequest['newpw2']) ))
       $sError .= LANG_ERROR_USER_SETTINGS_PW_NEW.	'<br />';
 
-    if( $this->m_aRequest['newpw'] !== $this->m_aRequest['newpw2'] )
+    if( isset($this->m_aRequest['newpw']) && isset($this->m_aRequest['newpw2']) &&
+            $this->m_aRequest['newpw'] !== $this->m_aRequest['newpw2'] )
       $sError .= LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG.	'<br />';
 
     if( !empty($sError) ) {
@@ -170,6 +171,12 @@ class User extends Main {
       return $sReturn;
     }
     else {
+
+      # Fix for missing id
+      $this->_iID = isset($this->m_aRequest['id']) && $this->m_aRequest['id'] !== USERID ?
+              (int)$this->m_aRequest['id'] :
+              USERID;
+
       if($this->_oModel->update($this->_iID) == true)
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
                 $this->_showFormTemplate(true);

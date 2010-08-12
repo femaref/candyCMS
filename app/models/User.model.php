@@ -75,19 +75,15 @@ class Model_User extends Model_Main {
 											)");
 	}
 
-	public function update($iID) {
+	public function update($iUID) {
 		$iNewsletterDefault = isset($this->m_aRequest['newsletter_default']) ? 1 : 0;
 
-		if( ($iID !== USERID) && USERRIGHT == 4 ) {
-			$iUID = $this->_iID;
+		if( ($iUID !== USERID) && USERRIGHT == 4 )
 			$iUserRight = isset($this->m_aRequest['userright']) && !empty($this->m_aRequest['userright']) ?
                     (int)$this->m_aRequest['userright'] :
                     0;
-		}
-		else {
-			$iUID = USERID;
+		else
 			$iUserRight = USERRIGHT;
-		}
 
 		$sPassword = isset($this->m_aRequest['newpw']) ?
 				md5(RANDOM_HASH.$this->m_aRequest['newpw']) :
