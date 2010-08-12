@@ -1,15 +1,13 @@
-#Options +FollowSymLinks
+# Many rules are taken from
+# http://github.com/paulirish/html5-boilerplate/blob/master/.htaccess
+
 RewriteEngine On
 
-#-------------------------------------------------------------------------------
-# REDIRECT FORM IMAGES/ FOLDER TO PUBLIC/IMAGES FOLDER
-#-------------------------------------------------------------------------------
+# Redirect from root to public folder
 RewriteRule ^favicon.ico$ public/favicon.ico [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
 
-#-------------------------------------------------------------------------------
-# SIMPLE, MOST USED RULES
-#-------------------------------------------------------------------------------
+# Simple rules for the right section
 RewriteRule ^About$ index.php?section=content&id=3 [L]
 RewriteRule ^Blog$ index.php?section=blog [L]
 RewriteRule ^Contact$ index.php?section=mail&id=1 [L]
@@ -31,18 +29,14 @@ RewriteRule ^Start$ index.php?section=blog [L]
 RewriteRule ^User$ index.php?section=user [L]
 RewriteRule ^User/Settings$ index.php?section=user&action=update [L]
 
-#-------------------------------------------------------------------------------
-# COMLICATED ENTRIES TO AVOID PROBLEMS WITH RULES BELOW
-#-------------------------------------------------------------------------------
+# More complicated rules to avoid problems with rules below
 RewriteRule ^Blog/create/([a-z]+)$ index.php?section=blog&action=create&mode=$1&page=1 [L] #CREATE WRITE MODE
 RewriteRule ^Blog/update/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=blog&action=update&id=$1&mode=$2&page=1 [L] #EDIT WRITE MODE
 RewriteRule ^Content/update/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=content&action=update&id=$1&mode=$2&page=1 [L] #EDIT WRITE MODE
 RewriteRule ^CreateComment/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
 RewriteRule ^DestroyComment/([0-9]+)/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
 
-#-------------------------------------------------------------------------------
-# SIMPLER ENTRIES, MOST USED FOR PERFORMANCE REASONS FIRST
-#-------------------------------------------------------------------------------
+# Here comes the action
 RewriteRule ^Blog/([0-9]+)$ index.php?section=blog&id=$1&page=1 [L]
 RewriteRule ^Blog/([0-9]+)/(.*)$ index.php?section=blog&id=$1&page=1 [L]
 RewriteRule ^Blog/page/([0-9]+)$ index.php?section=blog&page=$1 [L]
@@ -61,9 +55,7 @@ RewriteRule ^Static/([A-Z][a-z][0-9]+)$ index.php?section=static&action=$1 [L]
 RewriteRule ^User/([0-9]+)$ index.php?section=user&action=show&id=$1 [L]
 RewriteRule ^User/([0-9]+)/(.*)$ index.php?section=user&action=show&id=$1 [L]
 
-#-------------------------------------------------------------------------------
-# MOSTLY ADMIN ACTIONS, NOT USED AS OFTEN AS ABOVE
-#-------------------------------------------------------------------------------
+# More or less admin rules
 RewriteRule ^Blog/([a-z]+)$ index.php?section=blog&action=$1&page=1 [L]
 RewriteRule ^Blog/([a-z]+)/([A-Za-z0-9]+)$ index.php?section=blog&action=$1&id=$2&page=1 [L]
 RewriteRule ^Content/([a-z]+)$ index.php?section=content&action=$1&page=1 [L]
@@ -75,17 +67,23 @@ RewriteRule ^Media/([a-z]+)$ index.php?section=media&action=$1 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&file=$1 [L]
 RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
 
-#-------------------------------------------------------------------------------
-# HIDE CONFIG
-#-------------------------------------------------------------------------------
+# Hide config file for non script access
 <Files "Config.inc.php">
   Order Allow,Deny
   Deny from All
 </Files>
 
-#-------------------------------------------------------------------------------
-# CACHE OBJECTS
-#-------------------------------------------------------------------------------
+# Force the latest IE version, in various cases when it may fall back to IE7 mode
+# github.com/rails/rails/commit/123eb25#commitcomment-118920
+# Use ChromeFrame if it's installed for a better experience for the poor IE folk
+<IfModule mod_setenvif.c>
+  <IfModule mod_headers.c>
+    BrowserMatch MSIE ie
+    Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
+  </IfModule>
+</IfModule>
+
+# Cache files
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault A300
@@ -125,9 +123,7 @@ RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
   </filesMatch>
 </ifModule>
 
-#-------------------------------------------------------------------------------
-# GZIP FILES
-#-------------------------------------------------------------------------------
+# Use gzip to compress data stream
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/plain
   AddOutputFilterByType DEFLATE text/html
@@ -152,7 +148,26 @@ RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
   mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
 </ifModule>
 
-#-------------------------------------------------------------------------------
-# ETAG
-#-------------------------------------------------------------------------------
-FileETag MTime Size
+# Since we're sending far-future expires, we don't need ETags for
+# static content.
+# developer.yahoo.com/performance/rules.html#etags
+FileETag None
+
+# Add modern filetypes
+# video
+AddType video/ogg  ogg ogv
+AddType video/mp4  mp4
+AddType video/webm webm
+
+# Proper svg serving. Required for svg webfonts on iPad
+#   twitter.com/FontSquirrel/status/14855840545
+AddType image/svg+xml                 svg svgz
+
+# webfonts
+AddType application/vnd.ms-fontobject eot
+AddType font/ttf                      ttf
+AddType font/otf                      otf
+AddType font/x-woff                   woff
+
+# Custom error pages
+ErrorDocument 404 /public/404.html
