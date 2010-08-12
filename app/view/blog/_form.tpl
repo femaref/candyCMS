@@ -27,8 +27,7 @@
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='title' value='{$title}' type='text'
-                 id='title' />
+          <input name='title' value='{$title}' type='text' id='title' />
         </div>
       </td>
     </tr>
@@ -53,6 +52,7 @@
             id='content' rows='16' cols='50'>{$content}</textarea>
         </div>
         <div class='description'>
+          <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
           <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
         </div>
       </td>
@@ -71,12 +71,12 @@
     {if $smarty.get.action == 'update'}
       <tr class='row1'>
         <td class='td_left'>
-          <label for='showupdate'>{$lang_update_show}</label>
+          <label for='show_update'>{$lang_update_show}</label>
         </td>
         <td class='td_right'>
           <div class="checkbox">
-            <input type='checkbox' id='showupdate'
-                   name='showupdate' value='1' />
+            <input type='checkbox' id='show_update'
+                   name='show_update' value='1' />
           </div>
         </td>
       </tr>

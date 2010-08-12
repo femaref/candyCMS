@@ -14,9 +14,11 @@
       </td>
       <td rowspan='5' style='vertical-align:top'>
 		{if $USERID === $uid}
-          <a href="javascript:showDiv('uploadImage')" class='small'>
-            <img src='%PATH_UPLOAD%/{$avatar100}' class='image' alt='{$name}' />
-            <br />
+          <a href='{$avatar_popup}' rel='lightbox' title='{$name}'>
+            <img class='image' alt='{$name}' src="{$avatar_100}" />
+          </a>
+          <br />
+          <a href="javascript:showDiv('js-upload_image')" class='small'>
             {$lang_image_change}
           </a>
         {/if}
@@ -127,3 +129,6 @@
   <input type='hidden' value='formdata' name='update_user' />
 </form>
 <p></p>
+{literal}
+  <script language='javascript' src='%PATH_PUBLIC%/js/slimbox-min.js' type='text/javascript'></script>
+{/literal}

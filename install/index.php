@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+date_default_timezone_set('Europe/Berlin');
+
 try {
   #Load Parent
   if( !file_exists('../app/models/Main.model.php') ||
@@ -57,46 +59,43 @@ switch ($_REQUEST['step']) {
     $iNextStep = 2;
 
     if(!is_dir('../backup'))
-      @mkdir('../backup', '0777');
+      @mkdir('../backup', '0777', true);
 
     if(!is_dir('../cache'))
-      @mkdir('../cache', '0777');
+      @mkdir('../cache', '0777', true);
 
     if(!is_dir('../compile'))
-      @mkdir('../compile', '0777');
+      @mkdir('../compile', '0777', true);
 
     if(!is_dir('../upload'))
-      @mkdir('../upload', '0777');
+      @mkdir('../upload', '0777', true);
 
-    if(!is_dir('../upload/user/gallery'))
-      @mkdir('../upload/user/gallery', '0777');
+    if(!is_dir('../upload/gallery'))
+      @mkdir('../upload/gallery', '0777', true);
 
-    if(!is_dir('../upload/user/media'))
-      @mkdir('../upload/user/media', '0777');
+    if(!is_dir('../upload/media'))
+      @mkdir('../upload/media', '0777', true);
 
-    if(!is_dir('../upload/user/temp'))
-      @mkdir('../upload/user/temp', '0777');
-
-    if(!is_dir('../upload/user/18'))
-      @mkdir('../upload/user/18', '0777');
+    if(!is_dir('../upload/temp'))
+      @mkdir('../upload/temp', '0777', true);
 
     if(!is_dir('../upload/user/32'))
-      @mkdir('../upload/user/32', '0777');
+      @mkdir('../upload/user/32', '0777', true);
 
     if(!is_dir('../upload/user/64'))
-      @mkdir('../upload/user/64', '0777');
+      @mkdir('../upload/user/64', '0777', true);
 
     if(!is_dir('../upload/user/100'))
-      @mkdir('../upload/user/100', '0777');
+      @mkdir('../upload/user/100', '0777', true);
 
     if(!is_dir('../upload/user/' .THUMB_DEFAULT_X))
-      @mkdir('../upload/user/' .THUMB_DEFAULT_X, '0777');
+      @mkdir('../upload/user/' .THUMB_DEFAULT_X, '0777', true);
 
     if(!is_dir('../upload/user/' .POPUP_DEFAULT_X))
-      @mkdir('../upload/user/' .POPUP_DEFAULT_X, '0777');
+      @mkdir('../upload/user/' .POPUP_DEFAULT_X, '0777', true);
 
     if(!is_dir('../upload/user/original'))
-      @mkdir('../upload/user/original/', '0777');
+      @mkdir('../upload/user/original/', '0777', true);
 
     $sHTML .= "<ul>";
     $sColor = substr(decoct(fileperms("../backup")), 2) == '777' ? 'green' : 'red';
@@ -214,9 +213,9 @@ $oSmarty->assign('action', $_SERVER["PHP_SELF"]);
 
 $sCachedHTML  = $oSmarty->fetch('showLayout.tpl');
 $sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.	'/css', $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_IMAGES%', PATH_IMAGES, $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_PUBLIC%', PATH_PUBLIC, $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/css/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/public/images/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/public/', $sCachedHTML);
 
 echo $sCachedHTML;
 

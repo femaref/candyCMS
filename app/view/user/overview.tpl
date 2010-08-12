@@ -2,7 +2,6 @@
   <p>
     <a href='/Register'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create}
     </a>
   </p>
@@ -14,7 +13,7 @@
   {foreach from=$user item=u}
     <tr style='background:{cycle values="transparent,#eee"}'>
       <td style='width:5%'>
-        <img src='%PATH_UPLOAD%/{$u.avatar32}' width="18" height="18" alt='' />
+        <img src='{$u.avatar_32}' width="18" height="18" alt='' />
       </td>
       <td style='width:35%' class="left">
         <a href='/User/{$u.id}'>{$u.name} {$u.surname}</a>
@@ -27,7 +26,6 @@
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
-        &nbsp;
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                title='{$lang_destroy}' class="pointer"
                onclick="confirmDelete('{$u.name}', '/User/destroy/{$u.id}')" />

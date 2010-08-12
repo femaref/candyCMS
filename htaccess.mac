@@ -2,27 +2,33 @@
 RewriteEngine On
 
 #-------------------------------------------------------------------------------
+# REDIRECT FORM IMAGES/ FOLDER TO PUBLIC/IMAGES FOLDER
+#-------------------------------------------------------------------------------
+RewriteRule ^favicon.ico$ public/favicon.ico [L]
+RewriteRule ^robots.txt$ public/robots.txt [L]
+
+#-------------------------------------------------------------------------------
 # SIMPLE, MOST USED RULES
 #-------------------------------------------------------------------------------
-RewriteRule ^About$ index.php?section=content&id=4 [L]
+RewriteRule ^About$ index.php?section=content&id=3 [L]
 RewriteRule ^Blog$ index.php?section=blog [L]
 RewriteRule ^Contact$ index.php?section=mail&id=1 [L]
-RewriteRule ^Content$ index.php?section=content&action=overview [L]
+RewriteRule ^Content$ index.php?section=content [L]
 RewriteRule ^Disclaimer$ index.php?section=content&id=1 [L]
-RewriteRule ^Gallery$ index.php?section=gallery&action=overview [L]
-RewriteRule ^Help/BB-Code$ index.php?section=content&id=2 [L]
+RewriteRule ^Gallery$ index.php?section=gallery [L]
+RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [L]
 RewriteRule ^Help/FAQ$ index.php?section=content&id=4 [L]
-RewriteRule ^Help/Registration$ index.php?section=content&id=3 [L]
+RewriteRule ^Help/Registration$ index.php?section=content&id=2 [L]
 RewriteRule ^Impressum$ index.php?section=content&id=1 [L]
-RewriteRule ^Invite$ index.php?section=login&action=createinvite [L]
-RewriteRule ^Login$ index.php?section=login&action=createsession [L]
-RewriteRule ^Logout$ index.php?section=login&action=destroysession [L]
+RewriteRule ^Invite$ index.php?section=session&action=invite [L]
+RewriteRule ^Login$ index.php?section=session&action=create [L]
+RewriteRule ^Logout$ index.php?section=session&action=destroy [L]
 RewriteRule ^Media$ index.php?section=media [L]
 RewriteRule ^Newsletter$ index.php?section=newsletter [L]
 RewriteRule ^Register$ index.php?section=user&action=create [L]
 RewriteRule ^RSS$ index.php?section=rss [L]
 RewriteRule ^Start$ index.php?section=blog [L]
-RewriteRule ^User$ index.php?section=user&action=overview [L]
+RewriteRule ^User$ index.php?section=user [L]
 RewriteRule ^User/Settings$ index.php?section=user&action=update [L]
 
 #-------------------------------------------------------------------------------
@@ -47,7 +53,7 @@ RewriteRule ^Content/([0-9]+)/(.*)$ index.php?section=content&id=$1 [L]
 RewriteRule ^Gallery/([0-9]+)$ index.php?section=gallery&id=$1&page=1 [L]
 RewriteRule ^Gallery/([0-9]+)/page/([0-9]+)$ index.php?section=gallery&id=$1&page=$2&ajax=1 [L]
 RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
-RewriteRule ^Login/([a-z]+)$ index.php?section=login&action=$1 [L]
+RewriteRule ^Login/([a-z]+)$ index.php?section=session&action=$1 [L]
 RewriteRule ^Mail/([0-9]+)$ index.php?section=mail&id=$1 [L]
 RewriteRule ^Newsletter/([a-z]+)$ index.php?section=newsletter&action=$1 [L]
 RewriteRule ^RSS/([a-z]+)$ index.php?section=rss&action=$1 [L]

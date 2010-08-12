@@ -2,7 +2,6 @@
   <p>
     <a href='/Content/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -15,7 +14,7 @@
     <tr style='background:{cycle values="transparent,#eee"}'>
       <td style='width:45%' class="left">
         <a href='/Content/{$c.id}/{$c.eTitle}'>
-        {$c.title}
+          {$c.title}
         </a>
       </td>
       <td style='width:25%'>{$c.date}</td>
@@ -30,7 +29,6 @@
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
               title='{$lang_update}' />
           </a>
-          &nbsp;
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
             title='{$lang_destroy}'
             onclick="confirmDelete('{$c.title}', '/Content/destroy/{$c.id}')" />

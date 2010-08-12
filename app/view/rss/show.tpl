@@ -4,7 +4,7 @@
     <title>{$title}</title>
     <description>{$description}</description>
     <language>de-de</language>
-    <link>{$link}/Overview</link>
+    <link>{$link}</link>
     <copyright>{$copyright}</copyright>
     {foreach from=$data item=rss}
       <item>

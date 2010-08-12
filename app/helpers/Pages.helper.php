@@ -52,7 +52,7 @@ final class Pages {
     $oSmarty = new Smarty();
     $oSmarty->assign('current', $this->_iCurrentPage);
     $oSmarty->assign('URL', $sURL);
-    $oSmarty->assign('ROOT', PATH_IMAGES);
+    $oSmarty->assign('ROOT', WEBSITE_CDN. '/images');
     $oSmarty->assign('RSS', $sRssAction);
     $oSmarty->assign('page', $this->_iPages);
 
@@ -61,7 +61,7 @@ final class Pages {
   }
 
   public final function showSurrounding($sURL, $sRssAction = '') {
-    $iNext		= '';
+    $iNext      = '';
     $iPrevious	= '';
 
     if($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)

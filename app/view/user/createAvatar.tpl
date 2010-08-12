@@ -1,4 +1,4 @@
-<form id='uploadImage' style='{$style}' action='{$action}' method='post' enctype='multipart/form-data'>
+<form id='js-upload_image' style='{$style}' action='{$action}' method='post' enctype='multipart/form-data'>
   <table>
     <tr>
       <th colspan='2'>{$lang_image_upload}</th>

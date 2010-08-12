@@ -27,7 +27,6 @@
       <td class='tbl_right'>
         <input name='password2' id='password2' class='inputtext'
                value='' type='password' onkeyup="checkPassword()" />
-        <img id="icon" src="%PATH_IMAGES%/icons/close.png" alt="denied" style="padding:5px" />
       </td>
     </tr>
   </table>
@@ -42,14 +41,9 @@
 
     function checkPassword() {
         if( $('password').value == $('password2').value ) {
-          $$('icon').set('class', 'icon-success');
-
           if( $('email').value !== '' ) {
             $('nextstep').disabled = '';
           }
-        }
-        else {
-          $('icon').set('class', 'icon-close');
         }
       }
   </script>

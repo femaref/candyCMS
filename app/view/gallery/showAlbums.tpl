@@ -2,14 +2,13 @@
   <p>
     <a href='/Gallery/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
 {/if}
 <div class='gallery'>
   {if !$albums}
-    <div class='error' id='error' title='{$lang_no_entries}' onclick="hideDiv('error')">
+    <div class='error' id='js-error' title='{$lang_no_entries}' onclick="hideDiv('js-error')">
       <p>{$lang_no_entries}</p>
     </div>
   {else}
@@ -18,7 +17,6 @@
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $UR > 3}
-            &nbsp;
             <a href='/Gallery/update/{$a.id}'>
               <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />

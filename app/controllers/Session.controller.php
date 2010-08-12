@@ -7,23 +7,26 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
-require_once 'app/models/Login.model.php';
+require_once 'app/models/Session.model.php';
 
-class Login extends Main {
+class Session extends Main {
   protected $m_aRequest;
   protected $m_oSession;
 
   public function __init() {
-    $this->_oModel = new Model_Login($this->m_aRequest, $this->m_oSession);
+    $this->_oModel = new Model_Session($this->m_aRequest, $this->m_oSession);
   }
 
-  public final function createSession() {
+  /*
+   * @ Override
+   */
+  public final function create() {
     if( isset($this->m_aRequest['create_session']) &&
             isset($this->m_aRequest['email']) &&
             isset($this->m_aRequest['password']) &&
             !empty($this->m_aRequest['email']) &&
             !empty($this->m_aRequest['password']) )
-      return $this->_oModel->createSession();
+      return $this->_oModel->create();
     else
       return $this->showCreateSessionTemplate();
   }
@@ -34,8 +37,8 @@ class Login extends Main {
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
     $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
 
-    $oSmarty->template_dir = Helper::templateDir('login/createSession');
-    return $oSmarty->fetch('login/createSession.tpl');
+    $oSmarty->template_dir = Helper::templateDir('session/createSession');
+    return $oSmarty->fetch('session/createSession.tpl');
   }
 
   public final function createNewPassword() {
@@ -61,15 +64,16 @@ class Login extends Main {
     $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
     $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
 
-    $oSmarty->template_dir = Helper::templateDir('login/createNewPassword');
-    return $oSmarty->fetch('login/createNewPassword.tpl');
+    $oSmarty->template_dir = Helper::templateDir('session/createNewPassword');
+    return $oSmarty->fetch('session/createNewPassword.tpl');
   }
 
-  public final function destroySession($sMsg = true) {
-    $oStatus =& $this->_oModel->destroySession();
+  public final function destroy($sMsg = true) {
+    $oStatus =& $this->_oModel->destroy();
 
     if( $sMsg == true )
-      return Helper::redirectTo('/Start');
+      return Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL).
+              Helper::redirectTo('/Start');
   }
 
 #private final function _verifyEmail() {}

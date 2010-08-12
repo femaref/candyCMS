@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 class Section extends Main {
   protected $_oObject;
@@ -83,10 +83,6 @@ class Section extends Main {
         elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' )
           parent::_setContent($this->_oObject->destroy());
 
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'overview' ) {
-          parent::_setContent($this->_oObject->overview());
-          parent::_setTitle(LANG_GLOBAL_CONTENTMANAGER);
-        }
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
@@ -128,27 +124,6 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
-        }
-
-        break;
-
-      case 'login':
-
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createsession' ) {
-          parent::_setContent($this->_oObject->createSession());
-          parent::_setTitle(LANG_GLOBAL_LOGIN);
-        }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createinvite' ) {
-          parent::_setContent($this->_oObject->createInvite());
-          parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
-        }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createnewpassword' ) {
-          parent::_setContent($this->_oObject->createNewPassword());
-          parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
-        }
-        else {
-          parent::_setContent($this->_oObject->destroySession());
-          parent::_setTitle(LANG_GLOBAL_LOGOUT);
         }
 
         break;
@@ -198,7 +173,27 @@ class Section extends Main {
 
         break;
 
-      /* This function is used to GZIP contents via .htaccess */
+      case 'session':
+
+        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+          parent::_setContent($this->_oObject->create());
+          parent::_setTitle(LANG_GLOBAL_LOGIN);
+        }
+        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'invite' ) {
+          parent::_setContent($this->_oObject->createInvite());
+          parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
+        }
+        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'password' ) {
+          parent::_setContent($this->_oObject->createNewPassword());
+          parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
+        }
+        else {
+          parent::_setContent($this->_oObject->destroy());
+          parent::_setTitle(LANG_GLOBAL_LOGOUT);
+        }
+
+        break;
+
       case 'static':
 
         $sTpl = isset($this->m_aRequest['action']) ?
@@ -206,7 +201,7 @@ class Section extends Main {
                 LANG_ERROR_ACTION_NOT_SPECIFIED;
 
         $oSmarty = new Smarty();
-        $oSmarty->template_dir = 'static/skins/'	.SKIN_TPL.	'/tpl/static';
+        $oSmarty->template_dir = '/skins/'	.SKIN_TPL.	'/tpl/static';
         parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 
@@ -226,13 +221,9 @@ class Section extends Main {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_DESTROY);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'overview' ) {
-          parent::_setContent($this->_oObject->overview());
-          parent::_setTitle(LANG_USER_OVERVIEW);
-        }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle(LANG_USER_DETAILS.	': '	.$this->_oObject->getTitle());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;

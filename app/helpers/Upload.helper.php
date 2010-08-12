@@ -97,7 +97,6 @@ final class Upload {
       $oImage->resizeDefault('100');
       $oImage->resizeAndCut('64');
       $oImage->resizeAndCut('32');
-      $oImage->resizeAndCut('18');
 
       if($bReturnPath == true)
         return $this->_sFinalPath;

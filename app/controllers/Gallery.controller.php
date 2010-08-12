@@ -67,9 +67,7 @@ class Gallery extends Main {
       $oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
       $oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 
-      if( is_file(PATH_TPL_ADDON.	'/gallery/showAlbums.tpl') )
-        $oSmarty->template_dir = PATH_TPL_ADDON;
-
+      $oSmarty->template_dir = Helper::templateDir('gallery/showAlbums');
       return $oSmarty->fetch('gallery/showAlbums.tpl');
     }
   }

@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 require_once 'app/models/Content.model.php';
 
@@ -15,42 +15,42 @@ final class Content extends Main {
   }
 
   public final function show() {
-    $this->_aData = $this->_oModel->getData($this->_iID);
-
-    # create output
     $oSmarty = new Smarty();
-    $oSmarty->assign('c', $this->_aData[$this->_iID]);
-    $oSmarty->assign('UR', USERRIGHT);
-    $oSmarty->assign('URL', WEBSITE_URL);
-
-    $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iID]['title']));
-
-    # Language
-    $oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
-    $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
-    $oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
-    $oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
-    $oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
-    $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
-
-    $oSmarty->template_dir = Helper::templateDir('content/show');
-    return $oSmarty->fetch('content/show.tpl');
-  }
-
-  public final function overview() {
-    $oSmarty = new Smarty();
-    $oSmarty->assign('content', $this->_oModel->getData());
     $oSmarty->assign('UR', USERRIGHT);
 
     # Language
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
-    $oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
-    $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY_ENTRY);
     $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
-    $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
-    $oSmarty->template_dir = Helper::templateDir('content/overview');
-    return $oSmarty->fetch('content/overview.tpl');
+    if(!empty($this->_iID)) {
+      $this->_aData = $this->_oModel->getData($this->_iID);
+
+      # create output
+      $oSmarty->assign('c', $this->_aData[$this->_iID]);
+      $oSmarty->assign('URL', WEBSITE_URL);
+
+      $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iID]['title']));
+
+      # Language
+      $oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
+      $oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
+      $oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
+      $oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
+
+      $oSmarty->template_dir = Helper::templateDir('content/show');
+      return $oSmarty->fetch('content/show.tpl');
+    }
+    else {
+      $oSmarty->assign('content', $this->_oModel->getData());
+
+      # Language
+      $oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
+      $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY_ENTRY);
+      $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
+
+      $oSmarty->template_dir = Helper::templateDir('content/overview');
+      return $oSmarty->fetch('content/overview.tpl');
+    }
   }
 
   protected final function _showFormTemplate($bUpdate = true) {
@@ -120,9 +120,8 @@ final class Content extends Main {
     }
     else {
       if($this->_oModel->create() == true) {
-        $this->_iID;
         return Helper::successMessage(LANG_SUCCESS_CREATE).
-                $this->overview();
+                $this->show();
       }
       else
         return Helper::errorMessage(LANG_ERROR_DB_QUERY);
@@ -138,7 +137,7 @@ final class Content extends Main {
 
   protected final function _destroy() {
     if($this->_oModel->destroy((int)$this->m_aRequest['id']) == true)
-      return Helper::successMessage(LANG_SUCCESS_DESTROY).$this->showOverview();
+      return Helper::successMessage(LANG_SUCCESS_DESTROY).$this->show();
     else
       return Helper::errorMessage(LANG_ERROR_DB_QUERY);
   }

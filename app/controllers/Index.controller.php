@@ -131,11 +131,11 @@ class Index {
             $this->m_aRequest['section'] == 'comment' ||
             $this->m_aRequest['section'] == 'content' ||
             $this->m_aRequest['section'] == 'gallery' ||
-            $this->m_aRequest['section'] == 'login' ||
             $this->m_aRequest['section'] == 'mail' ||
             $this->m_aRequest['section'] == 'media' ||
             $this->m_aRequest['section'] == 'newsletter' ||
             $this->m_aRequest['section'] == 'rss' ||
+            $this->m_aRequest['section'] == 'session' ||
             $this->m_aRequest['section'] == 'static' ||
             $this->m_aRequest['section'] == 'user') {
 
@@ -157,14 +157,14 @@ class Index {
             (isset( $this->m_aRequest['ajax'] )  && true == $this->m_aRequest['ajax'])  )
       $sCachedHTML = $oSection->getContent();
     else {
-      $oSmarty->assign('title', $oSection->getTitle().
+      $oSmarty->assign('_title_', $oSection->getTitle().
               ' - '	.WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', WEBSITE_SLOGAN);
 
-      $sCachedHTML  = $oSmarty->fetch('Header.tpl');
-      $sCachedHTML .= $oSection->getContent();
-      $sCachedHTML .= $oSmarty->fetch('Footer.tpl');
+      $oSmarty->assign('_content_', $oSection->getContent());
+      $oSmarty->template_dir = Helper::templateDir('layout/application');
+      $sCachedHTML = $oSmarty->fetch('layout/application.tpl');
     }
 
     # Get possible flash messages
@@ -176,20 +176,18 @@ class Index {
     $sCachedHTML = str_replace('%FLASH_HEADLINE%', $aFlashMessages['headline'], $sCachedHTML);
 
     # Build absolute Path because of Pretty URLs
-    $sCachedHTML = str_replace('%PATH_PUBLIC%', PATH_PUBLIC, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL. '/' .PATH_UPLOAD, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/public', $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL.  '/' .PATH_UPLOAD, $sCachedHTML);
 
     if( SKIN_CSS == '' )
-      $sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/css', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_CSS%',
-              'skins/'	.SKIN_CSS.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.  'public/skins/'	.SKIN_CSS.	'/css', $sCachedHTML);
 
     if( SKIN_IMAGES == '' )
-      $sCachedHTML = str_replace('%PATH_IMAGES%', PATH_IMAGES, $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/public/images', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_IMAGES%',
-              PATH_IMAGES.	'/skins/'	.SKIN_GFX.	'/gfx', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.	'public/skins/'	.SKIN_IMAGES.	'/gfx', $sCachedHTML);
 
     # Cut spaces to minimize filesize
     # Normal tab
@@ -197,8 +195,6 @@ class Index {
 
     # Tab as two spaces
     $sCachedHTML = str_replace('  ', '', $sCachedHTML);
-
-    #$sCachedHTML = preg_replace('/\r\n/', '', $sCachedHTML);
 
     # Compress Data
     if( extension_loaded('zlib') )

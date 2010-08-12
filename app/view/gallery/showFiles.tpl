@@ -5,7 +5,6 @@
   <p>
     <a href='/Gallery/createfile/{$id}'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
-      &nbsp;
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -13,7 +12,6 @@
 <h2>
   {$gallery_name} ({$file_no} {$lang_files})
   {if $UR > 3}
-    &nbsp;
     <a href='/Gallery/update/{$id}'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />

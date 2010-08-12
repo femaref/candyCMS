@@ -29,9 +29,8 @@ class Model_User extends Model_Main {
 						'last_login'			=> Helper::formatTimestamp($aRow['last_login']),
 						'regdate'					=> Helper::formatTimestamp($aRow['regdate']),
 						'id'							=> $aRow['id'],
-						'avatar18'				=> Helper::getAvatar('user/18/', $aRow['id']),
-						'avatar32'				=> Helper::getAvatar('user/32/', $aRow['id']),
-						'avatarOriginal'	=> Helper::getAvatar('user/original/', $aRow['id'])
+						'avatar_32'				=> Helper::getAvatar('user/32/', $aRow['id']),
+						'avatar_original'	=> Helper::getAvatar('user/original/', $aRow['id'])
 				);
 			}
 		}
@@ -76,19 +75,15 @@ class Model_User extends Model_Main {
 											)");
 	}
 
-	public function update($iID) {
+	public function update($iUID) {
 		$iNewsletterDefault = isset($this->m_aRequest['newsletter_default']) ? 1 : 0;
 
-		if( ($iID !== USERID) && USERRIGHT == 4 ) {
-			$iUID = $this->_iID;
+		if( ($iUID !== USERID) && USERRIGHT == 4 )
 			$iUserRight = isset($this->m_aRequest['userright']) && !empty($this->m_aRequest['userright']) ?
                     (int)$this->m_aRequest['userright'] :
                     0;
-		}
-		else {
-			$iUID = USERID;
+		else
 			$iUserRight = USERRIGHT;
-		}
 
 		$sPassword = isset($this->m_aRequest['newpw']) ?
 				md5(RANDOM_HASH.$this->m_aRequest['newpw']) :
