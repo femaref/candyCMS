@@ -83,10 +83,6 @@ class Section extends Main {
         elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' )
           parent::_setContent($this->_oObject->destroy());
 
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'overview' ) {
-          parent::_setContent($this->_oObject->overview());
-          parent::_setTitle(LANG_GLOBAL_CONTENTMANAGER);
-        }
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
@@ -198,7 +194,6 @@ class Section extends Main {
 
         break;
 
-      /* This function is used to GZIP contents via .htaccess */
       case 'static':
 
         $sTpl = isset($this->m_aRequest['action']) ?
@@ -206,7 +201,7 @@ class Section extends Main {
                 LANG_ERROR_ACTION_NOT_SPECIFIED;
 
         $oSmarty = new Smarty();
-        $oSmarty->template_dir = 'static/skins/'	.SKIN_TPL.	'/tpl/static';
+        $oSmarty->template_dir = '/skins/'	.SKIN_TPL.	'/tpl/static';
         parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 
@@ -226,13 +221,9 @@ class Section extends Main {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_DESTROY);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'overview' ) {
-          parent::_setContent($this->_oObject->overview());
-          parent::_setTitle(LANG_USER_OVERVIEW);
-        }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle(LANG_USER_DETAILS.	': '	.$this->_oObject->getTitle());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;

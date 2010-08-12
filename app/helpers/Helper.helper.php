@@ -86,7 +86,7 @@ final class Helper {
       if(is_file($sFile))
         return WEBSITE_URL.  '/' .$sFile;
       else
-        return WEBSITE_CDN.  '/images/missing_avatar.jpg';
+        return WEBSITE_CDN.  '/public/images/missing_avatar.jpg';
     }
   }
 
@@ -221,14 +221,15 @@ final class Helper {
   }
 
   public final function templateDir($sTemplate) {
-    if(!file_exists('app/view/'	.$sTemplate.	'.tpl'))
-      throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
-
     try {
       if( @file_exists(PATH_TPL_ADDON.	'/'	.$sTemplate.	'.tpl') )
         return PATH_TPL_ADDON;
-      else
-        return 'app/view/';
+      else {
+        if(!file_exists('app/view/'	.$sTemplate.	'.tpl'))
+          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+        else
+          return 'app/view/';
+      }
     }
     catch (Exception $e ) {
       $e->getMessage();

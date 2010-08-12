@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+date_default_timezone_set('Europe/Berlin');
+
 try {
   #Load Parent
   if( !file_exists('../app/models/Main.model.php') ||
@@ -211,9 +213,9 @@ $oSmarty->assign('action', $_SERVER["PHP_SELF"]);
 
 $sCachedHTML  = $oSmarty->fetch('showLayout.tpl');
 $sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.	'/css', $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_IMAGES%', PATH_IMAGES, $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_PUBLIC%', PATH_PUBLIC, $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/css/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/public/images/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/public/', $sCachedHTML);
 
 echo $sCachedHTML;
 

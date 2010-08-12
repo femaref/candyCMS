@@ -183,58 +183,66 @@ class User extends Main {
     if( !empty($iUID))
       $this->_iID = (int)$iUID;
 
-    $this->_aData = $this->_oModel->getData($this->_iID);
-
-    # Get ImageSize to adjust the spacer.gif
-    $aPopupInfo	= getImageSize(Helper::getAvatar('user/' .POPUP_DEFAULT_X.  '/', $this->_iID));
-    $aThumbInfo	= getImageSize(Helper::getAvatar('user/100/', $this->_iID));
-
-    # Description Fix, format Code to BB
-    $this->_aData['description'] = Helper::formatBBCode($this->_aData['description']);
-
     $oSmarty = new Smarty();
-    $oSmarty->assign('uid', $this->_iID);
-    $oSmarty->assign('UR', USERRIGHT);
-    $oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']) );
-    $oSmarty->assign('regdate', Helper::formatTimestamp($this->_aData['regdate']) );
-    $oSmarty->assign('user', $this->_aData );
-    $oSmarty->assign('avatar_100', Helper::getAvatar('user/100/', $this->_iID) );
-    $oSmarty->assign('avatar_popup', Helper::getAvatar('user/' .POPUP_DEFAULT_X.  '/', $this->_iID) );
-    $oSmarty->assign('avatar_popup_info', $aPopupInfo);
-    $oSmarty->assign('avatar_thumb_info', $aThumbInfo);
-
-    # Manage PageTitle
-    $this->_sName = $this->_aData['name'];
-    $this->_setTitle($this->_sName.	' '	.$this->_aData['surname']);
-
-    # Language
-    $oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_ABOUT_HIMSELF) );
-    $oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT );
-    $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE );
-    $oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN );
-    $oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE );
-
-    $oSmarty->template_dir = Helper::templateDir('user/show');
-    return $oSmarty->fetch('user/show.tpl');
-  }
-
-  public function overview() {
-    $this->_aData = $this->_oModel->getData();
-
-    $oSmarty = new Smarty();
-    $oSmarty->assign('user', $this->_aData);
     $oSmarty->assign('UR', USERRIGHT);
 
     # Language
-    $oSmarty->assign('lang_create', LANG_USER_CREATE);
-    $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
-    $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
-    $oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
     $oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN );
     $oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE );
 
-    $oSmarty->template_dir = Helper::templateDir('user/overview');
-    return $oSmarty->fetch('user/overview.tpl');
+    if(!empty($this->_iID)) {
+
+      $this->_aData = $this->_oModel->getData($this->_iID);
+
+      # Get ImageSize to adjust the spacer.gif
+      $aPopupInfo	= getImageSize(Helper::getAvatar('user/' .POPUP_DEFAULT_X.  '/', $this->_iID));
+      $aThumbInfo	= getImageSize(Helper::getAvatar('user/100/', $this->_iID));
+
+      # Description Fix, format Code to BB
+      $this->_aData['description'] = Helper::formatBBCode($this->_aData['description']);
+
+      $oSmarty->assign('uid', $this->_iID);
+      $oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']) );
+      $oSmarty->assign('regdate', Helper::formatTimestamp($this->_aData['regdate']) );
+      $oSmarty->assign('user', $this->_aData );
+      $oSmarty->assign('avatar_100', Helper::getAvatar('user/100/', $this->_iID) );
+      $oSmarty->assign('avatar_popup', Helper::getAvatar('user/' .POPUP_DEFAULT_X.  '/', $this->_iID) );
+      $oSmarty->assign('avatar_popup_info', $aPopupInfo);
+      $oSmarty->assign('avatar_thumb_info', $aThumbInfo);
+
+      # Manage PageTitle
+      $this->_sName = $this->_aData['name'];
+      $this->_setTitle($this->_sName.	' '	.$this->_aData['surname']);
+
+      # Language
+      $oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_ABOUT_HIMSELF) );
+      $oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT );
+      $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE );
+
+
+      $oSmarty->template_dir = Helper::templateDir('user/show');
+      return $oSmarty->fetch('user/show.tpl');
+
+    }
+    else {
+      $this->_setTitle(LANG_USER_OVERVIEW);
+
+      if( USERRIGHT < 3 )
+        return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      else {
+        $this->_aData = $this->_oModel->getData();
+        $oSmarty->assign('user', $this->_aData);
+
+        # Language
+        $oSmarty->assign('lang_create', LANG_USER_CREATE);
+        $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
+        $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
+        $oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
+
+        $oSmarty->template_dir = Helper::templateDir('user/overview');
+        return $oSmarty->fetch('user/overview.tpl');
+      }
+    }
   }
 
   # @Override
@@ -242,7 +250,7 @@ class User extends Main {
     if( USERRIGHT == 4) {
       if($this->_oModel->destroy($this->_iID) == true)
         return Helper::successMessage(LANG_SUCCESS_DESTROY).
-                $this->showOverview();
+                $this->show();
       else
         return Helper::errorMessage(LANG_ERROR_DB_QUERY);
     }
