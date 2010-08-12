@@ -5,6 +5,10 @@ function hideDiv(sDivId) {
   new Fx.Slide(sDivId).toggle();
 }
 
+function fadeDiv(sDivId) {
+  $(sDivId).fade('out');
+}
+
 function showDiv(sDivId) {
   window.addEvent('domready', function() {
     $(sDivId).setStyle('display', 'inline');

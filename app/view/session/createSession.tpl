@@ -18,6 +18,6 @@
       </div>
     </fieldset>
     <input type='hidden' value='formdata' name='create_session' />
-    <p><a href='/Login/createnewpassword'>Passwort vergessen?</a></p>
+    <p><a href='/Login/new_password'>Passwort vergessen?</a></p>
   </form>
 </div>

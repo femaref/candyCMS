@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 class Section extends Main {
   protected $_oObject;
@@ -132,27 +132,6 @@ class Section extends Main {
 
         break;
 
-      case 'login':
-
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createsession' ) {
-          parent::_setContent($this->_oObject->createSession());
-          parent::_setTitle(LANG_GLOBAL_LOGIN);
-        }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createinvite' ) {
-          parent::_setContent($this->_oObject->createInvite());
-          parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
-        }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createnewpassword' ) {
-          parent::_setContent($this->_oObject->createNewPassword());
-          parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
-        }
-        else {
-          parent::_setContent($this->_oObject->destroySession());
-          parent::_setTitle(LANG_GLOBAL_LOGOUT);
-        }
-
-        break;
-
       case 'mail':
 
         parent::_setContent($this->_oObject->createMail());
@@ -195,6 +174,27 @@ class Section extends Main {
 
         parent::_setContent($this->_oObject->show());
         parent::_setTitle(LANG_GLOBAL_RSS);
+
+        break;
+
+      case 'session':
+
+        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+          parent::_setContent($this->_oObject->create());
+          parent::_setTitle(LANG_GLOBAL_LOGIN);
+        }
+        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'invite' ) {
+          parent::_setContent($this->_oObject->createInvite());
+          parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
+        }
+        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'password' ) {
+          parent::_setContent($this->_oObject->createNewPassword());
+          parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
+        }
+        else {
+          parent::_setContent($this->_oObject->destroy());
+          parent::_setTitle(LANG_GLOBAL_LOGOUT);
+        }
 
         break;
 

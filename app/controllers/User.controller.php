@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
-require_once 'app/controllers/Login.controller.php';
+require_once 'app/controllers/Session.controller.php';
 require_once 'app/controllers/Mail.controller.php';
 require_once 'app/models/User.model.php';
 require_once 'app/helpers/Image.helper.php';
@@ -315,7 +315,7 @@ class User extends Main {
       # Switch to user model
       # @Override Model
       # NOTE: Dirty method, no OO used
-      $this->_oController = new Login($this->m_aRequest, $this->m_oSession);
+      $this->_oController = new Session($this->m_aRequest, $this->m_oSession);
       $this->_oModel = new Model_User($this->m_aRequest, $this->m_oSession);
 
       if( $this->_oModel->create() == true) {

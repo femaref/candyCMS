@@ -4,15 +4,15 @@ RewriteEngine On
 #-------------------------------------------------------------------------------
 # SIMPLE, MOST USED RULES
 #-------------------------------------------------------------------------------
-RewriteRule ^About$ index.php?section=content&id=4 [L]
+RewriteRule ^About$ index.php?section=content&id=3 [L]
 RewriteRule ^Blog$ index.php?section=blog [L]
 RewriteRule ^Contact$ index.php?section=mail&id=1 [L]
 RewriteRule ^Content$ index.php?section=content&action=overview [L]
 RewriteRule ^Disclaimer$ index.php?section=content&id=1 [L]
 RewriteRule ^Gallery$ index.php?section=gallery&action=overview [L]
-RewriteRule ^Help/BB-Code$ index.php?section=content&id=2 [L]
+RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [L]
 RewriteRule ^Help/FAQ$ index.php?section=content&id=4 [L]
-RewriteRule ^Help/Registration$ index.php?section=content&id=3 [L]
+RewriteRule ^Help/Registration$ index.php?section=content&id=2 [L]
 RewriteRule ^Impressum$ index.php?section=content&id=1 [L]
 RewriteRule ^Invite$ index.php?section=login&action=createinvite [L]
 RewriteRule ^Login$ index.php?section=login&action=createsession [L]

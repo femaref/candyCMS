@@ -9,8 +9,8 @@
 
 require_once 'app/controllers/Mail.controller.php';
 
-class Model_Login extends Model_Main {
-  public final function createSession() {
+class Model_Session extends Model_Main {
+  public final function create() {
     $oCheckUser = new Query("	SELECT
 																*
 															FROM
@@ -44,7 +44,7 @@ class Model_Login extends Model_Main {
       }
     }
     else {
-      $oController = new Login($this->m_aRequest, $this->m_oSession);
+      $oController = new Session($this->m_aRequest, $this->m_oSession);
       return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
               $oController->showCreateSessionTemplate();
     }
@@ -104,7 +104,7 @@ class Model_Login extends Model_Main {
     }
   }
 
-  public final function destroySession() {
+  public final function destroy() {
     new Query("UPDATE `user` SET `session` = '' WHERE session = '"	.session_id().	"'");
     #session_destroy();
     unset($_SESSION);

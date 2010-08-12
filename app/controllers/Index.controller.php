@@ -131,11 +131,11 @@ class Index {
             $this->m_aRequest['section'] == 'comment' ||
             $this->m_aRequest['section'] == 'content' ||
             $this->m_aRequest['section'] == 'gallery' ||
-            $this->m_aRequest['section'] == 'login' ||
             $this->m_aRequest['section'] == 'mail' ||
             $this->m_aRequest['section'] == 'media' ||
             $this->m_aRequest['section'] == 'newsletter' ||
             $this->m_aRequest['section'] == 'rss' ||
+            $this->m_aRequest['section'] == 'session' ||
             $this->m_aRequest['section'] == 'static' ||
             $this->m_aRequest['section'] == 'user') {
 
@@ -157,14 +157,14 @@ class Index {
             (isset( $this->m_aRequest['ajax'] )  && true == $this->m_aRequest['ajax'])  )
       $sCachedHTML = $oSection->getContent();
     else {
-      $oSmarty->assign('title', $oSection->getTitle().
+      $oSmarty->assign('_title_', $oSection->getTitle().
               ' - '	.WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', WEBSITE_SLOGAN);
 
-      $sCachedHTML  = $oSmarty->fetch('Header.tpl');
-      $sCachedHTML .= $oSection->getContent();
-      $sCachedHTML .= $oSmarty->fetch('Footer.tpl');
+      $oSmarty->assign('_content_', $oSection->getContent());
+      $oSmarty->template_dir = Helper::templateDir('layout/application');
+      $sCachedHTML = $oSmarty->fetch('layout/application.tpl');
     }
 
     # Get possible flash messages

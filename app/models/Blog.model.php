@@ -27,7 +27,7 @@ class Model_Blog extends Model_Main {
           $sWhere = "WHERE b.published = '1'";
       }
 
-      $oEntries = new Query("SELECT COUNT(*) FROM blog "	.$sWhere);
+      $oEntries = new Query("SELECT COUNT(*) FROM blog b "	.$sWhere);
       $this->_oPages = new Pages($this->m_aRequest, $oEntries->count(), $iLimit);
 
       $oGetData = new Query("	SELECT

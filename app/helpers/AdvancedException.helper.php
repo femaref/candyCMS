@@ -14,10 +14,10 @@ class AdvancedException extends Exception
 		$sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
 		$iCode		= !empty($iCode) ? $iCode : $this->getCode();
 
-		$this->_sendAdminMail($sMessage, $iCode);
+		$this->_sendAdminMail($sMessage);
 	}
 
-	private function _sendAdminMail($sMessage, $iCode)
+	private function _sendAdminMail($sMessage)
 	{
     if(!class_exists('Mail'))
       require_once 'app/controllers/Mail.controller.php';

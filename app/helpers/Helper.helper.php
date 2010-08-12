@@ -232,8 +232,7 @@ final class Helper {
         return 'app/view/';
     }
     catch (Exception $e ) {
-      die($e->getMessage());
-      # TODO: MAIL TO ADMIN
+      $e->getMessage();
     }
   }
 
