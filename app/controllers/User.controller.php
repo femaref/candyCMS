@@ -78,7 +78,7 @@ class User extends Main {
         $this->m_oSession['userdata']['newsletter_default'] =& $this->m_aRequest['newsletter_default'];
       }
 
-      $oSmarty->assign('USER_ID', USER_ID );
+      $oSmarty->assign('uid', USER_ID );
       $oSmarty->assign('name',
               $this->m_oSession['userdata']['name'] );
       $oSmarty->assign('surname',
@@ -102,7 +102,7 @@ class User extends Main {
     $oSmarty->assign('style', 'display:none' );
 
     # Set _own_ USER_RIGHT and USER_ID for updating purposes
-    $oSmarty->assign('USER_ID', USERID );
+    $oSmarty->assign('USER_ID', USER_ID );
     $oSmarty->assign('USER_RIGHT', USER_RIGHT );
 
     # Compress slimbox

@@ -35,7 +35,6 @@
         <a href="/Gallery/updatefile/{$f.id}">
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt="{$lang_update}" />
         </a>
-        &nbsp;
         <a href="/Gallery/destroyfile/{$f.id}">
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-destroy" alt="{$lang_destroy}" />
         </a>
