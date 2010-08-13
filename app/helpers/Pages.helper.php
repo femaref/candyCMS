@@ -17,10 +17,9 @@ final class Pages {
 
   public final function __construct($aRequest, $iCount, $iLimit = 10) {
     $this->m_aRequest	=& $aRequest;
+    $this->_iCount    =& $iCount;
+    $this->_iLimit    =& $iLimit;
 
-    # Define temporary limit
-    $this->_iCount =& $iCount;
-    $this->_iLimit =& $iLimit;
     $this->_iCurrentPage = isset($this->m_aRequest['page']) ? (int)$this->m_aRequest['page'] : 1;
     $this->_iPages = ceil($this->_iCount / $this->_iLimit);
 
@@ -50,11 +49,10 @@ final class Pages {
 
   public final function showPages($sURL, $sRssAction = 'blog') {
     $oSmarty = new Smarty();
-    $oSmarty->assign('current', $this->_iCurrentPage);
-    $oSmarty->assign('URL', $sURL);
-    $oSmarty->assign('ROOT', WEBSITE_CDN. '/images');
-    $oSmarty->assign('RSS', $sRssAction);
-    $oSmarty->assign('page', $this->_iPages);
+    $oSmarty->assign('action_url', $sURL);
+    $oSmarty->assign('page_current', $this->_iCurrentPage);
+    $oSmarty->assign('public_folder', WEBSITE_CDN. '/public/images');
+    $oSmarty->assign('page_count', $this->_iPages);
 
     $oSmarty->template_dir = Helper::templateDir('pages/pages');
     return $oSmarty->fetch('pages/pages.tpl');
@@ -71,12 +69,12 @@ final class Pages {
       $iPrevious = $this->_iCurrentPage - 1;
 
     $oSmarty = new Smarty();
-    $oSmarty->assign('limit', $this->_iLimit);
-    $oSmarty->assign('count', $this->_iCount);
-    $oSmarty->assign('next', $iNext);
-    $oSmarty->assign('previous', $iPrevious);
-    $oSmarty->assign('URL', $sURL);
-    $oSmarty->assign('RSS', $sRssAction);
+    $oSmarty->assign('action_url', $sURL);
+    $oSmarty->assign('page_limit', $this->_iLimit);
+    $oSmarty->assign('page_count', $this->_iCount);
+    $oSmarty->assign('page_next', $iNext);
+    $oSmarty->assign('page_previous', $iPrevious);
+    $oSmarty->assign('rss_section', $sRssAction);
 
     # Language
     $oSmarty->assign('lang_next_entries', LANG_PAGES_NEXT_ENTRIES);

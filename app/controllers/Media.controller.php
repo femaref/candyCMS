@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
@@ -16,7 +16,7 @@ class Media extends Main {
   }
 
   public function create() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if( isset($this->m_aRequest['upload_file']) )
@@ -46,7 +46,7 @@ class Media extends Main {
   }
 
   public function show() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
@@ -67,10 +67,10 @@ class Media extends Main {
 
         $sFileName = substr($sFile, 0, $iNameLen);
 
-        if(	$sFileType == 'jpg' ||
-                $sFileType == 'jpeg' ||
-                $sFileType == 'png' ||
-                $sFileType == 'gif') {
+        if(	$sFileType      == 'jpg' ||
+                $sFileType  == 'jpeg'||
+                $sFileType  == 'png' ||
+                $sFileType  == 'gif') {
           $aImgDim = getImageSize($sPath);
           if( ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'gif' || $sFileType == 'png') &&
                   !is_file(PATH_UPLOAD.	'/temp/32/'	.$sFile)) {
@@ -83,17 +83,22 @@ class Media extends Main {
 
         $aFiles[] = array(	'name' => $sFile,
                 'cdate' => Helper::formatTimestamp(filectime($sPath)),
-                'size' => Helper::getFileSize($sPath),
-                'type' => $sFileType,
-                'dim' => $aImgDim
+                'size'  => Helper::getFileSize($sPath),
+                'type'  => $sFileType,
+                'dim'   => $aImgDim
         );
       }
 
       closedir($oDir);
 
       $oSmarty = new Smarty();
-      $oSmarty->assign('UR', USERRIGHT);
       $oSmarty->assign('files', $aFiles);
+
+      # Constants
+      $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+
+      # System variables
+      $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
       $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY);
@@ -112,9 +117,9 @@ class Media extends Main {
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file']);
-        Header('Location:'	.WEBSITE_URL.	'/Media');
-        /* return Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS).
-					$this->show(); */
+
+        return Header('Location:'	.WEBSITE_URL.	'/Media').
+                Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS);
       }
       else
         return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE);

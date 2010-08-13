@@ -23,23 +23,21 @@ class Blog extends Main {
 
 		$oSmarty = new Smarty();
 		$oSmarty->assign('blog', $this->_aData);
-		$oSmarty->assign('dev', WEBSITE_DEV);
-		$oSmarty->assign('uid', USERID);
-		$oSmarty->assign('UR', USERRIGHT);
+		$oSmarty->assign('USER_ID', USER_ID);
+		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$oSmarty->assign('URL', WEBSITE_URL);
 		$oSmarty->assign('pid', $this->_iID);
-
-		# Extra included stuff
-		$oSmarty->assign('blogPages', $this->_oModel->_oPages->showSurrounding('Blog', 'blog'));
 
 		# Manage Comments
 		$iCommentSum = 0;
 		if(!empty($this->_iID))
 			$iCommentSum = $this->_aData[1]['comment_sum'];
 
+    # System variables
 		$oComments = new Comment($this->m_aRequest, $this->m_oSession);
 		$oComments->__init($iCommentSum, $this->_aData);
-		$oSmarty->assign('blogComments', $oComments->show());
+		$oSmarty->assign('_blog_comments_', $oComments->show());
+		$oSmarty->assign('_blog_pages_', $this->_oModel->_oPages->showSurrounding('Blog', 'blog'));
 
 		# Language
 		$oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);

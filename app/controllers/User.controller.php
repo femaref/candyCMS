@@ -21,9 +21,9 @@ class User extends Main {
   # @Override
   public function update() {
     if( empty($this->_iID) )
-      $this->_iID = USERID;
+      $this->_iID = USER_ID;
 
-    if( USERID == 0 )
+    if( USER_ID == 0 )
       return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if( isset($this->m_aRequest['update_user']) )
@@ -50,7 +50,7 @@ class User extends Main {
 
   protected function _showFormTemplate($bUseRequest = false) {
     $oSmarty = new Smarty();
-    if( $this->_iID !== USERID && USERRIGHT == 4) {
+    if( $this->_iID !== USER_ID && USER_RIGHT == 4) {
       $this->_aData = $this->_oModel->getData($this->_iID);
 
       $oSmarty->assign('uid',
@@ -78,8 +78,7 @@ class User extends Main {
         $this->m_oSession['userdata']['newsletter_default'] =& $this->m_aRequest['newsletter_default'];
       }
 
-      $oSmarty->assign('uid',
-              USERID );
+      $oSmarty->assign('USER_ID', USER_ID );
       $oSmarty->assign('name',
               $this->m_oSession['userdata']['name'] );
       $oSmarty->assign('surname',
@@ -92,7 +91,7 @@ class User extends Main {
               (int)$this->m_oSession['userdata']['newsletter_default'] );
 
       # Avoid Smarty Bug if you're an administrator
-      $oSmarty->assign('userright', USERRIGHT );
+      $oSmarty->assign('USER_RIGHT', USER_RIGHT );
     }
 
     $oSmarty->assign('avatar_100', Helper::getAvatar('user/100/', $this->_iID) );
@@ -102,9 +101,12 @@ class User extends Main {
     $oSmarty->assign('action', '/User/Settings' );
     $oSmarty->assign('style', 'display:none' );
 
-    # Set _own_ USERRIGHT and USERID for updating purposes
-    $oSmarty->assign('USERID', USERID );
-    $oSmarty->assign('UR', USERRIGHT );
+    # Set _own_ USER_RIGHT and USER_ID for updating purposes
+    $oSmarty->assign('USER_ID', USERID );
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT );
+
+    # Compress slimbox
+    $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
     # Language
     $oSmarty->assign('lang_about_you', LANG_USER_SETTINGS_ABOUT_YOU);
@@ -173,9 +175,9 @@ class User extends Main {
     else {
 
       # Fix for missing id
-      $this->_iID = isset($this->m_aRequest['id']) && $this->m_aRequest['id'] !== USERID ?
+      $this->_iID = isset($this->m_aRequest['id']) && $this->m_aRequest['id'] !== USER_ID ?
               (int)$this->m_aRequest['id'] :
-              USERID;
+              USER_ID;
 
       if($this->_oModel->update($this->_iID) == true)
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
@@ -191,7 +193,7 @@ class User extends Main {
       $this->_iID = (int)$iUID;
 
     $oSmarty = new Smarty();
-    $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     # Language
     $oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN );
@@ -234,7 +236,7 @@ class User extends Main {
     else {
       $this->_setTitle(LANG_USER_OVERVIEW);
 
-      if( USERRIGHT < 3 )
+      if( USER_RIGHT < 3 )
         return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
       else {
         $this->_aData = $this->_oModel->getData();
@@ -254,7 +256,7 @@ class User extends Main {
 
   # @Override
   public function destroy() {
-    if( USERRIGHT == 4) {
+    if( USER_RIGHT == 4) {
       if($this->_oModel->destroy($this->_iID) == true)
         return Helper::successMessage(LANG_SUCCESS_DESTROY).
                 $this->show();
@@ -275,7 +277,7 @@ class User extends Main {
   private function _showCreateUserTemplate() {
     $oSmarty = new Smarty();
 
-    $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     $sName = isset($this->m_aRequest['name']) ? Helper::formatHTMLCode($this->m_aRequest['name']) : '';
     $oSmarty->assign('name', $sName);
@@ -313,7 +315,7 @@ class User extends Main {
     if( $this->m_aRequest['password'] !== $this->m_aRequest['password2'] )
       $sError .= LANG_ERROR_LOGIN_CHECK_PASSWORDS.	'<br />';
 
-    if( USERRIGHT < 4 ) {
+    if( USER_RIGHT < 4 ) {
       if( !isset($this->m_aRequest['disclaimer']))
         $sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER.	'<br />';
     }

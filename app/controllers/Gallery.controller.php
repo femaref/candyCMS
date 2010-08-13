@@ -19,8 +19,10 @@ class Gallery extends Main {
 
   public final function show() {
     $oSmarty = new Smarty();
-    $oSmarty->assign('UR', USERRIGHT);
-    $oSmarty->assign('AJAX', AJAX);
+
+    # Constants
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+    $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 
     # Language
     $oSmarty->assign('lang_no_files_yet', LANG_GALLERY_NO_FILES_YET);
@@ -33,14 +35,16 @@ class Gallery extends Main {
       $oSmarty->assign('id', $this->_iID);
       $oSmarty->assign('files',
               $this->_oModel->getThumbs($this->_iID, LIMIT_ALBUM_IMAGES));
+      $oSmarty->assign('file_no', $this->_oModel->_iEntries);
       $oSmarty->assign('gallery_name', $sAlbumName);
       $oSmarty->assign('gallery_description',
               $this->_oModel->getAlbumDescription($this->_iID));
-      $oSmarty->assign('file_no', $this->_oModel->_iEntries);
-      $oSmarty->assign('albumPages',
-              $this->_oModel->_oPages->showPages('Gallery/'	.$this->_iID));
-      $oSmarty->assign('dev', WEBSITE_DEV);
       $oSmarty->assign('popup_path', POPUP_DEFAULT_X);
+
+      # System variables
+      $oSmarty->assign('_album_pages_',
+              $this->_oModel->_oPages->showPages('Gallery/'	.$this->_iID));
+      $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
       $oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_CREATE_FILE);
@@ -124,7 +128,7 @@ class Gallery extends Main {
 
   protected final function _showFormTemplate($bUpdate = true) {
     $oSmarty = new Smarty();
-    $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iID, true);
@@ -172,7 +176,7 @@ class Gallery extends Main {
 
 
   public final function createFile() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if( isset($this->m_aRequest['create_file']) )
@@ -183,7 +187,7 @@ class Gallery extends Main {
   }
 
   public final function updateFile() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if( isset($this->m_aRequest['update_file']) )
@@ -198,7 +202,7 @@ class Gallery extends Main {
   }
 
   public final function destroyFile() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if($this->_oModel->destroyFile($this->_iID) == true) {
@@ -212,7 +216,7 @@ class Gallery extends Main {
 
   protected final function _showFormFileTemplate($bUpdate = false) {
     $oSmarty = new Smarty();
-    $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
     $oSmarty->assign('id', $this->_iID);
 
     if($bUpdate == true) {

@@ -1,4 +1,4 @@
-{if $UR > 3}
+{if $USER_RIGHT > 3}
   <p>
     <a href='/Media/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-upload" alt='' />
@@ -58,7 +58,12 @@
       {/foreach}
     {/if}
   </table>
+  <script type="text/javascript">
+    var sFilesSuffix = '{$_compress_files_suffix_}';
+    {literal}
+      window.addEvent('domready', function() {
+        new Asset.javascript('%PATH_PUBLIC%/js/slimbox' + sFilesSuffix + '.js');
+      });
+    {/literal}
+  </script>
 {/if}
-{literal}
-  <script language='javascript' src='%PATH_PUBLIC%/js/slimbox-min.js' type='text/javascript'></script>
-{/literal}

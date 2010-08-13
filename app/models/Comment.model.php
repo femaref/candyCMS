@@ -89,7 +89,7 @@ class Model_Comment extends Model_Main {
     new Query("	INSERT INTO
 									comment(authorID, author_name, content, date, parentID, parentCat)
 								VALUES(
-									'"	.USERID.	"',
+									'"	.USER_ID.	"',
 									'"	.$sAuthorName.	"',
 									'"	.Helper::formatHTMLCode($this->m_aRequest['content']).	"',
 									'"	.time().	"',

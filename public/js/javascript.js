@@ -41,7 +41,7 @@ function destroyContent(sDivId) {
 /* global confirmations */
 /********************************************************************************/
 function confirmDelete(sTitle, sUrl) {
-  if( confirm("Are you sure to delete " + sTitle + "?") )
+  if( confirm(LANG_DELETE_FILE_OR_CONTENT) )
     parent.location.href = sUrl;
 }
 
@@ -88,7 +88,7 @@ function stripSlash(sValue) {
 
 function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
-  $(sId).set('html', "<img src='" + sRoot + "/loading.gif' alt='loading...' />");
+  $(sId).set('html', "<img src='" + sRoot + "/loading.gif' alt='" + LANG_LOADING + "' />");
   $(sId).load(sURL);
 }
 

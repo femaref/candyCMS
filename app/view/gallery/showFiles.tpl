@@ -1,7 +1,7 @@
-{if $AJAX == false}
+{if $AJAX_REQUEST == false}
   <div class='gallery_files' id="js-ajax_reload" name="reload">
 {/if}
-{if $UR > 3}
+{if $USER_RIGHT > 3}
   <p>
     <a href='/Gallery/createfile/{$id}'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
@@ -11,7 +11,7 @@
 {/if}
 <h2>
   {$gallery_name} ({$file_no} {$lang_files})
-  {if $UR > 3}
+  {if $USER_RIGHT > 3}
     <a href='/Gallery/update/{$id}'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />
@@ -26,10 +26,10 @@
   {if $gallery_description !== ''}
     <div class='quote'>{$gallery_description}</div>
   {/if}
-  {$albumPages}
+  {$_album_pages_}
   {foreach from=$files item=f}
     <a href='{$f.full_path}/{$popup_path}/{$f.file}' rel='lightbox[]' title='
-      {if $UR > 3}
+      {if $USER_RIGHT > 3}
         {$lang_uploaded_at}: {$f.date}
         <br />
         <a href="/Gallery/updatefile/{$f.id}">
@@ -51,15 +51,16 @@
            style="background: url('{$f.full_path}/{$f.dim}/{$f.file}') center no-repeat" />
     </a>
   {/foreach}
-  <p>{$albumPages}</p>
+  <p>{$_album_pages_}</p>
 {/if}
-{if $AJAX == false}
+{if $AJAX_REQUEST == false}
   </div>
 {/if}
-{literal}
-  <script type="text/javascript">
+<script type="text/javascript">
+  var sFilesSuffix = '{$_compress_files_suffix_}';
+  {literal}
     window.addEvent('domready', function() {
-      new Asset.javascript('%PATH_PUBLIC%/js/slimbox-min.js');
+      new Asset.javascript('%PATH_PUBLIC%/js/slimbox' + sFilesSuffix + '.js');
     });
-  </script>
-{/literal}
+  {/literal}
+</script>

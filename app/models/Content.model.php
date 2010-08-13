@@ -75,7 +75,7 @@ class Model_Content extends Model_Main {
 		$oQuery = new Query("	INSERT INTO
 														content(authorID, title, content, date)
 													VALUES(
-														'"	.USERID.	"',
+														'"	.USER_ID.	"',
 														'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
 														'"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
 														'"	.time().	"')
@@ -96,7 +96,7 @@ class Model_Content extends Model_Main {
 													title = '"	.Helper::formatHTMLCode($this->m_aRequest['title'], false).	"',
 													content = '"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
 													date = '"	.time().	"',
-													authorID = '"	.USERID.	"'
+													authorID = '"	.USER_ID.	"'
 												WHERE
 													`id` = '"	.(int)$iID.	"'");
 	}

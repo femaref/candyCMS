@@ -11,6 +11,7 @@
         <div class="input">
           <input name='name' value='{$name}' type='text'
                  id='name' />
+        </div>
       </td>
       <td rowspan='5' style='vertical-align:top'>
 		{if $USERID === $uid}
@@ -67,7 +68,7 @@
         </div>
       </td>
     </tr>
-    {if $UR == 4 && $USERID !== $uid}
+    {if $USER_RIGHT == 4 && $USER_ID !== $uid}
       <tr class='row2'>
         <td class='td_left'>
           <label for='userright'>{$lang_userright}</label>
@@ -85,7 +86,7 @@
       </tr>
     {/if}
   </table>
-  {if $USERID == $uid}
+  {if $USER_ID == $uid}
     <p></p>
     <table>
       <tr>
@@ -129,6 +130,11 @@
   <input type='hidden' value='formdata' name='update_user' />
 </form>
 <p></p>
-{literal}
-  <script language='javascript' src='%PATH_PUBLIC%/js/slimbox-min.js' type='text/javascript'></script>
-{/literal}
+<script type="text/javascript">
+  var sFilesSuffix = '{$_compress_files_suffix_}';
+  {literal}
+    window.addEvent('domready', function() {
+      new Asset.javascript('%PATH_PUBLIC%/js/slimbox' + sFilesSuffix + '.js');
+    });
+  {/literal}
+</script>

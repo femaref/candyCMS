@@ -31,7 +31,6 @@ final class Comment extends Main {
     $this->_oModel = new Model_Comment($this->m_aRequest, $this->m_oSession);
 
     # Define Blog as standard category
-    # TODO: more comment-sections
     /*
 		 * Create a switch or if / else to add more categories!
 		 * b = Blog
@@ -56,8 +55,8 @@ final class Comment extends Main {
       }
 
       $oSmarty = new Smarty();
-      $oSmarty->assign('UR', USERRIGHT);
-      $oSmarty->assign('AJAX', AJAX);
+      $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+      $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
       $oSmarty->assign('parentID', $this->_iID);
 
       # Do only load comments, if they are avaiable
@@ -77,11 +76,11 @@ final class Comment extends Main {
         # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
         # when other people don't see it
         $iCommentNumber = ($this->_oPages->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS;
-        $oSmarty->assign('commentNumber', $iCommentNumber);
+        $oSmarty->assign('comment_number', $iCommentNumber);
 
         # Do we need Pages?
         $sPages = $this->_oPages->showPages('Comment/' .$this->_sParentCat. '/'	.$this->_iID, '');
-        $oSmarty->assign('commentPages', $sPages);
+        $oSmarty->assign('_comment_pages_', $sPages);
 
         # Language
         $oSmarty->assign('lang_author', LANG_GLOBAL_AUTHOR);
@@ -107,13 +106,13 @@ final class Comment extends Main {
 
   public final function create($sInputName) {
     if( isset($this->m_aRequest[$sInputName]) ) {
-      if( USERRIGHT == 0 )
+      if( USER_RIGHT == 0 )
         return $this->_checkCaptcha(true);
       else
         return $this->_create(false);
     }
     else {
-      $bShowCaptcha = ( USERRIGHT == 0 ) ? true : false;
+      $bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
       return $this->_showFormTemplate($bShowCaptcha);
     }
   }
@@ -133,7 +132,7 @@ final class Comment extends Main {
             empty($this->m_aRequest['content']) )
       $sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
-    if( USERID < 1) {
+    if( USER_ID < 1) {
       if( !isset($this->m_aRequest['name']) ||
               empty($this->m_aRequest['name']) )
         $sError .= LANG_GLOBAL_NAME.	'<br />';
@@ -182,19 +181,19 @@ final class Comment extends Main {
               '';
 
       $oSmarty = new Smarty();
-      $oSmarty->assign('UR', USERRIGHT);
-      $oSmarty->assign('USERNAME', USERNAME);
-      $oSmarty->assign('USERSURNAME', USERSURNAME);
+      $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+      $oSmarty->assign('USER_NAME', USER_NAME);
+      $oSmarty->assign('USER_SURNAME', USER_SURNAME);
       $oSmarty->assign('action', $this->_sAction.$iParentId);
       $oSmarty->assign('content', $sContent);
       $oSmarty->assign('name', $sName);
       $oSmarty->assign('parentID', $iParentId);
 
       if( $bShowCaptcha == true )
-        $oSmarty->assign('captcha', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
+        $oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
                 $this->_sRecaptchaError) );
       else
-        $oSmarty->assign('captcha', '');
+        $oSmarty->assign('_captcha_', '');
 
       # Language
       $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);

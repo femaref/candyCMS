@@ -2,8 +2,8 @@
   <tr>
     <th colspan='3'>
       {$user.name} {$user.surname}
-      {if $UR == 4}
-        <a href='/User/update/{$uid}'>
+      {if $USER_RIGHT == 4}
+        <a href='/User/update/{$USER_ID}'>
           <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt='{$lang_update}' style='vertical-align:baseline' />
         </a>
       {/if}
@@ -44,7 +44,7 @@
       {$lang_contact}
     </td>
     <td class='td_right'>
-      <a href='/Mail/{$uid}'>Klicke hier, um {$user.name} eine E-Mail zu schicken!</a>
+      <a href='/Mail/{$USER_ID}'>Klicke hier, um {$user.name} eine E-Mail zu schicken!</a>
     </td>
   </tr>
 </table>

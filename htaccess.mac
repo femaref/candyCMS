@@ -7,6 +7,11 @@ RewriteEngine On
 RewriteRule ^favicon.ico$ public/favicon.ico [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
 
+# Custom error pages
+ErrorDocument 404 /public/404.html
+ErrorDocument 422 /public/422.html
+ErrorDocument 500 /public/500.html
+
 # Simple rules for the right section
 RewriteRule ^About$ index.php?section=content&id=3 [L]
 RewriteRule ^Blog$ index.php?section=blog [L]
@@ -168,8 +173,3 @@ AddType application/vnd.ms-fontobject eot
 AddType font/ttf                      ttf
 AddType font/otf                      otf
 AddType font/x-woff                   woff
-
-# Custom error pages
-ErrorDocument 404 /public/404.html
-ErrorDocument 422 /public/422.html
-ErrorDocument 500 /public/500.html

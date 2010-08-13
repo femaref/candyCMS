@@ -1,4 +1,4 @@
-{if $UR > 3}
+{if $USER_RIGHT > 3}
   <p>
     <a href='/Blog/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
@@ -24,7 +24,7 @@
               {$lang_not_published}
             {/if}
             <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
-            {if $UR > 3}
+            {if $USER_RIGHT > 3}
               <a href='/Blog/update/{$b.id}'>
                 <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
@@ -78,7 +78,7 @@
       </div>
     {/if}
   {/foreach}
-  {$blogPages}
+  {$_blog_pages_}
   <a name='comments'></a>
-  {$blogComments}
+  {$_blog_comments_}
 {/if}

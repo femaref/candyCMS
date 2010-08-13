@@ -9,8 +9,8 @@
             <label for="name">{$lang_name}</label>
           </td>
           <td class='td_right'>
-            {if $UR > 0}
-              {$USERNAME} {$USERSURNAME}
+            {if $USER_RIGHT > 0}
+              {$USER_NAME} {$USER_SURNAME}
             {else}
               <div class="input">
                 <input type="text" value="{$name}" name="name" id="name" />
@@ -42,7 +42,7 @@
           };
         </script>
       {/literal}
-      {$captcha}
+      {$_captcha_}
     </center>
     <div class="submit">
       <input type='submit' value='{$lang_submit}' />

@@ -51,7 +51,7 @@
         };
       </script>
     {/literal}
-    {$captcha}
+    {$_captcha_}
   </center>
   <div class="submit">
     <input type='submit' value='{$lang_submit}' />

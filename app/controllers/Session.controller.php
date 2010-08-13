@@ -79,7 +79,7 @@ class Session extends Main {
 #private final function _verifyEmail() {}
 # TODO: SHOULD BE MOVED TO V2
   /*public final function createInvite() {
-		if( USERID == 0 )
+		if( USER_ID == 0 )
 			return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
 		else {
 			if( isset($this->m_aRequest['invite_friend']) )

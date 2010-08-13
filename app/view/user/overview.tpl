@@ -1,4 +1,4 @@
-{if $UR == 4}
+{if $USER_RIGHT == 4}
   <p>
     <a href='/Register'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
@@ -21,7 +21,7 @@
       <td style='width:25%' title='{$lang_registered_since}'>{$u.regdate}</td>
       <td style='width:25%' title='{$lang_last_login}'>{$u.last_login}</td>
       <td style='width:10%'>
-        {if $UR == 4}
+        {if $USER_RIGHT == 4}
           <a href='/User/update/{$u.id}'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />

@@ -56,7 +56,7 @@
         </div>
       </td>
     </tr>
-    {if $UR < 4}
+    {if $USER_RIGHT < 4}
       <tr class='row2'>
         <td class='td_left'>
           <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>

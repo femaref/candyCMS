@@ -16,7 +16,7 @@ final class Content extends Main {
 
   public final function show() {
     $oSmarty = new Smarty();
-    $oSmarty->assign('UR', USERRIGHT);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     # Language
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);

@@ -23,7 +23,7 @@ class Model_Blog extends Model_Main {
                 Helper::formatHTMLCode($this->m_aRequest['id']).	"%'";
       }
       else {
-        if(USERRIGHT < 3)
+        if(USER_RIGHT < 3)
           $sWhere = "WHERE b.published = '1'";
       }
 
@@ -81,7 +81,7 @@ class Model_Blog extends Model_Main {
     }
     # There's an ID so choose between editing or displaying entry
     else {
-      if(USERRIGHT < 3)
+      if(USER_RIGHT < 3)
         $sWhere = "AND b.published = '1'";
 
       $this->_oPages = new Pages($this->m_aRequest, 1);
@@ -168,7 +168,7 @@ class Model_Blog extends Model_Main {
     return new Query("INSERT INTO
 												blog(authorID, title, tags, content, published, date)
 											VALUES(
-												'"	.USERID.	"',
+												'"	.USER_ID.	"',
 												'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
 												'"	.Helper::formatHTMLCode($this->m_aRequest['tags']).	"',
 												'"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
@@ -187,7 +187,7 @@ class Model_Blog extends Model_Main {
             '0';
 
     $sUpdateAuthor = (isset($this->m_aRequest['show_update']) && $this->m_aRequest['show_update'] == true) ?
-            ", authorID = '"	.USERID.	"'" :
+            ", authorID = '"	.USER_ID.	"'" :
             '';
 
     return new Query("UPDATE

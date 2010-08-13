@@ -130,6 +130,7 @@ define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du hast dich erfolgreich registri
 
 define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );
 define( 'LANG_GALLERY_CREATE_FILE', 'Datei hinzuf&uuml;gen' );
+define( 'LANG_GALLERY_CREATE_FILE_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_CREATE_FILE_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_CREATE_FILE_RESIZE', 'Bild proportional verkleinern' );
 define( 'LANG_GALLERY_NO_FILES_YET', 'Noch keine Bilder vorhanden!' );

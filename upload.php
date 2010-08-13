@@ -57,7 +57,7 @@ final class Multiple_Upload extends Index {
   public final function createFiles() {
     if( isset($this->m_aRequest['section']) && 'gallery' == $this->m_aRequest['section']) {
       $this->_oModel = new Model_Gallery($this->m_aRequest, $this->m_oSession, $this->m_aFile);
-      $this->_sFilePath = $this->_oModel->createFile(USERID);
+      $this->_sFilePath = $this->_oModel->createFile(USER_ID);
       $this->_aReturn['link'] = $this->_sFilePath;
     }
   }
@@ -111,7 +111,7 @@ if(isset ($_FILES) && !empty($_FILES) ) {
   define( 'USERID',	(int)$aUser['id'] );
   define( 'USERRIGHT',(int)$aUser['userright'] );
 
-  if(USERRIGHT > 3)
+  if(USER_RIGHT > 3)
     echo $oUpload->validateAndUpload();
   else
     die('No Permission!'  .print_r($aUser));

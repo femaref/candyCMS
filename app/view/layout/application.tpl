@@ -3,26 +3,21 @@
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content='{$meta_description}' />
-
-    <link href='{$url}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
-      {if $dev == true}
-        <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-        <script language='javascript' src='%PATH_PUBLIC%/js/mootools.js' type='text/javascript'></script>
-      {else}
-        <link href='%PATH_CSS%/style-min.css' rel='stylesheet' type='text/css' media='screen, projection' />
-        <script language='javascript' src='%PATH_PUBLIC%/js/mootools-min.js' type='text/javascript'></script>
-      {/if}
+    <link href='{$_website_url_}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
+    <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
+    <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
+    <script language='javascript' src='%PATH_PUBLIC%/js/mootools{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
   </head>
   <body>
     <div id='container'>
       <div id='navigation'>
-        {if $uid > 0}
-          <strong>{$lang_welcome} <a href='/User/{$uid}'>{$user}</a>!</strong> &middot;
+        {if $USER_ID > 0}
+          <strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong> &middot;
         {/if}
           <a href='/Blog'>{$lang_blog}</a> &middot;
           <a href='/Gallery'>{$lang_gallery}</a> &middot;
-        {if $uid == 0}
+        {if $USER_ID == 0}
           <a href='/Login'>{$lang_login}</a> &middot;
           <a href='/Register'>{$lang_register}</a>
         {else}
@@ -44,7 +39,7 @@
     <p style='clear:both'>
       <a href='/About'>{$lang_about} {$name}</a> &middot; <a href='/Disclaimer'>{$lang_disclaimer}</a> &middot; <a href='/Contact/Bugreport'>{$lang_report_error}</a>
     </p>
-    {if $UR > 3}
+    {if $USER_RIGHT > 3}
       <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
         <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
         {$lang_newsletter_send}
@@ -67,10 +62,6 @@
         {$lang_newsletter_create_destroy}
       </a>
     {/if}
-    {if $dev == true}
-      <script language='javascript' src='%PATH_PUBLIC%/js/javascript.js' type='text/javascript'></script>
-    {else}
-      <script language='javascript' src='%PATH_PUBLIC%/js/javascript-min.js' type='text/javascript'></script>
-    {/if}
+    <script language='javascript' src='%PATH_PUBLIC%/js/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
   </body>
 </html>

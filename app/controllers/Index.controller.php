@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 class Index {
   protected $m_aRequest;
@@ -45,12 +45,12 @@ class Index {
       die();
     }
 
-    $sLang = isset($this->m_aCookie['lang']) ?
+    $this->_sLanguage = isset($this->m_aCookie['lang']) ?
             (string)$this->m_aCookie['lang'] :
             DEFAULT_LANGUAGE;
 
-    if( file_exists($sPath. 'config/language/'	.$sLang.	'.lang.php') )
-      require_once $sPath. 'config/language/'	.$sLang.	'.lang.php';
+    if( file_exists($sPath. 'config/language/'	.$this->_sLanguage.	'.lang.php') )
+      require_once $sPath. 'config/language/'	.$this->_sLanguage.	'.lang.php';
     else
       die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
   }
@@ -68,7 +68,7 @@ class Index {
   public final function setUser($SessionId = '') {
     if(empty($SessionId))
       $SessionId = session_id();
-      
+
     # TODO: Besser QueryModel
     $this->m_oSession['userdata'] = Model_Main::simpleQuery(
             '*',
@@ -91,36 +91,43 @@ class Index {
     # Set expiration date for header
     $sHeaderExpires = gmdate('D, d M Y H:i:s', time() + 60).	' GMT';
 
+    # Load JS language
+    $sLangVars  = '';
+    $oFile      = fopen('config/language/' .$this->_sLanguage.  '.lang.js', 'r');
+    while(!feof($oFile)) {
+      $sLangVars  .= fgets($oFile);
+    }
+
     # Header.tpl
     $oSmarty = new Smarty();
-    $oSmarty->assign('dev', WEBSITE_DEV);
     $oSmarty->assign('name', WEBSITE_NAME);
-    $oSmarty->assign('uid', (int)$this->m_oSession['userdata']['id']);
-    $oSmarty->assign('UR', USERRIGHT);
-    $oSmarty->assign('url', WEBSITE_URL);
     $oSmarty->assign('user', Helper::formatBBCode($this->m_oSession['userdata']['name']));
+    $oSmarty->assign('USER_ID', USER_ID);
+    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+
+    # System variables
+    $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
+    $oSmarty->assign('_javascript_language_file_', $sLangVars);
+    $oSmarty->assign('_website_url_', WEBSITE_URL);
 
     # Language
-    # Header (in default)
-    $oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
-    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
-    $oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
-    $oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
-    $oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
-    $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
-    $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
-    $oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
-
-    # Footer (in default)
     $oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);
+    $oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
     $oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);
     $oSmarty->assign('lang_cronjob_exec', LANG_GLOBAL_CRONJOB_EXEC);
     $oSmarty->assign('lang_disclaimer', LANG_GLOBAL_DISCLAIMER);
     $oSmarty->assign('lang_filemanager', LANG_GLOBAL_FILEMANAGER);
+    $oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
+    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
+    $oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
+    $oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
     $oSmarty->assign('lang_newsletter_create_destroy', LANG_NEWSLETTER_CREATE_DESTROY);
     $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE);
+    $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
     $oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
+    $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
     $oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
+    $oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
 
     /* Define Core Modules - check if we use a standard action. If yes, forward to
 		 * Section.class.php where we check for an override of this core modules. If we

@@ -158,7 +158,7 @@ class Model_Gallery extends Model_Main {
 		$oQuery = new Query("	INSERT INTO
 														gallery_album(authorID, title, description, date)
 													VALUES(
-														'"	.USERID.	"',
+														'"	.USER_ID.	"',
 														'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
 														'"	.Helper::formatHTMLCode($this->m_aRequest['description']).	"',
 														'"	.time().	"')

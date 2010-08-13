@@ -22,13 +22,13 @@ class Mail extends Main {
 
   public final function createMail() {
     if( isset($this->m_aRequest['send_mail']) ) {
-      if( USERRIGHT == 0 )
+      if( USER_RIGHT == 0 )
         return $this->_checkCaptcha();
       else
         return $this->_standardMail(false);
     }
     else {
-      $bShowCaptcha = ( USERRIGHT == 0 ) ? true : false;
+      $bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
       return $this->_showCreateMailTemplate($bShowCaptcha);
     }
   }
@@ -58,10 +58,10 @@ class Mail extends Main {
     $oSmarty->assign('subject', $sSubject);
 
     if( $bShowCaptcha == true )
-      $oSmarty->assign('captcha', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
+      $oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
               $this->_sRecaptchaError) );
     else
-      $oSmarty->assign('captcha', '');
+      $oSmarty->assign('_captcha_', '');
 
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
@@ -133,7 +133,8 @@ class Mail extends Main {
                         !empty($this->m_aRequest['email']) ?
                 Helper::formatHTMLCode($this->m_aRequest['email']):
                 WEBSITE_MAIL_NOREPLY;
-      } else
+      }
+      else
         $sReplyTo =& $sMailTo;
 
       $sSendersName = isset($this->m_oSession['userdata']['name']) ?
@@ -200,7 +201,8 @@ class Mail extends Main {
 
       return true;
 
-    } else {
+    }
+    else {
       # DEBUG MODE
       return Helper::errorMessage('<div style=\'text-align:left\'>'
               .LANG_GLOBAL_BY.	': '	.WEBSITE_NAME. '<br />'

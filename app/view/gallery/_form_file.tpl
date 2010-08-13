@@ -122,7 +122,7 @@
           </div>
           <div id="fancy-status" class="hide">
             <p>
-              <a href="#" id="fancy-browse">Browse Files</a>
+              <a href="#" id="fancy-browse">{$lang_file_choose}</a>
             </p>
             <div>
               <strong class="overall-title"></strong>
