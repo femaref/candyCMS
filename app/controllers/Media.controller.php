@@ -112,14 +112,14 @@ class Media extends Main {
   }
 
   public function destroy() {
-    if( USERRIGHT < 3 )
+    if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file']);
 
-        return Header('Location:'	.WEBSITE_URL.	'/Media').
-                Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS);
+        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESS).
+                Header('Location:'	.WEBSITE_URL.	'/Media');
       }
       else
         return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE);
