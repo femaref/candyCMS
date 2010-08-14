@@ -20,7 +20,7 @@ class Model_Blog extends Model_Main {
               isset($this->m_aRequest['id']) &&
               !empty($this->m_aRequest['id'])) {
         $sWhere = "WHERE b.tags LIKE '%"	.
-                Helper::formatHTMLCode($this->m_aRequest['id']).	"%'";
+                Helper::formatInput($this->m_aRequest['id']).	"%'";
       }
       else {
         if(USER_RIGHT < 3)
@@ -63,18 +63,18 @@ class Model_Blog extends Model_Main {
                 'authorID' => $aRow['authorID'],
                 'tags' => $aTags,
                 'tags_sum' => (int)count($aTags),
-                'title' => Helper::formatBBCode($aRow['title']),
-                'content' => Helper::formatBBCode($aRow['content'], true),
+                'title' => Helper::formatOutout($aRow['title']),
+                'content' => Helper::formatOutout($aRow['content'], true),
                 'date' => Helper::formatTimestamp($aRow['date']),
                 'date_modified' => Helper::formatTimestamp($aRow['date_modified']),
                 'uid' => $aRow['uid'],
-                'name' => Helper::formatBBCode($aRow['name']),
-                'surname' => Helper::formatBBCode($aRow['surname']),
+                'name' => Helper::formatOutout($aRow['name']),
+                'surname' => Helper::formatOutout($aRow['surname']),
                 'avatar18' => Helper::getAvatar('user/18/', $aRow['authorID']),
                 'avatar32' => Helper::getAvatar('user/32/', $aRow['authorID']),
                 'avatar64' => Helper::getAvatar('user/64/', $aRow['authorID']),
                 'comment_sum' => $aRow['commentSum'],
-                'eTitle' => Helper::formatBBCode(urlencode($aRow['title'])),
+                'eTitle' => Helper::formatOutout(urlencode($aRow['title'])),
                 'published' => $aRow['published']
         );
       }
@@ -115,7 +115,7 @@ class Model_Blog extends Model_Main {
         # Do we use WYSIWYG or BB-Code?
         if( isset($this->m_aRequest['write_mode']) &&
                 'wysiwyg' == $this->m_aRequest['write_mode'] )
-          $sContent = Helper::formatBBCode($aRow['content']);
+          $sContent = Helper::formatOutout($aRow['content']);
         else
           $sContent = Helper::removeSlahes($aRow['content']);
 
@@ -136,16 +136,16 @@ class Model_Blog extends Model_Main {
                 'authorID' => $aRow['authorID'],
                 'tags' => $aTags,
                 'tags_sum' => (int)count($aTags),
-                'title' => Helper::formatBBCode($aRow['title']),
-                'content' => Helper::formatBBCode($aRow['content'], true),
+                'title' => Helper::formatOutout($aRow['title']),
+                'content' => Helper::formatOutout($aRow['content'], true),
                 'date' => Helper::formatTimestamp($aRow['date']),
                 'date_modified' => Helper::formatTimestamp($aRow['date_modified']),
                 'uid' => $aRow['uid'],
-                'name' => Helper::formatBBCode($aRow['name']),
-                'surname' => Helper::formatBBCode($aRow['surname']),
+                'name' => Helper::formatOutout($aRow['name']),
+                'surname' => Helper::formatOutout($aRow['surname']),
                 'avatar' => '',
                 'comment_sum' => $aRow['commentSum'],
-                'eTitle' => Helper::formatBBCode(urlencode($aRow['title'])),
+                'eTitle' => Helper::formatOutout(urlencode($aRow['title'])),
                 'published' => $aRow['published']
         );
       }
@@ -169,9 +169,9 @@ class Model_Blog extends Model_Main {
 												blog(authorID, title, tags, content, published, date)
 											VALUES(
 												'"	.USER_ID.	"',
-												'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
-												'"	.Helper::formatHTMLCode($this->m_aRequest['tags']).	"',
-												'"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
+												'"	.Helper::formatInput($this->m_aRequest['title'], false).	"',
+												'"	.Helper::formatInput($this->m_aRequest['tags']).	"',
+												'"	.Helper::formatInput($this->m_aRequest['content'], false).	"',
 												'"	.(int)$this->m_aRequest['published'].	"',
 												'"	.time().	"')
 												");
@@ -193,9 +193,9 @@ class Model_Blog extends Model_Main {
     return new Query("UPDATE
 												`blog`
 											SET
-												title = '"	.Helper::formatHTMLCode($this->m_aRequest['title'], false).	"',
-												tags = '"	.Helper::formatHTMLCode($this->m_aRequest['tags'], false).	"',
-												content = '"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
+												title = '"	.Helper::formatInput($this->m_aRequest['title'], false).	"',
+												tags = '"	.Helper::formatInput($this->m_aRequest['tags']).	"',
+												content = '"	.Helper::formatInput($this->m_aRequest['content'], false).	"',
 												published = '"	.(int)$iPublished.	"',
 												date_modified = '"	.$iDateModified.	"'
 												"	.$sUpdateAuthor.	"

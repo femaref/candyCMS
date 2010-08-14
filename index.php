@@ -65,6 +65,7 @@ $oIndex->loadConfig();
 $oIndex->checkURL();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
+$oIndex->loadPlugins();
 $oIndex->connectDB();
 
 $aUser =& $oIndex->setUser();

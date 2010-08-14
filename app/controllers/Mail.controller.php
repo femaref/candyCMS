@@ -76,7 +76,7 @@ class Mail extends Main {
     else
       $oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $oSmarty->template_dir = Helper::templateDir('mail/create');
+    $oSmarty->template_dir = Helper::getTemplateDir('mail/create');
     return $oSmarty->fetch('mail/create.tpl');
   }
 
@@ -131,7 +131,7 @@ class Mail extends Main {
       if(empty($sMailTo)) {
         $sReplyTo = isset($this->m_aRequest['email']) &&
                         !empty($this->m_aRequest['email']) ?
-                Helper::formatHTMLCode($this->m_aRequest['email']):
+                Helper::formatInput($this->m_aRequest['email']):
                 WEBSITE_MAIL_NOREPLY;
       }
       else
@@ -142,10 +142,10 @@ class Mail extends Main {
               LANG_GLOBAL_SYSTEMBOT;
 
       $sSubject = isset($this->m_aRequest['subject']) && !empty($this->m_aRequest['subject']) ?
-              Helper::formatHTMLCode($this->m_aRequest['subject']) :
+              Helper::formatInput($this->m_aRequest['subject']) :
               str_replace('%u', $sSendersName, LANG_MAIL_SUBJECT_BY_USER);
 
-      $sMessage = Helper::formatHTMLCode($this->m_aRequest['content']);
+      $sMessage = Helper::formatInput($this->m_aRequest['content']);
 
       # Mail to, Subject, Message, Reply to
       $bStatus = Mail::send(	$sMailTo,

@@ -35,7 +35,7 @@ class Model_Content extends Model_Main {
 			# Do we use WYSIWYG or BB-Code?
 				if( isset($this->m_aRequest['write_mode']) &&
 						'wysiwyg' == $this->m_aRequest['write_mode'] )
-					$sContent = Helper::formatBBCode($aRow['content']);
+					$sContent = Helper::formatOutout($aRow['content']);
 				else
 					$sContent = Helper::removeSlahes($aRow['content']);
 
@@ -50,14 +50,14 @@ class Model_Content extends Model_Main {
 			else {
 				$this->_aData[$iID] = array(	'id' => $aRow['id'],
 						'authorID' => $aRow['authorID'],
-						'title' => Helper::formatBBCode($aRow['title']),
-						'content' => Helper::formatBBCode($aRow['content'], true),
+						'title' => Helper::formatOutout($aRow['title']),
+						'content' => Helper::formatOutout($aRow['content'], true),
 						'date' => Helper::formatTimestamp($aRow['date']),
 						'uid' => $aRow['uid'],
-						'name' => Helper::formatBBCode($aRow['name']),
-						'surname' => Helper::formatBBCode($aRow['surname']),
+						'name' => Helper::formatOutout($aRow['name']),
+						'surname' => Helper::formatOutout($aRow['surname']),
 						'avatar' => '',
-						'eTitle' => Helper::formatBBCode(urlencode($aRow['title']))
+						'eTitle' => Helper::formatOutout(urlencode($aRow['title']))
 				);
 			}
 		}
@@ -76,8 +76,8 @@ class Model_Content extends Model_Main {
 														content(authorID, title, content, date)
 													VALUES(
 														'"	.USER_ID.	"',
-														'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
-														'"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
+														'"	.Helper::formatInput($this->m_aRequest['title'], false).	"',
+														'"	.Helper::formatInput($this->m_aRequest['content'], false).	"',
 														'"	.time().	"')
 														");
 
@@ -93,8 +93,8 @@ class Model_Content extends Model_Main {
 		return new Query("	UPDATE
 													`content`
 												SET
-													title = '"	.Helper::formatHTMLCode($this->m_aRequest['title'], false).	"',
-													content = '"	.Helper::formatHTMLCode($this->m_aRequest['content'], false).	"',
+													title = '"	.Helper::formatInput($this->m_aRequest['title'], false).	"',
+													content = '"	.Helper::formatInput($this->m_aRequest['content'], false).	"',
 													date = '"	.time().	"',
 													authorID = '"	.USER_ID.	"'
 												WHERE

@@ -37,7 +37,7 @@ class Session extends Main {
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
     $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
 
-    $oSmarty->template_dir = Helper::templateDir('session/createSession');
+    $oSmarty->template_dir = Helper::getTemplateDir('session/createSession');
     return $oSmarty->fetch('session/createSession.tpl');
   }
 
@@ -64,7 +64,7 @@ class Session extends Main {
     $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
     $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
 
-    $oSmarty->template_dir = Helper::templateDir('session/createNewPassword');
+    $oSmarty->template_dir = Helper::getTemplateDir('session/createNewPassword');
     return $oSmarty->fetch('session/createNewPassword.tpl');
   }
 
@@ -114,9 +114,9 @@ class Session extends Main {
 		$sSubject = str_replace('%u', $sName, LANG_LOGIN_INVITATION_MAIL_SUBJECT);
 
 		$sMessage = str_replace('%u', $this->m_oSession['userdata']['name'], LANG_LOGIN_INVITATION_MAIL_BODY);
-		$sMessage = str_replace('%notes', Helper::formatHTMLCode($this->m_aRequest['notes']), $sMessage);
+		$sMessage = str_replace('%notes', Helper::formatInput($this->m_aRequest['notes']), $sMessage);
 
-		Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+		Mail::send(	Helper::formatInput($this->m_aRequest['email']),
 				$sSubject,
 				$sMessage.LANG_MAIL_SIGNATURE,
 				WEBSITE_MAIL_NOREPLY);

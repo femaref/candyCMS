@@ -132,7 +132,7 @@ class User extends Main {
     $oSmarty->assign('lang_userright_3', LANG_GLOBAL_USERRIGHT_3);
     $oSmarty->assign('lang_userright_4', LANG_GLOBAL_USERRIGHT_4);
 
-    $oSmarty->template_dir = Helper::templateDir('user/_form');
+    $oSmarty->template_dir = Helper::getTemplateDir('user/_form');
     return $oSmarty->fetch('user/_form.tpl').
             $oSmarty->fetch('user/createAvatar.tpl');
   }
@@ -208,7 +208,7 @@ class User extends Main {
       $aThumbInfo	= getImageSize(Helper::getAvatar('user/100/', $this->_iID));
 
       # Description Fix, format Code to BB
-      $this->_aData['description'] = Helper::formatBBCode($this->_aData['description']);
+      $this->_aData['description'] = Helper::formatOutout($this->_aData['description']);
 
       $oSmarty->assign('uid', $this->_iID);
       $oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']) );
@@ -229,7 +229,7 @@ class User extends Main {
       $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE );
 
 
-      $oSmarty->template_dir = Helper::templateDir('user/show');
+      $oSmarty->template_dir = Helper::getTemplateDir('user/show');
       return $oSmarty->fetch('user/show.tpl');
 
     }
@@ -248,7 +248,7 @@ class User extends Main {
         $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
         $oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
 
-        $oSmarty->template_dir = Helper::templateDir('user/overview');
+        $oSmarty->template_dir = Helper::getTemplateDir('user/overview');
         return $oSmarty->fetch('user/overview.tpl');
       }
     }
@@ -279,11 +279,11 @@ class User extends Main {
 
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
-    $sName = isset($this->m_aRequest['name']) ? Helper::formatHTMLCode($this->m_aRequest['name']) : '';
+    $sName = isset($this->m_aRequest['name']) ? Helper::formatInput($this->m_aRequest['name']) : '';
     $oSmarty->assign('name', $sName);
-    $sSurname = isset($this->m_aRequest['surname']) ? Helper::formatHTMLCode($this->m_aRequest['surname']) : '';
+    $sSurname = isset($this->m_aRequest['surname']) ? Helper::formatInput($this->m_aRequest['surname']) : '';
     $oSmarty->assign('surname', $sSurname);
-    $sEmail = isset($this->m_aRequest['email']) ? Helper::formatHTMLCode($this->m_aRequest['email']) : '';
+    $sEmail = isset($this->m_aRequest['email']) ? Helper::formatInput($this->m_aRequest['email']) : '';
     $oSmarty->assign('email', $sEmail);
 
     # Language
@@ -297,7 +297,7 @@ class User extends Main {
     $oSmarty->assign('lang_submit', LANG_GLOBAL_REGISTER);
     $oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
 
-    $oSmarty->template_dir = Helper::templateDir('user/createUser');
+    $oSmarty->template_dir = Helper::getTemplateDir('user/createUser');
     return $oSmarty->fetch('user/createUser.tpl');
   }
 
@@ -336,10 +336,10 @@ class User extends Main {
       $this->_oModel = new Model_User($this->m_aRequest, $this->m_oSession);
 
       if( $this->_oModel->create() == true) {
-        $sMail = str_replace('%n', Helper::formatHTMLCode($this->m_aRequest['name']),
+        $sMail = str_replace('%n', Helper::formatInput($this->m_aRequest['name']),
                 LANG_LOGIN_REGISTRATION_MAIL_BODY);
 
-        $bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+        $bStatus = Mail::send(	Helper::formatInput($this->m_aRequest['email']),
                 LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
                 $sMail,
                 WEBSITE_MAIL_NOREPLY);

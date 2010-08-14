@@ -27,7 +27,7 @@ class Newsletter extends Main {
       elseif($sQuery == 'INSERT') {
         $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
-        Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+        Mail::send(	Helper::formatInput($this->m_aRequest['email'], false),
                 LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT,
                 LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE,
                 WEBSITE_MAIL_NOREPLY);
@@ -42,7 +42,7 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_DESTROY);
     $oSmarty->assign('lang_description', LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION);
 
-    $oSmarty->template_dir = Helper::templateDir('newsletter/newsletter');
+    $oSmarty->template_dir = Helper::getTemplateDir('newsletter/newsletter');
     return $sMsg.$oSmarty->fetch('newsletter/newsletter.tpl');
   }
 
@@ -77,7 +77,7 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
     $oSmarty->assign('lang_submit', LANG_NEWSLETTER_SUBMIT);
 
-    $oSmarty->template_dir = Helper::templateDir('newsletter/create');
+    $oSmarty->template_dir = Helper::getTemplateDir('newsletter/create');
     return $oSmarty->fetch('newsletter/create.tpl');
   }
 
@@ -110,8 +110,8 @@ class Newsletter extends Main {
         $sReceiversName = $aRow['name'];
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject	= Helper::formatHTMLCode($this->m_aRequest['subject']);
-        $sMailContent	= Helper::formatHTMLCode
+        $sMailSubject	= Helper::formatInput($this->m_aRequest['subject']);
+        $sMailContent	= Helper::formatInput
                 (	str_replace('%u', $sReceiversName, $this->m_aRequest['content']),
                 false
         );
@@ -129,10 +129,10 @@ class Newsletter extends Main {
         $sReceiversName = LANG_NEWSLETTER_DEFAULT_ADDRESS;
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject	= Helper::formatHTMLCode($this->m_aRequest['subject']);
-        $sMailContent	= Helper::formatHTMLCode
+        $sMailSubject	= Helper::formatInput($this->m_aRequest['subject']);
+        $sMailContent	= Helper::formatInput
                 (	str_replace('%u', $sReceiversName, $this->m_aRequest['content']),
-                false
+                true
         );
 
         Mail::send(	$sReceiversMail, $sMailSubject, $sMailContent );

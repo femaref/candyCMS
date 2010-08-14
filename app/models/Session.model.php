@@ -16,9 +16,9 @@ class Model_Session extends Model_Main {
 															FROM
 																user
 															WHERE
-																email = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'
+																email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
 															AND
-																password = MD5('"	.RANDOM_HASH.Helper::formatHTMLCode($this->m_aRequest['password']).	"')
+																password = MD5('"	.RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']).	"')
 															LIMIT 1");
 
     # Check if user exists
@@ -61,7 +61,7 @@ class Model_Session extends Model_Main {
 														FROM
 															user
 														WHERE
-															email = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'");
+															email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'");
 
     $iUser = $oGetUser->count();
     if( $iUser == 0 )
@@ -79,7 +79,7 @@ class Model_Session extends Model_Main {
 																	FROM
 																		user
 																	WHERE
-																		email = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'
+																		email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
 																	LIMIT
 																		1");
       $aRow = $oGetUserName->fetch();
@@ -88,7 +88,7 @@ class Model_Session extends Model_Main {
       $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
       $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-      $bStatus = Mail::send(	Helper::formatHTMLCode($this->m_aRequest['email']),
+      $bStatus = Mail::send(	Helper::formatInput($this->m_aRequest['email']),
               LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
               $sContent,
               WEBSITE_MAIL_NOREPLY);
@@ -99,7 +99,7 @@ class Model_Session extends Model_Main {
                           SET
                             password = '"	.$sNewPasswordSecure.	"'
                           WHERE
-                            `email` = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'");
+                            `email` = '"	.Helper::formatInput($this->m_aRequest['email']).	"'");
       }
     }
   }

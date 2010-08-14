@@ -54,7 +54,7 @@ final class Pages {
     $oSmarty->assign('public_folder', WEBSITE_CDN. '/public/images');
     $oSmarty->assign('page_count', $this->_iPages);
 
-    $oSmarty->template_dir = Helper::templateDir('pages/pages');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages/pages');
     return $oSmarty->fetch('pages/pages.tpl');
   }
 
@@ -81,7 +81,7 @@ final class Pages {
     $oSmarty->assign('lang_previous_entries', LANG_PAGES_PREVIOUS_ENTRIES);
     $oSmarty->assign('lang_rss_feed', LANG_GLOBAL_RSS);
 
-    $oSmarty->template_dir = Helper::templateDir('pages/surrounding');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages/surrounding');
     return $oSmarty->fetch('pages/surrounding.tpl');
   }
 }

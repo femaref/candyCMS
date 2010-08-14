@@ -60,6 +60,17 @@ class Index {
       require_once 'addon/Addon.class.php';
   }
 
+  public final function loadPlugins() {
+		$oDir = opendir('plugins');
+
+		while($aFile = readdir($oDir)) {
+			if($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
+				continue;
+
+			require_once ('plugins/'	.$aFile);
+    }
+  }
+
   public final function connectDB() {
     SQLCONNECT::connect(SQL_HOST, SQL_USER, SQL_PASSWORD);
     SQLCONNECT::selectDB(SQL_DB);
@@ -101,7 +112,7 @@ class Index {
     # Header.tpl
     $oSmarty = new Smarty();
     $oSmarty->assign('name', WEBSITE_NAME);
-    $oSmarty->assign('user', Helper::formatBBCode($this->m_oSession['userdata']['name']));
+    $oSmarty->assign('user', Helper::formatOutout($this->m_oSession['userdata']['name']));
     $oSmarty->assign('USER_ID', USER_ID);
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
@@ -170,7 +181,7 @@ class Index {
       $oSmarty->assign('meta_description', WEBSITE_SLOGAN);
 
       $oSmarty->assign('_content_', $oSection->getContent());
-      $oSmarty->template_dir = Helper::templateDir('layout/application');
+      $oSmarty->template_dir = Helper::getTemplateDir('layout/application');
       $sCachedHTML = $oSmarty->fetch('layout/application.tpl');
     }
 

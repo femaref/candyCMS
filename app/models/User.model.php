@@ -24,8 +24,8 @@ class Model_User extends Model_Main {
 			while( $aRow = $oGetData->fetch()) {
 				$iID = $aRow['id'];
 				$this->_aData[$iID] = array(
-						'name'						=> Helper::formatBBCode($aRow['name']),
-						'surname'					=> Helper::formatBBCode($aRow['surname']),
+						'name'						=> Helper::formatOutout($aRow['name']),
+						'surname'					=> Helper::formatOutout($aRow['surname']),
 						'last_login'			=> Helper::formatTimestamp($aRow['last_login']),
 						'regdate'					=> Helper::formatTimestamp($aRow['regdate']),
 						'id'							=> $aRow['id'],
@@ -67,10 +67,10 @@ class Model_User extends Model_Main {
 												user (name, surname, password, email, regdate)
 											VALUES
 											(
-												'"	.Helper::formatHTMLCode($this->m_aRequest['name']).	"',
-												'"	.Helper::formatHTMLCode($this->m_aRequest['surname']).	"',
+												'"	.Helper::formatInput($this->m_aRequest['name']).	"',
+												'"	.Helper::formatInput($this->m_aRequest['surname']).	"',
 												'"	.md5(RANDOM_HASH.$this->m_aRequest['password']).	"',
-												'"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"',
+												'"	.Helper::formatInput($this->m_aRequest['email']).	"',
 												'"	.time().	"'
 											)");
 	}
@@ -92,10 +92,10 @@ class Model_User extends Model_Main {
 		return new Query("	UPDATE
 													`user`
 												SET
-													name = '"	.Helper::formatHTMLCode($this->m_aRequest['name']).	"',
-													surname = '"	.Helper::formatHTMLCode($this->m_aRequest['surname']).	"',
-													email = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"',
-													description = '"	.Helper::formatHTMLCode($this->m_aRequest['description']).	"',
+													name = '"	.Helper::formatInput($this->m_aRequest['name']).	"',
+													surname = '"	.Helper::formatInput($this->m_aRequest['surname']).	"',
+													email = '"	.Helper::formatInput($this->m_aRequest['email']).	"',
+													description = '"	.Helper::formatInput($this->m_aRequest['description']).	"',
 													newsletter_default = '"	.$iNewsletterDefault.	"',
 													password = '"	.$sPassword.	"',
 													userright = '"	.$iUserRight.	"'

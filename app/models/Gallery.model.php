@@ -48,8 +48,8 @@ class Model_Gallery extends Model_Main {
 				$iID = $aRow['id'];
 				$this->_aData[$iID] = array('id' => $aRow['id'],
 						'authorID' => $aRow['authorID'],
-						'title' => Helper::formatBBCode($aRow['title']),
-						'description' => Helper::formatBBCode($aRow['description'], true),
+						'title' => Helper::formatOutout($aRow['title']),
+						'description' => Helper::formatOutout($aRow['description'], true),
 						'date' => Helper::formatTimestamp($aRow['date']),
 						'files_sum' => $aRow['filesSum']
 				);
@@ -107,7 +107,7 @@ class Model_Gallery extends Model_Main {
 			$this->_aThumbs[$iID] = array(	'id' => $aRow['id'],
 					'file' => $aRow['file'],
 					'full_path' => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['aid'],
-					'description' => Helper::formatBBCode($aRow['description']),
+					'description' => Helper::formatOutout($aRow['description']),
 					'date' => Helper::formatTimestamp($aRow['date']),
 					'extension' => $aRow['extension'],
 					'dim' => THUMB_DEFAULT_X,
@@ -159,8 +159,8 @@ class Model_Gallery extends Model_Main {
 														gallery_album(authorID, title, description, date)
 													VALUES(
 														'"	.USER_ID.	"',
-														'"	.Helper::formatHTMLCode($this->m_aRequest['title']).	"',
-														'"	.Helper::formatHTMLCode($this->m_aRequest['description']).	"',
+														'"	.Helper::formatInput($this->m_aRequest['title']).	"',
+														'"	.Helper::formatInput($this->m_aRequest['description']).	"',
 														'"	.time().	"')
 														");
 
@@ -194,8 +194,8 @@ class Model_Gallery extends Model_Main {
 		return new Query("UPDATE
 												`gallery_album`
 											SET
-												title = '"	.Helper::formatHTMLCode($this->m_aRequest['title'], false).	"',
-												description = '"	.Helper::formatHTMLCode($this->m_aRequest['description'], false).	"'
+												title = '"	.Helper::formatInput($this->m_aRequest['title']).	"',
+												description = '"	.Helper::formatInput($this->m_aRequest['description']).	"'
 											WHERE
 												`id` = '"	.(int)$iID.	"'");
 	}
@@ -253,7 +253,7 @@ class Model_Gallery extends Model_Main {
 									'"	.(int)$iUserId.	"',
 									'"	.$oUploadFile->getId().	"',
 									'"	.$oUploadFile->getExtension().	"',
-									'"	.Helper::formatHTMLCode($this->m_aRequest['description']).	"',
+									'"	.Helper::formatInput($this->m_aRequest['description']).	"',
 									'"	.time().	"')");
 
 		return $sFilePath;
@@ -263,7 +263,7 @@ class Model_Gallery extends Model_Main {
 		$oQuery = new Query(" UPDATE
                             `gallery_file`
                           SET
-                            description = '"	.Helper::formatHTMLCode($this->m_aRequest['description'], false).	"'
+                            description = '"	.Helper::formatInput($this->m_aRequest['description']).	"'
                           WHERE
                             `id` = '"	.$iID.	"'");
     return $oQuery;

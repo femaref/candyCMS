@@ -21,7 +21,7 @@ final class Addon extends Section {
 		$oDir = opendir('addon');
 
 		while($aFile = readdir($oDir)) {
-			if($aFile == '.' || $aFile == '..' || $aFile == 'Addon.class.php' || $aFile == '_dev')
+			if($aFile == '.' || $aFile == '..' || $aFile == 'Addon.class.php' || $aFile == '_dev' || $aFile == '.htaccess')
 				continue;
 
 			require_once ('app/addon/'	.$aFile);

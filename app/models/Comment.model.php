@@ -51,11 +51,11 @@ class Model_Comment extends Model_Main {
                 'parentCat' => $aRow['parentCat'],
                 'authorID' => $aRow['authorID'],
                 'author_name' => $aRow['author_name'],
-                'name' => Helper::formatBBCode($aRow['name']),
-                'surname' => Helper::formatBBCode($aRow['surname']),
+                'name' => Helper::formatOutout($aRow['name']),
+                'surname' => Helper::formatOutout($aRow['surname']),
                 'avatar64' => Helper::getAvatar('user/64/', $aRow['authorID']),
                 'date' => Helper::formatTimestamp($aRow['date']),
-                'content' => Helper::formatBBCode($aRow['content']),
+                'content' => Helper::formatOutout($aRow['content']),
                 'loop' => $iLoop
         );
       }
@@ -83,7 +83,7 @@ class Model_Comment extends Model_Main {
 
   public function create() {
     $sAuthorName = isset($this->m_aRequest['name']) ?
-            Helper::formatHTMLCode($this->m_aRequest['name']) :
+            Helper::formatInput($this->m_aRequest['name']) :
             '';
 
     new Query("	INSERT INTO
@@ -91,7 +91,7 @@ class Model_Comment extends Model_Main {
 								VALUES(
 									'"	.USER_ID.	"',
 									'"	.$sAuthorName.	"',
-									'"	.Helper::formatHTMLCode($this->m_aRequest['content']).	"',
+									'"	.Helper::formatInput($this->m_aRequest['content']).	"',
 									'"	.time().	"',
 									'"	.(int)$this->m_aRequest['parentid'].	"',
 									'"	.$this->m_aRequest['parentcat'].	"')

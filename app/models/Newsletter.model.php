@@ -15,7 +15,7 @@ class Model_Newsletter extends Model_Main {
 															FROM
 																newsletter
 															WHERE
-																email ='"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'
+																email ='"	.Helper::formatInput($this->m_aRequest['email']).	"'
 															LIMIT
 																1");
 
@@ -23,7 +23,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = new Query("	DELETE FROM
                                 newsletter
                               WHERE
-                                email = '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"'
+                                email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
                               LIMIT 1");
         return 'DESTROY';
       }
@@ -31,7 +31,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = new Query("	INSERT INTO
                                 newsletter(email)
                               VALUES(
-                                '"	.Helper::formatHTMLCode($this->m_aRequest['email']).	"')");
+                                '"	.Helper::formatInput($this->m_aRequest['email']).	"')");
 
         return 'INSERT';
       }

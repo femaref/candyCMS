@@ -56,7 +56,7 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY.	': '	.
               $sAlbumName));
 
-      $oSmarty->template_dir = Helper::templateDir('gallery/showFiles');
+      $oSmarty->template_dir = Helper::getTemplateDir('gallery/showFiles');
       return $oSmarty->fetch('gallery/showFiles.tpl');
     }
     # Overview
@@ -71,7 +71,7 @@ class Gallery extends Main {
       $oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
       $oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 
-      $oSmarty->template_dir = Helper::templateDir('gallery/showAlbums');
+      $oSmarty->template_dir = Helper::getTemplateDir('gallery/showAlbums');
       return $oSmarty->fetch('gallery/showAlbums.tpl');
     }
   }
@@ -170,7 +170,7 @@ class Gallery extends Main {
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
     $oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 
-    $oSmarty->template_dir = Helper::templateDir('gallery/_form_album');
+    $oSmarty->template_dir = Helper::getTemplateDir('gallery/_form_album');
     return $oSmarty->fetch('gallery/_form_album.tpl');
   }
 
@@ -240,7 +240,7 @@ class Gallery extends Main {
     else {
       # See helper/Image.helper.php for Details!
       $sDefault = isset($this->m_aRequest['cut']) ?
-              Helper::formatHTMLCode($this->m_aRequest['cut']) :
+              Helper::formatInput($this->m_aRequest['cut']) :
               'r'; # r = resize, c = cut
 
       $oSmarty->assign('default', $sDefault);
@@ -260,7 +260,7 @@ class Gallery extends Main {
     # Language
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
 
-    $oSmarty->template_dir = Helper::templateDir('gallery/_form_file');
+    $oSmarty->template_dir = Helper::getTemplateDir('gallery/_form_file');
     return $oSmarty->fetch('gallery/_form_file.tpl');
   }
 }

@@ -88,7 +88,7 @@ final class Comment extends Main {
         $oSmarty->assign('lang_destroy', LANG_COMMENT_DESTROY);
         $oSmarty->assign('lang_quote', LANG_GLOBAL_QUOTE);
 
-        $oSmarty->template_dir = Helper::templateDir('comment/show');
+        $oSmarty->template_dir = Helper::getTemplateDir('comment/show');
         $sReturn .= $oSmarty->fetch('comment/show.tpl');
       }
 
@@ -203,7 +203,7 @@ final class Comment extends Main {
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 
-      $oSmarty->template_dir = Helper::templateDir('comment/_form');
+      $oSmarty->template_dir = Helper::getTemplateDir('comment/_form');
       return $oSmarty->fetch('comment/_form.tpl');
     }
   }
