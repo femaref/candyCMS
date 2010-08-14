@@ -72,11 +72,11 @@ RewriteRule ^Media/([a-z]+)$ index.php?section=media&action=$1 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&file=$1 [L]
 RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
 
-# Hide config file for non script access
-<Files "Config.inc.php">
-  Order Allow,Deny
-  Deny from All
-</Files>
+# Hide files for non script access
+<FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php)$">
+  order allow,deny
+  deny from all
+</FilesMatch> 
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
