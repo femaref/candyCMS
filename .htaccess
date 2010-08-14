@@ -73,7 +73,7 @@ RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&file=$1 
 RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
 
 # Hide files for non script access
-<FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php)$">
+<FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php)$">
   order allow,deny
   deny from all
 </FilesMatch> 
