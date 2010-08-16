@@ -145,23 +145,18 @@ define('POPUP_DEFAULT_Y', '800');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('SKIN_CSS', '');
+define('PATH_CSS', 'candyCMS');
 
 # DEFAULT: default
-define('SKIN_IMAGES', '');
-
-# DEFAULT: default
-define('SKIN_TPL', '');
-
-# ------------------------------------------------------------------------------
+define('PATH_IMAGES', '');
 
 # Define, where to search for additional templates
-# DEFAULT: '', FOLDER: 'public/skins/SKINNAME/view/addon'
-define('PATH_TPL_ADDON', '');
+# DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
+define('PATH_TPL', 'candyCMS');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
-define('PATH_TPL_STATIC', 'public/skins/default/view/_static');
+define('PATH_TPL_STATIC', 'public/skins/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload

@@ -94,7 +94,11 @@ h3 {
 
 ul
 {
-  margin-bottom:15px;
+  margin-bottom:10px;
+}
+
+li {
+  margin-bottom:5px;
 }
 
 /********************************************************************************/
@@ -203,10 +207,8 @@ fieldset .textarea textarea {
 
 /* Quote Boxes, Success and Error Messages */
 .success, .error, .notice {
-  border: 1px solid #41a62a;
-  color: #006729;
-  margin: 20px 30px 20px 30px;
-  padding: 0px;
+  margin: 10px;
+  padding: 10px;
   cursor:pointer;
 }
 
@@ -219,28 +221,25 @@ fieldset .textarea textarea {
 }
 
 .success {
-  padding:10px;
+  border: 1px solid #41a62a;
   background: #cbe472;
 }
 
 .notice {
-  padding:10px;
-  background:#FFFFCC;
-  border:1px solid #FF0000;
+  border: 1px solid #FFD324;
+  background: #FFF6BF;
 }
 
 .error {
   background:#EED0D0;
   color:#333;
   border:1px solid red;
-}
-
-.error h3 {
-  margin:0px;
+  padding:0px;
 }
 
 .error h4 {
   font-size:125%;
+  margin: 10px;
 }
 
 .error h4:before {
@@ -316,7 +315,6 @@ form table td {
 .td_left {
   font-weight:bold;
   width: 25%;
-  vertical-align: top;
 }
 
 table th
@@ -416,10 +414,6 @@ table th
 #create_comment fieldset {
   max-width: 700px;
 }
-
-/*#create_comment fieldset input, #create_comment fieldset textarea {
-  width: 400px;
-}*/
 
 .pointer {
   cursor: pointer;

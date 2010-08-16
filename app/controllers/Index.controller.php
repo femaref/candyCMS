@@ -212,15 +212,15 @@ class Index {
     $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/public', $sCachedHTML);
     $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL.  '/' .PATH_UPLOAD, $sCachedHTML);
 
-    if( SKIN_CSS == '' )
+    if( PATH_CSS == '' )
       $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/css', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_CSS%', PATH_PUBLIC.  'public/skins/'	.SKIN_CSS.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/skins/'	.PATH_CSS.	'/css', $sCachedHTML);
 
-    if( SKIN_IMAGES == '' )
+    if( PATH_IMAGES == '' )
       $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/public/images', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.	'public/skins/'	.SKIN_IMAGES.	'/gfx', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.	'/public/skins/'	.PATH_IMAGES.	'/images', $sCachedHTML);
 
     # Cut spaces to minimize filesize
     # Normal tab

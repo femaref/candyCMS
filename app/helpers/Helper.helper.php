@@ -111,8 +111,8 @@ final class Helper {
 
   public final function getTemplateDir($sTemplate) {
     try {
-      if( @file_exists(PATH_TPL_ADDON.	'/'	.$sTemplate.	'.tpl') )
-        return PATH_TPL_ADDON;
+      if( file_exists('public/skins/' .PATH_TPL.	'/view/'	.$sTemplate.	'.tpl') )
+        return 'public/skins/'  .PATH_TPL.  '/view/';
       else {
         if(!file_exists('app/view/'	.$sTemplate.	'.tpl'))
           throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);

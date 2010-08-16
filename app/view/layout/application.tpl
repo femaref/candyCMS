@@ -27,9 +27,9 @@
       </div>
       <div id='body'>
         {if $lang_update_avaiable !== ''}
-          <p class="info">
+          <div class="notice">
             {$lang_update_avaiable}
-          </p>
+          </div>
         {/if}
         <div id='js-flash_message'>
           <div class='%FLASH_TYPE% js-tooltip' id='js-flash_%FLASH_TYPE%'

@@ -201,7 +201,7 @@ class Section extends Main {
                 LANG_ERROR_ACTION_NOT_SPECIFIED;
 
         $oSmarty = new Smarty();
-        $oSmarty->template_dir = '/skins/'	.SKIN_TPL.	'/tpl/static';
+        $oSmarty->template_dir = '/skins/'	.PATH_TPL_STATIC.	'/tpl/static';
         parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 

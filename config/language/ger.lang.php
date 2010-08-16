@@ -60,7 +60,7 @@ define( 'LANG_GLOBAL_QUOTE', 'Zitat' );
 define( 'LANG_GLOBAL_QUOTE_BY', 'Zitat von' );
 define( 'LANG_GLOBAL_PUBLISHED', 'Ver&ouml;ffentlicht?' );
 define( 'LANG_GLOBAL_REGISTER', 'Registrieren' );
-define( 'LANG_GLOBAL_REGISTRATION', 'Registration' );
+define( 'LANG_GLOBAL_REGISTRATION', 'Registrierung' );
 define( 'LANG_GLOBAL_REPORT_ERROR', 'Fehler melden' );
 define( 'LANG_GLOBAL_REPLY_TO', 'Antwort an' );
 define( 'LANG_GLOBAL_RESET', 'Zur&#xFC;cksetzen' );
