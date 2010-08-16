@@ -104,7 +104,7 @@ class Index {
 
     # Load JS language
     $sLangVars  = '';
-    $oFile      = fopen('config/language/' .$this->_sLanguage.  '.lang.js', 'r');
+    $oFile      = fopen('config/language/' .$this->_sLanguage.  '.lang.js', 'rb');
     while(!feof($oFile)) {
       $sLangVars  .= fgets($oFile);
     }
@@ -115,8 +115,7 @@ class Index {
       $sVersionContent = stream_get_contents($oFile);
       fclose($oFile);
 
-      if($sVersionContent < VERSION)
-        unset($sVersionContent);
+      $sVersionContent &= ($sVersionContent > VERSION) ? (int)$sVersionContent : '';
     }
 
     # Header.tpl
@@ -133,7 +132,7 @@ class Index {
 
     # Language
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            LANG_GLOBAL_UPDATE_AVAIABLE :
+            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
             '';
 
     $oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);

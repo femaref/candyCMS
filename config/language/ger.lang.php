@@ -76,7 +76,7 @@ define( 'LANG_GLOBAL_TAGS_INFO', 'Suche nach &#xE4;hnlichen Eintr&#xE4;gen' );
 define( 'LANG_GLOBAL_TITLE', 'Titel' );
 define( 'LANG_GLOBAL_TODAY', 'Heute' );
 define( 'LANG_GLOBAL_UPDATE', 'Editieren' );
-define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update für diese Software verfügbar. Bitte besuche die <a href="http://candycms.com">CandyCMS.com</a> für weitere Informationen!' );
+define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update (#%v) für diese Software verfügbar. Besuche <a href="http://candycms.com">CandyCMS.com</a> für weitere Informationen.' );
 define( 'LANG_GLOBAL_UPDATE_ENTRY', 'Eintrag bearbeiten' );
 define( 'LANG_GLOBAL_UPLOADED_AT', 'Datum des Hochladens' );
 define( 'LANG_GLOBAL_USERMANAGER', 'Userverwaltung' );
