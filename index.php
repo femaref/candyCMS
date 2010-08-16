@@ -38,8 +38,6 @@ try {
 		require_once 'app/models/Main.model.php';
 		require_once 'app/controllers/Main.controller.php';
 		require_once 'app/controllers/Index.controller.php';
-
-		# All helpers
 		require_once 'app/helpers/AdvancedException.helper.php';
 		require_once 'app/helpers/Section.helper.php';
 		require_once 'app/helpers/Helper.helper.php';
