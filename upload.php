@@ -108,8 +108,8 @@ if(isset ($_FILES) && !empty($_FILES) ) {
 
   $aUser =& $oUpload->setUser($_GET['session_id']);
 
-  define( 'USERID',	(int)$aUser['id'] );
-  define( 'USERRIGHT',(int)$aUser['userright'] );
+  define( 'USER_ID',	(int)$aUser['id'] );
+  define( 'USER_RIGHT',(int)$aUser['userright'] );
 
   if(USER_RIGHT > 3)
     echo $oUpload->validateAndUpload();

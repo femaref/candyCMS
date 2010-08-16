@@ -107,7 +107,7 @@ final class Content extends Main {
 
     if(	!isset($this->m_aRequest['title']) ||
             empty($this->m_aRequest['title']) )
-      $sError .= LANG_WEBSITE_TITLE.	'<br />';
+      $sError .= LANG_GLOBAL_TITLE.	'<br />';
 
     if(	!isset($this->m_aRequest['content']) ||
             empty($this->m_aRequest['content']) )

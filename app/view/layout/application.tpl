@@ -26,6 +26,11 @@
         {/if}
       </div>
       <div id='body'>
+        {if $lang_update_avaiable !== ''}
+          <p class="info">
+            {$lang_update_avaiable}
+          </p>
+        {/if}
         <div id='js-flash_message'>
           <div class='%FLASH_TYPE% js-tooltip' id='js-flash_%FLASH_TYPE%'
             title="::" onclick="hideDiv('js-flash_message')">

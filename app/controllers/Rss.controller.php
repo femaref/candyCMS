@@ -34,7 +34,7 @@ class Rss {
 	public function show() {
 		$oSmarty = new Smarty();
 		$oSmarty->assign('data', $this->_oModel->getData());
-		$oSmarty->assign('title', WEBSITE_TITLE);
+		$oSmarty->assign('title', LANG_WEBSITE_TITLE);
 		$oSmarty->assign('description', '');
 		$oSmarty->assign('link', WEBSITE_URL);
 		$oSmarty->assign('copyright', date('Y') );

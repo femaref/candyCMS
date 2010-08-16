@@ -195,6 +195,9 @@ class User extends Main {
     $oSmarty = new Smarty();
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
+    # System variables
+    $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
+
     # Language
     $oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN );
     $oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE );

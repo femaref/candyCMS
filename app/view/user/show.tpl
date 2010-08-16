@@ -48,6 +48,11 @@
     </td>
   </tr>
 </table>
-{literal}
-  <script language='javascript' src='%PATH_PUBLIC%/js/slimbox-min.js' type='text/javascript'></script>
-{/literal}
+<script type="text/javascript">
+  var sFilesSuffix = '{$_compress_files_suffix_}';
+  {literal}
+    window.addEvent('domready', function() {
+      new Asset.javascript('%PATH_PUBLIC%/js/slimbox' + sFilesSuffix + '.js');
+    });
+  {/literal}
+</script>

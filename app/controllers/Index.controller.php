@@ -61,13 +61,13 @@ class Index {
   }
 
   public final function loadPlugins() {
-		$oDir = opendir('plugins');
+    $oDir = opendir('plugins');
 
-		while($aFile = readdir($oDir)) {
-			if($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
-				continue;
+    while($aFile = readdir($oDir)) {
+      if($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
+        continue;
 
-			require_once ('plugins/'	.$aFile);
+      require_once ('plugins/'	.$aFile);
     }
   }
 
@@ -109,6 +109,16 @@ class Index {
       $sLangVars  .= fgets($oFile);
     }
 
+    # Check for new version of script
+    if(USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+      $oFile = fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
+      $sVersionContent = stream_get_contents($oFile);
+      fclose($oFile);
+
+      if($sVersionContent < VERSION)
+        unset($sVersionContent);
+    }
+
     # Header.tpl
     $oSmarty = new Smarty();
     $oSmarty->assign('name', WEBSITE_NAME);
@@ -122,6 +132,10 @@ class Index {
     $oSmarty->assign('_website_url_', WEBSITE_URL);
 
     # Language
+    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+            LANG_GLOBAL_UPDATE_AVAIABLE :
+            '';
+
     $oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);
     $oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
     $oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);
@@ -137,6 +151,7 @@ class Index {
     $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
     $oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
     $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
+    $oSmarty->assign('lang_update_avaiable', $sLangUpdateAvaiable);
     $oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
     $oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
 
@@ -149,6 +164,7 @@ class Index {
             $this->m_aRequest['section'] == 'comment' ||
             $this->m_aRequest['section'] == 'content' ||
             $this->m_aRequest['section'] == 'gallery' ||
+            $this->m_aRequest['section'] == 'lang' ||
             $this->m_aRequest['section'] == 'mail' ||
             $this->m_aRequest['section'] == 'media' ||
             $this->m_aRequest['section'] == 'newsletter' ||
@@ -176,9 +192,9 @@ class Index {
       $sCachedHTML = $oSection->getContent();
     else {
       $oSmarty->assign('_title_', $oSection->getTitle().
-              ' - '	.WEBSITE_TITLE);
+              ' - '	.LANG_WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
-      $oSmarty->assign('meta_description', WEBSITE_SLOGAN);
+      $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
 
       $oSmarty->assign('_content_', $oSection->getContent());
       $oSmarty->template_dir = Helper::getTemplateDir('layout/application');

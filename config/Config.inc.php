@@ -93,6 +93,12 @@ define('ALLOW_GZIP_BACKUP', '1');
 
 # ------------------------------------------------------------------------------
 
+# Allow this software to connect the CandyCMS website to check for an update
+# DEFAULT: 1
+define('ALLOW_VERSION_CHECK', '0');
+
+# ------------------------------------------------------------------------------
+
 # Set the standard language (file must be placed in "config/language")
 # NOTE: lower cases required!
 # DEFAULT: ger
