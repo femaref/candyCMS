@@ -207,9 +207,9 @@ switch ($_REQUEST['step']) {
     break;
 }
 
-$oSmarty->assign('title', WEBSITE_TITLE.  ' - Installation');
+$oSmarty->assign('title', LANG_WEBSITE_TITLE.  ' - Installation');
 $oSmarty->assign('step', $iNextStep);
-$oSmarty->assign('action', $_SERVER["PHP_SELF"]);
+$oSmarty->assign('action', $_SERVER['PHP_SELF']);
 
 $sCachedHTML  = $oSmarty->fetch('showLayout.tpl');
 $sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);

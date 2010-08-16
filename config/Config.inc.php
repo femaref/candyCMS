@@ -95,7 +95,7 @@ define('ALLOW_GZIP_BACKUP', '1');
 
 # Allow this software to connect the CandyCMS website to check for an update
 # DEFAULT: 1
-define('ALLOW_VERSION_CHECK', '0');
+define('ALLOW_VERSION_CHECK', '1');
 
 # ------------------------------------------------------------------------------
 
