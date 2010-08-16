@@ -49,7 +49,7 @@ define('WEBSITE_CDN', 'http://phpcms.localhost');
 
 # Use compressed or non-compressed files
 # EXAMPLE: true
-define('WEBSITE_COMPRESS_FILES', true);
+define('WEBSITE_COMPRESS_FILES', false);
 # ------------------------------------------------------------------------------
 
 # Enter full name of Website. This is, where the E-Mails are sent from.

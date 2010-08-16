@@ -49,10 +49,10 @@ final class Pages {
 
   public final function showPages($sURL, $sRssAction = 'blog') {
     $oSmarty = new Smarty();
-    $oSmarty->assign('action_url', $sURL);
     $oSmarty->assign('page_current', $this->_iCurrentPage);
-    $oSmarty->assign('public_folder', WEBSITE_CDN. '/public/images');
     $oSmarty->assign('page_count', $this->_iPages);
+    $oSmarty->assign('_action_url_', $sURL);
+    $oSmarty->assign('_public_folder_', WEBSITE_CDN. '/public/images');
 
     $oSmarty->template_dir = Helper::getTemplateDir('pages/pages');
     return $oSmarty->fetch('pages/pages.tpl');

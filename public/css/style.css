@@ -92,11 +92,9 @@ h3 {
   padding-right: 10px;
 }
 
-/* Fixes lists in Blog entries */
 ul
 {
-  line-height:100%;
-  margin:0px;
+  margin-bottom:15px;
 }
 
 /********************************************************************************/
@@ -318,6 +316,7 @@ form table td {
 .td_left {
   font-weight:bold;
   width: 25%;
+  vertical-align: top;
 }
 
 table th

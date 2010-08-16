@@ -289,6 +289,9 @@ class User extends Main {
     $sEmail = isset($this->m_aRequest['email']) ? Helper::formatInput($this->m_aRequest['email']) : '';
     $oSmarty->assign('email', $sEmail);
 
+    # AJAX reload disclaimer
+    $oSmarty->assign('_public_folder_', WEBSITE_CDN. '/public/images');
+
     # Language
     $oSmarty->assign('lang_disclaimer_read', LANG_LOGIN_REGISTRATION_DISCLAIMER_READ);
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);

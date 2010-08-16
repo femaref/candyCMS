@@ -19,7 +19,7 @@ Generelle Infos
 - gerade einmal 2,5 MB groß
 - Auslagerung der statischen Dateien auf einem CDN ohne großen Aufwand möglich
 - Übersichtliche URLs dank der Verwendung von mod_rewrite
-- mehr als 90% der Punkte bei YSLOW standardmäßig möglich, mit der Einrichtung eines CDNs sind sogar 99% erreichbar!
+- über 90% der Punkte bei YSLOW standardmäßig möglich, mit der Einrichtung eines CDNs sind sogar 99% erreichbar!
 - verfügbare Cronjob-Schnittstelle für Backups und Cleanups
 
 

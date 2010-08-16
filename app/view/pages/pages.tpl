@@ -3,7 +3,7 @@
     {if $smarty.get.page == $smarty.section.pages.index && $page_count > 1}
       <span class='currentpagelink'>{$smarty.section.pages.index}</span>
     {elseif $page_count > 1}
-      <a onclick="reloadPage('/{$action_url}/page/{$smarty.section.pages.index}', '{$public_folder}')" href="#reload" class='pagelink'>{$smarty.section.pages.index}</a>
+      <a onclick="reloadPage('/{$_action_url_}/page/{$smarty.section.pages.index}', '{$_public_folder_}')" href="#reload" class='pagelink'>{$smarty.section.pages.index}</a>
     {/if}
   {/section}
 </p>

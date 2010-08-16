@@ -58,8 +58,10 @@
     </tr>
     {if $USER_RIGHT < 4}
       <tr class='row2'>
-        <td class='td_left'>
-          <a href='/Help/Registration' target='_blank'>{$lang_disclaimer_read}</a>
+        <td class='td_left vat'>
+          <a href='#reload' onclick="reloadPage('/Help/Registration', '{$_public_folder_}')">
+            {$lang_disclaimer_read}
+          </a>
         </td>
         <td class='td_right'>
           <div class="checkbox">
@@ -74,3 +76,4 @@
   </div>
   <input type='hidden' value='formdata' name='create_user' />
 </form>
+<div id="js-ajax_reload" name="reload" class="box" style="display:none"></div>

@@ -88,6 +88,7 @@ function stripSlash(sValue) {
 
 function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
+  $(sId).setStyle('display', 'block').addClass('center');
   $(sId).set('html', "<img src='" + sRoot + "/loading.gif' alt='" + LANG_LOADING + "' />");
   $(sId).load(sURL);
 }
