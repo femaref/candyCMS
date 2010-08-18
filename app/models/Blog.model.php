@@ -35,6 +35,8 @@ class Model_Blog extends Model_Main {
 																u.id AS uid,
 																u.name,
 																u.surname,
+																u.email,
+																u.use_gravatar,
 																COUNT(c.id) AS commentSum
 															FROM
 																blog b
@@ -58,6 +60,7 @@ class Model_Blog extends Model_Main {
       while($aRow = $oGetData->fetch()) {
         $iID = $aRow['id'];
         $aTags = explode(', ', $aRow['tags']);
+        $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
         $this->_aData[$iID] = array('id' => $aRow['id'],
                 'authorID' => $aRow['authorID'],
@@ -70,9 +73,8 @@ class Model_Blog extends Model_Main {
                 'uid' => $aRow['uid'],
                 'name' => Helper::formatOutout($aRow['name']),
                 'surname' => Helper::formatOutout($aRow['surname']),
-                'avatar18' => Helper::getAvatar('user/18/', $aRow['authorID']),
-                'avatar32' => Helper::getAvatar('user/32/', $aRow['authorID']),
-                'avatar64' => Helper::getAvatar('user/64/', $aRow['authorID']),
+                'avatar32' => Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
+                'avatar64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
                 'comment_sum' => $aRow['commentSum'],
                 'eTitle' => Helper::formatOutout(urlencode($aRow['title'])),
                 'published' => $aRow['published']

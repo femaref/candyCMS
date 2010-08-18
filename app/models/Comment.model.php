@@ -5,24 +5,27 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ */
 
 class Model_Comment extends Model_Main {
+
   private $_iEntries;
 
   public function __init($iEntries, $iOffset, $iLimit) {
-    $this->_iEntries	=& $iEntries;
-    $this->_iOffset   =& $iOffset;
-    $this->_iLimit    =& $iLimit;
+    $this->_iEntries = & $iEntries;
+    $this->_iOffset = & $iOffset;
+    $this->_iLimit = & $iLimit;
   }
 
   private final function _setData($parentID, $parentCat) {
-    if($this->_iEntries > 0) {
+    if ($this->_iEntries > 0) {
       $oGetData = new Query("	SELECT
 										c.*,
 										u.name,
 										u.surname,
-										u.id AS userID
+										u.id AS userID,
+                    u.use_gravatar,
+                    u.email
 									FROM
 										comment c
 									LEFT JOIN
@@ -30,33 +33,35 @@ class Model_Comment extends Model_Main {
 									ON
 										u.id=c.authorID
 									WHERE
-										c.parentID = '"	.$parentID.	"'
+										c.parentID = '" . $parentID . "'
 									AND
-										c.parentCat = '"	.$parentCat.	"'
+										c.parentCat = '" . $parentCat . "'
 									ORDER BY
 										c.date ASC,
 										c.id ASC
 									LIMIT
-										"	.$this->_iOffset.	",
-										"	.$this->_iLimit );
+										" . $this->_iOffset . ",
+										" . $this->_iLimit);
 
       $iLoop = 0;
-      while($aRow = $oGetData->fetch()) {
+      while ($aRow = $oGetData->fetch()) {
         $iLoop++;
         $iID = $aRow['id'];
+        $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+
         $this->_aData[$iID] =
-                array(	'id' => $aRow['id'],
-                'userID' => $aRow['userID'],
-                'parentID' => $aRow['parentID'],
-                'parentCat' => $aRow['parentCat'],
-                'authorID' => $aRow['authorID'],
-                'author_name' => $aRow['author_name'],
-                'name' => Helper::formatOutout($aRow['name']),
-                'surname' => Helper::formatOutout($aRow['surname']),
-                'avatar64' => Helper::getAvatar('user/64/', $aRow['authorID']),
-                'date' => Helper::formatTimestamp($aRow['date']),
-                'content' => Helper::formatOutout($aRow['content']),
-                'loop' => $iLoop
+                array('id' => $aRow['id'],
+                    'userID' => $aRow['userID'],
+                    'parentID' => $aRow['parentID'],
+                    'parentCat' => $aRow['parentCat'],
+                    'authorID' => $aRow['authorID'],
+                    'author_name' => $aRow['author_name'],
+                    'name' => Helper::formatOutout($aRow['name']),
+                    'surname' => Helper::formatOutout($aRow['surname']),
+                    'avatar64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
+                    'date' => Helper::formatTimestamp($aRow['date']),
+                    'content' => Helper::formatOutout($aRow['content']),
+                    'loop' => $iLoop
         );
       }
 
@@ -74,9 +79,9 @@ class Model_Comment extends Model_Main {
                           FROM
                             comment
                           WHERE
-                            parentID = '" .$iParentID.  "'
+                            parentID = '" . $iParentID . "'
                           AND
-                            parentCat = '" .$sParentCat.  "'");
+                            parentCat = '" . $sParentCat . "'");
 
     return $oQuery->count();
   }
@@ -89,19 +94,20 @@ class Model_Comment extends Model_Main {
     new Query("	INSERT INTO
 									comment(authorID, author_name, content, date, parentID, parentCat)
 								VALUES(
-									'"	.USER_ID.	"',
-									'"	.$sAuthorName.	"',
-									'"	.Helper::formatInput($this->m_aRequest['content']).	"',
-									'"	.time().	"',
-									'"	.(int)$this->m_aRequest['parentid'].	"',
-									'"	.$this->m_aRequest['parentcat'].	"')
+									'" . USER_ID . "',
+									'" . $sAuthorName . "',
+									'" . Helper::formatInput($this->m_aRequest['content']) . "',
+									'" . time() . "',
+									'" . (int) $this->m_aRequest['parentid'] . "',
+									'" . $this->m_aRequest['parentcat'] . "')
 									");
 
     return mysql_insert_id();
   }
 
   public function destroy($iID) {
-    new Query("DELETE FROM comment WHERE id = '"	.$iID.	"' LIMIT 1");
+    new Query("DELETE FROM comment WHERE id = '" . $iID . "' LIMIT 1");
     return true;
   }
+
 }

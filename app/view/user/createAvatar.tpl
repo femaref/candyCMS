@@ -1,3 +1,4 @@
+<a name="js-upload_image"></a>
 <form id='js-upload_image' style='{$style}' action='{$action}' method='post' enctype='multipart/form-data'>
   <table>
     <tr>
