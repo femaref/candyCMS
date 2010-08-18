@@ -145,14 +145,14 @@ define('POPUP_DEFAULT_Y', '800');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', '');
+define('PATH_CSS', 'empuxa');
 
 # DEFAULT: default
-define('PATH_IMAGES', '');
+define('PATH_IMAGES', 'empuxa');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', '');
+define('PATH_TPL', 'empuxa');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
@@ -171,7 +171,7 @@ define('LIMIT_ALBUM_THUMBS', 9999);
 
 # Limit of blog entries per page
 # DEFAULT: 5
-define('LIMIT_BLOG', 1);
+define('LIMIT_BLOG', 5);
 
 # Limit of comments per page
 # DEFAULT: 25

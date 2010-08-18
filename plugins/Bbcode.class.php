@@ -56,7 +56,7 @@ class Bbcode {
 
     # Image with description
     $sStr = preg_replace(	"/\[img\=(.+)\](.*)\[\/img]/isU",
-            "<div style='text-align:center;font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' />\n\\1</div>",
+            "<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
             $sStr);
 
     # Include Flash Player
@@ -86,7 +86,7 @@ class Bbcode {
 
     while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $iRand = rand(10000, 99999);
-      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
+      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#" .$iRand.  "' name='" .$iRand.  "' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
     }
 
     /* Add a paragraph to create similar BB-Code for TinyMCE */

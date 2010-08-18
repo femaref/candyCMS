@@ -73,6 +73,8 @@ define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
 define( 'LANG_GLOBAL_TAGS', 'Tags' );
 define( 'LANG_GLOBAL_TAGS_INFO', 'Suche nach &#xE4;hnlichen Eintr&#xE4;gen' );
+define( 'LANG_GLOBAL_TIME_AM', 'Uhr' );
+define( 'LANG_GLOBAL_TIME_PM', 'Uhr' );
 define( 'LANG_GLOBAL_TITLE', 'Titel' );
 define( 'LANG_GLOBAL_TODAY', 'Heute' );
 define( 'LANG_GLOBAL_UPDATE', 'Editieren' );

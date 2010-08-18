@@ -167,7 +167,7 @@ class Index {
             ucfirst($this->m_aRequest['section']) == 'Mail' ||
             ucfirst($this->m_aRequest['section']) == 'Media' ||
             ucfirst($this->m_aRequest['section']) == 'Newsletter' ||
-            ucfirst($this->m_aRequest['section']) == 'Rss' ||
+            ucfirst($this->m_aRequest['section']) == 'RSS' ||
             ucfirst($this->m_aRequest['section']) == 'Session' ||
             ucfirst($this->m_aRequest['section']) == 'Static' ||
             ucfirst($this->m_aRequest['section']) == 'User') {
@@ -186,7 +186,7 @@ class Index {
     }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
-    if(	(isset( $this->m_aRequest['section'] )  && 'rss' == $this->m_aRequest['section']) ||
+    if(	(isset( $this->m_aRequest['section'] )  && 'RSS' == $this->m_aRequest['section']) ||
             (isset( $this->m_aRequest['ajax'] )  && true == $this->m_aRequest['ajax'])  )
       $sCachedHTML = $oSection->getContent();
     else {
