@@ -68,8 +68,7 @@ class Blog extends Main {
 
 		elseif( isset($this->m_aRequest['action']) &&
 				'tag' == $this->m_aRequest['action'])
-			return Helper::removeSlahes(LANG_GLOBAL_TAGS.	': '
-					.$this->m_aRequest['id']);
+			return Helper::removeSlahes($this->m_aRequest['id']);
 
 		elseif( $this->_iID !== '' )
 			return Helper::removeSlahes($this->_aData[1]['title']);
