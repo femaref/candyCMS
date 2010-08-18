@@ -159,18 +159,18 @@ class Index {
 		 * want to override the core module, we got to load Addons later in Section.class.php */
     if(	!isset($this->m_aRequest['section']) ||
             empty($this->m_aRequest['section']) ||
-            $this->m_aRequest['section'] == 'blog' ||
-            $this->m_aRequest['section'] == 'comment' ||
-            $this->m_aRequest['section'] == 'content' ||
-            $this->m_aRequest['section'] == 'gallery' ||
-            $this->m_aRequest['section'] == 'lang' ||
-            $this->m_aRequest['section'] == 'mail' ||
-            $this->m_aRequest['section'] == 'media' ||
-            $this->m_aRequest['section'] == 'newsletter' ||
-            $this->m_aRequest['section'] == 'rss' ||
-            $this->m_aRequest['section'] == 'session' ||
-            $this->m_aRequest['section'] == 'static' ||
-            $this->m_aRequest['section'] == 'user') {
+            ucfirst($this->m_aRequest['section']) == 'Blog' ||
+            ucfirst($this->m_aRequest['section']) == 'Comment' ||
+            ucfirst($this->m_aRequest['section']) == 'Content' ||
+            ucfirst($this->m_aRequest['section']) == 'Gallery' ||
+            ucfirst($this->m_aRequest['section']) == 'Lang' ||
+            ucfirst($this->m_aRequest['section']) == 'Mail' ||
+            ucfirst($this->m_aRequest['section']) == 'Media' ||
+            ucfirst($this->m_aRequest['section']) == 'Newsletter' ||
+            ucfirst($this->m_aRequest['section']) == 'Rss' ||
+            ucfirst($this->m_aRequest['section']) == 'Session' ||
+            ucfirst($this->m_aRequest['section']) == 'Static' ||
+            ucfirst($this->m_aRequest['section']) == 'User') {
 
       $oSection = new Section($this->m_aRequest, $this->m_oSession, $this->m_aFile);
       $oSection->getSection();
@@ -182,7 +182,7 @@ class Index {
     # There's no request on a core module and Addons are disabled. */
     else {
       header('Status: 404 Not Found');
-      die();
+      die(ucfirst($this->m_aRequest['section']));
     }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested

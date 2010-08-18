@@ -115,8 +115,8 @@ class Media extends Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if(is_file(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file'])) {
-        unlink(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['file']);
+      if(is_file(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['id'])) {
+        unlink(PATH_UPLOAD.	'/media/'	.$this->m_aRequest['id']);
 
         return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESS).
                 Header('Location:'	.WEBSITE_URL.	'/Media');

@@ -39,7 +39,7 @@ final class Comment extends Main {
     */
     $this->_sParentCat		= 'b';
     $this->_sParentSection	= 'Blog';
-    $this->_sAction			= '/CreateComment/'.	$this->_sParentCat.	'/'	.$this->_iID;
+    $this->_sAction			= '/Comment/create/'.	$this->_sParentCat.	'/'	.$this->_iID;
   }
 
   public final function show() {
@@ -139,7 +139,7 @@ final class Comment extends Main {
     }
 
     /* Set new Action */
-    $this->_sAction = '/CreateComment/'	.$this->m_aRequest['parentcat'].
+    $this->_sAction = '/Comment/create/'	.$this->m_aRequest['parentcat'].
             '/'	.(int)$this->m_aRequest['parentid']. '#'.
             (int)$this->m_aRequest['parentid'];
 

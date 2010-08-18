@@ -12,65 +12,37 @@ ErrorDocument 404 /public/404.html
 ErrorDocument 422 /public/422.html
 ErrorDocument 500 /public/500.html
 
-# Simple rules for the right section
+# Static rules
 RewriteRule ^About$ index.php?section=content&id=3 [L]
-RewriteRule ^Blog$ index.php?section=blog [L]
+RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parentcat=$1&id=$2&page=$3&ajax=1 [L]
+RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
+RewriteRule ^Comment/destroy/([0-9]+)/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
 RewriteRule ^Contact$ index.php?section=mail&id=1 [L]
-RewriteRule ^Content$ index.php?section=content [L]
+RewriteRule ^Contact/(.*)$ index.php?section=mail&id=1&subject=$1 [L]
 RewriteRule ^Disclaimer$ index.php?section=content&id=1 [L]
-RewriteRule ^Gallery$ index.php?section=gallery [L]
+RewriteRule ^Gallery/upload/([0-9]+)/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L]
 RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [L]
 RewriteRule ^Help/FAQ$ index.php?section=content&id=4 [L]
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [L]
 RewriteRule ^Impressum$ index.php?section=content&id=1 [L]
 RewriteRule ^Invite$ index.php?section=session&action=invite [L]
+RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
 RewriteRule ^Login$ index.php?section=session&action=create [L]
 RewriteRule ^Logout$ index.php?section=session&action=destroy [L]
-RewriteRule ^Media$ index.php?section=media [L]
-RewriteRule ^Newsletter$ index.php?section=newsletter [L]
 RewriteRule ^Register$ index.php?section=user&action=create [L]
-RewriteRule ^RSS$ index.php?section=rss [L]
 RewriteRule ^Start$ index.php?section=blog [L]
-RewriteRule ^User$ index.php?section=user [L]
+RewriteRule ^Static/([A-Z][a-z][0-9]+)$ index.php?section=static&action=$1 [L]
 RewriteRule ^User/Settings$ index.php?section=user&action=update [L]
 
-# More complicated rules to avoid problems with rules below
-RewriteRule ^Blog/create/([a-z]+)$ index.php?section=blog&action=create&mode=$1&page=1 [L] #CREATE WRITE MODE
-RewriteRule ^Blog/update/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=blog&action=update&id=$1&mode=$2&page=1 [L] #EDIT WRITE MODE
-RewriteRule ^Content/update/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=content&action=update&id=$1&mode=$2&page=1 [L] #EDIT WRITE MODE
-RewriteRule ^CreateComment/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
-RewriteRule ^DestroyComment/([0-9]+)/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
+# Dynamic rules
+RewriteRule ^([A-Za-z]+)$ index.php?section=$1 [L]
+RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L]
+RewriteRule ^([A-Za-z]+)/([a-z]+)$ index.php?section=$1&action=$2&page=1 [L]
+RewriteRule ^([A-Za-z]+)/([a-z]+)/([A-Za-z0-9]+)$ index.php?section=$1&action=$2&id=$3&page=1 [L]
+RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L]
 
-# Here comes the action
-RewriteRule ^Blog/([0-9]+)$ index.php?section=blog&id=$1&page=1 [L]
-RewriteRule ^Blog/([0-9]+)/(.*)$ index.php?section=blog&id=$1&page=1 [L]
-RewriteRule ^Blog/page/([0-9]+)$ index.php?section=blog&page=$1 [L]
-RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parentcat=$1&id=$2&page=$3&ajax=1 [L]
-RewriteRule ^Contact/(.*)$ index.php?section=mail&id=1&subject=$1 [L]
-RewriteRule ^Content/([0-9]+)$ index.php?section=content&id=$1 [L]
-RewriteRule ^Content/([0-9]+)/(.*)$ index.php?section=content&id=$1 [L]
-RewriteRule ^Gallery/([0-9]+)$ index.php?section=gallery&id=$1&page=1 [L]
-RewriteRule ^Gallery/([0-9]+)/page/([0-9]+)$ index.php?section=gallery&id=$1&page=$2&ajax=1 [L]
-RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
-RewriteRule ^Login/([a-z]+)$ index.php?section=session&action=$1 [L]
-RewriteRule ^Mail/([0-9]+)$ index.php?section=mail&id=$1 [L]
-RewriteRule ^Newsletter/([a-z]+)$ index.php?section=newsletter&action=$1 [L]
-RewriteRule ^RSS/([a-z]+)$ index.php?section=rss&action=$1 [L]
-RewriteRule ^Static/([A-Z][a-z][0-9]+)$ index.php?section=static&action=$1 [L]
-RewriteRule ^User/([0-9]+)$ index.php?section=user&action=show&id=$1 [L]
-RewriteRule ^User/([0-9]+)/(.*)$ index.php?section=user&action=show&id=$1 [L]
-
-# More or less admin rules
-RewriteRule ^Blog/([a-z]+)$ index.php?section=blog&action=$1&page=1 [L]
-RewriteRule ^Blog/([a-z]+)/([A-Za-z0-9]+)$ index.php?section=blog&action=$1&id=$2&page=1 [L]
-RewriteRule ^Content/([a-z]+)$ index.php?section=content&action=$1&page=1 [L]
-RewriteRule ^Content/([a-z]+)/([0-9]+)$ index.php?section=content&action=$1&id=$2&page=1 [L]
-RewriteRule ^Gallery/([a-z]+)$ index.php?section=gallery&action=$1 [L]
-RewriteRule ^Gallery/upload/([0-9]+)/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L]
-RewriteRule ^Gallery/([a-z]+)/([0-9]+)$ index.php?section=gallery&action=$1&id=$2&page=1 [L]
-RewriteRule ^Media/([a-z]+)$ index.php?section=media&action=$1 [L]
-RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&file=$1 [L]
-RewriteRule ^User/([a-z]+)/([0-9]+)$ index.php?section=user&action=$1&id=$2 [L]
 
 # Hide files for non script access
 <FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php)$">

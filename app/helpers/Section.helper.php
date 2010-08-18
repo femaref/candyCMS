@@ -9,7 +9,6 @@
 
 class Section extends Main {
   protected $_oObject;
-
   private function _getController() {
     if( file_exists('app/addon/' .(string)ucfirst($this->m_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
       new Addon($this->m_aRequest, $this->m_oSession, $this->m_aFile);

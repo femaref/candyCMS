@@ -47,7 +47,7 @@
       <img src='%PATH_IMAGES%/spacer.gif' class='image' width='{$f.dim}'
            height='{$f.dim}' alt='{$f.description}' id='{$f.loop}{$f.file}'
            title='{$f.description}'
-           style="background: url('{$f.full_path}/{$f.dim}/{$f.file}') center no-repeat" />
+           style="background:#EFEFEF url('{$f.full_path}/{$f.dim}/{$f.file}') center no-repeat" />
     </a>
   {/foreach}
   <p>{$_album_pages_}</p>

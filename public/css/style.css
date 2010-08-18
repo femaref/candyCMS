@@ -175,11 +175,11 @@ fieldset .textarea textarea {
 /* Surround Image with Border */
 .image, .currentpagelink {
   border:1px solid #ababab;
-  padding:2px;
+  padding:5px;
   margin:1px;
 }
 
-.pagelink, .currentpagelink {
+.pagelink {
   padding:5px;
 }
 
@@ -397,6 +397,10 @@ table th
 
 .gallery_album .image, .gallery_files .image {
   margin: 2px;
+}
+
+.gallery_album .image {
+  padding:2px;
 }
 
 .center {

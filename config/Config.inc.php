@@ -171,7 +171,7 @@ define('LIMIT_ALBUM_THUMBS', 9999);
 
 # Limit of blog entries per page
 # DEFAULT: 5
-define('LIMIT_BLOG', 5);
+define('LIMIT_BLOG', 1);
 
 # Limit of comments per page
 # DEFAULT: 25
