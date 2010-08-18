@@ -23,9 +23,8 @@ class FormatTimestamp {
       $sDay = date('d.m.Y', $iTime);
       $sTime = date('H:i a', $iTime);
     }
-
-    $sTime = str_replace('am', $sTime, LANG_GLOBAL_TIME_AM);
-    $sTime = str_replace('pm', $sTime, LANG_GLOBAL_TIME_PM);
+    $sTime = str_replace('am', LANG_GLOBAL_TIME_AM, $sTime);
+    $sTime = str_replace('pm', LANG_GLOBAL_TIME_PM, $sTime);
 
     return $sDay.$sStyle.$sTime;
   }
