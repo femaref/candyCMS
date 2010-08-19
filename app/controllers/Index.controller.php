@@ -28,13 +28,10 @@ class Index {
   }
 
   public final function checkURL() {
-    if(file_exists('install/index.php') && WEBSITE_DEV == false)
+    if(is_dir('install') && WEBSITE_DEV == false)
       die('Please install software via <strong>install/index.php</strong> and delete the folder afterwards!');
-    # TODO: LANG!
 
-    if(	WEBSITE_DEV == false &&
-            (WEBSITE_URL !== 'http://'	.$_SERVER['SERVER_NAME'] ||
-                    !isset($this->m_aRequest['section']) ) )
+    if(!isset($this->m_aRequest['section']))
       Helper::redirectTo('/Start');
   }
 

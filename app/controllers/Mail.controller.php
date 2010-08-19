@@ -156,60 +156,51 @@ class Mail extends Main {
       if($bStatus == true)
         return Helper::successMessage(LANG_SUCCESS_MAIL_SENT).
                 Helper::redirectTo('/Start');
+      else
+        return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_FAILED_SUBJECT);
     }
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL) {
-    $oDate = date('r');
+    require_once 'lib/phpmailer/class.phpmailer.php';
 
-    $sHeader  =	"From:"	.WEBSITE_NAME.	" <"	.WEBSITE_MAIL.	">\n";
-    $sHeader .=	"Reply-To: "	.$sReplyTo.	"\n";
-    $sHeader .=	"X-Mailer: PHP/" . phpversion(). "\n";
-    $sHeader .=	"X-Sender-IP: "	.$_SERVER['REMOTE_ADDR'].	"\n";
-    $sHeader .=	'Content-Type: text/html; charset=UTF-8';
+    $oMail = new PHPMailer(true);
 
-    # If you're developing, avoid Mails to User
-    if(WEBSITE_DEV == 0) {
-      if(mail(trim($sTo), $sSubject, nl2br($sMessage), $sHeader, '-f ' .WEBSITE_MAIL))
-        return true;
-      else
-        return false;
-    }
-    elseif(SMTP_ON == true) {
-      require_once 'lib/smtpmail/Smtp.class.php';
+    if(SMTP_ON == true)
+      $oMail->IsSMTP();
+    else
+      $oMail->IsSendmail();
 
-      $sHeader = array(
-              'Date' => $oDate,
-              'From' => WEBSITE_NAME,
-              'Subject' => $sSubject,
-              'To' => $sTo,
-              'Reply-To' => $sReplyTo,
-              'Content-Type' => 'text/html; charset=utf-8',
-              'Sender' => WEBSITE_MAIL);
+    try {
+      if(SMTP_ON == true) {
 
-      $oSmtp = new SmtpConnect(SMTP_HOST, SMTP_PORT);
-      $oSmtp->connect();
-      $oSmtp->ehlo();
+        if(WEBSITE_DEV == true) {
+          $oMail->SMTPDebug  = 1;
+          $oMail->SMTPAuth   = false;
+        } else {
+          # enables SMTP debug information (for testing)
+          $oMail->SMTPDebug  = 0;
+          $oMail->SMTPAuth   = true;
+        }
 
-      if(SMTP_USER !== '' && SMTP_PASSWORD !== '')
-        $oSmtp->auth('', '', 'PLAIN');
+        $oMail->Host       = SMTP_HOST;
+        $oMail->Port       = SMTP_PORT;
+        $oMail->Username   = SMTP_USER;
+        $oMail->Password   = SMTP_PASSWORD;
+      }
 
-      $oSmtp->from(WEBSITE_MAIL);
-      $oSmtp->rcpt($sReplyTo);
-      $oSmtp->data(nl2br($sMessage), $sHeader);
-      $oSmtp->quit();
+      $oMail->AddReplyTo($sReplyTo);
+      $oMail->SetFrom(WEBSITE_MAIL, WEBSITE_NAME);
+      $oMail->AddAddress($sTo);
+      $oMail->Subject = $sSubject;
+      $oMail->MsgHTML(nl2br($sMessage));
+      $oMail->Send();
 
       return true;
-
-    }
-    else {
-      # DEBUG MODE
-      return Helper::errorMessage('<div style=\'text-align:left\'>'
-              .LANG_GLOBAL_BY.	': '	.WEBSITE_NAME. '<br />'
-              .LANG_GLOBAL_REPLY_TO.	': #'	.$sReplyTo. '<br />'
-              .LANG_GLOBAL_SUBJECT.	': '	.$sSubject. '<br />'
-              .LANG_GLOBAL_CONTENT.	': '	.$sMessage.	'</div>',
-              'DEBUG MODE' );
+    } catch (phpmailerException $e) {
+      return $e->errorMessage();
+    } catch (Exception $e) {
+      return $e->getMessage();
     }
   }
 }
