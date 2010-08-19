@@ -182,7 +182,7 @@ class Index {
     # There's no request on a core module and Addons are disabled. */
     else {
       header('Status: 404 Not Found');
-      die(ucfirst($this->m_aRequest['section']));
+      #die(ucfirst($this->m_aRequest['section']));
     }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested

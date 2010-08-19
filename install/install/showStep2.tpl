@@ -1,4 +1,4 @@
-<h1>2. Enter your personell data</h1>
+<h1>2. Enter your personal data</h1>
 {if $status == true}
   <fieldset>
     <legend>2.1. Please enter information below. You can edit your personal information after your first login.</legend>

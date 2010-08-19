@@ -47,7 +47,11 @@ class Model_Comment extends Model_Main {
       while ($aRow = $oGetData->fetch()) {
         $iLoop++;
         $iID = $aRow['id'];
-        $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+
+        if(isset($aRow['userID']))
+          $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+        else
+          $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
 
         $this->_aData[$iID] =
                 array('id' => $aRow['id'],
@@ -59,7 +63,8 @@ class Model_Comment extends Model_Main {
                     'author_name' => $aRow['author_name'],
                     'name' => Helper::formatOutout($aRow['name']),
                     'surname' => Helper::formatOutout($aRow['surname']),
-                    'avatar64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
+                    'avatar_32' => Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
+                    'avatar_64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
                     'date' => Helper::formatTimestamp($aRow['date']),
                     'content' => Helper::formatOutout($aRow['content']),
                     'loop' => $iLoop
