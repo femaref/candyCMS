@@ -179,6 +179,10 @@ fieldset .textarea textarea {
   margin:1px;
 }
 
+.image {
+  padding: 2px;
+}
+
 .pagelink {
   padding:5px;
 }
@@ -399,8 +403,8 @@ table th
   margin: 2px;
 }
 
-.gallery_album .image {
-  padding:2px;
+.gallery_files .image {
+  padding:5px;
 }
 
 .center {

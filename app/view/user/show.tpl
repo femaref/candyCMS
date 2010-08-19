@@ -17,9 +17,8 @@
       {$regdate}
     </td>
     <td rowspan='4' style='vertical-align:top'>
-      <a href='{$avatar_popup}' rel='lightbox'
-         title='{$user.name} ({$avatar_popup_info[0]} x {$avatar_popup_info[1]} px)'>
-          <img class='image' alt='{$user.name}' src="{$avatar_100}" {$avatar_thumb_info[3]} />
+      <a href='{$avatar_popup}' rel='lightbox' title='{$user.name} {$user.surname}'>
+        <img class='image' alt='{$user.name}' src="{$avatar_100}" />
       </a>
     </td>
   </tr>

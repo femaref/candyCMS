@@ -76,14 +76,13 @@ final class Helper {
     return $sString;
   }
 
-  public final static function getAvatar($sPath, $iUID, $aGravatar = '') {
-    if(!empty($aGravatar)) {
-      $sMail  = $aGravatar['email'];
-      $iSize  = $aGravatar['size'];
-      return '';
+  public final static function getAvatar($sPath, $iSize, $iUID, $aGravatar = '') {
+    if(!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
+      $sMail = md5($aGravatar['email']);
+      return 'http://www.gravatar.com/avatar/'  .$sMail. '.jpg?s='  .$iSize;
     }
     else {
-      $sFile = PATH_UPLOAD.	'/'	.$sPath.$iUID.	'.jpg';
+      $sFile = PATH_UPLOAD.	'/'	.$sPath.  '/' .$iSize.  '/' .$iUID.	'.jpg';
       if(is_file($sFile))
         return WEBSITE_URL.  '/' .$sFile;
       else

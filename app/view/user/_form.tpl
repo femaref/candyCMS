@@ -13,13 +13,13 @@
                  id='name' />
         </div>
       </td>
-      <td rowspan='5' style='vertical-align:top'>
+      <td rowspan='5' style='vertical-align:top;min-width:140px'>
 		{if $USER_ID === $uid}
           <a href='{$avatar_popup}' rel='lightbox' title='{$name}'>
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
           <br />
-          <a href="javascript:showDiv('js-upload_image')" class='small'>
+          <a href="#js-upload_image" onclick="javascript:showDiv('js-upload_image');" class='small'>
             {$lang_image_change}
           </a>
         {/if}
@@ -47,6 +47,23 @@
     </tr>
     <tr class='row2'>
       <td class='td_left'>
+        <label for='use_gravatar'>{$lang_use_gravatar}</label>
+      </td>
+      <td class='td_right'>
+        <div class="checkbox">
+          <input type='checkbox' id='use_gravatar' name='use_gravatar'
+                 value='1' {if $use_gravatar == 1}checked='checked'{/if} />
+          <span class="description">
+            {$lang_image_gravatar_info}
+            <a href="#js-upload_image" onclick="javascript:showDiv('js-upload_image');">
+              {$lang_image_change}
+            </a>
+          </span>
+        </div>
+      </td>
+    </tr>
+    <tr class='row1'>
+      <td class='td_left'>
         <label for='description'>{$lang_about_you}</label>
       </td>
       <td class='td_right'>
@@ -56,7 +73,7 @@
         </div>
       </td>
     </tr>
-    <tr class='row1'>
+    <tr class='row2'>
       <td class='td_left'>
         <label for='newsletter_default'>{$lang_newsletter}</label>
       </td>
@@ -69,7 +86,7 @@
       </td>
     </tr>
     {if $USER_RIGHT == 4 && $USER_ID !== $uid}
-      <tr class='row2'>
+      <tr class='row1'>
         <td class='td_left'>
           <label for='userright'>{$lang_userright}</label>
         </td>

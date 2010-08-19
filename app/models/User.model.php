@@ -13,9 +13,11 @@ class Model_User extends Model_Main {
 			$oGetData = new Query("	SELECT
 																id,
 																name,
+                                email,
 																surname,
 																last_login,
-																regdate
+																regdate,
+                                use_gravatar
 															FROM
 																user
 															ORDER BY
@@ -23,14 +25,15 @@ class Model_User extends Model_Main {
 
 			while( $aRow = $oGetData->fetch()) {
 				$iID = $aRow['id'];
+        $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 				$this->_aData[$iID] = array(
 						'name'						=> Helper::formatOutout($aRow['name']),
 						'surname'					=> Helper::formatOutout($aRow['surname']),
 						'last_login'			=> Helper::formatTimestamp($aRow['last_login']),
 						'regdate'					=> Helper::formatTimestamp($aRow['regdate']),
 						'id'							=> $aRow['id'],
-						'avatar_32'				=> Helper::getAvatar('user/32/', $aRow['id']),
-						'avatar_original'	=> Helper::getAvatar('user/original/', $aRow['id'])
+						'use_gravatar'		=> $aRow['use_gravatar'],
+						'avatar_32'				=> Helper::getAvatar('user', 32, $aRow['id'], $aGravatar)
 				);
 			}
 		}
@@ -43,7 +46,8 @@ class Model_User extends Model_Main {
 																regdate,
 																description,
 																userright,
-																newsletter_default
+																newsletter_default,
+                                use_gravatar
 															FROM
 																user
 															WHERE
@@ -77,6 +81,7 @@ class Model_User extends Model_Main {
 
 	public function update($iUID) {
 		$iNewsletterDefault = isset($this->m_aRequest['newsletter_default']) ? 1 : 0;
+		$iUseGravatar = isset($this->m_aRequest['use_gravatar']) ? 1 : 0;
 
 		if( ($iUID !== USER_ID) && USER_RIGHT == 4 )
 			$iUserRight = isset($this->m_aRequest['userright']) && !empty($this->m_aRequest['userright']) ?
@@ -97,6 +102,7 @@ class Model_User extends Model_Main {
 													email = '"	.Helper::formatInput($this->m_aRequest['email']).	"',
 													description = '"	.Helper::formatInput($this->m_aRequest['description']).	"',
 													newsletter_default = '"	.$iNewsletterDefault.	"',
+													use_gravatar = '"	.$iUseGravatar.	"',
 													password = '"	.$sPassword.	"',
 													userright = '"	.$iUserRight.	"'
 												WHERE
