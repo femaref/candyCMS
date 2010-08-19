@@ -26,5 +26,5 @@ while ($sFile = readdir($oDir)) {
 
 $oSmarty->assign('files', $aFiles);
 $oSmarty->assign('action', $_SERVER['PHP_SELF']);
-$sHTML = $oSmarty->fetch('show.tpl');
+$sHTML = $oSmarty->fetch('showStep1.tpl');
 ?>

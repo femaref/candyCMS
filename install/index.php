@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- */
+*/
 
 date_default_timezone_set('Europe/Berlin');
 
@@ -76,24 +76,36 @@ switch ($_REQUEST['action']) {
 
   case 'migrate':
 
+    $oSmarty->template_dir = 'migrate/';
+    $oSmarty->assign('title', LANG_WEBSITE_TITLE . ' - Migration');
+    $oSmarty->assign('action', $_SERVER['PHP_SELF']);
+
     if (isset($_REQUEST['file'])) {
       $oFo = fopen('sql/migrations/' .$_REQUEST['file'], 'r');
       $sQuery = fread($oFo, filesize('sql/migrations/' .$_REQUEST['file']));
-      new Query($sQuery);
+
+      $oIndex->connectDB();
+      $oQuery = new Query($sQuery);
+
+      # We return HTML due to ajax action
+      if($oQuery->getError() == '')
+        echo '<div class="box" style="color:green">Successfully updated!</div>';
+      else
+        echo '<div class="box" style="color:red">'  .$oQuery->getError().  '</div>';
     }
-
-    $oSmarty->template_dir = 'migrate/';
-
-    require_once 'migrate.php';
-
-    $oSmarty->assign('title', LANG_WEBSITE_TITLE . ' - Migration');
-    $oSmarty->assign('action', $_SERVER['PHP_SELF']);
+    else {
+      require_once 'migrate.php';
+    }
 
     break;
 }
 
-$sCachedHTML = $oSmarty->fetch('showLayout.tpl');
-$sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);
+
+if(!isset($_REQUEST['file'])) {
+  $sCachedHTML = $oSmarty->fetch('showLayout.tpl');
+  $sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);
+}
+
 $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css/', $sCachedHTML);
 $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images/', $sCachedHTML);
 $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public/', $sCachedHTML);

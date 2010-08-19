@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `gallery_album` (
 CREATE TABLE IF NOT EXISTS `gallery_file` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `authorID` smallint(5) NOT NULL,
+  `author_name` VARCHAR( 32 ) NOT NULL DEFAULT '',
   `aid` smallint(5) NOT NULL,
   `date` int(11) NOT NULL,
   `file` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
@@ -72,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_login` int(11) DEFAULT NULL,
   `newsletter_default` tinyint(1) NOT NULL DEFAULT '1',
   `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `use_gravatar` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `userright` (`userright`)
