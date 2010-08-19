@@ -4,6 +4,7 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content='{$meta_description}' />
     <link href='{$_website_url_}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
+    <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/mootools{$_compress_files_suffix_}.js' type='text/javascript'></script>

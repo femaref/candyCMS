@@ -22,10 +22,9 @@ class Model_Blog extends Model_Main {
         $sWhere = "WHERE b.tags LIKE '%"	.
                 Helper::formatInput($this->m_aRequest['id']).	"%'";
       }
-      else {
-        if(USER_RIGHT < 3)
-          $sWhere = "WHERE b.published = '1'";
-      }
+
+      if(USER_RIGHT < 3)
+        $sWhere = "WHERE b.published = '1'";
 
       $oEntries = new Query("SELECT COUNT(*) FROM blog b "	.$sWhere);
       $this->_oPages = new Pages($this->m_aRequest, $oEntries->count(), $iLimit);
@@ -52,7 +51,7 @@ class Model_Blog extends Model_Main {
 															GROUP BY
 																b.id
 															ORDER BY
-																b.id DESC
+																b.date DESC
 															LIMIT
 																"	.$this->_oPages->getOffset().	",
 																"	.$this->_oPages->getLimit() );

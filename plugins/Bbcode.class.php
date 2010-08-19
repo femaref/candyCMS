@@ -32,6 +32,7 @@ class Bbcode {
             $sStr);
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
     $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.gif" class="icon-\1" alt="\1" />', $sStr);
+    $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
     # replace the image tag
     while(preg_match('=\[img\](.*)\[/img\]=isU', $sStr, $sUrl)) {
