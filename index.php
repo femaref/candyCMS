@@ -70,6 +70,7 @@ $oIndex->connectDB();
 
 $aUser =& $oIndex->setUser();
 define( 'USER_ID',	(int)$aUser['id'] );
+define( 'USER_EMAIL', (string)$aUser['email'] );
 define( 'USER_NAME', (string)$aUser['name'] );
 define( 'USER_RIGHT', (int)$aUser['userright'] );
 define( 'USER_SURNAME', (string)$aUser['surname'] );

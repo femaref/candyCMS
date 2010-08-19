@@ -55,6 +55,7 @@ class Model_Comment extends Model_Main {
                     'parentID' => $aRow['parentID'],
                     'parentCat' => $aRow['parentCat'],
                     'authorID' => $aRow['authorID'],
+                    'author_email' => $aRow['author_email'],
                     'author_name' => $aRow['author_name'],
                     'name' => Helper::formatOutout($aRow['name']),
                     'surname' => Helper::formatOutout($aRow['surname']),
@@ -91,11 +92,16 @@ class Model_Comment extends Model_Main {
             Helper::formatInput($this->m_aRequest['name']) :
             '';
 
+    $sAuthorEmail = isset($this->m_aRequest['email']) ?
+            Helper::formatInput($this->m_aRequest['email']) :
+            '';
+
     new Query("	INSERT INTO
-									comment(authorID, author_name, content, date, parentID, parentCat)
+									comment(authorID, author_name, author_email, content, date, parentID, parentCat)
 								VALUES(
 									'" . USER_ID . "',
 									'" . $sAuthorName . "',
+									'" . $sAuthorEmail . "',
 									'" . Helper::formatInput($this->m_aRequest['content']) . "',
 									'" . time() . "',
 									'" . (int) $this->m_aRequest['parentid'] . "',

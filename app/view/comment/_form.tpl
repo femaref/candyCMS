@@ -20,6 +20,20 @@
         </tr>
         <tr class='row2'>
           <td class='td_left'>
+            <label for="name">{$lang_email} ({$lang_optional})</label>
+          </td>
+          <td class='td_right'>
+            {if $USER_RIGHT > 0}
+              {$USER_EMAIL}
+            {else}
+              <div class="input">
+                <input type="text" value="{$email}" name="email" id="email" />
+              </div>
+            {/if}
+          </td>
+        </tr>
+        <tr class='row1'>
+          <td class='td_left'>
             <label for='js-create_commment_text'>{$lang_content}</label>
           </td>
           <td class='td_right'>

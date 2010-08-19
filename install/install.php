@@ -120,11 +120,13 @@ switch ($_REQUEST['step']) {
     // Create MySQL tables
     dumpData("sql/tables.sql");
 
-    $sUrl = "sql/data.sql";
-    if(file_exists($sUrl)) {
-      $oFo = fopen($sUrl, 'r');
-      $sData = fread($oFo, filesize ($sUrl));
-      $oSql = new Query($sData);
+    if(isset($_POST['create_content'])) {
+      $sUrl = "sql/data.sql";
+      if(file_exists($sUrl)) {
+        $oFo = fopen($sUrl, 'r');
+        $sData = fread($oFo, filesize ($sUrl));
+        $oSql = new Query($sData);
+      }
     }
 
     $_SESSION['install'] = $_POST;

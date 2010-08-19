@@ -172,6 +172,10 @@ final class Comment extends Main {
               (string)$this->m_aRequest['name']:
               '';
 
+      $sEmail = isset($this->m_aRequest['email']) ?
+              (string)$this->m_aRequest['email']:
+              '';
+
       $sContent = isset($this->m_aRequest['content']) ?
               (string)$this->m_aRequest['content']:
               '';
@@ -182,10 +186,12 @@ final class Comment extends Main {
 
       $oSmarty = new Smarty();
       $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+      $oSmarty->assign('USER_EMAIL', USER_EMAIL);
       $oSmarty->assign('USER_NAME', USER_NAME);
       $oSmarty->assign('USER_SURNAME', USER_SURNAME);
       $oSmarty->assign('action', $this->_sAction.$iParentId);
       $oSmarty->assign('content', $sContent);
+      $oSmarty->assign('email', $sEmail);
       $oSmarty->assign('name', $sName);
       $oSmarty->assign('parentID', $iParentId);
 
@@ -199,7 +205,9 @@ final class Comment extends Main {
       $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
       $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
+      $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
       $oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
+      $oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 

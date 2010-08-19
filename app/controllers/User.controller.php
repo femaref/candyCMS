@@ -239,6 +239,7 @@ class User extends Main {
       # Language
       $oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_ABOUT_HIMSELF));
       $oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT);
+      $oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_sName, LANG_USER_CONTACT_VIA_EMAIL));
       $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
 

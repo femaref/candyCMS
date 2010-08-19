@@ -43,7 +43,7 @@
       {$lang_contact}
     </td>
     <td class='td_right'>
-      <a href='/Mail/{$uid}'>Klicke hier, um {$user.name} eine E-Mail zu schicken!</a>
+      <a href='/Mail/{$uid}'>{$lang_contact_via_mail}</a>
     </td>
   </tr>
 </table>
