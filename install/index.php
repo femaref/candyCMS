@@ -104,7 +104,8 @@ switch ($_REQUEST['action']) {
 if(!isset($_REQUEST['file'])) {
   $sCachedHTML = $oSmarty->fetch('showLayout.tpl');
   $sCachedHTML = str_replace('%CONTENT%', $sHTML, $sCachedHTML);
-}
+} else
+  $sCachedHTML = '';
 
 $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css/', $sCachedHTML);
 $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images/', $sCachedHTML);
