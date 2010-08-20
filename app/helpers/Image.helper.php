@@ -89,7 +89,6 @@ final class Image {
 
     elseif($this->_sImgType == 'gif')
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
-
     $oNewImg = imagecreatetruecolor($iWidth, $iWidth);
     $oBg = ImageColorAllocate ($oNewImg, 255, 255, 255);
 

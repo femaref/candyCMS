@@ -55,7 +55,7 @@ class Media extends Main {
 
       $aFiles = array();
       while($sFile = readdir($oDir)) {
-        if($sFile == '.' || $sFile == '..' || $sFile == '.htaccess' || $sFile == '.svn')
+        if(substr($sFile, 0, 1) == '.')
           continue;
 
         $sPath = $sOriginalPath.	'/'	.$sFile;
@@ -72,20 +72,21 @@ class Media extends Main {
                 $sFileType  == 'png' ||
                 $sFileType  == 'gif') {
           $aImgDim = getImageSize($sPath);
+
           if( ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'gif' || $sFileType == 'png') &&
                   !is_file(PATH_UPLOAD.	'/temp/32/'	.$sFile)) {
+
             $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32');
           }
         }
         else
           $aImgDim = '';
-
-        $aFiles[] = array(	'name' => $sFile,
-                'cdate' => Helper::formatTimestamp(filectime($sPath)),
-                'size'  => Helper::getFileSize($sPath),
-                'type'  => $sFileType,
-                'dim'   => $aImgDim
+          $aFiles[] = array('name' => $sFile,
+                            'cdate' => Helper::formatTimestamp(filectime($sPath)),
+                            'size'  => Helper::getFileSize($sPath),
+                            'type'  => $sFileType,
+                            'dim'   => $aImgDim
         );
       }
 

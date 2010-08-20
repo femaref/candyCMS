@@ -71,7 +71,7 @@ class Model_Session extends Model_Main {
       return Helper::errorMessage($sError);
 
     else {
-      $sNewPasswordClean = Helper::createRandomChar(10);
+      $sNewPasswordClean  = Helper::createRandomChar(10);
       $sNewPasswordSecure = md5(RANDOM_HASH.$sNewPasswordClean);
 
       $oGetUserName = new Query("	SELECT
@@ -82,6 +82,7 @@ class Model_Session extends Model_Main {
 																		email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
 																	LIMIT
 																		1");
+
       $aRow = $oGetUserName->fetch();
 
       # TODO: Put into controller?
