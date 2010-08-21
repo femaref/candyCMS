@@ -31,10 +31,10 @@ class Model_User extends Model_Main {
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($aResult as $aRow) {
-          $iID = $aRow['id'];
+          $iId = $aRow['id'];
           $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
-          $this->_aData[$iID] = array(
+          $this->_aData[$iId] = array(
               'name'          => Helper::formatOutput($aRow['name']),
               'surname'       => Helper::formatOutput($aRow['surname']),
               'last_login'    => Helper::formatTimestamp($aRow['last_login']),
@@ -83,9 +83,9 @@ class Model_User extends Model_Main {
     }
   }
 
-  public function getData($iID = '') {
-    if (!empty($iID))
-      $this->_iID = (int) $iID;
+  public function getData($iId = '') {
+    if (!empty($iId))
+      $this->_iID = (int) $iId;
 
     $this->_setData();
     return $this->_aData;
@@ -104,52 +104,94 @@ class Model_User extends Model_Main {
 											)");
   }
 
-  public function update($iUID) {
+  public function update($iId) {
     $iNewsletterDefault = isset($this->m_aRequest['newsletter_default']) ? 1 : 0;
     $iUseGravatar = isset($this->m_aRequest['use_gravatar']) ? 1 : 0;
 
-    if (($iUID !== USER_ID) && USER_RIGHT == 4)
+    if (($iId !== USER_ID) && USER_RIGHT == 4)
       $iUserRight = isset($this->m_aRequest['userright']) && !empty($this->m_aRequest['userright']) ?
               (int) $this->m_aRequest['userright'] :
               0;
     else
       $iUserRight = USER_RIGHT;
 
+    # Make sure the password is set and override session due to saving problems
     if (isset($this->m_aRequest['newpw']) && !empty($this->m_aRequest['newpw']) &&
             isset($this->m_aRequest['newpw']) && !empty($this->m_aRequest['oldpw']))
       $this->m_oSession['userdata']['password'] = md5(RANDOM_HASH . $this->m_aRequest['newpw']);
 
     $sPassword = $this->m_oSession['userdata']['password'];
 
-    return new Query("	UPDATE
-													`user`
-												SET
-													name = '" . Helper::formatInput($this->m_aRequest['name']) . "',
-													surname = '" . Helper::formatInput($this->m_aRequest['surname']) . "',
-													email = '" . Helper::formatInput($this->m_aRequest['email']) . "',
-													description = '" . Helper::formatInput($this->m_aRequest['description']) . "',
-													newsletter_default = '" . $iNewsletterDefault . "',
-													use_gravatar = '" . $iUseGravatar . "',
-													password = '" . $sPassword . "',
-													userright = '" . $iUserRight . "'
-												WHERE
-													`id` = '" . $iUID . "'");
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("	UPDATE
+                                  user
+                                SET
+                                  name = :name,
+                                  surname = :surname,
+                                  email = :email,
+                                  description = :description,
+                                  newsletter_default = :newsletter_default,
+                                  use_gravatar = :use_gravatar,
+                                  password = :password,
+                                  userright = :userright
+                                WHERE
+                                  id = :where");
+
+      $oQuery->bindParam('name', Helper::formatInput($this->m_aRequest['name']));
+      $oQuery->bindParam('surname',Helper::formatInput($this->m_aRequest['surname']));
+      $oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
+      $oQuery->bindParam('description', Helper::formatInput($this->m_aRequest['description']));
+      $oQuery->bindParam('newsletter_default', $iNewsletterDefault);
+      $oQuery->bindParam('use_gravatar', $iUseGravatar);
+      $oQuery->bindParam('password', $sPassword);
+      $oQuery->bindParam('userright', $iUserRight);
+      
+      $oQuery->bindParam('where', $iId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
   }
 
-  public function destroy($iID) {
+  public function destroy($iId) {
     # Delete avatars
-    @unlink(PATH_UPLOAD . '/user/18/' . (int) $iID . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/32/' . (int) $iID . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/64/' . (int) $iID . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/100/' . (int) $iID . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/200/' . (int) $iID . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/original/' . (int) $iID . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/' . POPUP_DEFAULT_X . '/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
 
-    return new Query("	DELETE FROM
-													`user`
-												WHERE
-													`id` = '" . (int) $iID . "'
-												LIMIT 1");
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("	DELETE FROM
+                                  user
+                                WHERE
+                                  id = :id
+                                LIMIT
+                                  1");
+
+      $oQuery->bindParam('id', $iId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
   }
-
 }

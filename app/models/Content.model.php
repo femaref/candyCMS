@@ -138,10 +138,6 @@ class Model_Content extends Model_Main {
     }
   }
 
-  /*public function getId() {
-    return $this->_iID;
-  }*/
-
   public function update($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -187,7 +183,6 @@ class Model_Content extends Model_Main {
                                 LIMIT
                                   1");
 
-      $iUserId = USER_ID;
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
 

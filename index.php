@@ -31,7 +31,6 @@ try {
 			!file_exists('app/helpers/AdvancedException.helper.php') ||
 			!file_exists('app/helpers/Section.helper.php') ||
 			!file_exists('app/helpers/Helper.helper.php') ||
-			!file_exists('app/helpers/SqlConnect.helper.php') ||
 			!file_exists('app/helpers/SqlQuery.helper.php') ||
 			!file_exists('lib/smarty/Smarty.class.php')
 	)
@@ -43,7 +42,6 @@ try {
 		require_once 'app/helpers/AdvancedException.helper.php';
 		require_once 'app/helpers/Section.helper.php';
 		require_once 'app/helpers/Helper.helper.php';
-		require_once 'app/helpers/SqlConnect.helper.php';
 		require_once 'app/helpers/SqlQuery.helper.php';
 
 		# Smarty template parsing

@@ -216,8 +216,25 @@ class User extends Main {
     $oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN);
     $oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE);
 
-    if (!empty($this->_iID)) {
+    if (empty($this->_iID)) {
+      $this->_setTitle(LANG_USER_OVERVIEW);
 
+      if (USER_RIGHT < 3)
+        return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      else {
+        $this->_aData = $this->_oModel->getData();
+        $oSmarty->assign('user', $this->_aData);
+
+        # Language
+        $oSmarty->assign('lang_create', LANG_USER_CREATE);
+        $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
+        $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
+        $oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
+
+        $oSmarty->template_dir = Helper::getTemplateDir('user/overview');
+        return $oSmarty->fetch('user/overview.tpl');
+      }
+    } else {
       $this->_aData = $this->_oModel->getData($this->_iID);
       $aGravatar = array('use_gravatar' => $this->_aData['use_gravatar'],
           'email' => $this->_aData['email']);
@@ -242,27 +259,9 @@ class User extends Main {
       $oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_sName, LANG_USER_CONTACT_VIA_EMAIL));
       $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
-
       $oSmarty->template_dir = Helper::getTemplateDir('user/show');
       return $oSmarty->fetch('user/show.tpl');
-    } else {
-      $this->_setTitle(LANG_USER_OVERVIEW);
 
-      if (USER_RIGHT < 3)
-        return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
-      else {
-        $this->_aData = $this->_oModel->getData();
-        $oSmarty->assign('user', $this->_aData);
-
-        # Language
-        $oSmarty->assign('lang_create', LANG_USER_CREATE);
-        $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
-        $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
-        $oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
-
-        $oSmarty->template_dir = Helper::getTemplateDir('user/overview');
-        return $oSmarty->fetch('user/overview.tpl');
-      }
     }
   }
 
@@ -270,10 +269,11 @@ class User extends Main {
 
   public function destroy() {
     if (USER_RIGHT == 4) {
-      if ($this->_oModel->destroy($this->_iID) == true)
+      if ($this->_oModel->destroy($this->_iID) == true) {
+        $this->_iID = '';
         return Helper::successMessage(LANG_SUCCESS_DESTROY) .
         $this->show();
-      else
+      } else
         return Helper::errorMessage(LANG_ERROR_DB_QUERY);
     }
     else
@@ -369,5 +369,4 @@ class User extends Main {
         return Helper::errorMessage(LANG_ERROR_DB_QUERY);
     }
   }
-
 }
