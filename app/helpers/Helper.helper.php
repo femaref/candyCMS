@@ -153,7 +153,7 @@ final class Helper {
       return date('d.m.Y - H:i', $iTime);
   }
 
-  public static final function formatOutout($sStr, $bUseParagraph = false) {
+  public static final function formatOutput($sStr, $bUseParagraph = false) {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 

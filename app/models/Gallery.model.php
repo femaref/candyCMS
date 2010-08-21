@@ -48,8 +48,8 @@ class Model_Gallery extends Model_Main {
 				$iID = $aRow['id'];
 				$this->_aData[$iID] = array('id' => $aRow['id'],
 						'authorID' => $aRow['authorID'],
-						'title' => Helper::formatOutout($aRow['title']),
-						'description' => Helper::formatOutout($aRow['description'], true),
+						'title' => Helper::formatOutput($aRow['title']),
+						'description' => Helper::formatOutput($aRow['description'], true),
 						'date' => Helper::formatTimestamp($aRow['date']),
 						'files_sum' => $aRow['filesSum']
 				);
@@ -107,7 +107,7 @@ class Model_Gallery extends Model_Main {
 			$this->_aThumbs[$iID] = array(	'id' => $aRow['id'],
 					'file' => $aRow['file'],
 					'full_path' => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['aid'],
-					'description' => Helper::formatOutout($aRow['description']),
+					'description' => Helper::formatOutput($aRow['description']),
 					'date' => Helper::formatTimestamp($aRow['date']),
 					'extension' => $aRow['extension'],
 					'dim' => THUMB_DEFAULT_X,

@@ -65,17 +65,17 @@ class Model_Blog extends Model_Main {
                 'authorID' => $aRow['authorID'],
                 'tags' => $aTags,
                 'tags_sum' => (int)count($aTags),
-                'title' => Helper::formatOutout($aRow['title']),
-                'content' => Helper::formatOutout($aRow['content'], true),
+                'title' => Helper::formatOutput($aRow['title']),
+                'content' => Helper::formatOutput($aRow['content'], true),
                 'date' => Helper::formatTimestamp($aRow['date']),
                 'date_modified' => Helper::formatTimestamp($aRow['date_modified']),
                 'uid' => $aRow['uid'],
-                'name' => Helper::formatOutout($aRow['name']),
-                'surname' => Helper::formatOutout($aRow['surname']),
+                'name' => Helper::formatOutput($aRow['name']),
+                'surname' => Helper::formatOutput($aRow['surname']),
                 'avatar32' => Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
                 'avatar64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
                 'comment_sum' => $aRow['commentSum'],
-                'eTitle' => Helper::formatOutout(urlencode($aRow['title'])),
+                'eTitle' => Helper::formatOutput(urlencode($aRow['title'])),
                 'published' => $aRow['published']
         );
       }
@@ -116,7 +116,7 @@ class Model_Blog extends Model_Main {
         # Do we use WYSIWYG or BB-Code?
         if( isset($this->m_aRequest['write_mode']) &&
                 'wysiwyg' == $this->m_aRequest['write_mode'] )
-          $sContent = Helper::formatOutout($aRow['content']);
+          $sContent = Helper::formatOutput($aRow['content']);
         else
           $sContent = Helper::removeSlahes($aRow['content']);
 
@@ -137,16 +137,16 @@ class Model_Blog extends Model_Main {
                 'authorID' => $aRow['authorID'],
                 'tags' => $aTags,
                 'tags_sum' => (int)count($aTags),
-                'title' => Helper::formatOutout($aRow['title']),
-                'content' => Helper::formatOutout($aRow['content'], true),
+                'title' => Helper::formatOutput($aRow['title']),
+                'content' => Helper::formatOutput($aRow['content'], true),
                 'date' => Helper::formatTimestamp($aRow['date']),
                 'date_modified' => Helper::formatTimestamp($aRow['date_modified']),
                 'uid' => $aRow['uid'],
-                'name' => Helper::formatOutout($aRow['name']),
-                'surname' => Helper::formatOutout($aRow['surname']),
+                'name' => Helper::formatOutput($aRow['name']),
+                'surname' => Helper::formatOutput($aRow['surname']),
                 'avatar' => '',
                 'comment_sum' => $aRow['commentSum'],
-                'eTitle' => Helper::formatOutout(urlencode($aRow['title'])),
+                'eTitle' => Helper::formatOutput(urlencode($aRow['title'])),
                 'published' => $aRow['published']
         );
       }

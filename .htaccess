@@ -8,7 +8,9 @@ RewriteRule ^favicon.ico$ public/favicon.ico [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
 
 # Custom error pages
-
+ErrorDocument 404 /public/404.html
+ErrorDocument 422 /public/422.html
+ErrorDocument 500 /public/500.html
 
 # Static rules
 RewriteRule ^About$ index.php?section=content&id=3 [L]

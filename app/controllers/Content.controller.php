@@ -22,7 +22,18 @@ final class Content extends Main {
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
     $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
-    if(!empty($this->_iID)) {
+    if(empty($this->_iID)) {
+      $oSmarty->assign('content', $this->_oModel->getData());
+
+      # Language
+      $oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
+      $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY_ENTRY);
+      $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
+
+      $oSmarty->template_dir = Helper::getTemplateDir('content/overview');
+      return $oSmarty->fetch('content/overview.tpl');
+    }
+    else {
       $this->_aData = $this->_oModel->getData($this->_iID);
 
       # create output
@@ -40,17 +51,6 @@ final class Content extends Main {
       $oSmarty->template_dir = Helper::getTemplateDir('content/show');
       return $oSmarty->fetch('content/show.tpl');
     }
-    else {
-      $oSmarty->assign('content', $this->_oModel->getData());
-
-      # Language
-      $oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
-      $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY_ENTRY);
-      $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
-
-      $oSmarty->template_dir = Helper::getTemplateDir('content/overview');
-      return $oSmarty->fetch('content/overview.tpl');
-    }
   }
 
   protected final function _showFormTemplate($bUpdate = true) {
@@ -58,8 +58,8 @@ final class Content extends Main {
 
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iID, true);
-      $oSmarty->assign('c', $this->_aData[$this->_iID]);
       $oSmarty->assign('action', '/Content/update');
+      $oSmarty->assign('c', $this->_aData);
       $oSmarty->assign('formdata', 'update_content');
       $oSmarty->assign('id', $this->_iID);
 
@@ -68,7 +68,7 @@ final class Content extends Main {
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
-      $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iID]['title']));
+      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
     else {
       $sTitle = isset($this->m_aRequest['title']) ?
@@ -119,10 +119,9 @@ final class Content extends Main {
       return $sReturn;
     }
     else {
-      if($this->_oModel->create() == true) {
+      if($this->_oModel->create() == true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).
                 $this->show();
-      }
       else
         return Helper::errorMessage(LANG_ERROR_DB_QUERY);
     }
@@ -130,15 +129,17 @@ final class Content extends Main {
 
   protected final function _update() {
     if($this->_oModel->update((int)$this->m_aRequest['id']) == true)
-      return Helper::successMessage(LANG_SUCCESS_UPDATE).$this->show();
+      return Helper::successMessage(LANG_SUCCESS_UPDATE).
+            $this->show();
     else
       return Helper::errorMessage(LANG_ERROR_DB_QUERY);
   }
 
   protected final function _destroy() {
-    if($this->_oModel->destroy((int)$this->m_aRequest['id']) == true)
-      return Helper::successMessage(LANG_SUCCESS_DESTROY).$this->show();
-    else
+    if ($this->_oModel->destroy((int) $this->m_aRequest['id']) == true) {
+      $this->_iID = '';
+      return Helper::successMessage(LANG_SUCCESS_DESTROY) .$this->show();
+    } else
       return Helper::errorMessage(LANG_ERROR_DB_QUERY);
   }
 }

@@ -61,12 +61,12 @@ class Model_Comment extends Model_Main {
                     'authorID' => $aRow['authorID'],
                     'author_email' => $aRow['author_email'],
                     'author_name' => $aRow['author_name'],
-                    'name' => Helper::formatOutout($aRow['name']),
-                    'surname' => Helper::formatOutout($aRow['surname']),
+                    'name' => Helper::formatOutput($aRow['name']),
+                    'surname' => Helper::formatOutput($aRow['surname']),
                     'avatar_32' => Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
                     'avatar_64' => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
                     'date' => Helper::formatTimestamp($aRow['date']),
-                    'content' => Helper::formatOutout($aRow['content']),
+                    'content' => Helper::formatOutput($aRow['content']),
                     'loop' => $iLoop
         );
       }

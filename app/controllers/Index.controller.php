@@ -5,120 +5,132 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ */
 
 class Index {
+
   protected $m_aRequest;
   protected $m_oSession;
   protected $m_aFile;
   protected $m_aCookie;
 
   public final function __construct($aRequest, $oSession, $aFile = '', $aCookie = '') {
-    $this->m_aRequest	=& $aRequest;
-    $this->m_oSession	=& $oSession;
-    $this->m_aFile		=& $aFile;
-    $this->m_aCookie	=& $aCookie;
+    $this->m_aRequest = & $aRequest;
+    $this->m_oSession = & $oSession;
+    $this->m_aFile = & $aFile;
+    $this->m_aCookie = & $aCookie;
   }
 
   public final function loadConfig($sPath = '') {
-    if( file_exists($sPath. 'config/Config.inc.php') )
-      require_once $sPath. 'config/Config.inc.php';
+    if (file_exists($sPath . 'config/Config.inc.php'))
+      require_once $sPath . 'config/Config.inc.php';
     else
-      die('Config could not be loaded.');
+      die('Missing config file.');
   }
 
   public final function checkURL() {
-    if(is_dir('install') && WEBSITE_DEV == false)
-      die('Please install software via <strong>install/index.php</strong> and delete the folder afterwards!');
+    if (is_dir('install') && WEBSITE_DEV == false)
+    # TODO: i18l
+      die('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
-    if(!isset($this->m_aRequest['section']))
+    if (!isset($this->m_aRequest['section']))
       Helper::redirectTo('/Start');
   }
 
   public final function setLanguage($sPath = '') {
-    if( isset($this->m_aRequest['lang'])) {
-      setCookie('lang', (string)$this->m_aRequest['lang'], time() + 2592000, '/');
+    if (isset($this->m_aRequest['lang'])) {
+      setCookie('lang', (string) $this->m_aRequest['lang'], time() + 2592000, '/');
       Helper::redirectTo('/Start');
       die();
     }
 
     $this->_sLanguage = isset($this->m_aCookie['lang']) ?
-            (string)$this->m_aCookie['lang'] :
+            (string) $this->m_aCookie['lang'] :
             DEFAULT_LANGUAGE;
 
-    if( file_exists($sPath. 'config/language/'	.$this->_sLanguage.	'.lang.php') )
-      require_once $sPath. 'config/language/'	.$this->_sLanguage.	'.lang.php';
+    if (file_exists($sPath . 'config/language/' . $this->_sLanguage . '.lang.php'))
+      require_once $sPath . 'config/language/' . $this->_sLanguage . '.lang.php';
     else
       die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
   }
 
   public final function loadAddons() {
-    if( ALLOW_ADDONS == true && file_exists('addon/Addon.class.php'))
+    if (ALLOW_ADDONS == true && file_exists('addon/Addon.class.php'))
       require_once 'addon/Addon.class.php';
   }
 
   public final function loadPlugins() {
     $oDir = opendir('plugins');
 
-    while($aFile = readdir($oDir)) {
-      if($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
+    while ($aFile = readdir($oDir)) {
+      if ($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
         continue;
 
-      require_once ('plugins/'	.$aFile);
+      require_once ('plugins/' . $aFile);
     }
   }
 
-  public final function connectDB() {
-    SQLCONNECT::connect(SQL_HOST, SQL_USER, SQL_PASSWORD);
-    SQLCONNECT::selectDB(SQL_DB);
-  }
-
   public final function setUser($SessionId = '') {
-    if(empty($SessionId))
+    if (empty($SessionId))
       $SessionId = session_id();
 
-    # TODO: Besser QueryModel
-    $this->m_oSession['userdata'] = Model_Main::simpleQuery(
-            '*',
-            'user',
-            "session = '"	.$SessionId.	"' AND ip = '"	.$_SERVER['REMOTE_ADDR'].	"'",
-            '1');
-    return $this->m_oSession['userdata'];
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session AND ip = :ip LIMIT 1");
+      $oQuery->bindParam('session', $SessionId);
+      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+      $oQuery->execute();
+
+      $this->m_oSession['userdata'] = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $this->m_oSession['userdata'];
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
   }
 
   protected final function _getFlashMessage() {
-    $aFlashMessage['type']      = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ? $_SESSION['flash_message']['type'] : '';
-    $aFlashMessage['message']   = isset($_SESSION['flash_message']['message']) && !empty($_SESSION['flash_message']['message']) ? $_SESSION['flash_message']['message'] : '';
-    $aFlashMessage['headline']  = isset($_SESSION['flash_message']['headline']) && !empty($_SESSION['flash_message']['headline']) ? $_SESSION['flash_message']['headline'] : '';
+    $aFlashMessage['type'] = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ?
+            $_SESSION['flash_message']['type'] :
+            '';
+    $aFlashMessage['message'] = isset($_SESSION['flash_message']['message']) && !empty($_SESSION['flash_message']['message']) ?
+            $_SESSION['flash_message']['message'] :
+            '';
+    $aFlashMessage['headline'] = isset($_SESSION['flash_message']['headline']) && !empty($_SESSION['flash_message']['headline']) ?
+            $_SESSION['flash_message']['headline'] :
+            '';
 
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }
 
   public final function show() {
-    # Set expiration date for header
-    $sHeaderExpires = gmdate('D, d M Y H:i:s', time() + 60).	' GMT';
-
     # Load JS language
-    $sLangVars  = '';
-    $oFile      = fopen('config/language/' .$this->_sLanguage.  '.lang.js', 'rb');
-    while(!feof($oFile)) {
-      $sLangVars  .= fgets($oFile);
+    $sLangVars = '';
+    $oFile = fopen('config/language/' . $this->_sLanguage . '.lang.js', 'rb');
+    while (!feof($oFile)) {
+      $sLangVars .= fgets($oFile);
     }
 
     # Check for new version of script
-    if(USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+    if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
       $sVersionContent = stream_get_contents($oFile);
       fclose($oFile);
 
-      $sVersionContent &= ($sVersionContent > VERSION) ? (int)$sVersionContent : '';
+      $sVersionContent &= ( $sVersionContent > VERSION) ? (int) $sVersionContent : '';
     }
+
+    # Set expiration date for header
+    $sHeaderExpires = gmdate('D, d M Y H:i:s', time() + 60) . ' GMT';
 
     # Header.tpl
     $oSmarty = new Smarty();
     $oSmarty->assign('name', WEBSITE_NAME);
-    $oSmarty->assign('user', Helper::formatOutout($this->m_oSession['userdata']['name']));
+    $oSmarty->assign('user', Helper::formatOutput($this->m_oSession['userdata']['name']));
     $oSmarty->assign('USER_ID', USER_ID);
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
@@ -152,9 +164,9 @@ class Index {
     $oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
 
     /* Define Core Modules - check if we use a standard action. If yes, forward to
-		 * Section.class.php where we check for an override of this core modules. If we
-		 * want to override the core module, we got to load Addons later in Section.class.php */
-    if(	!isset($this->m_aRequest['section']) ||
+     * Section.class.php where we check for an override of this core modules. If we
+     * want to override the core module, we got to load Addons later in Section.class.php */
+    if (!isset($this->m_aRequest['section']) ||
             empty($this->m_aRequest['section']) ||
             ucfirst($this->m_aRequest['section']) == 'Blog' ||
             ucfirst($this->m_aRequest['section']) == 'Comment' ||
@@ -173,22 +185,20 @@ class Index {
       $oSection->getSection();
     }
     /* We do not have a standard action, so let's take a look, if we have the required
-		 * Addon in addon. If we do have, proceed with own action. */
-    elseif( ALLOW_ADDONS == true)
+     * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
       $oSection = new Addon($this->m_aRequest, $this->m_oSession, $this->m_aFile);
     # There's no request on a core module and Addons are disabled. */
     else {
       header('Status: 404 Not Found');
-      #die(ucfirst($this->m_aRequest['section']));
     }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
-    if(	(isset( $this->m_aRequest['section'] )  && 'RSS' == $this->m_aRequest['section']) ||
-            (isset( $this->m_aRequest['ajax'] )  && true == $this->m_aRequest['ajax'])  )
+    if ((isset($this->m_aRequest['section']) && 'RSS' == $this->m_aRequest['section']) ||
+            (isset($this->m_aRequest['ajax']) && true == $this->m_aRequest['ajax']))
       $sCachedHTML = $oSection->getContent();
     else {
-      $oSmarty->assign('_title_', $oSection->getTitle().
-              ' - '	.LANG_WEBSITE_TITLE);
+      $oSmarty->assign('_title_', $oSection->getTitle() .
+              ' - ' . LANG_WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
 
@@ -206,18 +216,18 @@ class Index {
     $sCachedHTML = str_replace('%FLASH_HEADLINE%', $aFlashMessages['headline'], $sCachedHTML);
 
     # Build absolute Path because of Pretty URLs
-    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN.  '/public', $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL.  '/' .PATH_UPLOAD, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
-    if( PATH_CSS == '' )
-      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/css', $sCachedHTML);
+    if (PATH_CSS == '')
+      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN.  '/public/skins/'	.PATH_CSS.	'/css', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
-    if( PATH_IMAGES == '' )
-      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.  '/public/images', $sCachedHTML);
+    if (PATH_IMAGES == '')
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
     else
-      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN.	'/public/skins/'	.PATH_IMAGES.	'/images', $sCachedHTML);
+      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images', $sCachedHTML);
 
     # Cut spaces to minimize filesize
     # Normal tab
@@ -227,12 +237,12 @@ class Index {
     $sCachedHTML = str_replace('  ', '', $sCachedHTML);
 
     # Compress Data
-    if( extension_loaded('zlib') )
+    if (extension_loaded('zlib'))
       @ob_start('ob_gzhandler');
 
     header('Cache-Control: must-revalidate');
     header('Content-Type: text/html; charset=utf-8');
-    header('Expires: '	.$sHeaderExpires);
+    header('Expires: ' . $sHeaderExpires);
 
     return $sCachedHTML;
   }

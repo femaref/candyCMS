@@ -223,7 +223,7 @@ class User extends Main {
           'email' => $this->_aData['email']);
 
       # Description Fix, format Code to BB
-      $this->_aData['description'] = Helper::formatOutout($this->_aData['description']);
+      $this->_aData['description'] = Helper::formatOutput($this->_aData['description']);
 
       $oSmarty->assign('uid', $this->_iID);
       $oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));

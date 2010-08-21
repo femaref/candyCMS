@@ -66,7 +66,6 @@ $oIndex->checkURL();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
-$oIndex->connectDB();
 
 $aUser =& $oIndex->setUser();
 define( 'USER_ID',	(int)$aUser['id'] );
