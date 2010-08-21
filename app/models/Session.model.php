@@ -11,43 +11,73 @@ require_once 'app/controllers/Mail.controller.php';
 
 class Model_Session extends Model_Main {
   public final function create() {
-    $oCheckUser = new Query("	SELECT
-																*
-															FROM
-																user
-															WHERE
-																email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
-															AND
-																password = MD5('"	.RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']).	"')
-															LIMIT 1");
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$oQuery = $oDb->prepare(" SELECT
+																	*
+																FROM
+																	user
+																WHERE
+																	email = :email
+																AND
+																	password = :password
+																LIMIT
+																	1");
+
+			$sPassword = RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']);
+			$oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
+			$oQuery->bindParam('password', $sPassword);
+			$oQuery->execute();
+
+			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			$oDb = null;
+
+		} catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+			die();
+		}
 
     # Check if user exists
-    if($oCheckUser->numRows() == 1) {
-      $this->_aData =& $oCheckUser->fetch();
+    if(count((int)$aResult) == 1) {
+      $this->_aData =& $aResult;
 
-      new Query("	UPDATE
-										user
-									SET
-										session = '"	.session_id().	"',
-										ip = '"	.$_SERVER['REMOTE_ADDR'].	"',
-										last_login = '"	.time().	"'
-									WHERE
-										id = "	.(int)$this->_aData['id']);
+			try {
+				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      if(empty($this->_aData['last_login'])) {
-        return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL).
-                Helper::redirectTo('/User/Settings');
-      }
-      else {
-        return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL).
-                Helper::redirectTo('/Start');
-      }
+				$oQuery = $oDb->prepare("	UPDATE
+																		user
+																	SET
+																		session = :session,
+																		ip = :ip,
+																		last_login = :last_login
+																	WHERE
+																		id = :where");
+
+				$iSessionId = session_id();
+				$oQuery->bindParam('session', $iSessionId);
+				$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+				$oQuery->bindParam('time', time());
+				$oQuery->bindParam('where', $this->_aData['id']);
+				$bResult = $oQuery->execute();
+
+				$oDb = null;
+				return $bResult;
+
+			} catch (AdvancedException $e) {
+				$oDb->rollBack();
+				$e->getMessage();
+				die();
+			}
     }
-    else {
+    else
+			# Start new controller from here so output information
       $oController = new Session($this->m_aRequest, $this->m_oSession);
       return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
               $oController->showCreateSessionTemplate();
-    }
   }
 
   # TODO: Clean up Model and Controller
@@ -106,9 +136,30 @@ class Model_Session extends Model_Main {
   }
 
   public final function destroy() {
-    new Query("UPDATE `user` SET `session` = '' WHERE session = '"	.session_id().	"'");
-    #session_destroy();
-    unset($_SESSION);
-    return Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL);
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("	UPDATE
+                                  user
+                                SET
+                                  session = :session
+                                WHERE
+                                  session = :where");
+
+      $sNull			= 'null';
+      $iSessionId = session_id();
+      $oQuery->bindParam('session', $sNull, PDO::PARAM_NULL);
+      $oQuery->bindParam('where', $iSessionId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
   }
 }

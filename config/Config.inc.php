@@ -26,7 +26,7 @@ define('SQL_DEBUG', '0');
 
 # Do you want to use SMTP to send your mails instead of mail()?
 # DEFAULT: 0
-define('SMTP_ON', '1');
+define('SMTP_ON', '0');
 define('SMTP_HOST', 'localhost');
 define('SMTP_USER', '');
 define('SMTP_PASSWORD', '');

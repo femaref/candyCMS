@@ -92,16 +92,30 @@ class Model_User extends Model_Main {
   }
 
   public function create() {
-    return new Query("INSERT INTO
-												user (name, surname, password, email, regdate)
-											VALUES
-											(
-												'" . Helper::formatInput($this->m_aRequest['name']) . "',
-												'" . Helper::formatInput($this->m_aRequest['surname']) . "',
-												'" . md5(RANDOM_HASH . $this->m_aRequest['password']) . "',
-												'" . Helper::formatInput($this->m_aRequest['email']) . "',
-												'" . time() . "'
-											)");
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare(" INSERT INTO
+                                  user (name, surname, password, email, regdate)
+                                VALUES
+                                  ( :name, :surname, :password, :email, :regdate )");
+
+      $oQuery->bindParam('name', Helper::formatInput($this->m_aRequest['name']));
+      $oQuery->bindParam('surname', Helper::formatInput($this->m_aRequest['surname']));
+      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->m_aRequest['password']));
+      $oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
+      $oQuery->bindParam('regdate', time());
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
   }
 
   public function update($iId) {
