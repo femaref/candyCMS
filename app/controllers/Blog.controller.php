@@ -37,7 +37,7 @@ class Blog extends Main {
 		$oComments = new Comment($this->m_aRequest, $this->m_oSession);
 		$oComments->__init($iCommentSum, $this->_aData);
 		$oSmarty->assign('_blog_comments_', $oComments->show());
-		$oSmarty->assign('_blog_pages_', $this->_oModel->_oPages->showSurrounding('Blog', 'blog'));
+		#$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
 		# Language
 		$oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);

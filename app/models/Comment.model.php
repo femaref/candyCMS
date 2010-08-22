@@ -12,9 +12,9 @@ class Model_Comment extends Model_Main {
   private $_iEntries;
 
   public function __init($iEntries, $iOffset, $iLimit) {
-    $this->_iEntries = & $iEntries;
-    $this->_iOffset = & $iOffset;
-    $this->_iLimit = & $iLimit;
+    $this->_iEntries	= & $iEntries;
+    $this->_iOffset		= & $iOffset;
+    $this->_iLimit		= & $iLimit;
   }
 
   private final function _setData($parentID, $parentCat) {

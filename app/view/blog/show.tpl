@@ -34,7 +34,7 @@
           <div class='date'>
             {$b.date} {$lang_by}
             <a href='/User/{$b.authorID}'>{$b.name} {$b.surname}</a>
-            {if $b.date_modified != '01.01.1970 - 01:00'}
+            {if $b.date_modified != ''}
               - {$lang_last_update}: {$b.date_modified}
             {/if}
           </div>

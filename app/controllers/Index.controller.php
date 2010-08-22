@@ -9,29 +9,36 @@
 
 class Index {
 
-  protected $m_aRequest;
-  protected $m_oSession;
-  protected $m_aFile;
-  protected $m_aCookie;
+  private $m_aRequest;
+  private $m_oSession;
+  private $m_aFile;
+  private $m_aCookie;
 
   public final function __construct($aRequest, $oSession, $aFile = '', $aCookie = '') {
     $this->m_aRequest = & $aRequest;
     $this->m_oSession = & $oSession;
-    $this->m_aFile = & $aFile;
-    $this->m_aCookie = & $aCookie;
+    $this->m_aFile		= & $aFile;
+    $this->m_aCookie	= & $aCookie;
   }
 
   public final function loadConfig($sPath = '') {
-    if (file_exists($sPath . 'config/Config.inc.php'))
-      require_once $sPath . 'config/Config.inc.php';
-    else
-      die('Missing config file.');
+		try {
+			if (!file_exists($sPath . 'config/Config.inc.php'))
+				throw new AdvancedException('Missing config file.');
+			else
+				require_once $sPath . 'config/Config.inc.php';
+		} catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
   }
 
-  public final function checkURL() {
-    if (is_dir('install') && WEBSITE_DEV == false)
-    # TODO: i18l
-      die('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+  public final function setBasicConfiguration() {
+		try {
+			if (is_dir('install') && WEBSITE_DEV == false)
+				throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+		} catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
 
     if (!isset($this->m_aRequest['section']))
       Helper::redirectTo('/Start');
@@ -41,6 +48,7 @@ class Index {
     if (isset($this->m_aRequest['lang'])) {
       setCookie('lang', (string) $this->m_aRequest['lang'], time() + 2592000, '/');
       Helper::redirectTo('/Start');
+			# Stop parsing immediately
       die();
     }
 
@@ -70,7 +78,7 @@ class Index {
     }
   }
 
-  public final function setUser($SessionId = '') {
+  public final function setActiveUser($SessionId = '') {
     if (empty($SessionId))
       $SessionId = session_id();
 
@@ -79,6 +87,7 @@ class Index {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session AND ip = :ip LIMIT 1");
+			
       $oQuery->bindParam('session', $SessionId);
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
       $oQuery->execute();
@@ -121,7 +130,7 @@ class Index {
       $sVersionContent = stream_get_contents($oFile);
       fclose($oFile);
 
-      $sVersionContent &= ( $sVersionContent > VERSION) ? (int) $sVersionContent : '';
+      $sVersionContent &= ($sVersionContent > VERSION) ? (int) $sVersionContent : '';
     }
 
     # Set expiration date for header
@@ -167,19 +176,19 @@ class Index {
      * Section.class.php where we check for an override of this core modules. If we
      * want to override the core module, we got to load Addons later in Section.class.php */
     if (!isset($this->m_aRequest['section']) ||
-            empty($this->m_aRequest['section']) ||
-            ucfirst($this->m_aRequest['section']) == 'Blog' ||
-            ucfirst($this->m_aRequest['section']) == 'Comment' ||
-            ucfirst($this->m_aRequest['section']) == 'Content' ||
-            ucfirst($this->m_aRequest['section']) == 'Gallery' ||
-            ucfirst($this->m_aRequest['section']) == 'Lang' ||
-            ucfirst($this->m_aRequest['section']) == 'Mail' ||
-            ucfirst($this->m_aRequest['section']) == 'Media' ||
-            ucfirst($this->m_aRequest['section']) == 'Newsletter' ||
-            ucfirst($this->m_aRequest['section']) == 'RSS' ||
-            ucfirst($this->m_aRequest['section']) == 'Session' ||
-            ucfirst($this->m_aRequest['section']) == 'Static' ||
-            ucfirst($this->m_aRequest['section']) == 'User') {
+						empty($this->m_aRequest['section']) ||
+						ucfirst($this->m_aRequest['section']) == 'Blog' ||
+						ucfirst($this->m_aRequest['section']) == 'Comment' ||
+						ucfirst($this->m_aRequest['section']) == 'Content' ||
+						ucfirst($this->m_aRequest['section']) == 'Gallery' ||
+						ucfirst($this->m_aRequest['section']) == 'Lang' ||
+						ucfirst($this->m_aRequest['section']) == 'Mail' ||
+						ucfirst($this->m_aRequest['section']) == 'Media' ||
+						ucfirst($this->m_aRequest['section']) == 'Newsletter' ||
+						ucfirst($this->m_aRequest['section']) == 'RSS' ||
+						ucfirst($this->m_aRequest['section']) == 'Session' ||
+						ucfirst($this->m_aRequest['section']) == 'Static' ||
+						ucfirst($this->m_aRequest['section']) == 'User') {
 
       $oSection = new Section($this->m_aRequest, $this->m_oSession, $this->m_aFile);
       $oSection->getSection();
@@ -188,9 +197,8 @@ class Index {
      * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
       $oSection = new Addon($this->m_aRequest, $this->m_oSession, $this->m_aFile);
     # There's no request on a core module and Addons are disabled. */
-    else {
+    else
       header('Status: 404 Not Found');
-    }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
     if ((isset($this->m_aRequest['section']) && 'RSS' == $this->m_aRequest['section']) ||

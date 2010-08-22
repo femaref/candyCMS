@@ -12,11 +12,13 @@ require_once 'app/controllers/Mail.controller.php';
 class Model_Session extends Model_Main {
   public final function create() {
 		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+										PDO::ATTR_PERSISTENT => true
+								));
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$oQuery = $oDb->prepare(" SELECT
-																	*
+																	id
 																FROM
 																	user
 																WHERE
@@ -26,13 +28,12 @@ class Model_Session extends Model_Main {
 																LIMIT
 																	1");
 
-			$sPassword = RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']);
+			$sPassword = md5(RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']));
 			$oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
 			$oQuery->bindParam('password', $sPassword);
 			$oQuery->execute();
 
 			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			$oDb = null;
 
 		} catch (AdvancedException $e) {
 			$oDb->rollBack();
@@ -41,13 +42,10 @@ class Model_Session extends Model_Main {
 		}
 
     # Check if user exists
-    if(count((int)$aResult) == 1) {
+    if(!empty($aResult['id'])) {
       $this->_aData =& $aResult;
 
 			try {
-				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 				$oQuery = $oDb->prepare("	UPDATE
 																		user
 																	SET
@@ -55,13 +53,12 @@ class Model_Session extends Model_Main {
 																		ip = :ip,
 																		last_login = :last_login
 																	WHERE
-																		id = :where");
+																		id = :id");
 
-				$iSessionId = session_id();
-				$oQuery->bindParam('session', $iSessionId);
+				$oQuery->bindParam('session', session_id());
 				$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-				$oQuery->bindParam('time', time());
-				$oQuery->bindParam('where', $this->_aData['id']);
+				$oQuery->bindParam('last_login', time());
+				$oQuery->bindParam('id', $this->_aData['id']);
 				$bResult = $oQuery->execute();
 
 				$oDb = null;
@@ -74,10 +71,9 @@ class Model_Session extends Model_Main {
 			}
     }
     else
-			# Start new controller from here so output information
-      $oController = new Session($this->m_aRequest, $this->m_oSession);
-      return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
-              $oController->showCreateSessionTemplate();
+      return false;
+
+		$oDb = null;
   }
 
   # TODO: Clean up Model and Controller
@@ -143,14 +139,14 @@ class Model_Session extends Model_Main {
       $oQuery = $oDb->prepare("	UPDATE
                                   user
                                 SET
-                                  session = :session
+                                  session = :session_null
                                 WHERE
-                                  session = :where");
+                                  session = :session_id");
 
-      $sNull			= 'null';
+      $sNull			= 'NULL';
       $iSessionId = session_id();
-      $oQuery->bindParam('session', $sNull, PDO::PARAM_NULL);
-      $oQuery->bindParam('where', $iSessionId);
+      $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
+      $oQuery->bindParam('session_id', $iSessionId);
       $bResult = $oQuery->execute();
 
       $oDb = null;

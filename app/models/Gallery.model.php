@@ -90,13 +90,13 @@ class Model_Gallery extends Model_Main {
 		$this->_oPages = new Pages($this->m_aRequest, $this->_iEntries, $iLimit);
 
 		$oGetData = new Query("	SELECT
-															f.*
+															*
 														FROM
-															gallery_file f
+															gallery_file
 														WHERE
-															f.aid="	.$iAID.	"
+															aid="	.$iAID.	"
 														ORDER BY
-															f.date ASC
+															date ASC
 														LIMIT
 															"	.$this->_oPages->getOffset().	",
 															"	.$this->_oPages->getLimit() );

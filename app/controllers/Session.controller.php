@@ -27,16 +27,16 @@ class Session extends Main {
 						!empty($this->m_aRequest['email']) &&
 						!empty($this->m_aRequest['password'])) {
 
-			if ($this->_oModel->create() == true) {
-				if (empty($this->_aData['last_login']))
-					return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL) .
-							Helper::redirectTo('/Start');
-			}
+			if ($this->_oModel->create() == true)
+				return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL) .
+					Helper::redirectTo('/Start');
 			else
-				return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+				return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE) .
+					$this->showCreateSessionTemplate();
 		}
 		else
 			return $this->showCreateSessionTemplate();
+
 	}
 
   public final function showCreateSessionTemplate() {

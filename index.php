@@ -21,7 +21,7 @@ ini_set( 'arg_separator.output', '&amp;' );
 ini_set( 'zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
 
-define('VERSION', '20100818');
+define('VERSION', '20100822');
 
 try {
 	#Load Parent
@@ -47,25 +47,22 @@ try {
 		# Smarty template parsing
 		require_once 'lib/smarty/Smarty.class.php';
 	}
-} catch (Exception $e) {
+} catch (AdvancedException $e) {
 	die($e->getMessage());
 }
 
-if (isset ($_FILES))
-	$aFile =& $_FILES;
-else
-	$aFile = array();
 
 @session_start();
 
+$aFile = isset($_FILES) ? $_FILES : array();
 $oIndex = new Index($_REQUEST, $_SESSION, $aFile, $_COOKIE);
 $oIndex->loadConfig();
-$oIndex->checkURL();
+$oIndex->setBasicConfiguration();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
 
-$aUser =& $oIndex->setUser();
+$aUser =& $oIndex->setActiveUser();
 define( 'USER_ID',	(int)$aUser['id'] );
 define( 'USER_EMAIL', (string)$aUser['email'] );
 define( 'USER_NAME', (string)$aUser['name'] );

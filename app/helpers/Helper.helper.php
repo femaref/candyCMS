@@ -54,7 +54,6 @@ final class Helper {
     die();
   }
 
-
   public static final function checkEmailAddress($sMail) {
     if(preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
       return true;
@@ -134,10 +133,20 @@ final class Helper {
   }
 
   public final static function formatInput($sStr, $bDisableHTML = true) {
-    $sStr = addslashes($sStr);
+		try {
+			if(is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
+				throw new Exception('Input seems not valid.');
+			else
+				$sStr = addslashes($sStr);
 
-    if( $bDisableHTML == true )
-      $sStr = htmlspecialchars($sStr);
+				if( $bDisableHTML == true )
+					$sStr = htmlspecialchars($sStr);
+
+		} catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+			die();
+		}
 
     return $sStr;
   }
