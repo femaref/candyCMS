@@ -10,22 +10,22 @@
 require_once 'app/models/Session.model.php';
 
 class Session extends Main {
-  protected $m_aRequest;
-  protected $m_oSession;
+  protected $_aRequest;
+  protected $_aSession;
 
   public function __init() {
-    $this->_oModel = new Model_Session($this->m_aRequest, $this->m_oSession);
+    $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
   }
 
   /*
    * @ Override
    */
   public final function create() {
-		if (isset($this->m_aRequest['create_session']) &&
-						isset($this->m_aRequest['email']) &&
-						isset($this->m_aRequest['password']) &&
-						!empty($this->m_aRequest['email']) &&
-						!empty($this->m_aRequest['password'])) {
+		if (isset($this->_aRequest['create_session']) &&
+						isset($this->_aRequest['email']) &&
+						isset($this->_aRequest['password']) &&
+						!empty($this->_aRequest['email']) &&
+						!empty($this->_aRequest['password'])) {
 
 			if ($this->_oModel->create() == true)
 				return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL) .
@@ -50,7 +50,7 @@ class Session extends Main {
   }
 
   public final function createNewPassword() {
-    if( isset($this->m_aRequest['email']) && !empty($this->m_aRequest['email']) ) {
+    if( isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ) {
 
       if( $this->_oModel->createNewPassword() == true ) {
         return Helper::successMessage(LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS).

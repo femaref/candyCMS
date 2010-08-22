@@ -12,29 +12,29 @@ require_once 'app/helpers/Pages.helper.php';
 require_once 'app/controllers/Comment.controller.php';
 
 class Blog extends Main {
-	private $_oPages;
+	public $oPages;
 
 	public function __init() {
-		$this->_oModel = new Model_Blog($this->m_aRequest, $this->m_oSession);
+		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
 	}
 
 	public function show() {
-		$this->_aData = $this->_oModel->getData($this->_iID);
+		$this->_aData = $this->_oModel->getData($this->_iId);
 
 		$oSmarty = new Smarty();
 		$oSmarty->assign('blog', $this->_aData);
 		$oSmarty->assign('USER_ID', USER_ID);
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$oSmarty->assign('URL', WEBSITE_URL);
-		$oSmarty->assign('pid', $this->_iID);
+		$oSmarty->assign('pid', $this->_iId);
 
 		# Manage Comments
 		$iCommentSum = 0;
-		if(!empty($this->_iID))
+		if(!empty($this->_iId))
 			$iCommentSum = $this->_aData[1]['comment_sum'];
 
     # System variables
-		$oComments = new Comment($this->m_aRequest, $this->m_oSession);
+		$oComments = new Comment($this->_aRequest, $this->_aSession);
 		$oComments->__init($iCommentSum, $this->_aData);
 		$oSmarty->assign('_blog_comments_', $oComments->show());
 		#$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
@@ -61,21 +61,21 @@ class Blog extends Main {
 	}
 
 	private final function _setBlogTitle($aData) {
-		if( isset($this->m_aRequest['action']) &&
-				'create'	== $this->m_aRequest['action'] &&
-				'blog'		== $this->m_aRequest['section'])
-			return Helper::removeSlahes($this->m_aRequest['title']);
+		if( isset($this->_aRequest['action']) &&
+				'create'	== $this->_aRequest['action'] &&
+				'blog'		== $this->_aRequest['section'])
+			return Helper::removeSlahes($this->_aRequest['title']);
 
-		elseif( isset($this->m_aRequest['action']) &&
-				'tag' == $this->m_aRequest['action'])
-			return Helper::removeSlahes($this->m_aRequest['id']);
+		elseif( isset($this->_aRequest['action']) &&
+				'tag' == $this->_aRequest['action'])
+			return Helper::removeSlahes($this->_aRequest['id']);
 
-		elseif( $this->_iID !== '' )
+		elseif( $this->_iId !== '' )
 			return Helper::removeSlahes($this->_aData[1]['title']);
 
 		else {
-			$iPage = isset($this->m_aRequest['page']) ?
-					(int)$this->m_aRequest['page'] :
+			$iPage = isset($this->_aRequest['page']) ?
+					(int)$this->_aRequest['page'] :
 					1;
 
 			if( $iPage > 1)
@@ -92,8 +92,8 @@ class Blog extends Main {
 		# Show Update Template
 		if($bUpdate == true) {
 			# collect data array
-			$this->_aData = $this->_oModel->getData($this->_iID, true);
-			$oSmarty->assign('id', $this->_iID);
+			$this->_aData = $this->_oModel->getData($this->_iId, true);
+			$oSmarty->assign('id', $this->_iId);
 			$oSmarty->assign('tags', $this->_aData['tags']);
 			$oSmarty->assign('title', $this->_aData['title']);
 			$oSmarty->assign('content', $this->_aData['content']);
@@ -111,20 +111,20 @@ class Blog extends Main {
 		}
 		# Add Blog Template
 		else {
-			$sTitle = isset($this->m_aRequest['title']) ?
-					$this->m_aRequest['title'] :
+			$sTitle = isset($this->_aRequest['title']) ?
+					$this->_aRequest['title'] :
 					'';
 
-			$sTags = isset($this->m_aRequest['tags']) ?
-					$this->m_aRequest['tags'] :
+			$sTags = isset($this->_aRequest['tags']) ?
+					$this->_aRequest['tags'] :
 					'';
 
-			$sContent = isset($this->m_aRequest['content']) ?
-					$this->m_aRequest['content'] :
+			$sContent = isset($this->_aRequest['content']) ?
+					$this->_aRequest['content'] :
 					'';
 
-			$iPublished = isset($this->m_aRequest['published']) ?
-					$this->m_aRequest['published'] :
+			$iPublished = isset($this->_aRequest['published']) ?
+					$this->_aRequest['published'] :
 					'';
 
 			$oSmarty->assign('id', '');
@@ -161,12 +161,12 @@ class Blog extends Main {
 	protected final function _create() {
 		$sError = '';
 
-		if(	!isset($this->m_aRequest['title']) ||
-				empty($this->m_aRequest['title']) )
+		if(	!isset($this->_aRequest['title']) ||
+				empty($this->_aRequest['title']) )
 			$sError .= LANG_GLOBAL_TITLE.	'<br />';
 
-		if(	!isset($this->m_aRequest['content']) ||
-				empty($this->m_aRequest['content']) )
+		if(	!isset($this->_aRequest['content']) ||
+				empty($this->_aRequest['content']) )
 			$sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
 		if( !empty($sError) ) {
@@ -182,7 +182,7 @@ class Blog extends Main {
 	}
 
 	protected final function _update() {
-		if( $this->_oModel->update((int)$this->m_aRequest['id']) == true)
+		if( $this->_oModel->update((int)$this->_aRequest['id']) == true)
 			return Helper::successMessage(LANG_SUCCESS_UPDATE).
 					$this->show();
 		else
@@ -190,7 +190,7 @@ class Blog extends Main {
 	}
 
 	protected function _destroy() {
-		if( $this->_oModel->destroy((int)$this->m_aRequest['id']))
+		if( $this->_oModel->destroy((int)$this->_aRequest['id']))
 			return Helper::successMessage(LANG_SUCCESS_DESTROY).
 					$this->show();
 		else

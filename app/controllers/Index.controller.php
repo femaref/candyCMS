@@ -9,15 +9,15 @@
 
 class Index {
 
-  private $m_aRequest;
-  private $m_oSession;
-  private $m_aFile;
-  private $m_aCookie;
+  private $_aRequest;
+  private $_aSession;
+  private $_aFile;
+  private $_aCookie;
 
-  public final function __construct($aRequest, $oSession, $aFile = '', $aCookie = '') {
-    $this->m_aRequest = & $aRequest;
-    $this->m_oSession = & $oSession;
-    $this->m_aFile		= & $aFile;
+  public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+    $this->_aRequest = & $aRequest;
+    $this->_aSession = & $aSession;
+    $this->_aFile		= & $aFile;
     $this->m_aCookie	= & $aCookie;
   }
 
@@ -40,13 +40,13 @@ class Index {
 			die($e->getMessage());
 		}
 
-    if (!isset($this->m_aRequest['section']))
+    if (!isset($this->_aRequest['section']))
       Helper::redirectTo('/Start');
   }
 
   public final function setLanguage($sPath = '') {
-    if (isset($this->m_aRequest['lang'])) {
-      setCookie('lang', (string) $this->m_aRequest['lang'], time() + 2592000, '/');
+    if (isset($this->_aRequest['lang'])) {
+      setCookie('lang', (string) $this->_aRequest['lang'], time() + 2592000, '/');
       Helper::redirectTo('/Start');
 			# Stop parsing immediately
       die();
@@ -90,10 +90,15 @@ class Index {
 			
       $oQuery->bindParam('session', $SessionId);
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $oQuery->execute();
+      $bReturn = $oQuery->execute();
 
-      $this->m_oSession['userdata'] = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $this->m_oSession['userdata'];
+			if($bReturn == false) {
+				$oSession = new Session($this->_aRequest, $this->_aSession);
+				$oSession->destroy();
+			}
+
+      $this->_aSession['userdata'] = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $this->_aSession['userdata'];
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
@@ -139,7 +144,7 @@ class Index {
     # Header.tpl
     $oSmarty = new Smarty();
     $oSmarty->assign('name', WEBSITE_NAME);
-    $oSmarty->assign('user', Helper::formatOutput($this->m_oSession['userdata']['name']));
+    $oSmarty->assign('user', Helper::formatOutput($this->_aSession['userdata']['name']));
     $oSmarty->assign('USER_ID', USER_ID);
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
@@ -175,34 +180,34 @@ class Index {
     /* Define Core Modules - check if we use a standard action. If yes, forward to
      * Section.class.php where we check for an override of this core modules. If we
      * want to override the core module, we got to load Addons later in Section.class.php */
-    if (!isset($this->m_aRequest['section']) ||
-						empty($this->m_aRequest['section']) ||
-						ucfirst($this->m_aRequest['section']) == 'Blog' ||
-						ucfirst($this->m_aRequest['section']) == 'Comment' ||
-						ucfirst($this->m_aRequest['section']) == 'Content' ||
-						ucfirst($this->m_aRequest['section']) == 'Gallery' ||
-						ucfirst($this->m_aRequest['section']) == 'Lang' ||
-						ucfirst($this->m_aRequest['section']) == 'Mail' ||
-						ucfirst($this->m_aRequest['section']) == 'Media' ||
-						ucfirst($this->m_aRequest['section']) == 'Newsletter' ||
-						ucfirst($this->m_aRequest['section']) == 'RSS' ||
-						ucfirst($this->m_aRequest['section']) == 'Session' ||
-						ucfirst($this->m_aRequest['section']) == 'Static' ||
-						ucfirst($this->m_aRequest['section']) == 'User') {
+    if (!isset($this->_aRequest['section']) ||
+						empty($this->_aRequest['section']) ||
+						ucfirst($this->_aRequest['section']) == 'Blog' ||
+						ucfirst($this->_aRequest['section']) == 'Comment' ||
+						ucfirst($this->_aRequest['section']) == 'Content' ||
+						ucfirst($this->_aRequest['section']) == 'Gallery' ||
+						ucfirst($this->_aRequest['section']) == 'Lang' ||
+						ucfirst($this->_aRequest['section']) == 'Mail' ||
+						ucfirst($this->_aRequest['section']) == 'Media' ||
+						ucfirst($this->_aRequest['section']) == 'Newsletter' ||
+						ucfirst($this->_aRequest['section']) == 'RSS' ||
+						ucfirst($this->_aRequest['section']) == 'Session' ||
+						ucfirst($this->_aRequest['section']) == 'Static' ||
+						ucfirst($this->_aRequest['section']) == 'User') {
 
-      $oSection = new Section($this->m_aRequest, $this->m_oSession, $this->m_aFile);
+      $oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }
     /* We do not have a standard action, so let's take a look, if we have the required
      * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
-      $oSection = new Addon($this->m_aRequest, $this->m_oSession, $this->m_aFile);
+      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
     # There's no request on a core module and Addons are disabled. */
     else
       header('Status: 404 Not Found');
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
-    if ((isset($this->m_aRequest['section']) && 'RSS' == $this->m_aRequest['section']) ||
-            (isset($this->m_aRequest['ajax']) && true == $this->m_aRequest['ajax']))
+    if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
+            (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
       $sCachedHTML = $oSection->getContent();
     else {
       $oSmarty->assign('_title_', $oSection->getTitle() .

@@ -101,10 +101,10 @@ class Model_User extends Model_Main {
                                 VALUES
                                   ( :name, :surname, :password, :email, :regdate )");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->m_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->m_aRequest['surname']));
-      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->m_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('regdate', time());
       $bResult = $oQuery->execute();
 
@@ -119,22 +119,22 @@ class Model_User extends Model_Main {
   }
 
   public function update($iId) {
-    $iNewsletterDefault = isset($this->m_aRequest['newsletter_default']) ? 1 : 0;
-    $iUseGravatar = isset($this->m_aRequest['use_gravatar']) ? 1 : 0;
+    $iNewsletterDefault = isset($this->_aRequest['newsletter_default']) ? 1 : 0;
+    $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     if (($iId !== USER_ID) && USER_RIGHT == 4)
-      $iUserRight = isset($this->m_aRequest['userright']) && !empty($this->m_aRequest['userright']) ?
-              (int) $this->m_aRequest['userright'] :
+      $iUserRight = isset($this->_aRequest['userright']) && !empty($this->_aRequest['userright']) ?
+              (int) $this->_aRequest['userright'] :
               0;
     else
       $iUserRight = USER_RIGHT;
 
     # Make sure the password is set and override session due to saving problems
-    if (isset($this->m_aRequest['newpw']) && !empty($this->m_aRequest['newpw']) &&
-            isset($this->m_aRequest['newpw']) && !empty($this->m_aRequest['oldpw']))
-      $this->m_oSession['userdata']['password'] = md5(RANDOM_HASH . $this->m_aRequest['newpw']);
+    if (isset($this->_aRequest['newpw']) && !empty($this->_aRequest['newpw']) &&
+            isset($this->_aRequest['newpw']) && !empty($this->_aRequest['oldpw']))
+      $this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['newpw']);
 
-    $sPassword = $this->m_oSession['userdata']['password'];
+    $sPassword = $this->_aSession['userdata']['password'];
 
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -154,10 +154,10 @@ class Model_User extends Model_Main {
                                 WHERE
                                   id = :where");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->m_aRequest['name']));
-      $oQuery->bindParam('surname',Helper::formatInput($this->m_aRequest['surname']));
-      $oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
-      $oQuery->bindParam('description', Helper::formatInput($this->m_aRequest['description']));
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname',Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
+      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
       $oQuery->bindParam('newsletter_default', $iNewsletterDefault);
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);

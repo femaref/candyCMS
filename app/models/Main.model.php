@@ -8,15 +8,15 @@
  */
 
 abstract class Model_Main {
-	protected $m_aRequest;
+	protected $_aRequest;
 	protected $_aData;
 	protected $_iID;
 	public $oPages;
 
-	public function __construct($aRequest = '', $oSession = '', $aFile = '') {
-		$this->m_aRequest	=& $aRequest;
-		$this->m_oSession	=& $oSession;
-		$this->m_aFile		=& $aFile;
+	public function __construct($aRequest = '', $aSession = '', $aFile = '') {
+		$this->_aRequest	=& $aRequest;
+		$this->_aSession	=& $aSession;
+		$this->_aFile		=& $aFile;
 	}
 
 	public static function simpleQuery($sWhat, $sFrom, $sWhere, $iLimit = 0) {

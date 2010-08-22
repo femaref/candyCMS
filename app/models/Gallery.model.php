@@ -87,7 +87,7 @@ class Model_Gallery extends Model_Main {
 																	aid='"	.$iAID.	"'");
 
 		$this->_iEntries = $oCountEntries->count();
-		$this->_oPages = new Pages($this->m_aRequest, $this->_iEntries, $iLimit);
+		$this->_oPages = new Pages($this->_aRequest, $this->_iEntries, $iLimit);
 
 		$oGetData = new Query("	SELECT
 															*
@@ -159,8 +159,8 @@ class Model_Gallery extends Model_Main {
 														gallery_album(authorID, title, description, date)
 													VALUES(
 														'"	.USER_ID.	"',
-														'"	.Helper::formatInput($this->m_aRequest['title']).	"',
-														'"	.Helper::formatInput($this->m_aRequest['description']).	"',
+														'"	.Helper::formatInput($this->_aRequest['title']).	"',
+														'"	.Helper::formatInput($this->_aRequest['description']).	"',
 														'"	.time().	"')
 														");
 
@@ -194,8 +194,8 @@ class Model_Gallery extends Model_Main {
 		return new Query("UPDATE
 												`gallery_album`
 											SET
-												title = '"	.Helper::formatInput($this->m_aRequest['title']).	"',
-												description = '"	.Helper::formatInput($this->m_aRequest['description']).	"'
+												title = '"	.Helper::formatInput($this->_aRequest['title']).	"',
+												description = '"	.Helper::formatInput($this->_aRequest['description']).	"'
 											WHERE
 												`id` = '"	.(int)$iID.	"'");
 	}
@@ -222,12 +222,12 @@ class Model_Gallery extends Model_Main {
 		new Query("	DELETE FROM
 									`gallery_file`
 								WHERE
-									`aid` = '"	.(int)$this->m_aRequest['id'].	"'");
+									`aid` = '"	.(int)$this->_aRequest['id'].	"'");
 
 		new Query("	DELETE FROM
 									`gallery_album`
 								WHERE
-									`id` = '"	.(int)$this->m_aRequest['id'].	"'");
+									`id` = '"	.(int)$this->_aRequest['id'].	"'");
 
 		# Delete Folders
 		@rmdir($sPath.	'/32/');
@@ -240,20 +240,20 @@ class Model_Gallery extends Model_Main {
 	}
 
 	public final function createFile($iUserId = '') {
-		$oUploadFile = new Upload($this->m_aRequest, $this->m_aFile);
+		$oUploadFile = new Upload($this->_aRequest, $this->_aFile);
 		$sFilePath = $oUploadFile->uploadGalleryFile();
-    $this->m_aRequest['description']  = (isset($this->m_aRequest['description']) && !empty($this->m_aRequest['description']))
-                                      ? $this->m_aRequest['description']
+    $this->_aRequest['description']  = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description']))
+                                      ? $this->_aRequest['description']
                                       : '';
 
 		new Query("	INSERT INTO
 									gallery_file(aid, authorID, file, extension, description, date)
 								VALUES(
-									'"	.(int)$this->m_aRequest['id'].	"',
+									'"	.(int)$this->_aRequest['id'].	"',
 									'"	.(int)$iUserId.	"',
 									'"	.$oUploadFile->getId().	"',
 									'"	.$oUploadFile->getExtension().	"',
-									'"	.Helper::formatInput($this->m_aRequest['description']).	"',
+									'"	.Helper::formatInput($this->_aRequest['description']).	"',
 									'"	.time().	"')");
 
 		return $sFilePath;
@@ -263,7 +263,7 @@ class Model_Gallery extends Model_Main {
 		$oQuery = new Query(" UPDATE
                             `gallery_file`
                           SET
-                            description = '"	.Helper::formatInput($this->m_aRequest['description']).	"'
+                            description = '"	.Helper::formatInput($this->_aRequest['description']).	"'
                           WHERE
                             `id` = '"	.$iID.	"'");
     return $oQuery;
@@ -288,6 +288,6 @@ class Model_Gallery extends Model_Main {
 		return new Query("DELETE FROM
                         `gallery_file`
                       WHERE
-                        `id` = '"	.(int)$this->m_aRequest['id'].	"'");
+                        `id` = '"	.(int)$this->_aRequest['id'].	"'");
 	}
 }

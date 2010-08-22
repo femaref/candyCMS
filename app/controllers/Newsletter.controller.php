@@ -12,13 +12,13 @@ require_once 'app/controllers/Mail.controller.php';
 
 class Newsletter extends Main {
   public function __init() {
-    $this->_oModel = new Model_Newsletter($this->m_aRequest, $this->m_oSession);
+    $this->_oModel = new Model_Newsletter($this->_aRequest, $this->_aSession);
   }
 
   public final function handleNewsletter() {
     $sMsg = '';
 
-    if( isset($this->m_aRequest['email']) &&  ( Helper::checkEmailAddress($this->m_aRequest['email']) == false ) )
+    if( isset($this->_aRequest['email']) &&  ( Helper::checkEmailAddress($this->_aRequest['email']) == false ) )
       $sMsg .= Helper::errorMessage(LANG_ERROR_WRONG_EMAIL_FORMAT);
     else {
       $sQuery = $this->_oModel->handleNewsletter();
@@ -27,7 +27,7 @@ class Newsletter extends Main {
       elseif($sQuery == 'INSERT') {
         $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
-        Mail::send(	Helper::formatInput($this->m_aRequest['email'], false),
+        Mail::send(	Helper::formatInput($this->_aRequest['email'], false),
                 LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT,
                 LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE,
                 WEBSITE_MAIL_NOREPLY);
@@ -50,7 +50,7 @@ class Newsletter extends Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if( isset($this->m_aRequest['send_newsletter']) )
+      if( isset($this->_aRequest['send_newsletter']) )
         return $this->_newsletterMail();
       else
         return $this->_showCreateNewsletterTemplate();
@@ -58,12 +58,12 @@ class Newsletter extends Main {
   }
 
   private function _showCreateNewsletterTemplate() {
-    $sSubject = isset($this->m_aRequest['subject']) ?
-            (string)$this->m_aRequest['subject']:
+    $sSubject = isset($this->_aRequest['subject']) ?
+            (string)$this->_aRequest['subject']:
             '';
 
-    $sContent = isset($this->m_aRequest['content']) ?
-            (string)$this->m_aRequest['content']:
+    $sContent = isset($this->_aRequest['content']) ?
+            (string)$this->_aRequest['content']:
             '';
 
     $oSmarty = new Smarty();
@@ -84,12 +84,12 @@ class Newsletter extends Main {
   private function _newsletterMail() {
     $sError = '';
 
-    if(	!isset($this->m_aRequest['subject']) ||
-            empty($this->m_aRequest['subject']) )
+    if(	!isset($this->_aRequest['subject']) ||
+            empty($this->_aRequest['subject']) )
       $sError .= LANG_GLOBAL_SUBJECT.	'<br />';
 
-    if(	!isset($this->m_aRequest['content']) ||
-            empty($this->m_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) ||
+            empty($this->_aRequest['content']) )
       $sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
     if( !empty($sError) ) {
@@ -110,9 +110,9 @@ class Newsletter extends Main {
         $sReceiversName = $aRow['name'];
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject	= Helper::formatInput($this->m_aRequest['subject']);
+        $sMailSubject	= Helper::formatInput($this->_aRequest['subject']);
         $sMailContent	= Helper::formatInput
-                (	str_replace('%u', $sReceiversName, $this->m_aRequest['content']),
+                (	str_replace('%u', $sReceiversName, $this->_aRequest['content']),
                 false
         );
 
@@ -129,9 +129,9 @@ class Newsletter extends Main {
         $sReceiversName = LANG_NEWSLETTER_DEFAULT_ADDRESS;
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject	= Helper::formatInput($this->m_aRequest['subject']);
+        $sMailSubject	= Helper::formatInput($this->_aRequest['subject']);
         $sMailContent	= Helper::formatInput
-                (	str_replace('%u', $sReceiversName, $this->m_aRequest['content']),
+                (	str_replace('%u', $sReceiversName, $this->_aRequest['content']),
                 true
         );
 

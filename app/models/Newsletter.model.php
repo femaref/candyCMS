@@ -9,13 +9,13 @@
 
 class Model_Newsletter extends Model_Main {
   private function _setData() {
-    if( isset($this->m_aRequest['email']) && !empty($this->m_aRequest['email']) ) {
+    if( isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ) {
       $oGetData = new Query("	SELECT
 																email
 															FROM
 																newsletter
 															WHERE
-																email ='"	.Helper::formatInput($this->m_aRequest['email']).	"'
+																email ='"	.Helper::formatInput($this->_aRequest['email']).	"'
 															LIMIT
 																1");
 
@@ -23,7 +23,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = new Query("	DELETE FROM
                                 newsletter
                               WHERE
-                                email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
+                                email = '"	.Helper::formatInput($this->_aRequest['email']).	"'
                               LIMIT 1");
         return 'DESTROY';
       }
@@ -31,7 +31,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = new Query("	INSERT INTO
                                 newsletter(email)
                               VALUES(
-                                '"	.Helper::formatInput($this->m_aRequest['email']).	"')");
+                                '"	.Helper::formatInput($this->_aRequest['email']).	"')");
 
         return 'INSERT';
       }

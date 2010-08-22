@@ -28,8 +28,8 @@ class Model_Session extends Model_Main {
 																LIMIT
 																	1");
 
-			$sPassword = md5(RANDOM_HASH.Helper::formatInput($this->m_aRequest['password']));
-			$oQuery->bindParam('email', Helper::formatInput($this->m_aRequest['email']));
+			$sPassword = md5(RANDOM_HASH.Helper::formatInput($this->_aRequest['password']));
+			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
 			$oQuery->bindParam('password', $sPassword);
 			$oQuery->execute();
 
@@ -79,7 +79,7 @@ class Model_Session extends Model_Main {
   # TODO: Clean up Model and Controller
   public final function createNewPassword() {
     $sError = '';
-    if( empty($this->m_aRequest['email']) )
+    if( empty($this->_aRequest['email']) )
       $sError .= LANG_ERROR_LOGIN_ENTER_EMAIL.	'<br />';
 
     $oGetUser = new Query("	SELECT
@@ -87,7 +87,7 @@ class Model_Session extends Model_Main {
 														FROM
 															user
 														WHERE
-															email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'");
+															email = '"	.Helper::formatInput($this->_aRequest['email']).	"'");
 
     $iUser = $oGetUser->count();
     if( $iUser == 0 )
@@ -105,7 +105,7 @@ class Model_Session extends Model_Main {
 																	FROM
 																		user
 																	WHERE
-																		email = '"	.Helper::formatInput($this->m_aRequest['email']).	"'
+																		email = '"	.Helper::formatInput($this->_aRequest['email']).	"'
 																	LIMIT
 																		1");
 
@@ -115,7 +115,7 @@ class Model_Session extends Model_Main {
       $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
       $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-      $bStatus = Mail::send(	Helper::formatInput($this->m_aRequest['email']),
+      $bStatus = Mail::send(	Helper::formatInput($this->_aRequest['email']),
               LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
               $sContent,
               WEBSITE_MAIL_NOREPLY);
@@ -126,7 +126,7 @@ class Model_Session extends Model_Main {
                           SET
                             password = '"	.$sNewPasswordSecure.	"'
                           WHERE
-                            `email` = '"	.Helper::formatInput($this->m_aRequest['email']).	"'");
+                            `email` = '"	.Helper::formatInput($this->_aRequest['email']).	"'");
       }
     }
   }

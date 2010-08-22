@@ -11,7 +11,7 @@ require_once 'app/models/Content.model.php';
 
 final class Content extends Main {
   public final function __init() {
-    $this->_oModel = new Model_Content($this->m_aRequest, $this->m_oSession);
+    $this->_oModel = new Model_Content($this->_aRequest, $this->_aSession);
   }
 
   public final function show() {
@@ -22,7 +22,7 @@ final class Content extends Main {
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
     $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
-    if(empty($this->_iID)) {
+    if(empty($this->_iId)) {
       $oSmarty->assign('content', $this->_oModel->getData());
 
       # Language
@@ -34,13 +34,13 @@ final class Content extends Main {
       return $oSmarty->fetch('content/overview.tpl');
     }
     else {
-      $this->_aData = $this->_oModel->getData($this->_iID);
+      $this->_aData = $this->_oModel->getData($this->_iId);
 
       # create output
-      $oSmarty->assign('c', $this->_aData[$this->_iID]);
+      $oSmarty->assign('c', $this->_aData[$this->_iId]);
       $oSmarty->assign('URL', WEBSITE_URL);
 
-      $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iID]['title']));
+      $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iId]['title']));
 
       # Language
       $oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
@@ -57,11 +57,11 @@ final class Content extends Main {
     $oSmarty = new Smarty();
 
     if($bUpdate == true) {
-      $this->_aData = $this->_oModel->getData($this->_iID, true);
+      $this->_aData = $this->_oModel->getData($this->_iId, true);
       $oSmarty->assign('action', '/Content/update');
       $oSmarty->assign('c', $this->_aData);
       $oSmarty->assign('formdata', 'update_content');
-      $oSmarty->assign('id', $this->_iID);
+      $oSmarty->assign('id', $this->_iId);
 
       # Language
       $oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
@@ -71,12 +71,12 @@ final class Content extends Main {
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
     else {
-      $sTitle = isset($this->m_aRequest['title']) ?
-              $this->m_aRequest['title'] :
+      $sTitle = isset($this->_aRequest['title']) ?
+              $this->_aRequest['title'] :
               '';
 
-      $sContent = isset($this->m_aRequest['content']) ?
-              $this->m_aRequest['content'] :
+      $sContent = isset($this->_aRequest['content']) ?
+              $this->_aRequest['content'] :
               '';
 
       $aContent = array('title' => $sTitle, 'content' => $sContent);
@@ -105,12 +105,12 @@ final class Content extends Main {
   protected final function _create() {
     $sError = '';
 
-    if(	!isset($this->m_aRequest['title']) ||
-            empty($this->m_aRequest['title']) )
+    if(	!isset($this->_aRequest['title']) ||
+            empty($this->_aRequest['title']) )
       $sError .= LANG_GLOBAL_TITLE.	'<br />';
 
-    if(	!isset($this->m_aRequest['content']) ||
-            empty($this->m_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) ||
+            empty($this->_aRequest['content']) )
       $sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
     if( !empty($sError) ) {
@@ -128,7 +128,7 @@ final class Content extends Main {
   }
 
   protected final function _update() {
-    if($this->_oModel->update((int)$this->m_aRequest['id']) == true)
+    if($this->_oModel->update((int)$this->_aRequest['id']) == true)
       return Helper::successMessage(LANG_SUCCESS_UPDATE).
             $this->show();
     else
@@ -136,8 +136,8 @@ final class Content extends Main {
   }
 
   protected final function _destroy() {
-    if ($this->_oModel->destroy((int) $this->m_aRequest['id']) == true) {
-      $this->_iID = '';
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) == true) {
+      $this->_iId = '';
       return Helper::successMessage(LANG_SUCCESS_DESTROY) .$this->show();
     } else
       return Helper::errorMessage(LANG_ERROR_DB_QUERY);

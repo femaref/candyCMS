@@ -16,23 +16,22 @@ require_once 'app/helpers/Upload.helper.php';
 class User extends Main {
 
 	public final function __init() {
-		$this->_oModel = new Model_User($this->m_aRequest, $this->m_oSession, $this->m_aFile);
-
+		$this->_oModel = new Model_User($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
 
 	# @Override
 
 	public function update() {
-		if (empty($this->_iID))
-			$this->_iID = USER_ID;
+		if (empty($this->_iId))
+			$this->_iId = USER_ID;
 
 		if (USER_ID == 0)
 			return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
 		else {
-			if (isset($this->m_aRequest['update_user']))
-				return $this->_update($this->_iID);
-			elseif (isset($this->m_aRequest['create_avatar']))
-				return $this->_createAvatar($this->_iID);
+			if (isset($this->_aRequest['update_user']))
+				return $this->_update($this->_iId);
+			elseif (isset($this->_aRequest['create_avatar']))
+				return $this->_createAvatar($this->_iId);
 			else
 				return $this->_showFormTemplate();
 		}
@@ -40,29 +39,29 @@ class User extends Main {
 	}
 
 	private function _createAvatar() {
-		$iAgreement = isset($this->m_aRequest['agreement']) ? 1 : 0;
+		$iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
 
 		if ($iAgreement == 0)
 			return Helper::errorMessage(LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT) .
 			$this->_showFormTemplate();
 		else {
-			$oUpload = new Upload($this->m_aRequest, $this->m_aFile);
+			$oUpload = new Upload($this->_aRequest, $this->_aFile);
 			return $oUpload->uploadAvatarFile(false) .
-			$this->show($this->_iID);
+			$this->show($this->_iId);
 		}
 
 	}
 
 	protected function _showFormTemplate($bUseRequest = false) {
 		$oSmarty = new Smarty();
-		if ($this->_iID !== USER_ID && USER_RIGHT == 4) {
-			$this->_aData = $this->_oModel->getData($this->_iID);
+		if ($this->_iId !== USER_ID && USER_RIGHT == 4) {
+			$this->_aData = $this->_oModel->getData($this->_iId);
 
 			$aGravatar = array('use_gravatar' => (int) $this->_aData['use_gravatar'],
 					'email' => $this->_aData['email']);
 
 			$oSmarty->assign('uid',
-							$this->_iID);
+							$this->_iId);
 			$oSmarty->assign('name',
 							$this->_aData['name']);
 			$oSmarty->assign('surname',
@@ -81,37 +80,37 @@ class User extends Main {
 		else {
 			# Avoid redisplay-Bug
 			if ($bUseRequest == true) {
-				$this->m_oSession['userdata']['name'] = & $this->m_aRequest['name'];
-				$this->m_oSession['userdata']['surname'] = & $this->m_aRequest['surname'];
-				$this->m_oSession['userdata']['email'] = & $this->m_aRequest['email'];
-				$this->m_oSession['userdata']['description'] = & $this->m_aRequest['description'];
-				$this->m_oSession['userdata']['newsletter_default'] = & $this->m_aRequest['newsletter_default'];
-				$this->m_oSession['userdata']['use_gravatar'] = & $this->m_aRequest['use_gravatar'];
+				$this->_aSession['userdata']['name'] = & $this->_aRequest['name'];
+				$this->_aSession['userdata']['surname'] = & $this->_aRequest['surname'];
+				$this->_aSession['userdata']['email'] = & $this->_aRequest['email'];
+				$this->_aSession['userdata']['description'] = & $this->_aRequest['description'];
+				$this->_aSession['userdata']['newsletter_default'] = & $this->_aRequest['newsletter_default'];
+				$this->_aSession['userdata']['use_gravatar'] = & $this->_aRequest['use_gravatar'];
 			}
 
-			$aGravatar = array('use_gravatar' => (int) $this->m_oSession['userdata']['use_gravatar'],
-					'email' => $this->m_oSession['userdata']['email']);
+			$aGravatar = array('use_gravatar' => (int) $this->_aSession['userdata']['use_gravatar'],
+					'email' => $this->_aSession['userdata']['email']);
 
 			$oSmarty->assign('uid', USER_ID);
 			$oSmarty->assign('name',
-							$this->m_oSession['userdata']['name']);
+							$this->_aSession['userdata']['name']);
 			$oSmarty->assign('surname',
-							$this->m_oSession['userdata']['surname']);
+							$this->_aSession['userdata']['surname']);
 			$oSmarty->assign('email',
-							$this->m_oSession['userdata']['email']);
+							$this->_aSession['userdata']['email']);
 			$oSmarty->assign('description',
-							$this->m_oSession['userdata']['description']);
+							$this->_aSession['userdata']['description']);
 			$oSmarty->assign('newsletter_default',
-							(int) $this->m_oSession['userdata']['newsletter_default']);
+							(int) $this->_aSession['userdata']['newsletter_default']);
 			$oSmarty->assign('use_gravatar',
-							(int) $this->m_oSession['userdata']['use_gravatar']);
+							(int) $this->_aSession['userdata']['use_gravatar']);
 
 			# Avoid Smarty Bug if you're an administrator
 			$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		}
 
-		$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iID, $aGravatar));
-		$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iID, $aGravatar));
+		$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
+		$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
 
 		# Set Form params
 		$oSmarty->assign('action', '/User/Settings');
@@ -160,31 +159,31 @@ class User extends Main {
 	protected function _update() {
 		$sError = '';
 
-		if (!isset($this->m_aRequest['name']) ||
-						empty($this->m_aRequest['name']))
+		if (!isset($this->_aRequest['name']) ||
+						empty($this->_aRequest['name']))
 			$sError .= LANG_GLOBAL_NAME . '<br />';
 
-		if (!isset($this->m_aRequest['email']) ||
-						empty($this->m_aRequest['email']))
+		if (!isset($this->_aRequest['email']) ||
+						empty($this->_aRequest['email']))
 			$sError .= LANG_GLOBAL_EMAIL . '<br />';
 
-		if (empty($this->m_aRequest['oldpw']) &&
-						!empty($this->m_aRequest['newpw']) &&
-						!empty($this->m_aRequest['newpw2']))
+		if (empty($this->_aRequest['oldpw']) &&
+						!empty($this->_aRequest['newpw']) &&
+						!empty($this->_aRequest['newpw2']))
 			$sError .= LANG_ERROR_USER_SETTINGS_PW_OLD . '<br />';
 
-		if (!empty($this->m_aRequest['oldpw']) &&
-						md5(RANDOM_HASH . $this->m_aRequest['oldpw']) !==
-						$this->m_oSession['userdata']['password'])
+		if (!empty($this->_aRequest['oldpw']) &&
+						md5(RANDOM_HASH . $this->_aRequest['oldpw']) !==
+						$this->_aSession['userdata']['password'])
 			$sError .= LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG . '<br />';
 
-		if (!empty($this->m_aRequest['oldpw']) && (
-						empty($this->m_aRequest['newpw']) ||
-						empty($this->m_aRequest['newpw2']) ))
+		if (!empty($this->_aRequest['oldpw']) && (
+						empty($this->_aRequest['newpw']) ||
+						empty($this->_aRequest['newpw2']) ))
 			$sError .= LANG_ERROR_USER_SETTINGS_PW_NEW . '<br />';
 
-		if (isset($this->m_aRequest['newpw']) && isset($this->m_aRequest['newpw2']) &&
-						$this->m_aRequest['newpw'] !== $this->m_aRequest['newpw2'])
+		if (isset($this->_aRequest['newpw']) && isset($this->_aRequest['newpw2']) &&
+						$this->_aRequest['newpw'] !== $this->_aRequest['newpw2'])
 			$sError .= LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG . '<br />';
 
 		if (!empty($sError)) {
@@ -195,11 +194,11 @@ class User extends Main {
 		else {
 
 			# Fix for missing id
-			$this->_iID = isset($this->m_aRequest['id']) && $this->m_aRequest['id'] !== USER_ID ?
-							(int) $this->m_aRequest['id'] :
+			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
+							(int) $this->_aRequest['id'] :
 							USER_ID;
 
-			if ($this->_oModel->update($this->_iID) == true)
+			if ($this->_oModel->update($this->_iId) == true)
 				return Helper::successMessage(LANG_SUCCESS_UPDATE) .
 				$this->_showFormTemplate(true);
 			else
@@ -208,10 +207,10 @@ class User extends Main {
 
 	}
 
-	public function show($iUID = '') {
+	public function show($iUserId = '') {
 		# Fix to avoid empty UID on /User/Settings shortcut
-		if (!empty($iUID))
-			$this->_iID = (int) $iUID;
+		if (!empty($iUserId))
+			$this->_iId = (int) $iUserId;
 
 		$oSmarty = new Smarty();
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
@@ -223,7 +222,7 @@ class User extends Main {
 		$oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN);
 		$oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE);
 
-		if (empty($this->_iID)) {
+		if (empty($this->_iId)) {
 			$this->_setTitle(LANG_USER_OVERVIEW);
 
 			if (USER_RIGHT < 3)
@@ -243,19 +242,19 @@ class User extends Main {
 			}
 		}
 		else {
-			$this->_aData = $this->_oModel->getData($this->_iID);
+			$this->_aData = $this->_oModel->getData($this->_iId);
 			$aGravatar = array('use_gravatar' => $this->_aData['use_gravatar'],
 					'email' => $this->_aData['email']);
 
 			# Description Fix, format Code to BB
 			$this->_aData['description'] = Helper::formatOutput($this->_aData['description']);
 
-			$oSmarty->assign('uid', $this->_iID);
+			$oSmarty->assign('uid', $this->_iId);
 			$oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));
 			$oSmarty->assign('regdate', Helper::formatTimestamp($this->_aData['regdate']));
 			$oSmarty->assign('user', $this->_aData);
-			$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iID, $aGravatar));
-			$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iID, $aGravatar));
+			$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
+			$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
 
 			# Manage PageTitle
 			$this->_sName = $this->_aData['name'];
@@ -277,8 +276,8 @@ class User extends Main {
 
 	public function destroy() {
 		if (USER_RIGHT == 4) {
-			if ($this->_oModel->destroy($this->_iID) == true) {
-				$this->_iID = '';
+			if ($this->_oModel->destroy($this->_iId) == true) {
+				$this->_iId = '';
 				return Helper::successMessage(LANG_SUCCESS_DESTROY) .
 				$this->show();
 			} else
@@ -290,7 +289,7 @@ class User extends Main {
 	}
 
 	public function create() {
-		if (isset($this->m_aRequest['create_user']))
+		if (isset($this->_aRequest['create_user']))
 			return $this->_create();
 		else
 			return $this->_showCreateUserTemplate();
@@ -302,11 +301,11 @@ class User extends Main {
 
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
-		$sName = isset($this->m_aRequest['name']) ? Helper::formatInput($this->m_aRequest['name']) : '';
+		$sName = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
 		$oSmarty->assign('name', $sName);
-		$sSurname = isset($this->m_aRequest['surname']) ? Helper::formatInput($this->m_aRequest['surname']) : '';
+		$sSurname = isset($this->_aRequest['surname']) ? Helper::formatInput($this->_aRequest['surname']) : '';
 		$oSmarty->assign('surname', $sSurname);
-		$sEmail = isset($this->m_aRequest['email']) ? Helper::formatInput($this->m_aRequest['email']) : '';
+		$sEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) : '';
 		$oSmarty->assign('email', $sEmail);
 
 		# AJAX reload disclaimer
@@ -330,24 +329,24 @@ class User extends Main {
 
 	private function _create() {
 		$sError = '';
-		if (empty($this->m_aRequest['name']))
+		if (empty($this->_aRequest['name']))
 			$sError .= LANG_ERROR_LOGIN_ENTER_NAME . '<br />';
 
-		if (empty($this->m_aRequest['email']))
+		if (empty($this->_aRequest['email']))
 			$sError .= LANG_ERROR_LOGIN_ENTER_EMAIL . '<br />';
 
-		if (empty($this->m_aRequest['password']))
+		if (empty($this->_aRequest['password']))
 			$sError .= LANG_ERROR_LOGIN_ENTER_PASSWORD . '<br />';
 
-		if ($this->m_aRequest['password'] !== $this->m_aRequest['password2'])
+		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
 			$sError .= LANG_ERROR_LOGIN_CHECK_PASSWORDS . '<br />';
 
 		if (USER_RIGHT < 4) {
-			if (!isset($this->m_aRequest['disclaimer']))
+			if (!isset($this->_aRequest['disclaimer']))
 				$sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER . '<br />';
 		}
 
-		if (Helper::checkEmailAddress($this->m_aRequest['email']) == false)
+		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
 			$sError .= LANG_ERROR_WRONG_EMAIL_FORMAT . '<br />';
 
 		if (!empty($sError)) {
@@ -358,14 +357,14 @@ class User extends Main {
 		else {
 			# @Override Model
 			# NOTE: Dirty method, no OO used
-			$this->_oController = new Session($this->m_aRequest, $this->m_oSession);
-			$this->_oModel = new Model_User($this->m_aRequest, $this->m_oSession);
+			$this->_oController = new Session($this->_aRequest, $this->_aSession);
+			$this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 
 			if ($this->_oModel->create() == true) {
-				$sMail = str_replace('%n', Helper::formatInput($this->m_aRequest['name']),
+				$sMail = str_replace('%n', Helper::formatInput($this->_aRequest['name']),
 												LANG_LOGIN_REGISTRATION_MAIL_BODY);
 
-				$bStatus = Mail::send(Helper::formatInput($this->m_aRequest['email']),
+				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
 												LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
 												$sMail,
 												WEBSITE_MAIL_NOREPLY);

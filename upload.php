@@ -44,7 +44,7 @@ final class Multiple_Upload extends Index {
 
   public final function validateAndUpload() {
     $sError = '';
-    if (!isset($this->m_aFile['Filedata']) || !is_uploaded_file($this->m_aFile['Filedata']['tmp_name'])) {
+    if (!isset($this->_aFile['Filedata']) || !is_uploaded_file($this->_aFile['Filedata']['tmp_name'])) {
       $sError = 'Invalid Upload';
     }
 
@@ -55,8 +55,8 @@ final class Multiple_Upload extends Index {
   }
 
   public final function createFiles() {
-    if( isset($this->m_aRequest['section']) && 'gallery' == $this->m_aRequest['section']) {
-      $this->_oModel = new Model_Gallery($this->m_aRequest, $this->m_oSession, $this->m_aFile);
+    if( isset($this->_aRequest['section']) && 'gallery' == $this->_aRequest['section']) {
+      $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
       $this->_sFilePath = $this->_oModel->createFile(USER_ID);
       $this->_aReturn['link'] = $this->_sFilePath;
     }
@@ -69,10 +69,10 @@ final class Multiple_Upload extends Index {
     }
     else {
       $this->_aReturn = array('status' => '1',
-              'name' => $this->m_aFile['Filedata']['name']);
+              'name' => $this->_aFile['Filedata']['name']);
 
-      if(file_exists($this->m_aFile['Filedata']['tmp_name']))
-        $this->_aReturn['hash'] = md5_file($this->m_aFile['Filedata']['tmp_name']);
+      if(file_exists($this->_aFile['Filedata']['tmp_name']))
+        $this->_aReturn['hash'] = md5_file($this->_aFile['Filedata']['tmp_name']);
 
       $aInfo = @getimagesize($this->_sFilePath);
 
@@ -83,7 +83,7 @@ final class Multiple_Upload extends Index {
       }
     }
 
-    if(	isset($this->m_aRequest['response']) && $this->m_aRequest['response'] == 'xml') {
+    if(	isset($this->_aRequest['response']) && $this->_aRequest['response'] == 'xml') {
       $sOutput = '<response>';
 
       foreach($this->_aReturn as $sKey => $sValue) {

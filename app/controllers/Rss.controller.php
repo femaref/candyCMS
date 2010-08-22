@@ -14,21 +14,21 @@ class Rss {
 	private $_sAction;
 	private $_oModel;
 	private $_iLimit;
-	private $m_aRequest;
-	private $m_oSession;
+	private $_aRequest;
+	private $_aSession;
 
-	public function __construct($aRequest, $oSession) {
-		$this->m_aRequest =& $aRequest;
-		$this->m_oSession =& $oSession;
+	public function __construct($aRequest, $aSession) {
+		$this->_aRequest =& $aRequest;
+		$this->_aSession =& $aSession;
 	}
 
 	public function __init() {
-		$this->_sAction = isset( $this->m_aRequest['action'] ) ?
-				(string)$this->m_aRequest['action'] :
+		$this->_sAction = isset( $this->_aRequest['action'] ) ?
+				(string)$this->_aRequest['action'] :
 				'show';
 
 		$this->_iLimit = LIMIT_BLOG;
-		$this->_oModel = new Model_Blog($this->m_aRequest, $this->m_oSession);
+		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
 	}
 
 	public function show() {

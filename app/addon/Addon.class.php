@@ -8,10 +8,10 @@
  */
 
 final class Addon extends Section {
-	public final function __construct($aRequest, $oSession, $aFile = '') {
-		$this->m_aRequest	=& $aRequest;
-		$this->m_oSession	=& $oSession;
-		$this->m_aFile		=& $aFile;
+	public final function __construct($aRequest, $aSession, $aFile = '') {
+		$this->_aRequest	=& $aRequest;
+		$this->_aSession	=& $aSession;
+		$this->_aFile		=& $aFile;
 
 		$this->_setModules();
 		$this->_getSection();
@@ -29,7 +29,7 @@ final class Addon extends Section {
 	}
 
 	private final function _getSection() {
-		switch( strtolower( $this->m_aRequest['section']) ) {
+		switch( strtolower( $this->_aRequest['section']) ) {
 		# Addons by Marco Raddatz
 		/*	case 'menu':
 

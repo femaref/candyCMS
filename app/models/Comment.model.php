@@ -93,12 +93,12 @@ class Model_Comment extends Model_Main {
   }
 
   public function create() {
-    $sAuthorName = isset($this->m_aRequest['name']) ?
-            Helper::formatInput($this->m_aRequest['name']) :
+    $sAuthorName = isset($this->_aRequest['name']) ?
+            Helper::formatInput($this->_aRequest['name']) :
             '';
 
-    $sAuthorEmail = isset($this->m_aRequest['email']) ?
-            Helper::formatInput($this->m_aRequest['email']) :
+    $sAuthorEmail = isset($this->_aRequest['email']) ?
+            Helper::formatInput($this->_aRequest['email']) :
             '';
 
     new Query("	INSERT INTO
@@ -107,10 +107,10 @@ class Model_Comment extends Model_Main {
 									'" . USER_ID . "',
 									'" . $sAuthorName . "',
 									'" . $sAuthorEmail . "',
-									'" . Helper::formatInput($this->m_aRequest['content']) . "',
+									'" . Helper::formatInput($this->_aRequest['content']) . "',
 									'" . time() . "',
-									'" . (int) $this->m_aRequest['parentid'] . "',
-									'" . $this->m_aRequest['parentcat'] . "')
+									'" . (int) $this->_aRequest['parentid'] . "',
+									'" . $this->_aRequest['parentcat'] . "')
 									");
 
     return mysql_insert_id();

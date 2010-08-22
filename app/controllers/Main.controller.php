@@ -8,22 +8,22 @@
  */
 
 abstract class Main {
-  protected $m_aRequest;
-  protected $m_oSession;
-  protected $m_aFile;
-  protected $_iID;
+  protected $_aRequest;
+  protected $_aSession;
+  protected $_aFile;
+  protected $_iId;
   private $_aData = array();
   private $_sContent;
   private $_sTitle;
   private $_oModel;
 
-  public function __construct($aRequest, $oSession, $aFile = '') {
-    $this->m_aRequest	=& $aRequest;
-    $this->m_oSession	=& $oSession;
-    $this->m_aFile		=& $aFile;
+  public function __construct($aRequest, $aSession, $aFile = '') {
+    $this->_aRequest	=& $aRequest;
+    $this->_aSession	=& $aSession;
+    $this->_aFile			=& $aFile;
 
-    $this->_iID = isset($this->m_aRequest['id']) ?
-                  (int)$this->m_aRequest['id'] :
+    $this->_iId = isset($this->_aRequest['id']) ?
+                  (int)$this->_aRequest['id'] :
                   '';
   }
 
@@ -64,7 +64,7 @@ abstract class Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if( isset($this->m_aRequest[$sInputName]) )
+      if( isset($this->_aRequest[$sInputName]) )
         return $this->_create();
       else
         return $this->_showFormTemplate(false);
@@ -75,7 +75,7 @@ abstract class Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if( isset($this->m_aRequest[$sInputName]) )
+      if( isset($this->_aRequest[$sInputName]) )
         return $this->_update();
       else
         return $this->_showFormTemplate(true);

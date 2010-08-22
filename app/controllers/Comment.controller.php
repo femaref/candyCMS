@@ -28,7 +28,7 @@ final class Comment extends Main {
     $this->_aParentData =& $aParentData;
     $this->_iEntries	=& $iEntries;
 
-    $this->_oModel = new Model_Comment($this->m_aRequest, $this->m_oSession);
+    $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
 
     # Define Blog as standard category
     /*
@@ -39,17 +39,17 @@ final class Comment extends Main {
     */
     $this->_sParentCat		= 'b';
     $this->_sParentSection	= 'Blog';
-    $this->_sAction			= '/Comment/create/'.	$this->_sParentCat.	'/'	.$this->_iID;
+    $this->_sAction			= '/Comment/create/'.	$this->_sParentCat.	'/'	.$this->_iId;
   }
 
   public final function show() {
-    if($this->_iID) {
-      if(isset($this->m_aRequest['ajax'])) {
+    if($this->_iId) {
+      if(isset($this->_aRequest['ajax'])) {
         if( $this->_sParentCat == 'b') {
           $this->__autoload('Blog');
-          $oBlog = new Blog($this->m_aRequest, $this->m_oSession);
+          $oBlog = new Blog($this->_aRequest, $this->_aSession);
           $oBlog->__init();
-          $this->_aParentData =& $oBlog->_oModel->getData($this->_iID);
+          $this->_aParentData =& $oBlog->_oModel->getData($this->_iId);
           $this->_iEntries =& $this->_aParentData[1]['comment_sum'];
         }
       }
@@ -57,15 +57,15 @@ final class Comment extends Main {
       $oSmarty = new Smarty();
       $oSmarty->assign('USER_RIGHT', USER_RIGHT);
       $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
-      $oSmarty->assign('parentID', $this->_iID);
+      $oSmarty->assign('parentID', $this->_iId);
 
       # Do only load comments, if they are avaiable
       $sReturn = '';
       if($this->_iEntries > 0) {
         # @Override __init here due to AJAX reasons
-        $this->_oPages = new Pages($this->m_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
+        $this->_oPages = new Pages($this->_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
         $this->_oModel->__init($this->_iEntries, $this->_oPages->getOffset(), $this->_oPages->getLimit());
-        $this->_aData = $this->_oModel->getData($this->_iID, $this->_sParentCat);
+        $this->_aData = $this->_oModel->getData($this->_iId, $this->_sParentCat);
         $oSmarty->assign('comments', $this->_aData);
 
         # Set author of blog entry
@@ -79,7 +79,7 @@ final class Comment extends Main {
         $oSmarty->assign('comment_number', $iCommentNumber);
 
         # Do we need Pages?
-        $sPages = $this->_oPages->showPages('Comment/' .$this->_sParentCat. '/'	.$this->_iID, '');
+        $sPages = $this->_oPages->showPages('Comment/' .$this->_sParentCat. '/'	.$this->_iId, '');
         $oSmarty->assign('_comment_pages_', $sPages);
 
         # Language
@@ -94,9 +94,9 @@ final class Comment extends Main {
 
       # Does the user have enough rights to enter a comment?
       # Show createComment Template if we don't have an action - description below
-      if( ($this->_iID !== '' && !isset($this->m_aRequest['action']) ) ||
-              isset($this->m_aRequest['parentcat']) && $this->_iID !== '') {
-        if(!isset($this->m_aRequest['ajax']))
+      if( ($this->_iId !== '' && !isset($this->_aRequest['action']) ) ||
+              isset($this->_aRequest['parentcat']) && $this->_iId !== '') {
+        if(!isset($this->_aRequest['ajax']))
           $sReturn .= $this->create('create_comment');
       }
 
@@ -105,7 +105,7 @@ final class Comment extends Main {
   }
 
   public final function create($sInputName) {
-    if( isset($this->m_aRequest[$sInputName]) ) {
+    if( isset($this->_aRequest[$sInputName]) ) {
       if( USER_RIGHT == 0 )
         return $this->_checkCaptcha(true);
       else
@@ -120,28 +120,28 @@ final class Comment extends Main {
   protected final function _create($bShowCaptcha = false) {
     $sError = '';
 
-    if(	!isset($this->m_aRequest['parentcat']) ||
-            empty($this->m_aRequest['parentcat']) )
+    if(	!isset($this->_aRequest['parentcat']) ||
+            empty($this->_aRequest['parentcat']) )
       $sError .= LANG_GLOBAL_CATEGORY.	'<br />';
 
-    if(	!isset($this->m_aRequest['parentid']) ||
-            empty($this->m_aRequest['parentid']) )
+    if(	!isset($this->_aRequest['parentid']) ||
+            empty($this->_aRequest['parentid']) )
       $sError .= 'ID<br />';
 
-    if(	!isset($this->m_aRequest['content']) ||
-            empty($this->m_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) ||
+            empty($this->_aRequest['content']) )
       $sError .= LANG_GLOBAL_CONTENT.	'<br />';
 
     if( USER_ID < 1) {
-      if( !isset($this->m_aRequest['name']) ||
-              empty($this->m_aRequest['name']) )
+      if( !isset($this->_aRequest['name']) ||
+              empty($this->_aRequest['name']) )
         $sError .= LANG_GLOBAL_NAME.	'<br />';
     }
 
     /* Set new Action */
-    $this->_sAction = '/Comment/create/'	.$this->m_aRequest['parentcat'].
-            '/'	.(int)$this->m_aRequest['parentid']. '#'.
-            (int)$this->m_aRequest['parentid'];
+    $this->_sAction = '/Comment/create/'	.$this->_aRequest['parentcat'].
+            '/'	.(int)$this->_aRequest['parentid']. '#'.
+            (int)$this->_aRequest['parentid'];
 
     if( !empty($sError) ) {
       $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
@@ -153,35 +153,35 @@ final class Comment extends Main {
       # TODO: Success Message to Controller
       $iComment = $this->_oModel->create();
       Helper::redirectTo('/'	.$this->_sParentSection.
-              '/'	.(int)$this->m_aRequest['parentid'].	'#'	.$iComment);
+              '/'	.(int)$this->_aRequest['parentid'].	'#'	.$iComment);
     }
   }
 
   protected final function _destroy() {
     # TODO: Error Message
-    if($this->_oModel->destroy((int)$this->m_aRequest['id']) == true)
+    if($this->_oModel->destroy((int)$this->_aRequest['id']) == true)
       Header('Location:'	.WEBSITE_URL.	'/'	.$this->_sParentSection.
-              '/'	.(int)$this->m_aRequest['parentid']);
+              '/'	.(int)$this->_aRequest['parentid']);
   }
 
   protected final function _showFormTemplate($bShowCaptcha) {
     if( empty($this->_sAction) )
       return Helper::errorMessage(__CLASS__, LANG_ERROR_ACTION_NOT_SPECIFIED);
     else {
-      $sName = isset($this->m_aRequest['name']) ?
-              (string)$this->m_aRequest['name']:
+      $sName = isset($this->_aRequest['name']) ?
+              (string)$this->_aRequest['name']:
               '';
 
-      $sEmail = isset($this->m_aRequest['email']) ?
-              (string)$this->m_aRequest['email']:
+      $sEmail = isset($this->_aRequest['email']) ?
+              (string)$this->_aRequest['email']:
               '';
 
-      $sContent = isset($this->m_aRequest['content']) ?
-              (string)$this->m_aRequest['content']:
+      $sContent = isset($this->_aRequest['content']) ?
+              (string)$this->_aRequest['content']:
               '';
 
-      $iParentId = isset($this->m_aRequest['parentID']) ?
-              (int)$this->m_aRequest['parentID']:
+      $iParentId = isset($this->_aRequest['parentID']) ?
+              (int)$this->_aRequest['parentID']:
               '';
 
       $oSmarty = new Smarty();
@@ -217,12 +217,12 @@ final class Comment extends Main {
   }
 
   private function _checkCaptcha($bShowCaptcha = true) {
-    if( isset($this->m_aRequest['recaptcha_response_field']) ) {
+    if( isset($this->_aRequest['recaptcha_response_field']) ) {
       $this->_sRecaptchaResponse = recaptcha_check_answer (
               $this->_sRecaptchaPrivateKey,
               $_SERVER['REMOTE_ADDR'],
-              $this->m_aRequest['recaptcha_challenge_field'],
-              $this->m_aRequest['recaptcha_response_field']);
+              $this->_aRequest['recaptcha_challenge_field'],
+              $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_sRecaptchaResponse->is_valid)
         return $this->_create($bShowCaptcha);

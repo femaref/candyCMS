@@ -10,41 +10,41 @@
 class Section extends Main {
   protected $_oObject;
   private function _getController() {
-    if( file_exists('app/addon/' .(string)ucfirst($this->m_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
-      new Addon($this->m_aRequest, $this->m_oSession, $this->m_aFile);
-      $sClassName = (string)ucfirst($this->m_aRequest['section']). 'Extended';
-      $this->_oObject = new $sClassName($this->m_aRequest, $this->m_oSession, $this->m_aFile);
+    if( file_exists('app/addon/' .(string)ucfirst($this->_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
+      new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $sClassName = (string)ucfirst($this->_aRequest['section']). 'Extended';
+      $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
-    elseif(file_exists('app/controllers/'	.(string)ucfirst($this->m_aRequest['section']).	'.controller.php')) {
-      require_once('app/controllers/'	.(string)ucfirst($this->m_aRequest['section']).	'.controller.php');
-      $this->_oObject = new $this->m_aRequest['section']($this->m_aRequest, $this->m_oSession, $this->m_aFile);
+    elseif(file_exists('app/controllers/'	.(string)ucfirst($this->_aRequest['section']).	'.controller.php')) {
+      require_once('app/controllers/'	.(string)ucfirst($this->_aRequest['section']).	'.controller.php');
+      $this->_oObject = new $this->_aRequest['section']($this->_aRequest, $this->_aSession, $this->_aFile);
     }
     else
       throw new Exception('Module not found:' . 'app/controllers/'	.
-              (string)ucfirst($this->m_aRequest['section']).	'.controller.php');
+              (string)ucfirst($this->_aRequest['section']).	'.controller.php');
 
     $this->_oObject->__init();
     return $this->_oObject;
   }
 
   public function getSection() {
-    if( !isset($this->m_aRequest['section']) || empty($this->m_aRequest['section']) )
-      $this->m_aRequest['section'] = 'blog';
+    if( !isset($this->_aRequest['section']) || empty($this->_aRequest['section']) )
+      $this->_aRequest['section'] = 'blog';
 
     $this->_oObject =& $this->_getController();
 
-    switch( strtolower( (string)$this->m_aRequest['section']) ) {
+    switch( strtolower( (string)$this->_aRequest['section']) ) {
       case 'blog':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create('create_blog'));
           parent::_setTitle(LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'update' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update' ) {
           parent::_setContent($this->_oObject->update('update_blog'));
           parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_BLOG_UPDATE));
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' )
           parent::_setContent($this->_oObject->destroy());
 
         else {
@@ -56,30 +56,30 @@ class Section extends Main {
 
       case 'comment':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create('create_comment'));
           parent::_setTitle(LANG_COMMENT_CREATE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' ) {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_COMMENT_DESTROY);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'show' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'show' )
           parent::_setContent($this->_oObject->show());
 
         break;
 
       case 'content':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create('create_content'));
           parent::_setTitle(LANG_GLOBAL_CONTENTMANAGER.	': '	.LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'update' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update' ) {
           parent::_setContent($this->_oObject->update('update_content'));
           parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_UPDATE));
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' )
           parent::_setContent($this->_oObject->destroy());
 
         else {
@@ -98,26 +98,26 @@ class Section extends Main {
 
       case 'gallery':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create('create_gallery'));
           parent::_setTitle(LANG_GALLERY_CREATE_ALBUM);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'createfile' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'createfile' ) {
           parent::_setContent($this->_oObject->createFile());
           parent::_setTitle(LANG_GALLERY_CREATE_FILE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'update' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update' ) {
           parent::_setContent($this->_oObject->update('update_gallery'));
           parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_UPDATE));
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'updatefile' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'updatefile' ) {
           parent::_setContent($this->_oObject->updateFile());
           parent::_setTitle(LANG_GALLERY_UPDATE_FILE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' )
           parent::_setContent($this->_oObject->destroy());
 
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroyfile' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile' )
           parent::_setContent($this->_oObject->destroyFile());
 
         else {
@@ -136,11 +136,11 @@ class Section extends Main {
 
       case 'media':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_MEDIA_FILE_CREATE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' ) {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_MEDIA_FILE_DESTROY);
         }
@@ -153,7 +153,7 @@ class Section extends Main {
 
       case 'newsletter':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_NEWSLETTER_CREATE);
         }
@@ -174,15 +174,15 @@ class Section extends Main {
 
       case 'session':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_GLOBAL_LOGIN);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'invite' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'invite' ) {
           parent::_setContent($this->_oObject->createInvite());
           parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'password' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password' ) {
           parent::_setContent($this->_oObject->createNewPassword());
           parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
         }
@@ -195,8 +195,8 @@ class Section extends Main {
 
       case 'static':
 
-        $sTpl = isset($this->m_aRequest['action']) ?
-                (string)$this->m_aRequest['action'] :
+        $sTpl = isset($this->_aRequest['action']) ?
+                (string)$this->_aRequest['action'] :
                 LANG_ERROR_ACTION_NOT_SPECIFIED;
 
         $oSmarty = new Smarty();
@@ -208,15 +208,15 @@ class Section extends Main {
 
       case 'user':
 
-        if( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'update' ) {
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update' ) {
           parent::_setContent($this->_oObject->update());
           parent::_setTitle(LANG_USER_SETTINGS_HEADLINE);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'create' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_GLOBAL_REGISTRATION);
         }
-        elseif( isset($this->m_aRequest['action']) && $this->m_aRequest['action'] == 'destroy' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' ) {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_DESTROY);
         }

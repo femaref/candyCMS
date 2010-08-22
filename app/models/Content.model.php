@@ -123,8 +123,8 @@ class Model_Content extends Model_Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('user_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->m_aRequest['title'], false));
-      $oQuery->bindParam('content', Helper::formatInput($this->m_aRequest['content'], false));
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
@@ -155,8 +155,8 @@ class Model_Content extends Model_Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('user_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->m_aRequest['title'], false));
-      $oQuery->bindParam('content', Helper::formatInput($this->m_aRequest['content'], false));
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('where', $iId);
       $bResult = $oQuery->execute();

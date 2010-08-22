@@ -8,7 +8,7 @@
  */
 
 final class Pages {
-  private $m_aRequest;
+  private $_aRequest;
   private $_iLimit;
   private $_iOffset;
   private $_iPages;
@@ -16,11 +16,11 @@ final class Pages {
   private $_iCurrentPage;
 
   public final function __construct($aRequest, $iCount, $iLimit = 10) {
-    $this->m_aRequest	=& $aRequest;
+    $this->_aRequest	=& $aRequest;
     $this->_iCount    =& $iCount;
     $this->_iLimit    =& $iLimit;
 
-    $this->_iCurrentPage = isset($this->m_aRequest['page']) ? (int)$this->m_aRequest['page'] : 1;
+    $this->_iCurrentPage = isset($this->_aRequest['page']) ? (int)$this->_aRequest['page'] : 1;
     $this->_iPages = ceil($this->_iCount / $this->_iLimit);
 
     if(!$this->_iPages)

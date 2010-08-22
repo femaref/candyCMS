@@ -18,14 +18,14 @@ class Model_Blog extends Model_Main {
 				$sWhere = "WHERE published = '1'";
 
 			# Search Blog for Tags
-			if (isset($this->m_aRequest['action']) && 'tag' == $this->m_aRequest['action'] &&
-							isset($this->m_aRequest['id']) && !empty($this->m_aRequest['id'])) {
+			if (isset($this->_aRequest['action']) && 'tag' == $this->_aRequest['action'] &&
+							isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
 				if (empty($sWhere))
 					$sWhere = "WHERE tags LIKE '%" .
-									Helper::formatInput($this->m_aRequest['id']) . "%'";
+									Helper::formatInput($this->_aRequest['id']) . "%'";
 				else
 					$sWhere .= "AND tags LIKE '%" .
-									Helper::formatInput($this->m_aRequest['id']) . "%'";
+									Helper::formatInput($this->_aRequest['id']) . "%'";
 			}
 
 			try {
@@ -43,7 +43,7 @@ class Model_Blog extends Model_Main {
 				die();
 			}
 
-			$this->oPages = new Pages($this->m_aRequest, count((int)$aResult), $iLimit);
+			$this->oPages = new Pages($this->_aRequest, count((int)$aResult), $iLimit);
 
 			try {
 				$oQuery = $oDb->query("	SELECT
@@ -116,7 +116,7 @@ class Model_Blog extends Model_Main {
 			if (USER_RIGHT < 3)
 				$sWhere = "AND b.published = '1'";
 
-			$this->oPages = new Pages($this->m_aRequest, 1);
+			$this->oPages = new Pages($this->_aRequest, 1);
 
 			try {
 				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -207,41 +207,41 @@ class Model_Blog extends Model_Main {
 	}
 
 	public function create() {
-		$this->m_aRequest['published'] = isset($this->m_aRequest['published']) ?
-						$this->m_aRequest['published'] :
+		$this->_aRequest['published'] = isset($this->_aRequest['published']) ?
+						$this->_aRequest['published'] :
 						0;
 
 		return new Query("INSERT INTO
 												blog(authorID, title, tags, content, published, date)
 											VALUES(
 												'" . USER_ID . "',
-												'" . Helper::formatInput($this->m_aRequest['title'], false) . "',
-												'" . Helper::formatInput($this->m_aRequest['tags']) . "',
-												'" . Helper::formatInput($this->m_aRequest['content'], false) . "',
-												'" . (int) $this->m_aRequest['published'] . "',
+												'" . Helper::formatInput($this->_aRequest['title'], false) . "',
+												'" . Helper::formatInput($this->_aRequest['tags']) . "',
+												'" . Helper::formatInput($this->_aRequest['content'], false) . "',
+												'" . (int) $this->_aRequest['published'] . "',
 												'" . time() . "')
 												");
 	}
 
 	public function update($iId) {
-		$iDateModified = (isset($this->m_aRequest['show_update']) && $this->m_aRequest['show_update'] == true) ?
+		$iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
 						time() :
 						'';
 
-		$iPublished = (isset($this->m_aRequest['published']) && $this->m_aRequest['published'] == true) ?
+		$iPublished = (isset($this->_aRequest['published']) && $this->_aRequest['published'] == true) ?
 						'1' :
 						'0';
 
-		$sUpdateAuthor = (isset($this->m_aRequest['show_update']) && $this->m_aRequest['show_update'] == true) ?
+		$sUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
 						", authorID = '" . USER_ID . "'" :
 						'';
 
 		return new Query("UPDATE
 												`blog`
 											SET
-												title = '" . Helper::formatInput($this->m_aRequest['title'], false) . "',
-												tags = '" . Helper::formatInput($this->m_aRequest['tags']) . "',
-												content = '" . Helper::formatInput($this->m_aRequest['content'], false) . "',
+												title = '" . Helper::formatInput($this->_aRequest['title'], false) . "',
+												tags = '" . Helper::formatInput($this->_aRequest['tags']) . "',
+												content = '" . Helper::formatInput($this->_aRequest['content'], false) . "',
 												published = '" . (int) $iPublished . "',
 												date_modified = '" . $iDateModified . "'
 												" . $sUpdateAuthor . "
