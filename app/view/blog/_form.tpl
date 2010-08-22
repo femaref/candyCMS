@@ -95,5 +95,6 @@
       </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />
+  <input type='hidden' value='{$author_id}' name='author_id' />
   <input type='hidden' value='formdata' name='{$formdata}' />
 </form>

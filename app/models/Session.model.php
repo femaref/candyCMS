@@ -38,7 +38,6 @@ class Model_Session extends Model_Main {
 		} catch (AdvancedException $e) {
 			$oDb->rollBack();
 			$e->getMessage();
-			die();
 		}
 
     # Check if user exists
@@ -67,7 +66,6 @@ class Model_Session extends Model_Main {
 			} catch (AdvancedException $e) {
 				$oDb->rollBack();
 				$e->getMessage();
-				die();
 			}
     }
     else
@@ -155,7 +153,6 @@ class Model_Session extends Model_Main {
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
-      die();
     }
   }
 }

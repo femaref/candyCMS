@@ -40,7 +40,6 @@ class Model_Blog extends Model_Main {
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
 				$e->getMessage();
-				die();
 			}
 
 			$this->oPages = new Pages($this->_aRequest, count((int)$aResult), $iLimit);
@@ -79,7 +78,6 @@ class Model_Blog extends Model_Main {
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
 				$e->getMessage();
-				die();
 			}
 
 			foreach ($aResult as $aRow) {
@@ -89,7 +87,7 @@ class Model_Blog extends Model_Main {
 
         $this->_aData[$iId] = array(
 								'id'						=> $aRow['id'],
-                'authorID'			=> $aRow['authorID'],
+                'author_id'			=> $aRow['authorID'],
                 'tags'					=> $aTags,
                 'tags_sum'			=> (int)count($aTags),
                 'title'					=> Helper::formatOutput($aRow['title']),
@@ -151,7 +149,6 @@ class Model_Blog extends Model_Main {
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
 				$e->getMessage();
-				die();
 			}
 
 			$aRow =& $aResult;
@@ -160,7 +157,7 @@ class Model_Blog extends Model_Main {
 			if ($bEdit == true) {
 				$this->_aData = array(
 						'id'				=> $aRow['id'],
-						'authorID'	=> $aRow['authorID'],
+						'author_id'	=> $aRow['authorID'],
 						'tags'			=> Helper::removeSlahes($aRow['tags']),
 						'title'			=> Helper::removeSlahes($aRow['title']),
 						'content'		=> Helper::formatOutput($aRow['content']),
@@ -174,7 +171,7 @@ class Model_Blog extends Model_Main {
 				$aTags = explode(', ', $aRow['tags']);
 				$this->_aData[1] = array(
 						'id'						=> $aRow['id'],
-						'authorID'			=> $aRow['authorID'],
+						'author_id'			=> $aRow['authorID'],
 						'tags'					=> $aTags,
 						'tags_sum'			=> (int) count($aTags),
 						'title'					=> Helper::formatOutput($aRow['title']),
@@ -208,19 +205,34 @@ class Model_Blog extends Model_Main {
 
 	public function create() {
 		$this->_aRequest['published'] = isset($this->_aRequest['published']) ?
-						$this->_aRequest['published'] :
+						(int)$this->_aRequest['published'] :
 						0;
+		
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		return new Query("INSERT INTO
-												blog(authorID, title, tags, content, published, date)
-											VALUES(
-												'" . USER_ID . "',
-												'" . Helper::formatInput($this->_aRequest['title'], false) . "',
-												'" . Helper::formatInput($this->_aRequest['tags']) . "',
-												'" . Helper::formatInput($this->_aRequest['content'], false) . "',
-												'" . (int) $this->_aRequest['published'] . "',
-												'" . time() . "')
-												");
+      $oQuery = $oDb->prepare(" INSERT INTO
+                                  blog(authorID, title, tags, content, date, published)
+                                VALUES
+                                  ( :user_id, :title, :tags, :content, :date, :published )");
+
+      $iUserId = USER_ID;
+      $oQuery->bindParam('user_id', $iUserId);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('date', time());
+      $oQuery->bindParam('published', $this->_aRequest['published']);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 	}
 
 	public function update($iId) {
@@ -232,26 +244,85 @@ class Model_Blog extends Model_Main {
 						'1' :
 						'0';
 
-		$sUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
-						", authorID = '" . USER_ID . "'" :
-						'';
+		$iUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
+						USER_ID :
+						(int) $this->_aRequest['author_id'];
 
-		return new Query("UPDATE
-												`blog`
-											SET
-												title = '" . Helper::formatInput($this->_aRequest['title'], false) . "',
-												tags = '" . Helper::formatInput($this->_aRequest['tags']) . "',
-												content = '" . Helper::formatInput($this->_aRequest['content'], false) . "',
-												published = '" . (int) $iPublished . "',
-												date_modified = '" . $iDateModified . "'
-												" . $sUpdateAuthor . "
-											WHERE
-												`id` = '" . $iId . "'");
+		try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("	UPDATE
+                                  blog
+                                SET
+                                  authorID = :author_id,
+                                  title = :title,
+                                  tags = :tags,
+                                  content = :content,
+                                  date_modified = :date_modified,
+																	published = :published
+                                WHERE
+                                  id = :id");
+
+      $oQuery->bindParam('author_id', $iUpdateAuthor);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('date_modified', $iDateModified);
+      $oQuery->bindParam('published', $iPublished);
+      $oQuery->bindParam('id', $iId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 	}
 
 	public final function destroy($iId) {
-		new Query("DELETE FROM blog WHERE id = '" . $iId . "' LIMIT 1");
-		new Query("DELETE FROM comment WHERE parentID = '" . $iId . "' AND parentCat = 'b'");
-		return true;
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+										PDO::ATTR_PERSISTENT => true
+								));
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->prepare("	DELETE FROM
+                                  blog
+                                WHERE
+                                  id = :id
+                                LIMIT
+                                  1");
+
+      $oQuery->bindParam('id', $iId);
+      $bResult = $oQuery->execute();
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+
+    try {
+      $oQuery = $oDb->prepare("	DELETE FROM
+                                  comment
+                                WHERE
+                                  parentID = :parent_id
+																AND
+																	parentCat = :parent_cat");
+
+			$sParentCat = 'b';
+      $oQuery->bindParam('parent_cat', $sParentCat);
+      $oQuery->bindParam('parent_id', $iId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+      return $bResult;
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 	}
 }

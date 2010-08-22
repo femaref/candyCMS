@@ -37,7 +37,7 @@ class Blog extends Main {
 		$oComments = new Comment($this->_aRequest, $this->_aSession);
 		$oComments->__init($iCommentSum, $this->_aData);
 		$oSmarty->assign('_blog_comments_', $oComments->show());
-		#$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
+		$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
 		# Language
 		$oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
@@ -94,6 +94,7 @@ class Blog extends Main {
 			# collect data array
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
 			$oSmarty->assign('id', $this->_iId);
+			$oSmarty->assign('author_id', $this->_aData['author_id']);
 			$oSmarty->assign('tags', $this->_aData['tags']);
 			$oSmarty->assign('title', $this->_aData['title']);
 			$oSmarty->assign('content', $this->_aData['content']);
@@ -190,10 +191,11 @@ class Blog extends Main {
 	}
 
 	protected function _destroy() {
-		if( $this->_oModel->destroy((int)$this->_aRequest['id']))
+		if( $this->_oModel->destroy((int)$this->_aRequest['id'])) {
+		 $this->_iId = '';
 			return Helper::successMessage(LANG_SUCCESS_DESTROY).
 					$this->show();
-		else
+		} else
 			return Helper::errorMessage(LANG_ERROR_DB_QUERY);
 	}
 }

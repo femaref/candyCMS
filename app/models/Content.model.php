@@ -35,7 +35,6 @@ class Model_Content extends Model_Main {
       } catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
-        die();
       }
     } else {
       try {
@@ -70,7 +69,6 @@ class Model_Content extends Model_Main {
       } catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
-        die();
       }
     }
 
@@ -134,7 +132,6 @@ class Model_Content extends Model_Main {
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
-      die();
     }
   }
 
@@ -167,7 +164,6 @@ class Model_Content extends Model_Main {
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
-      die();
     }
   }
 
@@ -192,7 +188,6 @@ class Model_Content extends Model_Main {
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
-      die();
     }
   }
 }

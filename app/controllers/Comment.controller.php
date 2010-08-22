@@ -69,7 +69,7 @@ final class Comment extends Main {
         $oSmarty->assign('comments', $this->_aData);
 
         # Set author of blog entry
-        $iAuthorID = (int)$this->_aParentData[1]['authorID'];
+        $iAuthorID = (int)$this->_aParentData[1]['author_id'];
         $oSmarty->assign('authorID', $iAuthorID);
 
         # For correct information, do some math to display entries

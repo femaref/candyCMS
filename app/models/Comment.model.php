@@ -58,7 +58,7 @@ class Model_Comment extends Model_Main {
                     'userID' => $aRow['userID'],
                     'parentID' => $aRow['parentID'],
                     'parentCat' => $aRow['parentCat'],
-                    'authorID' => $aRow['authorID'],
+                    'author_id' => $aRow['authorID'],
                     'author_email' => $aRow['author_email'],
                     'author_name' => $aRow['author_name'],
                     'name' => Helper::formatOutput($aRow['name']),

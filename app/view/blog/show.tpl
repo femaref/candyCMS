@@ -33,7 +33,7 @@
           </h2>
           <div class='date'>
             {$b.date} {$lang_by}
-            <a href='/User/{$b.authorID}'>{$b.name} {$b.surname}</a>
+            <a href='/User/{$b.author_id}'>{$b.name} {$b.surname}</a>
             {if $b.date_modified != ''}
               - {$lang_last_update}: {$b.date_modified}
             {/if}
