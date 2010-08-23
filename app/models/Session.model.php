@@ -10,8 +10,8 @@
 require_once 'app/controllers/Mail.controller.php';
 
 class Model_Session extends Model_Main {
-  # Fetch userdata
-  private final function _setData($iSessionId) {
+  # Get userdata; static function and direct return due to uncritical action
+  public static final function getSessionData($iSessionId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -21,22 +21,33 @@ class Model_Session extends Model_Main {
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
       $bReturn = $oQuery->execute();
 
-$a = $oQuery->fetch(PDO::FETCH_ASSOC);
-die(print_r($a));
 			if($bReturn == false)
     		$this->destroy();
-      return $oQuery->fetch(PDO::FETCH_ASSOC);
 
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
   }
 
-  # Return userdata
-	public final function getData($iSessionId = '') {
-		return $this->_setData($iSessionId);
-	}
+  # Get user name and surname
+  public static final function getUserNames($iId) {
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT name, surname FROM user WHERE id = :id LIMIT 1");
+
+      $oQuery->bindParam('id', $iId);
+      $bReturn = $oQuery->execute();
+
+			# Return user data as array
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+  }
 
   # Create session
   public final function create() {

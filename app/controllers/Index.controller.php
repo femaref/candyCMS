@@ -80,12 +80,9 @@ class Index {
 
   public final function setActiveUser($iSessionId = '') {
     if (empty($iSessionId))
-      $SessionId = session_id();
+      $iSessionId = session_id();
 
-    $oSession = new Session($this->_aRequest, $this->_aSession);
-    $oSession->__init();
-    $this->_aSession['userdata'] =  $oSession->getSession($iSessionId);
-
+    $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
   }
 
