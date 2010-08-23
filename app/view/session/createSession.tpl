@@ -1,5 +1,5 @@
 <div id="login">
-  <form method='post' action='/Login'>
+  <form method='post' action='/Session/create'>
     <fieldset>
       <legend>{$lang_login}</legend>
       <div class="input">
@@ -18,6 +18,6 @@
       </div>
     </fieldset>
     <input type='hidden' value='formdata' name='create_session' />
-    <p><a href='/Login/password'>Passwort vergessen?</a></p>
+    <p><a href='/Session/password'>{$lang_lost_password}</a></p>
   </form>
 </div>

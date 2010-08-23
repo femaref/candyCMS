@@ -43,6 +43,7 @@ class Session extends Main {
     $oSmarty = new Smarty();
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
+    $oSmarty->assign('lang_lost_password', LANG_LOGIN_PASSWORD_LOST);
     $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
 
     $oSmarty->template_dir = Helper::getTemplateDir('session/createSession');

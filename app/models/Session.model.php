@@ -136,42 +136,42 @@ class Model_Session extends Model_Main {
 			$e->getMessage();
 		}
 
-		if( empty($aResult['name']) || $bResult == false)
+		if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
+			$oDb = null;
 			return false;
-
+		}
 		else {
 			$aRow = & $aResult;
 
-			$sNewPasswordClean = Helper::createRandomChar(10);
+			$sNewPasswordClean	= Helper::createRandomChar(10);
 			$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-			$sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
-			$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+			try {
+				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-											LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
-											$sContent,
-											WEBSITE_MAIL_NOREPLY);
+				$oQuery = $oDb->prepare("UPDATE user SET password = :password WHERE email = :email");
+				$oQuery->bindParam(':password', $sNewPasswordSecure);
+				$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
 
-			if ($bStatus == true) {
-				try {
-					$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-											PDO::ATTR_PERSISTENT => true
-									));
-					$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$bResult = $oQuery->execute();
+				$oDb = null;
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+				$e->getMessage();
+			}
 
-					$oQuery = $oDb->prepare("UPDATE user SET password = :password WHERE email = :email");
-					$oQuery->bindParam(':password', $sNewPasswordSecure);
-					$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+			if($bResult == true) {
+				$sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
+				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-					$bResult = $oQuery->execute();
-					$oDb = null;
-					return $bResult;
-				}
-				catch (AdvancedException $e) {
-					$oDb->rollBack();
-					$e->getMessage();
-				}
+				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+												LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
+												$sContent,
+												WEBSITE_MAIL_NOREPLY);
+
+				return $bStatus;
 			}
 			else
 				return false;
