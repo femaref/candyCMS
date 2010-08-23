@@ -8,7 +8,7 @@
       <h2>
         {$c.title}
         {if $USER_RIGHT > 3}
-          <a href='/Content/update/{$c.id}'>
+          <a href='/Content/{$c.id}/update'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
@@ -16,7 +16,7 @@
       </h2>
       <div class='date'>
         {$lang_last_update}: {$c.date} {$lang_by}
-        <a href='/User/{$c.authorID}'>{$c.name} {$c.surname}</a>
+        <a href='/User/{$c.authorID}/{$c.name} {$c.surname}'>{$c.name} {$c.surname}</a>
       </div>
     </div>
     {$c.content}

@@ -31,7 +31,7 @@ class Session extends Main {
 				return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL) .
 					Helper::redirectTo('/Start');
 			else
-				return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE) .
+				return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
 					$this->showCreateSessionTemplate();
 		}
 		else
@@ -56,11 +56,11 @@ class Session extends Main {
         return Helper::successMessage(LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS).
                 $this->showCreateSessionTemplate();
 			} else
-        return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT).
+        return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL).
                 $this->_showCreateNewPasswordTemplate();
     }
     else
-      return $this->_showCreateNewPasswordTemplate();
+			return $this->_showCreateNewPasswordTemplate();
   }
 
   private final function _showCreateNewPasswordTemplate() {

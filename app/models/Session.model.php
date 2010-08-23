@@ -7,54 +7,55 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'app/controllers/Mail.controller.php';
 
 class Model_Session extends Model_Main {
   # Get userdata; static function and direct return due to uncritical action
   public static final function getSessionData($iSessionId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session_id AND ip = :ip LIMIT 1");
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session_id AND ip = :ip LIMIT 1");
 
-      $oQuery->bindParam('session_id', $iSessionId);
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $bReturn = $oQuery->execute();
+			$oQuery->bindParam('session_id', $iSessionId);
+			$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+			$bReturn = $oQuery->execute();
 
-			if($bReturn == false)
-    		$this->destroy();
+			if ($bReturn == false)
+				$this->destroy();
 
-      return $oQuery->fetch(PDO::FETCH_ASSOC);
-    } catch (AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
-    }
+			return $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
   }
 
   # Get user name and surname
   public static final function getUserNames($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT name, surname FROM user WHERE id = :id LIMIT 1");
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT name, surname FROM user WHERE id = :id LIMIT 1");
 
-      $oQuery->bindParam('id', $iId);
-      $bReturn = $oQuery->execute();
+			$oQuery->bindParam('id', $iId);
+			$bReturn = $oQuery->execute();
 
 			# Return user data as array
-      return $oQuery->fetch(PDO::FETCH_ASSOC);
-    } catch (AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
-    }
-  }
+			return $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+	}
 
   # Create session
   public final function create() {
 		try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-										PDO::ATTR_PERSISTENT => true
-								));
+									PDO::ATTR_PERSISTENT => true
+							));
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$oQuery = $oDb->prepare(" SELECT
@@ -68,21 +69,21 @@ class Model_Session extends Model_Main {
 																LIMIT
 																	1");
 
-			$sPassword = md5(RANDOM_HASH.Helper::formatInput($this->_aRequest['password']));
+			$sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
 			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
 			$oQuery->bindParam('password', $sPassword);
 			$oQuery->execute();
 
 			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-
-		} catch (AdvancedException $e) {
+		}
+		catch (AdvancedException $e) {
 			$oDb->rollBack();
 			$e->getMessage();
 		}
 
     # Check if user exists
-    if(!empty($aResult['id'])) {
-      $this->_aData =& $aResult;
+    if (!empty($aResult['id'])) {
+			$this->_aData = & $aResult;
 
 			try {
 				$oQuery = $oDb->prepare("	UPDATE
@@ -102,97 +103,106 @@ class Model_Session extends Model_Main {
 
 				$oDb = null;
 				return $bResult;
-
-			} catch (AdvancedException $e) {
+			}
+			catch (AdvancedException $e) {
 				$oDb->rollBack();
 				$e->getMessage();
 			}
-    }
-    else
-      return false;
-
-		$oDb = null;
+		}
+		else {
+			$oDb = null;
+			return false;
+		}
   }
 
-  # TODO: Clean up Model and Controller
   public final function createNewPassword() {
-    $sError = '';
-    if( empty($this->_aRequest['email']) )
-      $sError .= LANG_ERROR_LOGIN_ENTER_EMAIL.	'<br />';
+		require_once 'app/controllers/Mail.controller.php';
+		$bResult = false;
 
-    $oGetUser = new Query("	SELECT
-															COUNT(email)
-														FROM
-															user
-														WHERE
-															email = '"	.Helper::formatInput($this->_aRequest['email']).	"'");
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+									PDO::ATTR_PERSISTENT => true
+							));
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $iUser = $oGetUser->count();
-    if( $iUser == 0 )
-      $sError .= LANG_ERROR_LOGIN_NO_SUCH_EMAIL.	'<br />';
+			$oQuery = $oDb->prepare("SELECT name, email FROM user WHERE email = :email");
+			$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+			$bResult = $oQuery->execute();
 
-    if( !empty($sError) )
-      return Helper::errorMessage($sError);
+			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
 
-    else {
-      $sNewPasswordClean  = Helper::createRandomChar(10);
-      $sNewPasswordSecure = md5(RANDOM_HASH.$sNewPasswordClean);
+		if( empty($aResult['name']) || $bResult == false)
+			return false;
 
-      $oGetUserName = new Query("	SELECT
-																		name
-																	FROM
-																		user
-																	WHERE
-																		email = '"	.Helper::formatInput($this->_aRequest['email']).	"'
-																	LIMIT
-																		1");
+		else {
+			$aRow = & $aResult;
 
-      $aRow = $oGetUserName->fetch();
+			$sNewPasswordClean = Helper::createRandomChar(10);
+			$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-      # TODO: Put into controller?
-      $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
-      $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+			$sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
+			$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-      $bStatus = Mail::send(	Helper::formatInput($this->_aRequest['email']),
-              LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
-              $sContent,
-              WEBSITE_MAIL_NOREPLY);
+			$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+											LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
+											$sContent,
+											WEBSITE_MAIL_NOREPLY);
 
-      if( $bStatus == true ) {
-        return new Query("UPDATE
-                            `user`
-                          SET
-                            password = '"	.$sNewPasswordSecure.	"'
-                          WHERE
-                            `email` = '"	.Helper::formatInput($this->_aRequest['email']).	"'");
-      }
-    }
+			if ($bStatus == true) {
+				try {
+					$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+											PDO::ATTR_PERSISTENT => true
+									));
+					$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+					$oQuery = $oDb->prepare("UPDATE user SET password = :password WHERE email = :email");
+					$oQuery->bindParam(':password', $sNewPasswordSecure);
+					$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+
+					$bResult = $oQuery->execute();
+					$oDb = null;
+					return $bResult;
+				}
+				catch (AdvancedException $e) {
+					$oDb->rollBack();
+					$e->getMessage();
+				}
+			}
+			else
+				return false;
+		}
   }
 
   public final function destroy() {
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->prepare("	UPDATE
+			$oQuery = $oDb->prepare("	UPDATE
                                   user
                                 SET
                                   session = :session_null
                                 WHERE
                                   session = :session_id");
 
-      $sNull			= 'NULL';
-      $iSessionId = session_id();
-      $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
-      $oQuery->bindParam('session_id', $iSessionId);
-      $bResult = $oQuery->execute();
+			$sNull = 'NULL';
+			$iSessionId = session_id();
+			$oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
+			$oQuery->bindParam('session_id', $iSessionId);
+			$bResult = $oQuery->execute();
 
-      $oDb = null;
-      return $bResult;
+			$oDb = null;
+			return $bResult;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
 
-    } catch (AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
-    }
-  }
+	}
 }
