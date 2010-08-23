@@ -15,10 +15,10 @@ class Index {
   private $_aCookie;
 
   public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
-    $this->_aRequest = & $aRequest;
-    $this->_aSession = & $aSession;
-    $this->_aFile		= & $aFile;
-    $this->m_aCookie	= & $aCookie;
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile     = & $aFile;
+    $this->_aCookie 	= & $aCookie;
   }
 
   public final function loadConfig($sPath = '') {
@@ -52,8 +52,8 @@ class Index {
       die();
     }
 
-    $this->_sLanguage = isset($this->m_aCookie['lang']) ?
-            (string) $this->m_aCookie['lang'] :
+    $this->_sLanguage = isset($this->_aCookie['lang']) ?
+            (string) $this->_aCookie['lang'] :
             DEFAULT_LANGUAGE;
 
     if (file_exists($sPath . 'config/language/' . $this->_sLanguage . '.lang.php'))
@@ -63,8 +63,8 @@ class Index {
   }
 
   public final function loadAddons() {
-    if (ALLOW_ADDONS == true && file_exists('addon/Addon.class.php'))
-      require_once 'addon/Addon.class.php';
+    if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
+      require_once 'helpers/Addon.helper.php';
   }
 
   public final function loadPlugins() {
@@ -202,13 +202,16 @@ class Index {
      * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
     # There's no request on a core module and Addons are disabled. */
-    else
+    else {
       header('Status: 404 Not Found');
+      die('Status: 404 Not Found');
+    }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
     if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
             (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
       $sCachedHTML = $oSection->getContent();
+
     else {
       $oSmarty->assign('_title_', $oSection->getTitle() .
               ' - ' . LANG_WEBSITE_TITLE);

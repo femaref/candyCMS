@@ -146,7 +146,7 @@ class Smarty
      *
      * @var boolean
      */
-    var $force_compile   =  false;
+    var $force_compile   =  true;
 
     /**
      * This enables template caching.

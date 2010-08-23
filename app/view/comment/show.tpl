@@ -5,7 +5,7 @@
 {foreach from=$comments item=c name=comments}
   <div class='comment {if $authorID == $c.authorID}from_author{/if}'>
     <h3 class='{if $authorID == $c.authorID}row1{/if}'>
-      <a href='/Blog/{$c.parentID}#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
+      <a href='#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
       {if $c.userID > 0}
         <a href='/User/{$c.userID}'>{$c.name} {$c.surname}</a>
       {elseif $c.author_name !== ''}
@@ -26,7 +26,7 @@
       </a>
       {if $USER_RIGHT > 3}
         <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
-             onclick="confirmDelete('#{$c.loop+$comment_number}', '/Comment/destroy/{$c.id}/{$c.parentID}')"
+             onclick="confirmDelete('#{$c.loop+$comment_number}', '/Comment/{$c.id}/destroy/{$c.parentID}')"
              title='{$lang_destroy}' />
       {/if}
     </div>
