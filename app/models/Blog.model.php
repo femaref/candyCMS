@@ -86,20 +86,20 @@ class Model_Blog extends Model_Main {
 				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
         $this->_aData[$iId] = array(
-								'id'						=> $aRow['id'],
-                'author_id'			=> $aRow['authorID'],
-                'tags'					=> $aTags,
-                'tags_sum'			=> (int)count($aTags),
-                'title'					=> Helper::formatOutput($aRow['title']),
-                'content'				=> Helper::formatOutput($aRow['content'], true),
-                'date'					=> Helper::formatTimestamp($aRow['date']),
-                'uid'						=> $aRow['uid'],
-                'name'					=> Helper::formatOutput($aRow['name']),
-                'surname'				=> Helper::formatOutput($aRow['surname']),
+                'id'          => $aRow['id'],
+                'author_id'   => $aRow['authorID'],
+                'tags'        => $aTags,
+                'tags_sum'    => (int)count($aTags),
+                'title'       => Helper::formatOutput($aRow['title']),
+                'content'     => Helper::formatOutput($aRow['content'], true),
+                'date'        => Helper::formatTimestamp($aRow['date']),
+                'uid'         => $aRow['uid'],
+                'name'        => Helper::formatOutput($aRow['name']),
+                'surname'     => Helper::formatOutput($aRow['surname']),
                 'avatar_32'			=> Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
                 'avatar_64'			=> Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
-                'comment_sum'		=> $aRow['commentSum'],
-                'eTitle'				=> Helper::formatOutput(urlencode($aRow['title'])),
+                'comment_sum'	=> $aRow['commentSum'],
+                'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
                 'published'			=> $aRow['published']
 				);
 
@@ -156,12 +156,12 @@ class Model_Blog extends Model_Main {
 			# Edit only
 			if ($bEdit == true) {
 				$this->_aData = array(
-						'id'				=> $aRow['id'],
+						'id'        => $aRow['id'],
 						'author_id'	=> $aRow['authorID'],
-						'tags'			=> Helper::removeSlahes($aRow['tags']),
-						'title'			=> Helper::removeSlahes($aRow['title']),
-						'content'		=> Helper::formatOutput($aRow['content']),
-						'date'			=> Helper::formatTimestamp($aRow['date']),
+						'tags'      => Helper::removeSlahes($aRow['tags']),
+						'title'     => Helper::removeSlahes($aRow['title']),
+						'content'   => Helper::removeSlahes($aRow['content']),
+						'date'      => Helper::formatTimestamp($aRow['date']),
 						'published' => $aRow['published']
 				);
 				unset($sContent);
@@ -170,19 +170,19 @@ class Model_Blog extends Model_Main {
 			else {
 				$aTags = explode(', ', $aRow['tags']);
 				$this->_aData[1] = array(
-						'id'						=> $aRow['id'],
-						'author_id'			=> $aRow['authorID'],
-						'tags'					=> $aTags,
-						'tags_sum'			=> (int) count($aTags),
-						'title'					=> Helper::formatOutput($aRow['title']),
-						'content'				=> Helper::formatOutput($aRow['content'], true),
-						'date'					=> Helper::formatTimestamp($aRow['date']),
-						'uid'						=> $aRow['uid'],
-						'name'					=> Helper::formatOutput($aRow['name']),
-						'surname'				=> Helper::formatOutput($aRow['surname']),
-						'avatar'				=> '',
-						'comment_sum'		=> $aRow['commentSum'],
-						'eTitle'				=> Helper::formatOutput(urlencode($aRow['title'])),
+						'id'          => $aRow['id'],
+						'author_id'   => $aRow['authorID'],
+						'tags'        => $aTags,
+						'tags_sum'    => (int) count($aTags),
+						'title'       => Helper::formatOutput($aRow['title']),
+						'content'     => Helper::formatOutput($aRow['content'], true),
+						'date'        => Helper::formatTimestamp($aRow['date']),
+						'uid'         => $aRow['uid'],
+						'name'        => Helper::formatOutput($aRow['name']),
+						'surname'     => Helper::formatOutput($aRow['surname']),
+						'avatar'      => '',
+						'comment_sum'	=> $aRow['commentSum'],
+						'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
 						'published'			=> $aRow['published']
 				);
 
@@ -237,18 +237,18 @@ class Model_Blog extends Model_Main {
 
 	public function update($iId) {
 		$iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
-						time() :
-						'';
+            time() :
+            '';
 
-		$iPublished = (isset($this->_aRequest['published']) && $this->_aRequest['published'] == true) ?
-						'1' :
-						'0';
+    $iPublished = (isset($this->_aRequest['published']) && $this->_aRequest['published'] == true) ?
+            '1' :
+            '0';
 
-		$iUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
-						USER_ID :
-						(int) $this->_aRequest['author_id'];
+    $iUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
+            USER_ID :
+            (int) $this->_aRequest['author_id'];
 
-		try {
+    try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -264,19 +264,19 @@ class Model_Blog extends Model_Main {
                                 WHERE
                                   id = :id");
 
-      $oQuery->bindParam('author_id', $iUpdateAuthor);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-      $oQuery->bindParam('date_modified', $iDateModified);
-      $oQuery->bindParam('published', $iPublished);
-      $oQuery->bindParam('id', $iId);
-      $bResult = $oQuery->execute();
+			$oQuery->bindParam('author_id', $iUpdateAuthor);
+			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+			$oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
+			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+			$oQuery->bindParam('date_modified', $iDateModified);
+			$oQuery->bindParam('published', $iPublished);
+			$oQuery->bindParam('id', $iId);
+			$bResult = $oQuery->execute();
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }

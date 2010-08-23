@@ -80,7 +80,7 @@ class Model_Content extends Model_Main {
             'id'        => $aRow['id'],
             'authorID'  => $aRow['authorID'],
             'title'     => Helper::removeSlahes($aRow['title']),
-            'content'   => Helper::formatOutput($aRow['content']),
+            'content'   => Helper::removeSlahes($aRow['content']),
             'date'      => Helper::formatTimestamp($aRow['date'])
         );
         unset($sContent);
@@ -117,10 +117,10 @@ class Model_Content extends Model_Main {
       $oQuery = $oDb->prepare(" INSERT INTO
                                   content(authorID, title, content, date)
                                 VALUES
-                                  ( :user_id, :title, :content, :date )");
+                                  ( :author_id, :title, :content, :date )");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('user_id', $iUserId);
+      $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
@@ -153,7 +153,7 @@ class Model_Content extends Model_Main {
       $iUserId = USER_ID;
       $oQuery->bindParam('user_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('where', $iId);
       $bResult = $oQuery->execute();

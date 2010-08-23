@@ -17,6 +17,10 @@ class Session extends Main {
     $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
   }
 
+  public final function getSession($iSessionId) {
+    return $this->_oModel->getData($iSessionId);
+  }
+
   /*
    * @ Override
    */

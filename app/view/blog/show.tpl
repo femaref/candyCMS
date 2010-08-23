@@ -25,7 +25,7 @@
             {/if}
             <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
             {if $USER_RIGHT > 3}
-              <a href='/Blog/update/{$b.id}'>
+              <a href='/Blog/{$b.id}/update'>
                 <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
               </a>

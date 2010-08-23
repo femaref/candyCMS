@@ -1,4 +1,4 @@
-<form method='post' action='/Register'>
+<form method='post' action='/User/create'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>

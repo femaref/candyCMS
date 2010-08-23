@@ -22,13 +22,13 @@
       <td style='width:25%' title='{$lang_last_login}'>{$u.last_login}</td>
       <td style='width:10%'>
         {if $USER_RIGHT == 4}
-          <a href='/User/update/{$u.id}'>
+          <a href='/User/{$u.id}/update'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                title='{$lang_destroy}' class="pointer"
-               onclick="confirmDelete('{$u.name}', '/User/destroy/{$u.id}')" />
+               onclick="confirmDelete('{$u.name}', '/User/{$u.id}/destroy')" />
         {/if}
       </td>
     </tr>

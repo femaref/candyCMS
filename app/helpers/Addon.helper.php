@@ -11,7 +11,7 @@ final class Addon extends Section {
 	public final function __construct($aRequest, $aSession, $aFile = '') {
 		$this->_aRequest	=& $aRequest;
 		$this->_aSession	=& $aSession;
-		$this->_aFile		=& $aFile;
+		$this->_aFile     =& $aFile;
 
 		$this->_setModules();
 		$this->_getSection();
@@ -21,7 +21,7 @@ final class Addon extends Section {
 		$oDir = opendir('addon');
 
 		while($aFile = readdir($oDir)) {
-			if($aFile == '.' || $aFile == '..' || $aFile == 'Addon.class.php' || $aFile == '_dev' || $aFile == '.htaccess')
+			if($aFile == '.' || $aFile == '..' || $aFile == '_dev' || $aFile == '.htaccess')
 				continue;
 
 			require_once ('app/addon/'	.$aFile);
@@ -30,12 +30,6 @@ final class Addon extends Section {
 
 	private final function _getSection() {
 		switch( strtolower( $this->_aRequest['section']) ) {
-		# Addons by Marco Raddatz
-		/*	case 'menu':
-
-				break;*/
-
-			# Insert extern Addons here
 			default:
 			case '404':
 
@@ -43,6 +37,8 @@ final class Addon extends Section {
 				parent::_setTitle(LANG_ERROR_GLOBAL_404);
 
 				break;
+
+      # Enter your addon information here
 		}
 	}
 }

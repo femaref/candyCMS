@@ -16,7 +16,7 @@ ErrorDocument 500 /public/500.html
 RewriteRule ^About$ index.php?section=content&id=3 [L]
 RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parentcat=$1&id=$2&page=$3&ajax=1 [L]
 RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
-RewriteRule ^Comment/destroy/([0-9]+)/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
+RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
 RewriteRule ^Contact$ index.php?section=mail&id=1 [L]
 RewriteRule ^Contact/(.*)$ index.php?section=mail&id=1&subject=$1 [L]
 RewriteRule ^Disclaimer$ index.php?section=content&id=1 [L]
@@ -30,6 +30,7 @@ RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
 RewriteRule ^Login$ index.php?section=session&action=create [L]
 RewriteRule ^Login/password$ index.php?section=session&action=password [L]
 RewriteRule ^Logout$ index.php?section=session&action=destroy [L]
+RewriteRule ^Media/destroy/(.*)$ index.php?section=session&action=destroy [L]
 RewriteRule ^Register$ index.php?section=user&action=create [L]
 RewriteRule ^Start$ index.php?section=blog [L]
 RewriteRule ^Static/([A-Z][a-z][0-9]+)$ index.php?section=static&action=$1 [L]
@@ -37,12 +38,12 @@ RewriteRule ^User/Settings$ index.php?section=user&action=update [L]
 
 # Dynamic rules
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1 [L]
-RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L]
-RewriteRule ^([A-Za-z]+)/([a-z]+)$ index.php?section=$1&action=$2&page=1 [L]
-RewriteRule ^([A-Za-z]+)/([a-z]+)/([A-Za-z0-9]+)$ index.php?section=$1&action=$2&id=$3&page=1 [L]
 RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L]
 RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L]
 RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L]
+RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L]
+RewriteRule ^([A-Za-z]+)/([a-z]+)$ index.php?section=$1&action=$2&page=1 [L]
+RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=$1&action=$3&id=$2&page=1 [L]
 
 
 # Hide files for non script access

@@ -15,10 +15,10 @@ class Index {
   private $_aCookie;
 
   public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
-    $this->_aRequest = & $aRequest;
-    $this->_aSession = & $aSession;
-    $this->_aFile		= & $aFile;
-    $this->m_aCookie	= & $aCookie;
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile     = & $aFile;
+    $this->_aCookie 	= & $aCookie;
   }
 
   public final function loadConfig($sPath = '') {
@@ -52,8 +52,8 @@ class Index {
       die();
     }
 
-    $this->_sLanguage = isset($this->m_aCookie['lang']) ?
-            (string) $this->m_aCookie['lang'] :
+    $this->_sLanguage = isset($this->_aCookie['lang']) ?
+            (string) $this->_aCookie['lang'] :
             DEFAULT_LANGUAGE;
 
     if (file_exists($sPath . 'config/language/' . $this->_sLanguage . '.lang.php'))
@@ -63,8 +63,8 @@ class Index {
   }
 
   public final function loadAddons() {
-    if (ALLOW_ADDONS == true && file_exists('addon/Addon.class.php'))
-      require_once 'addon/Addon.class.php';
+    if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
+      require_once 'helpers/Addon.helper.php';
   }
 
   public final function loadPlugins() {
@@ -78,45 +78,29 @@ class Index {
     }
   }
 
-  public final function setActiveUser($SessionId = '') {
-    if (empty($SessionId))
+  public final function setActiveUser($iSessionId = '') {
+    if (empty($iSessionId))
       $SessionId = session_id();
 
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $oSession = new Session($this->_aRequest, $this->_aSession);
+    $oSession->__init();
+    $this->_aSession['userdata'] =  $oSession->getSession($iSessionId);
 
-      $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session AND ip = :ip LIMIT 1");
-			
-      $oQuery->bindParam('session', $SessionId);
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $bReturn = $oQuery->execute();
-
-			if($bReturn == false) {
-				$oSession = new Session($this->_aRequest, $this->_aSession);
-				$oSession->destroy();
-			}
-
-      $this->_aSession['userdata'] = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $this->_aSession['userdata'];
-    } catch (AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
-      die();
-    }
+    return $this->_aSession['userdata'];
   }
 
   protected final function _getFlashMessage() {
-    $aFlashMessage['type'] = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ?
-            $_SESSION['flash_message']['type'] :
+    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+            $this->_aSession['flash_message']['type'] :
             '';
-    $aFlashMessage['message'] = isset($_SESSION['flash_message']['message']) && !empty($_SESSION['flash_message']['message']) ?
-            $_SESSION['flash_message']['message'] :
+    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
+            $this->_aSession['flash_message']['message'] :
             '';
-    $aFlashMessage['headline'] = isset($_SESSION['flash_message']['headline']) && !empty($_SESSION['flash_message']['headline']) ?
-            $_SESSION['flash_message']['headline'] :
+    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
+            $this->_aSession['flash_message']['headline'] :
             '';
 
+    unset($this->_aSession['flash_message']);
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }
@@ -202,13 +186,16 @@ class Index {
      * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
     # There's no request on a core module and Addons are disabled. */
-    else
+    else {
       header('Status: 404 Not Found');
+      die('Status: 404 Not Found');
+    }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested
     if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
             (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
       $sCachedHTML = $oSection->getContent();
+
     else {
       $oSmarty->assign('_title_', $oSection->getTitle() .
               ' - ' . LANG_WEBSITE_TITLE);
