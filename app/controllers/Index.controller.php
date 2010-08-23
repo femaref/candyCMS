@@ -78,45 +78,29 @@ class Index {
     }
   }
 
-  public final function setActiveUser($SessionId = '') {
-    if (empty($SessionId))
+  public final function setActiveUser($iSessionId = '') {
+    if (empty($iSessionId))
       $SessionId = session_id();
 
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $oSession = new Session($this->_aRequest, $this->_aSession);
+    $oSession->__init();
+    $this->_aSession['userdata'] =  $oSession->getSession($iSessionId);
 
-      $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session AND ip = :ip LIMIT 1");
-			
-      $oQuery->bindParam('session', $SessionId);
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $bReturn = $oQuery->execute();
-
-			if($bReturn == false) {
-				$oSession = new Session($this->_aRequest, $this->_aSession);
-				$oSession->destroy();
-			}
-
-      $this->_aSession['userdata'] = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $this->_aSession['userdata'];
-    } catch (AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
-      die();
-    }
+    return $this->_aSession['userdata'];
   }
 
   protected final function _getFlashMessage() {
-    $aFlashMessage['type'] = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ?
-            $_SESSION['flash_message']['type'] :
+    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+            $this->_aSession['flash_message']['type'] :
             '';
-    $aFlashMessage['message'] = isset($_SESSION['flash_message']['message']) && !empty($_SESSION['flash_message']['message']) ?
-            $_SESSION['flash_message']['message'] :
+    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
+            $this->_aSession['flash_message']['message'] :
             '';
-    $aFlashMessage['headline'] = isset($_SESSION['flash_message']['headline']) && !empty($_SESSION['flash_message']['headline']) ?
-            $_SESSION['flash_message']['headline'] :
+    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
+            $this->_aSession['flash_message']['headline'] :
             '';
 
+    unset($this->_aSession['flash_message']);
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }

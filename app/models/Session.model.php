@@ -10,6 +10,35 @@
 require_once 'app/controllers/Mail.controller.php';
 
 class Model_Session extends Model_Main {
+  # Fetch userdata
+  private final function _setData($iSessionId) {
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT * FROM user WHERE session = :session_id AND ip = :ip LIMIT 1");
+
+      $oQuery->bindParam('session_id', $iSessionId);
+      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+      $bReturn = $oQuery->execute();
+
+$a = $oQuery->fetch(PDO::FETCH_ASSOC);
+die(print_r($a));
+			if($bReturn == false)
+    		$this->destroy();
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
+
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+  }
+
+  # Return userdata
+	public final function getData($iSessionId = '') {
+		return $this->_setData($iSessionId);
+	}
+
+  # Create session
   public final function create() {
 		try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(

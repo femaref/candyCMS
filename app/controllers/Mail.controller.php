@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+require_once 'app/models/Blog.model.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 require_once 'app/controllers/User.controller.php';
 
