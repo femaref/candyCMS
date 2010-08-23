@@ -46,15 +46,16 @@ class Model_Comment extends Model_Main {
       $iLoop = 0;
       while ($aRow = $oGetData->fetch()) {
         $iLoop++;
-        $iID = $aRow['id'];
+        $iId = $aRow['id'];
 
         if(isset($aRow['userID']))
           $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
         else
           $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
 
-        $this->_aData[$iID] =
-                array('id' => $aRow['id'],
+        $this->_aData[$iId] =
+                array(
+										'id' => $aRow['id'],
                     'userID' => $aRow['userID'],
                     'parentID' => $aRow['parentID'],
                     'parentCat' => $aRow['parentCat'],
@@ -116,9 +117,8 @@ class Model_Comment extends Model_Main {
     return mysql_insert_id();
   }
 
-  public function destroy($iID) {
-    new Query("DELETE FROM comment WHERE id = '" . $iID . "' LIMIT 1");
+  public function destroy($iId) {
+    new Query("DELETE FROM comment WHERE id = '" . $iId . "' LIMIT 1");
     return true;
   }
-
 }
