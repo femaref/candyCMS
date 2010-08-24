@@ -118,9 +118,9 @@ final class Upload {
     return $this->_sFileExtension;
   }
 
-  /*public function getId() {
+  public function getId() {
     return $this->_iId.	'.'	.$this->_sFileExtension;
-  }*/
+  }
 
   # SIMPLE FILE UPLOAD
   public final function uploadFile() {

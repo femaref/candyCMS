@@ -101,11 +101,11 @@ if (isset($_FILES) && !empty($_FILES)) {
 
 	$aUser = Model_Session::getSessionData();
 
-	define('USER_ID', (int) $aUser['id']);
-	define('USER_RIGHT', (int) $aUser['userright']);
+	define('USER_ID', $aUser['id']);
+	define('USER_RIGHT', $aUser['userright']);
 
   # TODO: Try / catch
-	if (USER_RIGHT > 3)
+	if (USER_RIGHT >= 3)
 		echo $oUpload->validateAndUpload();
 	else
 		die('No Permission!');

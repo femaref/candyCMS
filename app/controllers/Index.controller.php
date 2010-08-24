@@ -79,9 +79,6 @@ class Index {
   }
 
   public final function setActiveUser($iSessionId = '') {
-    if (empty($iSessionId))
-      $iSessionId = session_id();
-
     $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
   }
