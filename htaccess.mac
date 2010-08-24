@@ -14,6 +14,7 @@ ErrorDocument 500 /public/500.html
 
 # Static rules
 RewriteRule ^About$ index.php?section=content&id=3 [L]
+RewriteRule ^Blog/([A-Za-z]+)$ index.php?section=blog&action=tag&id=$1 [L]
 RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parentcat=$1&id=$2&page=$3&ajax=1 [L]
 RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
 RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]

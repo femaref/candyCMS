@@ -77,12 +77,11 @@ class Session extends Main {
   }
 
   public final function destroy() {
-    if($oStatus =& $this->_oModel->destroy() == true) {
-			unset($_SESSION);
-      return Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL).
-              Helper::redirectTo('/Start');
-		}
-		else
-		 return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+    if ($oStatus = & $this->_oModel->destroy() == true) {
+      unset($_SESSION);
+      return Helper::redirectTo('/Start') . Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL);
+    }
+    else
+      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
   }
 }
