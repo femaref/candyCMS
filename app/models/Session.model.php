@@ -12,6 +12,7 @@ require_once 'app/controllers/Mail.controller.php';
 class Model_Session extends Model_Main {
   # Fetch userdata
   private final function _setData($iSessionId) {
+    die($iSessionId);
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -34,7 +35,7 @@ die(print_r($a));
   }
 
   # Return userdata
-	public final function getData($iSessionId = '') {
+	public final function getData($iSessionId) {
 		return $this->_setData($iSessionId);
 	}
 
