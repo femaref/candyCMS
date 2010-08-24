@@ -9,6 +9,27 @@
 
 class Model_User extends Model_Main {
 
+  # Get user name and surname
+  public static final function getUserNamesAndEmail($iId) {
+    try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT name, surname, email FROM user WHERE id = :id LIMIT 1");
+
+			$oQuery->bindParam('id', $iId);
+			$oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $oDb = null;
+
+			return $aResult;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+	}
+
   private function _setData() {
     if (empty($this->_iID)) {
       try {

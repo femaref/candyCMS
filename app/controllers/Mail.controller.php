@@ -53,7 +53,7 @@ class Mail extends Main {
 
     $oSmarty = new Smarty();
     $oSmarty->assign('id', $this->_iId);
-    $oSmarty->assign('contact', Model_Session::getUserNames($this->_iId));
+    $oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
     $oSmarty->assign('content', $sContent);
     $oSmarty->assign('email', $sEmail);
     $oSmarty->assign('subject', $sSubject);
@@ -104,31 +104,25 @@ class Mail extends Main {
   private function _standardMail($bShowCaptcha = true) {
     $sError = '';
 
-    if(	!isset($this->_aRequest['email']) ||
-            empty($this->_aRequest['email']) )
-      $sError .= LANG_GLOBAL_EMAIL.	'<br />';
+    if (!isset($this->_aRequest['email']) ||
+            empty($this->_aRequest['email']))
+      $sError .= LANG_GLOBAL_EMAIL . '<br />';
 
-    if(	!isset($this->_aRequest['content']) ||
-            empty($this->_aRequest['content']) )
-      $sError .= LANG_GLOBAL_CONTENT.	'<br />';
+    if (!isset($this->_aRequest['content']) ||
+            empty($this->_aRequest['content']))
+      $sError .= LANG_GLOBAL_CONTENT . '<br />';
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
+    if (!empty($sError)) {
+      $sReturn = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
       $sReturn .= $this->_showCreateMailTemplate($bShowCaptcha);
       return $sReturn;
     }
     else {
-      $oGetUser = new Query("	SELECT
-																name, email
-															FROM
-																user
-															WHERE
-																id = '"	.$this->_iId.	"'
-															LIMIT
-																1" );
-      $aRow = $oGetUser->fetch();
-      $sMailTo = $aRow['email'];
+      # Select user name and surname
+      require_once 'app/models/User.model.php';
+      $aRow = Model_User::getUserNamesAndEmail($this->_iId);
 
+      $sMailTo = $aRow['email'];
       if(empty($sMailTo)) {
         $sReplyTo = isset($this->_aRequest['email']) &&
                         !empty($this->_aRequest['email']) ?
@@ -167,27 +161,28 @@ class Mail extends Main {
 
     $oMail = new PHPMailer(true);
 
-    if(SMTP_ON == true)
+    if (SMTP_ON == true)
       $oMail->IsSMTP();
     else
       $oMail->IsSendmail();
 
     try {
-      if(SMTP_ON == true) {
+      if (SMTP_ON == true) {
 
-        if(WEBSITE_DEV == true) {
-          $oMail->SMTPDebug  = 1;
-          $oMail->SMTPAuth   = false;
-        } else {
+        if (WEBSITE_DEV == true) {
+          $oMail->SMTPDebug = 1;
+          $oMail->SMTPAuth = false;
+        }
+        else {
           # enables SMTP debug information (for testing)
-          $oMail->SMTPDebug  = 0;
-          $oMail->SMTPAuth   = true;
+          $oMail->SMTPDebug = 0;
+          $oMail->SMTPAuth = true;
         }
 
-        $oMail->Host       = SMTP_HOST;
-        $oMail->Port       = SMTP_PORT;
-        $oMail->Username   = SMTP_USER;
-        $oMail->Password   = SMTP_PASSWORD;
+        $oMail->Host = SMTP_HOST;
+        $oMail->Port = SMTP_PORT;
+        $oMail->Username = SMTP_USER;
+        $oMail->Password = SMTP_PASSWORD;
       }
 
       $oMail->AddReplyTo($sReplyTo);
@@ -198,9 +193,11 @@ class Mail extends Main {
       $oMail->Send();
 
       return true;
-    } catch (phpmailerException $e) {
+    }
+    catch (phpmailerException $e) {
       return $e->errorMessage();
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
       return $e->getMessage();
     }
   }

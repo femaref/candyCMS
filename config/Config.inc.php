@@ -17,13 +17,6 @@ define('SQL_DB', 'cms_new');
 
 # ------------------------------------------------------------------------------
 
-# Do you wish to start the DEBUG-Mode and show all queries? Note: You should use
-# it only in devlopment modus!
-# DEFAULT: 0
-define('SQL_DEBUG', '0');
-
-# ------------------------------------------------------------------------------
-
 # Do you want to use SMTP to send your mails instead of mail()?
 # DEFAULT: 0
 define('SMTP_ON', '0');

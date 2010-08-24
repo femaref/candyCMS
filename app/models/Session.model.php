@@ -37,27 +37,6 @@ class Model_Session extends Model_Main {
 		}
   }
 
-  # Get user name and surname
-  public static final function getUserNames($iId) {
-    try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT name, surname FROM user WHERE id = :id LIMIT 1");
-
-			$oQuery->bindParam('id', $iId);
-			$oQuery->execute();
-
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
-
-			return $aResult;
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
-	}
-
   # Create session
   public final function create() {
 		try {
