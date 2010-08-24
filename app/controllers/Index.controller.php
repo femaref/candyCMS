@@ -9,10 +9,10 @@
 
 class Index {
 
-  private $_aRequest;
-  private $_aSession;
-  private $_aFile;
-  private $_aCookie;
+  protected $_aRequest;
+  protected $_aSession;
+  protected $_aFile;
+  protected $_aCookie;
 
   public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
     $this->_aRequest  = & $aRequest;

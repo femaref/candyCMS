@@ -134,7 +134,7 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('offset', $this->oPages->getOffset(), PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $oDb = null;
       }
       catch (AdvancedException $e) {
@@ -152,6 +152,7 @@ class Model_Gallery extends Model_Main {
             'description' => Helper::formatOutput($aRow['description']),
             'date'        => Helper::formatTimestamp($aRow['date']),
             'extension'   => $aRow['extension'],
+            'dim'         => THUMB_DEFAULT_X,
             'loop'        => $iLoop
         );
 
@@ -171,20 +172,20 @@ class Model_Gallery extends Model_Main {
 
 	private final function _setAlbumName($iId) {
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT title FROM gallery_album WHERE id = :album_id");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT title FROM gallery_album WHERE id = :album_id");
 
-			$oQuery->bindParam('album_id', $iId);
-			$bReturn = $oQuery->execute();
+      $oQuery->bindParam('album_id', $iId);
+      $bReturn = $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       return $aResult['title'];
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 	}
 
 	public final function getAlbumName($iId) {
@@ -193,20 +194,20 @@ class Model_Gallery extends Model_Main {
 
 	private final function _setAlbumDescription($iId) {
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT description FROM gallery_album WHERE id = :album_id");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT description FROM gallery_album WHERE id = :album_id");
 
-			$oQuery->bindParam('album_id', $iId);
-			$bReturn = $oQuery->execute();
+      $oQuery->bindParam('album_id', $iId);
+      $bReturn = $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       return $aResult['description'];
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 	}
 
 	public final function getAlbumDescription($iId) {
@@ -232,33 +233,33 @@ class Model_Gallery extends Model_Main {
 
       $this->_iId = $oDb->lastInsertId();
       $oDb = null;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
 
     if($bResult == true) {
-      $sPath = PATH_UPLOAD.	'/gallery/'	.(int)$this->_iId;
+      $sPath = PATH_UPLOAD . '/gallery/' . (int) $this->_iId;
 
-      $sPathThumbS = $sPath.	'/32';
-      $sPathThumbL = $sPath.	'/'	.THUMB_DEFAULT_X;
-      $sPathThumbP = $sPath.	'/' .POPUP_DEFAULT_X;
-      $sPathThumbO = $sPath.	'/original';
+      $sPathThumbS = $sPath . '/32';
+      $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
+      $sPathThumbP = $sPath . '/' . POPUP_DEFAULT_X;
+      $sPathThumbO = $sPath . '/original';
 
-      if(!is_dir($sPath))
+      if (!is_dir($sPath))
         mkdir($sPath, 0755);
 
-      if(!is_dir($sPathThumbS))
+      if (!is_dir($sPathThumbS))
         mkdir($sPathThumbS, 0755);
 
-      if(!is_dir($sPathThumbL))
+      if (!is_dir($sPathThumbL))
         mkdir($sPathThumbL, 0755);
 
-      if(!is_dir($sPathThumbP))
+      if (!is_dir($sPathThumbP))
         mkdir($sPathThumbP, 0755);
 
-      if(!is_dir($sPathThumbO))
+      if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
     }
 
@@ -298,13 +299,13 @@ class Model_Gallery extends Model_Main {
     # Delete files
     try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-									PDO::ATTR_PERSISTENT => true
-							));
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT file FROM gallery_file WHERE aid = :album_id");
+                  PDO::ATTR_PERSISTENT => true
+              ));
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT file FROM gallery_file WHERE aid = :album_id");
 
-			$oQuery->bindParam('album_id', $iId);
-			$bReturn = $oQuery->execute();
+      $oQuery->bindParam('album_id', $iId);
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 		}
 		catch (AdvancedException $e) {
@@ -314,10 +315,10 @@ class Model_Gallery extends Model_Main {
 
     if($bReturn == true) {
       foreach ($aResult as $aRow) {
-        @unlink($sPath.	'/32/'	.$aRow['file']);
-        @unlink($sPath.	'/'	.THUMB_DEFAULT_X.	'/'	.$aRow['file']);
-        @unlink($sPath.	'/' .POPUP_DEFAULT_X. '/'	.$aRow['file']);
-        @unlink($sPath.	'/original/'	.$aRow['file']);
+        @unlink($sPath . '/32/' . $aRow['file']);
+        @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
+        @unlink($sPath . '/' . POPUP_DEFAULT_X . '/' . $aRow['file']);
+        @unlink($sPath . '/original/' . $aRow['file']);
       }
 
       # Delete Folders
@@ -340,8 +341,8 @@ class Model_Gallery extends Model_Main {
 
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();
-
-      } catch (AdvancedException $e) {
+      }
+      catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
       }
@@ -361,8 +362,8 @@ class Model_Gallery extends Model_Main {
         $bResult = $oQuery->execute();
         $oDb = null;
         return $bResult;
-
-      } catch (AdvancedException $e) {
+      }
+      catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
       }
@@ -399,13 +400,15 @@ class Model_Gallery extends Model_Main {
       $bResult = $oQuery->execute();
 
       $oDb = null;
-      return $bResult;
+      #return $bResult;
 
     } catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
-		#return $sFilePath;
+
+    # We must return the path for ajax information
+		return $sFilePath;
 	}
 
 	public final function updateFile($iId) {

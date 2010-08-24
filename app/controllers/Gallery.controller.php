@@ -238,7 +238,7 @@ class Gallery extends Main {
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
     }
     else {
-      # See helper/Image.helper.php for Details!
+      # See helper/Image.helper.php for details!
       $sDefault = isset($this->_aRequest['cut']) ?
               Helper::formatInput($this->_aRequest['cut']) :
               'r'; # r = resize, c = cut

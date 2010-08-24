@@ -8,30 +8,30 @@
  */
 
 try {
-	/* Load Parent */
-	if (    !file_exists('app/models/Main.model.php') ||
-          !file_exists('app/models/Session.model.php') ||
-					!file_exists('app/controllers/Main.controller.php') ||
-					!file_exists('app/controllers/Index.controller.php') ||
-					!file_exists('app/controllers/Gallery.controller.php') ||
-					!file_exists('app/helpers/AdvancedException.helper.php') ||
-					!file_exists('app/helpers/Section.helper.php') ||
-					!file_exists('app/helpers/Helper.helper.php')
-	)
-		throw new Exception('Could not load required classes.');
-	else {
-		require_once 'app/models/Main.model.php';
-		require_once 'app/models/Session.model.php';
-		require_once 'app/controllers/Main.controller.php';
-		require_once 'app/controllers/Index.controller.php';
-		require_once 'app/controllers/Gallery.controller.php';
-		require_once 'app/helpers/AdvancedException.helper.php';
-		require_once 'app/helpers/Section.helper.php';
-		require_once 'app/helpers/Helper.helper.php';
-	}
+  /* Load Parent */
+  if (!file_exists('app/models/Main.model.php') ||
+      !file_exists('app/models/Session.model.php') ||
+      !file_exists('app/controllers/Main.controller.php') ||
+      !file_exists('app/controllers/Index.controller.php') ||
+      !file_exists('app/controllers/Gallery.controller.php') ||
+      !file_exists('app/helpers/AdvancedException.helper.php') ||
+      !file_exists('app/helpers/Section.helper.php') ||
+      !file_exists('app/helpers/Helper.helper.php')
+  )
+    throw new Exception('Could not load required classes.');
+  else {
+    require_once 'app/models/Main.model.php';
+    require_once 'app/models/Session.model.php';
+    require_once 'app/controllers/Main.controller.php';
+    require_once 'app/controllers/Index.controller.php';
+    require_once 'app/controllers/Gallery.controller.php';
+    require_once 'app/helpers/AdvancedException.helper.php';
+    require_once 'app/helpers/Section.helper.php';
+    require_once 'app/helpers/Helper.helper.php';
+  }
 }
 catch (Exception $e) {
-	die($e->getMessage());
+  die($e->getMessage());
 }
 
 final class Multiple_Upload extends Index {
@@ -41,6 +41,7 @@ final class Multiple_Upload extends Index {
 
 	public final function validateAndUpload() {
 		$sError = '';
+
 		if (!isset($this->_aFile['Filedata']) || !is_uploaded_file($this->_aFile['Filedata']['tmp_name']))
 			$sError = 'Invalid Upload';
 
@@ -96,19 +97,19 @@ final class Multiple_Upload extends Index {
 if (isset($_FILES) && !empty($_FILES)) {
 	session_start();
 
-	$oUpload = new Multiple_Upload($_REQUEST, $_SESSION, $_FILES, $_COOKIE);
+	$oUpload = new Multiple_Upload($_REQUEST, $_SESSION, $_FILES);
 	$oUpload->loadConfig();
 
-	$aUser = Model_Session::getSessionData();
+	$aUser =& Model_Session::getSessionData($_REQUEST['session_id']);
 
-	define('USER_ID', $aUser['id']);
-	define('USER_RIGHT', $aUser['userright']);
+	define('USER_ID', (int) $aUser['id']);
+	define('USER_RIGHT', (int) $aUser['userright']);
 
   # TODO: Try / catch
-	if (USER_RIGHT >= 3)
+	if (USER_RIGHT >= 3) {
 		echo $oUpload->validateAndUpload();
-	else
-		die('No Permission!');
+  } else
+		die('No Permission!' . print_r($aUser));
 
 } else
 	die('NO FILES TO UPLOAD!');
