@@ -11,197 +11,266 @@ class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 
 	private final function _setData($bEdit = false) {
-		if( !empty($this->_iID) )
-			$sWhere = "WHERE a.id = '"	.$this->_iID.	"'";
-		else
-			$sWhere = '';
+    $sWhere = '';
 
-		$oGetData = new Query("	SELECT
-															a.*,
-															u.id AS uid,
-															u.name,
-															u.surname,
-															COUNT(f.id) AS filesSum
-														FROM
-															gallery_album a
-														LEFT JOIN
-															user u
-														ON
-															a.authorID=u.id
-														LEFT JOIN
-															gallery_file f
-														ON
-															f.aid=a.id
-														"	.$sWhere.	"
-														GROUP BY
-															a.id
-														ORDER BY
-															a.id DESC");
+		if( !empty($this->_iId) )
+			$sWhere = "WHERE a.id = '"	.$this->_iId.	"'";
+
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->query("	SELECT
+                                a.*,
+                                u.id AS uid,
+                                u.name,
+                                u.surname,
+                                COUNT(f.id) AS filesSum
+                              FROM
+                                gallery_album a
+                              LEFT JOIN
+                                user u
+                              ON
+                                a.authorID=u.id
+                              LEFT JOIN
+                                gallery_file f
+                              ON
+                                f.aid=a.id
+                              "	.$sWhere.	"
+                              GROUP BY
+                                a.id
+                              ORDER BY
+                                a.id DESC");
+
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $oDb = null;
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 
 		if($bEdit == true) {
-			$aRow = $oGetData->fetch();
-			$this->_aData = array(	'title' => Helper::removeSlahes($aRow['title']),
-					'description' => Helper::removeSlahes($aRow['description'], true));
+      $aRow = & $aResult;
+
+      # Fix fetchAll with array 0
+			$this->_aData = array(
+          'title'       => Helper::removeSlahes($aRow[0]['title']),
+					'description' => Helper::removeSlahes($aRow[0]['description'], true));
 		}
 		else {
-			while($aRow = $oGetData->fetch()) {
-				$iID = $aRow['id'];
-				$this->_aData[$iID] = array('id' => $aRow['id'],
-						'authorID' => $aRow['authorID'],
-						'title' => Helper::formatOutput($aRow['title']),
-						'description' => Helper::formatOutput($aRow['description'], true),
-						'date' => Helper::formatTimestamp($aRow['date']),
-						'files_sum' => $aRow['filesSum']
+			foreach ($aResult as $aRow) {
+				$iId = $aRow['id'];
+				$this->_aData[$iId] = array(
+            'id'          => $aRow['id'],
+            'authorID'    => $aRow['authorID'],
+            'title'       => Helper::formatOutput($aRow['title']),
+            'description' => Helper::formatOutput($aRow['description'], true),
+            'date'        => Helper::formatTimestamp($aRow['date']),
+            'files_sum'   => $aRow['filesSum']
 				);
 
 				if($aRow['filesSum'] > 0)
-					$this->_aData[$iID]['files'] = $this->getThumbs($iID, LIMIT_ALBUM_THUMBS);
+					$this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS);
 				else
-					$this->_aData[$iID]['files'] = '';
+					$this->_aData[$iId]['files'] = '';
 			}
 		}
 	}
 
-	public final function getData($iID = '', $bEdit = false) {
-		if( !empty($iID) )
-			$this->_iID = (int)$iID;
+	public final function getData($iId = '', $bEdit = false) {
+		if( !empty($iId) )
+			$this->_iId = (int)$iId;
 
 		$this->_setData($bEdit);
 		return $this->_aData;
 	}
 
 	public final function getId() {
-		return $this->_iID;
+		return $this->_iId;
 	}
 
-	private final function _setThumbs($iAID, $iLimit) {
+	private final function _setThumbs($iAid, $iLimit) {
 		# Clear existing array
 		if(!empty($this->_aThumbs))
 			unset($this->_aThumbs);
 
-		$oCountEntries = new Query("SELECT
-																	COUNT(*)
-																FROM
-																	gallery_file
-																WHERE
-																	aid='"	.$iAID.	"'");
+    try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+									PDO::ATTR_PERSISTENT => true
+							));
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE aid = :album_id");
 
-		$this->_iEntries = $oCountEntries->count();
-		$this->_oPages = new Pages($this->_aRequest, $this->_iEntries, $iLimit);
+			$oQuery->bindParam('album_id', $iAid);
+			$bReturn = $oQuery->execute();
 
-		$oGetData = new Query("	SELECT
-															*
-														FROM
-															gallery_file
-														WHERE
-															aid="	.$iAID.	"
-														ORDER BY
-															date ASC
-														LIMIT
-															"	.$this->_oPages->getOffset().	",
-															"	.$this->_oPages->getLimit() );
-
-		$iLoop = 0;
-		while($aRow = $oGetData->fetch()) {
-			$iID = $aRow['id'];
-			$this->_aThumbs[$iID] = array(	'id' => $aRow['id'],
-					'file' => $aRow['file'],
-					'full_path' => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['aid'],
-					'description' => Helper::formatOutput($aRow['description']),
-					'date' => Helper::formatTimestamp($aRow['date']),
-					'extension' => $aRow['extension'],
-					'dim' => THUMB_DEFAULT_X,
-					'loop' => $iLoop
-			);
-			$iLoop++;
+			$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+
+    $this->_iEntries = count($aResult);
+    $this->oPages = new Pages($this->_aRequest, $this->_iEntries, $iLimit);
+
+    if($this->_iEntries > 0) {
+      try {
+        $oQuery = $oDb->prepare("	SELECT
+                                    *
+                                  FROM
+                                    gallery_file
+                                  WHERE
+                                    aid= :album_id
+                                  ORDER BY
+                                    date ASC
+                                  LIMIT
+                                    :offset,
+                                    :limit");
+
+        $oQuery->bindParam('album_id', $iAid);
+        $oQuery->bindParam('limit', $this->oPages->getLimit(), PDO::PARAM_INT);
+        $oQuery->bindParam('offset', $this->oPages->getOffset(), PDO::PARAM_INT);
+        $oQuery->execute();
+
+        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $oDb = null;
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
+
+      $iLoop = 0;
+      foreach ($aResult as $aRow) {
+        $iId = $aRow['id'];
+        $this->_aThumbs[$iId] = array(
+            'id'          => $aRow['id'],
+            'file'        => $aRow['file'],
+            'full_path'   => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['aid'],
+            'description' => Helper::formatOutput($aRow['description']),
+            'date'        => Helper::formatTimestamp($aRow['date']),
+            'extension'   => $aRow['extension'],
+            'loop'        => $iLoop
+        );
+
+        $iLoop++;
+      }
+    }
+    else {
+      $oDb = null;
+      return false;
+    }
 	}
 
-	public final function getThumbs($iAID, $iLimit) {
-		$this->_setThumbs($iAID, $iLimit);
+	public final function getThumbs($iAid, $iLimit) {
+		$this->_setThumbs($iAid, $iLimit);
 		return $this->_aThumbs;
 	}
 
-	private final function _setAlbumName($iAID) {
-		$oGetName = new Query("	SELECT
-															title
-														FROM
-															gallery_album
-														WHERE
-															id='"	.(int)$iAID.	"'");
+	private final function _setAlbumName($iAid) {
+    try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT title FROM gallery_album WHERE id = :album_id");
 
-		$this->_aAlbumName = $oGetName->fetch();
-		return $this->_aAlbumName['title'];
+			$oQuery->bindParam('album_id', $iAid);
+			$bReturn = $oQuery->execute();
+
+			$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      return $aResult['title'];
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
 	}
 
-	public final function getAlbumName($iAID) {
-		return $this->_setAlbumName($iAID);
+	public final function getAlbumName($iAid) {
+		return $this->_setAlbumName($iAid);
 	}
 
-	private final function _setAlbumDescription($iAID) {
+	private final function _setAlbumDescription($iAid) {
 		$oGetDescription = new Query("SELECT
 																		description
 																	FROM
 																		gallery_album
 																	WHERE
-																		id='"	.(int)$iAID.	"'");
+																		id='"	.(int)$iAid.	"'");
 
 		$this->_aAlbumDescription = $oGetDescription->fetch();
 		return $this->_aAlbumDescription['description'];
 	}
 
-	public final function getAlbumDescription($iAID) {
-		return $this->_setAlbumDescription($iAID);
+	public final function getAlbumDescription($iAid) {
+		return $this->_setAlbumDescription($iAid);
 	}
 
 	public function create() {
-		$oQuery = new Query("	INSERT INTO
-														gallery_album(authorID, title, description, date)
-													VALUES(
-														'"	.USER_ID.	"',
-														'"	.Helper::formatInput($this->_aRequest['title']).	"',
-														'"	.Helper::formatInput($this->_aRequest['description']).	"',
-														'"	.time().	"')
-														");
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$this->_iID = mysql_insert_id();
-		$sPath = PATH_UPLOAD.	'/gallery/'	.$this->_iID;
+      $oQuery = $oDb->prepare(" INSERT INTO
+                                  gallery_album(authorID, title, description, date)
+                                VALUES
+                                  ( :author_id, :title, :description, :date )");
 
-		$sPathThumbS = $sPath.	'/32';
-		$sPathThumbL = $sPath.	'/'	.THUMB_DEFAULT_X;
-		$sPathThumbP = $sPath.	'/' .POPUP_DEFAULT_X;
-		$sPathThumbO = $sPath.	'/original';
+      $iUserId = USER_ID;
+      $oQuery->bindParam('author_id', $iUserId);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
+      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+      $oQuery->bindParam('date', time());
+      $bResult = $oQuery->execute();
 
-		if(!is_dir($sPath))
-			mkdir($sPath, 0755);
+      $this->_iId = $oDb->lastInsertId();
+      $oDb = null;
 
-		if(!is_dir($sPathThumbS))
-			mkdir($sPathThumbS, 0755);
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 
-		if(!is_dir($sPathThumbL))
-			mkdir($sPathThumbL, 0755);
+    if($bResult == true) {
+      $sPath = PATH_UPLOAD.	'/gallery/'	.(int)$this->_iId;
 
-		if(!is_dir($sPathThumbP))
-			mkdir($sPathThumbP, 0755);
+      $sPathThumbS = $sPath.	'/32';
+      $sPathThumbL = $sPath.	'/'	.THUMB_DEFAULT_X;
+      $sPathThumbP = $sPath.	'/' .POPUP_DEFAULT_X;
+      $sPathThumbO = $sPath.	'/original';
 
-		if(!is_dir($sPathThumbO))
-			mkdir($sPathThumbO, 0755);
+      if(!is_dir($sPath))
+        mkdir($sPath, 0755);
 
-		return $oQuery;
+      if(!is_dir($sPathThumbS))
+        mkdir($sPathThumbS, 0755);
+
+      if(!is_dir($sPathThumbL))
+        mkdir($sPathThumbL, 0755);
+
+      if(!is_dir($sPathThumbP))
+        mkdir($sPathThumbP, 0755);
+
+      if(!is_dir($sPathThumbO))
+        mkdir($sPathThumbO, 0755);
+    }
+
+		return $bResult;
 	}
 
-	public function update($iID) {
+	public function update($iId) {
 		return new Query("UPDATE
 												`gallery_album`
 											SET
 												title = '"	.Helper::formatInput($this->_aRequest['title']).	"',
 												description = '"	.Helper::formatInput($this->_aRequest['description']).	"'
 											WHERE
-												`id` = '"	.(int)$iID.	"'");
+												`id` = '"	.(int)$iId.	"'");
 	}
 
-	public final function destroy($iID) {
-		$sPath = PATH_UPLOAD.	'/gallery/'	.(int)$iID;
+	public final function destroy($iId) {
+		$sPath = PATH_UPLOAD.	'/gallery/'	.(int)$iId;
 
 		# Delete Files
 		$oGetImages = new Query("	SELECT
@@ -209,7 +278,7 @@ class Model_Gallery extends Model_Main {
 															FROM
 																gallery_file
 															WHERE
-																aid = '"	.(int)$iID.	"'");
+																aid = '"	.(int)$iId.	"'");
 
 		while($aRow = $oGetImages->fetch()) {
 			@unlink($sPath.	'/32/'	.$aRow['file']);
@@ -259,23 +328,23 @@ class Model_Gallery extends Model_Main {
 		return $sFilePath;
 	}
 
-	public final function updateFile($iID) {
+	public final function updateFile($iId) {
 		$oQuery = new Query(" UPDATE
                             `gallery_file`
                           SET
                             description = '"	.Helper::formatInput($this->_aRequest['description']).	"'
                           WHERE
-                            `id` = '"	.$iID.	"'");
+                            `id` = '"	.$iId.	"'");
     return $oQuery;
 	}
 
-	public final function destroyFile($iID) {
+	public final function destroyFile($iId) {
 		$oGetFileData = new Query("	SELECT
 																	file, aid
 																FROM
 																	gallery_file
 																WHERE
-																	id = '"	.(int)$iID.	"'");
+																	id = '"	.(int)$iId.	"'");
 
 		$aRow = $oGetFileData->fetch();
 		$sPath = PATH_UPLOAD.	'/gallery/'	.$aRow['aid'];

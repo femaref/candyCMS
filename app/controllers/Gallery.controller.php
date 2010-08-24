@@ -43,7 +43,7 @@ class Gallery extends Main {
 
       # System variables
       $oSmarty->assign('_album_pages_',
-              $this->_oModel->_oPages->showPages('Gallery/'	.$this->_iId));
+              $this->_oModel->oPages->showPages('Gallery/'	.$this->_iId));
       $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
@@ -135,7 +135,7 @@ class Gallery extends Main {
       $oSmarty->assign('title', $this->_aData['title']);
       $oSmarty->assign('description', $this->_aData['description']);
 
-      $oSmarty->assign('action', '/Gallery/update/'	.$this->_iId);
+      $oSmarty->assign('action', '/Gallery/'	.$this->_iId. '/update');
       $oSmarty->assign('formdata', 'update_gallery');
       $oSmarty->assign('id', $this->_iId);
 
@@ -230,7 +230,7 @@ class Gallery extends Main {
       $aRow = $oGetFileData->fetch();
       $oSmarty->assign('description', $aRow['description']);
       $oSmarty->assign('formdata', 'update_file');
-      $oSmarty->assign('action', '/Gallery/updatefile/'	.$this->_iId);
+      $oSmarty->assign('action', '/Gallery/'	.$this->_iId. '/updatefile');
 
       # Language
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
@@ -246,7 +246,7 @@ class Gallery extends Main {
       $oSmarty->assign('default', $sDefault);
       $oSmarty->assign('description', '');
       $oSmarty->assign('formdata', 'create_file');
-      $oSmarty->assign('action', '/Gallery/upload/'	.$this->_iId.	'/' .session_id());
+      $oSmarty->assign('action', '/Gallery/'	.$this->_iId.	'/upload/' .session_id());
 
       # Language
       $oSmarty->assign('lang_create_file_cut', LANG_GALLERY_CREATE_FILE_CUT);

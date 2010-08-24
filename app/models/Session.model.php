@@ -10,7 +10,10 @@
 
 class Model_Session extends Model_Main {
   # Get userdata; static function and direct return due to uncritical action
-  public static final function getSessionData($iSessionId) {
+  public static final function getSessionData($iSessionId = '') {
+    if(empty($iSessionId))
+      $iSessionId = session_id();
+
     try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -23,7 +26,10 @@ class Model_Session extends Model_Main {
 			if ($bReturn == false)
 				$this->destroy();
 
-			return $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $oDb = null;
+
+			return $aResult;
 		}
 		catch (AdvancedException $e) {
 			$oDb->rollBack();
@@ -39,10 +45,12 @@ class Model_Session extends Model_Main {
 			$oQuery = $oDb->prepare("SELECT name, surname FROM user WHERE id = :id LIMIT 1");
 
 			$oQuery->bindParam('id', $iId);
-			$bReturn = $oQuery->execute();
+			$oQuery->execute();
 
-			# Return user data as array
-			return $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $oDb = null;
+
+			return $aResult;
 		}
 		catch (AdvancedException $e) {
 			$oDb->rollBack();
@@ -203,6 +211,5 @@ class Model_Session extends Model_Main {
 			$oDb->rollBack();
 			$e->getMessage();
 		}
-
 	}
 }

@@ -9,7 +9,8 @@
 
 try {
 	/* Load Parent */
-	if (!file_exists('app/models/Main.model.php') ||
+	if (    !file_exists('app/models/Main.model.php') ||
+          !file_exists('app/models/Session.model.php') ||
 					!file_exists('app/controllers/Main.controller.php') ||
 					!file_exists('app/controllers/Index.controller.php') ||
 					!file_exists('app/controllers/Gallery.controller.php') ||
@@ -20,6 +21,7 @@ try {
 		throw new Exception('Could not load required classes.');
 	else {
 		require_once 'app/models/Main.model.php';
+		require_once 'app/models/Session.model.php';
 		require_once 'app/controllers/Main.controller.php';
 		require_once 'app/controllers/Index.controller.php';
 		require_once 'app/controllers/Gallery.controller.php';
@@ -96,17 +98,17 @@ if (isset($_FILES) && !empty($_FILES)) {
 
 	$oUpload = new Multiple_Upload($_REQUEST, $_SESSION, $_FILES, $_COOKIE);
 	$oUpload->loadConfig();
-	$oUpload->connectDB();
 
-	$aUser = & $oUpload->setUser($_GET['session_id']);
+	$aUser = Model_Session::getSessionData();
 
 	define('USER_ID', (int) $aUser['id']);
 	define('USER_RIGHT', (int) $aUser['userright']);
 
+  # TODO: Try / catch
 	if (USER_RIGHT > 3)
 		echo $oUpload->validateAndUpload();
 	else
-		die('No Permission!' . print_r($aUser));
+		die('No Permission!');
 
 } else
 	die('NO FILES TO UPLOAD!');

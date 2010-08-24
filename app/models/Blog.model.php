@@ -183,7 +183,7 @@ class Model_Blog extends Model_Main {
 						'avatar'      => '',
 						'comment_sum'	=> $aRow['commentSum'],
 						'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
-						'published'			=> $aRow['published']
+						'published'		=> $aRow['published']
 				);
 
 
@@ -215,10 +215,10 @@ class Model_Blog extends Model_Main {
       $oQuery = $oDb->prepare(" INSERT INTO
                                   blog(authorID, title, tags, content, date, published)
                                 VALUES
-                                  ( :user_id, :title, :tags, :content, :date, :published )");
+                                  ( :author_id, :title, :tags, :content, :date, :published )");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('user_id', $iUserId);
+      $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
       $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));

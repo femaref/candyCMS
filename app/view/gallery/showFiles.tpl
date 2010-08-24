@@ -3,7 +3,7 @@
 {/if}
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Gallery/createfile/{$id}'>
+    <a href='/Gallery/{$id}/createfile'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
@@ -12,7 +12,7 @@
 <h2>
   {$gallery_name} ({$file_no} {$lang_files})
   {if $USER_RIGHT > 3}
-    <a href='/Gallery/update/{$id}'>
+    <a href='/Gallery/{$id}/update'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />
     </a>
@@ -32,10 +32,10 @@
       {if $USER_RIGHT > 3}
         {$lang_uploaded_at}: {$f.date}
         <br />
-        <a href="/Gallery/updatefile/{$f.id}">
+        <a href="/Gallery/{$f.id}/updatefile">
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt="{$lang_update}" />
         </a>
-        <a href="/Gallery/destroyfile/{$f.id}">
+        <a href="/Gallery/{$f.id}/destroyfile">
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-destroy" alt="{$lang_destroy}" />
         </a>
         <br />

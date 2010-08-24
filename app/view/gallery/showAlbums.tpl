@@ -17,7 +17,7 @@
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $USER_RIGHT > 3}
-            <a href='/Gallery/update/{$a.id}'>
+            <a href='/Gallery/{$a.id}/update'>
               <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />
             </a>
