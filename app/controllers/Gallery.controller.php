@@ -192,8 +192,7 @@ class Gallery extends Main {
     else {
       if( isset($this->_aRequest['update_file']) )
         if( $this->_oModel->updateFile($this->_iId) == true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE).
-                  $this->show();
+          return Helper::successMessage(LANG_SUCCESS_UPDATE);
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL);
       else
@@ -220,15 +219,7 @@ class Gallery extends Main {
     $oSmarty->assign('id', $this->_iId);
 
     if($bUpdate == true) {
-      $oGetFileData = new Query("	SELECT
-																		description
-																	FROM
-																		gallery_file
-																	WHERE
-																		id = '"	.$this->_iId.	"'");
-
-      $aRow = $oGetFileData->fetch();
-      $oSmarty->assign('description', $aRow['description']);
+      $oSmarty->assign('description', $this->_oModel->getFileDescription($this->_iId));
       $oSmarty->assign('formdata', 'update_file');
       $oSmarty->assign('action', '/Gallery/'	.$this->_iId. '/updatefile');
 

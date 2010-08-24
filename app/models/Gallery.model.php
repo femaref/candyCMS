@@ -214,6 +214,28 @@ class Model_Gallery extends Model_Main {
 		return $this->_setAlbumDescription($iId);
 	}
 
+	private final function _setFileDescription($iId) {
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT description FROM gallery_file WHERE id = :id");
+
+      $oQuery->bindParam('id', $iId);
+      $bReturn = $oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $aResult['description'];
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+	}
+
+	public final function getFileDescription($iId) {
+		return $this->_setFileDescription($iId);
+	}
+
 	public function create() {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);

@@ -114,12 +114,14 @@ class Section extends Main {
           parent::_setContent($this->_oObject->updateFile());
           parent::_setTitle(LANG_GALLERY_UPDATE_FILE);
         }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' )
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' ) {
           parent::_setContent($this->_oObject->destroy());
-
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile' )
+          parent::_setTitle(LANG_GLOBAL_GALLERY);
+        }
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile' ) {
           parent::_setContent($this->_oObject->destroyFile());
-
+          parent::_setTitle(LANG_GLOBAL_GALLERY);
+        }
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
