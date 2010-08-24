@@ -160,7 +160,7 @@ switch ($_REQUEST['step']) {
     break;
   case '4':
 
-    header('Location:../Login');
+    header('Location:../Session/create');
 
     break;
 }

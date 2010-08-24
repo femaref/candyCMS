@@ -19,11 +19,11 @@
           <a href='/Blog'>{$lang_blog}</a> &middot;
           <a href='/Gallery'>{$lang_gallery}</a> &middot;
         {if $USER_ID == 0}
-          <a href='/Login'>{$lang_login}</a> &middot;
-          <a href='/Register'>{$lang_register}</a>
+          <a href='/Session/create'>{$lang_login}</a> &middot;
+          <a href='/User/create'>{$lang_register}</a>
         {else}
           <a href='/User/Settings'>{$lang_settings}</a> &middot;
-          <a href='/Logout'>{$lang_logout}</a>
+          <a href='/Session/destroy'>{$lang_logout}</a>
         {/if}
       </div>
       <div id='body'>

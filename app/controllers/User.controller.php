@@ -20,7 +20,6 @@ class User extends Main {
 	}
 
 	# @Override
-
 	public function update() {
 		if (empty($this->_iId))
 			$this->_iId = USER_ID;
@@ -28,14 +27,21 @@ class User extends Main {
 		if (USER_ID == 0)
 			return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
 		else {
-			if (isset($this->_aRequest['update_user']))
-				return $this->_update($this->_iId);
-			elseif (isset($this->_aRequest['create_avatar']))
-				return $this->_createAvatar($this->_iId);
+			if (isset($this->_aRequest['update_user'])) {
+				if ($this->_update($this->_iId) == true)
+					return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+				else
+					return Helper::errorMessage(LANG_ERROR_DB_QUERY) . $this->show();
+			}
+			elseif (isset($this->_aRequest['create_avatar'])) {
+				if ($this->_createAvatar($this->_iId) == true)
+					return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+				else
+					return Helper::errorMessage(LANG_ERROR_DB_QUERY) . $this->show();
+			}
 			else
 				return $this->_showFormTemplate();
 		}
-
 	}
 
 	private function _createAvatar() {
@@ -49,7 +55,6 @@ class User extends Main {
 			return $oUpload->uploadAvatarFile(false) .
 			$this->show($this->_iId);
 		}
-
 	}
 
 	protected function _showFormTemplate($bUseRequest = false) {
@@ -151,9 +156,8 @@ class User extends Main {
 		$oSmarty->assign('lang_userright_4', LANG_GLOBAL_USERRIGHT_4);
 
 		$oSmarty->template_dir = Helper::getTemplateDir('user/_form');
-		return $oSmarty->fetch('user/_form.tpl') .
-		$oSmarty->fetch('user/createAvatar.tpl');
-
+		# TODO: Include via smarty?
+		return $oSmarty->fetch('user/_form.tpl') . $oSmarty->fetch('user/createAvatar.tpl');
 	}
 
 	protected function _update() {
@@ -204,7 +208,6 @@ class User extends Main {
 			else
 				return Helper::errorMessage(LANG_ERROR_DB_QUERY);
 		}
-
 	}
 
 	public function show($iUserId = '') {
@@ -269,11 +272,9 @@ class User extends Main {
 			$oSmarty->template_dir = Helper::getTemplateDir('user/show');
 			return $oSmarty->fetch('user/show.tpl');
 		}
-
 	}
 
 	# @Override
-
 	public function destroy() {
 		if (USER_RIGHT == 4) {
 			if ($this->_oModel->destroy($this->_iId) == true) {
@@ -293,7 +294,6 @@ class User extends Main {
 			return $this->_create();
 		else
 			return $this->_showCreateUserTemplate();
-
 	}
 
 	private function _showCreateUserTemplate() {
@@ -324,7 +324,6 @@ class User extends Main {
 
 		$oSmarty->template_dir = Helper::getTemplateDir('user/createUser');
 		return $oSmarty->fetch('user/createUser.tpl');
-
 	}
 
 	private function _create() {
@@ -377,7 +376,5 @@ class User extends Main {
 			else
 				return Helper::errorMessage(LANG_ERROR_DB_QUERY);
 		}
-
 	}
-
 }

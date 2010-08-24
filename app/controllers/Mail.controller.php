@@ -53,7 +53,7 @@ class Mail extends Main {
 
     $oSmarty = new Smarty();
     $oSmarty->assign('id', $this->_iId);
-    $oSmarty->assign('contact', Model_Main::simpleQuery('name, surname', 'user', "id='" .$this->_iId. "'", '1'));
+    $oSmarty->assign('contact', Model_Session::getUserNames($this->_iId));
     $oSmarty->assign('content', $sContent);
     $oSmarty->assign('email', $sEmail);
     $oSmarty->assign('subject', $sSubject);
