@@ -47,8 +47,8 @@ Usermanagement
 
 Voraussetzungen
 ---------------------------------------------------------------------------------
-- PHP 5 & MySQL 4
-- mod_rewrite aktiviert
+- PHP 5.1 & PDO unterstütze Datenbank (http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html#2)
+- Imagemagick, GD2 Support und mod_rewrite aktiviert
 - eine Registration bei http://recaptcha.org zur Verwendung von Captchas
 - min. 3 MB Webspace
 
@@ -56,7 +56,8 @@ Voraussetzungen
 Installation
 ---------------------------------------------------------------------------------
 
-1. Ggf. einen Account auf reCaptcha.org einrichten.
-2. Die Ordner "/backup", "/cache", "/compile" und "/upload" erstellen und mit den Rechten "0755" versehen.
-3. Die Config ("/config/Config.php.inc") anpassen.
-4. Installationsscript via "/install" aufrufen und die Schritte durchführen.
+1. Ggf. einen Account auf http://recaptcha.org einrichten.
+2. Die Config ("/config/Config.php.inc") anpassen.
+3. Die Ordner "/backup", "/cache", "/compile" und "/upload" erstellen und mit den Rechten "777" versehen.
+3.1. Ebenfalls die Ordner "/upload/gallery", "/upload/media", "/upload/temp", "/upload/gallery", "/upload/user/32", "/upload/user/64", "/upload/user/100", "/upload/user/200", "/upload/user/POPUP_DEFAULT_X" (Wert aus der Config; Standard: 800), "/upload/user/original" erstellen und mit den CHMOD-Rechten 777 ausstatten.
+4. Installationsscript via "/install" aufrufen und die einzelnen Schritte durchführen.
