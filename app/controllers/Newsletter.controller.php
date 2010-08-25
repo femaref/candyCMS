@@ -29,7 +29,7 @@ class Newsletter extends Main {
         elseif ($sQuery == 'INSERT') {
           $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
-          Mail::send(Helper::formatInput($this->_aRequest['email'], false),
+          Mail::send(Helper::formatInput($this->_aRequest['email']),
                           LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT,
                           LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE,
                           WEBSITE_MAIL_NOREPLY);
@@ -128,7 +128,7 @@ class Newsletter extends Main {
         $sMailSubject = Helper::formatInput($this->_aRequest['subject']);
         $sMailContent = Helper::formatInput
                         (str_replace('%u', $sReceiversName, $this->_aRequest['content']),
-                        true
+                        false
         );
 
         $bStatusNewsletter = Mail::send($sReceiversMail, $sMailSubject, $sMailContent);

@@ -329,24 +329,27 @@ class User extends Main {
 	private function _create() {
 		$sError = '';
 		if (empty($this->_aRequest['name']))
-			$sError .= LANG_ERROR_LOGIN_ENTER_NAME . '<br />';
+      $sError .= LANG_ERROR_LOGIN_ENTER_NAME . '<br />';
 
-		if (empty($this->_aRequest['email']))
-			$sError .= LANG_ERROR_LOGIN_ENTER_EMAIL . '<br />';
+    if (empty($this->_aRequest['email']))
+      $sError .= LANG_ERROR_LOGIN_ENTER_EMAIL . '<br />';
 
-		if (empty($this->_aRequest['password']))
-			$sError .= LANG_ERROR_LOGIN_ENTER_PASSWORD . '<br />';
+    if (empty($this->_aRequest['password']))
+      $sError .= LANG_ERROR_LOGIN_ENTER_PASSWORD . '<br />';
 
-		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-			$sError .= LANG_ERROR_LOGIN_CHECK_PASSWORDS . '<br />';
+    if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+      $sError .= LANG_ERROR_LOGIN_CHECK_PASSWORDS . '<br />';
 
-		if (USER_RIGHT < 4) {
-			if (!isset($this->_aRequest['disclaimer']))
-				$sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER . '<br />';
-		}
+    if (USER_RIGHT < 4) {
+      if (!isset($this->_aRequest['disclaimer']))
+        $sError .= LANG_ERROR_LOGIN_CHECK_DISCLAIMER . '<br />';
+    }
 
-		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
-			$sError .= LANG_ERROR_WRONG_EMAIL_FORMAT . '<br />';
+    if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+      $sError .= LANG_ERROR_WRONG_EMAIL_FORMAT . '<br />';
+
+    if (Model_User::getExistingUser($this->_aRequest['email']) == false)
+      $sError .= LANG_ERROR_USER_EMAIL_ALREADY_EXISTS . '<br />';
 
 		if (!empty($sError)) {
 			$sReturn = Helper::errorMessage($sError);
@@ -356,11 +359,10 @@ class User extends Main {
 		else {
 			# @Override Model
 			# NOTE: Dirty method, no OO used
-			$this->_oController = new Session($this->_aRequest, $this->_aSession);
 			$this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 
 			if ($this->_oModel->create() == true) {
-				$sMail = str_replace('%n', Helper::formatInput($this->_aRequest['name']),
+				$sMail = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
 												LANG_LOGIN_REGISTRATION_MAIL_BODY);
 
 				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
@@ -369,7 +371,7 @@ class User extends Main {
 												WEBSITE_MAIL_NOREPLY);
 
 				if ($bStatus == true)
-					return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL) . $this->show();
+					return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL) . Helper::redirectTo('/Session/create');
 				else
 					return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT);
 			}

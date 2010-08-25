@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `parentCat` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'b',
   `authorID` smallint(5) NOT NULL,
   `author_name` varchar(32) NOT NULL DEFAULT '',
+  `author_ip` varchar(15) NOT NULL DEFAULT '',
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -31,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf-8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `gallery_album` (
@@ -76,5 +77,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `use_gravatar` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `userright` (`userright`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=2 ;
+  KEY `userright` (`userright`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;

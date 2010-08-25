@@ -30,6 +30,29 @@ class Model_User extends Model_Main {
 		}
 	}
 
+  public static function getExistingUser($sEmail) {
+    try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->prepare("SELECT email FROM user WHERE email = :email LIMIT 1");
+
+			$oQuery->bindParam('email', $sEmail);
+			$oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $oDb = null;
+
+      if(isset($aResult['email']) && !empty($aResult['email']))
+        return false;
+      else
+        return true;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+  }
+
   private function _setData() {
     if (empty($this->_iID)) {
       try {

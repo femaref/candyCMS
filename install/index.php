@@ -15,8 +15,6 @@ try {
           !file_exists('../app/controllers/Main.controller.php') ||
           !file_exists('../app/controllers/Index.controller.php') ||
           !file_exists('../app/helpers/AdvancedException.helper.php') ||
-          !file_exists('../app/helpers/SqlConnect.helper.php') ||
-          !file_exists('../app/helpers/SqlQuery.helper.php') ||
           !file_exists('../lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
@@ -27,8 +25,6 @@ try {
 
     # All helpers
     require_once '../app/helpers/AdvancedException.helper.php';
-    require_once '../app/helpers/SqlConnect.helper.php';
-    require_once '../app/helpers/SqlQuery.helper.php';
 
     # Smarty template parsing
     require_once '../lib/smarty/Smarty.class.php';
@@ -84,14 +80,25 @@ switch ($_REQUEST['action']) {
       $oFo = fopen('sql/migrations/' .$_REQUEST['file'], 'r');
       $sQuery = fread($oFo, filesize('sql/migrations/' .$_REQUEST['file']));
 
-      $oIndex->connectDB();
-      $oQuery = new Query($sQuery);
+      try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $oQuery = $oDb->query($sQuery);
+        $bResult = $oQuery->execute();
+
+        $oDb = null;
+
+      } catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
 
       # We return HTML due to ajax action
-      if($oQuery->getError() == '')
+      if($bResult == true)
         echo '<div class="box" style="color:green">Successfully updated!</div>';
       else
-        echo '<div class="box" style="color:red">'  .$oQuery->getError().  '</div>';
+        echo '<div class="box" style="color:red">Something went wrong!</div>';
     }
     else {
       require_once 'migrate.php';

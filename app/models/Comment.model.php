@@ -132,21 +132,22 @@ class Model_Comment extends Model_Main {
 
     $sAuthorEmail = isset($this->_aRequest['email']) ?
             Helper::formatInput($this->_aRequest['email']) :
-            '';
+            USER_EMAIL;
 
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  comment(authorID, author_name, author_email, content, date, parentCat, parentID)
+                                  comment(authorID, author_name, author_email, author_ip, content, date, parentCat, parentID)
                                 VALUES
-                                  ( :author_id, :author_name, :author_email, :content, :date, :parent_category, :parent_id )");
+                                  ( :author_id, :author_name, :author_email, :author_ip, :content, :date, :parent_category, :parent_id )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('author_name', $sAuthorName);
       $oQuery->bindParam('author_email', $sAuthorEmail);
+      $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('parent_category', $this->_aRequest['parentcat']);

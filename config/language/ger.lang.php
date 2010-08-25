@@ -127,8 +127,8 @@ define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT', 'Dein neues Passwort' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_SEND', 'Password zuschicken' ); # NEW
 define( 'LANG_LOGIN_REGISTRATION_DISCLAIMER_READ', 'Nutzungsbedingungen gelesen?' );
-define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %n!\r\n\r\nDanke f&#xFC;r deine Registration auf unserer Seite."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY);
-define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registration bei blog.eventize.de' );
+define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %u!\r\n\r\nDanke f&#xFC;r deine Registrierung auf " .WEBSITE_NAME.  "."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY);
+define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registrierung auf '  .WEBSITE_NAME.  '.' );
 define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du hast dich erfolgreich registriert und kannst dich jetzt einloggen!' );
 
 define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );
@@ -224,6 +224,7 @@ define( 'LANG_ERROR_LOGIN_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'Es existiert kein Benutzer mit einer solchen E-Mail Adresse!' ); # NEW
 define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte &#xFC;berpr&#xFC;fe die E-Mail Adresse und das Passwort!' );
 define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
+define( 'LANG_ERROR_USER_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen d&#xFC;rfen!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Bitte trage dein neues Passwort ein!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
