@@ -148,16 +148,21 @@ class Mail extends Main {
               $sMessage,
               $sReplyTo);
 
-      if($bStatus == true)
-        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT).
-                Helper::redirectTo('/Start');
-      else
-        return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_FAILED_SUBJECT);
+      if ($bStatus == true)
+				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . Helper::redirectTo('/Start');
+			else
+				return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_FAILED_SUBJECT);
     }
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL) {
     require_once 'lib/phpmailer/class.phpmailer.php';
+
+		# Parse message and replace with (footer) variables
+		$sMessage = str_replace('%NO_REPLY', LANG_MAIL_NO_REPLY, $sMessage);
+		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_SIGNATURE, $sMessage);
+		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
+		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 
     $oMail = new PHPMailer(true);
 

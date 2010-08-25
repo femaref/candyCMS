@@ -13,7 +13,7 @@ function showDiv(sDivId) {
   window.addEvent('domready', function() {
     $(sDivId).setStyle('display', 'inline');
     if($('js-flash_success') || $('js-flash_error')) {
-      (function(){ hideDiv(sDivId) }).delay(3000);
+      (function(){ hideDiv(sDivId) }).delay(5000);
     }
   });
 }

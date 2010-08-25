@@ -360,13 +360,17 @@ class User extends Main {
 			# NOTE: Dirty method, no OO used
 			$this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 
-			if ($this->_oModel->create() == true) {
-				$sMail = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
+			$iVerificationCode	= Helper::createRandomChar(12, true);
+			$sVerificationUrl		= Helper::createLinkTo('/User/'	.$iVerifyCode.	'/verification');
+
+			if ($this->_oModel->create($iVerificationCode) == true) {
+				$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
 												LANG_LOGIN_REGISTRATION_MAIL_BODY);
+				$sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
 
 				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
 												LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
-												$sMail,
+												$sMailMessage,
 												WEBSITE_MAIL_NOREPLY);
 
 				if ($bStatus == true)
@@ -377,5 +381,14 @@ class User extends Main {
 			else
 				return Helper::errorMessage(LANG_ERROR_DB_QUERY);
 		}
+	}
+
+	public function verifyEmail() {
+		if (empty($this->_iId))
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
+		elseif ($this->_oModel->verifyEmail($this->_iId) == true)
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESS);
+		else
+			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;
 	}
 }

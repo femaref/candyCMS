@@ -177,9 +177,13 @@ class Section extends Main {
           parent::_setContent($this->_oObject->createInvite());
           parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
         }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'lostpassword' ) {
           parent::_setContent($this->_oObject->createNewPassword());
           parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
+        }
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendverification' ) {
+          parent::_setContent($this->_oObject->createNewVerificationEmail());
+          parent::_setTitle(LANG_LOGIN_RESEND_VERIFICATION);
         }
         else {
           parent::_setContent($this->_oObject->destroy());
@@ -214,6 +218,10 @@ class Section extends Main {
         elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy' ) {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_DESTROY);
+        }
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verify' ) {
+          parent::_setContent($this->_oObject->verifyEmail());
+          parent::_setTitle(LANG_GLOBAL_EMAIL_VERIFICATION);
         }
         else {
           parent::_setContent($this->_oObject->show());

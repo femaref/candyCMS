@@ -37,16 +37,43 @@ class Model_Session extends Model_Main {
 		}
   }
 
+	public static function setActiveSession($iId) {
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$oQuery = $oDb->prepare("	UPDATE
+																	user
+																SET
+																	session = :session,
+																	ip = :ip,
+																	last_login = :last_login
+																WHERE
+																	id = :id");
+
+			$oQuery->bindParam('session', session_id());
+			$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+			$oQuery->bindParam('last_login', time());
+			$oQuery->bindParam('id', $iId);
+			$bResult = $oQuery->execute();
+
+			$oDb = null;
+			return $bResult;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+	}
+
   # Create session
   public final function create() {
 		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-									PDO::ATTR_PERSISTENT => true
-							));
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$oQuery = $oDb->prepare(" SELECT
-																	id
+																	id, verification_code
 																FROM
 																	user
 																WHERE
@@ -69,33 +96,11 @@ class Model_Session extends Model_Main {
 		}
 
     # Check if user exists
-    if (!empty($aResult['id'])) {
-			$this->_aData = & $aResult;
-
-			try {
-				$oQuery = $oDb->prepare("	UPDATE
-																		user
-																	SET
-																		session = :session,
-																		ip = :ip,
-																		last_login = :last_login
-																	WHERE
-																		id = :id");
-
-				$oQuery->bindParam('session', session_id());
-				$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-				$oQuery->bindParam('last_login', time());
-				$oQuery->bindParam('id', $this->_aData['id']);
-				$bResult = $oQuery->execute();
-
-				$oDb = null;
-				return $bResult;
-			}
-			catch (AdvancedException $e) {
-				$oDb->rollBack();
-				$e->getMessage();
-			}
+		if(isset($aResult) && !empty($aResult['verification_code'])) {
+			return false;
 		}
+    elseif (!empty($aResult['id']))
+			return Model_Session::setActiveSession($aResult['id']);
 		else {
 			$oDb = null;
 			return false;

@@ -1,5 +1,5 @@
 <div id="lost_pwrd">
-  <form method='post' action='/Session/password'>
+  <form method='post' action='/Session/lostpassword'>
     <fieldset>
       <legend>{$lang_headline}</legend>
       <p class='small'>{$lang_description}</p>

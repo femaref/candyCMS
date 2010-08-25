@@ -133,21 +133,22 @@ class Model_User extends Model_Main {
     return $this->_aData;
   }
 
-  public function create() {
+  public function create($iVerificationCode) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  user (name, surname, password, email, regdate)
+                                  user (name, surname, password, email, regdate, verification_code)
                                 VALUES
-                                  ( :name, :surname, :password, :email, :regdate )");
+                                  ( :name, :surname, :password, :email, :regdate, :verification_code )");
 
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('regdate', time());
+      $oQuery->bindParam('verification_code', $iVerificationCode);
       $bResult = $oQuery->execute();
 
       $oDb = null;
@@ -192,7 +193,7 @@ class Model_User extends Model_Main {
                                   password = :password,
                                   userright = :userright
                                 WHERE
-                                  id = :where");
+                                  id = :id");
 
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
       $oQuery->bindParam('surname',Helper::formatInput($this->_aRequest['surname']));
@@ -202,8 +203,7 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);
       $oQuery->bindParam('userright', $iUserRight);
-      
-      $oQuery->bindParam('where', $iId);
+      $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
 
       $oDb = null;
@@ -246,4 +246,57 @@ class Model_User extends Model_Main {
       $e->getMessage();
     }
   }
+
+	public function verifyEmail($iVerificationCode) {
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+			$oQuery = $oDb->prepare("	SELECT
+																	id
+																FROM
+																	user
+																WHERE
+																	verification_code = :verification_code
+																LIMIT 1");
+
+			$oQuery->bindParam('verification_code', $iVerificationCode);
+			$oQuery->execute();
+
+			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+			$e->getMessage();
+		}
+
+		if (!empty($aResult['id'])) {
+			try {
+				$oQuery = $oDb->prepare("	UPDATE
+																		user
+																	SET
+																		verification_code = ''
+																	WHERE
+																		id = :id");
+
+				$oQuery->bindParam('id', $aResult['id']);
+				$bResult = $oQuery->execute();
+
+				$oDb = null;
+
+				if ($bResult == true)
+					return Model_Session::setActiveSession($aResult['id']).Helper::redirectTo('/Start');
+				else
+					return false;
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+				$e->getMessage();
+			}
+		}
+		else {
+			$oDb = null;
+			return false;
+		}
+	}
 }

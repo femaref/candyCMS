@@ -61,8 +61,12 @@ final class Helper {
       return false;
   }
 
-  public final static function createRandomChar($iLength) {
-    $sChars='ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
+  public final static function createRandomChar($iLength, $bIntegerOnly = false) {
+    $sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
+
+		if($bIntOnly == true)
+			$sChars = '0123456789';
+
     srand(microtime()*1000000);
 
     $sString = '';
@@ -74,6 +78,10 @@ final class Helper {
 
     return $sString;
   }
+
+	public final static function createLinkTo($sUrl) {
+		return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
+	}
 
   public final static function getAvatar($sPath, $iSize, $iUserId, $aGravatar = '') {
     if(!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {

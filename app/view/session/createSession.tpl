@@ -18,6 +18,10 @@
       </div>
     </fieldset>
     <input type='hidden' value='formdata' name='create_session' />
-    <p><a href='/Session/password'>{$lang_lost_password}</a></p>
+    <p>
+      <a href='/Session/lostpassword'>{$lang_lost_password}</a>
+      |
+      <a href='/Session/resendverification'>{$lang_resend_verification}</a>
+    </p>
   </form>
 </div>

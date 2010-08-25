@@ -38,6 +38,7 @@ define( 'LANG_GLOBAL_DISCLAIMER', 'Impressum' );
 define( 'LANG_GLOBAL_DESTROY', 'L&#xF6;schen' );
 define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Eintrag l&#xF6;schen' );
 define( 'LANG_GLOBAL_EMAIL', 'E-Mail Adresse' );
+define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'E-Mail Adresse bestätigen' );
 define( 'LANG_GLOBAL_FILE', 'Datei' );
 define( 'LANG_GLOBAL_FILES', 'Dateien' );
 define( 'LANG_GLOBAL_FILEMANAGER', 'Dateiverwaltung' );
@@ -96,7 +97,7 @@ define( 'LANG_GLOBAL_YESTERDAY', 'Gestern' );
 define( 'LANG_MAIL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
 define( 'LANG_MAIL_OWN_EMAIL', 'Eigene E-Mail Adresse' );
 define( 'LANG_MAIL_SUBJECT_BY_USER', 'Neue Nachricht von %u' );
-define( 'LANG_MAIL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="'	.WEBSITE_URL.	'">'	.WEBSITE_NAME.	'</a></p>' );
+define( 'LANG_MAIL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
 
 # SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_CREATE', 'Blogeintrag hinzuf&#xFC;gen' );
@@ -110,7 +111,7 @@ define( 'LANG_COMMENT_LOGIN_FIRST', 'Bitte <a href=\'/Login\'>logge</a> dich ein
 
 define( 'LANG_CONTENT_UPDATE', 'Editieren: %p' );
 
-define( 'LANG_LOGIN_INVITATION_MAIL_BODY', "Hallo!\r\n\r\nHast du Lust mehr Sport zu treiben? Dann schau dir doch einfach mal KielMatch.de an, eine kostenlose Community f&#xFC;r mehr Sport und Spa&#xDF; in unserer sch&#xF6;nen Landeshauptstadt. ;-)\r\n\r\n%notes\r\n\r\nSch&#xF6;ne Gr&#xFC;&#xDF;e\r%u"  );
+define( 'LANG_LOGIN_INVITATION_MAIL_BODY', "Hallo!\r\n\r\n"  );
 define( 'LANG_LOGIN_INVITATION_HEADLINE', 'Lade deine Freunde ein!' );
 define( 'LANG_LOGIN_INVITATION_EMAIL_OF_FRIEND', 'E-Mail Adresse des "Neulings"' );
 define( 'LANG_LOGIN_INVITATION_MAIL_SUBJECT', '%u hat dich zu eventize.de eingeladen!' );
@@ -122,14 +123,17 @@ define( 'LANG_LOGIN_LOGIN_SUCCESSFUL', 'Login erfolgreich!' );
 define( 'LANG_LOGIN_LOGOUT_SUCCESSFUL', 'Logout erfolgreich!' );
 define( 'LANG_LOGIN_PASSWORD_LOST', 'Password vergessen?' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_DESCRIPTION', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der n&auml;chsten Minuten zu.' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em>" .LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY ); # NEW
+define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT', 'Dein neues Passwort' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
 define( 'LANG_LOGIN_PASSWORD_SEND', 'Password zuschicken' ); # NEW
 define( 'LANG_LOGIN_REGISTRATION_DISCLAIMER_READ', 'Nutzungsbedingungen gelesen?' );
-define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %u!\r\n\r\nDanke f&#xFC;r deine Registrierung auf " .WEBSITE_NAME.  "."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY);
-define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registrierung auf '  .WEBSITE_NAME.  '.' );
-define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du hast dich erfolgreich registriert und kannst dich jetzt einloggen!' );
+define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %u!\r\n\r\nDanke f&#xFC;r deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY");
+define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registrierung auf %WEBSITE_NAME.' );
+define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
+define( 'LANG_LOGIN_RESEND_VERIFICATION', 'E-Mail-Bestätigung erneut zusenden' );
+define( 'LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
+define( 'LANG_LOGIN_RESEND_VERIFICATION_SEND', 'E-Mail zuschicken' );
 
 define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );
 define( 'LANG_GALLERY_CREATE_FILE', 'Datei hinzuf&uuml;gen' );
@@ -154,8 +158,8 @@ define( 'LANG_NEWSLETTER_CONTENT_INFO', '%u wird zum Usernamen!<br />Bedenke bit
 define( 'LANG_NEWSLETTER_CREATE', 'Newsletter verfassen' );
 define( 'LANG_NEWSLETTER_CREATE_DESTROY', 'Newsletter abonieren / abbestellen' ); #NEW
 define( 'LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du ben&ouml;tigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' ); #NEW
-define( 'LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT', 'Newsletters von '  .WEBSITE_NAME ); #NEW
-define( 'LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='"	.WEBSITE_URL.	"/Newsletter'>hier</a>."	.LANG_MAIL_SIGNATURE.LANG_MAIL_NO_REPLY); #NEW
+define( 'LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT', 'Newsletters von %WEBSITE_NAME' ); #NEW
+define( 'LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE"); #NEW
 define( 'LANG_NEWSLETTER_DEFAULT_ADDRESS', 'Newsletter Abonnenten' ); #NEW
 define( 'LANG_NEWSLETTER_SUBMIT', 'Newsletter verschicken' );
 define( 'LANG_NEWSLETTER_SUBSCRIPTION_SUCCESSFUL', 'Du hast dich erfolgreich f&uuml;r den Newsletter eingetragen.' ); #NEW
@@ -184,6 +188,7 @@ define( 'LANG_USER_SETTINGS_PASSWORD_CHANGE', 'Passwort &auml;ndern' );
 define( 'LANG_USER_SETTINGS_PASSWORD_NEW', 'Neues Passwort' );
 define( 'LANG_USER_SETTINGS_PASSWORD_OLD', 'Altes Passwort' );
 define( 'LANG_USER_SETTINGS_SUBMIT', 'Profil aktualisieren' );
+define( 'LANG_USER_VERIFICATION_SUCCESS', 'Vielen Dank für die Bestätigung deiner E-Mail-Adresse.' );
 
 /* Success messages */
 define( 'LANG_SUCCESS_CREATE', 'Eintrag wurde hinzugef&#xFC;gt!' );
@@ -222,7 +227,7 @@ define( 'LANG_ERROR_LOGIN_CHECK_DISCLAIMER', 'Bitte den AGB zustimmen!' );
 define( 'LANG_ERROR_LOGIN_HEADLINE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_LOGIN_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'Es existiert kein Benutzer mit einer solchen E-Mail Adresse!' ); # NEW
-define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte &#xFC;berpr&#xFC;fe die E-Mail Adresse und das Passwort!' );
+define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte überprüfe die E-Mail Adresse und das Passwort oder bestätige vor dem Einloggen die Echtheit deiner E-Mail-Adresse!' );
 define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
 define( 'LANG_ERROR_USER_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen d&#xFC;rfen!' ); # NEW
@@ -230,5 +235,6 @@ define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Bitte trage dein neues Passwort ein!
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_OLD', 'Bitte trage dein altes Passwort ein!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' ); # NEW
+define( 'LANG_ERROR_USER_VERIFICATION', 'Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!' ); # NEW
 define( 'LANG_ERROR_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse' ); #NEW
 ?>
