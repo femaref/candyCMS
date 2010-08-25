@@ -156,7 +156,6 @@ class User extends Main {
 		$oSmarty->assign('lang_userright_4', LANG_GLOBAL_USERRIGHT_4);
 
 		$oSmarty->template_dir = Helper::getTemplateDir('user/_form');
-		# TODO: Include via smarty?
 		return $oSmarty->fetch('user/_form.tpl');
 	}
 

@@ -105,11 +105,16 @@ if (isset($_FILES) && !empty($_FILES)) {
 	define('USER_ID', (int) $aUser['id']);
 	define('USER_RIGHT', (int) $aUser['userright']);
 
-  # TODO: Try / catch
-	if (USER_RIGHT >= 3) {
-		echo $oUpload->validateAndUpload();
-  } else
-		die('No Permission!' . print_r($aUser));
+  try {
+    if (USER_RIGHT < 3)
+      throw new AdvancedException('No permission to upload files.');
+    else
+      # Echo due to direct output
+      echo $oUpload->validateAndUpload();
+  }
+  catch (AdvancedException $e) {
+    die($e->getMessage());
+  }
 
 } else
 	die('NO FILES TO UPLOAD!');

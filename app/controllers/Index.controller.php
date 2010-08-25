@@ -23,22 +23,24 @@ class Index {
 
   public final function loadConfig($sPath = '') {
 		try {
-			if (!file_exists($sPath . 'config/Config.inc.php'))
-				throw new AdvancedException('Missing config file.');
-			else
-				require_once $sPath . 'config/Config.inc.php';
-		} catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
+      if (!file_exists($sPath . 'config/Config.inc.php'))
+        throw new AdvancedException('Missing config file.');
+      else
+        require_once $sPath . 'config/Config.inc.php';
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
   }
 
   public final function setBasicConfiguration() {
 		try {
-			if (is_dir('install') && WEBSITE_DEV == false)
-				throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
-		} catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
+      if (is_dir('install') && WEBSITE_DEV == false)
+        throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
 
     if (!isset($this->_aRequest['section']))
       Helper::redirectTo('/Start');
@@ -48,7 +50,7 @@ class Index {
     if (isset($this->_aRequest['lang'])) {
       setCookie('lang', (string) $this->_aRequest['lang'], time() + 2592000, '/');
       Helper::redirectTo('/Start');
-			# Stop parsing immediately
+      # Stop parsing immediately
       die();
     }
 

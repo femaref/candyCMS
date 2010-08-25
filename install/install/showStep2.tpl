@@ -16,6 +16,28 @@
       </tr>
       <tr class='row2'>
         <td class='td_left'>
+          <label for='name'>Name *</label>
+        </td>
+        <td class='td_right'>
+          <div class="input">
+            <input name='name' id='name'
+                   value='' type='text' />
+          </div>
+        </td>
+      </tr>
+      <tr class='row1'>
+        <td class='td_left'>
+          <label for='name'>Surname *</label>
+        </td>
+        <td class='td_right'>
+          <div class="input">
+            <input name='surname' id='surname'
+                   value='' type='text' />
+          </div>
+        </td>
+      </tr>
+      <tr class='row2'>
+        <td class='td_left'>
           <label for='name'>Password *</label>
         </td>
         <td class='td_right'>
@@ -38,7 +60,7 @@
       </tr>
     </table>
   </fieldset>
-  <fieldset>
+  <fieldset style="margin-top:25px">
     <legend>2.2. Example data.</legend>
     <table>
       <tr class='row1'>
