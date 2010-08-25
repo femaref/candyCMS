@@ -89,13 +89,6 @@ class Section extends Main {
 
         break;
 
-      /* Should be excluded */
-      case 'cron':
-
-        require_once '../cronjob/cron.php';
-
-        break;
-
       case 'gallery':
 
         if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {

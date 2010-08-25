@@ -149,19 +149,20 @@ final class Comment extends Main {
       return $sReturn;
     }
     else {
-      # We receive the CommentID after creating an entry
-      # TODO: Success Message to Controller
-      $iComment = $this->_oModel->create();
-      Helper::redirectTo('/'	.$this->_sParentSection.
-              '/'	.(int)$this->_aRequest['parentid'].	'#'	.$iComment);
+      if ($this->_oModel->create() == true)
+        return Helper::redirectTo('/' . $this->_sParentSection .
+                '/' . (int) $this->_aRequest['parentid']) . Helper::successMessage(LANG_SUCCESS_CREATE);
+      else
+        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
     }
   }
 
   protected final function _destroy() {
-    # TODO: Error Message
-    if($this->_oModel->destroy((int)$this->_aRequest['id']) == true)
-      Header('Location:'	.WEBSITE_URL.	'/'	.$this->_sParentSection.
-              '/'	.(int)$this->_aRequest['parentid']);
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) == true)
+      Header('Location:' . WEBSITE_URL . '/' . $this->_sParentSection .
+                      '/' . (int) $this->_aRequest['parentid']) . Helper::successMessage(LANG_SUCCESS_DESTROY);
+    else
+      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
   }
 
   protected final function _showFormTemplate($bShowCaptcha) {

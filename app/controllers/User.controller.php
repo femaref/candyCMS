@@ -157,7 +157,7 @@ class User extends Main {
 
 		$oSmarty->template_dir = Helper::getTemplateDir('user/_form');
 		# TODO: Include via smarty?
-		return $oSmarty->fetch('user/_form.tpl') . $oSmarty->fetch('user/createAvatar.tpl');
+		return $oSmarty->fetch('user/_form.tpl');
 	}
 
 	protected function _update() {
