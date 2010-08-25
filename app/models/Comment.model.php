@@ -17,7 +17,7 @@ class Model_Comment extends Model_Main {
     $this->_iLimit		= & $iLimit;
   }
 
-  private final function _setData($parentID, $parentCat) {
+  private final function _setData($parentId, $parentCategory) {
     if ($this->_iEntries > 0) {
       try {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -47,8 +47,8 @@ class Model_Comment extends Model_Main {
                                     :offset,
                                     :limit");
 
-        $oQuery->bindParam('parent_id', $parentID);
-        $oQuery->bindParam('parent_category', $parentCat);
+        $oQuery->bindParam('parent_id', $parentId);
+        $oQuery->bindParam('parent_category', $parentCategory);
         $oQuery->bindParam('offset', $this->_iOffset, PDO::PARAM_INT);
         $oQuery->bindParam('limit', $this->_iLimit, PDO::PARAM_INT);
         $oQuery->execute();

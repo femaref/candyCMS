@@ -16,18 +16,18 @@ class Model_Content extends Model_Main {
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $oQuery = $oDb->query(" SELECT
-                                    c.*,
-                                    u.id AS uid,
-                                    u.name,
-                                    u.surname
-                                  FROM
-                                    content c
-                                  LEFT JOIN
-                                    user u
-                                  ON
-                                    c.authorID=u.id
-                                  ORDER BY
-                                    c.title ASC");
+                                  c.*,
+                                  u.id AS uid,
+                                  u.name,
+                                  u.surname
+                                FROM
+                                  content c
+                                LEFT JOIN
+                                  user u
+                                ON
+                                  c.authorID=u.id
+                                ORDER BY
+                                  c.title ASC");
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $oDb = null;

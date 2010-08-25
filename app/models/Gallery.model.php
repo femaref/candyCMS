@@ -166,11 +166,11 @@ class Model_Gallery extends Model_Main {
 	}
 
 	public final function getThumbs($iId, $iLimit) {
-		$this->_setThumbs($iId, $iLimit);
-		return $this->_aThumbs;
-	}
+    $this->_setThumbs($iId, $iLimit);
+    return $this->_aThumbs;
+  }
 
-	private final function _setAlbumName($iId) {
+  private final function _setAlbumName($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -186,13 +186,13 @@ class Model_Gallery extends Model_Main {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 
 	public final function getAlbumName($iId) {
-		return $this->_setAlbumName($iId);
-	}
+    return $this->_setAlbumName($iId);
+  }
 
-	private final function _setAlbumDescription($iId) {
+  private final function _setAlbumDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -208,13 +208,13 @@ class Model_Gallery extends Model_Main {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 
-	public final function getAlbumDescription($iId) {
-		return $this->_setAlbumDescription($iId);
-	}
+  public final function getAlbumDescription($iId) {
+    return $this->_setAlbumDescription($iId);
+  }
 
-	private final function _setFileDescription($iId) {
+  private final function _setFileDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -230,11 +230,11 @@ class Model_Gallery extends Model_Main {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 
-	public final function getFileDescription($iId) {
-		return $this->_setFileDescription($iId);
-	}
+  public final function getFileDescription($iId) {
+    return $this->_setFileDescription($iId);
+  }
 
 	public function create() {
     try {
@@ -308,19 +308,19 @@ class Model_Gallery extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 
 	public final function destroy($iId) {
-		$sPath = PATH_UPLOAD.	'/gallery/'	.(int)$iId;
+    $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
     # Delete files
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -329,13 +329,13 @@ class Model_Gallery extends Model_Main {
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 
-    if($bReturn == true) {
+    if ($bReturn == true) {
       foreach ($aResult as $aRow) {
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
@@ -344,10 +344,10 @@ class Model_Gallery extends Model_Main {
       }
 
       # Delete Folders
-      @rmdir($sPath.	'/32/');
-      @rmdir($sPath.	'/'	.THUMB_DEFAULT_X);
-      @rmdir($sPath.	'/' .POPUP_DEFAULT_X);
-      @rmdir($sPath.	'/original');
+      @rmdir($sPath . '/32/');
+      @rmdir($sPath . '/' . THUMB_DEFAULT_X);
+      @rmdir($sPath . '/' . POPUP_DEFAULT_X);
+      @rmdir($sPath . '/original');
       @rmdir($sPath);
 
       try {
@@ -394,15 +394,15 @@ class Model_Gallery extends Model_Main {
       $oDb = null;
       return false;
     }
-	}
+  }
 
 	public final function createFile($iUserId = '') {
-		$oUploadFile = new Upload($this->_aRequest, $this->_aFile);
-		$sFilePath = $oUploadFile->uploadGalleryFile();
+    $oUploadFile = new Upload($this->_aRequest, $this->_aFile);
+    $sFilePath = $oUploadFile->uploadGalleryFile();
 
-    $this->_aRequest['description']  = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description']))
-                                      ? $this->_aRequest['description']
-                                      : '';
+    $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
+            $this->_aRequest['description'] :
+            '';
 
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -423,15 +423,15 @@ class Model_Gallery extends Model_Main {
 
       $oDb = null;
       #return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
 
     # We must return the path for ajax information
-		return $sFilePath;
-	}
+    return $sFilePath;
+  }
 
 	public final function updateFile($iId) {
     try {
@@ -451,12 +451,12 @@ class Model_Gallery extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 
 	public final function destroyFile($iId) {
     try {
