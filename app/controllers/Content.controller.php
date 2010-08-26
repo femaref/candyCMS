@@ -58,9 +58,9 @@ final class Content extends Main {
 
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $oSmarty->assign('action', '/Content/update');
+      $oSmarty->assign('_action_url_', '/Content/update');
+      $oSmarty->assign('_formdata_', 'update_content');
       $oSmarty->assign('c', $this->_aData);
-      $oSmarty->assign('formdata', 'update_content');
       $oSmarty->assign('id', $this->_iId);
 
       # Language
@@ -79,10 +79,10 @@ final class Content extends Main {
               $this->_aRequest['content'] :
               '';
 
+      $oSmarty->assign('_action_url_', '/Content/create');
+      $oSmarty->assign('_formdata_', 'create_content');
       $aContent = array('title' => $sTitle, 'content' => $sContent);
       $oSmarty->assign('c', $aContent);
-      $oSmarty->assign('action', '/Content/create');
-      $oSmarty->assign('formdata', 'create_content');
       $oSmarty->assign('id', '');
 
       /* Language */

@@ -13,8 +13,8 @@ class Model_Gallery extends Model_Main {
 	private final function _setData($bEdit = false) {
     $sWhere = '';
 
-		if( !empty($this->_iId) )
-			$sWhere = "WHERE a.id = '"	.$this->_iId.	"'";
+		if (!empty($this->_iId))
+      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -70,47 +70,46 @@ class Model_Gallery extends Model_Main {
             'files_sum'   => $aRow['filesSum']
 				);
 
-				if($aRow['filesSum'] > 0)
-					$this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS);
-				else
-					$this->_aData[$iId]['files'] = '';
+				if ($aRow['filesSum'] > 0)
+          $this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS);
+        else
+          $this->_aData[$iId]['files'] = '';
 			}
 		}
 	}
 
 	public final function getData($iId = '', $bEdit = false) {
-		if( !empty($iId) )
-			$this->_iId = (int)$iId;
+    if (!empty($iId))
+      $this->_iId = (int) $iId;
 
-		$this->_setData($bEdit);
-		return $this->_aData;
-	}
+    $this->_setData($bEdit);
+    return $this->_aData;
+  }
 
 	public final function getId() {
-		return $this->_iId;
-	}
+    return $this->_iId;
+  }
 
 	private final function _setThumbs($iId, $iLimit) {
 		# Clear existing array
-		if(!empty($this->_aThumbs))
-			unset($this->_aThumbs);
+		if (!empty($this->_aThumbs))
+      unset($this->_aThumbs);
 
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-									PDO::ATTR_PERSISTENT => true
-							));
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE aid = :album_id");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                  PDO::ATTR_PERSISTENT => true
+              ));
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE aid = :album_id");
+      $oQuery->bindParam('album_id', $iId);
+      $bReturn = $oQuery->execute();
 
-			$oQuery->bindParam('album_id', $iId);
-			$bReturn = $oQuery->execute();
-
-			$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 
     $this->_iEntries = count($aResult);
     $this->oPages = new Pages($this->_aRequest, $this->_iEntries, $iLimit);
@@ -170,6 +169,7 @@ class Model_Gallery extends Model_Main {
     return $this->_aThumbs;
   }
 
+  # TODO: Move to static function?!
   private final function _setAlbumName($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -192,6 +192,7 @@ class Model_Gallery extends Model_Main {
     return $this->_setAlbumName($iId);
   }
 
+  # TODO: Move to static function?!
   private final function _setAlbumDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -214,6 +215,7 @@ class Model_Gallery extends Model_Main {
     return $this->_setAlbumDescription($iId);
   }
 
+  # TODO: Move to static function?!
   private final function _setFileDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -261,7 +263,7 @@ class Model_Gallery extends Model_Main {
       $e->getMessage();
     }
 
-    if($bResult == true) {
+    if ($bResult == true) {
       $sPath = PATH_UPLOAD . '/gallery/' . (int) $this->_iId;
 
       $sPathThumbS = $sPath . '/32';
@@ -318,7 +320,6 @@ class Model_Gallery extends Model_Main {
 	public final function destroy($iId) {
     $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
-    # Delete files
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
                   PDO::ATTR_PERSISTENT => true
@@ -430,6 +431,7 @@ class Model_Gallery extends Model_Main {
     }
 
     # We must return the path for ajax information
+    # TODO: Put into getter method
     return $sFilePath;
   }
 

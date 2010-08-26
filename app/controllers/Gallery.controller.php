@@ -135,8 +135,8 @@ class Gallery extends Main {
       $oSmarty->assign('title', $this->_aData['title']);
       $oSmarty->assign('description', $this->_aData['description']);
 
-      $oSmarty->assign('action', '/Gallery/'	.$this->_iId. '/update');
-      $oSmarty->assign('formdata', 'update_gallery');
+      $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/update');
+      $oSmarty->assign('_formdata_', 'update_gallery');
       $oSmarty->assign('id', $this->_iId);
 
       # Language
@@ -156,10 +156,10 @@ class Gallery extends Main {
               $this->_aRequest['description'] :
               '';
 
+      $oSmarty->assign('_action_url_', '/Gallery/create');
+      $oSmarty->assign('_formdata_', 'create_gallery');
       $oSmarty->assign('title', $sTitle);
       $oSmarty->assign('description', $sDescription);
-      $oSmarty->assign('action', '/Gallery/create');
-      $oSmarty->assign('formdata', 'create_gallery');
       $oSmarty->assign('id', '');
 
       # Language
@@ -219,9 +219,9 @@ class Gallery extends Main {
     $oSmarty->assign('id', $this->_iId);
 
     if($bUpdate == true) {
+      $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/updatefile');
+      $oSmarty->assign('_formdata_', 'update_file');
       $oSmarty->assign('description', $this->_oModel->getFileDescription($this->_iId));
-      $oSmarty->assign('formdata', 'update_file');
-      $oSmarty->assign('action', '/Gallery/'	.$this->_iId. '/updatefile');
 
       # Language
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
@@ -234,10 +234,10 @@ class Gallery extends Main {
               Helper::formatInput($this->_aRequest['cut']) :
               'r'; # r = resize, c = cut
 
+      $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId.	'/upload/' .session_id());
+      $oSmarty->assign('_formdata_', 'create_file');
       $oSmarty->assign('default', $sDefault);
       $oSmarty->assign('description', '');
-      $oSmarty->assign('formdata', 'create_file');
-      $oSmarty->assign('action', '/Gallery/'	.$this->_iId.	'/upload/' .session_id());
 
       # Language
       $oSmarty->assign('lang_create_file_cut', LANG_GALLERY_CREATE_FILE_CUT);

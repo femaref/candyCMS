@@ -93,14 +93,14 @@ class Blog extends Main {
 		if($bUpdate == true) {
 			# collect data array
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
+			$oSmarty->assign('_action_url_', '/Blog/update');
+			$oSmarty->assign('_formdata_', 'update_blog');
 			$oSmarty->assign('id', $this->_iId);
 			$oSmarty->assign('author_id', $this->_aData['author_id']);
 			$oSmarty->assign('tags', $this->_aData['tags']);
 			$oSmarty->assign('title', $this->_aData['title']);
 			$oSmarty->assign('content', $this->_aData['content']);
 			$oSmarty->assign('published', $this->_aData['published']);
-			$oSmarty->assign('action', '/Blog/update');
-			$oSmarty->assign('formdata', 'update_blog');
 
 			# Build up title
 			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
@@ -128,13 +128,13 @@ class Blog extends Main {
 					$this->_aRequest['published'] :
 					'';
 
+			$oSmarty->assign('_action_url_', '/Blog/create');
+			$oSmarty->assign('_formdata_', 'create_blog');
 			$oSmarty->assign('id', '');
 			$oSmarty->assign('title', $sTitle);
 			$oSmarty->assign('tags', $sTags);
 			$oSmarty->assign('content', $sContent);
 			$oSmarty->assign('published', $iPublished);
-			$oSmarty->assign('action', '/Blog/create');
-			$oSmarty->assign('formdata', 'create_blog');
 
 			# Build up title
 			$this->_setTitle(LANG_BLOG_CREATE);

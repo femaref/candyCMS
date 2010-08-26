@@ -21,11 +21,14 @@ abstract class Model_Main {
 	}
 
 	public function create() {
-	}
 
-	protected function update() {
-	}
+  }
 
-	public function destroy() {
-	}
+  protected function update() {
+
+  }
+
+  public function destroy() {
+
+  }
 }

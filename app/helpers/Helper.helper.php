@@ -11,15 +11,15 @@ final class Helper {
 
   # Check for plugins
   public static final function pluginExists($sPluginName = '') {
-    if(!empty($sPluginName) && !class_exists(ucfirst($sPluginName)) ) {
-      if(file_exists('plugins/' .(string)ucfirst($sPluginName).  '.class.php')) {
-        require_once 'plugins/' .(string)ucfirst($sPluginName).  '.class.php';
+    if (!empty($sPluginName) && !class_exists(ucfirst($sPluginName))) {
+      if (file_exists('plugins/' . (string) ucfirst($sPluginName) . '.class.php')) {
+        require_once 'plugins/' . (string) ucfirst($sPluginName) . '.class.php';
         return true;
       }
       else
         return false;
     }
-    elseif(class_exists(ucfirst($sPluginName)))
+    elseif (class_exists(ucfirst($sPluginName)))
       return true;
     else
       return false;
@@ -50,12 +50,12 @@ final class Helper {
   }
 
   public static final function redirectTo($sURL) {
-    header('Location:'	.WEBSITE_URL.$sURL);
+    header('Location:' . WEBSITE_URL . $sURL);
     die();
   }
 
   public static final function checkEmailAddress($sMail) {
-    if(preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
+    if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
       return true;
     else
       return false;
@@ -64,13 +64,13 @@ final class Helper {
   public final static function createRandomChar($iLength, $bIntegerOnly = false) {
     $sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
 
-		if($bIntegerOnly == true)
-			$sChars = '0123456789';
+    if ($bIntegerOnly == true)
+      $sChars = '0123456789';
 
-    srand(microtime()*1000000);
+    srand(microtime() * 1000000);
 
     $sString = '';
-    for($iI = 1; $iI <= $iLength ; $iI++) {
+    for ($iI = 1; $iI <= $iLength; $iI++) {
       $iTemp = rand(1, strlen($sChars));
       $iTemp--;
       $sString .= $sChars[$iTemp];
@@ -80,55 +80,55 @@ final class Helper {
   }
 
 	public final static function createLinkTo($sUrl) {
-		return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
-	}
+    return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
+  }
 
   public final static function getAvatar($sPath, $iSize, $iUserId, $aGravatar = '') {
-    if(!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
+    if (!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
       $sMail = md5($aGravatar['email']);
-      return 'http://www.gravatar.com/avatar/'  .$sMail. '.jpg?s='  .$iSize;
+      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $iSize;
     }
     else {
-      $sFile = PATH_UPLOAD.	'/'	.$sPath.  '/' .$iSize.  '/' .$iUserId.	'.jpg';
-      if(is_file($sFile))
-        return WEBSITE_URL.  '/' .$sFile;
+      $sFile = PATH_UPLOAD . '/' . $sPath . '/' . $iSize . '/' . $iUserId . '.jpg';
+      if (is_file($sFile))
+        return WEBSITE_URL . '/' . $sFile;
       else
-        return WEBSITE_CDN.  '/public/images/missing_avatar.jpg';
+        return WEBSITE_CDN . '/public/images/missing_avatar.jpg';
     }
   }
 
   public final static function getFileSize($sPath) {
     $iSize = filesize($sPath);
 
-    if($iSize > 1024 && $iSize < 1048576)
-      $sReturn = round(($iSize / 1024), 2). ' KB';
+    if ($iSize > 1024 && $iSize < 1048576)
+      $sReturn = round(($iSize / 1024), 2) . ' KB';
 
-    elseif($iSize >= 1048576 && $iSize < 1073741824)
-      $sReturn = round(($iSize / 1048576), 2). ' MB';
+    elseif ($iSize >= 1048576 && $iSize < 1073741824)
+      $sReturn = round(($iSize / 1048576), 2) . ' MB';
 
-    elseif($iSize >= 1073741824)
-      $sReturn = round(($iSize / 1073741824), 2). ' GB';
+    elseif ($iSize >= 1073741824)
+      $sReturn = round(($iSize / 1073741824), 2) . ' GB';
 
     else
-      $sReturn = round($iSize, 2). ' Byte';
+      $sReturn = round($iSize, 2) . ' Byte';
 
     return $sReturn;
   }
 
   public final function getTemplateDir($sTemplate) {
     try {
-      if(file_exists('public/skins/' .PATH_TPL.	'/view/'	.$sTemplate.	'.tpl'))
-        return 'public/skins/'  .PATH_TPL.  '/view/';
-      elseif(file_exists('public/skins/_addon/view/'	.$sTemplate.	'.tpl'))
+      if (file_exists('public/skins/' . PATH_TPL . '/view/' . $sTemplate . '.tpl'))
+        return 'public/skins/' . PATH_TPL . '/view/';
+      elseif (file_exists('public/skins/_addon/view/' . $sTemplate . '.tpl'))
         return 'public/skins/_addon/view/';
       else {
-        if(!file_exists('app/view/'	.$sTemplate.	'.tpl'))
+        if (!file_exists('app/view/' . $sTemplate . '.tpl'))
           throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
         else
           return 'app/view/';
       }
     }
-    catch (Exception $e ) {
+    catch (Exception $e) {
       $e->getMessage();
     }
   }
@@ -141,20 +141,20 @@ final class Helper {
   }
 
   public final static function formatInput($sStr, $bDisableHTML = true) {
-		try {
-			if(is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
-				throw new Exception('Input seems not valid.');
-			else
-				$sStr = addslashes($sStr);
+    try {
+      if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
+        throw new Exception('Input seems not valid.');
+      else
+        $sStr = addslashes($sStr);
 
-				if( $bDisableHTML == true )
-					$sStr = htmlspecialchars($sStr);
-
-		} catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-			die();
-		}
+      if ($bDisableHTML == true)
+        $sStr = htmlspecialchars($sStr);
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+      die();
+    }
 
     return $sStr;
   }
@@ -162,7 +162,7 @@ final class Helper {
   # Code for plugins
   # TODO: Use config for variables
   public static final function formatTimestamp($iTime) {
-    if(Helper::pluginExists('FormatTimestamp') == true) {
+    if (Helper::pluginExists('FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
       return $oDate->getDate($iTime);
     }
@@ -182,7 +182,7 @@ final class Helper {
     # Format SpecialChars
     $sStr = str_replace('&quot;', '"', $sStr);
 
-    if(Helper::pluginExists('Bbcode') == true) {
+    if (Helper::pluginExists('Bbcode') == true) {
       $oBbcode = new Bbcode();
       return $oBbcode->getFormatedText($sStr, $bUseParagraph);
     }

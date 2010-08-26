@@ -18,7 +18,7 @@
     });
   </script>
 {/literal}
-<form method='post' action='{$action}'>
+<form method='post' action='{$_action_url_}'>
   <fieldset class="left">
     <legend>
       {$lang_title}
@@ -55,5 +55,5 @@
       </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />
-  <input type='hidden' value='formdata' name='{$formdata}' />
+  <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

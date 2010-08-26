@@ -156,7 +156,7 @@
 </script>
 <p></p>
 <a name="js-upload_image"></a>
-<form id='js-upload_image' style='{$style}' action='{$action}' method='post' enctype='multipart/form-data'>
+<form id='js-upload_image' style='{$style}' action='{$_action_url_}' method='post' enctype='multipart/form-data'>
   <table>
     <tr>
       <th colspan='2'>{$lang_image_upload}</th>

@@ -52,6 +52,7 @@ final class Multiple_Upload extends Index {
 	}
 
 	public final function createFiles() {
+    # TODO: Cleanup into sperate methods
 		if (isset($this->_aRequest['section']) && 'gallery' == $this->_aRequest['section']) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
 			$this->_sFilePath = $this->_oModel->createFile(USER_ID);
@@ -80,15 +81,15 @@ final class Multiple_Upload extends Index {
 		}
 
 		if (isset($this->_aRequest['response']) && $this->_aRequest['response'] == 'xml') {
-			$sOutput = '<response>';
+      $sOutput = '<response>';
 
-			foreach ($this->_aReturn as $sKey => $sValue) {
-				$sOutput .= '<' . $sKey . '><![CDATA[' . $sValue . ']]></' . $sKey . '>';
-			}
+      foreach ($this->_aReturn as $sKey => $sValue) {
+        $sOutput .= '<' . $sKey . '><![CDATA[' . $sValue . ']]></' . $sKey . '>';
+      }
 
-			$sOutput .= '</response>';
-			return $sOutput;
-		}
+      $sOutput .= '</response>';
+      return $sOutput;
+    }
 		else
 			return json_encode($this->_aReturn);
 	}

@@ -8,37 +8,38 @@
  */
 
 final class Addon extends Section {
-	public final function __construct($aRequest, $aSession, $aFile = '') {
-		$this->_aRequest	=& $aRequest;
-		$this->_aSession	=& $aSession;
-		$this->_aFile     =& $aFile;
 
-		$this->_setModules();
-		$this->_getSection();
-	}
+  public final function __construct($aRequest, $aSession, $aFile = '') {
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile     = & $aFile;
 
-	private final function _setModules() {
-		$oDir = opendir('addon');
+    $this->_setModules();
+    $this->_getSection();
+  }
 
-		while($aFile = readdir($oDir)) {
-			if($aFile == '.' || $aFile == '..' || $aFile == '_dev' || $aFile == '.htaccess')
-				continue;
+  private final function _setModules() {
+    $oDir = opendir('addon');
 
-			require_once ('app/addon/'	.$aFile);
-		}
-	}
+    while ($aFile = readdir($oDir)) {
+      if ($aFile == '.' || $aFile == '..' || $aFile == '_dev' || $aFile == '.htaccess')
+        continue;
 
-	private final function _getSection() {
-		switch( strtolower( $this->_aRequest['section']) ) {
-			default:
-			case '404':
+      require_once ('app/addon/' . $aFile);
+    }
+  }
 
-				parent::_setContent(Helper::errorMessage(LANG_ERROR_GLOBAL_404));
-				parent::_setTitle(LANG_ERROR_GLOBAL_404);
+  private final function _getSection() {
+    switch (strtolower($this->_aRequest['section'])) {
+      default:
+      case '404':
 
-				break;
+        parent::_setContent(Helper::errorMessage(LANG_ERROR_GLOBAL_404));
+        parent::_setTitle(LANG_ERROR_GLOBAL_404);
+
+        break;
 
       # Enter your addon information here
-		}
-	}
+    }
+  }
 }

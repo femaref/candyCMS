@@ -20,19 +20,19 @@ final class Pages {
     $this->_iCount    =& $iCount;
     $this->_iLimit    =& $iLimit;
 
-    $this->_iCurrentPage = isset($this->_aRequest['page']) ? (int)$this->_aRequest['page'] : 1;
+    $this->_iCurrentPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
     $this->_iPages = ceil($this->_iCount / $this->_iLimit);
 
-    if(!$this->_iPages)
+    if (!$this->_iPages)
       $this->_iPages = 1;
 
-    if($this->_iCurrentPage < 1)
+    if ($this->_iCurrentPage < 1)
       $this->_iCurrentPage = 1;
 
-    if($this->_iCurrentPage > $this->_iPages)
+    if ($this->_iCurrentPage > $this->_iPages)
       $this->_iCurrentPage = $this->_iPages;
 
-    $this->_iOffset	= ($this->_iCurrentPage - 1) * $this->_iLimit;
+    $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
   }
 
   public final function getOffset() {
@@ -52,24 +52,24 @@ final class Pages {
     $oSmarty->assign('page_current', $this->_iCurrentPage);
     $oSmarty->assign('page_count', $this->_iPages);
     $oSmarty->assign('_action_url_', $sURL);
-    $oSmarty->assign('_public_folder_', WEBSITE_CDN. '/public/images');
+    $oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
     $oSmarty->template_dir = Helper::getTemplateDir('pages/pages');
     return $oSmarty->fetch('pages/pages.tpl');
   }
 
   public final function showSurrounding($sURL, $sRssAction = '') {
-    $iNext      = '';
-    $iPrevious	= '';
+    $iNext = '';
+    $iPrevious = '';
 
-    if($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
+    if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
       $iNext = $this->_iCurrentPage + 1;
 
-    if($this->_iCurrentPage > 1)
+    if ($this->_iCurrentPage > 1)
       $iPrevious = $this->_iCurrentPage - 1;
 
     $oSmarty = new Smarty();
-    $oSmarty->assign('action_url', $sURL);
+    $oSmarty->assign('_action_url_', $sURL);
     $oSmarty->assign('page_limit', $this->_iLimit);
     $oSmarty->assign('page_count', $this->_iCount);
     $oSmarty->assign('page_next', $iNext);

@@ -12,45 +12,45 @@ class Model_User extends Model_Main {
   # Get user name and surname
   public static final function getUserNamesAndEmail($iId) {
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT name, surname, email FROM user WHERE id = :id LIMIT 1");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT name, surname, email FROM user WHERE id = :id LIMIT 1");
 
-			$oQuery->bindParam('id', $iId);
-			$oQuery->execute();
+      $oQuery->bindParam('id', $iId);
+      $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       $oDb = null;
 
-			return $aResult;
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
-	}
+      return $aResult;
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+  }
 
   public static function getExistingUser($sEmail) {
     try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT email FROM user WHERE email = :email LIMIT 1");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT email FROM user WHERE email = :email LIMIT 1");
 
-			$oQuery->bindParam('email', $sEmail);
-			$oQuery->execute();
+      $oQuery->bindParam('email', $sEmail);
+      $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       $oDb = null;
 
-      if(isset($aResult['email']) && !empty($aResult['email']))
+      if (isset($aResult['email']) && !empty($aResult['email']))
         return false;
       else
         return true;
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
   }
 
   private function _setData() {
@@ -153,8 +153,8 @@ class Model_User extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -196,7 +196,7 @@ class Model_User extends Model_Main {
                                   id = :id");
 
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname',Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
       $oQuery->bindParam('newsletter_default', $iNewsletterDefault);
@@ -208,8 +208,8 @@ class Model_User extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -240,19 +240,19 @@ class Model_User extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
   }
 
 	public function verifyEmail($iVerificationCode) {
-		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$oQuery = $oDb->prepare("	SELECT
+      $oQuery = $oDb->prepare("	SELECT
 																	id
 																FROM
 																	user
@@ -260,43 +260,43 @@ class Model_User extends Model_Main {
 																	verification_code = :verification_code
 																LIMIT 1");
 
-			$oQuery->bindParam('verification_code', $iVerificationCode);
-			$oQuery->execute();
+      $oQuery->bindParam('verification_code', $iVerificationCode);
+      $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
 
-		if (!empty($aResult['id'])) {
-			try {
-				$oQuery = $oDb->prepare("	UPDATE
+    if (!empty($aResult['id'])) {
+      try {
+        $oQuery = $oDb->prepare("	UPDATE
 																		user
 																	SET
 																		verification_code = ''
 																	WHERE
 																		id = :id");
 
-				$oQuery->bindParam('id', $aResult['id']);
-				$bResult = $oQuery->execute();
+        $oQuery->bindParam('id', $aResult['id']);
+        $bResult = $oQuery->execute();
 
-				$oDb = null;
+        $oDb = null;
 
-				if ($bResult == true)
-					return Model_Session::setActiveSession($aResult['id']).Helper::redirectTo('/Start');
-				else
-					return false;
-			}
-			catch (AdvancedException $e) {
-				$oDb->rollBack();
-				$e->getMessage();
-			}
-		}
-		else {
-			$oDb = null;
-			return false;
-		}
-	}
+        if ($bResult == true)
+          return Model_Session::setActiveSession($aResult['id']) . Helper::redirectTo('/Start');
+        else
+          return false;
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
+    }
+    else {
+      $oDb = null;
+      return false;
+    }
+  }
 }

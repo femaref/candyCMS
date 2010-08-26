@@ -16,7 +16,7 @@
     });
   </script>
 {/literal}
-<form method='post' action='{$action}'>
+<form method='post' action='{$_action_url_}'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>
@@ -96,5 +96,5 @@
 	{/if}
   <input type='hidden' value='{$id}' name='id' />
   <input type='hidden' value='{$author_id}' name='author_id' />
-  <input type='hidden' value='formdata' name='{$formdata}' />
+  <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

@@ -45,43 +45,43 @@ class User extends Main {
 	}
 
 	private function _createAvatar() {
-		$iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
+    $iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
 
-		if ($iAgreement == 0)
-			return Helper::errorMessage(LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT) .
-			$this->_showFormTemplate();
-		else {
-			$oUpload = new Upload($this->_aRequest, $this->_aFile);
-			return $oUpload->uploadAvatarFile(false) .
-			$this->show($this->_iId);
-		}
-	}
+    if ($iAgreement == 0)
+      return Helper::errorMessage(LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT) .
+      $this->_showFormTemplate();
+    else {
+      $oUpload = new Upload($this->_aRequest, $this->_aFile);
+      return $oUpload->uploadAvatarFile(false) .
+      $this->show($this->_iId);
+    }
+  }
 
 	protected function _showFormTemplate($bUseRequest = false) {
-		$oSmarty = new Smarty();
-		if ($this->_iId !== USER_ID && USER_RIGHT == 4) {
-			$this->_aData = $this->_oModel->getData($this->_iId);
+    $oSmarty = new Smarty();
+    if ($this->_iId !== USER_ID && USER_RIGHT == 4) {
+      $this->_aData = $this->_oModel->getData($this->_iId);
 
-			$aGravatar = array('use_gravatar' => (int) $this->_aData['use_gravatar'],
-					'email' => $this->_aData['email']);
+      $aGravatar = array('use_gravatar' => (int) $this->_aData['use_gravatar'],
+          'email' => $this->_aData['email']);
 
-			$oSmarty->assign('uid',
-							$this->_iId);
-			$oSmarty->assign('name',
-							$this->_aData['name']);
-			$oSmarty->assign('surname',
-							$this->_aData['surname']);
-			$oSmarty->assign('email',
-							$this->_aData['email']);
-			$oSmarty->assign('description',
-							$this->_aData['description']);
-			$oSmarty->assign('use_gravatar',
-							(int) $this->_aData['use_gravatar']);
-			$oSmarty->assign('newsletter_default',
-							(int) $this->_aData['newsletter_default']);
-			$oSmarty->assign('userright',
-							(int) $this->_aData['userright']);
-		}
+      $oSmarty->assign('uid',
+              $this->_iId);
+      $oSmarty->assign('name',
+              $this->_aData['name']);
+      $oSmarty->assign('surname',
+              $this->_aData['surname']);
+      $oSmarty->assign('email',
+              $this->_aData['email']);
+      $oSmarty->assign('description',
+              $this->_aData['description']);
+      $oSmarty->assign('use_gravatar',
+              (int) $this->_aData['use_gravatar']);
+      $oSmarty->assign('newsletter_default',
+              (int) $this->_aData['newsletter_default']);
+      $oSmarty->assign('userright',
+              (int) $this->_aData['userright']);
+    }
 		else {
 			# Avoid redisplay-Bug
 			if ($bUseRequest == true) {
@@ -118,7 +118,7 @@ class User extends Main {
 		$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
 
 		# Set Form params
-		$oSmarty->assign('action', '/User/Settings');
+		$oSmarty->assign('_action_url_', '/User/Settings');
 		$oSmarty->assign('style', 'display:none');
 
 		# Set _own_ USER_RIGHT and USER_ID for updating purposes
@@ -160,40 +160,40 @@ class User extends Main {
 	}
 
 	protected function _update() {
-		$sError = '';
+    $sError = '';
 
-		if (!isset($this->_aRequest['name']) ||
-						empty($this->_aRequest['name']))
-			$sError .= LANG_GLOBAL_NAME . '<br />';
+    if (!isset($this->_aRequest['name']) ||
+            empty($this->_aRequest['name']))
+      $sError .= LANG_GLOBAL_NAME . '<br />';
 
-		if (!isset($this->_aRequest['email']) ||
-						empty($this->_aRequest['email']))
-			$sError .= LANG_GLOBAL_EMAIL . '<br />';
+    if (!isset($this->_aRequest['email']) ||
+            empty($this->_aRequest['email']))
+      $sError .= LANG_GLOBAL_EMAIL . '<br />';
 
-		if (empty($this->_aRequest['oldpw']) &&
-						!empty($this->_aRequest['newpw']) &&
-						!empty($this->_aRequest['newpw2']))
-			$sError .= LANG_ERROR_USER_SETTINGS_PW_OLD . '<br />';
+    if (empty($this->_aRequest['oldpw']) &&
+            !empty($this->_aRequest['newpw']) &&
+            !empty($this->_aRequest['newpw2']))
+      $sError .= LANG_ERROR_USER_SETTINGS_PW_OLD . '<br />';
 
-		if (!empty($this->_aRequest['oldpw']) &&
-						md5(RANDOM_HASH . $this->_aRequest['oldpw']) !==
-						$this->_aSession['userdata']['password'])
-			$sError .= LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG . '<br />';
+    if (!empty($this->_aRequest['oldpw']) &&
+            md5(RANDOM_HASH . $this->_aRequest['oldpw']) !==
+            $this->_aSession['userdata']['password'])
+      $sError .= LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG . '<br />';
 
-		if (!empty($this->_aRequest['oldpw']) && (
-						empty($this->_aRequest['newpw']) ||
-						empty($this->_aRequest['newpw2']) ))
-			$sError .= LANG_ERROR_USER_SETTINGS_PW_NEW . '<br />';
+    if (!empty($this->_aRequest['oldpw']) && (
+            empty($this->_aRequest['newpw']) ||
+            empty($this->_aRequest['newpw2']) ))
+      $sError .= LANG_ERROR_USER_SETTINGS_PW_NEW . '<br />';
 
-		if (isset($this->_aRequest['newpw']) && isset($this->_aRequest['newpw2']) &&
-						$this->_aRequest['newpw'] !== $this->_aRequest['newpw2'])
-			$sError .= LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG . '<br />';
+    if (isset($this->_aRequest['newpw']) && isset($this->_aRequest['newpw2']) &&
+            $this->_aRequest['newpw'] !== $this->_aRequest['newpw2'])
+      $sError .= LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG . '<br />';
 
-		if (!empty($sError)) {
-			$sReturn = Helper::errorMessage($sError);
-			$sReturn .= $this->_showFormTemplate();
-			return $sReturn;
-		}
+    if (!empty($sError)) {
+      $sReturn = Helper::errorMessage($sError);
+      $sReturn .= $this->_showFormTemplate();
+      return $sReturn;
+    }
 		else {
 
 			# Fix for missing id
@@ -289,11 +289,11 @@ class User extends Main {
 	}
 
 	public function create() {
-		if (isset($this->_aRequest['create_user']))
-			return $this->_create();
-		else
-			return $this->_showCreateUserTemplate();
-	}
+    if (isset($this->_aRequest['create_user']))
+      return $this->_create();
+    else
+      return $this->_showCreateUserTemplate();
+  }
 
 	private function _showCreateUserTemplate() {
 		$oSmarty = new Smarty();

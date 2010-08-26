@@ -96,17 +96,13 @@
                 alert('To enable the embedded uploader, install the latest Adobe Flash plugin.')
             }
           },
-
-          /*onComplete: function () {
-            alert('tset');
-          }*/
         });
 
       });
     </script>
   {/literal}
 {/if}
-<form action='{$action}' method='post' enctype='multipart/form-data' id='upload'>
+<form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='upload'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>
@@ -185,5 +181,5 @@
       <input type='button' id='fancy-upload' value='{$lang_headline}' />
     </div>
   {/if}
-  <input type='hidden' value='formdata' name='{$formdata}' />
+  <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

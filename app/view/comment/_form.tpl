@@ -1,6 +1,6 @@
 <a name='create'></a>
 <div id="create_comment">
-  <form action='{$action}' method='post'>
+  <form action='{$_action_url_}' method='post'>
     <fieldset>
       <legend>{$lang_headline}</legend>
       <table>

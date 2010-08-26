@@ -112,7 +112,7 @@ class Session extends Main {
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_LOGIN_PASSWORD_LOST);
 
-      $oSmarty->assign('action', '/Session/resendpassword');
+      $oSmarty->assign('_action_url_', '/Session/resendpassword');
 
       # Language
       $oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
@@ -122,7 +122,7 @@ class Session extends Main {
     else {
       $this->_setTitle(LANG_LOGIN_RESEND_VERIFICATION);
 
-      $oSmarty->assign('action', '/Session/resendverification');
+      $oSmarty->assign('_action_url_', '/Session/resendverification');
 
       # Language
       $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);

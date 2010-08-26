@@ -5,9 +5,10 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ */
 
 class Model_Newsletter extends Model_Main {
+
   public static function handleNewsletter($sEmail) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
@@ -34,7 +35,7 @@ class Model_Newsletter extends Model_Main {
       $e->getMessage();
     }
 
-    if(isset($aResult) && !empty($aResult['email'])) {
+    if (isset($aResult) && !empty($aResult['email'])) {
       try {
         $oQuery = $oDb->prepare("	DELETE FROM
                                     newsletter

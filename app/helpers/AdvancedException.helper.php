@@ -7,21 +7,19 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class AdvancedException extends Exception
-{
-	public function __contruct($sMessage, $iCode)
-	{
-		$sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
-		$iCode		= !empty($iCode) ? $iCode : $this->getCode();
+class AdvancedException extends Exception {
 
-		$this->_sendAdminMail($sMessage);
-	}
+  public function __contruct($sMessage, $iCode) {
+    $sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
+    $iCode = !empty($iCode) ? $iCode : $this->getCode();
 
-	private function _sendAdminMail($sMessage)
-	{
-    if(!class_exists('Mail'))
+    $this->_sendAdminMail($sMessage);
+  }
+
+  private function _sendAdminMail($sMessage) {
+    if (!class_exists('Mail'))
       require_once 'app/controllers/Mail.controller.php';
 
     Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, false);
-	}
+  }
 }
