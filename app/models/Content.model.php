@@ -128,8 +128,8 @@ class Model_Content extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -160,8 +160,8 @@ class Model_Content extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -184,8 +184,8 @@ class Model_Content extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }

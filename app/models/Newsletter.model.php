@@ -43,7 +43,6 @@ class Model_Newsletter extends Model_Main {
 
         $oQuery->bindParam('email', $sEmail);
         $bResult = $oQuery->execute();
-
         $oDb = null;
 
         if ($bResult == true)
@@ -65,7 +64,6 @@ class Model_Newsletter extends Model_Main {
 
         $oQuery->bindParam('email', $sEmail);
         $bResult = $oQuery->execute();
-
         $oDb = null;
 
         if ($bResult == true)
@@ -91,7 +89,9 @@ class Model_Newsletter extends Model_Main {
                                 FROM
                                   newsletter");
 
-        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $oDb = null;
+        return $aResult;
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
@@ -110,7 +110,9 @@ class Model_Newsletter extends Model_Main {
                                 WHERE
                                   newsletter_default = '1'");
 
-        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $oDb = null;
+        return $aResult;
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();

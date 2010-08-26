@@ -53,43 +53,51 @@ class Session extends Main {
 
   public final function createResendActions() {
     if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email'])) {
-      $aRow = $this->_oModel->createResendActions();
 
-      # Parse error first. $aRow should be an array, so if it's not, print error message.
-      if (!isset($aRow) || $aRow == false)
-        return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL) .
-        $this->_showCreateResendActionsTemplate();
+      if ($this->_aRequest['action'] == 'resendpassword') {
+        $sNewPasswordClean	= Helper::createRandomChar(10);
+        $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-      # Here it is an array.
-      elseif ($aRow['action'] == 'resendpassword') {
-        $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
-        $sContent = str_replace('%p', $aRow['password'], $sContent);
+        if($this->_oModel->createResendActions($sNewPasswordSecure) == true) {
+          $aData = $this->_oModel->getData();
 
-        $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                        LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
-                        $sContent,
-                        WEBSITE_MAIL_NOREPLY);
+          $sContent = str_replace('%u', $aData['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
+          $sContent = str_replace('%p',$sNewPasswordClean, $sContent);
 
-        if ($bStatus == true)
-          return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                          LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
+                          $sContent,
+                          WEBSITE_MAIL_NOREPLY);
+
+          if ($bStatus == true)
+            return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+          else
+            Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+        }
         else
-          Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+          Helper::errorMessage(LANG_ERROR_DB_QUERY);
       }
-      elseif ($aRow['action'] == 'resendverification') {
-        $sVerificationUrl = Helper::createLinkTo('/User/' . $aRow['verification_code'] . '/verification');
+      elseif ($this->_aRequest['action'] == 'resendverification') {
+        if($this->_oModel->createResendActions() == true) {
+          $aData = $this->_oModel->getData();
 
-        $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY);
-        $sContent = str_replace('%v', $sVerificationUrl, $sContent);
+          $sVerificationUrl = Helper::createLinkTo('/User/' . $aData['verification_code'] . '/verification');
 
-        $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                        LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT,
-                        $sContent,
-                        WEBSITE_MAIL_NOREPLY);
+          $sContent = str_replace('%u', $aData['name'], LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY);
+          $sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
-        if ($bStatus == true)
-          return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                          LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT,
+                          $sContent,
+                          WEBSITE_MAIL_NOREPLY);
+
+          if ($bStatus == true)
+            return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+          else
+            Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+        }
         else
-          Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+          Helper::errorMessage(LANG_ERROR_DB_QUERY);
       }
       else
         return Helper::errorMessage(LANG_ERROR_ACTION_NOT_SPECIFIED);

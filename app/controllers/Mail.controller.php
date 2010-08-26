@@ -176,7 +176,6 @@ class Mail extends Main {
 
     try {
       if (SMTP_ON == true) {
-
         if (WEBSITE_DEV == true) {
           $oMail->SMTPDebug = 1;
           $oMail->SMTPAuth = false;
@@ -193,6 +192,7 @@ class Mail extends Main {
         $oMail->Password = SMTP_PASSWORD;
       }
 
+      $oMail->CharSet = 'utf-8';
       $oMail->AddReplyTo($sReplyTo);
       $oMail->SetFrom(WEBSITE_MAIL, WEBSITE_NAME);
       $oMail->AddAddress($sTo);

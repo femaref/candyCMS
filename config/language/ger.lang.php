@@ -38,7 +38,7 @@ define( 'LANG_GLOBAL_DISCLAIMER', 'Impressum' );
 define( 'LANG_GLOBAL_DESTROY', 'L&#xF6;schen' );
 define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Eintrag l&#xF6;schen' );
 define( 'LANG_GLOBAL_EMAIL', 'E-Mail Adresse' );
-define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'E-Mail Adresse bestätigen' );
+define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'E-Mail-Adresse bestätigen' );
 define( 'LANG_GLOBAL_FILE', 'Datei' );
 define( 'LANG_GLOBAL_FILES', 'Dateien' );
 define( 'LANG_GLOBAL_FILEMANAGER', 'Dateiverwaltung' );
@@ -134,7 +134,7 @@ define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du wurdest erfolgreich registrier
 define( 'LANG_LOGIN_RESEND_VERIFICATION', 'E-Mail-Bestätigung erneut zusenden' );
 define( 'LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
 define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"); # NEW
-define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT', 'Deine E-MailBestätigung für %WEBSITE_NAME' ); # NEW
+define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT', 'Deine E-Mail-Bestätigung für %WEBSITE_NAME' ); # NEW
 define( 'LANG_LOGIN_RESEND_VERIFICATION_SEND', 'E-Mail zuschicken' );
 
 define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );

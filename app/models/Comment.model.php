@@ -122,7 +122,7 @@ class Model_Comment extends Model_Main {
       $e->getMessage();
     }
 
-    return count((int)$aResult);
+    return count((int) $aResult);
   }
 
   public function create() {
@@ -156,8 +156,8 @@ class Model_Comment extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -180,8 +180,8 @@ class Model_Comment extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }

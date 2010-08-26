@@ -19,28 +19,28 @@ class Model_Blog extends Model_Main {
 
 			# Search Blog for Tags
 			if (isset($this->_aRequest['action']) && 'tag' == $this->_aRequest['action'] &&
-							isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
-				if (empty($sWhere))
-					$sWhere = "WHERE tags LIKE '%" .
-									Helper::formatInput($this->_aRequest['id']) . "%'";
-				else
-					$sWhere .= "AND tags LIKE '%" .
-									Helper::formatInput($this->_aRequest['id']) . "%'";
-			}
+              isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
+        if (empty($sWhere))
+          $sWhere = "WHERE tags LIKE '%" .
+                  Helper::formatInput($this->_aRequest['id']) . "%'";
+        else
+          $sWhere .= "AND tags LIKE '%" .
+                  Helper::formatInput($this->_aRequest['id']) . "%'";
+      }
 
 			try {
-				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-										PDO::ATTR_PERSISTENT => true
-								));
-				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                    PDO::ATTR_PERSISTENT => true
+                ));
+        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				$oQuery = $oDb->query("SELECT id FROM blog " . $sWhere);
-				$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			}
-			catch (AdvancedException $e) {
-				$oDb->rollBack();
-				$e->getMessage();
-			}
+        $oQuery = $oDb->query("SELECT id FROM blog " . $sWhere);
+        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
 
 			$this->oPages = new Pages($this->_aRequest, count((int)$aResult), $iLimit);
 
@@ -96,11 +96,11 @@ class Model_Blog extends Model_Main {
                 'uid'         => $aRow['uid'],
                 'name'        => Helper::formatOutput($aRow['name']),
                 'surname'     => Helper::formatOutput($aRow['surname']),
-                'avatar_32'			=> Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
-                'avatar_64'			=> Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
+                'avatar_32'		=> Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
+                'avatar_64'		=> Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
                 'comment_sum'	=> $aRow['commentSum'],
                 'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
-                'published'			=> $aRow['published']
+                'published'		=> $aRow['published']
 				);
 
 				if (!empty($aRow['date_modified']))
@@ -188,26 +188,26 @@ class Model_Blog extends Model_Main {
 
 
 				if (!empty($aRow['date_modified']))
-					$this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
-				else
-					$this->_aData[1]['date_modified'] = '';
+          $this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
+        else
+          $this->_aData[1]['date_modified'] = '';
 			}
 		}
 	}
 
 	public final function getData($iId = '', $bEdit = false) {
-		if (!empty($iId))
-			$this->_iID = (int) $iId;
+    if (!empty($iId))
+      $this->_iID = (int) $iId;
 
-		$this->_setData($bEdit);
-		return $this->_aData;
-	}
+    $this->_setData($bEdit);
+    return $this->_aData;
+  }
 
 	public function create() {
-		$this->_aRequest['published'] = isset($this->_aRequest['published']) ?
-						(int)$this->_aRequest['published'] :
-						0;
-		
+    $this->_aRequest['published'] = isset($this->_aRequest['published']) ?
+            (int) $this->_aRequest['published'] :
+            0;
+
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -228,8 +228,8 @@ class Model_Blog extends Model_Main {
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -264,14 +264,14 @@ class Model_Blog extends Model_Main {
                                 WHERE
                                   id = :id");
 
-			$oQuery->bindParam('author_id', $iUpdateAuthor);
-			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-			$oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-			$oQuery->bindParam('date_modified', $iDateModified);
-			$oQuery->bindParam('published', $iPublished);
-			$oQuery->bindParam('id', $iId);
-			$bResult = $oQuery->execute();
+      $oQuery->bindParam('author_id', $iUpdateAuthor);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('date_modified', $iDateModified);
+      $oQuery->bindParam('published', $iPublished);
+      $oQuery->bindParam('id', $iId);
+      $bResult = $oQuery->execute();
 
       $oDb = null;
       return $bResult;
@@ -285,8 +285,8 @@ class Model_Blog extends Model_Main {
 	public final function destroy($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-										PDO::ATTR_PERSISTENT => true
-								));
+                  PDO::ATTR_PERSISTENT => true
+              ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	DELETE FROM
@@ -298,8 +298,8 @@ class Model_Blog extends Model_Main {
 
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
@@ -312,17 +312,17 @@ class Model_Blog extends Model_Main {
 																AND
 																	parentCat = :parent_cat");
 
-			$sParentCat = 'b';
+      $sParentCat = 'b';
       $oQuery->bindParam('parent_cat', $sParentCat);
       $oQuery->bindParam('parent_id', $iId);
       $bResult = $oQuery->execute();
 
       $oDb = null;
       return $bResult;
-
-    } catch (AdvancedException $e) {
+    }
+    catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
-	}
+  }
 }

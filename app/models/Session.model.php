@@ -89,25 +89,24 @@ class Model_Session extends Model_Main {
 			$oQuery->execute();
 
 			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			$oDb = null;
 		}
 		catch (AdvancedException $e) {
 			$oDb->rollBack();
 			$e->getMessage();
 		}
 
-    # Check if user exists
-		if(isset($aResult) && !empty($aResult['verification_code'])) {
+    # Check if user did not verify
+		if(isset($aResult['verification_code']) && !empty($aResult['verification_code']))
 			return false;
-		}
-    elseif (!empty($aResult['id']))
+    # User did verify his and has id, so log in!
+    elseif (isset($aResult['id']) && !empty($aResult['id']))
 			return Model_Session::setActiveSession($aResult['id']);
-		else {
-			$oDb = null;
+		else
 			return false;
-		}
   }
 
-  public final function createResendActions() {
+  public final function createResendActions($sNewPasswordSecure = '') {
 		require_once 'app/controllers/Mail.controller.php';
 		$bResult = false;
 
@@ -122,21 +121,18 @@ class Model_Session extends Model_Main {
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
-        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
       }
 
-      if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
+      if( empty($this->_aData['name']) || $bResult == false) {
         $oDb = null;
         return false;
       }
       else {
-        $sNewPasswordClean	= Helper::createRandomChar(10);
-        $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
-
         # Set new password
         try {
           $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -154,18 +150,13 @@ class Model_Session extends Model_Main {
           $e->getMessage();
         }
 
-        # Now back to controller to send mail
-        if($bResult == true) {
-          $aRow = & $aResult;
-          $aRow['action']   = 'resendpassword';
-          $aRow['password'] = $sNewPasswordClean;
-          return $aRow;
-        }
+        if($bResult == true)
+          return true;
         else
           return false;
       }
     }
-    else {
+    elseif ($this->_aRequest['action'] == 'resendverification') {
       try {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -174,18 +165,14 @@ class Model_Session extends Model_Main {
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
-        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
         $oDb = null;
 
-        if (empty($aResult['verification_code']) || empty($bResult) || $bResult == false)
+        if (empty($this->_aData['verification_code']) || $bResult == false)
           return false;
         else {
-          # Now back to controller to send mail
-          if (!empty($aResult['verification_code'])) {
-            $aRow = & $aResult;
-            $aRow['action'] = 'resendverification';
-            return $aRow;
-          }
+          if($bResult == true)
+            return true;
           else
             return false;
         }
@@ -195,6 +182,12 @@ class Model_Session extends Model_Main {
         $e->getMessage();
       }
     }
+    else
+      return Helper::errorMessage(LANG_ERROR_ACTION_NOT_SPECIFIED);
+  }
+
+  public final function getData() {
+    return $this->_aData;
   }
 
   public final function destroy() {
