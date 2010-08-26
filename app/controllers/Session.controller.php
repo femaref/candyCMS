@@ -55,10 +55,12 @@ class Session extends Main {
     if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email'])) {
       $aRow = $this->_oModel->createResendActions();
 
+      # Parse error first. $aRow should be an array, so if it's not, print error message.
       if (!isset($aRow) || $aRow == false)
         return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL) .
         $this->_showCreateResendActionsTemplate();
 
+      # Here it is an array.
       elseif ($aRow['action'] == 'resendpassword') {
         $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
         $sContent = str_replace('%p', $aRow['password'], $sContent);
@@ -71,7 +73,7 @@ class Session extends Main {
         if ($bStatus == true)
           return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
         else
-          Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
+          Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
       }
       elseif ($aRow['action'] == 'resendverification') {
         $sVerificationUrl = Helper::createLinkTo('/User/' . $aRow['verification_code'] . '/verification');
@@ -87,8 +89,10 @@ class Session extends Main {
         if ($bStatus == true)
           return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
         else
-          Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
+          Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
       }
+      else
+        return Helper::errorMessage(LANG_ERROR_ACTION_NOT_SPECIFIED);
     }
     else
       return $this->_showCreateResendActionsTemplate();
@@ -98,14 +102,20 @@ class Session extends Main {
     $oSmarty = new Smarty();
 
     if($this->_aRequest['action'] == 'resendpassword') {
+      $this->_setTitle(LANG_LOGIN_PASSWORD_LOST);
+
       $oSmarty->assign('action', '/Session/resendpassword');
+
       # Language
       $oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
       $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
       $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
     }
     else {
+      $this->_setTitle(LANG_LOGIN_RESEND_VERIFICATION);
+
       $oSmarty->assign('action', '/Session/resendverification');
+
       # Language
       $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);
       $oSmarty->assign('lang_description', LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION);

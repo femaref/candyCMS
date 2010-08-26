@@ -137,6 +137,7 @@ class Model_Session extends Model_Main {
         $sNewPasswordClean	= Helper::createRandomChar(10);
         $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
+        # Set new password
         try {
           $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
           $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -153,6 +154,7 @@ class Model_Session extends Model_Main {
           $e->getMessage();
         }
 
+        # Now back to controller to send mail
         if($bResult == true) {
           $aRow = & $aResult;
           $aRow['action']   = 'resendpassword';
@@ -178,6 +180,7 @@ class Model_Session extends Model_Main {
         if (empty($aResult['verification_code']) || empty($bResult) || $bResult == false)
           return false;
         else {
+          # Now back to controller to send mail
           if (!empty($aResult['verification_code'])) {
             $aRow = & $aResult;
             $aRow['action'] = 'resendverification';

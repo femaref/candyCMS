@@ -178,8 +178,10 @@ class Section extends Main {
           parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendpassword' ||
-                $this->_aRequest['action'] ==  'resendverification')
+                $this->_aRequest['action'] == 'resendverification') {
           parent::_setContent($this->_oObject->createResendActions());
+          parent::_setTitle($this->_oObject->getTitle());
+        }
         else {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_LOGOUT);
