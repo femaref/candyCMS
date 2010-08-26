@@ -22,7 +22,7 @@
           <a href='/Session/create'>{$lang_login}</a> &middot;
           <a href='/User/create'>{$lang_register}</a>
         {else}
-          <a href='/User/Settings'>{$lang_settings}</a> &middot;
+          <a href='/User/update'>{$lang_settings}</a> &middot;
           <a href='/Session/destroy'>{$lang_logout}</a>
         {/if}
       </div>

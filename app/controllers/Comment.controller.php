@@ -94,8 +94,7 @@ final class Comment extends Main {
 
       # Does the user have enough rights to enter a comment?
       # Show createComment Template if we don't have an action - description below
-      if( ($this->_iId !== '' && !isset($this->_aRequest['action']) ) ||
-              isset($this->_aRequest['parentcat']) && $this->_iId !== '') {
+      if( !empty($this->_iId) || isset($this->_aRequest['parentcat'])) {
         if(!isset($this->_aRequest['ajax']))
           $sReturn .= $this->create('create_comment');
       }
