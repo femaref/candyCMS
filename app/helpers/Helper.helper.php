@@ -64,7 +64,7 @@ final class Helper {
   public final static function createRandomChar($iLength, $bIntegerOnly = false) {
     $sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
 
-		if($bIntOnly == true)
+		if($bIntegerOnly == true)
 			$sChars = '0123456789';
 
     srand(microtime()*1000000);
@@ -80,7 +80,7 @@ final class Helper {
   }
 
 	public final static function createLinkTo($sUrl) {
-		return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
+		return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
 	}
 
   public final static function getAvatar($sPath, $iSize, $iUserId, $aGravatar = '') {

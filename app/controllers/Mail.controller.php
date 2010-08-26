@@ -159,10 +159,13 @@ class Mail extends Main {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
 		# Parse message and replace with (footer) variables
-		$sMessage = str_replace('%NO_REPLY', LANG_MAIL_NO_REPLY, $sMessage);
+		$sMessage = str_replace('%NOREPLY', LANG_MAIL_NO_REPLY, $sMessage);
 		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_SIGNATURE, $sMessage);
 		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
 		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
+
+		$sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
+		$sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
 
     $oMail = new PHPMailer(true);
 

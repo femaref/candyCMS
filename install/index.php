@@ -84,8 +84,7 @@ switch ($_REQUEST['action']) {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->query($sQuery);
-        $bResult = $oQuery->execute();
+        $bResult = $oDb->query($sQuery);
 
         $oDb = null;
 

@@ -52,17 +52,46 @@ class Session extends Main {
   }
 
   public final function createResendActions() {
-    # TODO: Set page title, send mails from here
-    if( isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ) {
-      if( $this->_oModel->createResendActions() == true ) {
-        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT).
-                $this->showCreateSessionTemplate();
-			} else
-        return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL).
-                $this->_showCreateResendActionsTemplate();
+    if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email'])) {
+      $aRow = $this->_oModel->createResendActions();
+
+      if (!isset($aRow) || $aRow == false)
+        return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL) .
+        $this->_showCreateResendActionsTemplate();
+
+      elseif ($aRow['action'] == 'resendpassword') {
+        $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
+        $sContent = str_replace('%p', $aRow['password'], $sContent);
+
+        $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                        LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
+                        $sContent,
+                        WEBSITE_MAIL_NOREPLY);
+
+        if ($bStatus == true)
+          return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+        else
+          Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
+      }
+      elseif ($aRow['action'] == 'resendverification') {
+        $sVerificationUrl = Helper::createLinkTo('/User/' . $aRow['verification_code'] . '/verification');
+
+        $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY);
+        $sContent = str_replace('%v', $sVerificationUrl, $sContent);
+
+        $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                        LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT,
+                        $sContent,
+                        WEBSITE_MAIL_NOREPLY);
+
+        if ($bStatus == true)
+          return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+        else
+          Helper::successMessage(LANG_SUCCESS_MAIL_SENT);
+      }
     }
     else
-			return $this->_showCreateResendActionsTemplate();
+      return $this->_showCreateResendActionsTemplate();
   }
 
   private final function _showCreateResendActionsTemplate() {
@@ -76,7 +105,7 @@ class Session extends Main {
       $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
     }
     else {
-      $oSmarty->assign('action', '/Session/resendvalidation');
+      $oSmarty->assign('action', '/Session/resendverification');
       # Language
       $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);
       $oSmarty->assign('lang_description', LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION);

@@ -214,7 +214,7 @@ class Section extends Main {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_DESTROY);
         }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verify' ) {
+        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification' ) {
           parent::_setContent($this->_oObject->verifyEmail());
           parent::_setTitle(LANG_GLOBAL_EMAIL_VERIFICATION);
         }

@@ -108,7 +108,6 @@ class Model_Session extends Model_Main {
   }
 
   public final function createResendActions() {
-    # TODO: Remove mails from here
 		require_once 'app/controllers/Mail.controller.php';
 		$bResult = false;
 
@@ -119,7 +118,7 @@ class Model_Session extends Model_Main {
                 ));
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->prepare("SELECT name, email FROM user WHERE email = :email");
+        $oQuery = $oDb->prepare("SELECT name FROM user WHERE email = :email");
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
@@ -135,8 +134,6 @@ class Model_Session extends Model_Main {
         return false;
       }
       else {
-        $aRow = & $aResult;
-
         $sNewPasswordClean	= Helper::createRandomChar(10);
         $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
@@ -157,15 +154,10 @@ class Model_Session extends Model_Main {
         }
 
         if($bResult == true) {
-          $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
-          $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
-
-          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                          LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
-                          $sContent,
-                          WEBSITE_MAIL_NOREPLY);
-
-          return $bStatus;
+          $aRow = & $aResult;
+          $aRow['action']   = 'resendpassword';
+          $aRow['password'] = $sNewPasswordClean;
+          return $aRow;
         }
         else
           return false;
@@ -181,31 +173,18 @@ class Model_Session extends Model_Main {
         $bResult = $oQuery->execute();
 
         $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $oDb = null;
 
-        if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
-          $oDb = null;
+        if (empty($aResult['verification_code']) || empty($bResult) || $bResult == false)
           return false;
-        }
         else {
           if (!empty($aResult['verification_code'])) {
             $aRow = & $aResult;
-
-            $sVerificationUrl		= Helper::createLinkTo('/User/'	.$iVerifyCode.	'/verification');
-
-            $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY);
-            $sContent = str_replace('%v', $sVerificationUrl, $sContent);
-
-            $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                            LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT,
-                            $sContent,
-                            WEBSITE_MAIL_NOREPLY);
-
-            return $bStatus;
+            $aRow['action'] = 'resendverification';
+            return $aRow;
           }
           else
             return false;
-
-          $oDb = null;
         }
       }
       catch (AdvancedException $e) {
