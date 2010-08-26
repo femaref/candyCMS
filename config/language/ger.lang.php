@@ -133,6 +133,8 @@ define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registrierung auf %WEBSIT
 define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
 define( 'LANG_LOGIN_RESEND_VERIFICATION', 'E-Mail-Bestätigung erneut zusenden' );
 define( 'LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
+define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"); # NEW
+define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT', 'Deine E-MailBestätigung für %WEBSITE_NAME' ); # NEW
 define( 'LANG_LOGIN_RESEND_VERIFICATION_SEND', 'E-Mail zuschicken' );
 
 define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );

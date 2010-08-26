@@ -107,67 +107,112 @@ class Model_Session extends Model_Main {
 		}
   }
 
-  public final function createNewPassword() {
+  public final function createResendActions() {
+    # TODO: Remove mails from here
 		require_once 'app/controllers/Mail.controller.php';
 		$bResult = false;
 
-		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-									PDO::ATTR_PERSISTENT => true
-							));
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if($this->_aRequest['action'] == 'resendpassword') {
+      try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                    PDO::ATTR_PERSISTENT => true
+                ));
+        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$oQuery = $oDb->prepare("SELECT name, email FROM user WHERE email = :email");
-			$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
-			$bResult = $oQuery->execute();
+        $oQuery = $oDb->prepare("SELECT name, email FROM user WHERE email = :email");
+        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $bResult = $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-			$e->getMessage();
-		}
+        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
 
-		if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
-			$oDb = null;
-			return false;
-		}
-		else {
-			$aRow = & $aResult;
+      if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
+        $oDb = null;
+        return false;
+      }
+      else {
+        $aRow = & $aResult;
 
-			$sNewPasswordClean	= Helper::createRandomChar(10);
-			$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
+        $sNewPasswordClean	= Helper::createRandomChar(10);
+        $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-			try {
-				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+          $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+          $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-				$oQuery = $oDb->prepare("UPDATE user SET password = :password WHERE email = :email");
-				$oQuery->bindParam(':password', $sNewPasswordSecure);
-				$oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+          $oQuery = $oDb->prepare("UPDATE user SET password = :password WHERE email = :email");
+          $oQuery->bindParam(':password', $sNewPasswordSecure);
+          $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
 
-				$bResult = $oQuery->execute();
-				$oDb = null;
-			}
-			catch (AdvancedException $e) {
-				$oDb->rollBack();
-				$e->getMessage();
-			}
+          $bResult = $oQuery->execute();
+          $oDb = null;
+        }
+        catch (AdvancedException $e) {
+          $oDb->rollBack();
+          $e->getMessage();
+        }
 
-			if($bResult == true) {
-				$sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
-				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+        if($bResult == true) {
+          $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
+          $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-												LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
-												$sContent,
-												WEBSITE_MAIL_NOREPLY);
+          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                          LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT,
+                          $sContent,
+                          WEBSITE_MAIL_NOREPLY);
 
-				return $bStatus;
-			}
-			else
-				return false;
-		}
+          return $bStatus;
+        }
+        else
+          return false;
+      }
+    }
+    else {
+      try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $oQuery = $oDb->prepare("SELECT name, verification_code FROM user WHERE email = :email");
+        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $bResult = $oQuery->execute();
+
+        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+        if( empty($aResult['name']) || empty($bResult) || $bResult == false) {
+          $oDb = null;
+          return false;
+        }
+        else {
+          if (!empty($aResult['verification_code'])) {
+            $aRow = & $aResult;
+
+            $sVerificationUrl		= Helper::createLinkTo('/User/'	.$iVerifyCode.	'/verification');
+
+            $sContent = str_replace('%u', $aRow['name'], LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY);
+            $sContent = str_replace('%v', $sVerificationUrl, $sContent);
+
+            $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                            LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT,
+                            $sContent,
+                            WEBSITE_MAIL_NOREPLY);
+
+            return $bStatus;
+          }
+          else
+            return false;
+
+          $oDb = null;
+        }
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+        $e->getMessage();
+      }
+    }
   }
 
   public final function destroy() {

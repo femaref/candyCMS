@@ -146,12 +146,12 @@ fieldset .textarea textarea {
   width:80%;
 }
 
-#login .submit, #lost_pwrd .submit, #newsletter .submit {
+#login .submit, #resend_actions .submit, #newsletter .submit {
   display:inline;
   padding:5px;
 }
 
-#login .input input, #lost_pwrd .input input, #newsletter .input input {
+#login .input input, #resend_actions .input input, #newsletter .input input {
   min-width:100px;
 }
 

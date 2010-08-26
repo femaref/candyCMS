@@ -51,56 +51,40 @@ class Session extends Main {
     return $oSmarty->fetch('session/createSession.tpl');
   }
 
-  public final function createNewPassword() {
+  public final function createResendActions() {
+    # TODO: Set page title, send mails from here
     if( isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ) {
-
-      if( $this->_oModel->createNewPassword() == true ) {
-        return Helper::successMessage(LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS).
+      if( $this->_oModel->createResendActions() == true ) {
+        return Helper::successMessage(LANG_SUCCESS_MAIL_SENT).
                 $this->showCreateSessionTemplate();
 			} else
         return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL).
-                $this->_showCreateNewPasswordTemplate();
+                $this->_showCreateResendActionsTemplate();
     }
     else
-			return $this->_showCreateNewPasswordTemplate();
+			return $this->_showCreateResendActionsTemplate();
   }
 
-  private final function _showCreateNewPasswordTemplate() {
+  private final function _showCreateResendActionsTemplate() {
     $oSmarty = new Smarty();
 
-    # Language
-    $oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
-    $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
-    $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
-
-    $oSmarty->template_dir = Helper::getTemplateDir('session/createNewPassword');
-    return $oSmarty->fetch('session/createNewPassword.tpl');
-  }
-
-	public final function createNewVerificationEmail() {
-    if( isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ) {
-
-      if( $this->_oModel->createNewVerificationEmail() == true ) {
-        return Helper::successMessage(LANG_LOGIN_RESEND_VERIFICATION_SUCCESS).
-                $this->showCreateSessionTemplate();
-			} else
-        return Helper::errorMessage(LANG_ERROR_LOGIN_NO_SUCH_EMAIL).
-                $this->_showCreateNewVerificationEmailTemplate();
+    if($this->_aRequest['action'] == 'resendpassword') {
+      $oSmarty->assign('action', '/Session/resendpassword');
+      # Language
+      $oSmarty->assign('lang_headline', LANG_LOGIN_PASSWORD_LOST);
+      $oSmarty->assign('lang_description', LANG_LOGIN_PASSWORD_LOST_DESCRIPTION);
+      $oSmarty->assign('lang_submit', LANG_LOGIN_PASSWORD_SEND);
     }
-    else
-			return $this->_showCreateNewVerificationEmailTemplate();
-	}
+    else {
+      $oSmarty->assign('action', '/Session/resendvalidation');
+      # Language
+      $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);
+      $oSmarty->assign('lang_description', LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION);
+      $oSmarty->assign('lang_submit', LANG_LOGIN_RESEND_VERIFICATION_SEND);
+    }
 
-  private final function _showCreateNewVerificationEmailTemplate() {
-    $oSmarty = new Smarty();
-
-    # Language
-    $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);
-    $oSmarty->assign('lang_description', LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION);
-    $oSmarty->assign('lang_submit', LANG_LOGIN_RESEND_VERIFICATION_SEND);
-
-    $oSmarty->template_dir = Helper::getTemplateDir('session/createResendValidation');
-    return $oSmarty->fetch('session/createResendValidation.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('session/createResendActions');
+    return $oSmarty->fetch('session/createResendActions.tpl');
   }
 
   public final function destroy() {

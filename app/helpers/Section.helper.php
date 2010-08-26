@@ -177,14 +177,9 @@ class Section extends Main {
           parent::_setContent($this->_oObject->createInvite());
           parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
         }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'lostpassword' ) {
-          parent::_setContent($this->_oObject->createNewPassword());
-          parent::_setTitle(LANG_LOGIN_PASSWORD_LOST);
-        }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendverification' ) {
-          parent::_setContent($this->_oObject->createNewVerificationEmail());
-          parent::_setTitle(LANG_LOGIN_RESEND_VERIFICATION);
-        }
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendpassword' ||
+                $this->_aRequest['action'] ==  'resendverification')
+          parent::_setContent($this->_oObject->createResendActions());
         else {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_GLOBAL_LOGOUT);
