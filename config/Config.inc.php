@@ -54,12 +54,12 @@ define('WEBSITE_NAME', 'dev.planetk4.de');
 
 # Define an email, where user responses for mails and newsletters are going to
 # be sent to!
-define('WEBSITE_MAIL', 'info@dev.planetk4.de');
+define('WEBSITE_MAIL', 'marco@empuxa.com');
 
 # ------------------------------------------------------------------------------
 
 # Define a noreply email for spam etc.
-define('WEBSITE_MAIL_NOREPLY', 'noreply@dev.planetk4.de');
+define('WEBSITE_MAIL_NOREPLY', 'no-reply@dev.planetk4.de');
 
 # ------------------------------------------------------------------------------
 

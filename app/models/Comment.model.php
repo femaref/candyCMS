@@ -57,7 +57,6 @@ class Model_Comment extends Model_Main {
 
       } catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
 
       $iLoop = 1;
@@ -119,7 +118,6 @@ class Model_Comment extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     return (int) $iResult;
@@ -159,7 +157,6 @@ class Model_Comment extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -183,7 +180,6 @@ class Model_Comment extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 }

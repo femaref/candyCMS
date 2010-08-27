@@ -29,13 +29,13 @@ class User extends Main {
 
     else {
       if (isset($this->_aRequest['update_user'])) {
-        if ($this->_update($this->_iId) == true)
+        if ($this->_update($this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
         else
           return $this->_showFormTemplate($this->_aError);
       }
       elseif (isset($this->_aRequest['create_avatar'])) {
-        if ($this->_createAvatar($this->_iId) == true)
+        if ($this->_createAvatar($this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
         else
           return $this->show();
@@ -83,7 +83,7 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               USER_ID;
 
-      if ($this->_oModel->update($this->_iId) == true)
+      if ($this->_oModel->update($this->_iId) === true)
         return true;
       else
         return false;
@@ -266,7 +266,7 @@ class User extends Main {
 	# @Override
 	public function destroy() {
     if (USER_RIGHT == 4) {
-      if ($this->_oModel->destroy($this->_iId) == true) {
+      if ($this->_oModel->destroy($this->_iId) === true) {
         $this->_iId = '';
         return Helper::successMessage(LANG_SUCCESS_DESTROY) . $this->show();
       } else
@@ -279,12 +279,14 @@ class User extends Main {
   # @ Override due registration (avoid user right level 3)
 	public function create() {
     if (isset($this->_aRequest['create_user'])) {
-      if ($this->_create() == true)
+			# Why is here a bug?
+      if ($this->_create() === true)
         return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL) . Helper::redirectTo('/Session/create');
 
       # TODO: We need to get seperate messages for failed mails and failed queries
       else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        #return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+				return $this->_showCreateUserTemplate();
     } else
       return $this->_showCreateUserTemplate();
   }
@@ -322,7 +324,7 @@ class User extends Main {
       $iVerificationCode = Helper::createRandomChar(12, true);
       $sVerificationUrl = Helper::createLinkTo('/User/' . $iVerificationCode . '/verification');
 
-      if ($this->_oModel->create($iVerificationCode) == true) {
+      if ($this->_oModel->create($iVerificationCode) === true) {
         $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
                         LANG_LOGIN_REGISTRATION_MAIL_BODY);
         $sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
@@ -369,7 +371,6 @@ class User extends Main {
 		$oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
 		$oSmarty->assign('lang_submit', LANG_GLOBAL_REGISTER);
 		$oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
-
 		$oSmarty->template_dir = Helper::getTemplateDir('user/createUser');
 		return $oSmarty->fetch('user/createUser.tpl');
 	}
@@ -377,7 +378,7 @@ class User extends Main {
 	public function verifyEmail() {
 		if (empty($this->_iId))
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
-		elseif ($this->_oModel->verifyEmail($this->_iId) == true)
+		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
 			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESS);
 		else
 			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;

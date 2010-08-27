@@ -174,7 +174,7 @@ class Blog extends Main {
 		if (isset($this->_aError))
       return $this->_showFormTemplate(false);
 
-		elseif( $this->_oModel->create() == true )
+		elseif( $this->_oModel->create() === true )
 			return Helper::successMessage(LANG_SUCCESS_CREATE).
 					$this->show();
 		else
@@ -182,7 +182,7 @@ class Blog extends Main {
 	}
 
 	protected final function _update() {
-		if( $this->_oModel->update((int)$this->_aRequest['id']) == true)
+		if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
 			return Helper::successMessage(LANG_SUCCESS_UPDATE).
 					$this->show();
 		else

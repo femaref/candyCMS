@@ -124,7 +124,7 @@ final class Content extends Main {
       return $this->_showFormTemplate(false);
 
     else {
-      if($this->_oModel->create() == true)
+      if($this->_oModel->create() === true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).
                 $this->show();
       else
@@ -133,7 +133,7 @@ final class Content extends Main {
   }
 
   protected final function _update() {
-    if($this->_oModel->update((int)$this->_aRequest['id']) == true)
+    if($this->_oModel->update((int)$this->_aRequest['id']) === true)
       return Helper::successMessage(LANG_SUCCESS_UPDATE).
             $this->show();
     else
@@ -141,7 +141,7 @@ final class Content extends Main {
   }
 
   protected final function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) == true) {
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       $this->_iId = '';
       return Helper::successMessage(LANG_SUCCESS_DESTROY) .$this->show();
     } else

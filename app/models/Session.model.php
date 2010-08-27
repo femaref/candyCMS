@@ -33,7 +33,6 @@ class Model_Session extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -62,7 +61,6 @@ class Model_Session extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -93,7 +91,6 @@ class Model_Session extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     # Check if user did not verify
@@ -125,7 +122,6 @@ class Model_Session extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
 
       if (empty($this->_aData['name']) || $bResult == false) {
@@ -147,7 +143,6 @@ class Model_Session extends Model_Main {
         }
         catch (AdvancedException $e) {
           $oDb->rollBack();
-          $e->getMessage();
         }
 
         if ($bResult == true)
@@ -179,7 +174,6 @@ class Model_Session extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else
@@ -213,7 +207,6 @@ class Model_Session extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 }

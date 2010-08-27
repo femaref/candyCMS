@@ -47,7 +47,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
 		if($bEdit == true) {
@@ -108,7 +107,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     $this->_iEntries = count($aResult);
@@ -138,7 +136,6 @@ class Model_Gallery extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
 
       $iLoop = 0;
@@ -182,7 +179,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if($bReturn == true)
@@ -202,7 +198,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if($bReturn == true)
@@ -222,7 +217,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if($bReturn == true)
@@ -251,7 +245,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if ($bResult == true) {
@@ -304,7 +297,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -324,7 +316,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if ($bReturn == true) {
@@ -358,7 +349,6 @@ class Model_Gallery extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
 
       try {
@@ -379,7 +369,6 @@ class Model_Gallery extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else {
@@ -418,7 +407,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     # We must return the path for ajax information
@@ -447,7 +435,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -465,7 +452,6 @@ class Model_Gallery extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if ($bReturn == true) {
@@ -495,7 +481,6 @@ class Model_Gallery extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else {

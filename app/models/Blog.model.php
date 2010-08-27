@@ -39,7 +39,6 @@ class Model_Blog extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
 
 			$this->oPages = new Pages($this->_aRequest, (int)$iResult, $iLimit);
@@ -148,7 +147,6 @@ class Model_Blog extends Model_Main {
 			}
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
-				$e->getMessage();
 			}
 
 			$aRow =& $aResult;
@@ -231,7 +229,6 @@ class Model_Blog extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 	}
 
@@ -278,7 +275,6 @@ class Model_Blog extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 	}
 
@@ -301,7 +297,6 @@ class Model_Blog extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     try {
@@ -322,7 +317,6 @@ class Model_Blog extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 }

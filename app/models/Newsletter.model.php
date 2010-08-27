@@ -32,7 +32,6 @@ class Model_Newsletter extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if (isset($aResult) && !empty($aResult['email'])) {
@@ -53,7 +52,6 @@ class Model_Newsletter extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else {
@@ -74,7 +72,6 @@ class Model_Newsletter extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
   }
@@ -96,7 +93,6 @@ class Model_Newsletter extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     elseif ($sMySqlTable == 'user') {
@@ -117,7 +113,6 @@ class Model_Newsletter extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else

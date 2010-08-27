@@ -28,7 +28,7 @@ class Session extends Main {
 						!empty($this->_aRequest['email']) &&
 						!empty($this->_aRequest['password'])) {
 
-			if ($this->_oModel->create() == true)
+			if ($this->_oModel->create() === true)
 				return Helper::successMessage(LANG_LOGIN_LOGIN_SUCCESSFUL) .
 					Helper::redirectTo('/Start');
 			else
@@ -60,7 +60,7 @@ class Session extends Main {
         $sNewPasswordClean	= Helper::createRandomChar(10);
         $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-        if($this->_oModel->createResendActions($sNewPasswordSecure) == true) {
+        if($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
           $aData = $this->_oModel->getData();
 
           $sContent = str_replace('%u', $aData['name'], LANG_LOGIN_PASSWORD_LOST_MAIL_BODY);
@@ -80,7 +80,7 @@ class Session extends Main {
           Helper::errorMessage(LANG_ERROR_DB_QUERY);
       }
       elseif ($this->_aRequest['action'] == 'resendverification') {
-        if($this->_oModel->createResendActions() == true) {
+        if($this->_oModel->createResendActions() === true) {
           $aData = $this->_oModel->getData();
 
           $sVerificationUrl = Helper::createLinkTo('/User/' . $aData['verification_code'] . '/verification');
@@ -142,7 +142,7 @@ class Session extends Main {
   }
 
   public final function destroy() {
-    if ($oStatus = & $this->_oModel->destroy() == true) {
+    if ($oStatus = & $this->_oModel->destroy() === true) {
       unset($_SESSION);
       return Helper::redirectTo('/Start') . Helper::successMessage(LANG_LOGIN_LOGOUT_SUCCESSFUL);
     }

@@ -7,13 +7,13 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class AdvancedException extends Exception {
+class AdvancedException extends ErrorException {
 
   public function __contruct($sMessage, $iCode) {
     $sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
     $iCode = !empty($iCode) ? $iCode : $this->getCode();
 
-    $this->_sendAdminMail($sMessage);
+		$this->_sendAdminMail($sMessage);
   }
 
   private function _sendAdminMail($sMessage) {

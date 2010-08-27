@@ -26,7 +26,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -49,7 +48,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -90,7 +88,6 @@ class Model_User extends Model_Main {
         }
       } catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     } else {
       try {
@@ -120,7 +117,6 @@ class Model_User extends Model_Main {
 
       } catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
   }
@@ -156,7 +152,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -211,7 +206,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -243,7 +237,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
   }
 
@@ -267,7 +260,6 @@ class Model_User extends Model_Main {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     if (!empty($aResult['id'])) {
@@ -291,7 +283,6 @@ class Model_User extends Model_Main {
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
-        $e->getMessage();
       }
     }
     else {

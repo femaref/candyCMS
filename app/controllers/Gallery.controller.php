@@ -82,7 +82,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate(false);
 
     else {
-      if($this->_oModel->create() == true)
+      if($this->_oModel->create() === true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).
                 $this->show($this->_oModel->getId());
       else
@@ -99,7 +99,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate(true);
 
     else {
-      if( $this->_oModel->update((int)$this->_aRequest['id']) == true)
+      if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
                 $this->show();
       else
@@ -108,7 +108,7 @@ class Gallery extends Main {
   }
 
   protected function _destroy() {
-    if($this->_oModel->destroy($this->_iId) == true) {
+    if($this->_oModel->destroy($this->_iId) === true) {
       unset($this->_iId);
       return Helper::successMessage(LANG_SUCCESS_DESTROY).
               $this->show();
@@ -190,7 +190,7 @@ class Gallery extends Main {
 
     else {
       if( isset($this->_aRequest['update_file']) )
-        if( $this->_oModel->updateFile($this->_iId) == true)
+        if( $this->_oModel->updateFile($this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE);
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL);
@@ -204,7 +204,7 @@ class Gallery extends Main {
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
-      if($this->_oModel->destroyFile($this->_iId) == true) {
+      if($this->_oModel->destroyFile($this->_iId) === true) {
         unset($this->_iId);
         Helper::redirectTo('/Gallery');
         return Helper::successMessage(LANG_MEDIA_FILE_DELETE_SUCCESS).$this->show();
@@ -218,7 +218,7 @@ class Gallery extends Main {
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
     $oSmarty->assign('id', $this->_iId);
 
-    if($bUpdate == true) {
+    if($bUpdate === true) {
       $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/updatefile');
       $oSmarty->assign('_formdata_', 'update_file');
       $oSmarty->assign('description', Model_Gallery::getFileDescription($this->_iId));

@@ -20,7 +20,7 @@ class Mail extends Main {
   # Empty, but required from section helper
   public function __init() {}
 
-  public final function createMail() {
+  public final function create() {
     if( isset($this->_aRequest['send_mail']) ) {
       if( USER_RIGHT == 0 )
         return $this->_checkCaptcha();

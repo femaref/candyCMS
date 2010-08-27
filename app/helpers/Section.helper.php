@@ -125,7 +125,7 @@ class Section extends Main {
 
       case 'mail':
 
-        parent::_setContent($this->_oObject->createMail());
+        parent::_setContent($this->_oObject->create());
         parent::_setTitle(LANG_GLOBAL_CONTACT);
 
         break;
