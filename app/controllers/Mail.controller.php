@@ -64,6 +64,11 @@ class Mail extends Main {
     else
       $oSmarty->assign('_captcha_', '');
 
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
+    }
+
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
     $oSmarty->assign('lang_email', LANG_MAIL_OWN_EMAIL);
@@ -93,8 +98,8 @@ class Mail extends Main {
         return $this->_standardMail(true);
       else {
         $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
-        return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT).
-                $this->_showCreateMailTemplate();
+        $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
+        return $this->_showCreateMailTemplate();
       }
     }
     else
@@ -102,27 +107,24 @@ class Mail extends Main {
   }
 
   private function _standardMail($bShowCaptcha = true) {
-    $sError = '';
-
+    # TODO: Better language
     if (!isset($this->_aRequest['email']) ||
             empty($this->_aRequest['email']))
-      $sError .= LANG_GLOBAL_EMAIL . '<br />';
+       $this->_aError['email'] = LANG_GLOBAL_EMAIL;
 
     if (!isset($this->_aRequest['content']) ||
             empty($this->_aRequest['content']))
-      $sError .= LANG_GLOBAL_CONTENT . '<br />';
+       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
-    if (!empty($sError)) {
-      $sReturn = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showCreateMailTemplate($bShowCaptcha);
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showCreateMailTemplate($bShowCaptcha);
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
       $aRow = Model_User::getUserNamesAndEmail($this->_iId);
 
       $sMailTo = $aRow['email'];
+
       if(empty($sMailTo)) {
         $sReplyTo = isset($this->_aRequest['email']) &&
                         !empty($this->_aRequest['email']) ?

@@ -76,15 +76,13 @@ class Gallery extends Main {
   }
 
   protected final function _create() {
+    # TODO: Better language
     if(	!isset($this->_aRequest['title']) ||
             empty($this->_aRequest['title']) )
-      $sError = LANG_GLOBAL_TITLE.	'<br />';
+      $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showFormTemplate(false);
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showFormTemplate(false);
     else {
       if($this->_oModel->create() == true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).
@@ -95,15 +93,13 @@ class Gallery extends Main {
   }
 
   protected final function _update() {
+    # TODO: Better language
     if(	!isset($this->_aRequest['title']) ||
             empty($this->_aRequest['title']) )
-      $sError = LANG_GLOBAL_TITLE.	'<br />';
+      $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showFormTemplate(true);
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showFormTemplate(true);
     else {
       if( $this->_oModel->update((int)$this->_aRequest['id']) == true)
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
@@ -164,6 +160,11 @@ class Gallery extends Main {
       # Language
       $oSmarty->assign('lang_headline', LANG_GALLERY_CREATE_ALBUM);
       $oSmarty->assign('lang_submit', LANG_GALLERY_CREATE_ALBUM);
+    }
+
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);

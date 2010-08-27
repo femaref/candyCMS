@@ -20,17 +20,20 @@
     <tr>
       <th colspan='2'>{$lang_headline}</th>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_subject} error{/if}'>
       <td class='td_left'>
         <label for='subject'>{$lang_subject}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='subject' id='subject' value='{$subject}' type='text' />
+          {if $error_subject}
+            <div class="description">{$error_subject}</div>
+          {/if}
         </div>
       </td>
     </tr>
-    <tr class='row2'>
+    <tr class='row2{if $error_content} error{/if}'>
       <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
@@ -38,8 +41,12 @@
         <div class="textarea">
           <textarea name='content' rows='20' cols='50'
                     id='content'>{$content}</textarea>
+          {if $error_content}
+            <div class="description">{$error_content}</div>
+          {else}
+            <div class='description'>{$lang_content_info}</div>
+          {/if}
         </div>
-        <div class='description'>{$lang_content_info}</div>
       </td>
     </tr>
   </table>

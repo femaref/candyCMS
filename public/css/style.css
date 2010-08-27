@@ -216,7 +216,7 @@ fieldset .textarea textarea {
 
 /* Quote Boxes, Success and Error Messages */
 .success, .error, .notice {
-  margin: 10px;
+  margin: 10px 0px 10px 0px;
   padding: 10px;
   cursor:pointer;
 }
@@ -243,7 +243,6 @@ fieldset .textarea textarea {
   background:#EED0D0;
   color:#333;
   border:1px solid red;
-  padding:0px;
 }
 
 .error h4 {

@@ -21,6 +21,7 @@ class Session extends Main {
    * @ Override
    */
   public final function create() {
+    # TODO: Formtastic error messages
 		if (isset($this->_aRequest['create_session']) &&
 						isset($this->_aRequest['email']) &&
 						isset($this->_aRequest['password']) &&
@@ -52,6 +53,7 @@ class Session extends Main {
   }
 
   public final function createResendActions() {
+    # TODO: Formtastic error messages
     if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email'])) {
 
       if ($this->_aRequest['action'] == 'resendpassword') {
@@ -128,6 +130,11 @@ class Session extends Main {
       $oSmarty->assign('lang_headline', LANG_LOGIN_RESEND_VERIFICATION);
       $oSmarty->assign('lang_description', LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION);
       $oSmarty->assign('lang_submit', LANG_LOGIN_RESEND_VERIFICATION_SEND);
+    }
+
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     $oSmarty->template_dir = Helper::getTemplateDir('session/createResendActions');

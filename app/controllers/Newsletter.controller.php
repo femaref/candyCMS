@@ -74,6 +74,11 @@ class Newsletter extends Main {
     $oSmarty->assign('subject', $sSubject);
     $oSmarty->assign('content', $sContent);
 
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
+    }
+
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
     $oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CONTENT_INFO);
@@ -90,17 +95,14 @@ class Newsletter extends Main {
 
     if(	!isset($this->_aRequest['subject']) ||
             empty($this->_aRequest['subject']) )
-      $sError .= LANG_GLOBAL_SUBJECT.	'<br />';
+       $this->_aError['subject'] = LANG_GLOBAL_SUBJECT;
 
     if(	!isset($this->_aRequest['content']) ||
             empty($this->_aRequest['content']) )
-      $sError .= LANG_GLOBAL_CONTENT.	'<br />';
+       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showCreateNewsletterTemplate();
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showCreateNewsletterTemplate();
     else {
       # Deliver Newsletter to users
       $aResult = Model_Newsletter::getNewsletterRecipients('user');

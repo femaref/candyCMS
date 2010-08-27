@@ -87,12 +87,17 @@ final class Content extends Main {
       $oSmarty->assign('c', $aContent);
       $oSmarty->assign('id', '');
 
-      /* Language */
+      # Language
       $oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
     }
 
-    /* More language */
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
+    }
+
+    # More language
     $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
     $oSmarty->assign('lang_currently', LANG_GLOBAL_CURRENTLY);
@@ -105,21 +110,17 @@ final class Content extends Main {
   }
 
   protected final function _create() {
-    $sError = '';
-
+    # TODO: Better error messages
     if(	!isset($this->_aRequest['title']) ||
             empty($this->_aRequest['title']) )
-      $sError .= LANG_GLOBAL_TITLE.	'<br />';
+      $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
     if(	!isset($this->_aRequest['content']) ||
             empty($this->_aRequest['content']) )
-      $sError .= LANG_GLOBAL_CONTENT.	'<br />';
+      $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showFormTemplate(false);
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showFormTemplate(false);
     else {
       if($this->_oModel->create() == true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).

@@ -3,7 +3,7 @@
     <tr>
       <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>
         <label for='email'>{$lang_email}</label>
       </td>
@@ -11,6 +11,9 @@
         {if $email == ''}
           <div class="input">
             <input name='email' id='email' value='{$email}' type='text' />
+            {if $error_email}
+              <div class="description">{$error_email}</div>
+            {/if}
           </div>
         {else}
           {$email}
@@ -30,7 +33,7 @@
         </div>
       </td>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_content} error{/if}'>
       <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
@@ -38,6 +41,9 @@
         <div class="textarea">
           <textarea name='content' id='content'
                     rows='12' cols='50'>{$content}</textarea>
+          {if $error_content}
+            <div class="description">{$error_content}</div>
+          {/if}
         </div>
       </td>
     </tr>
@@ -51,7 +57,12 @@
         };
       </script>
     {/literal}
-    {$_captcha_}
+    <div class="{if $error_captcha}error{/if}">
+      {$_captcha_}
+      {if $error_captcha}
+        <div class="description">{$error_captcha}</div>
+      {/if}
+    </div>
   </center>
   <div class="submit">
     <input type='submit' value='{$lang_submit}' />
