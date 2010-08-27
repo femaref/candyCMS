@@ -137,7 +137,7 @@ switch ($_REQUEST['step']) {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  user ( id, name, surname, password, email, ip, userright, regdate )
+                                  user ( id, name, surname, password, email, ip, user_right, date )
                                 VALUES (  1,
                                   '" . $_SESSION['install']['name'] . "',
                                   '" . $_SESSION['install']['surname'] . "',
@@ -153,8 +153,8 @@ switch ($_REQUEST['step']) {
       return $bResult;
     }
     catch (AdvancedException $e) {
+			$e->sendAdminMail($e->getMessage());
       $oDb->rollBack();
-      $e->getMessage();
     }
 
     break;

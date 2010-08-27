@@ -76,7 +76,6 @@ class Model_Blog extends Model_Main {
 			}
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
-				$e->getMessage();
 			}
 
 			foreach ($aResult as $aRow) {

@@ -13,13 +13,13 @@ class AdvancedException extends ErrorException {
     $sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
     $iCode = !empty($iCode) ? $iCode : $this->getCode();
 
-		$this->_sendAdminMail($sMessage);
+		$this->sendAdminMail($sMessage);
   }
 
-  private function _sendAdminMail($sMessage) {
+  public function sendAdminMail($sMessage, $sSubject = 'Exception') {
     if (!class_exists('Mail'))
       require_once 'app/controllers/Mail.controller.php';
 
-    Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, false);
+    Mail::send(WEBSITE_MAIL, $sSubject, $sMessage, false);
   }
 }

@@ -44,7 +44,7 @@ class Gallery extends Main {
       $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
-      $oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_CREATE_FILE);
+      $oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
       $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
       $oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
@@ -244,7 +244,7 @@ class Gallery extends Main {
       $oSmarty->assign('lang_create_file_resize', LANG_GALLERY_CREATE_FILE_RESIZE);
       $oSmarty->assign('lang_cut', LANG_GLOBAL_CUT);
       $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CHOOSE);
-      $oSmarty->assign('lang_headline', LANG_GALLERY_CREATE_FILE);
+      $oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
       $oSmarty->assign('lang_same_filetype', LANG_GALLERY_SAME_FILETYPE);
     }
 
