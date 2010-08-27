@@ -17,9 +17,8 @@ class Mail extends Main {
   private $_sRecaptchaResponse = '';
   private $_sRecaptchaError = '';
 
-  public function __init() {
-
-  }
+  # Empty, but required from section helper
+  public function __init() {}
 
   public final function createMail() {
     if( isset($this->_aRequest['send_mail']) ) {
@@ -38,8 +37,10 @@ class Mail extends Main {
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
       $sEmail = (string)$this->_aRequest['email'];
+
     elseif( isset($this->_aSession['userdata']['email']) )
       $sEmail = $this->_aSession['userdata']['email'];
+
     else
       $sEmail = '';
 
@@ -59,8 +60,7 @@ class Mail extends Main {
     $oSmarty->assign('subject', $sSubject);
 
     if( $bShowCaptcha == true )
-      $oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey,
-              $this->_sRecaptchaError) );
+      $oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey, $this->_sRecaptchaError) );
     else
       $oSmarty->assign('_captcha_', '');
 
@@ -76,8 +76,7 @@ class Mail extends Main {
     $oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
 
-    if( isset( $this->_aRequest['subject'] ) &&
-            'Bugreport' == $this->_aRequest['subject'] )
+    if( isset( $this->_aRequest['subject'] ) && 'Bugreport' == $this->_aRequest['subject'] )
       $oSmarty->assign('lang_submit', LANG_GLOBAL_REPORT_ERROR);
     else
       $oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
@@ -96,8 +95,9 @@ class Mail extends Main {
 
       if ($this->_sRecaptchaResponse->is_valid)
         return $this->_standardMail(true);
+
       else {
-        $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
+        $this->_sRecaptchaError   = $this->_sRecaptchaResponse->error;
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
         return $this->_showCreateMailTemplate();
       }
@@ -108,16 +108,15 @@ class Mail extends Main {
 
   private function _standardMail($bShowCaptcha = true) {
     # TODO: Better language
-    if (!isset($this->_aRequest['email']) ||
-            empty($this->_aRequest['email']))
+    if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
        $this->_aError['email'] = LANG_GLOBAL_EMAIL;
 
-    if (!isset($this->_aRequest['content']) ||
-            empty($this->_aRequest['content']))
+    if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
        $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showCreateMailTemplate($bShowCaptcha);
+
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
@@ -126,13 +125,12 @@ class Mail extends Main {
       $sMailTo = $aRow['email'];
 
       if(empty($sMailTo)) {
-        $sReplyTo = isset($this->_aRequest['email']) &&
-                        !empty($this->_aRequest['email']) ?
+        $sReplyTo = isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ?
                 Helper::formatInput($this->_aRequest['email']):
                 WEBSITE_MAIL_NOREPLY;
       }
       else
-        $sReplyTo =& $sMailTo;
+        $sReplyTo = $sMailTo;
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :

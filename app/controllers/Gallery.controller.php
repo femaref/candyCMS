@@ -33,16 +33,14 @@ class Gallery extends Main {
       $sAlbumName	= Model_Gallery::getAlbumName($this->_iId);
 
       $oSmarty->assign('id', $this->_iId);
-      $oSmarty->assign('files',
-              $this->_oModel->getThumbs($this->_iId, LIMIT_ALBUM_IMAGES));
+      $oSmarty->assign('files', $this->_oModel->getThumbs($this->_iId, LIMIT_ALBUM_IMAGES));
       $oSmarty->assign('file_no', $this->_oModel->_iEntries);
       $oSmarty->assign('gallery_name', $sAlbumName);
       $oSmarty->assign('gallery_description', Model_Gallery::getAlbumDescription($this->_iId));
       $oSmarty->assign('popup_path', POPUP_DEFAULT_X);
 
       # System variables
-      $oSmarty->assign('_album_pages_',
-              $this->_oModel->oPages->showPages('Gallery/'	.$this->_iId));
+      $oSmarty->assign('_album_pages_', $this->_oModel->oPages->showPages('Gallery/'	.$this->_iId));
       $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
@@ -77,12 +75,12 @@ class Gallery extends Main {
 
   protected final function _create() {
     # TODO: Better language
-    if(	!isset($this->_aRequest['title']) ||
-            empty($this->_aRequest['title']) )
+    if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
       $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(false);
+
     else {
       if($this->_oModel->create() == true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).
@@ -94,12 +92,12 @@ class Gallery extends Main {
 
   protected final function _update() {
     # TODO: Better language
-    if(	!isset($this->_aRequest['title']) ||
-            empty($this->_aRequest['title']) )
+    if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
       $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(true);
+
     else {
       if( $this->_oModel->update((int)$this->_aRequest['id']) == true)
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
@@ -174,10 +172,10 @@ class Gallery extends Main {
     return $oSmarty->fetch('gallery/_form_album.tpl');
   }
 
-
   public final function createFile() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if( isset($this->_aRequest['create_file']) )
         return $this->_oModel->createFile();
@@ -189,6 +187,7 @@ class Gallery extends Main {
   public final function updateFile() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if( isset($this->_aRequest['update_file']) )
         if( $this->_oModel->updateFile($this->_iId) == true)
@@ -203,6 +202,7 @@ class Gallery extends Main {
   public final function destroyFile() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if($this->_oModel->destroyFile($this->_iId) == true) {
         unset($this->_iId);

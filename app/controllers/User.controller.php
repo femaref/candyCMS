@@ -26,6 +26,7 @@ class User extends Main {
 
     if (USER_ID == 0)
       return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if (isset($this->_aRequest['update_user'])) {
         if ($this->_update($this->_iId) == true)
@@ -75,6 +76,7 @@ class User extends Main {
 
     if (isset($this->_aError))
       return false;
+
     else {
       # Fix for missing id
       $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
@@ -188,6 +190,7 @@ class User extends Main {
     if ($iAgreement == 0)
       return Helper::errorMessage(LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT) .
       $this->_showFormTemplate();
+
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
       return $oUpload->uploadAvatarFile(false) .
@@ -215,6 +218,7 @@ class User extends Main {
 
 			if (USER_RIGHT < 3)
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
 			else {
 				$this->_aData = $this->_oModel->getData();
 				$oSmarty->assign('user', $this->_aData);
@@ -286,13 +290,13 @@ class User extends Main {
   }
 
 	private function _create() {
-		if (empty($this->_aRequest['name']))
+		if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
       $this->_aError['name'] = LANG_ERROR_LOGIN_ENTER_NAME;
 
-    if (empty($this->_aRequest['email']))
+    if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
       $this->_aError['email'] = LANG_ERROR_LOGIN_ENTER_EMAIL;
 
-    if (empty($this->_aRequest['password']))
+    if (!isset($this->_aRequest['password']) || empty($this->_aRequest['password']))
       $this->_aError['password'] = LANG_ERROR_LOGIN_ENTER_PASSWORD;
 
     if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
@@ -311,6 +315,7 @@ class User extends Main {
 
     if (isset($this->_aError))
       return $this->_showCreateUserTemplate();
+
     else {
       $this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 

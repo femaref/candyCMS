@@ -19,10 +19,10 @@ final class Comment extends Main {
   private $_sParentSection;
   private $_sAction;
 
-  private $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
-  private $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
-  private $_sRecaptchaResponse = '';
-  private $_sRecaptchaError = '';
+  private $_sRecaptchaPublicKey   = RECAPTCHA_PUBLIC;
+  private $_sRecaptchaPrivateKey  = RECAPTCHA_PRIVATE;
+  private $_sRecaptchaResponse    = ''; # TODO: String ?!
+  private $_sRecaptchaError       = ''; # TODO: String ?!
 
   public function __init($iEntries = '', $aParentData = '') {
     $this->_aParentData =& $aParentData;
@@ -103,6 +103,8 @@ final class Comment extends Main {
     }
   }
 
+  # @Override
+  # We must override the main method due to user right problems
   public final function create($sInputName) {
     if( isset($this->_aRequest[$sInputName]) ) {
       if( USER_RIGHT == 0 )
@@ -118,21 +120,17 @@ final class Comment extends Main {
 
   protected final function _create($bShowCaptcha = false) {
     # TODO: Better language errors
-    if(	!isset($this->_aRequest['parent_category']) ||
-            empty($this->_aRequest['parent_category']) )
+    if(	!isset($this->_aRequest['parent_category']) || empty($this->_aRequest['parent_category']) )
       $this->_aError['parent_category'] = LANG_GLOBAL_CATEGORY;
 
-    if(	!isset($this->_aRequest['parent_id']) ||
-            empty($this->_aRequest['parent_id']) )
+    if(	!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']) )
       $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
-    if(	!isset($this->_aRequest['content']) ||
-            empty($this->_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
     if( USER_ID < 1) {
-      if( !isset($this->_aRequest['name']) ||
-              empty($this->_aRequest['name']) )
+      if( !isset($this->_aRequest['name']) || empty($this->_aRequest['name']) )
         $this->_aError['name'] = LANG_GLOBAL_NAME;
     }
 
@@ -143,6 +141,7 @@ final class Comment extends Main {
 
     if (isset($this->_aError))
       return $this->_showFormTemplate($bShowCaptcha);
+
     else {
       if ($this->_oModel->create() == true)
         return Helper::redirectTo('/' . $this->_sParentSection .
@@ -161,8 +160,11 @@ final class Comment extends Main {
   }
 
   protected final function _showFormTemplate($bShowCaptcha) {
+    # We search for parent category
+    # TODO: Better message
     if( empty($this->_sAction) )
       return Helper::errorMessage(__CLASS__, LANG_ERROR_ACTION_NOT_SPECIFIED);
+
     else {
       $sName = isset($this->_aRequest['name']) ?
               (string)$this->_aRequest['name']:
@@ -227,6 +229,7 @@ final class Comment extends Main {
 
       if ($this->_sRecaptchaResponse->is_valid)
         return $this->_create($bShowCaptcha);
+
       else {
         $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;

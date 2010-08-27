@@ -20,12 +20,14 @@ class Newsletter extends Main {
 
     if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
       $sMsg .= Helper::errorMessage(LANG_ERROR_WRONG_EMAIL_FORMAT);
+
     else {
       if(isset($this->_aRequest['email']) && !empty ($this->_aRequest['email'])) {
         $sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
         if ($sQuery == 'DESTROY')
           $sMsg .= Helper::successMessage(LANG_SUCCESS_DESTROY);
+
         elseif ($sQuery == 'INSERT') {
           $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
@@ -50,6 +52,8 @@ class Newsletter extends Main {
     return $sMsg . $oSmarty->fetch('newsletter/newsletter.tpl');
   }
 
+  # @Override
+  # We need more / other methods than parent
   public function create() {
     if (USER_RIGHT < 3)
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -93,16 +97,15 @@ class Newsletter extends Main {
   private function _newsletterMail() {
     $sError = '';
 
-    if(	!isset($this->_aRequest['subject']) ||
-            empty($this->_aRequest['subject']) )
+    if(	!isset($this->_aRequest['subject']) || empty($this->_aRequest['subject']) )
        $this->_aError['subject'] = LANG_GLOBAL_SUBJECT;
 
-    if(	!isset($this->_aRequest['content']) ||
-            empty($this->_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
        $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showCreateNewsletterTemplate();
+
     else {
       # Deliver Newsletter to users
       $aResult = Model_Newsletter::getNewsletterRecipients('user');

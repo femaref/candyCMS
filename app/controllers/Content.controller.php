@@ -15,14 +15,14 @@ final class Content extends Main {
   }
 
   public final function show() {
+    $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
+
     $oSmarty = new Smarty();
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     # Language
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
     $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
-
-    $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
 
     if(empty($this->_iId)) {
       $oSmarty->assign('content', $this->_oModel->getData());
@@ -72,6 +72,7 @@ final class Content extends Main {
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
+    # We create new content
     else {
       $sTitle = isset($this->_aRequest['title']) ?
               $this->_aRequest['title'] :
@@ -90,6 +91,8 @@ final class Content extends Main {
       # Language
       $oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
+
+      # Title comes from section helper
     }
 
     if (!empty($this->_aError)) {
@@ -111,16 +114,15 @@ final class Content extends Main {
 
   protected final function _create() {
     # TODO: Better error messages
-    if(	!isset($this->_aRequest['title']) ||
-            empty($this->_aRequest['title']) )
+    if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
       $this->_aError['title'] = LANG_GLOBAL_TITLE;
 
-    if(	!isset($this->_aRequest['content']) ||
-            empty($this->_aRequest['content']) )
+    if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(false);
+
     else {
       if($this->_oModel->create() == true)
         return Helper::successMessage(LANG_SUCCESS_CREATE).

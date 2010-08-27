@@ -79,8 +79,7 @@ class Blog extends Main {
 					1;
 
 			if( $iPage > 1)
-				return LANG_GLOBAL_BLOG.	' - '
-						.LANG_GLOBAL_PAGE.	' '	.$iPage;
+				return LANG_GLOBAL_BLOG . ' - ' . LANG_GLOBAL_PAGE . ' ' . $iPage;
 			else
 				return LANG_GLOBAL_BLOG;
 		}
@@ -165,17 +164,16 @@ class Blog extends Main {
 	}
 
 	protected final function _create() {
-    # TODO: Real error messages
-		if(	!isset($this->_aRequest['title']) ||
-				empty($this->_aRequest['title']) )
+    # TODO: Better error messages
+		if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
 			$this->_aError['title'] = LANG_GLOBAL_TITLE;
 
-		if(	!isset($this->_aRequest['content']) ||
-				empty($this->_aRequest['content']) )
+		if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
 			$this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
 		if (isset($this->_aError))
       return $this->_showFormTemplate(false);
+
 		elseif( $this->_oModel->create() == true )
 			return Helper::successMessage(LANG_SUCCESS_CREATE).
 					$this->show();
@@ -196,7 +194,8 @@ class Blog extends Main {
 		 $this->_iId = '';
 			return Helper::successMessage(LANG_SUCCESS_DESTROY).
 					$this->show();
-		} else
+		}
+    else
 			return Helper::errorMessage(LANG_ERROR_DB_QUERY);
 	}
 }

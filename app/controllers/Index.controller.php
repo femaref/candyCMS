@@ -60,6 +60,7 @@ class Index {
 
     if (file_exists($sPath . 'config/language/' . $this->_sLanguage . '.lang.php'))
       require_once $sPath . 'config/language/' . $this->_sLanguage . '.lang.php';
+
     else
       die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
   }
@@ -106,6 +107,7 @@ class Index {
     # Load JS language
     $sLangVars = '';
     $oFile = fopen('config/language/' . $this->_sLanguage . '.lang.js', 'rb');
+
     while (!feof($oFile)) {
       $sLangVars .= fgets($oFile);
     }

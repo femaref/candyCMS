@@ -15,6 +15,8 @@ class Media extends Main {
 
   }
 
+  # @Override
+  # We need more / other methods than parent
   public function create() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -55,6 +57,7 @@ class Media extends Main {
 
       $aFiles = array();
       while($sFile = readdir($oDir)) {
+
         if(substr($sFile, 0, 1) == '.')
           continue;
 
@@ -67,10 +70,7 @@ class Media extends Main {
 
         $sFileName = substr($sFile, 0, $iNameLen);
 
-        if(	$sFileType      == 'jpg' ||
-                $sFileType  == 'jpeg'||
-                $sFileType  == 'png' ||
-                $sFileType  == 'gif') {
+        if(	$sFileType      == 'jpg' || $sFileType  == 'jpeg'|| $sFileType  == 'png' || $sFileType  == 'gif') {
           $aImgDim = getImageSize($sPath);
 
           if( ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'gif' || $sFileType == 'png') &&
@@ -82,7 +82,7 @@ class Media extends Main {
         }
         else
           $aImgDim = '';
-          $aFiles[] = array('name' => $sFile,
+          $aFiles[] = array('name'  => $sFile,
                             'cdate' => Helper::formatTimestamp(filectime($sPath)),
                             'size'  => Helper::getFileSize($sPath),
                             'type'  => $sFileType,
