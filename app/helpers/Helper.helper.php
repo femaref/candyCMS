@@ -79,8 +79,11 @@ final class Helper {
     return $sString;
   }
 
-	public final static function createLinkTo($sUrl) {
-    return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
+	public final static function createLinkTo($sUrl, $bExtern = false) {
+		if($bExtern == false)
+			return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
+		else
+			return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
   public final static function getAvatar($sPath, $iSize, $iUserId, $aGravatar = '') {

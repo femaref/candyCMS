@@ -7,36 +7,35 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-/* GLOBAL STUFF */
+# Multilingual website title and slogan
 define( 'LANG_WEBSITE_TITLE', 'blog.marcoraddatz.com' );
 define( 'LANG_WEBSITE_SLOGAN', 'Gedanken und Erlebnisse von Marco Raddatz' );
 
-define( 'LANG_GLOBAL_ABOUT', '&#xDC;ber' );
-define( 'LANG_GLOBAL_ADD_BOOKMARK', 'Lesezeichen hinzuf&#xFC;gen' );
-define( 'LANG_GLOBAL_CREATE_ENTRY', 'Eintrag hinzuf&#xFC;gen' );
+define( 'LANG_GLOBAL_ABOUT', 'Über' );
+define( 'LANG_GLOBAL_ADD_BOOKMARK', 'Lesezeichen hinzufügen' );
+define( 'LANG_GLOBAL_CREATE_ENTRY', 'Eintrag hinzufügen' );
 define( 'LANG_GLOBAL_CREATE_ENTRY_HEADLINE', 'Einen neuen Eintrag verfassen' );
-define( 'LANG_GLOBAL_CREATED_AT', 'Hinzugef&#xFC;gt am' );
+define( 'LANG_GLOBAL_CREATED_AT', 'Hinzugefügt am' );
 define( 'LANG_GLOBAL_ALBUM', 'Album' );
 define( 'LANG_GLOBAL_AUTHOR', 'Autor' );
-define( 'LANG_GLOBAL_BBCODE', 'BB-Code' );
-define( 'LANG_GLOBAL_BBCODE_HELP', 'Weiterf&#xFC;hrende Informationen zur Verwendung von BB-Code.' );
+define( 'LANG_GLOBAL_BBCODE_HELP', 'Weiterführende Informationen zur Verwendung von BB-Code.' );
 define( 'LANG_GLOBAL_BLOG', 'Blog' );
 define( 'LANG_GLOBAL_BY', 'von' );
 define( 'LANG_GLOBAL_CATEGORY', 'Kategorie' );
-define( 'LANG_GLOBAL_CLOSE', 'Schlie&#xDF;en' );
+define( 'LANG_GLOBAL_CLOSE', 'Schließen' );
 define( 'LANG_GLOBAL_COMMENTS', 'Kommentare' );
 define( 'LANG_GLOBAL_CONTACT', 'Kontakt' );
 define( 'LANG_GLOBAL_CONTENT', 'Text' );
 define( 'LANG_GLOBAL_CONTENTMANAGER', 'Seitenverwaltung' );
-define( 'LANG_GLOBAL_CRONJOB_EXEC', 'Datenbank optimieren, sichern und tempor&auml;re Dateien l&ouml;schen' );
+define( 'LANG_GLOBAL_CRONJOB_EXEC', 'Datenbank optimieren, sichern und temporäre Dateien löschen' );
 define( 'LANG_GLOBAL_CURRENTLY', 'Momentan' );
 define( 'LANG_GLOBAL_CUT', 'Schnitt' );
 define( 'LANG_GLOBAL_DATE', 'Datum' );
-define( 'LANG_GLOBAL_DELETED_USER', 'Gel&ouml;schte Person' );
+define( 'LANG_GLOBAL_DELETED_USER', 'Gelöschte Person' );
 define( 'LANG_GLOBAL_DESCRIPTION', 'Beschreibung' );
 define( 'LANG_GLOBAL_DISCLAIMER', 'Impressum' );
-define( 'LANG_GLOBAL_DESTROY', 'L&#xF6;schen' );
-define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Eintrag l&#xF6;schen' );
+define( 'LANG_GLOBAL_DESTROY', 'Löschen' );
+define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Eintrag löschen' );
 define( 'LANG_GLOBAL_EMAIL', 'E-Mail Adresse' );
 define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'E-Mail-Adresse bestätigen' );
 define( 'LANG_GLOBAL_FILE', 'Datei' );
@@ -45,7 +44,7 @@ define( 'LANG_GLOBAL_FILEMANAGER', 'Dateiverwaltung' );
 define( 'LANG_GLOBAL_GALLERY', 'Galerie' );
 define( 'LANG_GLOBAL_IMAGE', 'Bild' );
 define( 'LANG_GLOBAL_IN', 'in' );
-define( 'LANG_GLOBAL_LAST_UPDATE', 'letzte &#xC4;nderung' );
+define( 'LANG_GLOBAL_LAST_UPDATE', 'letzte Änderung' );
 define( 'LANG_GLOBAL_LOCATION', 'Ort' );
 define( 'LANG_GLOBAL_LOGIN', 'Login' );
 define( 'LANG_GLOBAL_LOGOUT', 'Logout' );
@@ -53,19 +52,19 @@ define( 'LANG_GLOBAL_MAIL_SEND', 'E-Mail verschicken' );
 define( 'LANG_GLOBAL_MESSAGE_CLOSE', 'Blende diese Nachricht per Klick aus!' );
 define( 'LANG_GLOBAL_NAME', 'Name' );
 define( 'LANG_GLOBAL_OPTIONAL', 'optional' );
-define( 'LANG_GLOBAL_OVERVIEW', '&#xDC;bersicht' );
+define( 'LANG_GLOBAL_OVERVIEW', 'Übersicht' );
 define( 'LANG_GLOBAL_PAGE', 'Seite' );
 define( 'LANG_GLOBAL_PASSWORD', 'Passwort' );
 define( 'LANG_GLOBAL_PASSWORD_REPEAT', 'Passwort wiederholen' );
 define( 'LANG_GLOBAL_QUOTE', 'Zitat' );
 define( 'LANG_GLOBAL_QUOTE_BY', 'Zitat von' );
-define( 'LANG_GLOBAL_PUBLISHED', 'Ver&ouml;ffentlicht?' );
+define( 'LANG_GLOBAL_PUBLISHED', 'Veröffentlicht?' );
 define( 'LANG_GLOBAL_REGISTER', 'Registrieren' );
 define( 'LANG_GLOBAL_REGISTRATION', 'Registrierung' );
 define( 'LANG_GLOBAL_REPORT_ERROR', 'Fehler melden' );
 define( 'LANG_GLOBAL_REPLY_TO', 'Antwort an' );
-define( 'LANG_GLOBAL_RESET', 'Zur&#xFC;cksetzen' );
-define( 'LANG_GLOBAL_REQUIRED', 'ben&#xF6;tigt' );
+define( 'LANG_GLOBAL_RESET', 'Zurücksetzen' );
+define( 'LANG_GLOBAL_REQUIRED', 'benötigt' );
 define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
 define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' ); #NEW
@@ -73,14 +72,16 @@ define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
 define( 'LANG_GLOBAL_TAGS', 'Tags' );
-define( 'LANG_GLOBAL_TAGS_INFO', 'Suche nach &#xE4;hnlichen Eintr&#xE4;gen' );
+define( 'LANG_GLOBAL_TAGS_INFO', 'Suche nach ähnlichen Einträgen' );
+define( 'LANG_GLOBAL_TERMS_READ', 'Nutzungsbedingungen gelesen?' );
 define( 'LANG_GLOBAL_TIME_AM', 'Uhr' );
 define( 'LANG_GLOBAL_TIME_PM', 'Uhr' );
 define( 'LANG_GLOBAL_TITLE', 'Titel' );
 define( 'LANG_GLOBAL_TODAY', 'Heute' );
 define( 'LANG_GLOBAL_UPDATE', 'Editieren' );
-define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update (#%v) für diese Software verfügbar. Besuche <a href="http://candycms.com">CandyCMS.com</a> für weitere Informationen.' );
+define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update (#%v) für diese Software verfügbar. Besuche %l für weitere Informationen.' );
 define( 'LANG_GLOBAL_UPDATE_ENTRY', 'Eintrag bearbeiten' );
+define( 'LANG_GLOBAL_UPDATE_SHOW', 'Update anzeigen?' );
 define( 'LANG_GLOBAL_UPLOADED_AT', 'Datum des Hochladens' );
 define( 'LANG_GLOBAL_USERMANAGER', 'Userverwaltung' );
 define( 'LANG_GLOBAL_USERRIGHT', 'Userrecht' );
@@ -90,67 +91,73 @@ define( 'LANG_GLOBAL_USERRIGHT_2', 'besonderes Mitglied' );
 define( 'LANG_GLOBAL_USERRIGHT_3', 'Moderator' );
 define( 'LANG_GLOBAL_USERRIGHT_4', 'Administrator' );
 define( 'LANG_GLOBAL_WELCOME', 'Hallo' );
-define( 'LANG_GLOBAL_WRITE_MODE_INFO', 'Du schreibst momentan im %m.::Klicke hier, um zum %a zu wechseln!<br />Sollte sich ggf. die Ansicht nicht ge&#xE4;ndert haben, leere deinen Browsercache. (F5)<br /><strong>Achtung:</strong> Bereits get&#xE4;tigte &#xC4;nderungen werden verworfen!' );
-define( 'LANG_GLOBAL_WYSIWYG', 'Vorschaumodus' );
 define( 'LANG_GLOBAL_YESTERDAY', 'Gestern' );
 
-define( 'LANG_MAIL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
-define( 'LANG_MAIL_OWN_EMAIL', 'Eigene E-Mail Adresse' );
-define( 'LANG_MAIL_SUBJECT_BY_USER', 'Neue Nachricht von %u' );
-define( 'LANG_MAIL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
+# SUCCESS MESSAGES
+define( 'LANG_SUCCESS_CREATE', 'Eintrag wurde hinzugefügt!' );
+define( 'LANG_SUCCESS_DESTROY', 'Eintrag wurde gelöscht!' );
+define( 'LANG_SUCCESS_UPDATE', 'Update erfolgreich!' );
+define( 'LANG_SUCCESS_MAIL_SENT', 'E-Mail erfolgreich verschickt!' );
+
+# ERRORS IN FORM ELEMENTS
+define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Bitte fülle den Inhalt aus!' );
+define( 'LANG_ERROR_FORM_MISSING_NAME', 'Bitte gib deinen Namen an!' );
+define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Bitte gib einen Titel an!' );
 
 # SECTIONS AND SPECIAL FUNCTIONS
-define( 'LANG_BLOG_CREATE', 'Blogeintrag hinzuf&#xFC;gen' );
-define( 'LANG_BLOG_CREATE_TAG_INFO', 'Tags werden durch Komma und Leerzeichen getrennt, z.B (ohne Anf&#xFC;hrungszeichen): ", "' );
-define( 'LANG_BLOG_UPDATE', 'Editieren: %p' );
-define( 'LANG_BLOG_UPDATE_SHOW', 'Update anzeigen?' );
+define( 'LANG_BLOG_TITLE_CREATE', 'Blogeintrag hinzufügen' );
+define( 'LANG_BLOG_TITLE_UPDATE', 'Editieren: %p' );
+define( 'LANG_BLOG_INFO_TAG', 'Tags werden durch Komma und Leerzeichen getrennt, z.B (ohne Anführungszeichen): ", "' );
+define( 'LANG_COMMENT_TITLE_CREATE', 'Kommentar hinzufügen' );
+define( 'LANG_COMMENT_TITLE_DESTROY', 'Kommentar löschen' );
+define( 'LANG_CONTENT_TITLE_UPDATE', 'Editieren: %p' );
+define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Album hinzufügen' );
+define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei hinzuf&uuml;gen' );
+define( 'LANG_PAGES_NEXT_ENTRIES', 'Ältere Beiträge' );
+define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beiträge' );
+define( 'LANG_SESSION_CREATE_SUCCESSFUL', 'Login erfolgreich!' );
+define( 'LANG_SESSION_DESTROY_SUCCESSFUL', 'Logout erfolgreich!' );
+define( 'LANG_SESSION_PASSWORD_TITLE', 'Password vergessen?' );
+define( 'LANG_SESSION_PASSWORD_INFO', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.' ); # NEW
+# TODO: define( 'LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
+define( 'LANG_SESSION_PASSWORD_LABEL_SUBMIT', 'Password zuschicken' ); # NEW
+define( 'LANG_SESSION_VERIFICATION_TITLE', 'E-Mail-Bestätigung erneut zusenden' );
+define( 'LANG_SESSION_VERIFICATION_INFO', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
+define( 'LANG_SESSION_VERIFICATION_LABEL_SUBMIT', 'E-Mail zuschicken' );
+define( 'LANG_USER_CREATE_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
 
-define( 'LANG_COMMENT_CREATE', 'Kommentar hinzuf&#xFC;gen' );
-define( 'LANG_COMMENT_DESTROY', 'Kommentar l&#xF6;schen' );
-define( 'LANG_COMMENT_LOGIN_FIRST', 'Bitte <a href=\'/Login\'>logge</a> dich ein, wenn du einen Kommentar verfassen m&#xF6;chtest.' );
 
-define( 'LANG_CONTENT_UPDATE', 'Editieren: %p' );
-
-define( 'LANG_LOGIN_INVITATION_MAIL_BODY', "Hallo!\r\n\r\n"  );
-define( 'LANG_LOGIN_INVITATION_HEADLINE', 'Lade deine Freunde ein!' );
-define( 'LANG_LOGIN_INVITATION_EMAIL_OF_FRIEND', 'E-Mail Adresse des "Neulings"' );
-define( 'LANG_LOGIN_INVITATION_MAIL_SUBJECT', '%u hat dich zu eventize.de eingeladen!' );
-define( 'LANG_LOGIN_INVITATION_OWN_MESSAGE', 'Deine Nachricht' );
-define( 'LANG_LOGIN_INVITATION_OWN_NOTES', '--- Hier w&#xFC;rden deine Anmerkungen stehen ---' );
-define( 'LANG_LOGIN_INVITATION_SUBMIT', 'Einladung verschicken' );
-define( 'LANG_LOGIN_INVITATION_SUCCESSFUL', 'Die Einladung wurde erfolgreich verschickt!' );
-define( 'LANG_LOGIN_LOGIN_SUCCESSFUL', 'Login erfolgreich!' );
-define( 'LANG_LOGIN_LOGOUT_SUCCESSFUL', 'Logout erfolgreich!' );
-define( 'LANG_LOGIN_PASSWORD_LOST', 'Password vergessen?' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_DESCRIPTION', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der n&auml;chsten Minuten zu.' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUBJECT', 'Dein neues Passwort' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_LOST_MAIL_SUCCESS', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
-define( 'LANG_LOGIN_PASSWORD_SEND', 'Password zuschicken' ); # NEW
-define( 'LANG_LOGIN_REGISTRATION_DISCLAIMER_READ', 'Nutzungsbedingungen gelesen?' );
-define( 'LANG_LOGIN_REGISTRATION_MAIL_BODY', "Hallo %u!\r\n\r\nDanke f&#xFC;r deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY");
-define( 'LANG_LOGIN_REGISTRATION_MAIL_SUBJECT', 'Deine Registrierung auf %WEBSITE_NAME.' );
-define( 'LANG_LOGIN_REGISTRATION_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
-define( 'LANG_LOGIN_RESEND_VERIFICATION', 'E-Mail-Bestätigung erneut zusenden' );
-define( 'LANG_LOGIN_RESEND_VERIFICATION_DESCRIPTION', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
-define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"); # NEW
-define( 'LANG_LOGIN_RESEND_VERIFICATION_MAIL_SUBJECT', 'Deine E-Mail-Bestätigung für %WEBSITE_NAME' ); # NEW
-define( 'LANG_LOGIN_RESEND_VERIFICATION_SEND', 'E-Mail zuschicken' );
-
-define( 'LANG_GALLERY_CREATE_ALBUM', 'Album hinzuf&uuml;gen' );
-define( 'LANG_GALLERY_CREATE_FILE', 'Datei hinzuf&uuml;gen' );
 define( 'LANG_GALLERY_CREATE_FILE_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_CREATE_FILE_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_CREATE_FILE_RESIZE', 'Bild proportional verkleinern' );
 define( 'LANG_GALLERY_NO_FILES_YET', 'Noch keine Bilder vorhanden!' );
-define( 'LANG_GALLERY_SAME_FILETYPE', 'Bitte nur Bilder mit der gleichen Dateiendung ausw&auml;hlen!' );
+define( 'LANG_GALLERY_SAME_FILETYPE', 'Bitte nur Bilder mit der gleichen Dateiendung auswählen!' );
+define( 'LANG_GALLERY_TITLE_UPDATE', 'Editieren: %p' );
 define( 'LANG_GALLERY_UPDATE_FILE', 'Datei bearbeiten' ); # New
 
+
+
+# MAIL CONTENT GLOBAL
+define( 'LANG_MAIL_GLOBAL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
+define( 'LANG_MAIL_GLOBAL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
+define( 'LANG_MAIL_GLOBAL_SUBJECT_BY', 'Neue Nachricht von %u' );
+define( 'LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL', 'Deine E-Mail Adresse' );
+
+# MAIL CONTENT BY SECTION
+define( 'LANG_MAIL_SESSION_PASSWORD_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"); # NEW
+define( 'LANG_MAIL_SESSION_PASSWORD_SUBJECT', 'Dein neues Passwort' ); # NEW
+define( 'LANG_MAIL_SESSION_VERIFICATION_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"); # NEW
+define( 'LANG_MAIL_SESSION_VERIFICATION_SUBJECT', 'Deine E-Mail-Bestätigung für %WEBSITE_NAME' ); # NEW
+define( 'LANG_MAIL_USER_CREATE_BODY', "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY");
+define( 'LANG_MAIL_USER_CREATE_SUBJECT', 'Deine Registrierung auf %WEBSITE_NAME.' );
+
+
+# UNSORTED ACTIONS
 define( 'LANG_MEDIA_FILE_CHOOSE', 'Datei ausw&#xE4;hlen' );
-define( 'LANG_MEDIA_FILE_DESTROY', 'Datei l&#xF6;schen' );
-define( 'LANG_MEDIA_FILE_DESTROY_SUCCESS', 'Datei wurde gel&#xF6;scht!' );
+define( 'LANG_MEDIA_FILE_DESTROY', 'Datei löschen' );
+define( 'LANG_MEDIA_FILE_DESTROY_SUCCESS', 'Datei wurde gelöscht!' );
 define( 'LANG_MEDIA_FILE_CREATE', 'Datei hochladen' );
-define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig f&#xFC;r Missbrauch verwendbare Dateien den Server ggf. zerst&#xF6;ren k&#xF6;nnen! Gleichnamige Dateien werden beim Upload &#xFC;berschrieben.' );
+define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.' );
 define( 'LANG_MEDIA_FILE_CREATE_SUCCESS', 'Upload erfolgreich! Die Datei befindet sich jetzt unter <strong>%p</strong>.');
 define( 'LANG_MEDIA_IMAGE_CREATE_SUCCESS', 'Upload erfolgreich! Falls das Bild nicht korrekt angezeigt wird, leere bitte deinen Browsercache!');
 define( 'LANG_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien hochgeladen.' ); #NEW
@@ -159,44 +166,38 @@ define( 'LANG_MEDIA_FILE_RENAME', 'Datei benennen' );
 define( 'LANG_NEWSLETTER_CONTENT_INFO', '%u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.' );
 define( 'LANG_NEWSLETTER_CREATE', 'Newsletter verfassen' );
 define( 'LANG_NEWSLETTER_CREATE_DESTROY', 'Newsletter abonieren / abbestellen' ); #NEW
-define( 'LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du ben&ouml;tigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' ); #NEW
+define( 'LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' ); #NEW
 define( 'LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT', 'Newsletters von %WEBSITE_NAME' ); #NEW
 define( 'LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE"); #NEW
 define( 'LANG_NEWSLETTER_DEFAULT_ADDRESS', 'Newsletter Abonnenten' ); #NEW
 define( 'LANG_NEWSLETTER_SUBMIT', 'Newsletter verschicken' );
 define( 'LANG_NEWSLETTER_SUBSCRIPTION_SUCCESSFUL', 'Du hast dich erfolgreich f&uuml;r den Newsletter eingetragen.' ); #NEW
 
-define( 'LANG_PAGES_NEXT_ENTRIES', '&#xC4;ltere Beitr&#xE4;ge' );
-define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beitr&#xE4;ge' );
+
 
 define( 'LANG_USER_ABOUT_HIMSELF', 'Über %u' );
 define( 'LANG_USER_CONTACT_VIA_EMAIL', 'Klicke hier, um %u eine E-Mail zu schicken!' ); #NEW
 define( 'LANG_USER_CREATE', 'Benutzer erstellen' ); #NEW
 define( 'LANG_USER_DETAILS', 'Userdetails' );
 define( 'LANG_USER_LAST_LOGIN', 'Letzter Login' );
-define( 'LANG_USER_OVERVIEW', 'Benutzer&#xFC;bersicht' );
+define( 'LANG_USER_OVERVIEW', 'Benutzerübersicht' );
 define( 'LANG_USER_REGISTERED_SINCE', 'Registriert seit' );
-define( 'LANG_USER_SETTINGS_ABOUT_YOU', '&#xDC;ber dich' );
+define( 'LANG_USER_SETTINGS_ABOUT_YOU', 'Über dich' );
 define( 'LANG_USER_SETTINGS_HEADLINE', 'Einstellungen bearbeiten' );
 define( 'LANG_USER_SETTINGS_IMAGE_AGREEMENT', 'Ich darf das Bild hochladen und verletze keine Rechte Dritter.' );
 define( 'LANG_USER_SETTINGS_IMAGE_CHANGE', 'Userbild &#xE4;ndern?' );
 define( 'LANG_USER_SETTINGS_IMAGE_CHOOSE', 'Bild ausw&#xE4;hlen' );
 define( 'LANG_USER_SETTINGS_IMAGE_GRAVATAR_INFO', 'Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.' );
 define( 'LANG_USER_SETTINGS_IMAGE_UPLOAD', 'Bild hochladen' );
-define( 'LANG_USER_SETTINGS_IMAGE_UPLOAD_INFO', 'Bitte nur *.jpg Dateien mit einer Gr&#xF6;&#xDF;e von bis zu 400KB hochladen!' );
+define( 'LANG_USER_SETTINGS_IMAGE_UPLOAD_INFO', 'Bitte nur *.jpg Dateien mit einer Größe von bis zu 400KB hochladen!' );
 define( 'LANG_USER_SETTINGS_IMAGE_USE_GRAVATAR', 'Gravatar verwenden?' );
 define( 'LANG_USER_SETTINGS_NEWSLETTER', 'Newsletter abonieren?' );
-define( 'LANG_USER_SETTINGS_PASSWORD_CHANGE', 'Passwort &auml;ndern' );
+define( 'LANG_USER_SETTINGS_PASSWORD_CHANGE', 'Passwort ändern' );
 define( 'LANG_USER_SETTINGS_PASSWORD_NEW', 'Neues Passwort' );
 define( 'LANG_USER_SETTINGS_PASSWORD_OLD', 'Altes Passwort' );
 define( 'LANG_USER_SETTINGS_SUBMIT', 'Profil aktualisieren' );
 define( 'LANG_USER_VERIFICATION_SUCCESS', 'Vielen Dank für die Bestätigung deiner E-Mail-Adresse.' );
 
-/* Success messages */
-define( 'LANG_SUCCESS_CREATE', 'Eintrag wurde hinzugef&#xFC;gt!' );
-define( 'LANG_SUCCESS_DESTROY', 'Eintrag wurde gel&#xF6;scht!' );
-define( 'LANG_SUCCESS_UPDATE', 'Update erfolgreich!' );
-define( 'LANG_SUCCESS_MAIL_SENT', 'E-Mail erfolgreich verschickt!' );
 
 /* Error messages */
 define( 'LANG_ERROR_ACTION_NOT_SPECIFIED', 'Es wurde kein ACTION_REQUEST mitgliefert!' );
@@ -206,11 +207,11 @@ define( 'LANG_ERROR_DB_SELECTION', 'Auf die Datenbank kann nicht zugegriffen wer
 define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf:' );
 define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );
-define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Eintr&auml;ge!' ); #NEW
+define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Einträge!' ); #NEW
 define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Die Sprachdatei konnte nicht geladen werden!' );
-define( 'LANG_ERROR_GLOBAL_NO_PERMISSION', 'Du hast keine Berechtigung diese Aktion auszuf&#xFC;hren!' );
+define( 'LANG_ERROR_GLOBAL_NO_PERMISSION', 'Du hast keine Berechtigung diese Aktion auszuführen!' );
 define( 'LANG_ERROR_GLOBAL_NO_TEMPLATE', 'Es wurde keine passende Template gefunden!' );
-define( 'LANG_ERROR_GLOBAL_NOT_PUBLISHED', 'Nicht ver&ouml;ffentlicht:' );
+define( 'LANG_ERROR_GLOBAL_NOT_PUBLISHED', 'Nicht veröffentlicht:' );
 define( 'LANG_ERROR_GLOBAL_CHECK_FIELDS', 'Bitte folgende Felder ausfüllen:' );
 define( 'LANG_ERROR_GLOBAL_WRONG_ID', 'Falsche oder keine ID angegeben.' );
 define( 'LANG_ERROR_HELPER_NO_FLASH_INSTALLED', 'Downloade den Flashplayer, um dieses Video anzugucken!' );
@@ -218,13 +219,13 @@ define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT', 'Der Code war leider nicht korrek
 define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED', 'Captcha konnte nicht geladen werden, bitte aktiviere Javascript!' );
 define( 'LANG_ERROR_MAIL_FAILED_HEADLINE', 'E-Mail konnte nicht zugestellt werden' );
 define( 'LANG_ERROR_MAIL_FAILED_SUBJECT', 'Versand fehlgeschlagen, bitte kontaktiere den Admin.' );
-define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verf&#xFC;gbar!' );
-define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigr&#xF6;&#xDF;e von 400KB erreicht!' );
+define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verfügbar!' );
+define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigröße von 400KB erreicht!' );
 define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falsche Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
 define( 'LANG_ERROR_LOGIN_ENTER_NAME', 'Bitte den Vornamen eingeben!' );
 define( 'LANG_ERROR_LOGIN_ENTER_EMAIL', 'Bitte die E-Mail Adresse angeben!' );
 define( 'LANG_ERROR_LOGIN_ENTER_PASSWORD', 'Bitte ein Passwort angeben!' );
-define( 'LANG_ERROR_LOGIN_CHECK_PASSWORDS', 'Bitte zwei identische Passw&#xF6;rter angeben!' );
+define( 'LANG_ERROR_LOGIN_CHECK_PASSWORDS', 'Bitte zwei identische Passwörter angeben!' );
 define( 'LANG_ERROR_LOGIN_CHECK_DISCLAIMER', 'Bitte den AGB zustimmen!' );
 define( 'LANG_ERROR_LOGIN_HEADLINE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_LOGIN_FIRST', 'Bitte logge dich zuerst ein!' );
@@ -232,7 +233,7 @@ define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'Es existiert kein Benutzer mit einer 
 define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte überprüfe die E-Mail Adresse und das Passwort. Oder wurde deine E-Mail-Adresse noch nicht bestätigt?' );
 define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
 define( 'LANG_ERROR_USER_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen d&#xFC;rfen!' ); # NEW
+define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen dürfen!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Bitte trage dein neues Passwort ein!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_PW_OLD', 'Bitte trage dein altes Passwort ein!' ); # NEW

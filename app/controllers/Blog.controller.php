@@ -135,9 +135,6 @@ class Blog extends Main {
 			$oSmarty->assign('content', $sContent);
 			$oSmarty->assign('published', $iPublished);
 
-			# Build up title
-			$this->_setTitle(LANG_BLOG_CREATE);
-
 			# Language
 			$oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
 			$oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
@@ -151,13 +148,13 @@ class Blog extends Main {
 		# More language
 		$oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 		$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-		$oSmarty->assign('lang_create_tag_info', LANG_BLOG_CREATE_TAG_INFO);
+		$oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
 		$oSmarty->assign('lang_currently', LANG_GLOBAL_CURRENTLY);
 		$oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
 		$oSmarty->assign('lang_published', LANG_GLOBAL_PUBLISHED);
 		$oSmarty->assign('lang_tags', LANG_GLOBAL_TAGS);
 		$oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
-		$oSmarty->assign('lang_update_show', LANG_BLOG_UPDATE_SHOW);
+		$oSmarty->assign('lang_update_show', LANG_GLOBAL_UPDATE_SHOW);
 
 		$oSmarty->template_dir = Helper::getTemplateDir('blog/_form');
 		return $oSmarty->fetch('blog/_form.tpl');

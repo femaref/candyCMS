@@ -62,7 +62,7 @@ class Gallery extends Main {
       $oSmarty->assign('albums', $this->_oModel->getData());
 
       # Language
-      $oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_CREATE_ALBUM);
+      $oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
       $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
       $oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
       $oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
@@ -156,8 +156,8 @@ class Gallery extends Main {
       $oSmarty->assign('id', '');
 
       # Language
-      $oSmarty->assign('lang_headline', LANG_GALLERY_CREATE_ALBUM);
-      $oSmarty->assign('lang_submit', LANG_GALLERY_CREATE_ALBUM);
+      $oSmarty->assign('lang_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
+      $oSmarty->assign('lang_submit', LANG_GALLERY_ALBUM_CREATE_TITLE);
     }
 
     if (!empty($this->_aError)) {

@@ -281,7 +281,7 @@ class User extends Main {
     if (isset($this->_aRequest['create_user'])) {
 			# Why is here a bug?
       if ($this->_create() === true)
-        return Helper::successMessage(LANG_LOGIN_REGISTRATION_SUCCESSFUL) . Helper::redirectTo('/Session/create');
+        return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL) . Helper::redirectTo('/Session/create');
 
       # TODO: We need to get seperate messages for failed mails and failed queries
       else
@@ -293,7 +293,7 @@ class User extends Main {
 
 	private function _create() {
 		if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
-      $this->_aError['name'] = LANG_ERROR_LOGIN_ENTER_NAME;
+      $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
       $this->_aError['email'] = LANG_ERROR_LOGIN_ENTER_EMAIL;
@@ -326,11 +326,11 @@ class User extends Main {
 
       if ($this->_oModel->create($iVerificationCode) === true) {
         $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
-                        LANG_LOGIN_REGISTRATION_MAIL_BODY);
+                        LANG_MAIL_USER_CREATE_BODY);
         $sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
 
         $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                        LANG_LOGIN_REGISTRATION_MAIL_SUBJECT,
+                        LANG_MAIL_USER_CREATE_SUBJECT,
                         $sMailMessage,
                         WEBSITE_MAIL_NOREPLY);
 
@@ -362,7 +362,7 @@ class User extends Main {
 		$oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
 		# Language
-		$oSmarty->assign('lang_disclaimer_read', LANG_LOGIN_REGISTRATION_DISCLAIMER_READ);
+		$oSmarty->assign('lang_disclaimer_read', LANG_GLOBAL_TERMS_READ);
 		$oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
 		$oSmarty->assign('lang_headline', LANG_GLOBAL_REGISTRATION);
 		$oSmarty->assign('lang_name', LANG_GLOBAL_NAME);

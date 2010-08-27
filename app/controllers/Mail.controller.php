@@ -71,7 +71,7 @@ class Mail extends Main {
 
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-    $oSmarty->assign('lang_email', LANG_MAIL_OWN_EMAIL);
+    $oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
     $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
     $oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
@@ -138,7 +138,7 @@ class Mail extends Main {
 
       $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
               Helper::formatInput($this->_aRequest['subject']) :
-              str_replace('%u', $sSendersName, LANG_MAIL_SUBJECT_BY_USER);
+              str_replace('%u', $sSendersName, LANG_MAIL_GLOBAL_SUBJECT_BY);
 
       $sMessage = Helper::formatInput($this->_aRequest['content']);
 
@@ -159,8 +159,8 @@ class Mail extends Main {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
 		# Parse message and replace with (footer) variables
-		$sMessage = str_replace('%NOREPLY', LANG_MAIL_NO_REPLY, $sMessage);
-		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_SIGNATURE, $sMessage);
+		$sMessage = str_replace('%NOREPLY', LANG_MAIL_GLOBAL_NO_REPLY, $sMessage);
+		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_GLOBAL_SIGNATURE, $sMessage);
 		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
 		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 

@@ -141,6 +141,8 @@ class Index {
             str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
             '';
 
+    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+
     $oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);
     $oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
     $oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);

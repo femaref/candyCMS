@@ -85,7 +85,7 @@ final class Comment extends Main {
         # Language
         $oSmarty->assign('lang_author', LANG_GLOBAL_AUTHOR);
         $oSmarty->assign('lang_deleted_user', LANG_GLOBAL_DELETED_USER);
-        $oSmarty->assign('lang_destroy', LANG_COMMENT_DESTROY);
+        $oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
         $oSmarty->assign('lang_quote', LANG_GLOBAL_QUOTE);
 
         $oSmarty->template_dir = Helper::getTemplateDir('comment/show');
@@ -205,8 +205,7 @@ final class Comment extends Main {
       }
 
       # Language
-      $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);
-      $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
+      $oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
       $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
       $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
       $oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
