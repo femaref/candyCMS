@@ -21,27 +21,42 @@ class Session extends Main {
    * @ Override
    */
   public final function create() {
-    # TODO: Formtastic error messages
-		if (isset($this->_aRequest['create_session']) &&
-						isset($this->_aRequest['email']) &&
-						isset($this->_aRequest['password']) &&
-						!empty($this->_aRequest['email']) &&
-						!empty($this->_aRequest['password'])) {
-
-			if ($this->_oModel->create() === true)
-				return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL) .
-					Helper::redirectTo('/Start');
-			else
-				return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
-					$this->showCreateSessionTemplate();
-		}
+		if( isset($this->_aRequest['create_session']) )
+			return $this->_create();
 		else
 			return $this->showCreateSessionTemplate();
+	}
 
+	private final function _create() {
+		# TODO: Better language
+		if(	!isset($this->_aRequest['email']) || empty($this->_aRequest['email']) )
+			$this->_aError['email'] = LANG_GLOBAL_EMAIL;
+
+    if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+      $this->_aError['email'] = LANG_ERROR_WRONG_EMAIL_FORMAT;
+
+		if(	!isset($this->_aRequest['password']) || empty($this->_aRequest['password']) )
+			$this->_aError['password'] = LANG_GLOBAL_PASSWORD;
+
+		if (isset($this->_aError))
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_CHECK_FIELDS) . $this->showCreateSessionTemplate();
+
+		elseif( $this->_oModel->create() === true )
+			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL).
+					Helper::redirectTo('/Start');
+		else
+			return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
+				$this->showCreateSessionTemplate();
 	}
 
   public final function showCreateSessionTemplate() {
     $oSmarty = new Smarty();
+
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
+    }
+
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
     $oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);

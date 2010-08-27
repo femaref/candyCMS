@@ -2,13 +2,14 @@
   <form method='post' action='/Session/create'>
     <fieldset>
       <legend>{$lang_login}</legend>
-      <div class="input">
+      <div class="input{if $error_email} error{/if}">
         <label for='email'>{$lang_email}:</label>
         &nbsp;
         <input name='email' type='text' id='email' value='' />
+
       </div>
       &nbsp;
-      <div class="input">
+      <div class="input{if $error_password} error{/if}">
         <label for='password'>{$lang_password}:</label>
         &nbsp;
         <input name='password' type='password' id='password' value='' />

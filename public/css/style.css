@@ -155,6 +155,10 @@ fieldset .textarea textarea {
   min-width:100px;
 }
 
+#login div {
+  display: inline
+}
+
 /* Used for file manager to select link directly */
 .inputsmall {
   width:300px;
