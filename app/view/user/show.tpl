@@ -14,7 +14,7 @@
       {$lang_registered_since}
     </td>
     <td class='td_right'>
-      {$regdate}
+      {$date}
     </td>
     <td rowspan='4' style='vertical-align:top'>
       <a href='{$avatar_popup}' rel='lightbox' title='{$user.name} {$user.surname}'>

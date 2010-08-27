@@ -22,6 +22,8 @@ final class Content extends Main {
     $oSmarty->assign('lang_by', LANG_GLOBAL_BY);
     $oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
+    $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
+
     if(empty($this->_iId)) {
       $oSmarty->assign('content', $this->_oModel->getData());
 

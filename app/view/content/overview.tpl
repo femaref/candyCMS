@@ -19,19 +19,19 @@
       </td>
       <td style='width:25%'>{$c.date}</td>
       <td style='width:20%'>
-        <a href='/User/{$c.authorID}'>
+        <a href='/User/{$c.author_id}'>
           {$c.name} {$c.surname}
         </a>
       </td>
       <td style='width:10%'>
         {if $USER_RIGHT > 3}
-          <a href='/Content/update/{$c.id}'>
+          <a href='/Content/{$c.id}/update'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
               title='{$lang_update}' />
           </a>
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
             title='{$lang_destroy}'
-            onclick="confirmDelete('{$c.title}', '/Content/destroy/{$c.id}')" />
+            onclick="confirmDelete('{$c.title}', '/Content/{$c.id}/destroy')" />
         {/if}
       </td>
     </tr>

@@ -79,9 +79,10 @@ class Section extends Main {
           parent::_setContent($this->_oObject->update('update_content'));
           parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_UPDATE));
         }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy')
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-
+          parent::_setTitle($this->_oObject->getTitle());
+        }
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
@@ -172,10 +173,6 @@ class Section extends Main {
         if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_GLOBAL_LOGIN);
-        }
-        elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'invite' ) {
-          parent::_setContent($this->_oObject->createInvite());
-          parent::_setTitle(LANG_LOGIN_INVITATION_HEADLINE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendpassword' ||
                 $this->_aRequest['action'] == 'resendverification') {

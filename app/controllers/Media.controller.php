@@ -19,7 +19,7 @@ class Media extends Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if( isset($this->_aRequest['upload_file']) )
+      if (isset($this->_aRequest['upload_file']))
         return $this->_proceedUpload();
       else
         return $this->_showUploadFileTemplate();

@@ -75,28 +75,28 @@
     </tr>
     <tr class='row2'>
       <td class='td_left'>
-        <label for='newsletter_default'>{$lang_newsletter}</label>
+        <label for='receive_newsletter'>{$lang_newsletter}</label>
       </td>
       <td class='td_right'>
         <div class="checkbox">
-          <input name='newsletter_default' value='1' type='checkbox'
-                 id='newsletter_default'
-                 {if $newsletter_default == 1}checked='checked'{/if} />
+          <input name='receive_newsletter' value='1' type='checkbox'
+                 id='receive_newsletter'
+                 {if $receive_newsletter == 1}checked='checked'{/if} />
         </div>
       </td>
     </tr>
     {if $USER_RIGHT == 4 && $USER_ID !== $uid}
       <tr class='row1'>
         <td class='td_left'>
-          <label for='userright'>{$lang_userright}</label>
+          <label for='user_right'>{$lang_user_right}</label>
         </td>
         <td class='td_right'>
           <div class="dropdown">
-            <select name='userright' class='inputdropdown'>
-              <option value='1' {if $userright == 1}selected='selectsed'{/if}>{$lang_userright_1}</option>
-              <option value='2' {if $userright == 2}selected='selectsed'{/if}>{$lang_userright_2}</option>
-              <option value='3' {if $userright == 3}selected='selectsed'{/if}>{$lang_userright_3}</option>
-              <option value='4' {if $userright == 4}selected='selectsed'{/if}>{$lang_userright_4}</option>
+            <select name='user_right' class='inputdropdown'>
+              <option value='1' {if $user_right == 1}selected='selectsed'{/if}>{$lang_user_right_1}</option>
+              <option value='2' {if $user_right == 2}selected='selectsed'{/if}>{$lang_user_right_2}</option>
+              <option value='3' {if $user_right == 3}selected='selectsed'{/if}>{$lang_user_right_3}</option>
+              <option value='4' {if $user_right == 4}selected='selectsed'{/if}>{$lang_user_right_4}</option>
             </select>
           </div>
         </td>

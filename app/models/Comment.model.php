@@ -27,7 +27,7 @@ class Model_Comment extends Model_Main {
                                     c.*,
                                     u.name,
                                     u.surname,
-                                    u.id AS userID,
+                                    u.id AS user_id,
                                     u.use_gravatar,
                                     u.email
                                   FROM
@@ -35,11 +35,11 @@ class Model_Comment extends Model_Main {
                                   LEFT JOIN
                                     user u
                                   ON
-                                    u.id=c.authorID
+                                    u.id=c.author_id
                                   WHERE
-                                    c.parentID = :parent_id
+                                    c.parent_id = :parent_id
                                   AND
-                                    c.parentCat = :parent_category
+                                    c.parent_category = :parent_category
                                   ORDER BY
                                     c.date ASC,
                                     c.id ASC
@@ -64,27 +64,27 @@ class Model_Comment extends Model_Main {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        if(isset($aRow['userID']))
+        if(isset($aRow['user_id']))
           $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
         else
           $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
 
         $this->_aData[$iId] =
                 array(
-                    'id'            => $aRow['id'],
-                    'userID'        => $aRow['userID'],
-                    'parentID'      => $aRow['parentID'],
-                    'parentCat'     => $aRow['parentCat'],
-                    'author_id'     => $aRow['authorID'],
-                    'author_email'  => $aRow['author_email'],
-                    'author_name'   => $aRow['author_name'],
-                    'name'          => Helper::formatOutput($aRow['name']),
-                    'surname'       => Helper::formatOutput($aRow['surname']),
-                    'avatar_32'     => Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
-                    'avatar_64'     => Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
-                    'date'          => Helper::formatTimestamp($aRow['date']),
-                    'content'       => Helper::formatOutput($aRow['content']),
-                    'loop'          => $iLoop
+                    'id'              => $aRow['id'],
+                    'user_id'         => $aRow['user_id'],
+                    'parent_id'       => $aRow['parent_id'],
+                    'parent_category' => $aRow['parent_category'],
+                    'author_id'       => $aRow['author_id'],
+                    'author_email'    => $aRow['author_email'],
+                    'author_name'     => $aRow['author_name'],
+                    'name'            => Helper::formatOutput($aRow['name']),
+                    'surname'         => Helper::formatOutput($aRow['surname']),
+                    'avatar_32'       => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
+                    'avatar_64'       => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
+                    'date'            => Helper::formatTimestamp($aRow['date']),
+                    'content'         => Helper::formatOutput($aRow['content']),
+                    'loop'            => $iLoop
         );
 
         $iLoop++;
@@ -104,25 +104,25 @@ class Model_Comment extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" SELECT
-                                  id
+                                  COUNT(*)
                                 FROM
                                   comment
                                 WHERE
-                                  parentID = :parent_id
+                                  parent_id = :parent_id
                                 AND
-                                  parentCat = :parent_category");
+                                  parent_category = :parent_category");
 
       $oQuery->bindParam('parent_id', $iParentId);
       $oQuery->bindParam('parent_category', $sParentCategory);
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $iResult = $oQuery->fetchColumn();
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
 
-    return count((int) $aResult);
+    return (int) $iResult;
   }
 
   public function create() {
@@ -139,7 +139,7 @@ class Model_Comment extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  comment(authorID, author_name, author_email, author_ip, content, date, parentCat, parentID)
+                                  comment(author_id, author_name, author_email, author_ip, content, date, parent_category, parent_id)
                                 VALUES
                                   ( :author_id, :author_name, :author_email, :author_ip, :content, :date, :parent_category, :parent_id )");
 
@@ -150,8 +150,8 @@ class Model_Comment extends Model_Main {
       $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
-      $oQuery->bindParam('parent_category', $this->_aRequest['parentcat']);
-      $oQuery->bindParam('parent_id', $this->_aRequest['parentid']);
+      $oQuery->bindParam('parent_category', $this->_aRequest['parent_category']);
+      $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
       $bResult = $oQuery->execute();
 
       $oDb = null;

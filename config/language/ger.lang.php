@@ -229,7 +229,7 @@ define( 'LANG_ERROR_LOGIN_CHECK_DISCLAIMER', 'Bitte den AGB zustimmen!' );
 define( 'LANG_ERROR_LOGIN_HEADLINE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_LOGIN_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'Es existiert kein Benutzer mit einer solchen E-Mail Adresse!' ); # NEW
-define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte überprüfe die E-Mail Adresse und das Passwort oder bestätige vor dem Einloggen die Echtheit deiner E-Mail-Adresse!' );
+define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte überprüfe die E-Mail Adresse und das Passwort. Oder wurde deine E-Mail-Adresse noch nicht bestätigt?' );
 define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
 define( 'LANG_ERROR_USER_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
 define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen d&#xFC;rfen!' ); # NEW

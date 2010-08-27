@@ -34,15 +34,15 @@ class Model_Blog extends Model_Main {
                 ));
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->query("SELECT id FROM blog " . $sWhere);
-        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $oQuery = $oDb->query("SELECT COUNT(*) FROM blog " . $sWhere);
+        $iResult = $oQuery->fetchColumn();
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
       }
 
-			$this->oPages = new Pages($this->_aRequest, count((int)$aResult), $iLimit);
+			$this->oPages = new Pages($this->_aRequest, (int)$iResult, $iLimit);
 
 			try {
 				$oQuery = $oDb->query("	SELECT
@@ -58,11 +58,11 @@ class Model_Blog extends Model_Main {
 															LEFT JOIN
 																user u
 															ON
-																b.authorID=u.id
+																b.author_id=u.id
 															LEFT JOIN
 																comment c
 															ON
-																c.parentID=b.id AND c.parentCat='b'
+																c.parent_id=b.id AND c.parent_category='b'
 															" . $sWhere . "
 															GROUP BY
 																b.id
@@ -72,7 +72,7 @@ class Model_Blog extends Model_Main {
 																" . $this->oPages->getOffset() . ",
 																" . $this->oPages->getLimit());
 
-				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
 				$oDb = null;
 			}
 			catch (AdvancedException $e) {
@@ -87,7 +87,7 @@ class Model_Blog extends Model_Main {
 
         $this->_aData[$iId] = array(
                 'id'          => $aRow['id'],
-                'author_id'   => $aRow['authorID'],
+                'author_id'   => $aRow['author_id'],
                 'tags'        => $aTags,
                 'tags_sum'    => (int)count($aTags),
                 'title'       => Helper::formatOutput($aRow['title']),
@@ -96,8 +96,8 @@ class Model_Blog extends Model_Main {
                 'uid'         => $aRow['uid'],
                 'name'        => Helper::formatOutput($aRow['name']),
                 'surname'     => Helper::formatOutput($aRow['surname']),
-                'avatar_32'		=> Helper::getAvatar('user', 32, $aRow['authorID'], $aGravatar),
-                'avatar_64'		=> Helper::getAvatar('user', 64, $aRow['authorID'], $aGravatar),
+                'avatar_32'		=> Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
+                'avatar_64'		=> Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
                 'comment_sum'	=> $aRow['commentSum'],
                 'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
                 'published'		=> $aRow['published']
@@ -131,11 +131,11 @@ class Model_Blog extends Model_Main {
 																LEFT JOIN
 																	user u
 																ON
-																	b.authorID=u.id
+																	b.author_id=u.id
 																LEFT JOIN
 																	comment c
 																ON
-																	c.parentID=b.id AND c.parentCat='b'
+																	c.parent_id=b.id AND c.parent_category='b'
 																WHERE
 																	b.id = '" . Helper::formatInput($this->_iID) . "'
 																" . $sWhere . "
@@ -157,7 +157,7 @@ class Model_Blog extends Model_Main {
 			if ($bEdit == true) {
 				$this->_aData = array(
 						'id'        => $aRow['id'],
-						'author_id'	=> $aRow['authorID'],
+						'author_id'	=> $aRow['author_id'],
 						'tags'      => Helper::removeSlahes($aRow['tags']),
 						'title'     => Helper::removeSlahes($aRow['title']),
 						'content'   => Helper::removeSlahes($aRow['content']),
@@ -171,7 +171,7 @@ class Model_Blog extends Model_Main {
 				$aTags = explode(', ', $aRow['tags']);
 				$this->_aData[1] = array(
 						'id'          => $aRow['id'],
-						'author_id'   => $aRow['authorID'],
+						'author_id'   => $aRow['author_id'],
 						'tags'        => $aTags,
 						'tags_sum'    => (int) count($aTags),
 						'title'       => Helper::formatOutput($aRow['title']),
@@ -213,7 +213,7 @@ class Model_Blog extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  blog(authorID, title, tags, content, date, published)
+                                  blog(author_id, title, tags, content, date, published)
                                 VALUES
                                   ( :author_id, :title, :tags, :content, :date, :published )");
 
@@ -255,7 +255,7 @@ class Model_Blog extends Model_Main {
       $oQuery = $oDb->prepare("	UPDATE
                                   blog
                                 SET
-                                  authorID = :author_id,
+                                  author_id = :author_id,
                                   title = :title,
                                   tags = :tags,
                                   content = :content,
@@ -308,12 +308,12 @@ class Model_Blog extends Model_Main {
       $oQuery = $oDb->prepare("	DELETE FROM
                                   comment
                                 WHERE
-                                  parentID = :parent_id
+                                  parent_id = :parent_id
 																AND
-																	parentCat = :parent_cat");
+																	parent_category = :parent_category");
 
-      $sParentCat = 'b';
-      $oQuery->bindParam('parent_cat', $sParentCat);
+      $sParentCategory = 'b';
+      $oQuery->bindParam('parent_category', $sParentCategory);
       $oQuery->bindParam('parent_id', $iId);
       $bResult = $oQuery->execute();
 

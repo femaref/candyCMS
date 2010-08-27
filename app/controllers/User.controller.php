@@ -77,10 +77,10 @@ class User extends Main {
               $this->_aData['description']);
       $oSmarty->assign('use_gravatar',
               (int) $this->_aData['use_gravatar']);
-      $oSmarty->assign('newsletter_default',
-              (int) $this->_aData['newsletter_default']);
-      $oSmarty->assign('userright',
-              (int) $this->_aData['userright']);
+      $oSmarty->assign('receive_newsletter',
+              (int) $this->_aData['receive_newsletter']);
+      $oSmarty->assign('user_right',
+              (int) $this->_aData['user_right']);
     }
 		else {
 			# Avoid redisplay-Bug
@@ -89,7 +89,7 @@ class User extends Main {
 				$this->_aSession['userdata']['surname'] = & $this->_aRequest['surname'];
 				$this->_aSession['userdata']['email'] = & $this->_aRequest['email'];
 				$this->_aSession['userdata']['description'] = & $this->_aRequest['description'];
-				$this->_aSession['userdata']['newsletter_default'] = & $this->_aRequest['newsletter_default'];
+				$this->_aSession['userdata']['receive_newsletter'] = & $this->_aRequest['receive_newsletter'];
 				$this->_aSession['userdata']['use_gravatar'] = & $this->_aRequest['use_gravatar'];
 			}
 
@@ -105,8 +105,8 @@ class User extends Main {
 							$this->_aSession['userdata']['email']);
 			$oSmarty->assign('description',
 							$this->_aSession['userdata']['description']);
-			$oSmarty->assign('newsletter_default',
-							(int) $this->_aSession['userdata']['newsletter_default']);
+			$oSmarty->assign('receive_newsletter',
+							(int) $this->_aSession['userdata']['receive_newsletter']);
 			$oSmarty->assign('use_gravatar',
 							(int) $this->_aSession['userdata']['use_gravatar']);
 
@@ -149,11 +149,11 @@ class User extends Main {
 		$oSmarty->assign('lang_submit', LANG_USER_SETTINGS_SUBMIT);
 		$oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
 		$oSmarty->assign('lang_use_gravatar', LANG_USER_SETTINGS_IMAGE_USE_GRAVATAR);
-		$oSmarty->assign('lang_userright', LANG_GLOBAL_USERRIGHT);
-		$oSmarty->assign('lang_userright_1', LANG_GLOBAL_USERRIGHT_1);
-		$oSmarty->assign('lang_userright_2', LANG_GLOBAL_USERRIGHT_2);
-		$oSmarty->assign('lang_userright_3', LANG_GLOBAL_USERRIGHT_3);
-		$oSmarty->assign('lang_userright_4', LANG_GLOBAL_USERRIGHT_4);
+		$oSmarty->assign('lang_user_right', LANG_GLOBAL_USERRIGHT);
+		$oSmarty->assign('lang_user_right_1', LANG_GLOBAL_USERRIGHT_1);
+		$oSmarty->assign('lang_user_right_2', LANG_GLOBAL_USERRIGHT_2);
+		$oSmarty->assign('lang_user_right_3', LANG_GLOBAL_USERRIGHT_3);
+		$oSmarty->assign('lang_user_right_4', LANG_GLOBAL_USERRIGHT_4);
 
 		$oSmarty->template_dir = Helper::getTemplateDir('user/_form');
 		return $oSmarty->fetch('user/_form.tpl');
@@ -253,7 +253,7 @@ class User extends Main {
 
 			$oSmarty->assign('uid', $this->_iId);
 			$oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));
-			$oSmarty->assign('regdate', Helper::formatTimestamp($this->_aData['regdate']));
+			$oSmarty->assign('date', Helper::formatTimestamp($this->_aData['date']));
 			$oSmarty->assign('user', $this->_aData);
 			$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
 			$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));

@@ -18,7 +18,7 @@
       <td style='width:35%' class="left">
         <a href='/User/{$u.id}'>{$u.name} {$u.surname}</a>
       </td>
-      <td style='width:25%' title='{$lang_registered_since}'>{$u.regdate}</td>
+      <td style='width:25%' title='{$lang_registered_since}'>{$u.date}</td>
       <td style='width:25%' title='{$lang_last_login}'>{$u.last_login}</td>
       <td style='width:10%'>
         {if $USER_RIGHT == 4}

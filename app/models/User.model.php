@@ -65,7 +65,7 @@ class Model_User extends Model_Main {
                                     email,
                                     surname,
                                     last_login,
-                                    regdate,
+                                    date,
                                     use_gravatar
                                   FROM
                                     user
@@ -82,7 +82,7 @@ class Model_User extends Model_Main {
               'name'          => Helper::formatOutput($aRow['name']),
               'surname'       => Helper::formatOutput($aRow['surname']),
               'last_login'    => Helper::formatTimestamp($aRow['last_login']),
-              'regdate'       => Helper::formatTimestamp($aRow['regdate']),
+              'date'          => Helper::formatTimestamp($aRow['date']),
               'id'            => $aRow['id'],
               'use_gravatar'  => $aRow['use_gravatar'],
               'avatar_32'     => Helper::getAvatar('user', 32, $aRow['id'], $aGravatar)
@@ -102,10 +102,10 @@ class Model_User extends Model_Main {
                                     surname,
                                     last_login,
                                     email,
-                                    regdate,
+                                    date,
                                     description,
-                                    userright,
-                                    newsletter_default,
+                                    user_right,
+                                    receive_newsletter,
                                     use_gravatar
                                   FROM
                                     user
@@ -139,15 +139,15 @@ class Model_User extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  user (name, surname, password, email, regdate, verification_code)
+                                  user (name, surname, password, email, date, verification_code)
                                 VALUES
-                                  ( :name, :surname, :password, :email, :regdate, :verification_code )");
+                                  ( :name, :surname, :password, :email, :date, :verification_code )");
 
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('regdate', time());
+      $oQuery->bindParam('date', time());
       $oQuery->bindParam('verification_code', $iVerificationCode);
       $bResult = $oQuery->execute();
 
@@ -161,12 +161,12 @@ class Model_User extends Model_Main {
   }
 
   public function update($iId) {
-    $iNewsletterDefault = isset($this->_aRequest['newsletter_default']) ? 1 : 0;
+    $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     if (($iId !== USER_ID) && USER_RIGHT == 4)
-      $iUserRight = isset($this->_aRequest['userright']) && !empty($this->_aRequest['userright']) ?
-              (int) $this->_aRequest['userright'] :
+      $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
+              (int) $this->_aRequest['user_right'] :
               0;
     else
       $iUserRight = USER_RIGHT;
@@ -188,10 +188,10 @@ class Model_User extends Model_Main {
                                   surname = :surname,
                                   email = :email,
                                   description = :description,
-                                  newsletter_default = :newsletter_default,
+                                  receive_newsletter = :receive_newsletter,
                                   use_gravatar = :use_gravatar,
                                   password = :password,
-                                  userright = :userright
+                                  user_right = :user_right
                                 WHERE
                                   id = :id");
 
@@ -199,10 +199,10 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
-      $oQuery->bindParam('newsletter_default', $iNewsletterDefault);
+      $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter);
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);
-      $oQuery->bindParam('userright', $iUserRight);
+      $oQuery->bindParam('user_right', $iUserRight);
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
 

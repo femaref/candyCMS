@@ -25,7 +25,7 @@ class Model_Content extends Model_Main {
                                 LEFT JOIN
                                   user u
                                 ON
-                                  c.authorID=u.id
+                                  c.author_id=u.id
                                 ORDER BY
                                   c.title ASC");
 
@@ -51,7 +51,7 @@ class Model_Content extends Model_Main {
                                   LEFT JOIN
                                     user u
                                   ON
-                                    c.authorID=u.id
+                                    c.author_id=u.id
                                   WHERE
                                     c.id = :where
                                   ORDER BY
@@ -78,7 +78,7 @@ class Model_Content extends Model_Main {
 
         $this->_aData = array(
             'id'        => $aRow['id'],
-            'authorID'  => $aRow['authorID'],
+            'author_id' => $aRow['author_id'],
             'title'     => Helper::removeSlahes($aRow['title']),
             'content'   => Helper::removeSlahes($aRow['content']),
             'date'      => Helper::formatTimestamp($aRow['date'])
@@ -88,7 +88,7 @@ class Model_Content extends Model_Main {
       } else {
         $this->_aData[$iID] = array(
             'id'        => $aRow['id'],
-            'authorID'  => $aRow['authorID'],
+            'author_id' => $aRow['author_id'],
             'title'     => Helper::formatOutput($aRow['title']),
             'content'   => Helper::formatOutput($aRow['content'], true),
             'date'      => Helper::formatTimestamp($aRow['date']),
@@ -115,7 +115,7 @@ class Model_Content extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  content(authorID, title, content, date)
+                                  content(author_id, title, content, date)
                                 VALUES
                                   ( :author_id, :title, :content, :date )");
 
@@ -146,7 +146,7 @@ class Model_Content extends Model_Main {
                                   title = :title,
                                   content = :content,
                                   date = :date,
-                                  authorID = :user_id
+                                  author_id = :user_id
                                 WHERE
                                   id = :where");
 

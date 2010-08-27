@@ -66,6 +66,6 @@
              onclick="destroyContent('createCommentText')" />
     </div>
     <input type='hidden' value='formdata' name='create_comment' />
-    <input type='hidden' value='{$parentID}' name='parentID' />
+    <input type='hidden' value='{$parent_id}' name='parent_id' />
   </form>
 </div>

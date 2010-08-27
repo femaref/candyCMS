@@ -74,6 +74,7 @@ final class Pages {
     $oSmarty->assign('page_count', $this->_iCount);
     $oSmarty->assign('page_next', $iNext);
     $oSmarty->assign('page_previous', $iPrevious);
+
     $oSmarty->assign('rss_section', $sRssAction);
 
     # Language

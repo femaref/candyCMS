@@ -104,7 +104,7 @@ if (isset($_FILES) && !empty($_FILES)) {
 	$aUser =& Model_Session::getSessionData($_REQUEST['session_id']);
 
 	define('USER_ID', (int) $aUser['id']);
-	define('USER_RIGHT', (int) $aUser['userright']);
+	define('USER_RIGHT', (int) $aUser['user_right']);
 
   try {
     if (USER_RIGHT < 3)

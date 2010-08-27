@@ -25,7 +25,7 @@ class Rss {
 	public function __init() {
 		$this->_sAction = isset( $this->_aRequest['action'] ) ?
 				(string)$this->_aRequest['action'] :
-				'show';
+				'blog';
 
 		$this->_iLimit = LIMIT_BLOG;
 		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);

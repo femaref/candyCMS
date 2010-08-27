@@ -31,11 +31,11 @@ class Model_Gallery extends Model_Main {
                               LEFT JOIN
                                 user u
                               ON
-                                a.authorID=u.id
+                                a.author_id=u.id
                               LEFT JOIN
                                 gallery_file f
                               ON
-                                f.aid=a.id
+                                f.album_id=a.id
                               "	.$sWhere.	"
                               GROUP BY
                                 a.id
@@ -63,7 +63,7 @@ class Model_Gallery extends Model_Main {
 				$iId = $aRow['id'];
 				$this->_aData[$iId] = array(
             'id'          => $aRow['id'],
-            'authorID'    => $aRow['authorID'],
+            'author_id'   => $aRow['author_id'],
             'title'       => Helper::formatOutput($aRow['title']),
             'description' => Helper::formatOutput($aRow['description'], true),
             'date'        => Helper::formatTimestamp($aRow['date']),
@@ -100,7 +100,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE aid = :album_id");
+      $oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE album_id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
@@ -121,7 +121,7 @@ class Model_Gallery extends Model_Main {
                                   FROM
                                     gallery_file
                                   WHERE
-                                    aid= :album_id
+                                    album_id= :album_id
                                   ORDER BY
                                     date ASC
                                   LIMIT
@@ -147,7 +147,7 @@ class Model_Gallery extends Model_Main {
         $this->_aThumbs[$iId] = array(
             'id'          => $aRow['id'],
             'file'        => $aRow['file'],
-            'full_path'   => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['aid'],
+            'full_path'   => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['album_id'],
             'description' => Helper::formatOutput($aRow['description']),
             'date'        => Helper::formatTimestamp($aRow['date']),
             'extension'   => $aRow['extension'],
@@ -244,7 +244,7 @@ class Model_Gallery extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  gallery_album(authorID, title, description, date)
+                                  gallery_album(author_id, title, description, date)
                                 VALUES
                                   ( :author_id, :title, :description, :date )");
 
@@ -325,7 +325,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file FROM gallery_file WHERE aid = :album_id");
+      $oQuery = $oDb->prepare("SELECT file FROM gallery_file WHERE album_id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
@@ -358,7 +358,7 @@ class Model_Gallery extends Model_Main {
         $oQuery = $oDb->prepare("	DELETE FROM
                                     gallery_file
                                   WHERE
-                                    aid = :album_id
+                                    album_id = :album_id
                                   LIMIT
                                     1");
 
@@ -410,7 +410,7 @@ class Model_Gallery extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  gallery_file(aid, authorID, file, extension, description, date)
+                                  gallery_file(album_id, author_id, file, extension, description, date)
                                 VALUES
                                   ( :album_id, :author_id, :file, :extension, :description, :date )");
 
@@ -466,7 +466,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file, aid FROM gallery_file WHERE id = :id");
+      $oQuery = $oDb->prepare("SELECT file, album_id FROM gallery_file WHERE id = :id");
 
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
@@ -479,7 +479,7 @@ class Model_Gallery extends Model_Main {
 
     if ($bReturn == true) {
       foreach ($aResult as $aRow) {
-        $sPath = PATH_UPLOAD . '/gallery/' . $aRow['aid'];
+        $sPath = PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
         @unlink($sPath . '/' . POPUP_DEFAULT_X . '/' . $aRow['file']);

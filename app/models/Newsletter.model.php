@@ -109,7 +109,7 @@ class Model_Newsletter extends Model_Main {
                                 FROM
                                   user
                                 WHERE
-                                  newsletter_default = '1'");
+                                  receive_newsletter = '1'");
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $oDb = null;

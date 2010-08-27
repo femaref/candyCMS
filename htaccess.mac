@@ -16,31 +16,29 @@ ErrorDocument 500 /public/500.html
 # Nice to have
 RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L]
 RewriteRule ^About$ index.php?section=content&id=3 [L]
-RewriteRule ^Contact/(.*)$ index.php?section=mail&id=1&subject=$1 [L]
+RewriteRule ^Contact/([A-Za-z0-9]+)$ index.php?section=mail&id=1&subject=$1 [L]
 RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [L]
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [L]
 
 # Fixes for rules below
-RewriteRule ^Blog/([A-Za-z]+)$ index.php?section=blog&action=tag&id=$1&page=1 [L]
-RewriteRule ^Blog/(0-9]+)/(.*)$ index.php?section=blog&id=$1&page=1 [L]
-RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parentcat=$1&id=$2&page=$3&ajax=1 [L]
-RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parentcat=$1&parentid=$2 [L]
-RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parentid=$2 [L]
-RewriteRule ^Content/(0-9]+)/(.*)$ index.php?section=content&id=$1&page=1 [L]
+RewriteRule ^(Blog|Content|Gallery|Media|Newsletter|RSS|Session|User)$ index.php?section=$1 [L] # Show Section
+RewriteRule ^(Blog)/page/([0-9]+)$ index.php?section=$1&page=$2 [L] # Non AJAX pagination
+RewriteRule ^(Blog|Comment|Content|Gallery|Media|Newsletter|Session|User)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L] # Default actions
+RewriteRule ^(Blog|Comment|Content|Gallery|Session|User)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L] # Show update / destroy actions
+RewriteRule ^(Blog|Content|Gallery|Mail|User)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L] # Show entry with id
+RewriteRule ^(Blog|Content|User)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L] # Show entry with description in url
+RewriteRule ^(Gallery)/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&page=1 [L]
+RewriteRule ^(Gallery)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L] # Show pagination on sub id
+RewriteRule ^Blog/([A-Za-z]+)$ index.php?section=blog&action=tag&id=$1&page=1 [L] # Show item sorted by tag
+RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L]
+RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L]
+RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L]
 RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L]
+RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L]
 RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
-RewriteRule ^Media/destroy/(.*)$ index.php?section=session&action=destroy [L]
+RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L]
 RewriteRule ^Start$ index.php?section=blog [L]
-
-# Dynamic rules
-RewriteRule ^([A-Za-z]+)$ index.php?section=$1 [L]
-RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L]
-RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)/([a-z]+)$ index.php?section=$1&action=$3&id=$2&page=1 [L]
-RewriteRule ^([A-Za-z]+)/([a-z]+)$ index.php?section=$1&action=$2&page=1 [L]
-RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L]
-RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L]
-RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L]
-
+RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]
 
 # Hide files for non script access
 <FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php)$">

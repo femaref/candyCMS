@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-# List of userrights
+# List of user rights
 #--------------------------------------------------
 # 0 = Guests / Unregistered Users
 # 1 = Members
@@ -21,7 +21,7 @@ ini_set( 'arg_separator.output', '&amp;' );
 ini_set( 'zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
 
-define('VERSION', '20100824');
+define('VERSION', '20100827');
 
 try {
 	#Load Parent
@@ -65,7 +65,7 @@ $aUser =& $oIndex->setActiveUser();
 define( 'USER_ID',	(int)$aUser['id'] );
 define( 'USER_EMAIL', (string)$aUser['email'] );
 define( 'USER_NAME', (string)$aUser['name'] );
-define( 'USER_RIGHT', (int)$aUser['userright'] );
+define( 'USER_RIGHT', (int)$aUser['user_right'] );
 define( 'USER_SURNAME', (string)$aUser['surname'] );
 
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
