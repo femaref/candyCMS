@@ -21,31 +21,31 @@ class User extends Main {
 
 	# @Override
 	public function update() {
-		if (empty($this->_iId))
-			$this->_iId = USER_ID;
+    if (empty($this->_iId))
+      $this->_iId = USER_ID;
 
-		if (USER_ID == 0)
-			return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
-		else {
-			if (isset($this->_aRequest['update_user'])) {
-				if ($this->_update($this->_iId) == true)
-					return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
-				else
-					return $this->_showFormTemplate($this->_aError);
-			}
-			elseif (isset($this->_aRequest['create_avatar'])) {
-				if ($this->_createAvatar($this->_iId) == true)
-					return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
-				else
-					return $this->show();
-			}
-			else
-				return $this->_showFormTemplate();
-		}
-	}
+    if (USER_ID == 0)
+      return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
+    else {
+      if (isset($this->_aRequest['update_user'])) {
+        if ($this->_update($this->_iId) == true)
+          return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+        else
+          return $this->_showFormTemplate($this->_aError);
+      }
+      elseif (isset($this->_aRequest['create_avatar'])) {
+        if ($this->_createAvatar($this->_iId) == true)
+          return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+        else
+          return $this->show();
+      }
+      else
+        return $this->_showFormTemplate();
+    }
+  }
 
 	protected function _update() {
-		if (empty($this->_aRequest['name']))
+    if (empty($this->_aRequest['name']))
       $this->_aError['name'] = LANG_ERROR_LOGIN_ENTER_NAME;
 
     if (empty($this->_aRequest['email']))
@@ -73,23 +73,36 @@ class User extends Main {
             $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
       $this->_aError['password_new'] = LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG;
 
-		if (isset($this->_aError))
+    if (isset($this->_aError))
       return false;
-		else {
-			# Fix for missing id
-			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
-							(int) $this->_aRequest['id'] :
-							USER_ID;
+    else {
+      # Fix for missing id
+      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
+              (int) $this->_aRequest['id'] :
+              USER_ID;
 
-			if ($this->_oModel->update($this->_iId) == true)
-				return true;
-			else
-				return false;
-		}
-	}
+      if ($this->_oModel->update($this->_iId) == true)
+        return true;
+      else
+        return false;
+    }
+  }
 
 	protected function _showFormTemplate($bUseRequest = false) {
     $oSmarty = new Smarty();
+
+    # Set user id of person to update
+    if ($this->_iId !== USER_ID && USER_RIGHT == 4)
+      $iId = $this->_iId;
+    else {
+      $iId = USER_ID;
+
+      # Avoid URL manipulation
+      if($this->_iId !== USER_ID) {
+        Helper::redirectTo('/User/update');
+        die();
+      }
+    }
 
     # Fetch data from database
     $this->_aSession['user_to_update_data'] = $this->_oModel->getData($this->_iId);
@@ -105,12 +118,6 @@ class User extends Main {
       $this->_aSession['user_to_update_data']['user_right'] = & $this->_aRequest['user_right'];
     }
 
-    # Set user id of person to update
-    if ($this->_iId !== USER_ID && USER_RIGHT == 4)
-      $oSmarty->assign('uid', $this->_iId);
-    else
-      $oSmarty->assign('uid', USER_ID);
-
     # Set _own_ USER_RIGHT and USER_ID for updating purposes
     $oSmarty->assign('USER_ID', USER_ID);
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
@@ -125,6 +132,7 @@ class User extends Main {
         'email' => $this->_aSession['user_to_update_data']['email']
     );
 
+    $oSmarty->assign('uid', $iId);
     $oSmarty->assign('name', $this->_aSession['user_to_update_data']['name']);
     $oSmarty->assign('surname', $this->_aSession['user_to_update_data']['surname']);
     $oSmarty->assign('email', $this->_aSession['user_to_update_data']['email']);
@@ -253,19 +261,18 @@ class User extends Main {
 
 	# @Override
 	public function destroy() {
-		if (USER_RIGHT == 4) {
-			if ($this->_oModel->destroy($this->_iId) == true) {
-				$this->_iId = '';
-				return Helper::successMessage(LANG_SUCCESS_DESTROY) .
-				$this->show();
-			} else
-				return Helper::errorMessage(LANG_ERROR_DB_QUERY);
-		}
-		else
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+    if (USER_RIGHT == 4) {
+      if ($this->_oModel->destroy($this->_iId) == true) {
+        $this->_iId = '';
+        return Helper::successMessage(LANG_SUCCESS_DESTROY) . $this->show();
+      } else
+        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+    }
+    else
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+  }
 
-	}
-
+  # @ Override due registration (avoid user right level 3)
 	public function create() {
     if (isset($this->_aRequest['create_user'])) {
       if ($this->_create() == true)
