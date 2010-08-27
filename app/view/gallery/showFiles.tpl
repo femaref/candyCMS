@@ -23,7 +23,7 @@
     <p>{$lang_no_files_yet}</p>
   </div>
 {else}
-  {if $gallery_description !== ''}
+  {if $gallery_description}
     <div class='quote'>{$gallery_description}</div>
   {/if}
   {$_album_pages_}

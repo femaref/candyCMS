@@ -8,7 +8,7 @@
       <a href='#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
       {if $c.user_id > 0}
         <a href='/User/{$c.user_id}'>{$c.name} {$c.surname}</a>
-      {elseif $c.author_name !== ''}
+      {elseif $c.author_name}
         {$c.author_name}
       {else}
         <em style="text-decoration:line-through">{$lang_deleted_user}</em>

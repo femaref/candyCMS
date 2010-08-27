@@ -203,6 +203,11 @@ fieldset .textarea textarea {
   padding:3px;
 }
 
+.input .description, .checkbox .description, .textarea .description,
+.dropdown .description {
+  color: #000;
+}
+
 /* Colors of switching rows */
 /* Also change directly in tpl: mediaShowMedia.tpl, contentShowOverview.tpl */
 .row1, .row2 {

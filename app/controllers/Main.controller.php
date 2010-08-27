@@ -12,6 +12,7 @@ abstract class Main {
   protected $_aSession;
   protected $_aFile;
   protected $_iId;
+  protected $_aError;
   private $_aData = array();
   private $_sContent;
   private $_sTitle;

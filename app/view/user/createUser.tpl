@@ -3,13 +3,16 @@
     <tr>
       <th colspan='2'>{$lang_headline}</th>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
         <label for='name'>{$lang_name}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='name' id='name' value='{$name}' type='text' />
+          {if $error_name}
+            <div class="description">{$error_name}</div>
+          {/if}
         </div>
       </td>
     </tr>
@@ -23,17 +26,20 @@
         </div>
       </td>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>
         <label for='email'>{$lang_email}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='email' id='email' value='{$email}' type='text' />
+          {if $error_email}
+            <div class="description">{$error_email}</div>
+          {/if}
         </div>
       </td>
     </tr>
-    <tr class='row2'>
+    <tr class='row2{if $error_password} error{/if}'>
       <td class='td_left'>
         <label for='password'>{$lang_password}</label>
       </td>
@@ -41,6 +47,9 @@
         <div class="input">
           <input name='password' class='inputtext' id='password'
                  value='' type='password' />
+          {if $error_password}
+            <div class="description">{$error_password}</div>
+          {/if}
         </div>
       </td>
     </tr>
@@ -57,7 +66,7 @@
       </td>
     </tr>
     {if $USER_RIGHT < 4}
-      <tr class='row2'>
+      <tr class='row2{if $error_disclaimer} error{/if}'>
         <td class='td_left vat'>
           <a href='#reload' onclick="reloadPage('/Help/Registration', '{$_public_folder_}')">
             {$lang_disclaimer_read}
@@ -66,6 +75,9 @@
         <td class='td_right'>
           <div class="checkbox">
             <input name='disclaimer' value='' type='checkbox' />
+            {if $error_disclaimer}
+              <div class="description">{$error_disclaimer}</div>
+            {/if}
           </div>
         </td>
       </tr>

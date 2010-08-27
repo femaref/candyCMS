@@ -27,7 +27,7 @@
         {/if}
       </div>
       <div id='body'>
-        {if $lang_update_avaiable !== ''}
+        {if $lang_update_avaiable}
           <div class="notice">
             {$lang_update_avaiable}
           </div>

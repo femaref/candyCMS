@@ -3,18 +3,20 @@
     <tr>
       <th colspan='3'>{$lang_headline}</th>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
         <label for='name'>{$lang_name} ({$lang_required})</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='name' value='{$name}' type='text'
-                 id='name' />
+          <input name='name' value='{$name}' type='text' id='name' />
+          {if $error_name}
+            <div class="description">{$error_name}</div>
+          {/if}
         </div>
       </td>
       <td rowspan='5' style='vertical-align:top;min-width:140px'>
-		{if $USER_ID === $uid}
+        {if $USER_ID === $uid}
           <a href='{$avatar_popup}' rel='lightbox' title='{$name}'>
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
@@ -35,13 +37,16 @@
         </div>
       </td>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>
         <label for='email'>{$lang_email}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='email' value='{$email}' type='text' id='email' />
+          {if $error_email}
+            <div class="description">{$error_email}</div>
+          {/if}
         </div>
       </td>
     </tr>
@@ -109,33 +114,39 @@
       <tr>
         <th colspan='2'>{$lang_password_change}</th>
       </tr>
-      <tr class='row1'>
+      <tr class='row1{if $error_password_old} error{/if}'>
         <td class='td_left'>
-          <label for='oldpw'>{$lang_password_old}</label>
+          <label for='password_old'>{$lang_password_old}</label>
         </td>
         <td class='td_right'>
           <div class="input">
-            <input name='oldpw' value='' type='password' id='oldpw' />
+            <input name='password_old' value='' type='password' id='password_old' />
+            {if $error_password_old}
+              <div class="description">{$error_password_old}</div>
+            {/if}
           </div>
         </td>
       </tr>
-      <tr class='row2'>
+      <tr class='row2{if $error_password_new} error{/if}'>
         <td class='td_left'>
-          <label for='newpw'>{$lang_password_new}</label>
+          <label for='password_new'>{$lang_password_new}</label>
         </td>
         <td class='td_right'>
           <div class="input">
-            <input name='newpw' value='' type='password' id='newpw' />
+            <input name='password_new' value='' type='password' id='password_new' />
+            {if $error_password_old}
+              <div class="description">{$error_password_old}</div>
+            {/if}
           </div>
         </td>
       </tr>
       <tr class='row1'>
         <td class='td_left'>
-          <label for='newpw2'>{$lang_password_repeat}</label>
+          <label for='password_new2'>{$lang_password_repeat}</label>
         </td>
         <td class='td_right'>
           <div class="input">
-            <input name='newpw2' value='' type='password' id='newpw2' />
+            <input name='password_new2' value='' type='password' id='password_new2' />
           </div>
         </td>
       </tr>
