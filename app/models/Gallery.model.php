@@ -169,8 +169,7 @@ class Model_Gallery extends Model_Main {
     return $this->_aThumbs;
   }
 
-  # TODO: Move to static function?!
-  private final function _setAlbumName($iId) {
+  public final static function getAlbumName($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -180,20 +179,17 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $aResult['title'];
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
+
+    if($bReturn == true)
+      return $aResult['title'];
   }
 
-	public final function getAlbumName($iId) {
-    return $this->_setAlbumName($iId);
-  }
-
-  # TODO: Move to static function?!
-  private final function _setAlbumDescription($iId) {
+  public final static function getAlbumDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -203,20 +199,17 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $aResult['description'];
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
+
+    if($bReturn == true)
+      return $aResult['description'];
   }
 
-  public final function getAlbumDescription($iId) {
-    return $this->_setAlbumDescription($iId);
-  }
-
-  # TODO: Move to static function?!
-  private final function _setFileDescription($iId) {
+  public final function getFileDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -226,16 +219,14 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      return $aResult['description'];
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
       $e->getMessage();
     }
-  }
 
-  public final function getFileDescription($iId) {
-    return $this->_setFileDescription($iId);
+    if($bReturn == true)
+      return $aResult['description'];
   }
 
 	public function create() {

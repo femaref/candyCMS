@@ -30,15 +30,14 @@ class Gallery extends Main {
     # Specific gallery
     if( !empty($this->_iId) ) {
       # collect data array
-      $sAlbumName	= $this->_oModel->getAlbumName($this->_iId);
+      $sAlbumName	= Model_Gallery::getAlbumName($this->_iId);
 
       $oSmarty->assign('id', $this->_iId);
       $oSmarty->assign('files',
               $this->_oModel->getThumbs($this->_iId, LIMIT_ALBUM_IMAGES));
       $oSmarty->assign('file_no', $this->_oModel->_iEntries);
       $oSmarty->assign('gallery_name', $sAlbumName);
-      $oSmarty->assign('gallery_description',
-              $this->_oModel->getAlbumDescription($this->_iId));
+      $oSmarty->assign('gallery_description', Model_Gallery::getAlbumDescription($this->_iId));
       $oSmarty->assign('popup_path', POPUP_DEFAULT_X);
 
       # System variables
@@ -221,7 +220,7 @@ class Gallery extends Main {
     if($bUpdate == true) {
       $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/updatefile');
       $oSmarty->assign('_formdata_', 'update_file');
-      $oSmarty->assign('description', $this->_oModel->getFileDescription($this->_iId));
+      $oSmarty->assign('description', Model_Gallery::getFileDescription($this->_iId));
 
       # Language
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
