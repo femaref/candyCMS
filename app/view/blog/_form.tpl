@@ -21,13 +21,16 @@
     <tr>
       <th colspan='2'>{$lang_headline}</th>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_title} error{/if}'>
       <td class='td_left'>
         <label for='title'>{$lang_title}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='title' value='{$title}' type='text' id='title' />
+          {if $error_title}
+            <div class="description">{$error_title}</div>
+          {/if}
         </div>
       </td>
     </tr>
@@ -42,7 +45,7 @@
         <div class='description'>{$lang_create_tag_info}</div>
       </td>
     </tr>
-    <tr class='row1'>
+    <tr class='row1{if $error_content} error{/if}'>
       <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
@@ -50,10 +53,14 @@
         <div class="textarea">
           <textarea name='content'
             id='content' rows='16' cols='50'>{$content}</textarea>
-        </div>
-        <div class='description'>
-          <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
-          <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
+          {if $error_content}
+            <div class="description">{$error_content}</div>
+          {else}
+            <div class='description'>
+              <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
+              <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
+            </div>
+          {/if}
         </div>
       </td>
     </tr>

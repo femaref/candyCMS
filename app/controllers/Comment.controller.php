@@ -117,36 +117,32 @@ final class Comment extends Main {
   }
 
   protected final function _create($bShowCaptcha = false) {
-    $sError = '';
-
+    # TODO: Better language errors
     if(	!isset($this->_aRequest['parent_category']) ||
             empty($this->_aRequest['parent_category']) )
-      $sError .= LANG_GLOBAL_CATEGORY.	'<br />';
+      $this->_aError['parent_category'] = LANG_GLOBAL_CATEGORY;
 
     if(	!isset($this->_aRequest['parent_id']) ||
             empty($this->_aRequest['parent_id']) )
-      $sError .= 'ID<br />';
+      $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
     if(	!isset($this->_aRequest['content']) ||
             empty($this->_aRequest['content']) )
-      $sError .= LANG_GLOBAL_CONTENT.	'<br />';
+      $this->_aError['content'] = LANG_GLOBAL_CONTENT;
 
     if( USER_ID < 1) {
       if( !isset($this->_aRequest['name']) ||
               empty($this->_aRequest['name']) )
-        $sError .= LANG_GLOBAL_NAME.	'<br />';
+        $this->_aError['name'] = LANG_GLOBAL_NAME;
     }
 
-    /* Set new Action */
+    # Set new action for form template
     $this->_sAction = '/Comment/create/'	.$this->_aRequest['parent_category'].
             '/'	.(int)$this->_aRequest['parent_id']. '#'.
             (int)$this->_aRequest['parent_id'];
 
-    if( !empty($sError) ) {
-      $sReturn  = Helper::errorMessage($sError, LANG_ERROR_GLOBAL_CHECK_FIELDS);
-      $sReturn .= $this->_showFormTemplate($bShowCaptcha);
-      return $sReturn;
-    }
+    if (isset($this->_aError))
+      return $this->_showFormTemplate($bShowCaptcha);
     else {
       if ($this->_oModel->create() == true)
         return Helper::redirectTo('/' . $this->_sParentSection .
@@ -201,6 +197,11 @@ final class Comment extends Main {
       else
         $oSmarty->assign('_captcha_', '');
 
+      if (!empty($this->_aError)) {
+        foreach ($this->_aError as $sField => $sMessage)
+          $oSmarty->assign('error_' . $sField, $sMessage);
+      }
+
       # Language
       $oSmarty->assign('lang_headline', LANG_COMMENT_CREATE);
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
@@ -228,8 +229,8 @@ final class Comment extends Main {
         return $this->_create($bShowCaptcha);
       else {
         $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
-        return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT).
-                $this->_showFormTemplate($bShowCaptcha);
+        $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
+        return $this->_showFormTemplate($bShowCaptcha);
       }
     }
     else

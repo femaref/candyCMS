@@ -204,7 +204,7 @@ fieldset .textarea textarea {
 }
 
 .input .description, .checkbox .description, .textarea .description,
-.dropdown .description {
+.dropdown .description, .error .description {
   color: #000;
 }
 
