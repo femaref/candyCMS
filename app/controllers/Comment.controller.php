@@ -147,7 +147,7 @@ final class Comment extends Main {
         return Helper::redirectTo('/' . $this->_sParentSection .
                 '/' . (int) $this->_aRequest['parent_id']) . Helper::successMessage(LANG_SUCCESS_CREATE);
       else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
   }
 
@@ -156,14 +156,14 @@ final class Comment extends Main {
       Header('Location:' . WEBSITE_URL . '/' . $this->_sParentSection .
                       '/' . (int) $this->_aRequest['parent_id']) . Helper::successMessage(LANG_SUCCESS_DESTROY);
     else
-      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 
   protected final function _showFormTemplate($bShowCaptcha) {
     # We search for parent category
     # TODO: Better message
     if( empty($this->_sAction) )
-      return Helper::errorMessage(__CLASS__, LANG_ERROR_ACTION_NOT_SPECIFIED);
+      return Helper::errorMessage(__CLASS__, LANG_ERROR_REQUEST_MISSING_ACTION);
 
     else {
       $sName = isset($this->_aRequest['name']) ?

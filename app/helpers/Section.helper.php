@@ -102,11 +102,11 @@ class Section extends Main {
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_gallery'));
-          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_TITLE_UPDATE));
+          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'updatefile') {
           parent::_setContent($this->_oObject->updateFile());
-          parent::_setTitle(LANG_GALLERY_UPDATE_FILE);
+          parent::_setTitle(LANG_GALLERY_FILE_UPDATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
@@ -134,11 +134,11 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle(LANG_MEDIA_FILE_CREATE);
+          parent::_setTitle(LANG_MEDIA_FILE_CREATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_MEDIA_FILE_DESTROY);
+          parent::_setTitle(LANG_MEDIA_FILE_DESTROY_TITLE);
         }
         else {
           parent::_setContent($this->_oObject->show());
@@ -151,12 +151,12 @@ class Section extends Main {
 
         if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle(LANG_NEWSLETTER_CREATE);
+          parent::_setTitle(LANG_NEWSLETTER_CREATE_TITLE);
         }
         else # CREATE and DESTROY functions
         {
           parent::_setContent($this->_oObject->handleNewsletter());
-          parent::_setTitle(LANG_NEWSLETTER_CREATE_DESTROY);
+          parent::_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
         }
 
         break;
@@ -190,7 +190,7 @@ class Section extends Main {
 
         $sTpl = isset($this->_aRequest['action']) ?
                 (string)$this->_aRequest['action'] :
-                LANG_ERROR_ACTION_NOT_SPECIFIED;
+                LANG_ERROR_REQUEST_MISSING_ACTION;
 
         $oSmarty = new Smarty();
         $oSmarty->template_dir = '/skins/'	.PATH_TPL_STATIC.	'/tpl/static';
@@ -203,7 +203,7 @@ class Section extends Main {
 
         if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update' ) {
           parent::_setContent($this->_oObject->update());
-          parent::_setTitle(LANG_USER_SETTINGS_HEADLINE);
+          parent::_setTitle(LANG_USER_UPDATE_TITLE);
         }
         elseif( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
           parent::_setContent($this->_oObject->create());

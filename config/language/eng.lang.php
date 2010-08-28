@@ -181,7 +181,7 @@ define( 'LANG_SUCCESS_UPDATE', 'Update successful!' );
 /* Error messages */
 define( 'LANG_ERROR_ACTION_NOT_SPECIFIED', 'No ACTION_REQUEST has been delivered!' );
 define( 'LANG_ERROR_DB_CONNECTION', 'Can not connect to database!' );
-define( 'LANG_ERROR_DB_QUERY', 'Error at SQL Query!' );
+define( 'LANG_ERROR_SQL_QUERY', 'Error at SQL Query!' );
 define( 'LANG_ERROR_DB_SELECTION', 'Can not use database!' );
 define( 'LANG_ERROR_GLOBAL', 'An Error occured' );
 define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );

@@ -154,26 +154,26 @@ class User extends Main {
     $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
     # Language
-    $oSmarty->assign('lang_about_you', LANG_USER_SETTINGS_ABOUT_YOU);
+    $oSmarty->assign('lang_about_you', LANG_USER_UPDATE_LABEL_DESCRIPTION);
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $oSmarty->assign('lang_headline', LANG_USER_SETTINGS_HEADLINE);
-    $oSmarty->assign('lang_image_agreement', LANG_USER_SETTINGS_IMAGE_AGREEMENT);
-    $oSmarty->assign('lang_image_change', LANG_USER_SETTINGS_IMAGE_CHANGE);
-    $oSmarty->assign('lang_image_choose', LANG_USER_SETTINGS_IMAGE_CHOOSE);
-    $oSmarty->assign('lang_image_headline', LANG_USER_SETTINGS_IMAGE_CHOOSE);
-    $oSmarty->assign('lang_image_gravatar_info', LANG_USER_SETTINGS_IMAGE_GRAVATAR_INFO);
-    $oSmarty->assign('lang_image_upload', LANG_USER_SETTINGS_IMAGE_UPLOAD);
-    $oSmarty->assign('lang_image_upload_info', LANG_USER_SETTINGS_IMAGE_UPLOAD_INFO);
+    $oSmarty->assign('lang_headline', LANG_USER_UPDATE_TITLE);
+    $oSmarty->assign('lang_image_agreement', LANG_USER_UPDATE_LABEL_TERMS);
+    $oSmarty->assign('lang_image_change', LANG_USER_UPDATE_IMAGE_LABEL_CHANGE);
+    $oSmarty->assign('lang_image_choose', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
+    $oSmarty->assign('lang_image_headline', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
+    $oSmarty->assign('lang_image_gravatar_info', LANG_USER_UPDATE_GRAVATAR_INFO);
+    $oSmarty->assign('lang_image_upload', LANG_USER_UPDATE_IMAGE_TITLE);
+    $oSmarty->assign('lang_image_upload_info', LANG_USER_UPDATE_IMAGE_INFO);
     $oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
-    $oSmarty->assign('lang_newsletter', LANG_USER_SETTINGS_NEWSLETTER);
-    $oSmarty->assign('lang_password_change', LANG_USER_SETTINGS_PASSWORD_CHANGE);
-    $oSmarty->assign('lang_password_new', LANG_USER_SETTINGS_PASSWORD_NEW);
-    $oSmarty->assign('lang_password_old', LANG_USER_SETTINGS_PASSWORD_OLD);
+    $oSmarty->assign('lang_newsletter', LANG_USER_UPDATE_LABEL_NEWSLETTER);
+    $oSmarty->assign('lang_password_change', LANG_USER_UPDATE_LABEL_PASSWORD_CHANGE);
+    $oSmarty->assign('lang_password_new', LANG_USER_UPDATE_LABEL_PASSWORD_NEW);
+    $oSmarty->assign('lang_password_old', LANG_USER_UPDATE_LABEL_PASSWORD_OLD);
     $oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
     $oSmarty->assign('lang_required', LANG_GLOBAL_REQUIRED);
-    $oSmarty->assign('lang_submit', LANG_USER_SETTINGS_SUBMIT);
+    $oSmarty->assign('lang_submit', LANG_USER_UPDATE_LABEL_SUBMIT);
     $oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
-    $oSmarty->assign('lang_use_gravatar', LANG_USER_SETTINGS_IMAGE_USE_GRAVATAR);
+    $oSmarty->assign('lang_use_gravatar', LANG_USER_UPDATE_LABEL_GRAVATAR);
     $oSmarty->assign('lang_user_right', LANG_GLOBAL_USERRIGHT);
     $oSmarty->assign('lang_user_right_1', LANG_GLOBAL_USERRIGHT_1);
     $oSmarty->assign('lang_user_right_2', LANG_GLOBAL_USERRIGHT_2);
@@ -209,12 +209,8 @@ class User extends Main {
 		# System variables
 		$oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
-		# Language
-		$oSmarty->assign('lang_last_login', LANG_USER_LAST_LOGIN);
-		$oSmarty->assign('lang_registered_since', LANG_USER_REGISTERED_SINCE);
-
 		if (empty($this->_iId)) {
-			$this->_setTitle(LANG_USER_OVERVIEW);
+			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
 
 			if (USER_RIGHT < 3)
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -224,7 +220,7 @@ class User extends Main {
 				$oSmarty->assign('user', $this->_aData);
 
 				# Language
-				$oSmarty->assign('lang_create', LANG_USER_CREATE);
+				$oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
 				$oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
 				$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 				$oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
@@ -253,9 +249,11 @@ class User extends Main {
 			$this->_setTitle($this->_sName . ' ' . $this->_aData['surname']);
 
 			# Language
-			$oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_ABOUT_HIMSELF));
+			$oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
 			$oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT);
-			$oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_sName, LANG_USER_CONTACT_VIA_EMAIL));
+			$oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_sName, LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
+      $oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
+      $oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 			$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
 			$oSmarty->template_dir = Helper::getTemplateDir('user/show');
@@ -270,7 +268,7 @@ class User extends Main {
         $this->_iId = '';
         return Helper::successMessage(LANG_SUCCESS_DESTROY) . $this->show();
       } else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
     else
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -285,7 +283,7 @@ class User extends Main {
 
       # TODO: We need to get seperate messages for failed mails and failed queries
       else
-        #return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        #return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 				return $this->_showCreateUserTemplate();
     } else
       return $this->_showCreateUserTemplate();
@@ -379,7 +377,7 @@ class User extends Main {
 		if (empty($this->_iId))
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESS);
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL);
 		else
 			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;
 	}

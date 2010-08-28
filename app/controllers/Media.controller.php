@@ -32,10 +32,10 @@ class Media extends Main {
     $oSmarty = new Smarty();
 
     /* Language */
-    $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CHOOSE);
-    $oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_RENAME);
+    $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
+    $oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
     $oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
-    $oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE);
+    $oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
     $oSmarty->template_dir = Helper::getTemplateDir('media/create');
     return $oSmarty->fetch('media/create.tpl');
@@ -102,10 +102,10 @@ class Media extends Main {
       $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
       # Language
-      $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY);
+      $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
       $oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
-      $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE);
-      $oSmarty->assign('lang_no_files', LANG_MEDIA_FILE_EMPTY_FOLDER);
+      $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
+      $oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
 
       $oSmarty->template_dir = Helper::getTemplateDir('media/show');
       return $oSmarty->fetch('media/show.tpl');
@@ -119,7 +119,7 @@ class Media extends Main {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id']);
 
-        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESS).
+        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL).
                 Header('Location:'	.WEBSITE_URL.	'/Media');
       }
       else

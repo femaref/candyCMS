@@ -63,9 +63,9 @@
         {$lang_usermanager}
       </a>
     {else}
-      <a href='/Newsletter' title='{$lang_newsletter_create_destroy}'>
+      <a href='/Newsletter' title='{$lang_newsletter_handle}'>
         <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
-        {$lang_newsletter_create_destroy}
+        {$lang_newsletter_handle}
       </a>
     {/if}
     <script language='javascript' src='%PATH_PUBLIC%/js/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>

@@ -25,7 +25,7 @@ class Gallery extends Main {
     $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 
     # Language
-    $oSmarty->assign('lang_no_files_yet', LANG_GALLERY_NO_FILES_YET);
+    $oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
     # Specific gallery
     if( !empty($this->_iId) ) {
@@ -86,7 +86,7 @@ class Gallery extends Main {
         return Helper::successMessage(LANG_SUCCESS_CREATE).
                 $this->show($this->_oModel->getId());
       else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
   }
 
@@ -103,7 +103,7 @@ class Gallery extends Main {
         return Helper::successMessage(LANG_SUCCESS_UPDATE).
                 $this->show();
       else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
   }
 
@@ -115,7 +115,7 @@ class Gallery extends Main {
     }
     else {
       unset($this->_iId);
-      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
   }
 
@@ -225,7 +225,7 @@ class Gallery extends Main {
 
       # Language
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
-      $oSmarty->assign('lang_headline', LANG_GALLERY_UPDATE_FILE);
+      $oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
     }
     else {
@@ -240,12 +240,12 @@ class Gallery extends Main {
       $oSmarty->assign('description', '');
 
       # Language
-      $oSmarty->assign('lang_create_file_cut', LANG_GALLERY_CREATE_FILE_CUT);
-      $oSmarty->assign('lang_create_file_resize', LANG_GALLERY_CREATE_FILE_RESIZE);
+      $oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
+      $oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
       $oSmarty->assign('lang_cut', LANG_GLOBAL_CUT);
-      $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CHOOSE);
+      $oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
       $oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-      $oSmarty->assign('lang_same_filetype', LANG_GALLERY_SAME_FILETYPE);
+      $oSmarty->assign('lang_same_filetype', LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE);
     }
 
     # Language

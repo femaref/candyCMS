@@ -151,7 +151,7 @@ class Mail extends Main {
       if ($bStatus == true)
 				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . Helper::redirectTo('/Start');
 			else
-				return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_FAILED_SUBJECT);
+				return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_ERROR);
     }
   }
 

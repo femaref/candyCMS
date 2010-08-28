@@ -175,7 +175,7 @@ class Blog extends Main {
 			return Helper::successMessage(LANG_SUCCESS_CREATE).
 					$this->show();
 		else
-			return Helper::errorMessage($sError, LANG_ERROR_DB_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
 
 	protected final function _update() {
@@ -183,7 +183,7 @@ class Blog extends Main {
 			return Helper::successMessage(LANG_SUCCESS_UPDATE).
 					$this->show();
 		else
-			return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
 
 	protected function _destroy() {
@@ -193,6 +193,6 @@ class Blog extends Main {
 					$this->show();
 		}
     else
-			return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
 }

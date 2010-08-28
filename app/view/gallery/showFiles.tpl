@@ -19,8 +19,8 @@
   {/if}
 </h2>
 {if !$files}
-  <div class='error' id='error' title='{$lang_no_files_yet}' onclick="hideDiv('error')">
-    <p>{$lang_no_files_yet}</p>
+  <div class='error' id='error' onclick="hideDiv('error')">
+    <p>{$lang_no_files_uploaded}</p>
   </div>
 {else}
   {if $gallery_description}

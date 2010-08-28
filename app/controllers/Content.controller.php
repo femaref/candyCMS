@@ -128,7 +128,7 @@ final class Content extends Main {
         return Helper::successMessage(LANG_SUCCESS_CREATE).
                 $this->show();
       else
-        return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
   }
 
@@ -137,7 +137,7 @@ final class Content extends Main {
       return Helper::successMessage(LANG_SUCCESS_UPDATE).
             $this->show();
     else
-      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 
   protected final function _destroy() {
@@ -145,6 +145,6 @@ final class Content extends Main {
       $this->_iId = '';
       return Helper::successMessage(LANG_SUCCESS_DESTROY) .$this->show();
     } else
-      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 }
