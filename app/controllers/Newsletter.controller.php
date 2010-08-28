@@ -32,12 +32,12 @@ class Newsletter extends Main {
           $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
 
           Mail::send(Helper::formatInput($this->_aRequest['email']),
-                          LANG_NEWSLETTER_CREATE_SUCCESS_SUBJECT,
-                          LANG_NEWSLETTER_CREATE_SUCCESS_MESSAGE,
+                          LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
+                          LANG_MAIL_NEWSLETTER_CREATE_BODY,
                           WEBSITE_MAIL_NOREPLY);
         }
         else
-          return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+          return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
       }
     }
 
@@ -45,8 +45,8 @@ class Newsletter extends Main {
 
     # Language
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_DESTROY);
-    $oSmarty->assign('lang_description', LANG_NEWSLETTER_CREATE_DESTROY_DESCRIPTION);
+    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
+    $oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
     $oSmarty->template_dir = Helper::getTemplateDir('newsletter/newsletter');
     return $sMsg . $oSmarty->fetch('newsletter/newsletter.tpl');
@@ -85,10 +85,10 @@ class Newsletter extends Main {
 
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-    $oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CONTENT_INFO);
-    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE);
+    $oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
+    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
-    $oSmarty->assign('lang_submit', LANG_NEWSLETTER_SUBMIT);
+    $oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
     $oSmarty->template_dir = Helper::getTemplateDir('newsletter/create');
     return $oSmarty->fetch('newsletter/create.tpl');
@@ -127,7 +127,7 @@ class Newsletter extends Main {
       $aResult = Model_Newsletter::getNewsletterRecipients('newsletter');
 
       foreach ($aResult as $aRow) {
-        $sReceiversName = LANG_NEWSLETTER_DEFAULT_ADDRESS;
+        $sReceiversName = LANG_NEWSLETTER_SHOW_DEFAULT_NAME;
         $sReceiversMail = $aRow['email'];
 
         $sMailSubject = Helper::formatInput($this->_aRequest['subject']);
@@ -142,7 +142,7 @@ class Newsletter extends Main {
       if($bStatusNewsletter == true && $bStatusUser == true)
         return Helper::successMessage( LANG_SUCCESS_MAIL_SENT );
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT);
+        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR);
     }
   }
 }

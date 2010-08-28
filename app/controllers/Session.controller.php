@@ -39,7 +39,7 @@ class Session extends Main {
 			$this->_aError['password'] = LANG_GLOBAL_PASSWORD;
 
 		if (isset($this->_aError))
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_CHECK_FIELDS) . $this->showCreateSessionTemplate();
+      return Helper::errorMessage(LANG_ERROR_FORM_TITLE) . $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL).
@@ -89,10 +89,10 @@ class Session extends Main {
           if ($bStatus == true)
             return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
           else
-            Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+            Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
         }
         else
-          Helper::errorMessage(LANG_ERROR_DB_QUERY);
+          Helper::errorMessage(LANG_ERROR_SQL_QUERY);
       }
       elseif ($this->_aRequest['action'] == 'resendverification') {
         if($this->_oModel->createResendActions() === true) {
@@ -111,13 +111,13 @@ class Session extends Main {
           if ($bStatus == true)
             return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
           else
-            Helper::errorMessage(LANG_ERROR_MAIL_FAILED_SUBJECT) . $this->showCreateSessionTemplate();
+            Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
         }
         else
-          Helper::errorMessage(LANG_ERROR_DB_QUERY);
+          Helper::errorMessage(LANG_ERROR_SQL_QUERY);
       }
       else
-        return Helper::errorMessage(LANG_ERROR_ACTION_NOT_SPECIFIED);
+        return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
     }
     else
       return $this->_showCreateResendActionsTemplate();
@@ -162,6 +162,6 @@ class Session extends Main {
       return Helper::redirectTo('/Start') . Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_DB_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 }

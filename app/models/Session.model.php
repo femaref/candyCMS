@@ -177,7 +177,7 @@ class Model_Session extends Model_Main {
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_ACTION_NOT_SPECIFIED);
+      return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
   }
 
   public final function getData() {

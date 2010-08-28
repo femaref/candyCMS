@@ -1,6 +1,6 @@
 {if $USER_RIGHT == 4}
   <p>
-    <a href='/Register'>
+    <a href='/User/create'>
       <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
       {$lang_create}
     </a>

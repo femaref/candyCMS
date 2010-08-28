@@ -153,8 +153,8 @@ class Index {
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
     $oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
     $oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
-    $oSmarty->assign('lang_newsletter_create_destroy', LANG_NEWSLETTER_CREATE_DESTROY);
-    $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE);
+    $oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
+    $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE_TITLE);
     $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
     $oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
     $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
@@ -189,7 +189,7 @@ class Index {
     # There's no request on a core module and Addons are disabled. */
     else {
       header('Status: 404 Not Found');
-      die('Status: 404 Not Found');
+      die(LANG_ERROR_GLOBAL_404);
     }
 
     # Avoid Header and Footer HTML if RSS or AJAX are requested

@@ -203,13 +203,8 @@ fieldset .textarea textarea {
 
 /* Small Info on special functions etc. Used primary as help */
 .description {
-  color:#999;
-  padding:3px;
-}
-
-.input .description, .checkbox .description, .textarea .description,
-.dropdown .description, .error .description {
   color: #000;
+  padding: 3px;
 }
 
 /* Colors of switching rows */

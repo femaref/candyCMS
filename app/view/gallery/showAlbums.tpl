@@ -34,7 +34,7 @@
               {/foreach}
             </a>
           {else}
-            {$lang_no_files_yet}
+            {$lang_no_files_uploaded}
           {/if}
         </p>
       </div>
