@@ -225,7 +225,7 @@ fieldset .textarea textarea {
   cursor:pointer;
 }
 
-.success p, .notice p {
+.success p, .notice p, .error p {
   margin: 0px;
 }
 
@@ -251,7 +251,7 @@ fieldset .textarea textarea {
 
 .error h4 {
   font-size:125%;
-  margin: 10px;
+  margin: 0px;
 }
 
 .error h4:before {
@@ -408,7 +408,7 @@ table th
 }
 
 .gallery_album .image, .gallery_files .image {
-  margin: 2px;
+  margin: 2px 0px
 }
 
 .gallery_files .image {
