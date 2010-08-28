@@ -76,7 +76,7 @@ define('ALLOW_ADDONS', '0');
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
 # DEFAULT: 1
-define('ALLOW_CACHE', '0');
+define('ALLOW_CACHE', '1');
 
 # ------------------------------------------------------------------------------
 

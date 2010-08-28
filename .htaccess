@@ -1,50 +1,53 @@
 # Many rules are taken from
 # http://github.com/paulirish/html5-boilerplate/blob/master/.htaccess
 
-RewriteEngine On
-
-# Redirect from root to public folder
-RewriteRule ^favicon.ico$ public/favicon.ico [L]
-RewriteRule ^robots.txt$ public/robots.txt [L]
-
 # Custom error pages
 ErrorDocument 404 /public/404.html
 ErrorDocument 422 /public/422.html
 ErrorDocument 500 /public/500.html
-
-# Static rules
-# Nice to have
-RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L]
-RewriteRule ^About$ index.php?section=content&id=3 [L]
-RewriteRule ^Contact/([A-Za-z0-9]+)$ index.php?section=mail&id=1&subject=$1 [L]
-RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [L]
-RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [L]
-
-# Fixes for rules below
-RewriteRule ^(Blog|Content|Gallery|Media|Newsletter|RSS|Session|User)$ index.php?section=$1 [L] # Show Section
-RewriteRule ^(Blog)/page/([0-9]+)$ index.php?section=$1&page=$2 [L] # Non AJAX pagination
-RewriteRule ^(Blog|Comment|Content|Gallery|Media|Newsletter|Session|User)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L] # Default actions
-RewriteRule ^(Blog|Comment|Content|Gallery|Session|User)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L] # Show update / destroy actions
-RewriteRule ^(Blog|Content|Gallery|Mail|User)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L] # Show entry with id
-RewriteRule ^(Blog|Content|User)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L] # Show entry with description in url
-RewriteRule ^(Gallery)/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&page=1 [L]
-RewriteRule ^(Gallery)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L] # Show pagination on sub id
-RewriteRule ^Blog/([A-Za-z]+)$ index.php?section=blog&action=tag&id=$1&page=1 [L] # Show item sorted by tag
-RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L]
-RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L]
-RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L]
-RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L]
-RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L]
-RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L]
-RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L]
-RewriteRule ^Start$ index.php?section=blog [L]
-RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]
 
 # Hide files for non script access
 <FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php)$">
   order allow,deny
   deny from all
 </FilesMatch>
+
+Options +FollowSymLinks
+
+RewriteEngine On
+RewriteBase /
+
+# Redirect from root to public folder
+RewriteRule ^favicon.ico$ public/favicon.ico [L]
+RewriteRule ^robots.txt$ public/robots.txt [L]
+
+# Static rules
+# Nice to have
+RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA]
+RewriteRule ^About$ index.php?section=content&id=3 [L,QSA]
+RewriteRule ^Contact/([A-Za-z0-9]+)$ index.php?section=mail&id=1&subject=$1 [L,QSA]
+RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [R=301]
+RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
+
+# Fixes for rules below
+RewriteRule ^(Blog|Content|Gallery|Media|Newsletter|RSS|Session|User)$ index.php?section=$1 [L,QSA] # Show Section
+RewriteRule ^(Blog)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA] # Non AJAX pagination
+RewriteRule ^(Blog|Comment|Content|Gallery|Media|Newsletter|Session|User)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA] # Default actions
+RewriteRule ^(Blog|Comment|Content|Gallery|Session|User)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA] # Show update / destroy actions
+RewriteRule ^(Blog|Content|Gallery|Mail|User)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA] # Show entry with id
+RewriteRule ^(Blog|Content|User)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L,QSA] # Show entry with description in url
+RewriteRule ^(Gallery)/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA]
+RewriteRule ^(Gallery)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L,QSA] # Show pagination on sub id
+RewriteRule ^Blog/([A-Za-z]+)$ index.php?section=blog&action=tag&id=$1&page=1 [L,QSA] # Show item sorted by tag
+RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L,QSA]
+RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA]
+RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA]
+RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L,QSA]
+RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA]
+RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L,QSA]
+RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA]
+RewriteRule ^Start$ index.php?section=blog [L]
+RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
@@ -59,55 +62,57 @@ RewriteRule ^User/resendverification$ index.php?section=user&action=verification
 # Cache files
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresDefault A300
-  ExpiresByType application/javascript A2592000
-  ExpiresByType application/pdf A604800
-  ExpiresByType application/x-javascript A2592000
-  ExpiresByType application/x-shockwave-flash A604800
-  ExpiresByType text/css A2592000
-  ExpiresByType text/javascript A2592000
-  ExpiresByType text/html A300
-  ExpiresByType text/plain A604800
-  ExpiresByType image/gif A604800
-  ExpiresByType image/jpeg A604800
-  ExpiresByType image/png A604800
-  ExpiresByType image/x-icon A2592000
-  ExpiresByType video/x-flv A604800
+  ExpiresDefault A0
 
+  # 1 YEAR
+  <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
+  ExpiresDefault A9030400
+  </FilesMatch>
+
+  # 1 WEEK
+  <FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+  ExpiresDefault A604800
+  </FilesMatch>
+
+  # 3 HOUR
+  <FilesMatch "\.(txt|xml|js|css)$">
+  ExpiresDefault A10800"
+  </FilesMatch>
+
+  # Microsoft icon support
   AddType image/vnd.microsoft.icon .ico
   ExpiresByType image/vnd.microsoft.icon "access plus 3 months"
 </IfModule>
 
 <ifModule mod_headers.c>
-  <filesMatch "\\.(ico|pdf|flv|jpg|jpeg|png|gif|swf)$">
-    Header set Cache-Control "max-age=2592000, public"
-  </filesMatch>
-  <filesMatch "\\.(css)$">
-    Header set Cache-Control "max-age=604800, public"
-  </filesMatch>
-  <filesMatch "\\.(js)$">
-    Header set Cache-Control "max-age=216000, private"
-  </filesMatch>
-  <filesMatch "\\.(xml|txt)$">
-    Header set Cache-Control "max-age=216000, public, must-revalidate"
-  </filesMatch>
-  <filesMatch "\\.(html|htm|php)$">
-    Header set Cache-Control "max-age=1, private, must-revalidate"
-  </filesMatch>
+  # 1 YEAR
+  <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
+  Header set Cache-Control "max-age=29030400, public"
+  </FilesMatch>
+
+  # 1 WEEK
+  <FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
+  Header set Cache-Control "max-age=604800, public"
+  </FilesMatch>
+
+  # 3 HOUR
+  <FilesMatch "\.(txt|xml|js|css)$">
+  Header set Cache-Control "max-age=10800"
+  </FilesMatch>
+
+  # NEVER CACHE
+  <FilesMatch "\.(html|htm|php|cgi|pl)$">
+  Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
+  </FilesMatch>
+
+  # hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+  # Disabled. Uncomment to serve cross-domain ajax requests
+  Header set Access-Control-Allow-Origin "*"
 </ifModule>
 
 # Use gzip to compress data stream
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/plain
-  AddOutputFilterByType DEFLATE text/html
-  AddOutputFilterByType DEFLATE text/xml
-  AddOutputFilterByType DEFLATE text/css
-  AddOutputFilterByType DEFLATE text/javascript
-  AddOutputFilterByType DEFLATE application/xml
-  AddOutputFilterByType DEFLATE application/xhtml+xml
-  AddOutputFilterByType DEFLATE application/rss+xml
-  AddOutputFilterByType DEFLATE application/javascript
-  AddOutputFilterByType DEFLATE application/x-javascript
+ AddOutputFilterByType DEFLATE text/html text/plain text/css application/x-javascript text/javascript application/javascript application/json text/xml application/xml text/x-component
 </IfModule>
 
 <ifModule mod_gzip.c>
@@ -141,3 +146,5 @@ AddType application/vnd.ms-fontobject eot
 AddType font/ttf                      ttf
 AddType font/otf                      otf
 AddType font/x-woff                   woff
+
+ServerSignature Off
