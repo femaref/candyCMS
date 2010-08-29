@@ -19,7 +19,9 @@ class Newsletter extends Main {
     $sMsg = '';
 
     if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
-      $sMsg .= Helper::errorMessage(LANG_ERROR_WRONG_EMAIL_FORMAT);
+      $sMsg .= Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT);
+
+		# TODO: Better lang and check, if email is empty
 
     else {
       if(isset($this->_aRequest['email']) && !empty ($this->_aRequest['email'])) {
@@ -97,6 +99,7 @@ class Newsletter extends Main {
   private function _newsletterMail() {
     $sError = '';
 
+		# TODO: better language
     if(	!isset($this->_aRequest['subject']) || empty($this->_aRequest['subject']) )
        $this->_aError['subject'] = LANG_GLOBAL_SUBJECT;
 

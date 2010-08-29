@@ -25,7 +25,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_ERROR_LOGIN_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_GLOBAL_CREATE_SESSION_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
       if (isset($this->_aRequest['update_user'])) {
@@ -47,32 +47,32 @@ class User extends Main {
 
 	protected function _update() {
     if (empty($this->_aRequest['name']))
-      $this->_aError['name'] = LANG_ERROR_LOGIN_ENTER_NAME;
+      $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 
     if (empty($this->_aRequest['email']))
-      $this->_aError['email'] = LANG_ERROR_LOGIN_ENTER_EMAIL;
+      $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
     if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_WRONG_EMAIL_FORMAT;
+      $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
     if (empty($this->_aRequest['password_old']) &&
             !empty($this->_aRequest['password_new']) &&
             !empty($this->_aRequest['password_new2']))
-      $this->_aError['password_old'] = LANG_ERROR_USER_SETTINGS_PW_OLD;
+      $this->_aError['password_old'] = LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY;
 
     if (!empty($this->_aRequest['password_old']) &&
             md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
             $this->_aSession['userdata']['password'])
-      $this->_aError['password_old'] = LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG;
+      $this->_aError['password_old'] = LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG;
 
     if (!empty($this->_aRequest['password_old']) && (
             empty($this->_aRequest['password_new']) ||
             empty($this->_aRequest['password_new2']) ))
-      $this->_aError['password_new'] = LANG_ERROR_USER_SETTINGS_PW_NEW;
+      $this->_aError['password_new'] = LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY;
 
     if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
             $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
-      $this->_aError['password_new'] = LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG;
+      $this->_aError['password_new'] = LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH;
 
     if (isset($this->_aError))
       return false;
@@ -188,7 +188,7 @@ class User extends Main {
     $iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
 
     if ($iAgreement == 0)
-      return Helper::errorMessage(LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT) .
+      return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD) .
       $this->_showFormTemplate();
 
     else {
@@ -293,25 +293,26 @@ class User extends Main {
 		if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
       $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 
+    if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+      $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
+
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
-      $this->_aError['email'] = LANG_ERROR_LOGIN_ENTER_EMAIL;
+      $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
+
+    if (Model_User::getExistingUser($this->_aRequest['email']) == false)
+      $this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
 
     if (!isset($this->_aRequest['password']) || empty($this->_aRequest['password']))
-      $this->_aError['password'] = LANG_ERROR_LOGIN_ENTER_PASSWORD;
+      $this->_aError['password'] = LANG_ERROR_FORM_MISSING_PASSWORD;
 
     if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-      $this->_aError['password'] = LANG_ERROR_LOGIN_CHECK_PASSWORDS;
+      $this->_aError['password'] = LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH;
 
     if (USER_RIGHT < 4) {
       if (!isset($this->_aRequest['disclaimer']))
-        $this->_aError['disclaimer'] = LANG_ERROR_LOGIN_CHECK_DISCLAIMER;
+        $this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
     }
 
-    if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_WRONG_EMAIL_FORMAT;
-
-    if (Model_User::getExistingUser($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_USER_EMAIL_ALREADY_EXISTS;
 
     if (isset($this->_aError))
       return $this->_showCreateUserTemplate();

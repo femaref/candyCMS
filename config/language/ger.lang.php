@@ -186,21 +186,27 @@ define( 'LANG_MAIL_USER_CREATE_SUBJECT', 'Deine Registrierung auf %WEBSITE_NAME.
 
 
 # ERRORS IN FORM ELEMENTS
-define( 'LANG_ERROR_FORM_TITLE', 'Bitte fülle folgende, markierte Felder aus:' );
+define( 'LANG_ERROR_FORM_TITLE', 'Bitte fülle die markierten Felder aus:' );
 define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Bitte fülle den Inhalt aus!' );
+define( 'LANG_ERROR_FORM_MISSING_EMAIL', 'Bitte gib deine E-Mail-Adresse an!' );
 define( 'LANG_ERROR_FORM_MISSING_NAME', 'Bitte gib deinen Namen an!' );
 define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Bitte gib einen Titel an!' );
+define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Bitte gib ein Passwort an!' );
 
 # ERROR MESSAGES
-define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Noch keine Bilder vorhanden!' );
-define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf.' );
+define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Es wurden noch keine Bilder hochgeladen!' );
+define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf!' );
 define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Seite nicht verfügbar!' );
+define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );
 define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Einträge!' ); #NEW
 define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Die Sprachdatei konnte nicht geladen werden!' );
 define( 'LANG_ERROR_GLOBAL_NO_PERMISSION', 'Du hast keine Berechtigung diese Aktion auszuführen!' );
 define( 'LANG_ERROR_GLOBAL_NO_TEMPLATE', 'Es wurde keine passende Template gefunden!' );
 define( 'LANG_ERROR_GLOBAL_NOT_PUBLISHED', 'Nicht veröffentlicht:' );
+define( 'LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH', 'Bitte zwei identische Passwörter angeben!' );
+define( 'LANG_ERROR_GLOBAL_READ_DISCLAIMER', 'Bitte den Nutzungsbedingungen zustimmen!' );
+define( 'LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse!' ); #NEW
 define( 'LANG_ERROR_GLOBAL_WRONG_ID', 'Falsche oder keine ID angegeben.' );
 define( 'LANG_ERROR_HELPER_NO_FLASH_INSTALLED', 'Downloade den Flashplayer, um dieses Video anzugucken!' );
 define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT', 'Der Code war leider nicht korrekt!' );
@@ -211,27 +217,16 @@ define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verfügbar!' );
 define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigröße von 400KB erreicht!' );
 define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falsche Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
 define( 'LANG_ERROR_REQUEST_MISSING_ACTION', 'Es wurde kein ACTION_REQUEST mitgliefert!' );
+define( 'LANG_ERROR_SESSION_CREATE', 'Bitte überprüfe die E-Mail Adresse und das Passwort. Oder wurde deine E-Mail-Adresse noch nicht bestätigt?' );
+define( 'LANG_ERROR_SESSION_CREATE_TITLE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_SQL_QUERY', 'Es gab einen Fehler beim Verarbeiten des SQL-Statements.' );
-
-
-# TODO
-
-define( 'LANG_ERROR_LOGIN_ENTER_NAME', 'Bitte den Vornamen eingeben!' );
-define( 'LANG_ERROR_LOGIN_ENTER_EMAIL', 'Bitte die E-Mail Adresse angeben!' );
-define( 'LANG_ERROR_LOGIN_ENTER_PASSWORD', 'Bitte ein Passwort angeben!' );
-define( 'LANG_ERROR_LOGIN_CHECK_PASSWORDS', 'Bitte zwei identische Passwörter angeben!' );
-define( 'LANG_ERROR_LOGIN_CHECK_DISCLAIMER', 'Bitte den AGB zustimmen!' );
-define( 'LANG_ERROR_LOGIN_HEADLINE', 'Kann dich nicht einloggen!' );
-define( 'LANG_ERROR_LOGIN_FIRST', 'Bitte logge dich zuerst ein!' );
-define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'Es existiert kein Benutzer mit einer solchen E-Mail Adresse!' ); # NEW
-define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Bitte überprüfe die E-Mail Adresse und das Passwort. Oder wurde deine E-Mail-Adresse noch nicht bestätigt?' );
-define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
-define( 'LANG_ERROR_USER_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Du musst das Bild hochladen dürfen!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Bitte trage dein neues Passwort ein!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_PW_OLD', 'Bitte trage dein altes Passwort ein!' ); # NEW
-define( 'LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' ); # NEW
+define( 'LANG_ERROR_UPLOAD_CREATE', 'Der Upload schlug fehl.' );
+define( 'LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
+define( 'LANG_ERROR_USER_UPDATE_AGREE_UPLOAD', 'Du musst das Bild hochladen dürfen!' ); # NEW
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY', 'Bitte trage dein neues Passwort ein!' ); # NEW
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY', 'Bitte trage dein altes Passwort ein!' ); # NEW
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' ); # NEW
 define( 'LANG_ERROR_USER_VERIFICATION', 'Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!' ); # NEW
-define( 'LANG_ERROR_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse' ); #NEW
+
 ?>

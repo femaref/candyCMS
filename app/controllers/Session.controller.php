@@ -33,7 +33,7 @@ class Session extends Main {
 			$this->_aError['email'] = LANG_GLOBAL_EMAIL;
 
     if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_WRONG_EMAIL_FORMAT;
+      $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
 		if(	!isset($this->_aRequest['password']) || empty($this->_aRequest['password']) )
 			$this->_aError['password'] = LANG_GLOBAL_PASSWORD;
@@ -45,7 +45,7 @@ class Session extends Main {
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL).
 					Helper::redirectTo('/Start');
 		else
-			return Helper::errorMessage(LANG_ERROR_LOGIN_WRONG_USERDATA, LANG_ERROR_LOGIN_HEADLINE).
+			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
 				$this->showCreateSessionTemplate();
 	}
 

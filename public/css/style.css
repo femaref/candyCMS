@@ -248,12 +248,12 @@ fieldset .textarea textarea {
   font-size:125%;
   margin: 0px;
 }
-
+/*
 .error h4:before {
   content:"ERROR: ";
   color:red;
 }
-
+*/
 .quote, .box, .debug {
   background:#d7d7d7;
   width:80%;

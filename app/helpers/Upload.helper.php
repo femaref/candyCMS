@@ -135,6 +135,6 @@ final class Upload {
                       WEBSITE_URL . '/' . $sFile, LANG_MEDIA_FILE_UPLOAD_SUCCESS));
 
     else
-      return Helper::errorMessage(LANG_ERROR_UPLOAD_FAILED);
+      return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
   }
 }
