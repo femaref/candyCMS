@@ -147,7 +147,7 @@ class User extends Main {
     $oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
 
     # Set Form params
-    $oSmarty->assign('_action_url_', '/User/Settings');
+    $oSmarty->assign('_action_url_', '/User/update');
     $oSmarty->assign('style', 'display:none');
 
     # Compress slimbox
