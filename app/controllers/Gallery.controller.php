@@ -74,9 +74,8 @@ class Gallery extends Main {
   }
 
   protected final function _create() {
-    # TODO: Better language
     if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
-      $this->_aError['title'] = LANG_GLOBAL_TITLE;
+      $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(false);
@@ -91,9 +90,8 @@ class Gallery extends Main {
   }
 
   protected final function _update() {
-    # TODO: Better language
     if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
-      $this->_aError['title'] = LANG_GLOBAL_TITLE;
+      $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(true);

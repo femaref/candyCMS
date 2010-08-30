@@ -1,5 +1,8 @@
 <div id="newsletter">
   <form method='post' action='/Newsletter'>
+    {if $error_email}
+      <div class="error">{$error_email}</div>
+    {/if}
     <fieldset>
       <legend>{$lang_headline}</legend>
       <p class='small'>{$lang_description}</p>

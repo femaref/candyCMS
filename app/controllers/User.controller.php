@@ -277,11 +277,11 @@ class User extends Main {
   # @ Override due registration (avoid user right level 3)
 	public function create() {
     if (isset($this->_aRequest['create_user'])) {
-			# Why is here a bug?
       if ($this->_create() === true)
         return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL) . Helper::redirectTo('/Session/create');
 
       # TODO: We need to get seperate messages for failed mails and failed queries
+      # Move _create to create?!
       else
         #return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 				return $this->_showCreateUserTemplate();
@@ -312,7 +312,6 @@ class User extends Main {
       if (!isset($this->_aRequest['disclaimer']))
         $this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
     }
-
 
     if (isset($this->_aError))
       return $this->_showCreateUserTemplate();

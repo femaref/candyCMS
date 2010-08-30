@@ -1,15 +1,24 @@
 <div id="login">
   <form method='post' action='/Session/create'>
+    {if $error_email || $error_password}
+      <div class="error">
+        {if $error_email}
+          <p>{$error_email}</p>
+        {/if}
+        {if $error_password}
+          <p>{$error_password}</p>
+        {/if}
+      </div>
+    {/if}
     <fieldset>
       <legend>{$lang_login}</legend>
-      <div class="input{if $error_email} error{/if}">
+      <div class="input">
         <label for='email'>{$lang_email}:</label>
         &nbsp;
         <input name='email' type='text' id='email' value='' />
-
       </div>
       &nbsp;
-      <div class="input{if $error_password} error{/if}">
+      <div class="input">
         <label for='password'>{$lang_password}:</label>
         &nbsp;
         <input name='password' type='password' id='password' value='' />

@@ -113,12 +113,11 @@ final class Content extends Main {
   }
 
   protected final function _create() {
-    # TODO: Better error messages
     if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
-      $this->_aError['title'] = LANG_GLOBAL_TITLE;
+      $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
     if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
-      $this->_aError['content'] = LANG_GLOBAL_CONTENT;
+      $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showFormTemplate(false);

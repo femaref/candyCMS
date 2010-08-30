@@ -119,19 +119,18 @@ final class Comment extends Main {
   }
 
   protected final function _create($bShowCaptcha = false) {
-    # TODO: Better language errors
     if(	!isset($this->_aRequest['parent_category']) || empty($this->_aRequest['parent_category']) )
-      $this->_aError['parent_category'] = LANG_GLOBAL_CATEGORY;
+      $this->_aError['parent_category'] = LANG_ERROR_FORM_MISSING_CATEGORY;
 
     if(	!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']) )
       $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
     if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
-      $this->_aError['content'] = LANG_GLOBAL_CONTENT;
+      $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
     if( USER_ID < 1) {
       if( !isset($this->_aRequest['name']) || empty($this->_aRequest['name']) )
-        $this->_aError['name'] = LANG_GLOBAL_NAME;
+        $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
     }
 
     # Set new action for form template
@@ -161,7 +160,6 @@ final class Comment extends Main {
 
   protected final function _showFormTemplate($bShowCaptcha) {
     # We search for parent category
-    # TODO: Better message
     if( empty($this->_sAction) )
       return Helper::errorMessage(__CLASS__, LANG_ERROR_REQUEST_MISSING_ACTION);
 

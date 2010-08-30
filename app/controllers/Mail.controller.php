@@ -107,12 +107,11 @@ class Mail extends Main {
   }
 
   private function _standardMail($bShowCaptcha = true) {
-    # TODO: Better language
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
-       $this->_aError['email'] = LANG_GLOBAL_EMAIL;
+       $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
     if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
+       $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showCreateMailTemplate($bShowCaptcha);

@@ -17,9 +17,7 @@ class Session extends Main {
     $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
   }
 
-  /*
-   * @ Override
-   */
+  # @ Override
   public final function create() {
 		if( isset($this->_aRequest['create_session']) )
 			return $this->_create();
@@ -28,18 +26,17 @@ class Session extends Main {
 	}
 
 	private final function _create() {
-		# TODO: Better language
 		if(	!isset($this->_aRequest['email']) || empty($this->_aRequest['email']) )
-			$this->_aError['email'] = LANG_GLOBAL_EMAIL;
+			$this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
     if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
       $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
 		if(	!isset($this->_aRequest['password']) || empty($this->_aRequest['password']) )
-			$this->_aError['password'] = LANG_GLOBAL_PASSWORD;
+			$this->_aError['password'] = LANG_ERROR_FORM_MISSING_PASSWORD;
 
 		if (isset($this->_aError))
-      return Helper::errorMessage(LANG_ERROR_FORM_TITLE) . $this->showCreateSessionTemplate();
+      return $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL).
@@ -68,56 +65,65 @@ class Session extends Main {
   }
 
   public final function createResendActions() {
-    # TODO: Formtastic error messages
-    if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email'])) {
+    if (isset($this->_aRequest['email'])) {
+      if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+        $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
-      if ($this->_aRequest['action'] == 'resendpassword') {
-        $sNewPasswordClean	= Helper::createRandomChar(10);
-        $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
+      if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
+        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
-        if($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
-          $aData = $this->_oModel->getData();
+      if (isset($this->_aError))
+        return $this->_showCreateResendActionsTemplate();
 
-          $sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_PASSWORD_BODY);
-          $sContent = str_replace('%p',$sNewPasswordClean, $sContent);
+      else {
+        if ($this->_aRequest['action'] == 'resendpassword') {
+          $sNewPasswordClean	= Helper::createRandomChar(10);
+          $sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
-          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                          LANG_MAIL_SESSION_PASSWORD_SUBJECT,
-                          $sContent,
-                          WEBSITE_MAIL_NOREPLY);
+          if($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
+            $aData = $this->_oModel->getData();
 
-          if ($bStatus == true)
-            return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+            $sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_PASSWORD_BODY);
+            $sContent = str_replace('%p',$sNewPasswordClean, $sContent);
+
+            $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                            LANG_MAIL_SESSION_PASSWORD_SUBJECT,
+                            $sContent,
+                            WEBSITE_MAIL_NOREPLY);
+
+            if ($bStatus == true)
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+            else
+              Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+          }
           else
-            Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+            Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+        }
+        elseif ($this->_aRequest['action'] == 'resendverification') {
+          if($this->_oModel->createResendActions() === true) {
+            $aData = $this->_oModel->getData();
+
+            $sVerificationUrl = Helper::createLinkTo('/User/' . $aData['verification_code'] . '/verification');
+
+            $sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
+            $sContent = str_replace('%v', $sVerificationUrl, $sContent);
+
+            $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+                            LANG_MAIL_SESSION_VERIFICATION_SUBJECT,
+                            $sContent,
+                            WEBSITE_MAIL_NOREPLY);
+
+            if ($bStatus == true)
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+            else
+              return $this->showCreateSessionTemplate();
+          }
+          else
+            Helper::errorMessage(LANG_ERROR_SQL_QUERY);
         }
         else
-          Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+          return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
       }
-      elseif ($this->_aRequest['action'] == 'resendverification') {
-        if($this->_oModel->createResendActions() === true) {
-          $aData = $this->_oModel->getData();
-
-          $sVerificationUrl = Helper::createLinkTo('/User/' . $aData['verification_code'] . '/verification');
-
-          $sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
-          $sContent = str_replace('%v', $sVerificationUrl, $sContent);
-
-          $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                          LANG_MAIL_SESSION_VERIFICATION_SUBJECT,
-                          $sContent,
-                          WEBSITE_MAIL_NOREPLY);
-
-          if ($bStatus == true)
-            return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
-          else
-            Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
-        }
-        else
-          Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-      }
-      else
-        return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
     }
     else
       return $this->_showCreateResendActionsTemplate();

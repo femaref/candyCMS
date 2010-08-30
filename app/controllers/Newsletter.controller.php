@@ -16,34 +16,45 @@ class Newsletter extends Main {
   }
 
   public final function handleNewsletter() {
-    $sMsg = '';
+    if (isset($this->_aRequest['email'])) {
+      if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+        $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
-    if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
-      $sMsg .= Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT);
+      if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
+        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
-		# TODO: Better lang and check, if email is empty
+      if (isset($this->_aError))
+        return $this->_showHandleNewsletterTemplate();
 
-    else {
-      if(isset($this->_aRequest['email']) && !empty ($this->_aRequest['email'])) {
+      else {
         $sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
         if ($sQuery == 'DESTROY')
-          $sMsg .= Helper::successMessage(LANG_SUCCESS_DESTROY);
+          return Helper::successMessage(LANG_SUCCESS_DESTROY);
 
         elseif ($sQuery == 'INSERT') {
-          $sMsg .= Helper::successMessage(LANG_SUCCESS_CREATE);
-
           Mail::send(Helper::formatInput($this->_aRequest['email']),
                           LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
                           LANG_MAIL_NEWSLETTER_CREATE_BODY,
                           WEBSITE_MAIL_NOREPLY);
+
+          return Helper::successMessage(LANG_SUCCESS_CREATE);
         }
         else
           return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
       }
     }
+    else
+      return $this->_showHandleNewsletterTemplate();
+  }
 
+  private function _showHandleNewsletterTemplate() {
     $oSmarty = new Smarty();
+
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $oSmarty->assign('error_' . $sField, $sMessage);
+    }
 
     # Language
     $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
@@ -51,7 +62,7 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
     $oSmarty->template_dir = Helper::getTemplateDir('newsletter/newsletter');
-    return $sMsg . $oSmarty->fetch('newsletter/newsletter.tpl');
+    return $oSmarty->fetch('newsletter/newsletter.tpl');
   }
 
   # @Override
@@ -97,14 +108,11 @@ class Newsletter extends Main {
   }
 
   private function _newsletterMail() {
-    $sError = '';
-
-		# TODO: better language
     if(	!isset($this->_aRequest['subject']) || empty($this->_aRequest['subject']) )
-       $this->_aError['subject'] = LANG_GLOBAL_SUBJECT;
+       $this->_aError['subject'] = LANG_ERROR_FORM_MISSING_SUBJECT;
 
     if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
-       $this->_aError['content'] = LANG_GLOBAL_CONTENT;
+       $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
     if (isset($this->_aError))
       return $this->_showCreateNewsletterTemplate();
