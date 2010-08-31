@@ -66,17 +66,17 @@ RewriteRule ^User/resendverification$ index.php?section=user&action=verification
 
   # 1 YEAR
   <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
-  ExpiresDefault A9030400
+    ExpiresDefault A9030400
   </FilesMatch>
 
   # 1 WEEK
   <FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
-  ExpiresDefault A604800
+    ExpiresDefault A604800
   </FilesMatch>
 
   # 3 HOUR
   <FilesMatch "\.(txt|xml|js|css)$">
-  ExpiresDefault A10800"
+    ExpiresDefault A604800
   </FilesMatch>
 
   # Microsoft icon support
@@ -87,22 +87,22 @@ RewriteRule ^User/resendverification$ index.php?section=user&action=verification
 <ifModule mod_headers.c>
   # 1 YEAR
   <FilesMatch "\.(flv|ico|pdf|avi|mov|ppt|doc|mp3|wmv|wav)$">
-  Header set Cache-Control "max-age=29030400, public"
+    Header set Cache-Control "max-age=29030400, public"
   </FilesMatch>
 
   # 1 WEEK
   <FilesMatch "\.(jpg|jpeg|png|gif|swf)$">
-  Header set Cache-Control "max-age=604800, public"
+    Header set Cache-Control "max-age=604800, public"
   </FilesMatch>
 
-  # 3 HOUR
+  # 5 HOUR
   <FilesMatch "\.(txt|xml|js|css)$">
-  Header set Cache-Control "max-age=10800"
+    Header set Cache-Control "max-age=604800"
   </FilesMatch>
 
   # NEVER CACHE
   <FilesMatch "\.(html|htm|php|cgi|pl)$">
-  Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
+    Header set Cache-Control "max-age=0, private, no-store, no-cache, must-revalidate"
   </FilesMatch>
 
   # hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
