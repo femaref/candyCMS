@@ -11,14 +11,11 @@ error_reporting(E_ALL);
 ini_set('arg_separator.output', '&amp;');
 ini_set('zlib.output_compression_level', 9);
 
-require_once ('../Config.inc.php');
-require_once ('../classes/helper/SqlConnect.class.php');
-require_once ('../classes/helper/SqlQuery.class.php');
-#require_once ('../classes/helper/Helper.class.php');
+require_once ('../../config/Config.inc.php');
 
 /* Cleanup Preview Thumbnails */
 $sReturn = '<h2>1. Delete temp images</h2>';
-$sTempPath = '../' . PATH_UPLOAD . '/temp/32';
+$sTempPath = '../../' . PATH_UPLOAD . '/temp/32';
 $oDir = opendir($sTempPath);
 
 $iI = 0;
@@ -33,29 +30,41 @@ $sReturn .= $iI . ' Files deleted.';
 
 /* Optimize Core Tables in Database */
 $sReturn .= '<h2>2. Optimize MySQL Core</h2>';
-SQLCONNECT::connect(SQL_HOST, SQL_USER, SQL_PASSWORD);
-SQLCONNECT::selectDB(SQL_DB);
 
-$oOptimize = new Query("OPTIMIZE TABLE
-							`blog`,
-							`comment`,
-							`content`,
-							`gallery_album`,
-							`gallery_file`,
-							`newsletter`,
-							`user`");
+try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+              PDO::ATTR_PERSISTENT => true
+          ));
+  $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $oQuery = $oDb->query(" OPTIMIZE TABLE
+                            blog,
+                            comment,
+                            content,
+                            gallery_album,
+                            gallery_file,
+                            newsletter,
+                            user");
+
+  $bResult = $oQuery->execute();
+  $oDb = null;
+}
+catch (AdvancedException $e) {
+  $oDb->rollBack();
+}
 
 $sReturn .= 'Database optimized.';
 $sReturn .= '<h2>3. Backup Database</h2>';
 
+/*
+
 $sBackupName = date('Y-m-d---Hi') . '.sql';
-$sBackupFolder = '../backup';
+$sBackupFolder = '../../backup';
 $sBackupPath = $sBackupFolder . '/' . $sBackupName;
 
 if (!is_dir($sBackupFolder))
   mkdir($sBackupFolder, 0777);
 
-/* Create header information */
+# Create header information
 $sFileText = "#---------------------------------------------------------------#\r\n";
 $sFileText .= "# Server OS: " . php_uname() . "\r\n";
 $sFileText .= "# MySQL-Version: " . mysql_get_server_info() . "\r\n";
@@ -66,13 +75,13 @@ $sFileText .= "#---------------------------------------------------------------#
 $sFileText .= "\r\n\r\n";
 $sFileText .= "# Backup includes following tables:\r\n";
 
-/* Get all tables and name them */
+# Get all tables and name them
 $iTables = 0;
 $aTables = mysql_list_tables(SQL_DB);
 for ($iI = 0; $iI < mysql_num_rows($aTables); $iI++) {
   $sTableName = mysql_tablename($aTables, $iI);
 
-  /* Add Tables to information */
+  # Add Tables to information
   $sFileText .= "# " . $iI . ". " . $sTableName . "\r\n";
 
   if ($sTableName <> '') {
@@ -84,7 +93,7 @@ for ($iI = 0; $iI < mysql_num_rows($aTables); $iI++) {
 flush();
 unset($iI, $aTables, $sTableName);
 
-/* Backup Tables */
+# Backup Tables
 for ($iI = 0; $iI < $iTables; $iI++) {
   $sTable = $aTable[$iI];
   $sFileText .= "#---------------------------------------------------------------#\r\n\r\n";
@@ -114,11 +123,11 @@ for ($iI = 0; $iI < $iTables; $iI++) {
         $aAutoIncrement = array(true, $aRow['Field']);
     }
 
-    /* End of column */
+    # End of column
     $sFileText .= ",";
   }
 
-  /* Extra Structure (add at end of table) */
+  # Extra Structure (add at end of table)
   $oGetKeys = new Query("SHOW KEYS FROM " . $sTable);
   while ($aRow = $oGetKeys->fetch()) {
     $sKey = & $aRow['Key_name'];
@@ -126,7 +135,7 @@ for ($iI = 0; $iI < $iTables; $iI++) {
     if (($sKey != 'PRIMARY') && ($sKey['Non_unique'] == 0))
       $sKey = "UNIQUE|" . $sKey;
 
-    /* Do we have keys? */
+    # Do we have keys?
     $sFileText .= ",\n";
     if ($sKey == "PRIMARY")
       $sFileText .= " PRIMARY KEY (`" . $aRow['Column_name'] . "`)";
@@ -175,7 +184,7 @@ for ($iI = 0; $iI < $iTables; $iI++) {
 }
 
 
-/* Write into file */
+# Write into file
 $oFile = fopen($sBackupPath, 'a+');
 fwrite($oFile, $sFileText);
 fclose($oFile);
@@ -211,5 +220,10 @@ $sMailHeader .= "Content-Disposition: attachment; filename='" . $sBackupPath . "
 $sMailHeader .= $oFile . "\n";
 #@mail(WEBSITE_MAIL_BACKUP, "Backup "	.date('Y-m-d'), $sFileText, $sMailHeader);
 #$sReturn .= 'Backup successfully sent.';
+
+ */
+
+$oDB = null;
 echo $sReturn;
+
 ?>
