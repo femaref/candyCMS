@@ -73,11 +73,11 @@ class Index {
   public final function loadPlugins() {
     $oDir = opendir('plugins');
 
-    while ($aFile = readdir($oDir)) {
-      if ($aFile == '.' || $aFile == '..' || $aFile == '.htaccess' || $aFile == '_dev')
+    while ($sFile = readdir($oDir)) {
+      if (substr($sFile, 0, 1) == '.' || $sFile == '_dev' || $sFile == 'Cron.not_working.php')
         continue;
 
-      require_once ('plugins/' . $aFile);
+      require_once ('plugins/' . $sFile);
     }
   }
 

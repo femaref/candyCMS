@@ -11,11 +11,11 @@ error_reporting(E_ALL);
 ini_set('arg_separator.output', '&amp;');
 ini_set('zlib.output_compression_level', 9);
 
-require_once ('../../config/Config.inc.php');
+require_once ('../config/Config.inc.php');
 
 /* Cleanup Preview Thumbnails */
 $sReturn = '<h2>1. Delete temp images</h2>';
-$sTempPath = '../../' . PATH_UPLOAD . '/temp/32';
+$sTempPath = '../' . PATH_UPLOAD . '/temp/32';
 $oDir = opendir($sTempPath);
 
 $iI = 0;
