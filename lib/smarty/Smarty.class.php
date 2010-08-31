@@ -209,7 +209,7 @@ class Smarty
      *
      * @var boolean
      */
-    var $security       =   true;
+    var $security       =   false;
 
     /**
      * This is the list of template directories that are considered secure. This
