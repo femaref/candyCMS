@@ -1,6 +1,3 @@
-/********************************************************************************/
-/* HTML Basics */
-/********************************************************************************/
 body
 {
   font: 13px "Trebuchet MS", Arial, Sans-serif;
@@ -44,18 +41,10 @@ h3 {
   font-size: 14px;
 }
 
-/********************************************************************************/
-/* Container and main-HTML Settings */
-/********************************************************************************/
 #container {
   margin:50px auto auto;
   width:805px;
   background:white;
-}
-
-#js-flash_message {
-  display:none;
-  cursor:pointer;
 }
 
 #navigation
@@ -101,9 +90,7 @@ li {
   margin-bottom:5px;
 }
 
-/********************************************************************************/
-/* Input Styles */
-/********************************************************************************/
+/* All form actions */
 .submit, .input, .textarea, .dropdown, .cancel, .checkbox, .button {
   display:inline;
 }
@@ -121,10 +108,6 @@ li {
 .submit input, .cancel input, .button input {
   text-align:center;
   margin: 5px;
-}
-
-.cancel input {
-  color:red;
 }
 
 .input input, .dropdown select {
@@ -155,142 +138,7 @@ fieldset .textarea textarea {
   min-width:100px;
 }
 
-/* Used for file manager to select link directly */
-.inputsmall {
-  width:300px;
-  height:12px;
-  font-size:10px;
-  background:transparent;
-  border:0px;
-  color:black;
-}
-
-.inputsmall:hover {
-  cursor:pointer;
-}
-
-/********************************************************************************/
-/* HTML Style */
-/********************************************************************************/
-/* Surround Image with Border */
-.image, .currentpagelink {
-  border:1px solid #ababab;
-  padding:5px;
-  margin:1px;
-}
-
-.image {
-  padding: 2px;
-}
-
-.pagelink {
-  padding:5px;
-}
-
-/* Center Videoplayer */
-.media_player {
-  margin: 5px;
-}
-
-/* Shortcut to display small fonts */
-.small, .description, .element .header .date {
-  font-size: 85%;
-}
-
-/* Small Info on special functions etc. Used primary as help */
-.description {
-  color: #000;
-  padding: 3px;
-}
-
-/* Colors of switching rows */
-/* Also change directly in tpl: mediaShowMedia.tpl, contentShowOverview.tpl */
-.row1, .row2 {
-  background:transparent;
-}
-
-/* Quote Boxes, Success and Error Messages */
-.success, .error, .notice {
-  margin: 10px 0px 10px 0px;
-  padding: 10px;
-  cursor:pointer;
-}
-
-.success p, .notice p, .error p {
-  margin: 0px;
-}
-
-.success h4, .notice h4 {
-  display: none;
-}
-
-.success {
-  border: 1px solid #41a62a;
-  background: #cbe472;
-}
-
-.notice {
-  border: 1px solid #FFD324;
-  background: #FFF6BF;
-}
-
-.error {
-  background:#EED0D0;
-  color:#333;
-  border:1px solid red;
-}
-
-.error h4 {
-  font-size:125%;
-  margin: 0px;
-}
-/*
-.error h4:before {
-  content:"ERROR: ";
-  color:red;
-}
-*/
-.quote, .box, .debug {
-  background:#d7d7d7;
-  width:80%;
-  padding:15px;
-  margin:10px auto 10px auto;
-  text-align:left;
-  -moz-border-radius:10px;
-  -webkit-border-radius: 10px;
-}
-
-.quote h3 {
-  margin-top:0px;
-  margin-bottom:0px;
-}
-
-.box {
-  padding: 10px;
-  width:90%;
-}
-
-.debug {
-  border:1px solid #121212;
-  width:600px;
-  padding:5px;
-  margin-bottom:3px;
-  background:#fff;
-  color:black;
-}
-
-.debug:before {
-  content:"DEBUG: ";
-  font-weight:bold;
-}
-
-.pointer {
-  cursor:pointer;
-}
-
-/********************************************************************************/
-/* Section independent */
-/********************************************************************************/
+/* General table alignments */
 table, fieldset, .element, .comment {
   margin:0px auto auto;
 }
@@ -307,24 +155,49 @@ form table td {
   padding:2px 5px 2px 5px;
 }
 
-/* Simulate table */
-.td_left, .td_right {
-  margin: 10px 5px 5px 10px;
-  vertical-align:middle;
-  text-align:left;
-  height: 30px;
-}
-
-.td_left {
-  font-weight:bold;
-  width: 25%;
-}
-
 table th
 {
   padding-bottom: 8px;
   font-weight:bold;
   font-size:150%;
+}
+
+/* Surround Image with Border */
+.image, .currentpagelink {
+  border:1px solid #ababab;
+  padding:5px;
+  margin:1px;
+}
+
+.image {
+  padding: 2px;
+}
+
+.pagelink {
+  padding:5px;
+}
+
+/* Small Info on special functions etc. Used primary as help */
+.description {
+  color: #000;
+  padding: 3px;
+}
+
+/* Colors of switching rows */
+/* Also change directly in tpl: mediaShowMedia.tpl, contentShowOverview.tpl */
+.row1, .row2 {
+  background:transparent;
+}
+
+/* Center Videoplayer */
+.media_player {
+  margin: 5px;
+}
+
+/* Highlight content or code */
+.box {
+  padding: 10px;
+  width:90%;
 }
 
 /* Main DIV container at blog, comments etc. */
@@ -354,6 +227,10 @@ table th
   -moz-border-radius-topright:10px;
 }
 
+.element .header .date {
+  font-size: 85%;
+}
+
 .element h2, .gallery_album h2 {
   margin: 3px 0px 0px 0px;
 }
@@ -371,6 +248,7 @@ table th
   margin-left:4px;
 }
 
+/* Element footer */
 .footer {
   font-size: 90%;
   text-align: right;
@@ -385,6 +263,7 @@ table th
   margin-left: 5px;
 }
 
+/* Both gallery options */
 .gallery_files h2 {
   margin-top: 3px;
 }
@@ -405,194 +284,3 @@ table th
 .gallery_files .image {
   padding:5px;
 }
-
-.center {
-  text-align:center;
-}
-
-.left {
-  text-align: left;
-}
-
-.right {
-  text-align: right;
-}
-
-#create_comment fieldset {
-  max-width: 700px;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.nom {
-  margin: 0px !important;
-}
-
-/********************************************************************************/
-/* ToolTips */
-/********************************************************************************/
-.tip {
-  color: #333;
-  z-index: 13000;
-  background: transparent url(../images/bg_tooltip.png);
-  border:1px solid #666;
-  overflow:auto;
-  text-align:left;
-  max-width:400px;
-}
-
-.tip-title {
-  font-weight: bold;
-  margin: 0;
-  padding: 8px 8px 4px;
-}
-
-.tip-text {
-  font-size: 90%;
-  padding: 4px 8px 8px;
-}
-
-/********************************************************************************/
-/* Slimbox */
-/********************************************************************************/
-#lbOverlay {
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  cursor: pointer;
-}
-
-#lbCenter, #lbBottomContainer {
-  position: absolute;
-  z-index: 9999;
-  overflow: hidden;
-  background-color: #fff;
-}
-
-.lbLoading {
-  background: #fff url(../images/loading.gif) no-repeat center;
-}
-
-#lbImage {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border: 10px solid #fff;
-  background-repeat: no-repeat;
-}
-
-#lbPrevLink, #lbNextLink {
-  display: block;
-  position: absolute;
-  top: 0;
-  width: 50%;
-  outline: none;
-}
-
-#lbPrevLink {
-  left: 0;
-}
-
-#lbPrevLink:hover {
-  background: transparent url(../images/slimbox/prevlabel.png) no-repeat 0 15%;
-}
-
-#lbNextLink {
-  right: 0;
-}
-
-#lbNextLink:hover {
-  background: transparent url(../images/slimbox/nextlabel.png) no-repeat 100% 15%;
-}
-
-#lbBottom {
-  font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
-  font-size: 10px;
-  color: #666;
-  line-height: 1.4em;
-  text-align: left;
-  border: 10px solid #fff;
-  border-top-style: none;
-}
-
-#lbCloseLink {
-  display: block;
-  float: right;
-  width: 66px;
-  height: 22px;
-  background: transparent url(../images/slimbox/closelabel.png) no-repeat center;
-  margin: 5px 0;
-  outline: none;
-}
-
-#lbCaption, #lbNumber {
-  margin-right: 71px;
-}
-
-#lbCaption {
-  font-weight: bold;
-}
-
-.icon-close { background: url(../images/sprite_icons.png); background-position: 0 0; width: 16px; height: 16px; }
-.icon-comments { background: url(../images/sprite_icons.png); background-position: 0 -66px; width: 16px; height: 16px; }
-.icon-create { background: url(../images/sprite_icons.png); background-position: 0 -132px; width: 16px; height: 16px; }
-.icon-date { background: url(../images/sprite_icons.png); background-position: 0 -198px; width: 16px; height: 16px; }
-.icon-delicious { background: url(../images/sprite_icons.png); background-position: 0 -264px; width: 16px; height: 16px; }
-.icon-destroy { background: url(../images/sprite_icons.png); background-position: 0 -330px; width: 16px; height: 16px; }
-.icon-digg { background: url(../images/sprite_icons.png); background-position: 0 -396px; width: 16px; height: 16px; }
-.icon-email { background: url(../images/sprite_icons.png); background-position: 0 -462px; width: 16px; height: 16px; }
-.icon-error { background: url(../images/sprite_icons.png); background-position: 0 -528px; width: 16px; height: 16px; }
-.icon-facebook { background: url(../images/sprite_icons.png); background-position: 0 -594px; width: 16px; height: 16px; }
-.icon-folder { background: url(../images/sprite_icons.png); background-position: 0 -660px; width: 16px; height: 16px; }
-.icon-gmaps { background: url(../images/sprite_icons.png); background-position: 0 -726px; width: 16px; height: 16px; }
-.icon-help { background: url(../images/sprite_icons.png); background-position: 0 -792px; width: 16px; height: 16px; }
-.icon-info { background: url(../images/sprite_icons.png); background-position: 0 -858px; width: 16px; height: 16px; }
-.icon-like { background: url(../images/sprite_icons.png); background-position: 0 -924px; width: 17px; height: 16px; }
-.icon-manager { background: url(../images/sprite_icons.png); background-position: 0 -990px; width: 16px; height: 16px; }
-.icon-mrwong { background: url(../images/sprite_icons.png); background-position: 0 -1056px; width: 16px; height: 16px; }
-.icon-private { background: url(../images/sprite_icons.png); background-position: 0 -1122px; width: 16px; height: 16px; }
-.icon-quote { background: url(../images/sprite_icons.png); background-position: 0 -1188px; width: 16px; height: 16px; }
-.icon-redirect { background: url(../images/sprite_icons.png); background-position: 0 -1254px; width: 16px; height: 16px; }
-.icon-rss { background: url(../images/sprite_icons.png); background-position: 0 -1320px; width: 16px; height: 16px; }
-.icon-save { background: url(../images/sprite_icons.png); background-position: 0 -1386px; width: 16px; height: 16px; }
-.icon-success { background: url(../images/sprite_icons.png); background-position: 0 -1452px; width: 16px; height: 16px; }
-.icon-tags { background: url(../images/sprite_icons.png); background-position: 0 -1518px; width: 16px; height: 16px; }
-.icon-technorati { background: url(../images/sprite_icons.png); background-position: 0 -1584px; width: 16px; height: 15px; }
-.icon-time { background: url(../images/sprite_icons.png); background-position: 0 -1649px; width: 16px; height: 16px; }
-.icon-toggle_max { background: url(../images/sprite_icons.png); background-position: 0 -1715px; width: 16px; height: 16px; }
-.icon-toggle_min { background: url(../images/sprite_icons.png); background-position: 0 -1781px; width: 16px; height: 16px; }
-.icon-update { background: url(../images/sprite_icons.png); background-position: 0 -1847px; width: 16px; height: 16px; }
-.icon-upload { background: url(../images/sprite_icons.png); background-position: 0 -1913px; width: 16px; height: 16px; }
-.icon-user { background: url(../images/sprite_icons.png); background-position: -67px 0; width: 16px; height: 16px; }
-.icon-zoom { background: url(../images/sprite_icons.png); background-position: -67px -66px; width: 16px; height: 16px; }
-
-.file-avi { background: url(../images/sprite_files.png); background-position: 0 0; width: 16px; height: 16px; }
-.file-doc { background: url(../images/sprite_files.png); background-position: 0 -66px; width: 16px; height: 16px; }
-.file-jpeg { background: url(../images/sprite_files.png); background-position: 0 -132px; width: 15px; height: 17px; }
-.file-jpg { background: url(../images/sprite_files.png); background-position: 0 -199px; width: 16px; height: 16px; }
-.file-mp3 { background: url(../images/sprite_files.png); background-position: 0 -265px; width: 16px; height: 16px; }
-.file-mp4 { background: url(../images/sprite_files.png); background-position: 0 -331px; width: 16px; height: 16px; }
-.file-mpg { background: url(../images/sprite_files.png); background-position: 0 -397px; width: 16px; height: 16px; }
-.file-odt { background: url(../images/sprite_files.png); background-position: 0 -463px; width: 16px; height: 16px; }
-.file-pdf { background: url(../images/sprite_files.png); background-position: 0 -529px; width: 16px; height: 16px; }
-.file-png { background: url(../images/sprite_files.png); background-position: 0 -595px; width: 16px; height: 16px; }
-.file-psd { background: url(../images/sprite_files.png); background-position: 0 -661px; width: 16px; height: 16px; }
-.file-rar { background: url(../images/sprite_files.png); background-position: 0 -727px; width: 16px; height: 16px; }
-.file-txt { background: url(../images/sprite_files.png); background-position: 0 -793px; width: 16px; height: 16px; }
-.file-wmv { background: url(../images/sprite_files.png); background-position: 0 -859px; width: 16px; height: 16px; }
-.file-zip { background: url(../images/sprite_files.png); background-position: 0 -925px; width: 15px; height: 16px; }
-
-.filemanager-doc { background: url(../images/sprite_filemanager.png); background-position: 0 0; width: 32px; height: 32px; }
-.filemanager-flv { background: url(../images/sprite_filemanager.png); background-position: 0 -82px; width: 32px; height: 32px; }
-.filemanager-gz { background: url(../images/sprite_filemanager.png); background-position: 0 -164px; width: 32px; height: 32px; }
-.filemanager-mp3 { background: url(../images/sprite_filemanager.png); background-position: 0 -246px; width: 32px; height: 32px; }
-.filemanager-mp4 { background: url(../images/sprite_filemanager.png); background-position: 0 -328px; width: 32px; height: 32px; }
-.filemanager-pdf { background: url(../images/sprite_filemanager.png); background-position: 0 -410px; width: 32px; height: 32px; }
-.filemanager-txt { background: url(../images/sprite_filemanager.png); background-position: 0 -492px; width: 32px; height: 32px; }
-.filemanager-zip { background: url(../images/sprite_filemanager.png); background-position: 0 -574px; width: 32px; height: 32px; }
