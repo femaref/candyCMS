@@ -1,0 +1,11 @@
+ALTER TABLE `blog` CHANGE `authorID` `author_id` smallint(5) NOT NULL DEFAULT '1';
+ALTER TABLE `comment` CHANGE `parentID` `parent_id` int(9) NOT NULL;
+ALTER TABLE `comment` CHANGE `parentCat` `parent_category` char(1) NOT NULL DEFAULT 'b';
+ALTER TABLE `comment` CHANGE `authorID` `author_id` smallint(5) NOT NULL;
+ALTER TABLE `content` CHANGE `authorID` `author_id` smallint(5) NOT NULL DEFAULT '1';
+ALTER TABLE `gallery_album` CHANGE `authorID` `author_id` smallint(5) NOT NULL;
+ALTER TABLE `gallery_file` CHANGE `authorID` `author_id` smallint(5) NOT NULL;
+ALTER TABLE `gallery_file` CHANGE `aid` `album_id` smallint(5) NOT NULL;
+ALTER TABLE `user` CHANGE `regdate` `date` int(11) NULL DEFAULT NULL;
+ALTER TABLE `user` CHANGE `userright` `user_right` tinyint(1) NOT NULL DEFAULT '1';
+ALTER TABLE `user` CHANGE `newsletter_default` `receive_newsletter` tinyint(1) NOT NULL DEFAULT '1';

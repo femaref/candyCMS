@@ -178,9 +178,11 @@ class Blog extends Main {
 	}
 
 	protected final function _update() {
-		if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
+		if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
+      $this->_aRequest['content'] = ''; # FIxes filled out comment content after update
 			return Helper::successMessage(LANG_SUCCESS_UPDATE).
 					$this->show();
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}

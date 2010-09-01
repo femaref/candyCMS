@@ -15,7 +15,7 @@ final class Upload {
   private $_aFile;
   private $_sRename;
   private $_sFileExtension = '';
-  private $_sFinalPath;
+  public $sFilePath;
 
   public final function __construct($aRequest, $aFile, $sRename = '') {
     $this->_aRequest = & $aRequest;
@@ -30,15 +30,14 @@ final class Upload {
     $this->_sFormAction = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
-    $this->_sFinalPath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
+    $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
     if (!empty($this->_sRename)) {
       $this->_iId = & $this->_replaceNonAlphachars($this->_sRename);
-      $this->_sFinalPath = $this->sFinalPath . '.' . $this->_sFileExtension;
+      $this->sFilePath = $this->sFilePath . '.' . $this->_sFileExtension;
     }
 
-    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->_sFinalPath);
-    return $this->_sFinalPath;
+    return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
   }
 
   public function uploadGalleryFile($sResize = '') {
@@ -48,11 +47,11 @@ final class Upload {
     $this->_iId = $this->_replaceNonAlphachars($this->_aFile['Filedata']['name']);
     $this->_iId = substr($this->_iId, 0, strlen($this->_iId) - strlen($this->_sFileExtension) - 1) . rand(100, 999);
     $this->_sUploadFolder = 'gallery/' . (int) $this->_aRequest['id'];
-    $this->_sFinalPath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.' . $this->_sFileExtension;
+    $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.' . $this->_sFileExtension;
 
-    move_uploaded_file($this->_aFile['Filedata']['tmp_name'], $this->_sFinalPath);
+    move_uploaded_file($this->_aFile['Filedata']['tmp_name'], $this->sFilePath);
 
-    $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFinalPath, $this->_sFileExtension);
+    $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->sFilePath, $this->_sFileExtension);
     if (isset($this->_aRequest['cut']) && 'c' == $this->_aRequest['cut'])
       $oImage->resizeAndCut(THUMB_DEFAULT_X);
 
@@ -65,7 +64,8 @@ final class Upload {
     $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
     $oImage->resizeAndCut('32');
 
-    return $this->_sFinalPath;
+    # TODO: Return
+    return true;
   }
 
   public function uploadAvatarFile($bReturnPath = true) {
@@ -73,7 +73,7 @@ final class Upload {
     $this->_iId = USER_ID;
     $this->_sFormAction = 'User/Settings';
     $this->_sUploadFolder = 'user';
-    $this->_sFinalPath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId .
+    $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId .
             '.' . $this->_sFileExtension;
 
     if ($this->_iId == '0')
@@ -89,9 +89,9 @@ final class Upload {
       return Helper::errorMessage(LANG_ERROR_MEDIA_WRONG_FILETYPE);
     }
     else {
-      move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFinalPath);
+      move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
 
-      $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFinalPath, $this->_sFileExtension);
+      $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
 
       $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
       $oImage->resizeDefault(THUMB_DEFAULT_X);
@@ -100,7 +100,7 @@ final class Upload {
       $oImage->resizeAndCut('32');
 
       if ($bReturnPath == true)
-        return $this->_sFinalPath;
+        return $this->_sFilePath;
     }
   }
 
@@ -125,8 +125,8 @@ final class Upload {
 
   # SIMPLE FILE UPLOAD
   public final function uploadFile() {
-    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->_sFinalPath);
-    return $this->_sFinalPath;
+    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->_sFilePath);
+    return $this->_sFilePath;
   }
 
   public final function uploadMessage($sFile) {

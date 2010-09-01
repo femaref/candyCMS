@@ -1,0 +1,13 @@
+CREATE TABLE `migration` (id INT) DEFAULT CHARACTER SET `utf8`;
+ALTER TABLE `migration` ADD `file` varchar(100) NULL DEFAULT NULL  AFTER `id`;
+ALTER TABLE `migration` ADD `date` int(11) NULL DEFAULT NULL  AFTER `file`;
+ALTER TABLE `migration` CHANGE `date` `date` int(11) NOT NULL;
+ALTER TABLE `migration` CHANGE `id` `id` int(11) NULL  auto_increment PRIMARY KEY;
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('1','20091122_longer_filename.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('2','20100714_authorID_to_gallery_file.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('3','20100724_author_name_to_comments.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('4','20100818_add_gravatar_option.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('5','20100819_author_email_to_comments.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('6','20100825_add_email_verification.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('7','20100825_add_ip_to_comments.sql ','1283338660');
+INSERT INTO `migration` (`id`,`file`,`date`) VALUES ('8','20100827_renamed_sql_columns.sql ','1283338660');

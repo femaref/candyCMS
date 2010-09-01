@@ -21,7 +21,7 @@ final class Comment extends Main {
 
   private $_sRecaptchaPublicKey   = RECAPTCHA_PUBLIC;
   private $_sRecaptchaPrivateKey  = RECAPTCHA_PRIVATE;
-  private $_sRecaptchaResponse    = ''; # TODO: String ?!
+  private $_oRecaptchaResponse    = '';
   private $_sRecaptchaError       = ''; # TODO: String ?!
 
   public function __init($iEntries = '', $aParentData = '') {
@@ -219,17 +219,17 @@ final class Comment extends Main {
 
   private function _checkCaptcha($bShowCaptcha = true) {
     if( isset($this->_aRequest['recaptcha_response_field']) ) {
-      $this->_sRecaptchaResponse = recaptcha_check_answer (
+      $this->_oRecaptchaResponse = recaptcha_check_answer (
               $this->_sRecaptchaPrivateKey,
               $_SERVER['REMOTE_ADDR'],
               $this->_aRequest['recaptcha_challenge_field'],
               $this->_aRequest['recaptcha_response_field']);
 
-      if ($this->_sRecaptchaResponse->is_valid)
+      if ($this->_oRecaptchaResponse->is_valid)
         return $this->_create($bShowCaptcha);
 
       else {
-        $this->_sRecaptchaError = $this->_sRecaptchaResponse->error;
+        #$this->_sRecaptchaError = $this->_oRecaptchaResponse->error;
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
         return $this->_showFormTemplate($bShowCaptcha);
       }

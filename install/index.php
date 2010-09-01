@@ -77,8 +77,8 @@ switch ($_REQUEST['action']) {
     $oSmarty->assign('action', $_SERVER['PHP_SELF']);
 
     if (isset($_REQUEST['file'])) {
-      $oFo = fopen('sql/migrations/' .$_REQUEST['file'], 'r');
-      $sQuery = fread($oFo, filesize('sql/migrations/' .$_REQUEST['file']));
+      $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');
+      $sQuery = fread($oFo, filesize('migrate/sql/' .$_REQUEST['file']));
 
       try {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -93,15 +93,32 @@ switch ($_REQUEST['action']) {
         $e->getMessage();
       }
 
-      # We return HTML due to ajax action
-      if($bResult == true)
-        echo '<div class="box" style="color:green">Successfully updated!</div>';
-      else
-        echo '<div class="box" style="color:red">Something went wrong!</div>';
+      # Write migration into table
+      if($bResult == true) {
+        try {
+          $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+          $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+          $oQuery = $oDb->prepare(" INSERT INTO
+                                      migration(file, date)
+                                    VALUES
+                                      ( :file, :date )");
+
+          $oQuery->bindParam('file', $_REQUEST['file']);
+          $oQuery->bindParam('date', time());
+          $bResult = $oQuery->execute();
+          $oDb = null;
+
+          if($bResult == true)
+            echo '<div class="success">Successfully updated!</div>';
+        }
+        catch (AdvancedException $e) {
+          $oDb->rollBack();
+        }
+      }
     }
-    else {
+    else
       require_once 'migrate.php';
-    }
 
     break;
 }

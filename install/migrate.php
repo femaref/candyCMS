@@ -7,22 +7,46 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-$sDir = 'sql/migrations';
+$sDir = 'migrate/sql';
 $oDir = opendir($sDir);
 
 $iI = 1;
 $aFiles = array();
 while ($sFile = readdir($oDir)) {
-  if ($sFile == '.' || $sFile == '..' || $sFile == '.htaccess' || $sFile == '.svn')
+  # Initial fix for older versions
+  try {
+    $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+    $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $oQuery = $oDb->prepare("SELECT date FROM migration WHERE file = :file");
+    $oQuery->bindParam(':file', $sFile);
+
+    $bReturn = $oQuery->execute();
+
+    if($bReturn == true)
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+    $oDb = null;
+  } catch (AdvancedException $e) {
+    $oDb->rollBack();
+    $e->getMessage();
+  }
+
+  $bAlreadyMigrated = isset($aResult['date']) && !empty($aResult['date']) ? true : false;
+
+  if (substr($sFile, 0, 1) == '.' || $sFile == '.svn' || $bAlreadyMigrated == true)
     continue;
+  else {
+    $oFo = fopen($sDir. '/' .$sFile, 'r');
+    $sQuery = fread($oFo, filesize($sDir. '/' .$sFile));
 
-  $oFo = fopen($sDir. '/' .$sFile, 'r');
-  $sQuery = fread($oFo, filesize($sDir. '/' .$sFile));
-
-  $aFiles[$iI]['name'] = $sFile;
-  $aFiles[$iI]['query'] = $sQuery;
-  $iI++;
+    $aFiles[$iI]['name'] = $sFile;
+    $aFiles[$iI]['query'] = $sQuery;
+    $iI++;
+  }
 }
+
+sort($aFiles);
 
 $oSmarty->assign('files', $aFiles);
 $oSmarty->assign('action', $_SERVER['PHP_SELF']);

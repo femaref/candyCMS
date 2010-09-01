@@ -379,39 +379,39 @@ class Model_Gallery extends Model_Main {
 
 	public final function createFile($iUserId = '') {
     $oUploadFile = new Upload($this->_aRequest, $this->_aFile);
-    $sFilePath = $oUploadFile->uploadGalleryFile();
 
-    $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
-            $this->_aRequest['description'] :
-            '';
+    if($oUploadFile->uploadGalleryFile() == true) {
+      $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
+              $this->_aRequest['description'] :
+              '';
 
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  gallery_file(album_id, author_id, file, extension, description, date)
-                                VALUES
-                                  ( :album_id, :author_id, :file, :extension, :description, :date )");
+        $oQuery = $oDb->prepare(" INSERT INTO
+                                    gallery_file(album_id, author_id, file, extension, description, date)
+                                  VALUES
+                                    ( :album_id, :author_id, :file, :extension, :description, :date )");
 
-      $oQuery->bindParam('album_id', $this->_aRequest['id']);
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('file', $oUploadFile->getId());
-      $oQuery->bindParam('extension', $oUploadFile->getExtension());
-      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
-      $oQuery->bindParam('date', time());
-      $bResult = $oQuery->execute();
+        $oQuery->bindParam('album_id', $this->_aRequest['id']);
+        $oQuery->bindParam('author_id', $iUserId);
+        $oQuery->bindParam('file', $oUploadFile->getId());
+        $oQuery->bindParam('extension', $oUploadFile->getExtension());
+        $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+        $oQuery->bindParam('date', time());
 
-      $oDb = null;
-      #return $bResult;
+        $bResult = $oQuery->execute();
+        $oDb = null;
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
+      }
+
+      return $oUploadFile->sFilePath;
     }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
-
-    # We must return the path for ajax information
-    # TODO: Put into getter method
-    return $sFilePath;
+    else
+      return Helper::errorMessage (LANG_ERROR_UPLOAD_CREATE);
   }
 
 	public final function updateFile($iId) {
