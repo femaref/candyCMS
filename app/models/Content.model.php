@@ -10,7 +10,7 @@
 class Model_Content extends Model_Main {
 
   private final function _setData($bUpdateEntry = false) {
-    if (empty($this->_iID)) {
+    if (empty($this->_iId)) {
       try {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -58,7 +58,7 @@ class Model_Content extends Model_Main {
                                   LIMIT
                                     1");
 
-        $oQuery->bindParam('where', $this->_iID);
+        $oQuery->bindParam('where', $this->_iId);
         $oQuery->execute();
 
         # Fix for using it in the same template as overview
@@ -71,7 +71,7 @@ class Model_Content extends Model_Main {
     }
 
     foreach ($aResult as $aRow) {
-      $iID = $aRow['id'];
+      $iId = $aRow['id'];
       if ($bUpdateEntry == true) {
 
         $this->_aData = array(
@@ -84,16 +84,24 @@ class Model_Content extends Model_Main {
         unset($sContent);
 
       } else {
-        $this->_aData[$iID] = array(
-            'id'        => $aRow['id'],
-            'author_id' => $aRow['author_id'],
-            'title'     => Helper::formatOutput($aRow['title']),
-            'content'   => Helper::formatOutput($aRow['content'], true),
-            'date'      => Helper::formatTimestamp($aRow['date']),
-            'uid'       => $aRow['uid'],
-            'name'      => Helper::formatOutput($aRow['name']),
-            'surname'   => Helper::formatOutput($aRow['surname']),
-            'eTitle'    => Helper::formatOutput(urlencode($aRow['title']))
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
+
+        $this->_aData[$iId] = array(
+            'id'            => $aRow['id'],
+            'author_id'     => $aRow['author_id'],
+            'title'         => Helper::formatOutput($aRow['title']),
+            'content'       => Helper::formatOutput($aRow['content'], true),
+            'date'          => Helper::formatTimestamp($aRow['date']),
+            'uid'           => $aRow['uid'],
+            'name'          => $sName,
+            'surname'       => $sSurname,
+            'full_name'     => $sFullName,
+            'full_name_seo' => urlencode($sFullName),
+            'eTitle'        => Helper::formatOutput(urlencode($aRow['title']))
         );
       }
     }
@@ -101,7 +109,7 @@ class Model_Content extends Model_Main {
 
   public final function getData($iId = '', $bUpdateEntry = false) {
     if (!empty($iId))
-      $this->_iID = (int) $iId;
+      $this->_iId = (int) $iId;
 
     $this->_setData($bUpdateEntry);
     return $this->_aData;

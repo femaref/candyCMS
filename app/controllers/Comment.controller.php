@@ -22,7 +22,7 @@ final class Comment extends Main {
   private $_sRecaptchaPublicKey   = RECAPTCHA_PUBLIC;
   private $_sRecaptchaPrivateKey  = RECAPTCHA_PRIVATE;
   private $_oRecaptchaResponse    = '';
-  private $_sRecaptchaError       = ''; # TODO: String ?!
+  private $_sRecaptchaError       = '';
 
   public function __init($iEntries = '', $aParentData = '') {
     $this->_aParentData =& $aParentData;

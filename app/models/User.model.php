@@ -52,7 +52,7 @@ class Model_User extends Model_Main {
   }
 
   private function _setData() {
-    if (empty($this->_iID)) {
+    if (empty($this->_iId)) {
       try {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -76,9 +76,16 @@ class Model_User extends Model_Main {
           $iId = $aRow['id'];
           $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
+          # Set SEO friendly user names
+          $sName      = Helper::formatOutput($aRow['name']);
+          $sSurname   = Helper::formatOutput($aRow['surname']);
+          $sFullName  = $sName . ' ' . $sSurname;
+
           $this->_aData[$iId] = array(
-              'name'          => Helper::formatOutput($aRow['name']),
-              'surname'       => Helper::formatOutput($aRow['surname']),
+              'name'          => $sName,
+              'surname'       => $sSurname,
+              'full_name'     => $sFullName,
+              'full_name_seo' => urlencode($sFullName),
               'last_login'    => Helper::formatTimestamp($aRow['last_login']),
               'date'          => Helper::formatTimestamp($aRow['date']),
               'id'            => $aRow['id'],
@@ -110,7 +117,7 @@ class Model_User extends Model_Main {
                                     id = :id
                                   LIMIT 1");
 
-        $oQuery->bindParam('id', $this->_iID);
+        $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
 
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -121,9 +128,12 @@ class Model_User extends Model_Main {
     }
   }
 
-  public function getData($iId = '') {
+  public function getData($iId = '', $bForceNoId = false) {
     if (!empty($iId))
-      $this->_iID = (int) $iId;
+      $this->_iId = (int) $iId;
+
+    if($bForceNoId == true)
+      $this->_iId = '';
 
     $this->_setData();
     return $this->_aData;

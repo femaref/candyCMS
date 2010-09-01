@@ -16,7 +16,7 @@
       </h2>
       <div class='date'>
         {$lang_last_update}: {$c.date} {$lang_by}
-        <a href='/User/{$c.author_id}/{$c.name} {$c.surname}'>{$c.name} {$c.surname}</a>
+        <a href='/User/{$c.author_id}/{$c.full_name_seo}'>{$c.full_name}</a>
       </div>
     </div>
     {$c.content}

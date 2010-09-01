@@ -13,7 +13,7 @@ class Model_Blog extends Model_Main {
 		$iLimit = LIMIT_BLOG;
 		$sWhere	= '';
 
-		if (empty($this->_iID)) {
+		if (empty($this->_iId)) {
 			if (USER_RIGHT < 3)
 				$sWhere = "WHERE published = '1'";
 
@@ -83,22 +83,29 @@ class Model_Blog extends Model_Main {
 				$aTags = explode(', ', $aRow['tags']);
 				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
         $this->_aData[$iId] = array(
-                'id'          => $aRow['id'],
-                'author_id'   => $aRow['author_id'],
-                'tags'        => $aTags,
-                'tags_sum'    => (int)count($aTags),
-                'title'       => Helper::formatOutput($aRow['title']),
-                'content'     => Helper::formatOutput($aRow['content'], true),
-                'date'        => Helper::formatTimestamp($aRow['date']),
-                'uid'         => $aRow['uid'],
-                'name'        => Helper::formatOutput($aRow['name']),
-                'surname'     => Helper::formatOutput($aRow['surname']),
-                'avatar_32'		=> Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
-                'avatar_64'		=> Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
-                'comment_sum'	=> $aRow['commentSum'],
-                'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
-                'published'		=> $aRow['published']
+                'id'            => $aRow['id'],
+                'author_id'     => $aRow['author_id'],
+                'tags'          => $aTags,
+                'tags_sum'      => (int)count($aTags),
+                'title'         => Helper::formatOutput($aRow['title']),
+                'content'       => Helper::formatOutput($aRow['content'], true),
+                'date'          => Helper::formatTimestamp($aRow['date']),
+                'uid'           => $aRow['uid'],
+                'name'          => $sName,
+                'surname'       => $sSurname,
+                'full_name'     => $sFullName,
+                'full_name_seo' => urlencode($sFullName),
+                'avatar_32'     => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
+                'avatar_64'     => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
+                'comment_sum'   => $aRow['commentSum'],
+                'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
+                'published'     => $aRow['published']
 				);
 
 				if (!empty($aRow['date_modified']))
@@ -135,7 +142,7 @@ class Model_Blog extends Model_Main {
 																ON
 																	c.parent_id=b.id AND c.parent_category='b'
 																WHERE
-																	b.id = '" . Helper::formatInput($this->_iID) . "'
+																	b.id = '" . Helper::formatInput($this->_iId) . "'
 																" . $sWhere . "
 																GROUP BY
 																	b.title
@@ -166,21 +173,29 @@ class Model_Blog extends Model_Main {
 			# Give back blog entry
 			else {
 				$aTags = explode(', ', $aRow['tags']);
+
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
 				$this->_aData[1] = array(
-						'id'          => $aRow['id'],
-						'author_id'   => $aRow['author_id'],
-						'tags'        => $aTags,
-						'tags_sum'    => (int) count($aTags),
-						'title'       => Helper::formatOutput($aRow['title']),
-						'content'     => Helper::formatOutput($aRow['content'], true),
-						'date'        => Helper::formatTimestamp($aRow['date']),
-						'uid'         => $aRow['uid'],
-						'name'        => Helper::formatOutput($aRow['name']),
-						'surname'     => Helper::formatOutput($aRow['surname']),
-						'avatar'      => '',
-						'comment_sum'	=> $aRow['commentSum'],
-						'eTitle'      => Helper::formatOutput(urlencode($aRow['title'])),
-						'published'		=> $aRow['published']
+						'id'            => $aRow['id'],
+						'author_id'     => $aRow['author_id'],
+						'tags'          => $aTags,
+						'tags_sum'      => (int) count($aTags),
+						'title'         => Helper::formatOutput($aRow['title']),
+						'content'       => Helper::formatOutput($aRow['content'], true),
+						'date'          => Helper::formatTimestamp($aRow['date']),
+						'uid'           => $aRow['uid'],
+            'name'          => $sName,
+            'surname'       => $sSurname,
+            'full_name'     => $sFullName,
+            'full_name_seo' => urlencode($sFullName),
+						'avatar'        => '',
+						'comment_sum'   => $aRow['commentSum'],
+						'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
+						'published'     => $aRow['published']
 				);
 
 
@@ -194,7 +209,7 @@ class Model_Blog extends Model_Main {
 
 	public final function getData($iId = '', $bEdit = false) {
     if (!empty($iId))
-      $this->_iID = (int) $iId;
+      $this->_iId = (int) $iId;
 
     $this->_setData($bEdit);
     return $this->_aData;
