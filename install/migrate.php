@@ -14,11 +14,11 @@ $iI = 1;
 $aFiles = array();
 while ($sFile = readdir($oDir)) {
   # Initial fix for older versions
-  if(file_exists('migrate/disable_sql.txt')) {
+  if(file_exists('migrate/sql/20100901_add_migrations_to_mysql.sql')) {
     $aFiles[0]['name'] = '20100901_add_migrations_to_mysql.sql';
     $aFiles[0]['query'] = 'Execute this migration and reload page afterwards. If nothing changes,
-      delete "/install/migrate/disable_sql.txt" manually.';
-    @unlink('migrate/disable_sql.txt');
+      delete "/install/migrate/sql/20100901_add_migrations_to_mysql.sql" manually.';
+    @unlink('migrate/sql/20100901_add_migrations_to_mysql.sql');
   }
   else {
     try {
@@ -40,6 +40,9 @@ while ($sFile = readdir($oDir)) {
     }
 
     $bAlreadyMigrated = isset($aResult['date']) && !empty($aResult['date']) ? true : false;
+
+    if($sFile == '20100901_add_migrations_to_mysql.sql')
+      $bAlreadyMigrated = true;
 
     if (substr($sFile, 0, 1) == '.' || $sFile == '.svn' || $bAlreadyMigrated == true)
       continue;
