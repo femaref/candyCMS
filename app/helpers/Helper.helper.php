@@ -147,8 +147,6 @@ final class Helper {
     try {
       if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
         throw new Exception('Input seems not valid.');
-      else
-        $sStr = addslashes($sStr);
 
       if ($bDisableHTML == true)
         $sStr = htmlspecialchars($sStr);

@@ -18,24 +18,25 @@ final class Upload {
   public $sFilePath;
 
   public final function __construct($aRequest, $aFile, $sRename = '') {
-    $this->_aRequest = & $aRequest;
-    $this->_aFile = & $aFile;
-    $this->_sRename = & $sRename;
+    $this->_aRequest  = & $aRequest;
+    $this->_aFile     = & $aFile;
+    $this->_sRename   = & $sRename;
   }
 
   public function uploadMediaFile() {
     $this->_iId = $this->_replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
-    $this->_sFormAction = 'Media/upload';
+    $this->_sFormAction   = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
-    $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
     if (!empty($this->_sRename)) {
-      $this->_iId = & $this->_replaceNonAlphachars($this->_sRename);
-      $this->sFilePath = $this->sFilePath . '.' . $this->_sFileExtension;
+      $this->_sRename   = & $this->_replaceNonAlphachars($this->_sRename);
+      $this->sFilePath  = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_sRename . '.' . $this->_sFileExtension;
     }
+    else
+      $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
     return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
   }
