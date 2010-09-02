@@ -34,12 +34,8 @@ class User extends Main {
         else
           return $this->_showFormTemplate($this->_aError);
       }
-      elseif (isset($this->_aRequest['create_avatar'])) {
-        if ($this->_createAvatar($this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
-        else
-          return $this->show();
-      }
+      elseif (isset($this->_aRequest['create_avatar']))
+        return $this->_createAvatar($this->_iId);
       else
         return $this->_showFormTemplate();
     }
@@ -96,6 +92,7 @@ class User extends Main {
     # Set user id of person to update
     if ($this->_iId !== USER_ID && USER_RIGHT == 4)
       $iId = $this->_iId;
+
     else {
       $iId = USER_ID;
 
@@ -187,14 +184,17 @@ class User extends Main {
 	private function _createAvatar() {
     $iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
 
-    if ($iAgreement == 0)
+    if ($iAgreement == false)
       return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD) .
       $this->_showFormTemplate();
 
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
-      return $oUpload->uploadAvatarFile(false) .
-      $this->show($this->_iId);
+      if ($oUpload->uploadAvatarFile(false) === true)
+        return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
+
+      else
+        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
     }
   }
 
@@ -375,8 +375,10 @@ class User extends Main {
 	public function verifyEmail() {
 		if (empty($this->_iId))
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
+
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
 			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/Start');
+
 		else
 			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;
 	}

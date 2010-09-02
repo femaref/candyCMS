@@ -104,6 +104,8 @@ final class Upload {
 
       if ($bReturnPath == true)
         return $this->_sFilePath;
+      else
+        return true;
     }
   }
 
