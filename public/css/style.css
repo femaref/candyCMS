@@ -6,7 +6,7 @@ body
   background:#262626;
 }
 
-a:link, a:visited, .element_body a, .comment_body a
+a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover
 {
   color:#FF0000;
   text-decoration: none;

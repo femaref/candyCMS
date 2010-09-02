@@ -147,8 +147,8 @@
         <td class='td_right'>
           <div class="dropdown">
             <select name='cut' id='cut'>
-              <option value='r' {if $default == 'r'}default='default'{/if}>{$lang_create_file_resize}</option>
               <option value='c' {if $default == 'c'}default='default'{/if}>{$lang_create_file_cut}</option>
+              <option value='r' {if $default == 'r'}default='default'{/if}>{$lang_create_file_resize}</option>
             </select>
           </div>
         </td>

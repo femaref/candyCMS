@@ -225,7 +225,7 @@ class Gallery extends Main {
       # See helper/Image.helper.php for details!
       $sDefault = isset($this->_aRequest['cut']) ?
               Helper::formatInput($this->_aRequest['cut']) :
-              'r'; # r = resize, c = cut
+              'c'; # r = resize, c = cut
 
       $oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId.	'/upload/' .session_id());
       $oSmarty->assign('_formdata_', 'create_file');

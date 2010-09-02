@@ -9,12 +9,12 @@
 
 final class Upload {
 
-  private $_iId;
-  private $_sUploadFolder;
-  private $_sFormAction;
   private $_aFile;
-  private $_sRename;
+  private $_iId;
   private $_sFileExtension = '';
+  private $_sFormAction;
+  private $_sRename;
+  private $_sUploadFolder;
   public $sFilePath;
 
   public final function __construct($aRequest, $aFile, $sRename = '') {
@@ -111,8 +111,11 @@ final class Upload {
 
   private function _replaceNonAlphachars($sStr) {
     $sStr = str_replace('"', '', $sStr);
+    $sStr = str_replace('Ä', 'Ae', $sStr);
     $sStr = str_replace('ä', 'ae', $sStr);
+    $sStr = str_replace('Ü', 'Ue', $sStr);
     $sStr = str_replace('ü', 'ue', $sStr);
+    $sStr = str_replace('Ö', 'Oe', $sStr);
     $sStr = str_replace('ö', 'oe', $sStr);
     $sStr = str_replace('ß', 'ss', $sStr);
     $sStr = str_replace(' ', '_', $sStr);
