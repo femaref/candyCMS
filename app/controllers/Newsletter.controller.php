@@ -30,7 +30,7 @@ class Newsletter extends Main {
         $sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
         if ($sQuery == 'DESTROY')
-          return Helper::successMessage(LANG_SUCCESS_DESTROY);
+          return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Newsletter');
 
         elseif ($sQuery == 'INSERT') {
           Mail::send(Helper::formatInput($this->_aRequest['email']),
@@ -38,7 +38,7 @@ class Newsletter extends Main {
                           LANG_MAIL_NEWSLETTER_CREATE_BODY,
                           WEBSITE_MAIL_NOREPLY);
 
-          return Helper::successMessage(LANG_SUCCESS_CREATE);
+          return Helper::successMessage(LANG_SUCCESS_CREATE, '/Newsletter');
         }
         else
           return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
@@ -151,7 +151,7 @@ class Newsletter extends Main {
       }
 
       if($bStatusNewsletter == true && $bStatusUser == true)
-        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT );
+        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/Start' );
       else
         return Helper::errorMessage(LANG_ERROR_MAIL_ERROR);
     }

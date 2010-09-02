@@ -143,8 +143,8 @@ final class Comment extends Main {
 
     else {
       if ($this->_oModel->create() == true)
-        return Helper::redirectTo('/' . $this->_sParentSection .
-                '/' . (int) $this->_aRequest['parent_id']) . Helper::successMessage(LANG_SUCCESS_CREATE);
+        return Helper::successMessage(LANG_SUCCESS_CREATE, '/' . $this->_sParentSection .
+                '/' . (int) $this->_aRequest['parent_id']);
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
@@ -152,8 +152,8 @@ final class Comment extends Main {
 
   protected final function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) == true)
-      Header('Location:' . WEBSITE_URL . '/' . $this->_sParentSection .
-                      '/' . (int) $this->_aRequest['parent_id']) . Helper::successMessage(LANG_SUCCESS_DESTROY);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/' . $this->_sParentSection .
+              '/' . (int) $this->_aRequest['parent_id']);
     else
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }

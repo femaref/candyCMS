@@ -21,8 +21,12 @@ class Media extends Main {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
     else {
-      if (isset($this->_aRequest['upload_file']))
-        return $this->_proceedUpload();
+      if (isset($this->_aRequest['upload_file'])) {
+        if($this->_proceedUpload() === true)
+          return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/Media');
+        else
+          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
+      }
       else
         return $this->_showUploadFileTemplate();
     }
@@ -43,8 +47,7 @@ class Media extends Main {
 
   private function _proceedUpload() {
     $oUploadImage = new Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
-    $oUploadImage->uploadMediaFile();
-    Header('Location:'	.WEBSITE_URL.	'/Media');
+    return $oUploadImage->uploadMediaFile();
   }
 
   public function show() {
@@ -118,9 +121,7 @@ class Media extends Main {
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id']);
-
-        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL).
-                Header('Location:'	.WEBSITE_URL.	'/Media');
+        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/Media');
       }
       else
         return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE);

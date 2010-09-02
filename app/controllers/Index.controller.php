@@ -87,7 +87,7 @@ class Index {
   }
 
   protected final function _getFlashMessage() {
-		# TODO: Fix $_SESSION to $this->_aSession
+    # TODO: Fix $_SESSION to $this->_aSession
     $aFlashMessage['type'] = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ?
             $_SESSION['flash_message']['type'] :
             '';
@@ -98,7 +98,6 @@ class Index {
             $_SESSION['flash_message']['headline'] :
             '';
 
-    #unset($this->_aSession['flash_message']);
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }
@@ -220,15 +219,19 @@ class Index {
     $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
     $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
-    if (PATH_CSS == '')
-      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-    else
-      $sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
+    # Check for user custom css
+    $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
+    if (PATH_CSS !== '' && dir_exists(WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css'))
+      $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
-    if (PATH_IMAGES == '')
-      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-    else
-      $sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images', $sCachedHTML);
+    $sCachedHTML = & $sCachedCss;
+
+    # Check for user custom icons etc.
+    $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
+    if (PATH_IMAGES !== '' && dir_exists(WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images'))
+      $sCachedImages = WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images';
+
+    $sCachedHTML = & $sCachedImages;
 
     # Cut spaces to minimize filesize
     # Normal tab

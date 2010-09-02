@@ -25,10 +25,14 @@ final class Helper {
       return false;
   }
 
-  public static final function successMessage($sMSG) {
+  public static final function successMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'success';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = '';
+    $_SESSION['flash_message']['show']      = '0';
+
+    if(!empty($sRedirectTo))
+      Helper::redirectTo ($sRedirectTo);
   }
 
   public static final function errorMessage($sMSG = '', $sHL = '') {
@@ -41,12 +45,6 @@ final class Helper {
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = $sHL;
-  }
-
-  public static final function debugMessage($sMSG) {
-    $_SESSION['flash_message']['type']      = 'debug';
-    $_SESSION['flash_message']['message']   = $sMSG;
-    $_SESSION['flash_message']['headline']  = '';
   }
 
   public static final function redirectTo($sURL) {

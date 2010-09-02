@@ -148,7 +148,7 @@ class Mail extends Main {
               $sReplyTo);
 
       if ($bStatus == true)
-				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . Helper::redirectTo('/Start');
+				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Start');
 			else
 				return Helper::errorMessage($bStatus, LANG_ERROR_MAIL_ERROR);
     }

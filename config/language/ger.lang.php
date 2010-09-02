@@ -122,6 +122,7 @@ define( 'LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE', 'Datei ausw&#xE4;hlen' );
 define( 'LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE', 'Datei umbenennen' );
 # TODO: define( 'LANG_MEDIA_FILE_CREATE_SUCCESSFUL', 'Upload erfolgreich! Die Datei befindet sich jetzt unter <strong>%p</strong>.');
 define( 'LANG_MEDIA_FILE_CREATE_TITLE', 'Datei hochladen' );
+define( 'LANG_MEDIA_FILE_CREATE_SUCCESSFUL', 'Datei wurde erfolgreich hochgeladen.' );
 define( 'LANG_MEDIA_FILE_DESTROY_TITLE', 'Datei löschen' );
 define( 'LANG_MEDIA_FILE_DESTROY_SUCCESSFUL', 'Datei wurde erfolgreich gelöscht!' );
 # TODO: Still needed?: define( 'LANG_MEDIA_IMAGE_CREATE_SUCCESS', 'Upload erfolgreich! Falls das Bild nicht korrekt angezeigt wird, leere bitte deinen Browsercache!');

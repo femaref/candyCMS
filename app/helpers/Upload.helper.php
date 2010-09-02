@@ -38,7 +38,9 @@ final class Upload {
     else
       $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
-    return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
+    # TODO: This must be better
+    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
+    return true;
   }
 
   public function uploadGalleryFile($sResize = '') {
@@ -125,17 +127,9 @@ final class Upload {
   }
 
   # SIMPLE FILE UPLOAD
-  public final function uploadFile() {
-    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->_sFilePath);
+  public final function uploadFile($sFilePath = '') {
+    $sFilePath = isset($this->_sFilePath) && !empty($this->_sFilePath) ? $this->_sFilePath : $sFilePath;
+    move_uploaded_file($this->_aFile['file']['tmp_name'], $sFilePath);
     return $this->_sFilePath;
-  }
-
-  public final function uploadMessage($sFile) {
-    if (file_exists($sFile))
-      return Helper::successMessage(str_replace('%p',
-                      WEBSITE_URL . '/' . $sFile, LANG_MEDIA_FILE_UPLOAD_SUCCESS));
-
-    else
-      return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
   }
 }

@@ -30,13 +30,13 @@ class User extends Main {
     else {
       if (isset($this->_aRequest['update_user'])) {
         if ($this->_update($this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
       }
       elseif (isset($this->_aRequest['create_avatar'])) {
         if ($this->_createAvatar($this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE) . $this->show();
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
         else
           return $this->show();
       }
@@ -264,10 +264,9 @@ class User extends Main {
 	# @Override
 	public function destroy() {
     if (USER_RIGHT == 4) {
-      if ($this->_oModel->destroy($this->_iId) === true) {
-        $this->_iId = '';
-        return Helper::successMessage(LANG_SUCCESS_DESTROY) . $this->show();
-      } else
+      if ($this->_oModel->destroy($this->_iId) === true)
+        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/User');
+      else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
     else
@@ -278,7 +277,7 @@ class User extends Main {
 	public function create() {
     if (isset($this->_aRequest['create_user'])) {
       if ($this->_create() === true)
-        return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL) . Helper::redirectTo('/Session/create');
+        return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
 
       # TODO: We need to get seperate messages for failed mails and failed queries
       # Move _create to create?!
@@ -377,7 +376,7 @@ class User extends Main {
 		if (empty($this->_iId))
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL);
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/Start');
 		else
 			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;
 	}

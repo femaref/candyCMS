@@ -39,8 +39,7 @@ class Session extends Main {
       return $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL).
-					Helper::redirectTo('/Start');
+			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/Start');
 		else
 			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
 				$this->showCreateSessionTemplate();
@@ -92,7 +91,7 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Session/create');
             else
               Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
@@ -114,7 +113,7 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT) . $this->showCreateSessionTemplate();
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Session/create');
             else
               return $this->showCreateSessionTemplate();
           }
@@ -164,8 +163,8 @@ class Session extends Main {
 
   public final function destroy() {
     if ($oStatus = & $this->_oModel->destroy() === true) {
+      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/Start');
       unset($_SESSION);
-      return Helper::redirectTo('/Start') . Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL);
     }
     else
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY);

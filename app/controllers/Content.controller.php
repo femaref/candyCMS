@@ -124,8 +124,7 @@ final class Content extends Main {
 
     else {
       if($this->_oModel->create() === true)
-        return Helper::successMessage(LANG_SUCCESS_CREATE).
-                $this->show();
+        return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
     }
@@ -133,17 +132,15 @@ final class Content extends Main {
 
   protected final function _update() {
     if($this->_oModel->update((int)$this->_aRequest['id']) === true)
-      return Helper::successMessage(LANG_SUCCESS_UPDATE).
-            $this->show();
+      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Content/' . (int) $this->_aRequest['id']);
     else
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 
   protected final function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      $this->_iId = '';
-      return Helper::successMessage(LANG_SUCCESS_DESTROY) .$this->show();
-    } else
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
+    else
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
   }
 }

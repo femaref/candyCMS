@@ -143,6 +143,7 @@ class Model_Gallery extends Model_Main {
         $iId = $aRow['id'];
         $this->_aThumbs[$iId] = array(
             'id'          => $aRow['id'],
+            'album_id'    => $aRow['album_id'],
             'file'        => $aRow['file'],
             'full_path'   => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['album_id'],
             'description' => Helper::formatOutput($aRow['description']),

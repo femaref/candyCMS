@@ -32,7 +32,7 @@
       {if $USER_RIGHT > 3}
         {$lang_uploaded_at}: {$f.date}
         <br />
-        <a href="/Gallery/{$f.id}/updatefile">
+        <a href="/Gallery/{$f.id}/updatefile/{$f.album_id}">
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt="{$lang_update}" />
         </a>
         <a href="/Gallery/{$f.id}/destroyfile">

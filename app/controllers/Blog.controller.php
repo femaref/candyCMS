@@ -171,28 +171,21 @@ class Blog extends Main {
       return $this->_showFormTemplate(false);
 
 		elseif( $this->_oModel->create() === true )
-			return Helper::successMessage(LANG_SUCCESS_CREATE).
-					$this->show();
+			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
 
 	protected final function _update() {
-		if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
-      $this->_aRequest['content'] = ''; # Fixes filled out comment content after update
-			return Helper::successMessage(LANG_SUCCESS_UPDATE).
-					$this->show();
-    }
+		if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
 
 	protected function _destroy() {
-		if( $this->_oModel->destroy((int)$this->_aRequest['id'])) {
-		 $this->_iId = '';
-			return Helper::successMessage(LANG_SUCCESS_DESTROY).
-					$this->show();
-		}
+		if( $this->_oModel->destroy((int)$this->_aRequest['id']))
+			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
     else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 	}
