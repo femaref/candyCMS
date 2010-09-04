@@ -99,7 +99,13 @@ class Bbcode {
     return $sStr;
   }
 
-  public final function getFormatedText($sStr, $bUseParagraph) {
-    return $this->_setFormatedText($sStr, $bUseParagraph);
+	# This method is perfect to override when you extend your bb code
+	protected function _setMoreFormatedText($sFormatedText) {
+		return $sFormatedText;
+	}
+
+	public final function getFormatedText($sStr, $bUseParagraph) {
+    $sFormatedText = $this->_setFormatedText($sStr, $bUseParagraph);
+		return $this->_setMoreFormatedText($sFormatedText);
   }
 }
