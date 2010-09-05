@@ -14,7 +14,7 @@ class Model_User extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT name, surname, email FROM user WHERE id = :id LIMIT 1");
+      $oQuery = $oDb->prepare("SELECT name, surname, email FROM users WHERE id = :id LIMIT 1");
 
       $oQuery->bindParam('id', $iId);
       $oQuery->execute();
@@ -33,7 +33,7 @@ class Model_User extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT email FROM user WHERE email = :email LIMIT 1");
+      $oQuery = $oDb->prepare("SELECT email FROM users WHERE email = :email LIMIT 1");
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
@@ -66,7 +66,7 @@ class Model_User extends Model_Main {
                                     date,
                                     use_gravatar
                                   FROM
-                                    user
+                                    users
                                   ORDER BY
                                     id ASC");
 
@@ -112,7 +112,7 @@ class Model_User extends Model_Main {
                                     receive_newsletter,
                                     use_gravatar
                                   FROM
-                                    user
+                                    users
                                   WHERE
                                     id = :id
                                   LIMIT 1");
@@ -145,7 +145,7 @@ class Model_User extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  user (name, surname, password, email, date, verification_code)
+                                  users (name, surname, password, email, date, verification_code)
                                 VALUES
                                   ( :name, :surname, :password, :email, :date, :verification_code )");
 
@@ -187,7 +187,7 @@ class Model_User extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  user
+                                  users
                                 SET
                                   name = :name,
                                   surname = :surname,
@@ -233,7 +233,7 @@ class Model_User extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	DELETE FROM
-                                  user
+                                  users
                                 WHERE
                                   id = :id
                                 LIMIT
@@ -258,7 +258,7 @@ class Model_User extends Model_Main {
       $oQuery = $oDb->prepare("	SELECT
 																	id
 																FROM
-																	user
+																	users
 																WHERE
 																	verification_code = :verification_code
 																LIMIT 1");
@@ -275,7 +275,7 @@ class Model_User extends Model_Main {
     if (!empty($aResult['id'])) {
       try {
         $oQuery = $oDb->prepare("	UPDATE
-																		user
+																		users
 																	SET
 																		verification_code = ''
 																	WHERE

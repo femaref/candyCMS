@@ -21,9 +21,9 @@ class Model_Content extends Model_Main {
                                   u.name,
                                   u.surname
                                 FROM
-                                  content c
+                                  contents c
                                 LEFT JOIN
-                                  user u
+                                  users u
                                 ON
                                   c.author_id=u.id
                                 ORDER BY
@@ -46,9 +46,9 @@ class Model_Content extends Model_Main {
                                     u.name,
                                     u.surname
                                   FROM
-                                    content c
+                                    contents c
                                   LEFT JOIN
-                                    user u
+                                    users u
                                   ON
                                     c.author_id=u.id
                                   WHERE
@@ -121,7 +121,7 @@ class Model_Content extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  content(author_id, title, content, date)
+                                  contents(author_id, title, content, date)
                                 VALUES
                                   ( :author_id, :title, :content, :date )");
 
@@ -146,7 +146,7 @@ class Model_Content extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  content
+                                  contents
                                 SET
                                   title = :title,
                                   content = :content,
@@ -177,7 +177,7 @@ class Model_Content extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	DELETE FROM
-                                  content
+                                  contents
                                 WHERE
                                   id = :id
                                 LIMIT

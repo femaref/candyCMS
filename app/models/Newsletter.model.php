@@ -19,7 +19,7 @@ class Model_Newsletter extends Model_Main {
       $oQuery = $oDb->prepare("	SELECT
                                   email
                                 FROM
-                                  newsletter
+                                  newsletters
                                 WHERE
                                   email = :email
                                 LIMIT
@@ -37,7 +37,7 @@ class Model_Newsletter extends Model_Main {
     if (isset($aResult) && !empty($aResult['email'])) {
       try {
         $oQuery = $oDb->prepare("	DELETE FROM
-                                    newsletter
+                                    newsletters
                                   WHERE
                                     email = :email");
 
@@ -57,7 +57,7 @@ class Model_Newsletter extends Model_Main {
     else {
       try {
         $oQuery = $oDb->prepare(" INSERT INTO
-                                    newsletter(email)
+                                    newsletters (email)
                                   VALUES
                                     ( :email )");
 
@@ -85,7 +85,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = $oDb->query("	SELECT
                                   email
                                 FROM
-                                  newsletter");
+                                  newsletters");
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $oDb = null;
@@ -103,7 +103,7 @@ class Model_Newsletter extends Model_Main {
         $oQuery = $oDb->query("	SELECT
                                   name, email
                                 FROM
-                                  user
+                                  users
                                 WHERE
                                   receive_newsletter = '1'");
 

@@ -27,13 +27,13 @@ class Model_Gallery extends Model_Main {
                                 u.surname,
                                 COUNT(f.id) AS filesSum
                               FROM
-                                gallery_album a
+                                gallery_albums a
                               LEFT JOIN
-                                user u
+                                users u
                               ON
                                 a.author_id=u.id
                               LEFT JOIN
-                                gallery_file f
+                                gallery_files f
                               ON
                                 f.album_id=a.id
                               "	.$sWhere.	"
@@ -99,7 +99,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM gallery_file WHERE album_id = :album_id");
+      $oQuery = $oDb->prepare("SELECT * FROM gallery_files WHERE album_id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
@@ -117,7 +117,7 @@ class Model_Gallery extends Model_Main {
         $oQuery = $oDb->prepare("	SELECT
                                     *
                                   FROM
-                                    gallery_file
+                                    gallery_files
                                   WHERE
                                     album_id= :album_id
                                   ORDER BY
@@ -171,7 +171,7 @@ class Model_Gallery extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT title FROM gallery_album WHERE id = :album_id");
+      $oQuery = $oDb->prepare("SELECT title FROM gallery_albums WHERE id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
@@ -190,7 +190,7 @@ class Model_Gallery extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT description FROM gallery_album WHERE id = :album_id");
+      $oQuery = $oDb->prepare("SELECT description FROM gallery_albums WHERE id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
@@ -209,7 +209,7 @@ class Model_Gallery extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT description FROM gallery_file WHERE id = :id");
+      $oQuery = $oDb->prepare("SELECT description FROM gallery_files WHERE id = :id");
 
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
@@ -230,7 +230,7 @@ class Model_Gallery extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  gallery_album(author_id, title, description, date)
+                                  gallery_albums (author_id, title, description, date)
                                 VALUES
                                   ( :author_id, :title, :description, :date )");
 
@@ -281,7 +281,7 @@ class Model_Gallery extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  gallery_album
+                                  gallery_albums
                                 SET
                                   title = :title,
                                   description = :description
@@ -309,7 +309,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file FROM gallery_file WHERE album_id = :album_id");
+      $oQuery = $oDb->prepare("SELECT file FROM gallery_files WHERE album_id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
@@ -339,7 +339,7 @@ class Model_Gallery extends Model_Main {
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $oQuery = $oDb->prepare("	DELETE FROM
-                                    gallery_file
+                                    gallery_files
                                   WHERE
                                     album_id = :album_id
                                   LIMIT
@@ -357,7 +357,7 @@ class Model_Gallery extends Model_Main {
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $oQuery = $oDb->prepare("	DELETE FROM
-                                    gallery_album
+                                    gallery_albums
                                   WHERE
                                     id = :album_id
                                   LIMIT
@@ -391,7 +391,7 @@ class Model_Gallery extends Model_Main {
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $oQuery = $oDb->prepare(" INSERT INTO
-                                    gallery_file(album_id, author_id, file, extension, description, date)
+                                    gallery_files (album_id, author_id, file, extension, description, date)
                                   VALUES
                                     ( :album_id, :author_id, :file, :extension, :description, :date )");
 
@@ -421,7 +421,7 @@ class Model_Gallery extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  gallery_file
+                                  gallery_files
                                 SET
                                   description = :description
                                 WHERE
@@ -445,7 +445,7 @@ class Model_Gallery extends Model_Main {
                   PDO::ATTR_PERSISTENT => true
               ));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file, album_id FROM gallery_file WHERE id = :id");
+      $oQuery = $oDb->prepare("SELECT file, album_id FROM gallery_files WHERE id = :id");
 
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
@@ -469,7 +469,7 @@ class Model_Gallery extends Model_Main {
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $oQuery = $oDb->prepare("	DELETE FROM
-                                    gallery_file
+                                    gallery_files
                                   WHERE
                                     id = :id
                                   LIMIT
