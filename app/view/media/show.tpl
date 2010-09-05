@@ -62,7 +62,7 @@
     var sFilesSuffix = '{$_compress_files_suffix_}';
     {literal}
       window.addEvent('domready', function() {
-        new Asset.javascript('%PATH_PUBLIC%/js/slimbox' + sFilesSuffix + '.js');
+        new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
       });
     {/literal}
   </script>

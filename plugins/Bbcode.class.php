@@ -9,7 +9,6 @@
 
 class Bbcode {
   private final function _setFormatedText($sStr, $bUseParagraph) {
-
     # BB Code
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);
@@ -26,25 +25,41 @@ class Bbcode {
     $sStr = preg_replace('#\[acronym=(.*)\](.*)\[/acronym\]#Uis', '<acronym title="\1">\2</acronym>', $sStr);
     $sStr = preg_replace('#\[color=(.*)\](.*)\[/color\]#Uis', '<span style="color:\1">\2</span>', $sStr);
     $sStr = preg_replace('#\[size=(.*)\](.*)\[/size\]#Uis', '<span style="font-size:\1%">\2</span>', $sStr);
-    $sStr = preg_replace('#\[site=(.*)\](.*)\[/site\]#Uis', '<a href="\1">\2</a>', $sStr);
+
+		# Internal redirect
+		$sStr = preg_replace('#\[site=(.*)\](.*)\[/site\]#Uis', '<a href="\1">\2</a>', $sStr);
+
+		# External redirect (not W3C strict!)
     $sStr = preg_replace('#\[url=(.*)\](.*)\[/url\]#Uis',
             '<img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
             $sStr);
+
+		# Set anchor easily
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
+
+		# Load specific icon
     $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.gif" class="icon-\1" alt="\1" />', $sStr);
+
+		# Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
-    # replace the image tag
+		# Manually set javascript plugins
+    #$sStr = preg_replace('#\[js:(.*)\]#Uis', '<script src="%PATH_PUBLIC%/js/plugins/\1" type="text/javascript"></script>', $sStr);
+
+    # Replace images with image tag (every location allowed)
     while(preg_match('=\[img\](.*)\[/img\]=isU', $sStr, $sUrl)) {
       if(@getimagesize($sUrl[1]) == false)
         $sHTML = '';
+
       else {
         $aInfo = @getimagesize($sUrl[1]);
+
         if($aInfo[0] <= MEDIA_DEFAULT_X)
           $sHTML = '<img class=\'image\' src="'	.$sUrl[1].	'" width="'	.$aInfo[0].	'" height="'	.$aInfo[1].	'" alt="'	.$sUrl[1].	'" />';
-        else // Resize
+
+				else // Resize
         {
-          $iFactor = 575 / $aInfo[0];
+          $iFactor = MEDIA_DEFAULT_X / $aInfo[0];
           $aInfo[0] = $aInfo[0] * $iFactor;
           $aInfo[1] = $aInfo[1] * $iFactor;
           $sHTML = '<a href="'	.$sUrl[1].	'" rel=\'lightbox\'><img class=\'image\' src="'	.$sUrl[1].	'" width="'	.$aInfo[0].	'" height="'	.$aInfo[1].	'" alt=\'\' /></a>';
@@ -78,7 +93,7 @@ class Bbcode {
             $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
             $sStr);
 
-    /* Quote */
+    # Quote
     while(	preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU",$sStr) ||
             preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<div class='quote'>\\1</div>", $sStr);
@@ -90,7 +105,7 @@ class Bbcode {
       $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#" .$iRand.  "' name='" .$iRand.  "' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
     }
 
-    /* Add a paragraph to create similar BB-Code for TinyMCE */
+    # Add a paragraph to create similar BB-Code for TinyMCE
     if( $bUseParagraph == true ) {
       if( substr($sStr, 0, 3) !== '<p>' )
         $sStr = '<p>'	.$sStr.	'</p>';
@@ -99,13 +114,7 @@ class Bbcode {
     return $sStr;
   }
 
-	# This method is perfect to override when you extend your bb code
-	protected function _setMoreFormatedText($sFormatedText) {
-		return $sFormatedText;
-	}
-
 	public final function getFormatedText($sStr, $bUseParagraph) {
-    $sFormatedText = $this->_setFormatedText($sStr, $bUseParagraph);
-		return $this->_setMoreFormatedText($sFormatedText);
+		return $this->_setFormatedText($sStr, $bUseParagraph);
   }
 }
