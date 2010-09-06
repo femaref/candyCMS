@@ -202,8 +202,8 @@ class Index {
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
 
       $oSmarty->assign('_content_', $oSection->getContent());
-      $oSmarty->template_dir = Helper::getTemplateDir('layout/application');
-      $sCachedHTML = $oSmarty->fetch('layout/application.tpl');
+      $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
+      $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
     }
 
     # Get possible flash messages

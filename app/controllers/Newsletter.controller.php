@@ -61,8 +61,8 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
     $oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('newsletter/newsletter');
-    return $oSmarty->fetch('newsletter/newsletter.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('newsletters/newsletter');
+    return $oSmarty->fetch('newsletters/newsletter.tpl');
   }
 
   # @Override
@@ -103,8 +103,8 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
     $oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('newsletter/create');
-    return $oSmarty->fetch('newsletter/create.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('newsletters/create');
+    return $oSmarty->fetch('newsletters/create.tpl');
   }
 
   private function _newsletterMail() {

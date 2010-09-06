@@ -81,8 +81,8 @@ class Mail extends Main {
     else
       $oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('mail/create');
-    return $oSmarty->fetch('mail/create.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('mails/create');
+    return $oSmarty->fetch('mails/create.tpl');
   }
 
   private function _checkCaptcha() {

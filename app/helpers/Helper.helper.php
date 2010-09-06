@@ -102,15 +102,15 @@ final class Helper {
 
   public final function getTemplateDir($sTemplate) {
     try {
-      if (file_exists('public/skins/' . PATH_TPL . '/view/' . $sTemplate . '.tpl'))
-        return 'public/skins/' . PATH_TPL . '/view/';
-      elseif (file_exists('public/skins/_addon/view/' . $sTemplate . '.tpl'))
-        return 'public/skins/_addon/view/';
+      if (file_exists('public/skins/' . PATH_TPL . '/views/' . $sTemplate . '.tpl'))
+        return 'public/skins/' . PATH_TPL . '/views/';
+      elseif (file_exists('public/skins/_addons/views/' . $sTemplate . '.tpl'))
+        return 'public/skins/_addons/views/';
       else {
-        if (!file_exists('app/view/' . $sTemplate . '.tpl'))
+        if (!file_exists('app/views/' . $sTemplate . '.tpl'))
           throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
         else
-          return 'app/view/';
+          return 'app/views/';
       }
     }
     catch (Exception $e) {

@@ -53,8 +53,8 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY.	': '	.
               $sAlbumName));
 
-      $oSmarty->template_dir = Helper::getTemplateDir('gallery/showFiles');
-      return $oSmarty->fetch('gallery/showFiles.tpl');
+      $oSmarty->template_dir = Helper::getTemplateDir('galleries/showFiles');
+      return $oSmarty->fetch('galleries/showFiles.tpl');
     }
     # Overview
     else {
@@ -68,8 +68,8 @@ class Gallery extends Main {
       $oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
       $oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 
-      $oSmarty->template_dir = Helper::getTemplateDir('gallery/showAlbums');
-      return $oSmarty->fetch('gallery/showAlbums.tpl');
+      $oSmarty->template_dir = Helper::getTemplateDir('galleries/showAlbums');
+      return $oSmarty->fetch('galleries/showAlbums.tpl');
     }
   }
 
@@ -161,8 +161,8 @@ class Gallery extends Main {
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
     $oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('gallery/_form_album');
-    return $oSmarty->fetch('gallery/_form_album.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_album');
+    return $oSmarty->fetch('galleries/_form_album.tpl');
   }
 
   public final function createFile() {
@@ -244,7 +244,7 @@ class Gallery extends Main {
     # Language
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('gallery/_form_file');
-    return $oSmarty->fetch('gallery/_form_file.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_file');
+    return $oSmarty->fetch('galleries/_form_file.tpl');
   }
 }

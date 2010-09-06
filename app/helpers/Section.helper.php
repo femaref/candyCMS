@@ -14,7 +14,7 @@ class Section extends Main {
   private function _getController() {
     if( file_exists('app/addon/' .(string)ucfirst($this->_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
       new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $sClassName = (string)ucfirst($this->_aRequest['section']). 'Extended';
+      $sClassName = 'Extension_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
     elseif(file_exists('app/controllers/'	.(string)ucfirst($this->_aRequest['section']).	'.controller.php')) {

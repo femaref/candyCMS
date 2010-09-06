@@ -59,8 +59,8 @@ class Session extends Main {
     $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
     $oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
-    $oSmarty->template_dir = Helper::getTemplateDir('session/createSession');
-    return $oSmarty->fetch('session/createSession.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('sessions/createSession');
+    return $oSmarty->fetch('sessions/createSession.tpl');
   }
 
   public final function createResendActions() {
@@ -157,8 +157,8 @@ class Session extends Main {
         $oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $oSmarty->template_dir = Helper::getTemplateDir('session/createResendActions');
-    return $oSmarty->fetch('session/createResendActions.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('sessions/createResendActions');
+    return $oSmarty->fetch('sessions/createResendActions.tpl');
   }
 
   public final function destroy() {

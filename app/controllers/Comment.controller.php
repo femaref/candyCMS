@@ -88,8 +88,8 @@ final class Comment extends Main {
         $oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
         $oSmarty->assign('lang_quote', LANG_GLOBAL_QUOTE);
 
-        $oSmarty->template_dir = Helper::getTemplateDir('comment/show');
-        $sReturn .= $oSmarty->fetch('comment/show.tpl');
+        $oSmarty->template_dir = Helper::getTemplateDir('comments/show');
+        $sReturn .= $oSmarty->fetch('comments/show.tpl');
       }
 
       # Does the user have enough rights to enter a comment?
@@ -212,8 +212,8 @@ final class Comment extends Main {
       $oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 
-      $oSmarty->template_dir = Helper::getTemplateDir('comment/_form');
-      return $oSmarty->fetch('comment/_form.tpl');
+      $oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
+      return $oSmarty->fetch('comments/_form.tpl');
     }
   }
 
