@@ -137,7 +137,7 @@ switch ($_REQUEST['step']) {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  user ( id, name, surname, password, email, ip, user_right, date )
+                                  users ( id, name, surname, password, email, ip, user_right, date )
                                 VALUES (  1,
                                   '" . $_SESSION['install']['name'] . "',
                                   '" . $_SESSION['install']['surname'] . "',

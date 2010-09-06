@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
+    <link href='%PATH_CSS%/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' src='%PATH_PUBLIC%/js/mootools.js' type='text/javascript'></script>
+    <script language='javascript' src='%PATH_PUBLIC%/js/core/mootools.js' type='text/javascript'></script>
     <title>{$title}</title>
   </head>
   <body>
