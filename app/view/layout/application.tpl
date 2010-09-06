@@ -7,7 +7,6 @@
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/mootools{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
   </head>
@@ -69,6 +68,7 @@
         {$lang_newsletter_handle}
       </a>
     {/if}
+    <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
   </body>
 </html>
