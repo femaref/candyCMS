@@ -129,6 +129,13 @@
   overflow:auto;
   text-align:left;
   max-width:400px;
+  border-radius:4px;
+  -moz-border-radius:4px;
+  -webkit-border-radius: 4px;
+  /*
+  box-shadow: 10px 10px 5px #888;
+  -moz-box-shadow:1px 2px #eee;
+  */
 }
 
 .tip-title {

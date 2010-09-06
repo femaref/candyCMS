@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+require_once 'app/helpers/Addon.helper.php';
+
 class Section extends Main {
   protected $_oObject;
   private function _getController() {
