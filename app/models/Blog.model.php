@@ -34,7 +34,7 @@ class Model_Blog extends Model_Main {
                 ));
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->query("SELECT COUNT(*) FROM blog " . $sWhere);
+        $oQuery = $oDb->query("SELECT COUNT(*) FROM blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
       catch (AdvancedException $e) {
@@ -53,13 +53,13 @@ class Model_Blog extends Model_Main {
 																u.use_gravatar,
 																COUNT(c.id) AS commentSum
 															FROM
-																blog b
+																blogs b
 															LEFT JOIN
-																user u
+																users u
 															ON
 																b.author_id=u.id
 															LEFT JOIN
-																comment c
+																comments c
 															ON
 																c.parent_id=b.id AND c.parent_category='b'
 															" . $sWhere . "
@@ -132,13 +132,13 @@ class Model_Blog extends Model_Main {
 																	u.surname,
 																	COUNT(c.id) AS commentSum
 																FROM
-																	blog b
+																	blogs b
 																LEFT JOIN
-																	user u
+																	users u
 																ON
 																	b.author_id=u.id
 																LEFT JOIN
-																	comment c
+																	comments c
 																ON
 																	c.parent_id=b.id AND c.parent_category='b'
 																WHERE
@@ -225,7 +225,7 @@ class Model_Blog extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  blog(author_id, title, tags, content, date, published)
+                                  blogs(author_id, title, tags, content, date, published)
                                 VALUES
                                   ( :author_id, :title, :tags, :content, :date, :published )");
 
@@ -264,7 +264,7 @@ class Model_Blog extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  blog
+                                  blogs
                                 SET
                                   author_id = :author_id,
                                   title = :title,
@@ -300,7 +300,7 @@ class Model_Blog extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	DELETE FROM
-                                  blog
+                                  blogs
                                 WHERE
                                   id = :id
                                 LIMIT
@@ -315,7 +315,7 @@ class Model_Blog extends Model_Main {
 
     try {
       $oQuery = $oDb->prepare("	DELETE FROM
-                                  comment
+                                  comments
                                 WHERE
                                   parent_id = :parent_id
 																AND

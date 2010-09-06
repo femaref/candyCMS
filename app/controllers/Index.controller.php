@@ -71,14 +71,13 @@ class Index {
   }
 
   public final function loadPlugins() {
-    $oDir = opendir('plugins');
+		$sPlugins = ALLOW_PLUGINS;
+		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
 
-    while ($sFile = readdir($oDir)) {
-      if (substr($sFile, 0, 1) == '.' || $sFile == '_dev' || $sFile == 'Cron.not_working.php')
-        continue;
-
-      require_once ('plugins/' . $sFile);
-    }
+		foreach($aPlugins as $sPluginName) {
+			if (file_exists('plugins/' . (string) ucfirst($sPluginName) . '.class.php'))
+				require_once 'plugins/' . (string) ucfirst($sPluginName) . '.class.php';
+		}
   }
 
   public final function setActiveUser($iSessionId = '') {

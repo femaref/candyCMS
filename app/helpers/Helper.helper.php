@@ -9,22 +9,6 @@
 
 final class Helper {
 
-  # Check for plugins
-  public static final function pluginExists($sPluginName = '') {
-    if (!empty($sPluginName) && !class_exists(ucfirst($sPluginName))) {
-      if (file_exists('plugins/' . (string) ucfirst($sPluginName) . '.class.php')) {
-        require_once 'plugins/' . (string) ucfirst($sPluginName) . '.class.php';
-        return true;
-      }
-      else
-        return false;
-    }
-    elseif (class_exists(ucfirst($sPluginName)))
-      return true;
-    else
-      return false;
-  }
-
   public static final function successMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'success';
     $_SESSION['flash_message']['message']   = $sMSG;
@@ -161,12 +145,12 @@ final class Helper {
   # Code for plugins
   # TODO: Use config for variables
   public static final function formatTimestamp($iTime) {
-    if (Helper::pluginExists('FormatTimestamp') == true) {
+    if (class_exists('FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
       return $oDate->getDate($iTime);
     }
     else
-      return date('d.m.Y - H:i', $iTime);
+      return date(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
   }
 
   public static final function formatOutput($sStr, $bUseParagraph = false) {
@@ -181,7 +165,7 @@ final class Helper {
     # Format SpecialChars
     $sStr = str_replace('&quot;', '"', $sStr);
 
-    if (Helper::pluginExists('Bbcode') == true) {
+    if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();
       return $oBbcode->getFormatedText($sStr, $bUseParagraph);
     }

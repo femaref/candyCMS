@@ -18,7 +18,7 @@ define('SQL_DB', 'cms_new');
 # ------------------------------------------------------------------------------
 
 # Do you want to use SMTP to send your mails instead of mail()?
-# DEFAULT: 0
+# DEFAULT: '0'
 define('SMTP_ON', '0');
 define('SMTP_HOST', 'localhost');
 define('SMTP_USER', '');
@@ -40,8 +40,9 @@ define('WEBSITE_CDN', 'http://phpcms.localhost');
 
 # ------------------------------------------------------------------------------
 
-# Use compressed or non-compressed files
-# EXAMPLE: true
+# Use compressed or non-compressed files. Note that compressed files must be
+# updated every time you work on a non-compressed file!
+# DEFAULT: 'true'
 define('WEBSITE_COMPRESS_FILES', false);
 # ------------------------------------------------------------------------------
 
@@ -64,38 +65,55 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@dev.planetk4.de');
 # ------------------------------------------------------------------------------
 
 # Is the website in development mode?
-# DEFAULT: 0
+# DEFAULT: '0'
 define('WEBSITE_DEV', '1');
 
 # ------------------------------------------------------------------------------
 
 # If you use plugins (placed in "app/addons/"), turn true
-# DEFAULT: 0
+# DEFAULT: '0'
 define('ALLOW_ADDONS', '0');
 
 # ------------------------------------------------------------------------------
+# Tell the allowed plugins seperated by comma
+# DEFAULT: 'Bbcode,FormatTimestamp'
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+
+# ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
-# DEFAULT: 1
+# DEFAULT: '1'
 define('ALLOW_CACHE', '1');
 
 # ------------------------------------------------------------------------------
 
 # Allow compressing of SQL Backups
-# DEFAULT: 1
+# DEFAULT: '1'
 define('ALLOW_GZIP_BACKUP', '1');
 
 # ------------------------------------------------------------------------------
 
 # Allow this software to connect the CandyCMS website to check for an update
-# DEFAULT: 1
+# DEFAULT: '1'
 define('ALLOW_VERSION_CHECK', '1');
 
 # ------------------------------------------------------------------------------
 
 # Set the standard language (file must be placed in "config/language")
 # NOTE: lower cases required!
-# DEFAULT: ger
+# DEFAULT: 'ger'
 define('DEFAULT_LANGUAGE', 'ger');
+
+# ------------------------------------------------------------------------------
+
+# Set the standard date format
+# DEFAULT: 'd.m.Y'
+define('DEFAULT_DATE_FORMAT', 'd.m.Y');
+
+# ------------------------------------------------------------------------------
+
+# Set the standard time format (with seperator - if wanted)
+# DEFAULT: ', H:i a'
+define('DEFAULT_TIME_FORMAT', ', H:i a');
 
 # ------------------------------------------------------------------------------
 

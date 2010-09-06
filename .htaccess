@@ -7,7 +7,7 @@ ErrorDocument 422 /public/422.html
 ErrorDocument 500 /public/500.html
 
 # Hide files for non script access
-<FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php)$">
+<FilesMatch "\.(tpl|ini|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php|config.php)$">
   order allow,deny
   deny from all
 </FilesMatch>

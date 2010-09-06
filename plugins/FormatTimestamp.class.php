@@ -8,25 +8,24 @@
 */
 
 class FormatTimestamp {
-  private final function _setDate($iTime, $sStyle = ', ') {
-    if(date('d.m.Y', $iTime) == date('d.m.Y', time())) {
+  private final function _setDate($iTime) {
+    if(date(DEFAULT_DATE_FORMAT, $iTime) == date(DEFAULT_DATE_FORMAT, time())) {
       $sDay = LANG_GLOBAL_TODAY;
-      $sStyle = ',&nbsp;';
-      $sTime = date('H:i a', $iTime);
+      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
     }
-    elseif(date('d.m.Y', $iTime) == date('d.m.Y', (time()-60*60*24))) {
+    elseif(date(DEFAULT_DATE_FORMAT, $iTime) == date(DEFAULT_DATE_FORMAT, (time()-60*60*24))) {
       $sDay = LANG_GLOBAL_YESTERDAY;
-      $sStyle = ',&nbsp;';
-      $sTime = date('H:i a', $iTime);
+      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
     }
     else {
-      $sDay = date('d.m.Y', $iTime);
-      $sTime = date('H:i a', $iTime);
+      $sDay = date(DEFAULT_DATE_FORMAT, $iTime);
+      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
     }
+
     $sTime = str_replace('am', LANG_GLOBAL_TIME_AM, $sTime);
     $sTime = str_replace('pm', LANG_GLOBAL_TIME_PM, $sTime);
 
-    return $sDay.$sStyle.$sTime;
+    return $sDay.$sTime;
   }
 
   public final function getDate($iTime) {
