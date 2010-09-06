@@ -12,19 +12,23 @@
   </head>
   <body>
     <div id='container'>
-      <div id='navigation'>
-        {if $USER_ID > 0}
-          <strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong> &middot;
-        {/if}
-          <a href='/Blog'>{$lang_blog}</a> &middot;
-          <a href='/Gallery'>{$lang_gallery}</a> &middot;
-        {if $USER_ID == 0}
-          <a href='/Session/create'>{$lang_login}</a> &middot;
-          <a href='/User/create'>{$lang_register}</a>
-        {else}
-          <a href='/User/update'>{$lang_settings}</a> &middot;
-          <a href='/Session/destroy'>{$lang_logout}</a>
-        {/if}
+      <div id="header">
+        <div id='navigation'>
+          <ul>
+            {if $USER_ID > 0}
+              <li><strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong></li>
+            {/if}
+            <li><a href='/Blog'>{$lang_blog}</a></li>
+            <li><a href='/Gallery'>{$lang_gallery}</a></li>
+            {if $USER_ID == 0}
+              <li><a href='/Session/create'>{$lang_login}</a></li>
+              <li><a href='/User/create'>{$lang_register}</a></li>
+            {else}
+              <li><a href='/User/update'>{$lang_settings}</a></li>
+              <li><a href='/Session/destroy'>{$lang_logout}</a></li>
+            {/if}
+          </ul>
+        </div>
       </div>
       <div id='body'>
         {if $lang_update_avaiable}
@@ -41,33 +45,42 @@
         </div>
         {$_content_}
       </div>
+      <div id="footer">
+        <p>
+          <a href='/About'>{$lang_about} {$name}</a> &middot; <a href='/Disclaimer'>{$lang_disclaimer}</a> &middot; <a href='/Contact/Bugreport'>{$lang_report_error}</a>
+        </p>
+        <ul>
+          {if $USER_RIGHT > 3}
+            <li>
+              <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
+                {$lang_newsletter_send}</a>
+            </li>
+            <li>
+              <a href='/Media' title='{$lang_filemanager}'>
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-folder" alt='' />
+                {$lang_filemanager}</a>
+            </li>
+            <li>
+              <a href='/Content' title='{$lang_contentmanager}'>
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-manager" alt='' />
+                {$lang_contentmanager}</a>
+            </li>
+            <li>
+              <a href='/User' title='{$lang_usermanager}'>
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-user" alt='' />
+                {$lang_usermanager}</a>
+            </li>
+          {else}
+            <li>
+              <a href='/Newsletter' title='{$lang_newsletter_handle}'>
+                <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
+                {$lang_newsletter_handle}</a>
+            </li>
+          {/if}
+        </ul>
+      </div>
     </div>
-    <p style='clear:both'>
-      <a href='/About'>{$lang_about} {$name}</a> &middot; <a href='/Disclaimer'>{$lang_disclaimer}</a> &middot; <a href='/Contact/Bugreport'>{$lang_report_error}</a>
-    </p>
-    {if $USER_RIGHT > 3}
-      <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
-        {$lang_newsletter_send}
-      </a> &middot;
-      <a href='/Media' title='{$lang_filemanager}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-folder" alt='' />
-        {$lang_filemanager}
-      </a> &middot;
-      <a href='/Content' title='{$lang_contentmanager}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-manager" alt='' />
-        {$lang_contentmanager}
-      </a> &middot;
-      <a href='/User' title='{$lang_usermanager}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-user" alt='' />
-        {$lang_usermanager}
-      </a>
-    {else}
-      <a href='/Newsletter' title='{$lang_newsletter_handle}'>
-        <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
-        {$lang_newsletter_handle}
-      </a>
-    {/if}
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
   </body>

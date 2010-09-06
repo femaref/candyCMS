@@ -2,32 +2,32 @@ body
 {
   font: 13px "Trebuchet MS", Arial, Sans-serif;
   text-align: center;
-  color:#333;
-  background:#262626;
+  color: #333;
+  background: #262626;
 }
 
 a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover
 {
-  color:#FF0000;
+  color: #FF0000;
   text-decoration: none;
 }
 
 a:hover
 {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 img {
   border: none;
-  vertical-align:bottom;
+  vertical-align: bottom;
 }
 
 a:hover img {
-  text-decoration:none;
+  text-decoration: none;
 }
 
 legend {
-  font-weight:bold;
+  font-weight: bold;
   font-size: 120%;
 }
 
@@ -42,9 +42,9 @@ h3 {
 }
 
 #container {
-  margin:50px auto auto;
-  width:805px;
-  background:white;
+  margin: 50px auto auto;
+  width: 805px;
+  background: white;
 }
 
 #navigation
@@ -61,9 +61,23 @@ h3 {
   border-bottom:1px solid white;
 }
 
+#navigation ul, #footer ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+#navigation ul li, #footer ul li {
+  display: inline;
+  margin: 0px 8px 0px 8px;
+  word-spacing: 2px;
+}
+
+#footer ul li {
+  margin: 0px 3px 0px 3px;
+}
+
 #navigation a
 {
-  padding: 5px;
   text-align:center;
   color:white;
 }
@@ -79,6 +93,12 @@ h3 {
   padding-bottom:10px;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+#footer {
+  clear: both;
+  background: #262626;
+  padding-top: 10px;
 }
 
 ul
