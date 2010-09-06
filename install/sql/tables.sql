@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `blog`;
+DROP TABLE IF EXISTS `blogs`;
 
-CREATE TABLE `blog` (
+CREATE TABLE `blogs` (
   `id` smallint(5) NOT NULL AUTO_INCREMENT,
   `author_id` smallint(5) NOT NULL DEFAULT '1',
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -14,9 +14,9 @@ CREATE TABLE `blog` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
 
 
-DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `comments`;
 
-CREATE TABLE `comment` (
+CREATE TABLE `comments` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `parent_id` int(9) NOT NULL,
   `parent_category` char(1) NOT NULL DEFAULT 'b',
@@ -32,9 +32,9 @@ CREATE TABLE `comment` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
 
 
-DROP TABLE IF EXISTS `content`;
+DROP TABLE IF EXISTS `contents`;
 
-CREATE TABLE `content` (
+CREATE TABLE `contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` smallint(5) NOT NULL DEFAULT '1',
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE `content` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
 
 
-DROP TABLE IF EXISTS `gallery_album`;
+DROP TABLE IF EXISTS `gallery_albums`;
 
-CREATE TABLE `gallery_album` (
+CREATE TABLE `gallery_albums` (
   `id` smallint(5) NOT NULL AUTO_INCREMENT,
   `author_id` smallint(5) NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -56,9 +56,9 @@ CREATE TABLE `gallery_album` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `gallery_file`;
+DROP TABLE IF EXISTS `gallery_files`;
 
-CREATE TABLE `gallery_file` (
+CREATE TABLE `gallery_files` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `album_id` smallint(5) NOT NULL,
   `author_id` smallint(5) NOT NULL,
@@ -69,18 +69,26 @@ CREATE TABLE `gallery_file` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `migrations`;
 
-DROP TABLE IF EXISTS `newsletter`;
+CREATE TABLE `migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file` varchar(100) DEFAULT NULL,
+  `date` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `newsletter` (
+DROP TABLE IF EXISTS `newsletters`;
+
+CREATE TABLE `newsletters` (
   `email` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   UNIQUE KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `surname` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
