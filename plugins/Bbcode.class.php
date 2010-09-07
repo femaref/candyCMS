@@ -77,13 +77,13 @@ class Bbcode {
 
     # HTML5 Video
     $sVideo = '<div class="video">';
-    $sVideo .= '<video width="\1" height="\2" controls>';
+    $sVideo .= '<video width="\1" height="\2" controls="controls">';
     $sVideo .= '<source src="\3.mp4"  type="video/mp4" />';
     $sVideo .= '<source src="\3.webm"  type="video/webm" />';
     $sVideo .= '<source src="\3.ogv"  type="video/ogg" />';
     $sVideo .= '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
     $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-    $sVideo .= '<param name="FlashVars" value="mediaURL=\3.mp4&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\3.mp4&amp;controlColor=0xffffff&amp;showTimecode=true" />';
     $sVideo .= '<param name="allowFullScreen" value="true" />';
     $sVideo .= '</object>';
     $sVideo .= '</video>';
@@ -95,13 +95,13 @@ class Bbcode {
 
     # HTML5 Video
     $sVideo = '<div class="video">';
-    $sVideo .= '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls>';
+    $sVideo .= '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls">';
     $sVideo .= '<source src="\1.mp4"  type="video/mp4" />';
     $sVideo .= '<source src="\1.webm"  type="video/webm" />';
     $sVideo .= '<source src="\1.ogv"  type="video/ogg" />';
     $sVideo .= '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
     $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-    $sVideo .= '<param name="FlashVars" value="mediaURL=\1.mp4&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\1.mp4&amp;controlColor=0xffffff&amp;showTimecode=true" />';
     $sVideo .= '<param name="allowFullScreen" value="true" />';
     $sVideo .= '</object>';
     $sVideo .= '</video>';
@@ -113,13 +113,13 @@ class Bbcode {
 
     # HTML5 Video
     $sVideo = '<div class="video">';
-    $sVideo .= '<video width="\1" height="\2" controls>';
+    $sVideo .= '<video width="\1" height="\2" controls="controls">';
     $sVideo .= '<source src="\4.mp4"  type="video/mp4" />';
     $sVideo .= '<source src="\4.webm"  type="video/webm" />';
     $sVideo .= '<source src="\4.ogv"  type="video/ogg" />';
     $sVideo .= '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
     $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-    $sVideo .= '<param name="FlashVars" value="mediaURL=\4.mp4&amp;teaserURL=\3&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\4.mp4&amp;teaserURL=\3&amp;controlColor=0xffffff&amp;showTimecode=true" />';
     $sVideo .= '<param name="allowFullScreen" value="true" />';
     $sVideo .= '<img src="\3" width="\1" height="\2" alt="\3" />';
     $sVideo .= '</object>';
