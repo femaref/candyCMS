@@ -196,10 +196,15 @@ class Index {
       $sCachedHTML = $oSection->getContent();
 
     else {
-      $oSmarty->assign('_title_', $oSection->getTitle() .
-              ' - ' . LANG_WEBSITE_TITLE);
+      $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
+
+      # Include optional plugins
+      if (class_exists('Archive')) {
+        $oArchive = new Archive($this->_aRequest, $this->_aSession);
+        $oSmarty->assign('_plugin_archive_', $oArchive->show());
+      }
 
       $oSmarty->assign('_content_', $oSection->getContent());
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
@@ -242,10 +247,6 @@ class Index {
     # Compress Data
     if (extension_loaded('zlib'))
       @ob_start('ob_gzhandler');
-
-    header('Cache-Control: must-revalidate');
-    header('Content-Type: text/html; charset=utf-8');
-    header('Expires: ' . $sHeaderExpires);
 
     return $sCachedHTML;
   }

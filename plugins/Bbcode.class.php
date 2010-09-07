@@ -75,22 +75,59 @@ class Bbcode {
             "<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
             $sStr);
 
-    # Include Flash Player
-    $iRand = rand(10000, 99999);
-    $sHTML = '<div class=\'media_player center\' id=\'media_player'	.$iRand.	'\'>';
-    $sHTML .= '<a href=\'http://www.macromedia.com/go/getflashplayer\'>'	.LANG_ERROR_HELPER_NO_FLASH_INSTALLED.	'</a>';
-    $sHTML .= '</div>';
+    # HTML5 Video
+    $sVideo = '<div class="video">';
+    $sVideo .= '<video width="\1" height="\2" controls>';
+    $sVideo .= '<source src="\3.mp4"  type="video/mp4" />';
+    $sVideo .= '<source src="\3.webm"  type="video/webm" />';
+    $sVideo .= '<source src="\3.ogv"  type="video/ogg" />';
+    $sVideo .= '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
+    $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\3.mp4&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="allowFullScreen" value="true" />';
+    $sVideo .= '</object>';
+    $sVideo .= '</video>';
+    $sVideo .= '</div>';
 
-    $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf",{id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\3",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
+    $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+)\](.*)\[/video]#Uis',
+                    $sVideo,
+                    $sStr);
+
+    # HTML5 Video
+    $sVideo = '<div class="video">';
+    $sVideo .= '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls>';
+    $sVideo .= '<source src="\1.mp4"  type="video/mp4" />';
+    $sVideo .= '<source src="\1.webm"  type="video/webm" />';
+    $sVideo .= '<source src="\1.ogv"  type="video/ogg" />';
+    $sVideo .= '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
+    $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\1.mp4&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="allowFullScreen" value="true" />';
+    $sVideo .= '</object>';
+    $sVideo .= '</video>';
+    $sVideo .= '</div>';
+
+    $sStr = preg_replace(	'#\[video\](.*)\[/video\]#Uis',
+            $sVideo,
             $sStr);
 
-    $sStr = preg_replace(	'#\[media ([0-9]+) ([0-9]+) (.*)\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf", {id: "'  .$iRand.  '",width: \1,height: \2,container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\4",config:"%PATH_PUBLIC%/flv/config.xml",image:"\3"}});</script>',
-            $sStr);
+    # HTML5 Video
+    $sVideo = '<div class="video">';
+    $sVideo .= '<video width="\1" height="\2" controls>';
+    $sVideo .= '<source src="\4.mp4"  type="video/mp4" />';
+    $sVideo .= '<source src="\4.webm"  type="video/webm" />';
+    $sVideo .= '<source src="\4.ogv"  type="video/ogg" />';
+    $sVideo .= '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
+    $sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
+    $sVideo .= '<param name="FlashVars" value="mediaURL=\4.mp4&amp;teaserURL=\3&amp;controlColor=0xffffff" />';
+    $sVideo .= '<param name="allowFullScreen" value="true" />';
+    $sVideo .= '<img src="\3" width="\1" height="\2" alt="\3" />';
+    $sVideo .= '</object>';
+    $sVideo .= '</video>';
+    $sVideo .= '</div>';
 
-    $sStr = preg_replace(	'#\[media\](.*)\[/media\]#Uis',
-            $sHTML.	'<script type="text/javascript">new Swiff("%PATH_PUBLIC%/flv/mediaplayer.swf", {id: "'  .$iRand.  '",width: ' .MEDIA_DEFAULT_X.  ',height: '  .MEDIA_DEFAULT_Y.  ',container:"media_player'  .$iRand.  '",params:{allowfullscreen: "true"},vars:{file:"\1",config:"%PATH_PUBLIC%/flv/config.xml"}});</script>',
+    $sStr = preg_replace(	'#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[/video\]#Uis', 
+            $sVideo,
             $sStr);
 
     # Quote

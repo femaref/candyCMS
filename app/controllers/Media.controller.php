@@ -46,8 +46,8 @@ class Media extends Main {
   }
 
   private function _proceedUpload() {
-    $oUploadImage = new Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
-    return $oUploadImage->uploadMediaFile();
+    $oUpload = new Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
+    return $oUpload->uploadMediaFile();
   }
 
   public function show() {

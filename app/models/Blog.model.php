@@ -9,8 +9,7 @@
 
 class Model_Blog extends Model_Main {
 
-	private function _setData($bEdit = false) {
-		$iLimit = LIMIT_BLOG;
+	private function _setData($bEdit = false, $iLimit = '') {
 		$sWhere	= '';
 
 		if (empty($this->_iId)) {
@@ -42,7 +41,7 @@ class Model_Blog extends Model_Main {
       }
 
 			$this->oPages = new Pages($this->_aRequest, (int)$iResult, $iLimit);
-
+ 
 			try {
 				$oQuery = $oDb->query("	SELECT
 																b.*,
@@ -96,6 +95,7 @@ class Model_Blog extends Model_Main {
                 'title'         => Helper::formatOutput($aRow['title']),
                 'content'       => Helper::formatOutput($aRow['content'], true),
                 'date'          => Helper::formatTimestamp($aRow['date']),
+                'date_raw'      => $aRow['date'],
                 'uid'           => $aRow['uid'],
                 'name'          => $sName,
                 'surname'       => $sSurname,
@@ -187,6 +187,7 @@ class Model_Blog extends Model_Main {
 						'title'         => Helper::formatOutput($aRow['title']),
 						'content'       => Helper::formatOutput($aRow['content'], true),
 						'date'          => Helper::formatTimestamp($aRow['date']),
+            'date_raw'      => $aRow['date'],
 						'uid'           => $aRow['uid'],
             'name'          => $sName,
             'surname'       => $sSurname,
@@ -207,11 +208,11 @@ class Model_Blog extends Model_Main {
 		}
 	}
 
-	public final function getData($iId = '', $bEdit = false) {
+	public final function getData($iId = '', $bEdit = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit);
+    $this->_setData($bEdit, $iLimit);
     return $this->_aData;
   }
 

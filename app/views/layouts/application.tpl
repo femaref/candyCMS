@@ -43,6 +43,7 @@
             <p>%FLASH_MESSAGE%</p>
           </div>
         </div>
+        {$_plugin_archive_}
         {$_content_}
       </div>
       <div id="footer">

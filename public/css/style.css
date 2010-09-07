@@ -209,11 +209,6 @@ table th
   background:transparent;
 }
 
-/* Center Videoplayer */
-.media_player {
-  margin: 5px;
-}
-
 /* Highlight content or code */
 .box {
   padding: 10px;
@@ -303,4 +298,8 @@ table th
 
 .gallery_files .image {
   padding:5px;
+}
+
+.video {
+  text-align: center;
 }
