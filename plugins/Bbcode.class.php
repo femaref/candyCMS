@@ -93,13 +93,12 @@ class Bbcode {
       $sVideo .= $sFlash;
       $sVideo .= '</video>';
 
-      $sFile  = $aOutput[1][0];
+      $sFile  = trim($aOutput[1][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
       $sStr = preg_replace(	'#\[video\](.*)\[\/video\]#Uis',
               '<div class="video">' . $sVideo . '</div>',
               $sStr);
     }
-
 
     # [video width height]file[/video]
     if(preg_match('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr)) {
@@ -117,7 +116,7 @@ class Bbcode {
       $sVideo .= '<source src="\3.ogv"  type="video/ogg" />';
       $sVideo .= '</video>';
 
-      $sFile  = $aOutput[3][0];
+      $sFile  = trim($aOutput[3][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis',
                       '<div class="video">' . $sVideo . '</div>',
@@ -144,7 +143,7 @@ class Bbcode {
       $sVideo .= $sFlash;
       $sVideo .= '</video>';
 
-      $sFile  = $aOutput[4][0];
+      $sFile  = trim($aOutput[4][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
       $sStr = preg_replace(	'#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
               '<div class="video">' . $sVideo . '</div>',
@@ -177,16 +176,21 @@ class Bbcode {
   }
 
   private final function _getVideo($sFile) {
-    $iUrl   = strlen(WEBSITE_URL);
+    $sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
 
-    if ( file_exists($sFile . '.ogv') || file_exists($sFile . '.webm') )
+    # We have WebM (and mp4) and do use any browser exept FF
+    if ( file_exists($sFile . '.webm') && !preg_match('/Firefox/', $_SERVER['HTTP_USER_AGENT']) )
       return true;
 
-    # We use a browser exept Firefox and Opera
+    # We have ogg (and mp4) - serves all
+    elseif ( file_exists($sFile . '.ogv') )
+      return true;
+
+    # We do only have mp4, so use flash for Firefox and Opera
     elseif( preg_match('/(Firefox|Opera)/', $_SERVER['HTTP_USER_AGENT']) )
       return false;
 
-    # We show Flash
+    # We try HTML5 anyways
     else
       return true;
   }
