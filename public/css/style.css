@@ -300,6 +300,6 @@ table th
   padding:5px;
 }
 
-.video {
+.video, .audio {
   text-align: center;
 }

@@ -176,7 +176,9 @@ class Bbcode {
   }
 
   private final function _getVideo($sFile) {
-    $sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
+    # If external link, make local
+    if(preg_match('/http:\/\/(.*)/', $sFile))
+      $sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
 
     # We have WebM (and mp4) and do use any browser exept FF
     if ( file_exists($sFile . '.webm') && !preg_match('/Firefox/', $_SERVER['HTTP_USER_AGENT']) )
@@ -190,7 +192,7 @@ class Bbcode {
     elseif( preg_match('/(Firefox|Opera)/', $_SERVER['HTTP_USER_AGENT']) )
       return false;
 
-    # We try HTML5 anyways
+    # We try HTML5 anyways or it's external
     else
       return true;
   }

@@ -60,11 +60,11 @@ class Media extends Main {
 
       $aFiles = array();
       while($sFile = readdir($oDir)) {
+        $sPath = $sOriginalPath.	'/'	.$sFile;
 
-        if(substr($sFile, 0, 1) == '.')
+        if(substr($sFile, 0, 1) == '.' || is_dir($sPath))
           continue;
 
-        $sPath = $sOriginalPath.	'/'	.$sFile;
         $sFileType = strtolower(substr(strrchr($sPath, '.'), 1));
         $iNameLen = strlen($sFile) - 4;
 
