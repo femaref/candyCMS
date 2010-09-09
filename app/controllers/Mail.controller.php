@@ -154,7 +154,7 @@ class Mail extends Main {
     }
   }
 
-  public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL) {
+  public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
 		# Parse message and replace with (footer) variables
@@ -197,6 +197,10 @@ class Mail extends Main {
       $oMail->AddAddress($sTo);
       $oMail->Subject = $sSubject;
       $oMail->MsgHTML(nl2br($sMessage));
+
+      if(!empty($sAttachment))
+        $oMail->AddAttachment($sAttachment);
+
       $oMail->Send();
 
       return true;

@@ -62,6 +62,7 @@ $oIndex->setBasicConfiguration();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
+$oIndex->loadCronjob();
 
 $aUser =& $oIndex->setActiveUser();
 define( 'USER_ID',	(int)$aUser['id'] );

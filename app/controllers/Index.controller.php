@@ -80,6 +80,14 @@ class Index {
 		}
   }
 
+  public final function loadCronjob() {
+    if (class_exists('Cron')) {
+      Cron::cleanup();
+      Cron::optimize();
+      Cron::backup();
+    }
+  }
+
   public final function setActiveUser($iSessionId = '') {
     $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
