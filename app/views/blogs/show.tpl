@@ -85,3 +85,11 @@
   <a name='comments'></a>
   {$_blog_comments_}
 {/if}
+{literal}
+  <script type="text/javascript">
+    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+      display: -1,
+      alwaysHide: true
+    });
+  </script>
+{/literal}

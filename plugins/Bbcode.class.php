@@ -158,8 +158,9 @@ class Bbcode {
     }
 
     while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
-      $iRand = rand(10000, 99999);
-      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<a href='#" .$iRand.  "' name='" .$iRand.  "' onclick=\"showDiv('toggle" .$iRand.  "')\"><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div id=\"toggle" .$iRand.  "\" style='display:none'>\\2</div>", $sStr);
+      $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU",
+                      "<a href='#' class='js-toggle'><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div class=\"js-element\">\\2</div>",
+                      $sStr);
     }
 
     # Add a paragraph to create similar BB-Code for TinyMCE

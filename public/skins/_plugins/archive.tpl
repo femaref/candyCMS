@@ -2,8 +2,8 @@
   <ul>
     {foreach from=$data item=data key=month}
       <li>
-        <a href="#" class="month">{$month} ({$data|@count})</a>
-        <ul class="elements">
+        <a href="#" class="js-archive_month">{$month} ({$data|@count})</a>
+        <ul class="js-archive_entries">
         {foreach from=$data item=entry}
           <li>
             <a href="/Blog/{$entry.id}/{$entry.title_seo}" title="{$entry.date}">
@@ -17,8 +17,8 @@
   </ul>
 </div>
 {literal}
-  <script>
-    var myAccordion = new Fx.Accordion($$('.month'), $$('.elements'), {
+  <script type="text/javascript">
+    var myAccordion = new Fx.Accordion($$('.js-archive_month'), $$('.js-archive_entries'), {
       display: -1,
       alwaysHide: true
     });
