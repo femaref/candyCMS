@@ -202,25 +202,11 @@ class Index {
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
 
-
-      # Include right container if needed
-      if(defined('INCLUDE SIDEBAR')) {
-
-        # Tell smarty what to do
-        $oSmarty->assign('_sidebar_', true);
-
-        # Include search option
-        $oSearch = new Search($this->_aRequest, $this->_aSession);
-        $oSmarty->assign('_search_', $oSearch->showFormTemplate());
-
-        # Include optional plugins
-        if (class_exists('Archive')) {
-          $oArchive = new Archive($this->_aRequest, $this->_aSession);
-          $oSmarty->assign('_plugin_archive_', $oArchive->show());
-        }
+      # Include optional plugins
+      if (class_exists('Archive')) {
+        $oArchive = new Archive($this->_aRequest, $this->_aSession);
+        $oSmarty->assign('_plugin_archive_', $oArchive->show());
       }
-      else
-        $oSmarty->assign('_sidebar_', true);
 
       $oSmarty->assign('_content_', $oSection->getContent());
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');

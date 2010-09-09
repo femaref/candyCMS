@@ -25,11 +25,16 @@ class Archive extends Blog {
   public function show() {
     $this->_aData = $this->_oModel->getData('', false, 1000);
 
-    $oSmarty = new Smarty();
-    $oSmarty->template_dir = '/public/skins/_plugins';
+    foreach($this->_aData as $aData) {
+      $m = date('F Y', $aData['date_raw']);
+      $id = $aData['id'];
+      $aMonth[$m][$id] = $aData;
+    }
 
-    $oSmarty->assign('data', $this->_aData);
+    $oSmarty = new Smarty();
+    $oSmarty->assign('data', $aMonth);
     
+    $oSmarty->template_dir = '/public/skins/_plugins';
     return $oSmarty->fetch('archive.tpl');
   }
 }

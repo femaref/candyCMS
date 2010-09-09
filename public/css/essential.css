@@ -3,17 +3,6 @@
   cursor:pointer;
 }
 
-/* Display archive plugin in the right way */
-#archive ul {
-  margin: 0px;
-  padding: 0px;
-}
-
-#archive ul li {
-  list-style: none;
-  display: block;
-}
-
 .cancel input {
   color:red;
 }

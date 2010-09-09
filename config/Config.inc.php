@@ -77,7 +77,7 @@ define('ALLOW_ADDONS', '0');
 # ------------------------------------------------------------------------------
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp'
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Archive');
 
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
