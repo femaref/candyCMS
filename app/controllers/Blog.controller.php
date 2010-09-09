@@ -100,6 +100,7 @@ class Blog extends Main {
 			$oSmarty->assign('author_id', $this->_aData['author_id']);
 			$oSmarty->assign('tags', $this->_aData['tags']);
 			$oSmarty->assign('title', $this->_aData['title']);
+			$oSmarty->assign('teaser', $this->_aData['teaser']);
 			$oSmarty->assign('content', $this->_aData['content']);
 			$oSmarty->assign('published', $this->_aData['published']);
 
@@ -114,33 +115,37 @@ class Blog extends Main {
 		# Add Blog Template
 		else {
 			$sTitle = isset($this->_aRequest['title']) ?
-					$this->_aRequest['title'] :
-					'';
+              $this->_aRequest['title'] :
+              '';
 
-			$sTags = isset($this->_aRequest['tags']) ?
-					$this->_aRequest['tags'] :
-					'';
+      $sTags = isset($this->_aRequest['tags']) ?
+              $this->_aRequest['tags'] :
+              '';
 
-			$sContent = isset($this->_aRequest['content']) ?
-					$this->_aRequest['content'] :
-					'';
+      $sTeaser = isset($this->_aRequest['teaser']) ?
+              $this->_aRequest['teaser'] :
+              '';
 
-			$iPublished = isset($this->_aRequest['published']) ?
-					$this->_aRequest['published'] :
-					'';
+      $sContent = isset($this->_aRequest['content']) ?
+              $this->_aRequest['content'] :
+              '';
 
-			$oSmarty->assign('_action_url_', '/Blog/create');
-			$oSmarty->assign('_formdata_', 'create_blog');
-			$oSmarty->assign('id', '');
-			$oSmarty->assign('title', $sTitle);
-			$oSmarty->assign('tags', $sTags);
-			$oSmarty->assign('content', $sContent);
-			$oSmarty->assign('published', $iPublished);
+      $iPublished = isset($this->_aRequest['published']) ?
+              $this->_aRequest['published'] :
+              '';
 
-			# Language
-			$oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
-			$oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
-		}
+      $oSmarty->assign('_action_url_', '/Blog/create');
+      $oSmarty->assign('_formdata_', 'create_blog');
+      $oSmarty->assign('id', '');
+      $oSmarty->assign('title', $sTitle);
+      $oSmarty->assign('tags', $sTags);
+      $oSmarty->assign('content', $sContent);
+      $oSmarty->assign('published', $iPublished);
+
+      # Language
+      $oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
+      $oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
+    }
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
@@ -151,6 +156,7 @@ class Blog extends Main {
 		$oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 		$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
 		$oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
+		$oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 		$oSmarty->assign('lang_currently', LANG_GLOBAL_CURRENTLY);
 		$oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
 		$oSmarty->assign('lang_published', LANG_GLOBAL_PUBLISHED);
@@ -167,8 +173,8 @@ class Blog extends Main {
 		if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
 			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
-		if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
-			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
+		#if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
+		#	$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
 		if (isset($this->_aError))
       return $this->_showFormTemplate(false);

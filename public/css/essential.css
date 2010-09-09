@@ -63,7 +63,7 @@
 }
 
 .error {
-  background:#EED0D0;
+  background:#EED0D0 !important; /* Override .row1 and .row2 */
   color:#333;
   border:1px solid red;
 }

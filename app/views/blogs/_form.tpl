@@ -1,4 +1,19 @@
 {literal}
+  <script type="text/javascript">
+    window.addEvent('domready', function() {
+      var sValue = $('teaser').value;
+      var iLength = sValue.length;
+      var iRemaining = 140 - iLength;
+      $('js-chars').set('html', iRemaining);
+
+      $('teaser').addEvent('keyup', function() {
+        var sValue = $('teaser').value;
+        var iLength = sValue.length;
+        var iRemaining = 140 - iLength;
+        $('js-chars').set('html', iRemaining);
+      });
+    });
+  </script>
   <script language='javascript' type='text/javascript'
     src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   <script language='javascript' type='text/javascript'>
@@ -16,7 +31,7 @@
     });
   </script>
 {/literal}
-<form method='post' action='{$_action_url_}'>
+<form method='post' action='{$_action_url_}' class="form">
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>
@@ -36,24 +51,27 @@
     </tr>
     <tr class='row2'>
       <td class='td_left'>
-        <label for='teaser'>{$lang_teaser}</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='teaser' value='{$teaser}' type='text' id='teaser' />
-        </div>
-        <div class='description'>{$lang_create_teaser_info}</div>
-      </td>
-    </tr>
-    <tr class='row1'>
-      <td class='td_left'>
         <label for='tags'>{$lang_tags}</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='tags' value='{$tags}' type='text' id='tags' />
+          <div class='description'>{$lang_create_tag_info}</div>
         </div>
-        <div class='description'>{$lang_create_tag_info}</div>
+      </td>
+    </tr>
+    <tr class='row1'>
+      <td class='td_left'>
+        <label for='teaser'>
+          {$lang_teaser}
+          <span id="js-chars">140</span>
+        </label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='teaser' value='{$teaser}' type='text' id='teaser' />
+          <div class='description'>{$lang_create_teaser_info}</div>
+        </div>
       </td>
     </tr>
     <tr class='row2{if $error_content} error{/if}'>
@@ -67,7 +85,7 @@
           {if $error_content}
             <div class="description">{$error_content}</div>
           {else}
-            <div class='description center'>
+            <div class='description'>
               <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
               <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
             </div>
@@ -109,7 +127,7 @@
       </div>
       <div class="cancel">
         <input type='button' value='{$lang_destroy_entry}'
-           onclick="confirmDelete('{$title}', '/Blog/{$id}/destroy')" />
+           onclick="confirmDelete('/Blog/{$id}/destroy')" />
       </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />

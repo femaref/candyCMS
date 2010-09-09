@@ -58,7 +58,7 @@
     </div>
     <div class="cancel">
       <input type='button' value='{$lang_destroy}'
-             onclick="confirmDelete('{$c.title}', '/Content/destroy/{$id}')" />
+             onclick="confirmDelete('/Content/destroy/{$id}')" />
     </div>
 	{/if}
   <input type='hidden' value='{$id}' name='id' />

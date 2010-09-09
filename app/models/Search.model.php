@@ -46,7 +46,7 @@ class Model_Search extends Model_Main {
     }
   }
 
-	public function getData($sSearch, $aTables = '') {
+  public function getData($sSearch, $aTables = '') {
     if (empty($aTables))
       $aTables = array('blogs', 'contents');
 

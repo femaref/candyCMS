@@ -52,7 +52,7 @@
           <td style='width:5%'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
                  title='{$lang_destroy}'
-                 onclick="confirmDelete('{$f.name}', '/Media/destroy/{$f.name}')" />
+                 onclick="confirmDelete('/Media/destroy/{$f.name}')" />
           </td>
         </tr>
       {/foreach}

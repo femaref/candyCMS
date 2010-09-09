@@ -40,7 +40,7 @@ function destroyContent(sDivId) {
 /********************************************************************************/
 /* global confirmations */
 /********************************************************************************/
-function confirmDelete(sTitle, sUrl) {
+function confirmDelete(sUrl) {
   if( confirm(LANG_DELETE_FILE_OR_CONTENT) )
     parent.location.href = sUrl;
 }

@@ -107,7 +107,8 @@ define( 'LANG_SUCCESS_MAIL_SENT', 'E-Mail erfolgreich verschickt!' );
 # SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_TITLE_CREATE', 'Blogeintrag hinzufügen' );
 define( 'LANG_BLOG_TITLE_UPDATE', 'Editieren: %p' );
-define( 'LANG_BLOG_INFO_TAG', 'Tags werden durch Komma und Leerzeichen getrennt, z.B (ohne Anführungszeichen): ", "' );
+define( 'LANG_BLOG_INFO_TAG', 'Getrennt durch Komma und Leerzeichen, z.B "Tag, Tag2, Tag3"' );
+define( 'LANG_BLOG_INFO_TEASER', 'Schreib einen kurzen Teaser um den Blogeintrag interessanter zu machen!' );
 define( 'LANG_COMMENT_TITLE_CREATE', 'Kommentar hinzufügen' );
 define( 'LANG_COMMENT_TITLE_DESTROY', 'Kommentar löschen' );
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Editieren: %p' );

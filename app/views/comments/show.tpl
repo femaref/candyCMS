@@ -26,7 +26,7 @@
       </a>
       {if $USER_RIGHT > 3}
         <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
-             onclick="confirmDelete('#{$c.loop+$comment_number}', '/Comment/{$c.id}/destroy/{$c.parent_id}')"
+             onclick="confirmDelete('/Comment/{$c.id}/destroy/{$c.parent_id}')"
              title='{$lang_destroy}' />
       {/if}
     </div>

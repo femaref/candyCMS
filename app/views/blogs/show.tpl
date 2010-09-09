@@ -39,6 +39,9 @@
             {/if}
           </div>
         </div>
+        {if $b.teaser}
+          <div class="teaser">{$b.teaser}</div>
+        {/if}
         {$b.content}
         <div class='footer'>
           {if $b.tags_sum > 0}

@@ -215,8 +215,18 @@ table th
 
 /* Small Info on special functions etc. Used primary as help */
 .description {
-  color: #000;
+  color: #666;
   padding: 3px;
+}
+
+.input .description {
+  margin-left: 300px;
+  padding: 0px;
+}
+
+.error .description {
+  padding-top: 6px;
+  color: #000;
 }
 
 /* Colors of switching rows */
@@ -279,6 +289,10 @@ table th
   margin-left:4px;
 }
 
+.teaser {
+  font-weight: bold;
+}
+
 /* Element footer */
 .footer {
   font-size: 90%;
@@ -320,7 +334,12 @@ table th
   text-align: center;
 }
 
-/* Override existing value to fit into container_right */
-#search .input input {
-  min-width: 180px;
+
+.form .input input {
+  float: left;
+}
+
+#js-chars {
+  color: #666;
+  margin-left: 10px;
 }

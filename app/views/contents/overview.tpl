@@ -31,7 +31,7 @@
           </a>
           <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy pointer" alt='{$lang_destroy}'
             title='{$lang_destroy}'
-            onclick="confirmDelete('{$c.title}', '/Content/{$c.id}/destroy')" />
+            onclick="confirmDelete('/Content/{$c.id}/destroy')" />
         {/if}
       </td>
     </tr>
