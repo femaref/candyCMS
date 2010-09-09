@@ -153,7 +153,7 @@ final class Helper {
       return date(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
   }
 
-  public static final function formatOutput($sStr, $bUseParagraph = false) {
+  public static final function formatOutput($sStr, $bUseParagraph = false, $highlight = '') {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
@@ -164,6 +164,10 @@ final class Helper {
 
     # Format SpecialChars
     $sStr = str_replace('&quot;', '"', $sStr);
+
+    # Highlight string
+    if(!empty($highlight))
+      $sStr = str_replace($highlight, '<span class="highlight">' . $highlight . '</span>', $sStr);
 
     if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();

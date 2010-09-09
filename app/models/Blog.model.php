@@ -87,6 +87,7 @@ class Model_Blog extends Model_Main {
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
+
         $this->_aData[$iId] = array(
                 'id'            => $aRow['id'],
                 'author_id'     => $aRow['author_id'],
@@ -179,13 +180,18 @@ class Model_Blog extends Model_Main {
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
+        # Do we need to highlight text?
+        $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
+                $this->_aRequest['highlight'] :
+                '';
+
 				$this->_aData[1] = array(
 						'id'            => $aRow['id'],
 						'author_id'     => $aRow['author_id'],
 						'tags'          => $aTags,
 						'tags_sum'      => (int) count($aTags),
-						'title'         => Helper::formatOutput($aRow['title']),
-						'content'       => Helper::formatOutput($aRow['content'], true),
+						'title'         => Helper::formatOutput($aRow['title'], false, $sHighlight),
+						'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
 						'date'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'      => $aRow['date'],
 						'uid'           => $aRow['uid'],

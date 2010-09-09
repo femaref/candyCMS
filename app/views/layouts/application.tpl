@@ -15,8 +15,12 @@
       <div id="header">
         <div id='navigation'>
           <ul>
+            {if $USER_ID > 0}
+              <li><strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong></li>
+            {/if}
             <li><a href='/Blog'>{$lang_blog}</a></li>
             <li><a href='/Gallery'>{$lang_gallery}</a></li>
+            <li><a href='/Search'>{$lang_search}</a></li>
             {if $USER_ID == 0}
               <li><a href='/Session/create'>{$lang_login}</a></li>
               <li><a href='/User/create'>{$lang_register}</a></li>
@@ -28,30 +32,19 @@
         </div>
       </div>
       <div id='body'>
-        <div id="container_left">
-          {if $lang_update_avaiable}
-            <div class="notice">
-              {$lang_update_avaiable}
-            </div>
-          {/if}
-          <div id='js-flash_message'>
-            <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
-                 onclick="hideDiv('js-flash_message')">
-              <h4>%FLASH_HEADLINE%</h4>
-              <p>%FLASH_MESSAGE%</p>
-            </div>
+        {if $lang_update_avaiable}
+          <div class="notice">
+            {$lang_update_avaiable}
           </div>
-          {$_content_}
-        </div>
-        <div id="container_right">
-          {if $USER_ID > 0}
-            <strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong>
-          {/if}
-          <div id="search">
-            {$_search_}
+        {/if}
+        <div id='js-flash_message'>
+          <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
+               onclick="hideDiv('js-flash_message')">
+            <h4>%FLASH_HEADLINE%</h4>
+            <p>%FLASH_MESSAGE%</p>
           </div>
-          {$_plugin_archive_}
         </div>
+        {$_content_}
       </div>
       <div id="footer">
         <p>

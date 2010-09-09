@@ -43,7 +43,7 @@ h3 {
 
 #container {
   margin: 50px auto auto;
-  width: 960px;
+  width: 800px;
   background: white;
 }
 
@@ -87,19 +87,11 @@ h3 {
   color:#f5f5f5;
 }
 
-#container_left, #container_right {
-  width: 620px;
-  float: left;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-#container_right {
-  width:300px;
-}
-
 #body
 {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
   margin-top:10px;
 }
 
@@ -107,6 +99,23 @@ h3 {
   clear: both;
   background: #262626;
   padding-top: 10px;
+}
+
+#search legend {
+  font-size: 180%;
+}
+
+#search fieldset {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+#search fieldset li {
+  padding-left: 30px;
+}
+
+#search fieldset li a {
+  margin-left: 30px;
 }
 
 ul

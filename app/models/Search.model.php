@@ -11,7 +11,6 @@ class Model_Search extends Model_Main {
 
   # Get userdata; static function and direct return due to uncritical action
   private function _setData($sSearch, $aTables) {
-    $sSearch = $sSearch . '%';
 
     foreach ($aTables as $sTable) {
       try {
@@ -21,6 +20,10 @@ class Model_Search extends Model_Main {
                                   id, title, date
                                 FROM
                                   " . $sTable."
+                                WHERE
+                                  title LIKE '%"  .$sSearch.  "%'
+                                OR
+                                  content LIKE '%"  .$sSearch.  "%'
                                 ORDER BY
                                   date
                                 DESC");

@@ -11,6 +11,8 @@ require_once 'app/models/Blog.model.php';
 require_once 'app/helpers/Pages.helper.php';
 require_once 'app/controllers/Comment.controller.php';
 
+define('include_sidebar', true);
+
 class Blog extends Main {
 	public $oPages;
 
@@ -153,6 +155,7 @@ class Blog extends Main {
 		$oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
 		$oSmarty->assign('lang_published', LANG_GLOBAL_PUBLISHED);
 		$oSmarty->assign('lang_tags', LANG_GLOBAL_TAGS);
+		$oSmarty->assign('lang_teaser', LANG_GLOBAL_TEASER);
 		$oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 		$oSmarty->assign('lang_update_show', LANG_GLOBAL_UPDATE_SHOW);
 

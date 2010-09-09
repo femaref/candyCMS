@@ -75,6 +75,7 @@ define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
 define( 'LANG_GLOBAL_TAGS', 'Tags' );
 define( 'LANG_GLOBAL_TAGS_INFO', 'Suche nach ähnlichen Einträgen' );
+define( 'LANG_GLOBAL_TEASER', 'Teaser' );
 define( 'LANG_GLOBAL_TERMS_READ', 'Nutzungsbedingungen gelesen?' );
 define( 'LANG_GLOBAL_TIME_AM', 'Uhr' );
 define( 'LANG_GLOBAL_TIME_PM', 'Uhr' );
@@ -136,6 +137,7 @@ define( 'LANG_NEWSLETTER_HANDLE_TITLE', 'Newsletter abonieren / abbestellen' ); 
 define( 'LANG_NEWSLETTER_SHOW_DEFAULT_NAME', 'Abonnenten' ); #NEW # Name of anonymous receivers
 define( 'LANG_PAGES_NEXT_ENTRIES', 'Ältere Beiträge' );
 define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beiträge' );
+define( 'LANG_SEARCH_SHOW_TITLE', 'Suchergebnisse für "%s":' );
 define( 'LANG_SESSION_CREATE_SUCCESSFUL', 'Login erfolgreich!' );
 define( 'LANG_SESSION_DESTROY_SUCCESSFUL', 'Logout erfolgreich!' );
 define( 'LANG_SESSION_PASSWORD_TITLE', 'Password vergessen?' );

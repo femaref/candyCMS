@@ -30,6 +30,7 @@ class Search extends Main {
       $sSearch = Helper::formatInput($this->_aRequest['id']);
       $oSmarty = new Smarty();
 
+      # Fetch data
       $this->_aData = $this->_oModel->getData($sSearch, $aTables);
 
       # Build real table names
@@ -37,8 +38,13 @@ class Search extends Main {
         $iTableLen = strlen($sTable) - 1;
         $this->_aData[$sTable]['title'] = substr(ucfirst($sTable), 0, $iTableLen);
       }
-print_r($this->_aData);
+
+      # Assign thmen
+      $oSmarty->assign('search', $sSearch);
       $oSmarty->assign('tables', $this->_aData);
+
+      # Language
+      $oSmarty->assign('lang_headline', str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE));
 
       $oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
       return $oSmarty->fetch('searches/show.tpl');

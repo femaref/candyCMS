@@ -3,6 +3,7 @@
   cursor:pointer;
 }
 
+/* Display archive plugin in the right way */
 #archive ul {
   margin: 0px;
   padding: 0px;
@@ -70,6 +71,11 @@
 .error h4 {
   font-size:125%;
   margin: 0px;
+}
+
+.highlight {
+  background: #FFD324;
+  padding: 2px;
 }
 
 .quote, .box {

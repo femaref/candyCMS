@@ -89,12 +89,16 @@ class Model_Content extends Model_Main {
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
+        # Do we need to highlight text?
+        $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
+                $this->_aRequest['highlight'] :
+                '';
 
         $this->_aData[$iId] = array(
             'id'            => $aRow['id'],
             'author_id'     => $aRow['author_id'],
-            'title'         => Helper::formatOutput($aRow['title']),
-            'content'       => Helper::formatOutput($aRow['content'], true),
+            'title'         => Helper::formatOutput($aRow['title'], false, $sHighlight),
+            'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
             'date'          => Helper::formatTimestamp($aRow['date']),
             'uid'           => $aRow['uid'],
             'name'          => $sName,
