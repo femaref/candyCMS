@@ -7,7 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'app/controllers/Mail.controller.php';
+# Fix for install script
+if(file_exists('app/controllers/Mail.controller.php'))
+  require_once 'app/controllers/Mail.controller.php';
 
 final class Cron {
   public static final function cleanup() {
@@ -56,9 +58,9 @@ final class Cron {
     }
   }
 
-  public static final function backup() {
+  public static final function backup($sPath = '') {
     $sBackupName = date('Y-m-d---Hi') . '.sql';
-    $sBackupFolder = 'backup';
+    $sBackupFolder = $sPath . 'backup';
     $sBackupPath = $sBackupFolder . '/' . $sBackupName;
 
     if (!is_dir($sBackupFolder))
@@ -117,6 +119,8 @@ final class Cron {
       $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
       $sFileText .= "# Table: " . $sTable . ", Columns: " . $iColumns;
       $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+      $sFileText .= "\r\n";
+      $sFileText .= "DROP TABLE IF EXISTS `"  .$sTable.  "`;";
       $sFileText .= "\r\n";
       $sFileText .= "CREATE TABLE `" . $sTable . "` (";
 
@@ -196,7 +200,7 @@ final class Cron {
         $sFileText .= $iRows + 1;
       }
 
-      $sFileText .= " DEFAULT CHARSET=utf-8;";
+      $sFileText .= " DEFAULT CHARSET=utf8;";
       $sFileText .= "\r\n";
 
       # Now fetch content
@@ -248,6 +252,7 @@ final class Cron {
     }
 
     # Send the backup via mail
-    Mail::send(WEBSITE_MAIL, 'Backup', 'Backup created', WEBSITE_MAIL_NOREPLY, $sBackupPath);
+    if(class_exists('Mail'))
+      Mail::send(WEBSITE_MAIL, 'Backup', 'Backup created', WEBSITE_MAIL_NOREPLY, $sBackupPath);
   }
 }

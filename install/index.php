@@ -15,6 +15,7 @@ try {
           !file_exists('../app/controllers/Main.controller.php') ||
           !file_exists('../app/controllers/Index.controller.php') ||
           !file_exists('../app/helpers/AdvancedException.helper.php') ||
+          !file_exists('../plugins/Cron.class.php') ||
           !file_exists('../lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
@@ -22,14 +23,14 @@ try {
     require_once '../app/models/Main.model.php';
     require_once '../app/controllers/Main.controller.php';
     require_once '../app/controllers/Index.controller.php';
-
-    # All helpers
     require_once '../app/helpers/AdvancedException.helper.php';
+    require_once '../plugins/Cron.class.php';
 
     # Smarty template parsing
     require_once '../lib/smarty/Smarty.class.php';
   }
-} catch (Exception $e) {
+}
+catch (Exception $e) {
   die($e->getMessage());
 }
 
@@ -75,6 +76,9 @@ switch ($_REQUEST['action']) {
     $oSmarty->template_dir = 'migrate/';
     $oSmarty->assign('title', LANG_WEBSITE_TITLE . ' - Migration');
     $oSmarty->assign('action', $_SERVER['PHP_SELF']);
+
+    # Backup database
+    Cron::backup('../');
 
     if (isset($_REQUEST['file'])) {
       $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');

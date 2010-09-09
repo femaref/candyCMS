@@ -5,6 +5,7 @@ CREATE TABLE `blogs` (
   `author_id` smallint(5) NOT NULL DEFAULT '1',
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `tags` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `teaser` varchar(140) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date` int(11) DEFAULT NULL,
   `date_modified` int(11) DEFAULT NULL,
