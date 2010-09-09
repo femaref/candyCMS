@@ -8,8 +8,8 @@
  */
 
 class Model_Session extends Model_Main {
-  # Get userdata; static function and direct return due to uncritical action
 
+  # Get userdata; static function and direct return due to uncritical action
   public static final function getSessionData($iSessionId = '') {
     if (empty($iSessionId))
       $iSessionId = session_id();

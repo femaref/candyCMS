@@ -36,6 +36,17 @@
     </tr>
     <tr class='row2'>
       <td class='td_left'>
+        <label for='teaser'>{$lang_teaser}</label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='teaser' value='{$teaser}' type='text' id='teaser' />
+        </div>
+        <div class='description'>{$lang_create_teaser_info}</div>
+      </td>
+    </tr>
+    <tr class='row1'>
+      <td class='td_left'>
         <label for='tags'>{$lang_tags}</label>
       </td>
       <td class='td_right'>
@@ -45,7 +56,7 @@
         <div class='description'>{$lang_create_tag_info}</div>
       </td>
     </tr>
-    <tr class='row1{if $error_content} error{/if}'>
+    <tr class='row2{if $error_content} error{/if}'>
       <td class='td_left'>
         <label for='content'>{$lang_content}</label>
       </td>
@@ -64,7 +75,7 @@
         </div>
       </td>
     </tr>
-    <tr class='row2'>
+    <tr class='row1'>
       <td class='td_left'>
         <label for='published'>{$lang_published}</label>
       </td>
@@ -76,7 +87,7 @@
       </td>
     </tr>
     {if $smarty.get.action == 'update'}
-      <tr class='row1'>
+      <tr class='row2'>
         <td class='td_left'>
           <label for='show_update'>{$lang_update_show}</label>
         </td>

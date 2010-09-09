@@ -27,6 +27,7 @@ try {
 	#Load Parent
 	if( !file_exists('app/models/Main.model.php') ||
 			!file_exists('app/controllers/Main.controller.php') ||
+			!file_exists('app/controllers/Search.controller.php') ||
 			!file_exists('app/controllers/Session.controller.php') ||
 			!file_exists('app/controllers/Index.controller.php') ||
 			!file_exists('app/helpers/AdvancedException.helper.php') ||
@@ -38,6 +39,7 @@ try {
 	else {
 		require_once 'app/models/Main.model.php';
 		require_once 'app/controllers/Main.controller.php';
+		require_once 'app/controllers/Search.controller.php';
 		require_once 'app/controllers/Session.controller.php';
 		require_once 'app/controllers/Index.controller.php';
 		require_once 'app/helpers/AdvancedException.helper.php';

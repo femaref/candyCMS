@@ -43,7 +43,7 @@ h3 {
 
 #container {
   margin: 50px auto auto;
-  width: 805px;
+  width: 960px;
   background: white;
 }
 
@@ -87,12 +87,20 @@ h3 {
   color:#f5f5f5;
 }
 
+#container_left, #container_right {
+  width: 620px;
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#container_right {
+  width:300px;
+}
+
 #body
 {
   margin-top:10px;
-  padding-bottom:10px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 #footer {
@@ -150,7 +158,6 @@ fieldset .textarea textarea {
 }
 
 #login .submit, #resend_actions .submit, #newsletter .submit {
-  display:inline;
   padding:5px;
 }
 
@@ -302,4 +309,9 @@ table th
 
 .video, .audio {
   text-align: center;
+}
+
+/* Override existing value to fit into container_right */
+#search .input input {
+  min-width: 180px;
 }

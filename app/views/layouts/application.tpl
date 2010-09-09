@@ -15,9 +15,6 @@
       <div id="header">
         <div id='navigation'>
           <ul>
-            {if $USER_ID > 0}
-              <li><strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong></li>
-            {/if}
             <li><a href='/Blog'>{$lang_blog}</a></li>
             <li><a href='/Gallery'>{$lang_gallery}</a></li>
             {if $USER_ID == 0}
@@ -31,20 +28,30 @@
         </div>
       </div>
       <div id='body'>
-        {if $lang_update_avaiable}
-          <div class="notice">
-            {$lang_update_avaiable}
+        <div id="container_left">
+          {if $lang_update_avaiable}
+            <div class="notice">
+              {$lang_update_avaiable}
+            </div>
+          {/if}
+          <div id='js-flash_message'>
+            <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
+                 onclick="hideDiv('js-flash_message')">
+              <h4>%FLASH_HEADLINE%</h4>
+              <p>%FLASH_MESSAGE%</p>
+            </div>
           </div>
-        {/if}
-        <div id='js-flash_message'>
-          <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
-               onclick="hideDiv('js-flash_message')">
-            <h4>%FLASH_HEADLINE%</h4>
-            <p>%FLASH_MESSAGE%</p>
-          </div>
+          {$_content_}
         </div>
-        {$_plugin_archive_}
-        {$_content_}
+        <div id="container_right">
+          {if $USER_ID > 0}
+            <strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong>
+          {/if}
+          <div id="search">
+            {$_search_}
+          </div>
+          {$_plugin_archive_}
+        </div>
       </div>
       <div id="footer">
         <p>

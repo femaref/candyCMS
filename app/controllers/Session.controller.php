@@ -10,8 +10,8 @@
 require_once 'app/models/Session.model.php';
 
 class Session extends Main {
-  protected $_aRequest;
-  protected $_aSession;
+  #protected $_aRequest;
+  #protected $_aSession;
 
   public function __init() {
     $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
@@ -40,6 +40,7 @@ class Session extends Main {
 
 		elseif( $this->_oModel->create() === true )
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/Start');
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
 				$this->showCreateSessionTemplate();

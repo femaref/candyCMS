@@ -17,7 +17,7 @@ class Model_Blog extends Model_Main {
 				$sWhere = "WHERE published = '1'";
 
 			# Search Blog for Tags
-			if (isset($this->_aRequest['action']) && 'tag' == $this->_aRequest['action'] &&
+			if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
               isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
         if (empty($sWhere))
           $sWhere = "WHERE tags LIKE '%" .

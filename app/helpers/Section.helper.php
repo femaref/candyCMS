@@ -170,6 +170,19 @@ class Section extends Main {
 
         break;
 
+      case 'search':
+
+        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
+          parent::_setContent($this->_oObject->create());
+          parent::_setTitle(LANG_GLOBAL_LOGIN);
+        }
+        else {
+          parent::_setContent($this->_oObject->show());
+          parent::_setTitle(LANG_GLOBAL_SEARCH);
+        }
+
+        break;
+
       case 'session':
 
         if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {

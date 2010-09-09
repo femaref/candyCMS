@@ -67,6 +67,7 @@ define( 'LANG_GLOBAL_REPLY_TO', 'Antwort an' );
 define( 'LANG_GLOBAL_RESET', 'Zurücksetzen' );
 define( 'LANG_GLOBAL_REQUIRED', 'benötigt' );
 define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
+define( 'LANG_GLOBAL_SEARCH', 'Suche' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
 define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' ); #NEW
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );

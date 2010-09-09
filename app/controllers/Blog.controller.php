@@ -67,7 +67,7 @@ class Blog extends Main {
 			return Helper::removeSlahes($this->_aRequest['title']);
 
 		elseif( isset($this->_aRequest['action']) &&
-				'tag' == $this->_aRequest['action'])
+				'search' == $this->_aRequest['action'])
 			return Helper::removeSlahes($this->_aRequest['id']);
 
 		elseif( $this->_iId !== '' )

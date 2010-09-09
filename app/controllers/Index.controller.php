@@ -155,6 +155,7 @@ class Index {
     $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE_TITLE);
     $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
     $oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
+    $oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
     $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
     $oSmarty->assign('lang_update_avaiable', $sLangUpdateAvaiable);
     $oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
@@ -174,6 +175,7 @@ class Index {
 						ucfirst($this->_aRequest['section']) == 'Media' ||
 						ucfirst($this->_aRequest['section']) == 'Newsletter' ||
 						ucfirst($this->_aRequest['section']) == 'RSS' ||
+						ucfirst($this->_aRequest['section']) == 'Search' ||
 						ucfirst($this->_aRequest['section']) == 'Session' ||
 						ucfirst($this->_aRequest['section']) == 'Static' ||
 						ucfirst($this->_aRequest['section']) == 'User') {
@@ -205,6 +207,10 @@ class Index {
         $oArchive = new Archive($this->_aRequest, $this->_aSession);
         $oSmarty->assign('_plugin_archive_', $oArchive->show());
       }
+
+      # Include search option
+      $oSearch = new Search($this->_aRequest, $this->_aSession);
+      $oSmarty->assign('_search_', $oSearch->showFormTemplate());
 
       $oSmarty->assign('_content_', $oSection->getContent());
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
