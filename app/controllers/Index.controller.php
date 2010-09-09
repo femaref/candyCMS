@@ -208,6 +208,11 @@ class Index {
         $oSmarty->assign('_plugin_archive_', $oArchive->show());
       }
 
+      if (class_exists('Headlines')) {
+        $oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
+        $oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
+      }
+
       $oSmarty->assign('_content_', $oSection->getContent());
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
       $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');

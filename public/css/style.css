@@ -119,16 +119,16 @@ h3 {
 }
 
 /* Display archive plugin in the right way */
-#archive {
+#archive, #headlines {
   text-align: left;
 }
 
-#archive ul {
+#archive ul, #headlines ul {
   margin: 0px !important;
   padding: 0px;
 }
 
-#archive ul li {
+#archive ul li, #headlines ul li {
   list-style: none;
   display: block;
   margin-bottom: 2px;

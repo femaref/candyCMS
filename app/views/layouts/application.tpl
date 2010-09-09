@@ -45,6 +45,7 @@
           </div>
         </div>
         {$_plugin_archive_}
+        {$_plugin_headlines_}
         {$_content_}
       </div>
       <div id="footer">

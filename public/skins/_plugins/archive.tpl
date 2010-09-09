@@ -6,7 +6,7 @@
         <ul class="elements">
         {foreach from=$data item=entry}
           <li>
-            <a href="/Blog/{$entry.id}/{$entry.title_seo}">
+            <a href="/Blog/{$entry.id}/{$entry.title_seo}" title="{$entry.date}">
               {$entry.title}
             </a>
           </li>
