@@ -11,7 +11,7 @@
 if(file_exists('app/controllers/Mail.controller.php'))
   require_once 'app/controllers/Mail.controller.php';
 
-final class Cron {
+final class Cronjob {
   public static final function cleanup() {
     # Cleanup temp images
     $sTempPath = PATH_UPLOAD . '/temp/32';
@@ -58,10 +58,11 @@ final class Cron {
     }
   }
 
-  public static final function backup($sPath = '') {
-    $sBackupName = date('Y-m-d---Hi') . '.sql';
+  public static final function backup($iUserId, $sPath = '') {
+    $sBackupName = date(DEFAULT_DATE_FORMAT);
     $sBackupFolder = $sPath . 'backup';
-    $sBackupPath = $sBackupFolder . '/' . $sBackupName;
+    $sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
+    $iBackupStartTime = time();
 
     if (!is_dir($sBackupFolder))
       mkdir($sBackupFolder, 0777);
@@ -236,11 +237,11 @@ final class Cron {
     }
 
     # Write into file
-    $oFile = fopen($sBackupPath, 'a+');
-    fwrite($oFile, $sFileText);
-    fclose($oFile);
+    $oFile = @fopen($sBackupPath, 'a+');
+    @fwrite($oFile, $sFileText);
+    @fclose($oFile);
 
-    if (ALLOW_GZIP_BACKUP == true) {
+    if (CRONJOB_GZIP_BACKUP == true) {
       $oData = implode('', file($sBackupPath));
       $oCompress = gzencode($oData, 9);
       unlink($sBackupPath);
@@ -252,7 +253,68 @@ final class Cron {
     }
 
     # Send the backup via mail
-    if(class_exists('Mail'))
-      Mail::send(WEBSITE_MAIL, 'Backup', 'Backup created', WEBSITE_MAIL_NOREPLY, $sBackupPath);
+    if(class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
+      Mail::send( WEBSITE_MAIL,
+                  str_replace ('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT),
+                  LANG_MAIL_CRONJOB_CREATE_BODY,
+                  WEBSITE_MAIL_NOREPLY,
+                  $sBackupPath);
+
+    # Write into backup log
+    try {
+      $oQuery = $oDb->prepare(" INSERT INTO
+                                  logs(class_name, action_name, action_id, time_start, time_end, user_id)
+                                VALUES
+                                  ( :class_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
+
+      $sClassName = 'cronjob';
+      $sActionName = 'create';
+      $sActionId = 0;
+      $oQuery->bindParam('class_name', $sClassName);
+      $oQuery->bindParam('action_name', $sActionName);
+      $oQuery->bindParam('action_id', $sActionId, PDO::PARAM_INT);
+      $oQuery->bindParam('time_start', $iBackupStartTime);
+      $oQuery->bindParam('time_end', time());
+      $oQuery->bindParam('user_id', $iUserId);
+      $bResult = $oQuery->execute();
+
+      $oDb = null;
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+    }
+  }
+
+  public static function getNextUpdate($iInterval = '') {
+    $iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
+
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $oQuery = $oDb->query(" SELECT
+                                time_end
+                              FROM
+                                logs
+                              WHERE
+                                class_name = 'cronjob'
+                              ORDER BY
+                                time_end DESC
+                              LIMIT
+                                1");
+
+      $aResult = $oQuery->fetch();
+      $iTimeEnd = $aResult['time_end'];
+
+      $oDb = null;
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+    }
+
+    if($iTimeEnd + $iInterval < time())
+      return true;
+    else
+      return false;
   }
 }

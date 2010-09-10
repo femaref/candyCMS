@@ -19,6 +19,7 @@ define( 'LANG_GLOBAL_CREATE_ENTRY_HEADLINE', 'Einen neuen Eintrag verfassen' );
 define( 'LANG_GLOBAL_CREATED_AT', 'Hinzugefügt am' );
 define( 'LANG_GLOBAL_ALBUM', 'Album' );
 define( 'LANG_GLOBAL_AUTHOR', 'Autor' );
+define( 'LANG_GLOBAL_BACKUP', 'Sicherungskopie' );
 define( 'LANG_GLOBAL_BBCODE_HELP', 'Weiterführende Informationen zur Verwendung von BB-Code.' );
 define( 'LANG_GLOBAL_BLOG', 'Blog' );
 define( 'LANG_GLOBAL_BY', 'von' );
@@ -180,6 +181,8 @@ define( 'LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL', 'Deine E-Mail Adresse' );
 
 
 # MAIL CONTENT BY SECTION
+define( 'LANG_MAIL_CRONJOB_CREATE_BODY', "Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n" ); #NEW
+define( 'LANG_MAIL_CRONJOB_CREATE_SUBJECT', 'Sicherungskopie vom %d' ); #NEW
 define( 'LANG_MAIL_NEWSLETTER_CREATE_SUBJECT', 'Newsletters von %WEBSITE_NAME' ); #NEW
 define( 'LANG_MAIL_NEWSLETTER_CREATE_BODY', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE"); #NEW
 define( 'LANG_MAIL_SESSION_PASSWORD_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"); # NEW

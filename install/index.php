@@ -15,7 +15,7 @@ try {
           !file_exists('../app/controllers/Main.controller.php') ||
           !file_exists('../app/controllers/Index.controller.php') ||
           !file_exists('../app/helpers/AdvancedException.helper.php') ||
-          !file_exists('../plugins/Cron.class.php') ||
+          !file_exists('../plugins/Cronjob.class.php') ||
           !file_exists('../lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
@@ -24,7 +24,7 @@ try {
     require_once '../app/controllers/Main.controller.php';
     require_once '../app/controllers/Index.controller.php';
     require_once '../app/helpers/AdvancedException.helper.php';
-    require_once '../plugins/Cron.class.php';
+    require_once '../plugins/Cronjob.class.php';
 
     # Smarty template parsing
     require_once '../lib/smarty/Smarty.class.php';
@@ -78,7 +78,7 @@ switch ($_REQUEST['action']) {
     $oSmarty->assign('action', $_SERVER['PHP_SELF']);
 
     # Backup database
-    Cron::backup('../');
+    Cronjob::backup(0, '../');
 
     if (isset($_REQUEST['file'])) {
       $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');

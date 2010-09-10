@@ -62,7 +62,6 @@ $oIndex->setBasicConfiguration();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
-$oIndex->loadCronjob();
 
 $aUser =& $oIndex->setActiveUser();
 define( 'USER_ID',	(int)$aUser['id'] );
@@ -70,6 +69,9 @@ define( 'USER_EMAIL', (string)$aUser['email'] );
 define( 'USER_NAME', (string)$aUser['name'] );
 define( 'USER_RIGHT', (int)$aUser['user_right'] );
 define( 'USER_SURNAME', (string)$aUser['surname'] );
+
+# Load cronjob
+$oIndex->loadCronjob();
 
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define( 'AJAX_REQUEST', (int)$iAjax );

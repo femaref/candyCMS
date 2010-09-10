@@ -80,14 +80,6 @@ class Index {
 		}
   }
 
-  public final function loadCronjob() {
-    if (class_exists('Cron')) {
-      Cron::cleanup();
-      Cron::optimize();
-      Cron::backup();
-    }
-  }
-
   public final function setActiveUser($iSessionId = '') {
     $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
@@ -107,6 +99,16 @@ class Index {
 
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
+  }
+
+  public final function loadCronjob() {
+    if (class_exists('Cronjob')) {
+      if(Cronjob::getNextUpdate() === true) {
+        Cronjob::cleanup();
+        Cronjob::optimize();
+        Cronjob::backup(USER_ID);
+      }
+    }
   }
 
   public final function show() {

@@ -18,8 +18,8 @@ define('SQL_DB', 'cms_new');
 # ------------------------------------------------------------------------------
 
 # Do you want to use SMTP to send your mails instead of mail()?
-# DEFAULT: '0'
-define('SMTP_ON', '0');
+# DEFAULT: false
+define('SMTP_ON', false);
 define('SMTP_HOST', 'localhost');
 define('SMTP_USER', '');
 define('SMTP_PASSWORD', '');
@@ -65,36 +65,48 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@dev.planetk4.de');
 # ------------------------------------------------------------------------------
 
 # Is the website in development mode?
-# DEFAULT: '0'
-define('WEBSITE_DEV', '1');
+# DEFAULT: false
+define('WEBSITE_DEV', true);
 
 # ------------------------------------------------------------------------------
 
-# If you use plugins (placed in "app/addons/"), turn true
-# DEFAULT: '0'
-define('ALLOW_ADDONS', '0');
+# Number of seconds between cronjob execution (if enabled)
+# DEFAULT: '86400'
+define('CRONJOB_UPDATE_INTERVAL', '86400');
+
+# ------------------------------------------------------------------------------
+
+# Allow compressing of SQL backups
+# DEFAULT: true
+define('CRONJOB_GZIP_BACKUP', true);
+
+# ------------------------------------------------------------------------------
+
+# Do you want to receive a mail with the backup after it's created?
+# DEFAULT: true
+define('CRONJOB_SEND_PER_MAIL', false);
+
+# ------------------------------------------------------------------------------
+
+# If you want to override existing classes (placed in "app/addons/"), turn true
+# DEFAULT: false
+define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp'
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cron');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob');
 
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
-# DEFAULT: '1'
-define('ALLOW_CACHE', '1');
-
-# ------------------------------------------------------------------------------
-
-# Allow compressing of SQL Backups
-# DEFAULT: '1'
-define('ALLOW_GZIP_BACKUP', '1');
+# DEFAULT: true
+define('ALLOW_CACHE', true);
 
 # ------------------------------------------------------------------------------
 
 # Allow this software to connect the CandyCMS website to check for an update
-# DEFAULT: '1'
-define('ALLOW_VERSION_CHECK', '1');
+# DEFAULT: true
+define('ALLOW_VERSION_CHECK', true);
 
 # ------------------------------------------------------------------------------
 
