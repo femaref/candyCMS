@@ -1,1 +1,0 @@
-ALTER TABLE user ADD use_gravatar TINYINT( 1 ) DEFAULT '0' AFTER description;

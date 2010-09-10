@@ -8,8 +8,8 @@
  */
 
 # Multilingual website title and slogan
-define( 'LANG_WEBSITE_TITLE', 'blog.marcoraddatz.com' );
-define( 'LANG_WEBSITE_SLOGAN', 'Gedanken und Erlebnisse von Marco Raddatz' );
+define( 'LANG_WEBSITE_TITLE', 'CandyCMS' );
+define( 'LANG_WEBSITE_SLOGAN', 'Free, fast and simple PHP CMS.' );
 
 
 define( 'LANG_GLOBAL_ABOUT', 'Über' );

@@ -1,4 +1,4 @@
-CREATE TABLE `migration` (
+CREATE TABLE `migrations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file` varchar(100) DEFAULT NULL,
   `date` int(11) NOT NULL,

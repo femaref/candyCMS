@@ -69,11 +69,11 @@ final class Cronjob {
 
     # Create header information
     $sFileText = "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "# Server OS: " . php_uname();
+    $sFileText .= "# Server OS: " . @php_uname();
     $sFileText .= "\r\n";
-    $sFileText .= "# MySQL-Version: " . mysql_get_server_info();
+    $sFileText .= "# MySQL-Version: " . @mysql_get_server_info();
     $sFileText .= "\r\n";
-    $sFileText .= "# PHP-Version: " . phpversion();
+    $sFileText .= "# PHP-Version: " . @phpversion();
     $sFileText .= "\r\n";
     $sFileText .= "# Database: " . SQL_DB;
     $sFileText .= "\r\n";

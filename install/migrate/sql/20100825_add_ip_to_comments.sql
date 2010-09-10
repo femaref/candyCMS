@@ -1,1 +1,0 @@
-ALTER TABLE comment ADD author_ip VARCHAR( 15 ) DEFAULT '' AFTER author_email;
