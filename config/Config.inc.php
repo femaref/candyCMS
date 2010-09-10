@@ -94,7 +94,8 @@ define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp'
+# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines
 define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob');
 
 # ------------------------------------------------------------------------------
