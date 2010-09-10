@@ -12,7 +12,7 @@ CREATE TABLE `blogs` (
   `published` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `tags` (`tags`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `comments`;
@@ -30,7 +30,7 @@ CREATE TABLE `comments` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `parent_category` (`parent_category`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `contents`;
@@ -42,7 +42,7 @@ CREATE TABLE `contents` (
   `date` int(11) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf-8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `gallery_albums`;
@@ -121,4 +121,4 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `name` (`name`),
   KEY `user_right` (`user_right`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

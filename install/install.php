@@ -78,11 +78,7 @@ switch ($_REQUEST['step']) {
     break;
   case '2':
 
-    $sStatus = mysql_connect(SQL_HOST, SQL_USER, SQL_PASSWORD);
-    $sStatus = mysql_select_db(SQL_DB);
-
     $oSmarty->assign('database', SQL_DB);
-    $oSmarty->assign('status', $sStatus);
 
     $sHTML = $oSmarty->fetch('showStep2.tpl');
     $iNextStep = 3;
@@ -93,39 +89,24 @@ switch ($_REQUEST['step']) {
     if (!$_POST)
       die('No data sent!');
 
-    $oIndex->connectDB();
-
     $sHTML = $oSmarty->fetch('showStep3.tpl');
     $iNextStep = 4;
 
-    // Read MySQL tables
-    function dumpData($sFile) {
-      $oFile = file($sFile);
-      $sQuery = "";
+    # We create the tables
+    $sUrl = "sql/tables.sql";
+    if (file_exists($sUrl)) {
+      $oFo = fopen($sUrl, 'r');
+      $sData = fread($oFo, filesize($sUrl));
 
-      foreach ($oFile as $sSqlInline) {
-        $sSql = trim($sSqlInline);
-        if (($sSql != "") && (substr($sSql, 0, 2) != "--") && (substr($sSql, 0, 1) != "#")) {
-          $sQuery .= $sSqlInline;
-          if (preg_match("/;\s*$/", $sSqlInline)) {
-            $oResult = mysql_query($sQuery);
-            if (!$oResult)
-              die(mysql_error());
-            $sQuery = "";
-          }
-        }
+      try {
+        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                    PDO::ATTR_PERSISTENT => true
+                ));
+
+        $oQuery = $oDb->query($sData);
       }
-      $sQuery = "";
-    }
-    // Create MySQL tables
-    dumpData("sql/tables.sql");
-
-    if (isset($_POST['create_content'])) {
-      $sUrl = "sql/data.sql";
-      if (file_exists($sUrl)) {
-        $oFo = fopen($sUrl, 'r');
-        $sData = fread($oFo, filesize($sUrl));
-        $oSql = new Query($sData);
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
       }
     }
 
@@ -133,28 +114,44 @@ switch ($_REQUEST['step']) {
     $sPassword = md5(RANDOM_HASH . $_SESSION['install']['password']);
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
       $oQuery = $oDb->prepare(" INSERT INTO
                                   users ( id, name, surname, password, email, ip, user_right, date )
-                                VALUES (  1,
-                                  '" . $_SESSION['install']['name'] . "',
-                                  '" . $_SESSION['install']['surname'] . "',
-                                  '" . $sPassword . "',
-                                  '" . $_SESSION['install']['email'] . "',
-                                  '" . $_SERVER['REMOTE_ADDR'] . "',
-                                  4,
-                                  '" . time() . "' )");
+                                VALUES
+                                  ( :id, :name, :surname, :password, :email, :ip, :user_right, :date )");
 
+      $iId = 1;
+      $iUserRight = 4;
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->bindParam('name', $_SESSION['install']['name']);
+      $oQuery->bindParam('surname', $_SESSION['install']['surname']);
+      $oQuery->bindParam('password', $sPassword);
+      $oQuery->bindParam('email', $_SESSION['install']['email']);
+      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+      $oQuery->bindParam('user_right', $iUserRight, PDO::PARAM_INT);
+      $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
       $oDb = null;
-      return $bResult;
     }
     catch (AdvancedException $e) {
-			$e->sendAdminMail($e->getMessage());
       $oDb->rollBack();
+    }
+
+    # Create sample content if wanted
+    if (isset($_POST['create_content'])) {
+      $sUrl = "sql/data.sql";
+      if (file_exists($sUrl)) {
+        $oFo = fopen($sUrl, 'r');
+        $sData = fread($oFo, filesize($sUrl));
+        try {
+          $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+          $oQuery = $oDb->query($sData);
+          $oDb = null;
+        }
+        catch (AdvancedException $e) {
+          $oDb->rollBack();
+        }
+      }
     }
 
     break;

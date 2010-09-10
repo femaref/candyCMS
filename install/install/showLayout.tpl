@@ -12,7 +12,7 @@
       <div id='body' style="text-align:left;padding:10px">
         <form action="index.php?step={$step}&action=install" method="post">
           %CONTENT%
-          <div style="margin-top:30px;text-align:right">
+          <div id="steps" style="margin-top:30px;text-align:right">
             {if $step > 2}
               <input type="button" id="prevstep" value="Step back" onclick="stepBack({$step})"  />
             {/if}
