@@ -94,10 +94,10 @@ class Session extends Main {
             if ($bStatus == true)
               return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Session/create');
             else
-              Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+              return Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
           else
-            Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+            return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
         }
         elseif ($this->_aRequest['action'] == 'resendverification') {
           if($this->_oModel->createResendActions() === true) {
@@ -119,7 +119,7 @@ class Session extends Main {
               return $this->showCreateSessionTemplate();
           }
           else
-            Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+            return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
         }
         else
           return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);

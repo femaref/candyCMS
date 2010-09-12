@@ -409,10 +409,12 @@ class Model_Gallery extends Model_Main {
         $oDb->rollBack();
       }
 
+			# TODO: Return true or false?
       return $oUploadFile->sFilePath;
     }
     else
-      return Helper::errorMessage (LANG_ERROR_UPLOAD_CREATE);
+			return false;
+      #return Helper::errorMessage (LANG_ERROR_UPLOAD_CREATE);
   }
 
 	public final function updateFile($iId) {

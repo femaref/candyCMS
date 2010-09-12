@@ -176,8 +176,6 @@ class Model_Session extends Model_Main {
         $oDb->rollBack();
       }
     }
-    else
-      return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
   }
 
   public final function getData() {
