@@ -16,26 +16,25 @@ class Media extends Main {
   }
 
   # @Override
-  # We need more / other methods than parent
   public function create() {
-    if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
-    else {
-      if (isset($this->_aRequest['upload_file'])) {
-        if($this->_proceedUpload() === true)
-          return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/Media');
-        else
-          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
-      }
-      else
-        return $this->_showUploadFileTemplate();
-    }
-  }
+		if (USER_RIGHT < 3)
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+		else {
+			if (isset($this->_aRequest['upload_file'])) {
+				if ($this->_proceedUpload() === true)
+					return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/Media');
+				else
+					return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/Media');
+			}
+			else
+				return $this->_showUploadFileTemplate();
+		}
+	}
 
   private function _showUploadFileTemplate() {
     $oSmarty = new Smarty();
 
-    /* Language */
+    # Language
     $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
     $oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
     $oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
@@ -124,7 +123,7 @@ class Media extends Main {
         return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/Media');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE);
+        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/Media');
     }
   }
 }

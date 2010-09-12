@@ -25,7 +25,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_GLOBAL_CREATE_SESSION_FIRST, LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_GLOBAL_CREATE_SESSION_FIRST);
 
     else {
       if (isset($this->_aRequest['update_user'])) {
@@ -186,7 +186,7 @@ class User extends Main {
 
     if ($iAgreement == false)
       return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD) .
-      $this->_showFormTemplate();
+				$this->_showFormTemplate();
 
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
@@ -194,7 +194,7 @@ class User extends Main {
         return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
 
       else
-        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE);
+        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/User/' . $this->_iId);
     }
   }
 
@@ -267,24 +267,18 @@ class User extends Main {
       if ($this->_oModel->destroy($this->_iId) === true)
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/User');
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/User');
     }
     else
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
   }
 
   # @ Override due registration (avoid user right level 3)
+	# Merge with function below?
 	public function create() {
-		if (isset($this->_aRequest['create_user'])) {
-			if ($this->_create() === true)
-				return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
-
-			# TODO: Do we need better reports?
-			# Move _create to create?!
-			else
-			#return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-				return $this->_showCreateUserTemplate();
-		} else
+		if (isset($this->_aRequest['create_user']))
+			return $this->_create();
+		else
 			return $this->_showCreateUserTemplate();
 	}
 
@@ -331,10 +325,14 @@ class User extends Main {
 												$sMailMessage,
 												WEBSITE_MAIL_NOREPLY);
 
-				return $bStatus;
+				if($bStatus == true)
+					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
+
+				else
+					return Helper::errorMessage (LANG_ERROR_MAIL_ERROR);
 			}
 			else
-				return false;
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 		}
 	}
 
@@ -374,12 +372,12 @@ class User extends Main {
 
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/Start');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
 			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/Start');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION);;
+			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/Start');
 	}
 }

@@ -16,37 +16,37 @@ class Newsletter extends Main {
   }
 
   public final function handleNewsletter() {
-    if (isset($this->_aRequest['email'])) {
-      if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
-        $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
+		if (isset($this->_aRequest['email'])) {
+			if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+				$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
-      if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
-        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
+			if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
+				$this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
-      if (isset($this->_aError))
-        return $this->_showHandleNewsletterTemplate();
+			if (isset($this->_aError))
+				return $this->_showHandleNewsletterTemplate();
 
-      else {
-        $sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
+			else {
+				$sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
-        if ($sQuery == 'DESTROY')
-          return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Newsletter');
+				if ($sQuery == 'DESTROY')
+					return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Newsletter');
 
-        elseif ($sQuery == 'INSERT') {
-          Mail::send(Helper::formatInput($this->_aRequest['email']),
-                          LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
-                          LANG_MAIL_NEWSLETTER_CREATE_BODY,
-                          WEBSITE_MAIL_NOREPLY);
+				elseif ($sQuery == 'INSERT') {
+					Mail::send(Helper::formatInput($this->_aRequest['email']),
+													LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
+													LANG_MAIL_NEWSLETTER_CREATE_BODY,
+													WEBSITE_MAIL_NOREPLY);
 
-          return Helper::successMessage(LANG_SUCCESS_CREATE, '/Newsletter');
-        }
-        else
-          return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-      }
-    }
-    else
-      return $this->_showHandleNewsletterTemplate();
-  }
+					return Helper::successMessage(LANG_SUCCESS_CREATE, '/Newsletter');
+				}
+				else
+					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Newsletter');
+			}
+		}
+		else
+			return $this->_showHandleNewsletterTemplate();
+	}
 
   private function _showHandleNewsletterTemplate() {
     $oSmarty = new Smarty();
@@ -66,10 +66,10 @@ class Newsletter extends Main {
   }
 
   # @Override
-  # We need more / other methods than parent
   public function create() {
     if (USER_RIGHT < 3)
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if (isset($this->_aRequest['send_newsletter']))
         return $this->_newsletterMail();
@@ -153,7 +153,7 @@ class Newsletter extends Main {
       if($bStatusNewsletter == true && $bStatusUser == true)
         return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/Start' );
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR);
+        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/Start');
     }
   }
 }

@@ -81,10 +81,12 @@ class Gallery extends Main {
       return $this->_showFormTemplate(false);
 
     else {
+			$sRedirect = '/Gallery/' . $this->_oModel->getId();
+
       if ($this->_oModel->create() === true)
-        return Helper::successMessage(LANG_SUCCESS_CREATE, '/Gallery/' . $this->_oModel->getId());
+        return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
   }
 
@@ -96,18 +98,22 @@ class Gallery extends Main {
       return $this->_showFormTemplate(true);
 
     else {
+			$sRedirect = '/Gallery/' . (int) $this->_aRequest['id'];
+
       if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
-        return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery/' . (int) $this->_aRequest['id']);
+        return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
   }
 
   protected function _destroy() {
+		$sRedirect = '/Gallery/' . $this->_iId;
+
     if($this->_oModel->destroy($this->_iId) === true)
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery/' . $this->_iId);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     else {
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
       unset($this->_iId);
     }
   }
@@ -182,11 +188,12 @@ class Gallery extends Main {
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
-      if( isset($this->_aRequest['update_file']) )
+      if( isset($this->_aRequest['update_file']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
         else
-          return Helper::errorMessage(LANG_ERROR_GLOBAL);
+          return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
+			}
       else
         return $this->_showFormFileTemplate(true);
     }
@@ -200,8 +207,9 @@ class Gallery extends Main {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
         unset($this->_iId);
-        ;
       }
+			else
+				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/Gallery');
     }
   }
 

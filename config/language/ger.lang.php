@@ -208,6 +208,7 @@ define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Es wurden noch keine Bilder hoc
 define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf!' );
 define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Seite nicht verfügbar!' );
 define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Bitte logge dich zuerst ein!' );
+define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'Die Datei konnte nicht gelöscht werden!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );
 define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Einträge!' ); #NEW
 define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Die Sprachdatei konnte nicht geladen werden!' );

@@ -181,20 +181,20 @@ class Blog extends Main {
 		elseif ($this->_oModel->create() === true)
 			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
 
 	protected final function _update() {
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true)
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
 
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']))
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
 }

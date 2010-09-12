@@ -19,16 +19,18 @@ final class Helper {
       Helper::redirectTo ($sRedirectTo);
   }
 
-  public static final function errorMessage($sMSG = '', $sHL = '') {
+  public static final function errorMessage($sMSG, $sRedirectTo = '', $sHL = '') {
     if(empty($sHL))
       $sHL = LANG_ERROR_GLOBAL;
-
-    if(empty($sMSG))
-      $sMSG = LANG_ERROR_GLOBAL;
 
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = $sHL;
+
+    if(!empty($sRedirectTo)) {
+			$_SESSION['flash_message']['show']		= '0';
+      Helper::redirectTo ($sRedirectTo);
+		}
   }
 
   public static final function redirectTo($sURL) {

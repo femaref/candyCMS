@@ -136,26 +136,30 @@ final class Comment extends Main {
 			return $this->_showFormTemplate($bShowCaptcha);
 
 		else {
+			$sRedirect =	'/' . $this->_sParentSection .
+										'/' . (int) $this->_aRequest['parent_id'];
+
 			if ($this->_oModel->create() == true)
-				return Helper::successMessage(LANG_SUCCESS_CREATE, '/' . $this->_sParentSection .
-								'/' . (int) $this->_aRequest['parent_id']);
+				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
 			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 		}
   }
 
   protected final function _destroy() {
+		$sRedirect =	'/' . $this->_sParentSection .
+									'/' . (int) $this->_aRequest['parent_id'];
+
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
-			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/' . $this->_sParentSection .
-							'/' . (int) $this->_aRequest['parent_id']);
+			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
 
   protected final function _showFormTemplate($bShowCaptcha) {
     # We search for parent category
     if( empty($this->_sAction) )
-      return Helper::errorMessage(__CLASS__, LANG_ERROR_REQUEST_MISSING_ACTION);
+      return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
 
     else {
       $sName = isset($this->_aRequest['name']) ?

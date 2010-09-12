@@ -42,7 +42,7 @@ class Session extends Main {
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/Start');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
 				$this->showCreateSessionTemplate();
 	}
 
@@ -168,6 +168,6 @@ class Session extends Main {
       unset($_SESSION);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Start');
   }
 }
