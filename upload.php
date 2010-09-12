@@ -52,7 +52,7 @@ final class Multiple_Upload extends Index {
 	}
 
 	public final function createFiles() {
-    # TODO: Cleanup into sperate methods
+		# TODO: Cleanup into sperate methods
 		if (isset($this->_aRequest['section']) && 'gallery' == $this->_aRequest['section']) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
 			$this->_sFilePath = $this->_oModel->createFile(USER_ID);

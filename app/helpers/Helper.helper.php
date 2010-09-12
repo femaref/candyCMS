@@ -143,7 +143,6 @@ final class Helper {
   }
 
   # Code for plugins
-  # TODO: Use config for variables
   public static final function formatTimestamp($iTime) {
     if (class_exists('FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
@@ -167,7 +166,7 @@ final class Helper {
 
     # Highlight string
     if(!empty($highlight))
-      $sStr = str_replace($highlight, '<span class="highlight">' . $highlight . '</span>', $sStr);
+      $sStr = str_ireplace($highlight, '<span class="highlight">' . $highlight . '</span>', $sStr);
 
     if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();

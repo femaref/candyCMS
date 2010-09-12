@@ -140,30 +140,30 @@ class Model_User extends Model_Main {
   }
 
   public function create($iVerificationCode) {
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->prepare(" INSERT INTO
+			$oQuery = $oDb->prepare(" INSERT INTO
                                   users (name, surname, password, email, date, verification_code)
                                 VALUES
                                   ( :name, :surname, :password, :email, :date, :verification_code )");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
-      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('verification_code', $iVerificationCode);
-      $bResult = $oQuery->execute();
+			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
+			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
+			$oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
+			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
+			$oQuery->bindParam('date', time());
+			$oQuery->bindParam('verification_code', $iVerificationCode);
+			$bResult = $oQuery->execute();
 
-      $oDb = null;
-      return $bResult;
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
-  }
+			$oDb = null;
+			return $bResult;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+		}
+	}
 
   public function update($iId) {
     $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;

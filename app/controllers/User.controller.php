@@ -275,68 +275,68 @@ class User extends Main {
 
   # @ Override due registration (avoid user right level 3)
 	public function create() {
-    if (isset($this->_aRequest['create_user'])) {
-      if ($this->_create() === true)
-        return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
+		if (isset($this->_aRequest['create_user'])) {
+			if ($this->_create() === true)
+				return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
 
-      # TODO: We need to get seperate messages for failed mails and failed queries
-      # Move _create to create?!
-      else
-        #return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+			# TODO: Do we need better reports?
+			# Move _create to create?!
+			else
+			#return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
 				return $this->_showCreateUserTemplate();
-    } else
-      return $this->_showCreateUserTemplate();
-  }
+		} else
+			return $this->_showCreateUserTemplate();
+	}
 
 	private function _create() {
 		if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
-      $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
+			$this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 
-    if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
+		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
-    if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
-      $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
+		if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
+			$this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
-    if (Model_User::getExistingUser($this->_aRequest['email']) == false)
-      $this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
+		if (Model_User::getExistingUser($this->_aRequest['email']) == false)
+			$this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
 
-    if (!isset($this->_aRequest['password']) || empty($this->_aRequest['password']))
-      $this->_aError['password'] = LANG_ERROR_FORM_MISSING_PASSWORD;
+		if (!isset($this->_aRequest['password']) || empty($this->_aRequest['password']))
+			$this->_aError['password'] = LANG_ERROR_FORM_MISSING_PASSWORD;
 
-    if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-      $this->_aError['password'] = LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH;
+		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+			$this->_aError['password'] = LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH;
 
-    if (USER_RIGHT < 4) {
-      if (!isset($this->_aRequest['disclaimer']))
-        $this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
-    }
+		if (USER_RIGHT < 4) {
+			if (!isset($this->_aRequest['disclaimer']))
+				$this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
+		}
 
-    if (isset($this->_aError))
-      return $this->_showCreateUserTemplate();
+		if (isset($this->_aError))
+			return $this->_showCreateUserTemplate();
 
-    else {
-      $this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
+		else {
+			$this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 
-      $iVerificationCode = Helper::createRandomChar(12, true);
-      $sVerificationUrl = Helper::createLinkTo('/User/' . $iVerificationCode . '/verification');
+			$iVerificationCode = Helper::createRandomChar(12, true);
+			$sVerificationUrl = Helper::createLinkTo('/User/' . $iVerificationCode . '/verification');
 
-      if ($this->_oModel->create($iVerificationCode) === true) {
-        $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
-                        LANG_MAIL_USER_CREATE_BODY);
-        $sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
+			if ($this->_oModel->create($iVerificationCode) === true) {
+				$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
+												LANG_MAIL_USER_CREATE_BODY);
+				$sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
 
-        $bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-                        LANG_MAIL_USER_CREATE_SUBJECT,
-                        $sMailMessage,
-                        WEBSITE_MAIL_NOREPLY);
+				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+												LANG_MAIL_USER_CREATE_SUBJECT,
+												$sMailMessage,
+												WEBSITE_MAIL_NOREPLY);
 
-        return $bStatus;
-      }
-      else
-        return false;
-    }
-  }
+				return $bStatus;
+			}
+			else
+				return false;
+		}
+	}
 
 	private function _showCreateUserTemplate() {
 		$oSmarty = new Smarty();

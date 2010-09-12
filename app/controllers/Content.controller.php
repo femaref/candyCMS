@@ -113,34 +113,34 @@ final class Content extends Main {
   }
 
   protected final function _create() {
-    if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
-      $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
+		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
+			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
-    if(	!isset($this->_aRequest['content']) || empty($this->_aRequest['content']) )
-      $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
+		if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
+			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
-    if (isset($this->_aError))
-      return $this->_showFormTemplate(false);
+		if (isset($this->_aError))
+			return $this->_showFormTemplate(false);
 
-    else {
-      if($this->_oModel->create() === true)
-        return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
-      else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-    }
-  }
+		else {
+			if ($this->_oModel->create() === true)
+				return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
+			else
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+		}
+	}
 
   protected final function _update() {
-    if($this->_oModel->update((int)$this->_aRequest['id']) === true)
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Content/' . (int) $this->_aRequest['id']);
-    else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-  }
+		if ($this->_oModel->update((int) $this->_aRequest['id']) === true)
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Content/' . (int) $this->_aRequest['id']);
+		else
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+	}
 
-  protected final function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
-    else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
-  }
+	protected final function _destroy() {
+		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
+			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
+		else
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+	}
 }

@@ -30,7 +30,6 @@ final class Upload {
     $this->_sFormAction   = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
-
     if (!empty($this->_sRename)) {
       $this->_sRename   = & $this->_replaceNonAlphachars($this->_sRename);
       $this->sFilePath  = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_sRename . '.' . $this->_sFileExtension;
@@ -38,9 +37,7 @@ final class Upload {
     else
       $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
-    # TODO: This must be better
-    move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
-    return true;
+    return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
   }
 
   public function uploadGalleryFile($sResize = '') {
@@ -52,14 +49,14 @@ final class Upload {
     $this->_sUploadFolder = 'gallery/' . (int) $this->_aRequest['id'];
     $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.' . $this->_sFileExtension;
 
-    move_uploaded_file($this->_aFile['Filedata']['tmp_name'], $this->sFilePath);
+    $bReturn = move_uploaded_file($this->_aFile['Filedata']['tmp_name'], $this->sFilePath);
 
     $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->sFilePath, $this->_sFileExtension);
     if (isset($this->_aRequest['cut']) && 'c' == $this->_aRequest['cut'])
       $oImage->resizeAndCut(THUMB_DEFAULT_X);
 
     elseif (isset($this->_aRequest['cut']) && 'r' == $this->_aRequest['cut'])
-      $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_X);#MAX Y?
+      $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_X);
 
     else
       throw new Exception('No resizing information!');
@@ -67,8 +64,7 @@ final class Upload {
     $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
     $oImage->resizeAndCut('32');
 
-    # TODO: Return
-    return true;
+    return $bReturn;
   }
 
   public function uploadAvatarFile($bReturnPath = true) {
@@ -92,21 +88,20 @@ final class Upload {
       return Helper::errorMessage(LANG_ERROR_MEDIA_WRONG_FILETYPE);
     }
     else {
-      move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
+			$bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
 
-      $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
+			$oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
+			$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
+			$oImage->resizeDefault(THUMB_DEFAULT_X);
+			$oImage->resizeDefault('100');
+			$oImage->resizeAndCut('64');
+			$oImage->resizeAndCut('32');
 
-      $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
-      $oImage->resizeDefault(THUMB_DEFAULT_X);
-      $oImage->resizeDefault('100');
-      $oImage->resizeAndCut('64');
-      $oImage->resizeAndCut('32');
-
-      if ($bReturnPath == true)
-        return $this->_sFilePath;
-      else
-        return true;
-    }
+			if ($bReturnPath == true)
+				return $this->_sFilePath;
+			else
+				return $bReturn;
+		}
   }
 
   private function _replaceNonAlphachars($sStr) {
@@ -124,17 +119,16 @@ final class Upload {
   }
 
   public function getExtension() {
-    return $this->_sFileExtension;
-  }
+		return $this->_sFileExtension;
+	}
 
-  public function getId() {
-    return $this->_iId . '.' . $this->_sFileExtension;
-  }
+	public function getId() {
+		return $this->_iId . '.' . $this->_sFileExtension;
+	}
 
-  # SIMPLE FILE UPLOAD
-  public final function uploadFile($sFilePath = '') {
-    $sFilePath = isset($this->_sFilePath) && !empty($this->_sFilePath) ? $this->_sFilePath : $sFilePath;
-    move_uploaded_file($this->_aFile['file']['tmp_name'], $sFilePath);
-    return $this->_sFilePath;
-  }
+	public final function uploadFile($sFilePath = '') {
+		$sFilePath = isset($this->_sFilePath) && !empty($this->_sFilePath) ? $this->_sFilePath : $sFilePath;
+		move_uploaded_file($this->_aFile['file']['tmp_name'], $sFilePath);
+		return $this->_sFilePath;
+	}
 }

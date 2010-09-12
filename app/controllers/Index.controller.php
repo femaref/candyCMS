@@ -86,17 +86,17 @@ class Index {
   }
 
   protected final function _getFlashMessage() {
-    # TODO: Fix $_SESSION to $this->_aSession
-    $aFlashMessage['type'] = isset($_SESSION['flash_message']['type']) && !empty($_SESSION['flash_message']['type']) ?
-            $_SESSION['flash_message']['type'] :
-            '';
-    $aFlashMessage['message'] = isset($_SESSION['flash_message']['message']) && !empty($_SESSION['flash_message']['message']) ?
-            $_SESSION['flash_message']['message'] :
-            '';
-    $aFlashMessage['headline'] = isset($_SESSION['flash_message']['headline']) && !empty($_SESSION['flash_message']['headline']) ?
-            $_SESSION['flash_message']['headline'] :
-            '';
+    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+						$this->_aSession['flash_message']['type'] :
+						'';
+		$aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
+						$this->_aSession['flash_message']['message'] :
+						'';
+		$aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
+						$this->_aSession['flash_message']['headline'] :
+						'';
 
+		# This must be a global
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }

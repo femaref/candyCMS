@@ -1,5 +1,5 @@
 /********************************************************************************/
-/* Show / Hide Element: TODO: Nicer slideDown */
+/* Show / Hide Element */
 /********************************************************************************/
 function hideDiv(sDivId) {
   new Fx.Slide(sDivId).toggle();
