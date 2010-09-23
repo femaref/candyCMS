@@ -81,7 +81,8 @@ class Model_Comment extends Model_Main {
                     'surname'         => Helper::formatOutput($aRow['surname']),
                     'avatar_32'       => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
                     'avatar_64'       => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
-                    'date'            => Helper::formatTimestamp($aRow['date']),
+                    'date'            => Helper::formatTimestamp($aRow['date'], true),
+                    'datetime'        => Helper::formatTimestamp($aRow['date']),
                     'content'         => Helper::formatOutput($aRow['content']),
                     'loop'            => $iLoop
         );

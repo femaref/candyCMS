@@ -96,7 +96,8 @@ class Model_Blog extends Model_Main {
                 'title_seo'     => urlencode(Helper::formatOutput($aRow['title'])),
                 'content'       => Helper::formatOutput($aRow['content'], true),
                 'teaser'        => Helper::formatOutput($aRow['teaser'], true),
-                'date'          => Helper::formatTimestamp($aRow['date']),
+                'date'          => Helper::formatTimestamp($aRow['date'], true),
+                'datetime'      => Helper::formatTimestamp($aRow['date']),
                 'date_raw'      => $aRow['date'],
                 'uid'           => $aRow['uid'],
                 'name'          => $sName,
@@ -168,7 +169,8 @@ class Model_Blog extends Model_Main {
 						'title'     => Helper::removeSlahes($aRow['title']),
 						'teaser'    => Helper::removeSlahes($aRow['teaser']),
 						'content'   => Helper::removeSlahes($aRow['content']),
-						'date'      => Helper::formatTimestamp($aRow['date']),
+						'date'      => Helper::formatTimestamp($aRow['date'], true),
+						'datetime'  => Helper::formatTimestamp($aRow['date']),
 						'published' => $aRow['published']
 				);
 				unset($sContent);
@@ -195,7 +197,8 @@ class Model_Blog extends Model_Main {
             'title_seo'     => urlencode(Helper::formatOutput($aRow['title'])),
 						'teaser'        => Helper::formatOutput($aRow['teaser'], true, $sHighlight),
 						'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
-						'date'          => Helper::formatTimestamp($aRow['date']),
+						'date'          => Helper::formatTimestamp($aRow['date'], true),
+						'datetime'      => Helper::formatTimestamp($aRow['date']),
             'date_raw'      => $aRow['date'],
 						'uid'           => $aRow['uid'],
             'name'          => $sName,

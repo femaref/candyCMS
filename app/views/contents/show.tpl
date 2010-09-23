@@ -15,7 +15,7 @@
         {/if}
       </h2>
       <div class='date'>
-        {$lang_last_update}: {$c.date} {$lang_by}
+        {$lang_last_update}: {$c.datetime} {$lang_by}
         <a href='/User/{$c.author_id}/{$c.full_name_seo}'>{$c.full_name}</a>
       </div>
     </div>

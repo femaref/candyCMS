@@ -17,4 +17,5 @@ install/sql/data.sql
 logs/*
 version.txt
 public/skins/empuxa/*
+public/skins/marcoraddatz/*
 public/images/before_sprite/*

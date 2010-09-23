@@ -96,7 +96,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive');
 
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
@@ -120,7 +120,7 @@ define('DEFAULT_LANGUAGE', 'ger');
 
 # Set the standard date format
 # DEFAULT: 'd.m.Y'
-define('DEFAULT_DATE_FORMAT', 'd.m.Y');
+define('DEFAULT_DATE_FORMAT', 'd.M.Y');
 
 # ------------------------------------------------------------------------------
 
@@ -150,7 +150,7 @@ define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
 # Set maximum image/video width (MEDIA_DEFAULT_X) and height (MEDIA_DEFAULT_Y) in px.
 # Larger images and videos will be reseized or scaled down!
 # DEFAULT: 748
-define('MEDIA_DEFAULT_X', '748');
+define('MEDIA_DEFAULT_X', '468');
 
 # DEFAULT: 421
 define('MEDIA_DEFAULT_Y', '421');
@@ -169,14 +169,14 @@ define('POPUP_DEFAULT_Y', '800');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', '');
+define('PATH_CSS', 'marcoraddatz');
 
 # DEFAULT: default
 define('PATH_IMAGES', '');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', '');
+define('PATH_TPL', 'marcoraddatz');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
@@ -195,7 +195,7 @@ define('LIMIT_ALBUM_THUMBS', 9999);
 
 # Limit of blog entries per page
 # DEFAULT: 5
-define('LIMIT_BLOG', 2);
+define('LIMIT_BLOG', 5);
 
 # Limit of comments per page
 # DEFAULT: 25

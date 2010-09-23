@@ -71,7 +71,7 @@ class Bbcode {
           else
             $sFileType = '';
 
-          $sFileName = md5($sUrl[1]);
+          $sFileName = md5(MEDIA_DEFAULT_X.$sUrl[1]);
           $sFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sFileName . '.' . $sFileType;
 
           if (!file_exists($sFilePath) && !empty($sFileType)) {

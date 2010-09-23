@@ -8,7 +8,7 @@
 */
 
 class FormatTimestamp {
-  private final function _setDate($iTime) {
+  private final function _setDate($iTime, $bDateOnly) {
     if(date(DEFAULT_DATE_FORMAT, $iTime) == date(DEFAULT_DATE_FORMAT, time())) {
       $sDay = LANG_GLOBAL_TODAY;
       $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
@@ -25,10 +25,13 @@ class FormatTimestamp {
     $sTime = str_replace('am', LANG_GLOBAL_TIME_AM, $sTime);
     $sTime = str_replace('pm', LANG_GLOBAL_TIME_PM, $sTime);
 
-    return $sDay.$sTime;
+    if ($bDateOnly == true)
+      return $sDay;
+    else
+      return $sDay.$sTime;
   }
 
-  public final function getDate($iTime) {
-    return $this->_setDate($iTime);
+  public final function getDate($iTime, $bDateOnly) {
+    return $this->_setDate($iTime, $bDateOnly);
   }
 }

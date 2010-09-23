@@ -242,14 +242,14 @@ class Index {
 
     # Check for user custom css
     $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-    if (PATH_CSS !== '' && dir_exists(WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css'))
+    if (PATH_CSS !== '')
       $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
     $sCachedHTML = & $sCachedCss;
 
     # Check for user custom icons etc.
     $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-    if (PATH_IMAGES !== '' && dir_exists(WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images'))
+    if (PATH_IMAGES !== '')
       $sCachedImages = WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images';
 
     $sCachedHTML = & $sCachedImages;

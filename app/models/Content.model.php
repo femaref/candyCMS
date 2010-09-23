@@ -79,7 +79,8 @@ class Model_Content extends Model_Main {
             'author_id' => $aRow['author_id'],
             'title'     => Helper::removeSlahes($aRow['title']),
             'content'   => Helper::removeSlahes($aRow['content']),
-            'date'      => Helper::formatTimestamp($aRow['date'])
+            'date'      => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'  => Helper::formatTimestamp($aRow['date'])
         );
         unset($sContent);
 
@@ -99,7 +100,8 @@ class Model_Content extends Model_Main {
             'author_id'     => $aRow['author_id'],
             'title'         => Helper::formatOutput($aRow['title'], false, $sHighlight),
             'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
-            'date'          => Helper::formatTimestamp($aRow['date']),
+            'date'          => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'      => Helper::formatTimestamp($aRow['date']),
             'uid'           => $aRow['uid'],
             'name'          => $sName,
             'surname'       => $sSurname,
