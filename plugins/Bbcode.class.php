@@ -72,11 +72,11 @@ class Bbcode {
             $sFileType = '';
 
           $sFileName = md5($sUrl[1]);
-          $sFilePath = PATH_UPLOAD . '/temp/blog/' . $sFileName . '.' . $sFileType;
+          $sFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sFileName . '.' . $sFileType;
 
           if (!file_exists($sFilePath) && !empty($sFileType)) {
             $oImage = new Image($sFileName, 'temp', $sUrl[1], $sFileType);
-            $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'blog');
+            $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
           }
 
           # Override with full path
