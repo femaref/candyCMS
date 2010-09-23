@@ -24,6 +24,17 @@ final class Cronjob {
       unlink($sTempPath . '/' . $sFile);
     }
 
+    # TODO: Array with both functions
+    $sTempPath = PATH_UPLOAD . '/temp/bbcode';
+    $oDir = opendir($sTempPath);
+
+    while ($sFile = readdir($oDir)) {
+      if (substr($sFile, 0, 1) == '.')
+        continue;
+
+      unlink($sTempPath . '/' . $sFile);
+    }
+
     # Delete old backups (older than 10 days)
     $sTempPath = 'backup';
     $oDir = opendir($sTempPath);

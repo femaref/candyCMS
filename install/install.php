@@ -35,6 +35,12 @@ switch ($_REQUEST['step']) {
     if (!is_dir('../upload/temp'))
       @mkdir('../upload/temp', '0777', true);
 
+    if (!is_dir('../upload/temp/media'))
+      @mkdir('../upload/temp/media', '0777', true);
+
+    if (!is_dir('../upload/temp/bbcode'))
+      @mkdir('../upload/temp/bbcode', '0777', true);
+
     if (!is_dir('../upload/user/32'))
       @mkdir('../upload/user/32', '0777', true);
 
