@@ -12,13 +12,14 @@ body
   background: white;
 }
 
-a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover
+a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover, .js-toggle
 {
   color: #FF0000;
   text-decoration: none;
+  cursor: pointer;
 }
 
-a:hover
+a:hover, .js-toggle:hover
 {
   text-decoration: underline;
 }

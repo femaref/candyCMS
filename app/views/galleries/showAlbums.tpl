@@ -13,7 +13,7 @@
     </div>
   {else}
     {foreach from=$albums item=a}
-      <div class='gallery_album' style='background:{cycle values="transparent,#eee"}'>
+      <div class='gallery_album {cycle values="row1,row2"}'>
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $USER_RIGHT > 3}
@@ -23,7 +23,7 @@
             </a>
           {/if}
         </h2>
-        <span class='small'>{$a.date} - {$a.files_sum} {$lang_files}</span>
+        <span class='small'>{$a.datetime} - {$a.files_sum} {$lang_files}</span>
         <p>
           {if $a.files_sum > 0}
             <a href='/Gallery/{$a.id}'>

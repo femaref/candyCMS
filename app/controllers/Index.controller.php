@@ -250,7 +250,7 @@ class Index {
     # Check for user custom icons etc.
     $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
     if (PATH_IMAGES !== '')
-      $sCachedImages = WEBSITE_CDN . '/public/skins/' . PATH_IMAGES . '/images';
+      $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
 
     $sCachedHTML = & $sCachedImages;
 

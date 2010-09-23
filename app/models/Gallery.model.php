@@ -65,7 +65,8 @@ class Model_Gallery extends Model_Main {
             'author_id'   => $aRow['author_id'],
             'title'       => Helper::formatOutput($aRow['title']),
             'description' => Helper::formatOutput($aRow['description'], true),
-            'date'        => Helper::formatTimestamp($aRow['date']),
+            'date'        => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'    => Helper::formatTimestamp($aRow['date']),
             'files_sum'   => $aRow['filesSum']
 				);
 

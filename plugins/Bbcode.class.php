@@ -196,9 +196,9 @@ class Bbcode {
       $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<div class='quote'><h3>"	.LANG_GLOBAL_QUOTE_BY.	" \\1</h3>\\2</div>", $sStr);
     }
 
-    while(  preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
+    while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU",
-                      "<a href='#' class='js-toggle'><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</a><div class=\"js-element\">\\2</div>",
+                      "<span class='js-toggle'><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-element\">\\2</div>",
                       $sStr);
     }
 

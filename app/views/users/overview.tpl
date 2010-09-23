@@ -11,7 +11,7 @@
     <th colspan='5'>{$lang_headline}</th>
   </tr>
   {foreach from=$user item=u}
-    <tr style='background:{cycle values="transparent,#eee"}'>
+    <tr class='{cycle values="row1,row2"}'>
       <td style='width:5%'>
         <img src='{$u.avatar_32}' width="18" height="18" alt='' />
       </td>

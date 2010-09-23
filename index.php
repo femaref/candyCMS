@@ -53,7 +53,6 @@ try {
 	die($e->getMessage());
 }
 
-
 @session_start();
 $aFile = isset($_FILES) ? $_FILES : array();
 $oIndex = new Index($_REQUEST, $_SESSION, $aFile, $_COOKIE);

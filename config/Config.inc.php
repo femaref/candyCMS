@@ -120,7 +120,7 @@ define('DEFAULT_LANGUAGE', 'ger');
 
 # Set the standard date format
 # DEFAULT: 'd.m.Y'
-define('DEFAULT_DATE_FORMAT', 'd.M.Y');
+define('DEFAULT_DATE_FORMAT', 'd. M. Y');
 
 # ------------------------------------------------------------------------------
 
@@ -153,7 +153,7 @@ define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
 define('MEDIA_DEFAULT_X', '468');
 
 # DEFAULT: 421
-define('MEDIA_DEFAULT_Y', '421');
+define('MEDIA_DEFAULT_Y', '263');
 
 # Set thumb width
 # DEFAULT: 200

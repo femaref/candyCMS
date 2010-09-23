@@ -11,13 +11,13 @@
   <th colspan='4'>{$lang_headline}</th>
   </tr>
   {foreach from=$content item=c}
-    <tr style='background:{cycle values="transparent,#eee"}'>
+    <tr class='{cycle values="row1,row2"}'>
       <td style='width:45%' class="left">
         <a href='/Content/{$c.id}/{$c.eTitle}'>
           {$c.title}
         </a>
       </td>
-      <td style='width:25%'>{$c.date}</td>
+      <td style='width:25%'>{$c.datetime}</td>
       <td style='width:20%'>
         <a href='/User/{$c.author_id}'>
           {$c.name} {$c.surname}

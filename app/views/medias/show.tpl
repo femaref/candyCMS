@@ -19,7 +19,7 @@
       </tr>
     {else}
       {foreach from=$files item=f}
-        <tr style='background:{cycle values="transparent,#eee"}'>
+        <tr class='{cycle values="row1,row2"}'>
           <td style='width:10%'>
             {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
               <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
