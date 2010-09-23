@@ -14,7 +14,7 @@ if(file_exists('app/controllers/Mail.controller.php'))
 final class Cronjob {
   public static final function cleanup() {
     # Cleanup temp images
-    $sTempPath = PATH_UPLOAD . '/temp/32';
+    $sTempPath = PATH_UPLOAD . '/temp/media';
     $oDir = opendir($sTempPath);
 
     while ($sFile = readdir($oDir)) {

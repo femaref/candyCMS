@@ -5,15 +5,19 @@ function hideDiv(sDivId) {
   new Fx.Slide(sDivId).toggle();
 }
 
-function fadeDiv(sDivId) {
+function fadeInDiv(sDivId) {
+  $(sDivId).fade('in');
+}
+
+function fadeOutDiv(sDivId) {
   $(sDivId).fade('out');
 }
 
 function showDiv(sDivId) {
   window.addEvent('domready', function() {
-    $(sDivId).setStyle('display', 'inline');
+    fadeInDiv(sDivId);
     if($('js-flash_success') || $('js-flash_error')) {
-      (function(){ hideDiv(sDivId) }).delay(5000);
+      (function(){ fadeOutDiv(sDivId) }).delay(5000);
     }
   });
 }

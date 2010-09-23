@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+require_once 'app/helpers/Image.helper.php';
+
 class Bbcode {
   private final function _setFormatedText($sStr, $bUseParagraph) {
     # BB Code
@@ -43,9 +45,6 @@ class Bbcode {
 		# Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
-		# Manually set javascript plugins
-    #$sStr = preg_replace('#\[js:(.*)\]#Uis', '<script src="%PATH_PUBLIC%/js/plugins/\1" type="text/javascript"></script>', $sStr);
-
     # Replace images with image tag (every location allowed)
     while(preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
       if(@getimagesize($sUrl[1]) == false)
@@ -57,12 +56,49 @@ class Bbcode {
         if($aInfo[0] <= MEDIA_DEFAULT_X)
           $sHTML = '<img class=\'image\' src="'	.$sUrl[1].	'" width="'	.$aInfo[0].	'" height="'	.$aInfo[1].	'" alt="'	.$sUrl[1].	'" />';
 
-				else // Resize
+        # Resize and save temp image
+				else
         {
-          $iFactor = MEDIA_DEFAULT_X / $aInfo[0];
-          $aInfo[0] = $aInfo[0] * $iFactor;
-          $aInfo[1] = $aInfo[1] * $iFactor;
-          $sHTML = '<a href="'	.$sUrl[1].	'" rel=\'lightbox\'><img class=\'image\' src="'	.$sUrl[1].	'" width="'	.$aInfo[0].	'" height="'	.$aInfo[1].	'" alt=\'\' /></a>';
+          if ($aInfo['mime'] == 'image/jpeg')
+            $sFileType = 'jpg';
+
+          elseif ($aInfo['mime'] == 'image/png')
+            $sFileType = 'png';
+
+          elseif ($aInfo['mime'] == 'image/gif')
+            $sFileType = 'gif';
+
+          else
+            $sFileType = '';
+
+          $sFileName = md5($sUrl[1]);
+          $sFilePath = PATH_UPLOAD . '/temp/blog/' . $sFileName . '.' . $sFileType;
+
+          if (!file_exists($sFilePath) && !empty($sFileType)) {
+            $oImage = new Image($sFileName, 'temp', $sUrl[1], $sFileType);
+            $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'blog');
+          }
+
+          # Override with full path
+          $sFilePath = WEBSITE_URL . '/' . $sFilePath;
+
+          $aInfo = @getimagesize($sFilePath);
+          $iMarginTop = $aInfo[1] - 30;
+
+          # Language
+          $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
+          $sText = str_replace('%h', $aInfo[1], $sText);
+
+          $sHTML = '<div style="width:' . $aInfo[0] . 'px;height:' . $aInfo[1] . 'px" class="image">';
+          $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
+          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $aInfo[0] . 'px;margin-top:' . $iMarginTop . 'px">';
+          $sHTML .= $sText;
+          $sHTML .= '</div>';
+          $sHTML .= '<img src="' . $sFilePath . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt=\'\'';
+          $sHTML .= 'onmouseover="fadeInDiv(\'' . $sFileName . '\')"';
+          $sHTML .= 'onmouseout="fadeOutDiv(\'' . $sFileName . '\')" />';
+          $sHTML .= '</a>';
+          $sHTML .= '</div>';
         }
       }
 

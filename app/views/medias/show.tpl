@@ -22,7 +22,7 @@
         <tr style='background:{cycle values="transparent,#eee"}'>
           <td style='width:10%'>
             {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
-              <img src='%PATH_UPLOAD%/temp/32/{$f.name}'
+              <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
                    width='32' height='32' alt='{$f.type}' />
             {else}
               <img src='%PATH_IMAGES%/spacer.gif' class="filemanager-{$f.type}"

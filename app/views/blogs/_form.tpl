@@ -31,7 +31,7 @@
     });
   </script>
 {/literal}
-<form method='post' action='{$_action_url_}' class="form">
+<form method='post' action='{$_action_url_}' class="form blog">
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>

@@ -85,11 +85,18 @@
   <a name='comments'></a>
   {$_blog_comments_}
 {/if}
-{literal}
-  <script type="text/javascript">
+<script type="text/javascript">
+  {literal}
     var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
       display: -1,
       alwaysHide: true
     });
-  </script>
-{/literal}
+  {/literal}
+
+  var sFilesSuffix = '{$_compress_files_suffix_}';
+  {literal}
+    window.addEvent('domready', function() {
+      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
+    });
+  {/literal}
+</script>

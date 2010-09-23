@@ -75,9 +75,7 @@ class Media extends Main {
         if(	$sFileType      == 'jpg' || $sFileType  == 'jpeg'|| $sFileType  == 'png' || $sFileType  == 'gif') {
           $aImgDim = getImageSize($sPath);
 
-          if( ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'gif' || $sFileType == 'png') &&
-                  !is_file(PATH_UPLOAD.	'/temp/32/'	.$sFile)) {
-
+          if( !file_exists(PATH_UPLOAD.	'/temp/media/'	.$sFile) ) {
             $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32');
           }

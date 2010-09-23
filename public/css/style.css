@@ -241,6 +241,7 @@ table th
   padding: 3px;
 }
 
+/* Fixes the create / update view */
 .blog .input .description {
   margin-left: 300px;
   padding: 0px;
