@@ -82,19 +82,22 @@ class Bbcode {
           # Override with full path
           $sFilePath = WEBSITE_URL . '/' . $sFilePath;
 
-          $aInfo = @getimagesize($sFilePath);
-          $iMarginTop = $aInfo[1] - 30;
+          $aNewInfo = @getimagesize($sFilePath);
+
+          # Devide margin and padding from essential.css
+          $iMarginTop = $aNewInfo[1] - 30;
+          $iWidth = $aNewInfo[0] - 10;
 
           # Language
           $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
           $sText = str_replace('%h', $aInfo[1], $sText);
 
-          $sHTML = '<div style="width:' . $aInfo[0] . 'px;height:' . $aInfo[1] . 'px" class="image">';
+          $sHTML = '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px" class="image">';
           $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
-          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $aInfo[0] . 'px;margin-top:' . $iMarginTop . 'px">';
+          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $iWidth . 'px;margin-top:' . $iMarginTop . 'px">';
           $sHTML .= $sText;
           $sHTML .= '</div>';
-          $sHTML .= '<img src="' . $sFilePath . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt=\'\'';
+          $sHTML .= '<img src="' . $sFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
           $sHTML .= 'onmouseover="fadeInDiv(\'' . $sFileName . '\')"';
           $sHTML .= 'onmouseout="fadeOutDiv(\'' . $sFileName . '\')" />';
           $sHTML .= '</a>';

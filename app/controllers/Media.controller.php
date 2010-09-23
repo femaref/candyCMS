@@ -77,7 +77,7 @@ class Media extends Main {
 
           if( !file_exists(PATH_UPLOAD.	'/temp/media/'	.$sFile) ) {
             $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
-            $oImage->resizeAndCut('32');
+            $oImage->resizeAndCut('32', 'media');
           }
         }
         else

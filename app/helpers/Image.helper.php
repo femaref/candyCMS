@@ -63,7 +63,10 @@ final class Image {
     imagedestroy($oNewImg);
   }
 
-  public final function resizeAndCut($iWidth) {
+  public final function resizeAndCut($iWidth, $sFolder = '') {
+    if(empty($sFolder))
+      $sFolder = $iWidth;
+
     $iNewX = $iWidth;
     $iNewY = $iWidth;
     $iDstX = 0;
@@ -90,6 +93,7 @@ final class Image {
 
     elseif ($this->_sImgType == 'gif')
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
+
     $oNewImg = imagecreatetruecolor($iWidth, $iWidth);
     $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
 
@@ -97,13 +101,13 @@ final class Image {
     imagecopyresampled($oNewImg, $oOldImg, $iDstX, $iDstY, $iSrcX, $iSrcY, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, 'upload/' . $this->_sFolder . '/' . $iWidth . '/' . $this->_iId . '.' . $this->_sImgType, 75);
+      ImageJPEG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
 
     elseif ($this->_sImgType == 'png')
-      ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $iWidth . '/' . $this->_iId . '.png', 9);
+      ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
 
     elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, 'upload/' . $this->_sFolder . '/' . $iWidth . '/' . $this->_iId . '.gif');
+      ImageGIF($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
 
     imagedestroy($oNewImg);
   }
