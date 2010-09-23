@@ -15,9 +15,9 @@ function fadeOutDiv(sDivId) {
 
 function showDiv(sDivId) {
   window.addEvent('domready', function() {
-    fadeInDiv(sDivId);
+    $(sDivId).setStyle('display', 'inline');
     if($('js-flash_success') || $('js-flash_error')) {
-      (function(){ fadeOutDiv(sDivId) }).delay(5000);
+      (function(){ hideDiv(sDivId) }).delay(5000);
     }
   });
 }

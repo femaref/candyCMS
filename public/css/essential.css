@@ -1,7 +1,6 @@
 #js-flash_message {
   opacity: 0;
-  visibility: hidden;
-  cursor:pointer;
+  display: none;
 }
 
 .image_overlay {
