@@ -160,8 +160,8 @@ define('MEDIA_DEFAULT_Y', '421');
 define('THUMB_DEFAULT_X', '200');
 
 # Set popup width
-# DEFAULT: 800
-define('POPUP_DEFAULT_X', '800');
+# DEFAULT: 1000 / 800
+define('POPUP_DEFAULT_X', '1000');
 define('POPUP_DEFAULT_Y', '800');
 
 # ------------------------------------------------------------------------------

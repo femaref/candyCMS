@@ -37,7 +37,6 @@ class Gallery extends Main {
       $oSmarty->assign('file_no', $this->_oModel->_iEntries);
       $oSmarty->assign('gallery_name', $sAlbumName);
       $oSmarty->assign('gallery_description', Model_Gallery::getAlbumDescription($this->_iId));
-      $oSmarty->assign('popup_path', POPUP_DEFAULT_X);
 
       # System variables
       $oSmarty->assign('_album_pages_', $this->_oModel->oPages->showPages('Gallery/'	.$this->_iId));
@@ -81,7 +80,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate(false);
 
     else {
-			$sRedirect = '/Gallery/' . $this->_oModel->getId();
+			$sRedirect = '/Gallery';
 
       if ($this->_oModel->create() === true)
         return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);

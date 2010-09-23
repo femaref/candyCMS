@@ -28,7 +28,7 @@
   {/if}
   {$_album_pages_}
   {foreach from=$files item=f}
-    <a href='{$f.full_path}/{$popup_path}/{$f.file}' rel='lightbox[]' title='
+    <a href='{$f.full_path}/popup/{$f.file}' rel='lightbox[]' title='
       {if $USER_RIGHT > 3}
         {$lang_uploaded_at}: {$f.date}
         <br />
@@ -39,7 +39,7 @@
             <img src="%PATH_IMAGES%/spacer.gif" class="icon-destroy" alt="{$lang_destroy}" />
         </a>
         <br />
-        <input type="text" value="{$f.full_path}/{$popup_path}/{$f.file}" class="inputsmall"
+        <input type="text" value="{$f.full_path}/popup/{$f.file}" class="inputsmall"
             onclick="this.focus();this.select();" />
       {else}
         {$f.description}

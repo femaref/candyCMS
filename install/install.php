@@ -53,8 +53,8 @@ switch ($_REQUEST['step']) {
     if (!is_dir('../upload/user/' . THUMB_DEFAULT_X))
       @mkdir('../upload/user/' . THUMB_DEFAULT_X, '0777', true);
 
-    if (!is_dir('../upload/user/' . POPUP_DEFAULT_X))
-      @mkdir('../upload/user/' . POPUP_DEFAULT_X, '0777', true);
+    if (!is_dir('../upload/user/popup'))
+      @mkdir('../upload/user/popup', '0777', true);
 
     if (!is_dir('../upload/user/original'))
       @mkdir('../upload/user/original/', '0777', true);

@@ -253,7 +253,7 @@ class Model_Gallery extends Model_Main {
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
-      $sPathThumbP = $sPath . '/' . POPUP_DEFAULT_X;
+      $sPathThumbP = $sPath . '/popup';
       $sPathThumbO = $sPath . '/original';
 
       if (!is_dir($sPath))
@@ -323,14 +323,14 @@ class Model_Gallery extends Model_Main {
       foreach ($aResult as $aRow) {
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
-        @unlink($sPath . '/' . POPUP_DEFAULT_X . '/' . $aRow['file']);
+        @unlink($sPath . '/popup/' . $aRow['file']);
         @unlink($sPath . '/original/' . $aRow['file']);
       }
 
       # Delete Folders
       @rmdir($sPath . '/32/');
       @rmdir($sPath . '/' . THUMB_DEFAULT_X);
-      @rmdir($sPath . '/' . POPUP_DEFAULT_X);
+      @rmdir($sPath . '/popup');
       @rmdir($sPath . '/original');
       @rmdir($sPath);
 
@@ -462,7 +462,7 @@ class Model_Gallery extends Model_Main {
         $sPath = PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
-        @unlink($sPath . '/' . POPUP_DEFAULT_X . '/' . $aRow['file']);
+        @unlink($sPath . '/popup/' . $aRow['file']);
         @unlink($sPath . '/original/' . $aRow['file']);
       }
 

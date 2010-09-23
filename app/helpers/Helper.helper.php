@@ -70,13 +70,16 @@ final class Helper {
 			return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
-  public final static function getAvatar($sPath, $iSize, $iUserId, $aGravatar = '') {
+  public final static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
     if (!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
+      if(!is_int($sSize))
+        $sSize = POPUP_DEFAULT_X;
+
       $sMail = md5($aGravatar['email']);
-      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $iSize;
+      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize;
     }
     else {
-      $sFile = PATH_UPLOAD . '/' . $sPath . '/' . $iSize . '/' . $iUserId . '.jpg';
+      $sFile = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId . '.jpg';
       if (is_file($sFile))
         return WEBSITE_URL . '/' . $sFile;
       else

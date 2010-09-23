@@ -141,7 +141,7 @@ class User extends Main {
     $oSmarty->assign('user_right', (int) $this->_aSession['user_to_update_data']['user_right']);
 
     $oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
-    $oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
+    $oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 
     # Set Form params
     $oSmarty->assign('_action_url_', '/User/update');
@@ -242,7 +242,7 @@ class User extends Main {
 			$oSmarty->assign('date', Helper::formatTimestamp($this->_aData['date']));
 			$oSmarty->assign('user', $this->_aData);
 			$oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
-			$oSmarty->assign('avatar_popup', Helper::getAvatar('user', POPUP_DEFAULT_X, $this->_iId, $aGravatar));
+			$oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 
 			# Manage PageTitle
 			$this->_sName = $this->_aData['name'];

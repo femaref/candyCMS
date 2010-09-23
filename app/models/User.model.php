@@ -225,7 +225,7 @@ class Model_User extends Model_Main {
     @unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
     @unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
     @unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/' . POPUP_DEFAULT_X . '/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
     @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
 
     try {

@@ -61,7 +61,7 @@ final class Upload {
     else
       throw new Exception('No resizing information!');
 
-    $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
+    $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
     $oImage->resizeAndCut('32');
 
     return $bReturn;
@@ -91,7 +91,7 @@ final class Upload {
 			$bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
 
 			$oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
-			$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y);
+			$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
 			$oImage->resizeDefault(THUMB_DEFAULT_X);
 			$oImage->resizeDefault('100');
 			$oImage->resizeAndCut('64');
