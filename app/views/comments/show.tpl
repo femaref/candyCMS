@@ -13,7 +13,7 @@
       {else}
         <em style="text-decoration:line-through">{$lang_deleted_user}</em>
       {/if}
-      {if $author_id == $c.author_id}&nbsp;({$lang_author}){/if}, {$c.date}
+      {if $author_id == $c.author_id}&nbsp;({$lang_author}){/if}, {$c.datetime}
     </h3>
     <div id="c{$c.id}">
       {$c.content}
