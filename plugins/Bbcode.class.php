@@ -92,15 +92,15 @@ class Bbcode {
           $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
           $sText = str_replace('%h', $aInfo[1], $sText);
 
-          $sHTML = '<div class="image">';
+          $sHTML = '<div class="image" style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
           $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
-          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $iWidth . 'px;margin-top:' . $iMarginTop . 'px">';
-          $sHTML .= $sText;
-          $sHTML .= '</div>';
           $sHTML .= '<img src="' . $sFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
           $sHTML .= 'onmouseover="fadeInDiv(\'' . $sFileName . '\')"';
           $sHTML .= 'onmouseout="fadeOutDiv(\'' . $sFileName . '\')" />';
           $sHTML .= '</a>';
+          $sHTML .= '</div>';
+          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $iWidth . 'px">';
+          $sHTML .= $sText;
           $sHTML .= '</div>';
         }
       }

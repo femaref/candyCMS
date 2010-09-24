@@ -13,6 +13,7 @@
   opacity: 0;
   visibility: hidden;
   text-align: center;
+  margin: -34px 4px 0px;
 }
 
 .cancel input {
