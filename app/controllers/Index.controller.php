@@ -211,6 +211,7 @@ class Index {
       $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
+      $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
 
       # Include optional plugins
       if (class_exists('Archive')) {

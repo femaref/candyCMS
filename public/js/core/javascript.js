@@ -54,12 +54,6 @@ function confirmDelete(sUrl) {
 /********************************************************************************/
 /* Show Tooltips on Blog */
 if($$('.js-tooltip')) {
-  $$('.js-tooltip').each(function(element, index) {
-    var content = element.get('title').split('::');
-    element.store('tip:title', content[0]);
-    element.store('tip:text', content[1]);
-  });
-
   var myTips = new Tips('.js-tooltip');
   myTips.addEvent('show', function(tip){
     tip.fade('in');
