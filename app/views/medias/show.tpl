@@ -18,7 +18,7 @@
         </td>
       </tr>
     {else}
-      {foreach from=$files item=f}
+      {foreach $files as $f}
         <tr class='{cycle values="row1,row2"}'>
           <td style='width:10%'>
             {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}

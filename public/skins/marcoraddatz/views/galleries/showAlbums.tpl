@@ -12,7 +12,7 @@
       <p>{$lang_no_entries}</p>
     </div>
   {else}
-    {foreach from=$albums item=a}
+    {foreach $albums as $a}
       <div class='gallery_album {cycle values="row1,row2"}'>
         <div class="date">
           {$a.date}

@@ -6,7 +6,7 @@
     <language>de-de</language>
     <link>{$link}</link>
     <copyright>{$copyright}</copyright>
-    {foreach from=$data item=rss}
+    {foreach $data as $rss}
       <item>
       {if $action == 'blog'}
         <title>{$rss.title}</title>

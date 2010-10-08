@@ -11,7 +11,7 @@
     <p>{$lang_no_entries}</p>
   </div>
 {else}
-  {foreach from=$blog item=b}
+  {foreach $blog as $b}
     {if !$b.id}
       <div class='error' id='js-error' title='{$lang_missing_entry}' onclick="hideDiv('js-error')">
         <p>{$lang_missing_entry}</p>
@@ -78,17 +78,15 @@
   {$_blog_comments_}
 {/if}
 <script type="text/javascript">
-  {literal}
-    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
-      display: -1,
-      alwaysHide: true
-    });
-  {/literal}
-
   var sFilesSuffix = '{$_compress_files_suffix_}';
   {literal}
     window.addEvent('domready', function() {
       new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
+    });
+
+    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+      display: -1,
+      alwaysHide: true
     });
   {/literal}
 </script>

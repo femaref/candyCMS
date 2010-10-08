@@ -1,10 +1,10 @@
 <div id="search">
   <h1>{$lang_headline}</h1>
-  {foreach from=$tables item=table}
+  {foreach $tables as $table}
     <fieldset>
       <legend class="big">{$table.title}</legend>
       <ol>
-        {foreach from=$table item=data}
+        {foreach $table as $data}
           {if $data.id > 0}
             <li>
               {$data.date}

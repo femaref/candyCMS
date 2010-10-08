@@ -8,9 +8,9 @@
 {/if}
 <table>
   <tr>
-  <th colspan='4'>{$lang_headline}</th>
+    <th colspan='4'>{$lang_headline}</th>
   </tr>
-  {foreach from=$content item=c}
+  {foreach $content $c}
     <tr class='{cycle values="row1,row2"}'>
       <td style='width:45%' class="left">
         <a href='/Content/{$c.id}/{$c.eTitle}'>

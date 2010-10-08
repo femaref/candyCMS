@@ -27,7 +27,7 @@
     <div class='quote'>{$gallery_description}</div>
   {/if}
   {$_album_pages_}
-  {foreach from=$files item=f}
+  {foreach $files as $f}
     <a href='{$f.full_path}/popup/{$f.file}' rel='lightbox[]' title='
       {if $USER_RIGHT > 3}
         {$lang_uploaded_at}: {$f.date}

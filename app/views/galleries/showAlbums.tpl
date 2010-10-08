@@ -12,7 +12,7 @@
       <p>{$lang_no_entries}</p>
     </div>
   {else}
-    {foreach from=$albums item=a}
+    {foreach $albums as $a}
       <div class='gallery_album {cycle values="row1,row2"}'>
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
@@ -27,7 +27,7 @@
         <p>
           {if $a.files_sum > 0}
             <a href='/Gallery/{$a.id}'>
-              {foreach from=$a.files item=f}
+              {foreach $a.files as $f}
                 <img src='{$f.full_path}/32/{$f.file}'
                      alt='{$f.file}' title='{$f.description}' class='image'
                      height='32' width='32' />

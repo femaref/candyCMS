@@ -1,4 +1,5 @@
 <p>
+  <!-- TODO: create smarty3 syntax //-->
   {section name=pages start=1 loop=$page_count+1 step=1}
     {if $smarty.get.page == $smarty.section.pages.index && $page_count > 1}
       <span class='currentpagelink'>{$smarty.section.pages.index}</span>

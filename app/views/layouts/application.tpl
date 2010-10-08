@@ -48,7 +48,11 @@
     </div>
     <div id="footer">
       <p>
-        <a href='/About'>{$lang_about} {$name}</a> &middot; <a href='/Disclaimer'>{$lang_disclaimer}</a> &middot; <a href='/Contact/Bugreport'>{$lang_report_error}</a>
+        <a href='/About'>{$lang_about} {$name}</a>
+        &middot;
+        <a href='/Disclaimer'>{$lang_disclaimer}</a>
+        &middot;
+        <a href='/Contact/Bugreport'>{$lang_report_error}</a>
       </p>
       <ul>
         {if $USER_RIGHT > 3}

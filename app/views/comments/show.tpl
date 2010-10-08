@@ -2,7 +2,7 @@
   <div id="js-ajax_reload" name="reload">
 {/if}
 {$_comment_pages_}
-{foreach from=$comments item=c name=comments}
+{foreach $comments as $c}
   <div class='comment {if $author_id == $c.author_id}from_author{/if}'>
     <h3 class='{if $author_id == $c.author_id}row1{/if}'>
       <a href='#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
