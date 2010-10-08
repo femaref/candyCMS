@@ -56,6 +56,8 @@ class Blog extends Main {
 		# Create Page-Title
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
 		$oSmarty->template_dir = Helper::getTemplateDir('blogs/show');
 		return $oSmarty->fetch('blogs/show.tpl');
 	}
@@ -167,6 +169,8 @@ class Blog extends Main {
 		$oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 		$oSmarty->assign('lang_update_show', LANG_GLOBAL_UPDATE_SHOW);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
 		$oSmarty->template_dir = Helper::getTemplateDir('blogs/_form');
 		return $oSmarty->fetch('blogs/_form.tpl');
 	}

@@ -54,6 +54,8 @@ final class Pages {
     $oSmarty->assign('_action_url_', $sURL);
     $oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('pages/pages');
     return $oSmarty->fetch('pages/pages.tpl');
   }
@@ -82,6 +84,8 @@ final class Pages {
     $oSmarty->assign('lang_previous_entries', LANG_PAGES_PREVIOUS_ENTRIES);
     $oSmarty->assign('lang_rss_feed', LANG_GLOBAL_RSS);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('pages/surrounding');
     return $oSmarty->fetch('pages/surrounding.tpl');
   }

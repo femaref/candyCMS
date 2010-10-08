@@ -46,6 +46,8 @@ class Search extends Main {
       # Language
       $oSmarty->assign('lang_headline', str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE));
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
       return $oSmarty->fetch('searches/show.tpl');
     }
@@ -57,6 +59,8 @@ class Search extends Main {
     # Language
     $oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
     return $oSmarty->fetch('searches/_form.tpl');
   }

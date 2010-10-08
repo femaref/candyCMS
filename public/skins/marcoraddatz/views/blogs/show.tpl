@@ -40,6 +40,9 @@
             <div class="teaser">{$b.teaser}</div>
           {/if}
           {$b.content}
+          {if $b.date_modified != ''}
+            <p>{$lang_last_update}: {$b.date_modified}</p>
+          {/if}
           <div class='footer'>
             {$lang_share}:
             <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'

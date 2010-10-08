@@ -208,6 +208,8 @@ class Section extends Main {
                 LANG_ERROR_REQUEST_MISSING_ACTION;
 
         $oSmarty = new Smarty();
+        $oSmarty->cache_dir = CACHE_DIR;
+        $oSmarty->compile_dir = COMPILE_DIR;
         $oSmarty->template_dir = '/skins/'	.PATH_TPL_STATIC.	'/tpl/static';
         parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));

@@ -81,6 +81,8 @@ class Mail extends Main {
     else
       $oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('mails/create');
     return $oSmarty->fetch('mails/create.tpl');
   }

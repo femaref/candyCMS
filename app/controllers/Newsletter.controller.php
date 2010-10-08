@@ -61,6 +61,8 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
     $oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('newsletters/newsletter');
     return $oSmarty->fetch('newsletters/newsletter.tpl');
   }
@@ -103,6 +105,8 @@ class Newsletter extends Main {
     $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
     $oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('newsletters/create');
     return $oSmarty->fetch('newsletters/create.tpl');
   }

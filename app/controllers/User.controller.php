@@ -177,6 +177,8 @@ class User extends Main {
     $oSmarty->assign('lang_user_right_3', LANG_GLOBAL_USERRIGHT_3);
     $oSmarty->assign('lang_user_right_4', LANG_GLOBAL_USERRIGHT_4);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('users/_form');
     return $oSmarty->fetch('users/_form.tpl');
   }
@@ -225,6 +227,8 @@ class User extends Main {
 				$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 				$oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
 
+        $oSmarty->cache_dir = CACHE_DIR;
+        $oSmarty->compile_dir = COMPILE_DIR;
 				$oSmarty->template_dir = Helper::getTemplateDir('users/overview');
 				return $oSmarty->fetch('users/overview.tpl');
 			}
@@ -256,6 +260,8 @@ class User extends Main {
       $oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 			$oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
 			$oSmarty->template_dir = Helper::getTemplateDir('users/show');
 			return $oSmarty->fetch('users/show.tpl');
 		}
@@ -366,6 +372,9 @@ class User extends Main {
 		$oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
 		$oSmarty->assign('lang_submit', LANG_GLOBAL_REGISTER);
 		$oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
+
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
 		$oSmarty->template_dir = Helper::getTemplateDir('users/createUser');
 		return $oSmarty->fetch('users/createUser.tpl');
 	}

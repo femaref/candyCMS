@@ -40,6 +40,8 @@ class Media extends Main {
     $oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
     $oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('medias/create');
     return $oSmarty->fetch('medias/create.tpl');
   }
@@ -107,6 +109,8 @@ class Media extends Main {
       $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
       $oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('medias/show');
       return $oSmarty->fetch('medias/show.tpl');
     }

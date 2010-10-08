@@ -44,6 +44,8 @@ class Rss {
 		$oSmarty->assign('date', LANG_GLOBAL_DATE );
 		$oSmarty->assign('location', LANG_GLOBAL_LOCATION );
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
 		$oSmarty->template_dir = Helper::getTemplateDir('rss/show');
 		return $oSmarty->fetch('rss/show.tpl');
 	}

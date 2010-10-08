@@ -32,6 +32,8 @@ final class Content extends Main {
       $oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY_ENTRY);
       $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('contents/overview');
       return $oSmarty->fetch('contents/overview.tpl');
     }
@@ -50,6 +52,8 @@ final class Content extends Main {
       $oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
       $oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('contents/show');
       return $oSmarty->fetch('contents/show.tpl');
     }
@@ -108,6 +112,8 @@ final class Content extends Main {
     $oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
     $oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('contents/_form');
     return $oSmarty->fetch('contents/_form.tpl');
   }

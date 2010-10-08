@@ -37,6 +37,7 @@
       </div>
       <p>
         <a href='http://www.facebook.com/marcoraddatz' rel='external'>Facebook</a>
+        <a href='http://github.com/marcoraddatz' rel='external'>GitHub</a>
         <a href='http://www.studivz.net/Profile/Z8-9k7vbFJJbnaEhntaQVHnGTppx4Mj1fVE6GfIbLXY' rel='external'>studiVZ</a>
         <a href='https://twitter.com/marcoraddatz' rel='external'>Twitter</a>
         <a href='https://www.xing.com/profile/Marco_Raddatz2' rel='external'>XING</a>

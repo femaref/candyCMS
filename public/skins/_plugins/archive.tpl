@@ -1,10 +1,10 @@
 <div id="archive">
   <ul>
-    {foreach from=$data item=data key=month}
+    {foreach from=$data item=d key=month}
       <li>
         <a href="#" class="js-archive_month">{$month} ({$data|@count})</a>
         <ul class="js-archive_entries">
-        {foreach from=$data item=entry}
+        {foreach from=$d item=entry}
           <li>
             <a href="/Blog/{$entry.id}/{$entry.title_seo}" title="{$entry.date}">
               {$entry.title}

@@ -225,7 +225,11 @@ class Index {
       }
 
       $oSmarty->assign('_content_', $oSection->getContent());
+
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
+      $oSmarty->isCached('layouts/application.tpl');
       $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
     }
 

@@ -52,6 +52,8 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY.	': '	.
               $sAlbumName));
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('galleries/showFiles');
       return $oSmarty->fetch('galleries/showFiles.tpl');
     }
@@ -67,6 +69,8 @@ class Gallery extends Main {
       $oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
       $oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 
+      $oSmarty->cache_dir = CACHE_DIR;
+      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('galleries/showAlbums');
       return $oSmarty->fetch('galleries/showAlbums.tpl');
     }
@@ -166,6 +170,8 @@ class Gallery extends Main {
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
     $oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_album');
     return $oSmarty->fetch('galleries/_form_album.tpl');
   }
@@ -251,6 +257,8 @@ class Gallery extends Main {
     # Language
     $oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
 
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
     $oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_file');
     return $oSmarty->fetch('galleries/_form_file.tpl');
   }
