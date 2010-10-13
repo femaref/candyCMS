@@ -12,7 +12,7 @@ require_once 'app/helpers/Addon.helper.php';
 class Section extends Main {
   protected $_oObject;
   private function _getController() {
-    if( file_exists('app/addon/' .(string)ucfirst($this->_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
+    if( file_exists('app/addons/' .(string)ucfirst($this->_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
       new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $sClassName = 'Extension_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);

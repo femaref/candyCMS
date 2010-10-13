@@ -19,13 +19,13 @@ final class Addon extends Section {
   }
 
   private final function _setModules() {
-    $oDir = opendir('app/addon');
+    $oDir = opendir('app/addons');
 
     while ($aFile = readdir($oDir)) {
       if ($aFile == '.' || $aFile == '..' || $aFile == '_dev' || $aFile == '.htaccess')
         continue;
 
-      require_once ('app/addon/' . $aFile);
+      require_once ('app/addons/' . $aFile);
     }
   }
 
