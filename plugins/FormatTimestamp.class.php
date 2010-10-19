@@ -9,17 +9,17 @@
 
 class FormatTimestamp {
   private final function _setDate($iTime, $bDateOnly) {
-    if(date(DEFAULT_DATE_FORMAT, $iTime) == date(DEFAULT_DATE_FORMAT, time())) {
+    if(date('Ymd', $iTime) == date('Ymd', time())) {
       $sDay = LANG_GLOBAL_TODAY;
-      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
+      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
-    elseif(date(DEFAULT_DATE_FORMAT, $iTime) == date(DEFAULT_DATE_FORMAT, (time()-60*60*24))) {
+    elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24))) {
       $sDay = LANG_GLOBAL_YESTERDAY;
-      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
+      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
     else {
-      $sDay = date(DEFAULT_DATE_FORMAT, $iTime);
-      $sTime = date(DEFAULT_TIME_FORMAT, $iTime);
+      $sDay = strftime(DEFAULT_DATE_FORMAT, $iTime);
+      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
 
     $sTime = str_replace('am', LANG_GLOBAL_TIME_AM, $sTime);

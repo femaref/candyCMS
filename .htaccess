@@ -45,7 +45,7 @@ RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=c
 RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA]
 RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L,QSA]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA]
-RewriteRule ^Lang/([a-z]+)$ index.php?lang=$1 [L,QSA]
+RewriteRule ^Language/([a-z]+)$ index.php?language=$1 [L,QSA]
 RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA]
 RewriteRule ^Start$ index.php?section=blog [L]
 RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]

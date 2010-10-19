@@ -149,15 +149,19 @@ final class Helper {
 
   # Code for plugins
   public static final function formatTimestamp($iTime, $bDateOnly = false) {
+
+    # Set active locale
+    setlocale(LC_ALL, DEFAULT_LANGUAGE);
+
     if (class_exists('FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
       return $oDate->getDate($iTime, $bDateOnly);
     }
     else {
       if( $bDateOnly == true )
-        return date(DEFAULT_DATE_FORMAT, $iTime);
+        return strftime(DEFAULT_DATE_FORMAT, $iTime);
       else
-        return date(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
+        return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
     }
   }
 

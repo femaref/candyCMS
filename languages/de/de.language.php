@@ -72,7 +72,7 @@ define( 'LANG_GLOBAL_REQUIRED', 'benötigt' );
 define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
 define( 'LANG_GLOBAL_SEARCH', 'Suche' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
-define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' ); #NEW
+define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' );
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
@@ -121,10 +121,10 @@ define( 'LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE', 'Bitte nur Bilder mit der
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Bild proportional verkleinern' );
-define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei hinzuf&uuml;gen' );
-define( 'LANG_GALLERY_FILE_UPDATE_TITLE', 'Datei bearbeiten' ); # New
+define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei hinzufügen' );
+define( 'LANG_GALLERY_FILE_UPDATE_TITLE', 'Datei bearbeiten' );
 define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.' );
-define( 'LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE', 'Datei ausw&#xE4;hlen' );
+define( 'LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE', 'Datei auswählen' );
 define( 'LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE', 'Datei umbenennen' );
 # TODO: define( 'LANG_MEDIA_FILE_CREATE_SUCCESSFUL', 'Upload erfolgreich! Die Datei befindet sich jetzt unter <strong>%p</strong>.');
 define( 'LANG_MEDIA_FILE_CREATE_TITLE', 'Datei hochladen' );
@@ -135,26 +135,26 @@ define( 'LANG_MEDIA_FILE_DESTROY_SUCCESSFUL', 'Datei wurde erfolgreich gelöscht
 define( 'LANG_NEWSLETTER_CREATE_INFO', '%u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.' );
 define( 'LANG_NEWSLETTER_CREATE_TITLE', 'Newsletter verfassen' );
 define( 'LANG_NEWSLETTER_CREATE_LABEL_SUBMIT', 'Newsletter verschicken' );
-# TODO: define( 'LANG_NEWSLETTER_HANDLE_CREATE_SUCCESSFUL', 'Du hast dich erfolgreich f&uuml;r den Newsletter eingetragen.' ); #NEW
-define( 'LANG_NEWSLETTER_HANDLE_INFO', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' ); #NEW
-define( 'LANG_NEWSLETTER_HANDLE_TITLE', 'Newsletter abonieren / abbestellen' ); #NEW
-define( 'LANG_NEWSLETTER_SHOW_DEFAULT_NAME', 'Abonnenten' ); #NEW # Name of anonymous receivers
+# TODO: define( 'LANG_NEWSLETTER_HANDLE_CREATE_SUCCESSFUL', 'Du hast dich erfolgreich f&uuml;r den Newsletter eingetragen.' );
+define( 'LANG_NEWSLETTER_HANDLE_INFO', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' );
+define( 'LANG_NEWSLETTER_HANDLE_TITLE', 'Newsletter abonieren / abbestellen' );
+define( 'LANG_NEWSLETTER_SHOW_DEFAULT_NAME', 'Abonnenten' ); # Name of anonymous receivers
 define( 'LANG_PAGES_NEXT_ENTRIES', 'Ältere Beiträge' );
 define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beiträge' );
 define( 'LANG_SEARCH_SHOW_TITLE', 'Suchergebnisse für "%s":' );
 define( 'LANG_SESSION_CREATE_SUCCESSFUL', 'Login erfolgreich!' );
 define( 'LANG_SESSION_DESTROY_SUCCESSFUL', 'Logout erfolgreich!' );
 define( 'LANG_SESSION_PASSWORD_TITLE', 'Password vergessen?' );
-define( 'LANG_SESSION_PASSWORD_INFO', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.' ); # NEW
-# TODO: define( 'LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' ); # NEW
-define( 'LANG_SESSION_PASSWORD_LABEL_SUBMIT', 'Password zuschicken' ); # NEW
+define( 'LANG_SESSION_PASSWORD_INFO', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.' );
+# TODO: define( 'LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' );
+define( 'LANG_SESSION_PASSWORD_LABEL_SUBMIT', 'Password zuschicken' );
 define( 'LANG_SESSION_VERIFICATION_TITLE', 'E-Mail-Bestätigung erneut zusenden' );
 define( 'LANG_SESSION_VERIFICATION_INFO', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
 define( 'LANG_SESSION_VERIFICATION_LABEL_SUBMIT', 'E-Mail zuschicken' );
 define( 'LANG_USER_CREATE_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
-define( 'LANG_USER_CREATE_TITLE', 'Benutzer erstellen' ); #NEW
+define( 'LANG_USER_CREATE_TITLE', 'Benutzer erstellen' );
 define( 'LANG_USER_SHOW_OVERVIEW_TITLE', 'Benutzerübersicht' );
-define( 'LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL', 'Klicke hier, um %u eine E-Mail zu schicken!' ); #NEW
+define( 'LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL', 'Klicke hier, um %u eine E-Mail zu schicken!' );
 define( 'LANG_USER_SHOW_USER_LABEL_DESCRIPTION', 'Über %u' );
 define( 'LANG_USER_SHOW_USER_LABEL_LAST_LOGIN', 'Letzter Login' );
 define( 'LANG_USER_SHOW_USER_REGISTERED_SINCE', 'Registriert seit' );
@@ -177,20 +177,20 @@ define( 'LANG_USER_UPDATE_TITLE', 'Einstellungen bearbeiten' );
 
 # MAIL CONTENT GLOBAL
 define( 'LANG_MAIL_GLOBAL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
-define( 'LANG_MAIL_GLOBAL_SIGNATURE', '<p>Viel Spa&szlig; w&uuml;nscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
+define( 'LANG_MAIL_GLOBAL_SIGNATURE', '<p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
 define( 'LANG_MAIL_GLOBAL_SUBJECT_BY', 'Neue Nachricht von %u' );
 define( 'LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL', 'Deine E-Mail Adresse' );
 
 
 # MAIL CONTENT BY SECTION
-define( 'LANG_MAIL_CRONJOB_CREATE_BODY', "Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n" ); #NEW
-define( 'LANG_MAIL_CRONJOB_CREATE_SUBJECT', 'Sicherungskopie vom %d' ); #NEW
-define( 'LANG_MAIL_NEWSLETTER_CREATE_SUBJECT', 'Newsletters von %WEBSITE_NAME' ); #NEW
-define( 'LANG_MAIL_NEWSLETTER_CREATE_BODY', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE"); #NEW
-define( 'LANG_MAIL_SESSION_PASSWORD_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"); # NEW
-define( 'LANG_MAIL_SESSION_PASSWORD_SUBJECT', 'Dein neues Passwort' ); # NEW
-define( 'LANG_MAIL_SESSION_VERIFICATION_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"); # NEW
-define( 'LANG_MAIL_SESSION_VERIFICATION_SUBJECT', 'Deine E-Mail-Bestätigung für %WEBSITE_NAME' ); # NEW
+define( 'LANG_MAIL_CRONJOB_CREATE_BODY', "Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n" );
+define( 'LANG_MAIL_CRONJOB_CREATE_SUBJECT', 'Sicherungskopie vom %d' );
+define( 'LANG_MAIL_NEWSLETTER_CREATE_SUBJECT', 'Newsletter von %WEBSITE_NAME' );
+define( 'LANG_MAIL_NEWSLETTER_CREATE_BODY', "Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE");
+define( 'LANG_MAIL_SESSION_PASSWORD_BODY', "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY");
+define( 'LANG_MAIL_SESSION_PASSWORD_SUBJECT', 'Dein neues Passwort' );
+define( 'LANG_MAIL_SESSION_VERIFICATION_BODY', "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY");
+define( 'LANG_MAIL_SESSION_VERIFICATION_SUBJECT', 'Deine E-Mail-Bestätigung für %WEBSITE_NAME' );
 define( 'LANG_MAIL_USER_CREATE_BODY', "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY");
 define( 'LANG_MAIL_USER_CREATE_SUBJECT', 'Deine Registrierung auf %WEBSITE_NAME.' );
 
@@ -212,20 +212,20 @@ define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Seite nicht verfügbar!' );
 define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'Die Datei konnte nicht gelöscht werden!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );
-define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Einträge!' ); #NEW
+define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'Es existieren noch keine Einträge!' );
 define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Die Sprachdatei konnte nicht geladen werden!' );
 define( 'LANG_ERROR_GLOBAL_NO_PERMISSION', 'Du hast keine Berechtigung diese Aktion auszuführen!' );
 define( 'LANG_ERROR_GLOBAL_NO_TEMPLATE', 'Es wurde keine passende Template gefunden!' );
 define( 'LANG_ERROR_GLOBAL_NOT_PUBLISHED', 'Nicht veröffentlicht:' );
 define( 'LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH', 'Bitte zwei identische Passwörter angeben!' );
 define( 'LANG_ERROR_GLOBAL_READ_DISCLAIMER', 'Bitte den Nutzungsbedingungen zustimmen!' );
-define( 'LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse!' ); #NEW
+define( 'LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT', 'Dies ist keine gültige E-Mail-Adresse!' );
 define( 'LANG_ERROR_GLOBAL_WRONG_ID', 'Falsche oder keine ID angegeben.' );
 define( 'LANG_ERROR_HELPER_NO_FLASH_INSTALLED', 'Downloade den Flashplayer, um dieses Video anzugucken!' );
 define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT', 'Der Code war leider nicht korrekt!' );
 define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED', 'Captcha konnte nicht geladen werden, bitte aktiviere Javascript!' );
 define( 'LANG_ERROR_MAIL_ERROR', 'Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.' );
-define( 'LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien hochgeladen.' ); #NEW
+define( 'LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien hochgeladen.' );
 define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verfügbar!' );
 define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigröße von 400KB erreicht!' );
 define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falsche Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
@@ -234,12 +234,12 @@ define( 'LANG_ERROR_SESSION_CREATE', 'Bitte überprüfe die E-Mail Adresse und d
 define( 'LANG_ERROR_SESSION_CREATE_TITLE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_SQL_QUERY', 'Es gab einen Fehler beim Verarbeiten des SQL-Statements.' );
 define( 'LANG_ERROR_UPLOAD_CREATE', 'Der Upload schlug fehl.' );
-define( 'LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' ); # NEW
-define( 'LANG_ERROR_USER_UPDATE_AGREE_UPLOAD', 'Du musst das Bild hochladen dürfen!' ); # NEW
-define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY', 'Bitte trage dein neues Passwort ein!' ); # NEW
-define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' ); # NEW
-define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY', 'Bitte trage dein altes Passwort ein!' ); # NEW
-define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' ); # NEW
-define( 'LANG_ERROR_USER_VERIFICATION', 'Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!' ); # NEW
+define( 'LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS', 'Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!' );
+define( 'LANG_ERROR_USER_UPDATE_AGREE_UPLOAD', 'Du musst das Bild hochladen dürfen!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY', 'Bitte trage dein neues Passwort ein!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH', 'Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY', 'Bitte trage dein altes Passwort ein!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG', 'Dein altes Passwort stimmt leider nicht!' );
+define( 'LANG_ERROR_USER_VERIFICATION', 'Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!' );
 
 ?>

@@ -47,19 +47,18 @@ class Index {
   }
 
   public final function setLanguage($sPath = '') {
-    if (isset($this->_aRequest['lang'])) {
-      setCookie('lang', (string) $this->_aRequest['lang'], time() + 2592000, '/');
-      Helper::redirectTo('/Start');
-      # Stop parsing immediately
-      die();
+    if (isset($this->_aRequest['language'])) {
+      setcookie('language', (string) $this->_aRequest['language'], time() + 2592000, '/');
     }
 
-    $this->_sLanguage = isset($this->_aCookie['lang']) ?
-            (string) $this->_aCookie['lang'] :
-            DEFAULT_LANGUAGE;
+    $this->_sLanguage = isset($this->_aCookie['language']) ?
+            (string) $this->_aCookie['language'] :
+            substr(DEFAULT_LANGUAGE, 0, 2);
 
-    if (file_exists($sPath . 'config/language/' . $this->_sLanguage . '.lang.php'))
-      require_once $sPath . 'config/language/' . $this->_sLanguage . '.lang.php';
+    define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
+
+    if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
+      require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
 
     else
       die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
@@ -114,7 +113,7 @@ class Index {
   public final function show() {
     # Load JS language
     $sLangVars = '';
-    $oFile = fopen('config/language/' . $this->_sLanguage . '.lang.js', 'rb');
+    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
 
     while (!feof($oFile)) {
       $sLangVars .= fgets($oFile);
@@ -134,7 +133,6 @@ class Index {
 
     # Header.tpl
     $oSmarty = new Smarty();
-    $oSmarty->assign('name', WEBSITE_NAME);
     $oSmarty->assign('user', Helper::formatOutput($this->_aSession['userdata']['name']));
     $oSmarty->assign('USER_ID', USER_ID);
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
@@ -142,6 +140,8 @@ class Index {
     # System variables
     $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
     $oSmarty->assign('_javascript_language_file_', $sLangVars);
+    $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
+    $oSmarty->assign('_website_name_', WEBSITE_NAME);
     $oSmarty->assign('_website_url_', WEBSITE_URL);
 
     # Language
