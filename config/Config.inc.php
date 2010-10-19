@@ -119,13 +119,13 @@ define('DEFAULT_LANGUAGE', 'de_DE');
 # ------------------------------------------------------------------------------
 
 # Set the standard date format (http://en.php.net/strftime)
-# DEFAULT: 'd.m.Y'
+# DEFAULT: '%d. %b. %Y'
 define('DEFAULT_DATE_FORMAT', '%d. %b. %Y');
 
 # ------------------------------------------------------------------------------
 
 # Set the standard time format (with seperator - if wanted) (http://en.php.net/strftime)
-# DEFAULT: ', H:i a'
+# DEFAULT: ', %H:%M %p'
 define('DEFAULT_TIME_FORMAT', ', %H:%M %p');
 
 # ------------------------------------------------------------------------------

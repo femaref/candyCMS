@@ -205,6 +205,7 @@ define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Bitte gib einen Titel an!' );
 define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Bitte gib ein Passwort an!' );
 define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Bitte gib einen Betreff ein!' );
 
+
 # ERROR MESSAGES
 define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Es wurden noch keine Bilder hochgeladen!' );
 define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf!' );
@@ -228,9 +229,9 @@ define( 'LANG_ERROR_MAIL_ERROR', 'Die E-Mail konnte nicht verschickt werden. Bit
 define( 'LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien hochgeladen.' );
 define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verfügbar!' );
 define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigröße von 400KB erreicht!' );
-define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falsche Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
+define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falscher Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
 define( 'LANG_ERROR_REQUEST_MISSING_ACTION', 'Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!' );
-define( 'LANG_ERROR_SESSION_CREATE', 'Bitte überprüfe die E-Mail Adresse und das Passwort. Oder wurde deine E-Mail-Adresse noch nicht bestätigt?' );
+define( 'LANG_ERROR_SESSION_CREATE', 'Bitte überprüfe die E-Mail-Adresse und das Passwort. Falls du deine E-Mail-Adresse noch nicht bestätigt hast, mache das bitte vor dem Login.' );
 define( 'LANG_ERROR_SESSION_CREATE_TITLE', 'Kann dich nicht einloggen!' );
 define( 'LANG_ERROR_SQL_QUERY', 'Es gab einen Fehler beim Verarbeiten des SQL-Statements.' );
 define( 'LANG_ERROR_UPLOAD_CREATE', 'Der Upload schlug fehl.' );

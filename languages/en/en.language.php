@@ -106,6 +106,7 @@ define( 'LANG_SUCCESS_DESTROY', 'Entry has been deleted!' );
 define( 'LANG_SUCCESS_UPDATE', 'Entry has been updated!' );
 define( 'LANG_SUCCESS_MAIL_SENT', 'Email has been sent!' );
 
+
 # SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_TITLE_CREATE', 'Create blog entry' );
 define( 'LANG_BLOG_TITLE_UPDATE', 'Update: %p' );
@@ -191,56 +192,51 @@ define( 'LANG_MAIL_USER_CREATE_SUBJECT', 'Your registration at %WEBSITE_NAME.' )
 
 
 # ERRORS IN FORM ELEMENTS
-define( 'LANG_ERROR_FORM_TITLE', 'Bitte fülle die markierten Felder aus:' );
-define( 'LANG_ERROR_FORM_MISSING_CATEGORY', 'Bitte wähle eine Kategorie!' );
-define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Bitte fülle den Inhalt aus!' );
-define( 'LANG_ERROR_FORM_MISSING_EMAIL', 'Bitte gib deine E-Mail-Adresse an!' );
-define( 'LANG_ERROR_FORM_MISSING_NAME', 'Bitte gib deinen Namen an!' );
-define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Bitte gib einen Titel an!' );
-define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Bitte gib ein Passwort an!' );
-define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Bitte gib einen Betreff ein!' );
+define( 'LANG_ERROR_FORM_TITLE', 'Please fill out the following information:' );
+define( 'LANG_ERROR_FORM_MISSING_CATEGORY', 'Please select a category.' );
+define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Please enter content.' );
+define( 'LANG_ERROR_FORM_MISSING_EMAIL', 'Please enter your Email.' );
+define( 'LANG_ERROR_FORM_MISSING_NAME', 'Please enter your name.' );
+define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Please enter a title.' );
+define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Please enter a password.' );
+define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Please enter a subject.' );
 
 
-
-
-
-
-
-
-/* Error messages */
-define( 'LANG_ERROR_ACTION_NOT_SPECIFIED', 'No ACTION_REQUEST has been delivered!' );
-define( 'LANG_ERROR_DB_CONNECTION', 'Can not connect to database!' );
-define( 'LANG_ERROR_SQL_QUERY', 'Error at SQL Query!' );
-define( 'LANG_ERROR_DB_SELECTION', 'Can not use database!' );
-define( 'LANG_ERROR_GLOBAL', 'An Error occured' );
-define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );
-define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Missing Entry - Please check URL!' );
-define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'No entries yet!' );
-define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Language not defined!' );
+# ERROR MESSAGES
+define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'No files were uploaded yet!' );
+define( 'LANG_ERROR_GLOBAL', 'An error occured!' );
+define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Page does not exist!' );
+define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Please login first!' );
+define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'This file could not be deleted!' );
+define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'This entry does not exist!' );
+define( 'LANG_ERROR_GLOBAL_NO_ENTRIES', 'There are no entries yet!' );
+define( 'LANG_ERROR_GLOBAL_NO_LANGUAGE', 'Language file could not be loaded!' );
 define( 'LANG_ERROR_GLOBAL_NO_PERMISSION', 'You do not have permission to proceed!' );
-define( 'LANG_ERROR_GLOBAL_NO_TEMPLATE', 'No template found!' );
-define( 'LANG_ERROR_GLOBAL_CHECK_FIELDS', 'Please check following field(s):' );
-define( 'LANG_ERROR_GLOBAL_WRONG_ID', 'Wrong or no ID delivered!' );
-define( 'LANG_ERROR_HELPER_NO_FLASH_INSTALLED', 'Download Flashplayer to watch this Media!' );
-define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED', 'Captcha konnte nicht geladen werden, bitte aktiviere Javascript!' );
-define( 'LANG_ERROR_MAIL_FAILED_HEADLINE', 'Mail can not be sent!' );
-define( 'LANG_ERROR_MAIL_FAILED_SUBJECT', 'Delivery failed, please contact Admin!' );
-define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'File is not avaiable!' );
-define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Your File reached maximum size of 400KB!' );
+define( 'LANG_ERROR_GLOBAL_NO_TEMPLATE', 'This template is not avaiable!' );
+define( 'LANG_ERROR_GLOBAL_NOT_PUBLISHED', 'Not published:' );
+define( 'LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH', 'Passwords do not match, please retype. ' );
+define( 'LANG_ERROR_GLOBAL_READ_DISCLAIMER', 'Please accept the terms and conditions!' );
+define( 'LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT', 'This Email is not valid!' );
+define( 'LANG_ERROR_GLOBAL_WRONG_ID', 'Wrong or no ID submitted.' );
+define( 'LANG_ERROR_HELPER_NO_FLASH_INSTALLED', 'Download flash to watch this video.' );
+define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT', 'The code was incorrect!' );
+define( 'LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED', 'Captcha could not be loaded, please activate Javascript!' );
+define( 'LANG_ERROR_MAIL_ERROR', 'Mail delivery failed. If the Email is correct, please contact Admin.' );
+define( 'LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER', 'No files have been uploaded.' );
+define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'File not avaiable!' );
+define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Your file is bigger than 400KB!' );
 define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'You uploaded an illegal filetype. Only *.jpg is allowed!' );
-define( 'LANG_ERROR_LOGIN_ENTER_NAME', 'Please enter Name!' );
-define( 'LANG_ERROR_LOGIN_ENTER_EMAIL', 'Please enter Email!' );
-define( 'LANG_ERROR_LOGIN_ENTER_PASSWORD', 'Please enter Password!' );
-define( 'LANG_ERROR_LOGIN_CHECK_PASSWORDS', 'Enter two identical passwords!' );
-define( 'LANG_ERROR_LOGIN_CHECK_DISCLAIMER', 'Agree to the disclaimer first!' );
-define( 'LANG_ERROR_LOGIN_HEADLINE', 'Can not login!' );
-define( 'LANG_ERROR_LOGIN_FIRST', 'Please <a href=\'/Login\'>login</a> first!' );
-define( 'LANG_ERROR_LOGIN_NO_SUCH_EMAIL', 'User with that Email does not exist!' );
-define( 'LANG_ERROR_LOGIN_WRONG_USERDATA', 'Please check username and password!' );
-define( 'LANG_ERROR_UPLOAD_FAILED', 'Der Upload schlug fehl.' );
-define( 'LANG_ERROR_USER_SETTINGS_UPLOAD_AGREEMENT', 'Agree to the terms first!' );
-define( 'LANG_ERROR_USER_SETTINGS_PW_NEW', 'Enter new password!' );
-define( 'LANG_ERROR_USER_SETTINGS_PW_NEW_WRONG', 'Type identical passwords!' );
-define( 'LANG_ERROR_USER_SETTINGS_PW_OLD', 'Enter old password!' );
-define( 'LANG_ERROR_USER_SETTINGS_PW_OLD_WRONG', 'Your old password is wrong!' );
+define( 'LANG_ERROR_REQUEST_MISSING_ACTION', 'Aborting action due to missing parameters!' );
+define( 'LANG_ERROR_SESSION_CREATE', 'Please check your Email and password. Also, is your Email verified?' );
+define( 'LANG_ERROR_SESSION_CREATE_TITLE', 'Can not create session!' );
+define( 'LANG_ERROR_SQL_QUERY', 'This SQL query caused an error.' );
+define( 'LANG_ERROR_UPLOAD_CREATE', 'Upload failed.' );
+define( 'LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS', 'An account with that Email does already exist. If you lost your password, you can recover it at the login.' );
+define( 'LANG_ERROR_USER_UPDATE_AGREE_UPLOAD', 'You must accept the terms and conditions!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY', 'Please enter your new password!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH', 'Passwords do not match. Please enter again!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY', 'Please enter your old password!' );
+define( 'LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG', 'Your old password was incorrect!' );
+define( 'LANG_ERROR_USER_VERIFICATION', 'Could not verify your account. This code does not exist!' );
+
 ?>
