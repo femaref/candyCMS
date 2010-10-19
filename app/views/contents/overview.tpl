@@ -10,7 +10,7 @@
   <tr>
     <th colspan='4'>{$lang_headline}</th>
   </tr>
-  {foreach $content $c}
+  {foreach $content as $c}
     <tr class='{cycle values="row1,row2"}'>
       <td style='width:45%' class="left">
         <a href='/Content/{$c.id}/{$c.eTitle}'>

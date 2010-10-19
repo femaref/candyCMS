@@ -41,15 +41,11 @@ class Index {
     catch (AdvancedException $e) {
       die($e->getMessage());
     }
-
-    if (!isset($this->_aRequest['section']))
-      Helper::redirectTo('/Start');
   }
 
   public final function setLanguage($sPath = '') {
-    if (isset($this->_aRequest['language'])) {
+    if (isset($this->_aRequest['language']))
       setcookie('language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-    }
 
     $this->_sLanguage = isset($this->_aCookie['language']) ?
             (string) $this->_aCookie['language'] :
@@ -180,7 +176,7 @@ class Index {
 						ucfirst($this->_aRequest['section']) == 'Comment' ||
 						ucfirst($this->_aRequest['section']) == 'Content' ||
 						ucfirst($this->_aRequest['section']) == 'Gallery' ||
-						ucfirst($this->_aRequest['section']) == 'Lang' ||
+						ucfirst($this->_aRequest['section']) == 'Language' ||
 						ucfirst($this->_aRequest['section']) == 'Mail' ||
 						ucfirst($this->_aRequest['section']) == 'Media' ||
 						ucfirst($this->_aRequest['section']) == 'Newsletter' ||
