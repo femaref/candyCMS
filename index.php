@@ -21,7 +21,7 @@ ini_set( 'arg_separator.output', '&amp;' );
 ini_set( 'zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
 
-define('VERSION', '20101019');
+define('VERSION', '20100119');
 
 try {
 	#Load Parent

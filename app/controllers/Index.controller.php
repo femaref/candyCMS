@@ -44,12 +44,14 @@ class Index {
   }
 
   public final function setLanguage($sPath = '') {
-    if (isset($this->_aRequest['language']))
-      setcookie('language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+    if (isset($this->_aRequest['language'])) {
+      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+      $this->_sLanguage = (string) $this->_aRequest['language'];
 
-    $this->_sLanguage = isset($this->_aCookie['language']) ?
-            (string) $this->_aCookie['language'] :
-            substr(DEFAULT_LANGUAGE, 0, 2);
+    } else
+      $this->_sLanguage = isset($this->_aRequest['default_language']) ?
+              (string) $this->_aRequest['default_language'] :
+              substr(DEFAULT_LANGUAGE, 0, 2);
 
     define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
 
@@ -107,6 +109,11 @@ class Index {
   }
 
   public final function show() {
+
+    # Redirect to landing page if we got no section
+    if (!isset($this->_aRequest['section']))
+      $this->_aRequest['section'] = WEBSITE_LANDING_PAGE;
+
     # Load JS language
     $sLangVars = '';
     $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');

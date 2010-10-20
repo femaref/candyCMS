@@ -11,24 +11,35 @@ require_once 'app/helpers/Addon.helper.php';
 
 class Section extends Main {
   protected $_oObject;
-  private function _getController() {
-    if( file_exists('app/addons/' .(string)ucfirst($this->_aRequest['section']). '.controller.php') && ALLOW_ADDONS == true) {
-      new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $sClassName = 'Extension_' . (string) ucfirst($this->_aRequest['section']);
-      $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
-    }
-    elseif(file_exists('app/controllers/'	.(string)ucfirst($this->_aRequest['section']).	'.controller.php')) {
-      require_once('app/controllers/'	.(string)ucfirst($this->_aRequest['section']).	'.controller.php');
-      $this->_oObject = new $this->_aRequest['section']($this->_aRequest, $this->_aSession, $this->_aFile);
-    }
-    else
-      throw new Exception('Module not found:' . 'app/controllers/'	.
-              (string)ucfirst($this->_aRequest['section']).	'.controller.php');
 
-    $this->_oObject->__init();
-    return $this->_oObject;
+  private function _getController() {
+    # Check, whether we need to load controllers or if we only want to print out html
+    if ((string) ucfirst($this->_aRequest['section']) !== 'Static') {
+
+      # Are addons avaiable? If yes, use them
+      if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS == true) {
+        new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+        $sClassName = 'Extension_' . (string) ucfirst($this->_aRequest['section']);
+        $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
+      }
+
+      # There are no addons, so we use the default controllers
+      elseif (file_exists('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
+        require_once('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+        $this->_oObject = new $this->_aRequest['section']($this->_aRequest, $this->_aSession, $this->_aFile);
+      }
+
+      # Some files are missing. Quit work!
+      else
+        throw new Exception('Module not found:' . 'app/controllers/' .
+                (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+
+      $this->_oObject->__init();
+      return $this->_oObject;
+    }
   }
 
+  # Handle the pre-defined sections
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
       $this->_aRequest['section'] = 'blog';
@@ -203,14 +214,14 @@ class Section extends Main {
 
       case 'static':
 
-        $sTpl = isset($this->_aRequest['action']) ?
-                (string)$this->_aRequest['action'] :
-                LANG_ERROR_REQUEST_MISSING_ACTION;
+        $sTpl = isset($this->_aRequest['template']) ?
+                (string)$this->_aRequest['template'] :
+                LANG_ERROR_GLOBAL_NO_TEMPLATE;
 
         $oSmarty = new Smarty();
         $oSmarty->cache_dir = CACHE_DIR;
         $oSmarty->compile_dir = COMPILE_DIR;
-        $oSmarty->template_dir = '/skins/'	.PATH_TPL_STATIC.	'/tpl/static';
+        $oSmarty->template_dir = PATH_TPL_STATIC.	'/';
         parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 
