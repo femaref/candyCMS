@@ -111,8 +111,18 @@ class Index {
   public final function show() {
 
     # Redirect to landing page if we got no section
-    if (!isset($this->_aRequest['section']))
-      $this->_aRequest['section'] = WEBSITE_LANDING_PAGE;
+    if (!isset($this->_aRequest['section'])) {
+
+      # Are we going to a static page?
+      if (substr(WEBSITE_LANDING_PAGE, 0, 6) == 'Static') {
+        $iTemplateLength = strlen(WEBSITE_LANDING_PAGE);
+
+        $this->_aRequest['section'] = 'Static';
+        $this->_aRequest['template'] = substr(WEBSITE_LANDING_PAGE, 7, $iTemplateLength);
+
+      } else
+        $this->_aRequest['section'] = WEBSITE_LANDING_PAGE;
+    }
 
     # Load JS language
     $sLangVars = '';

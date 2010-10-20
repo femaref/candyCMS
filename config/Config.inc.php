@@ -70,9 +70,10 @@ define('WEBSITE_DEV', true);
 
 # ------------------------------------------------------------------------------
 
-# Define ABSOLUTE path of your cdn. If you don't use a cdn,
-# enter your website url.
-# EXAMPLE: http://www.google.com
+# Define the entry point of your website. If you want to use a static page, type
+# "Static/nameofyourpage" and place it at
+# "public/skins/_static/nameofyourpage.tpl"
+# DEFAULT: Blog
 define('WEBSITE_LANDING_PAGE', 'Blog');
 # ------------------------------------------------------------------------------
 
