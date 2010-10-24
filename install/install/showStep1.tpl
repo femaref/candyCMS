@@ -7,4 +7,4 @@
   <li>LANG_WEBSITE_SLOGAN</li>
 </ul>
 <h3 style="margin-bottom:0px">1.4. Set following dirs to <em>CHMOD 777 (recursive)</em> via the FTP software of your choice:</h3>
-(If this is an nightly build, install the <a href="http://github.com/marcoraddatz/candyCMS/archives/master" target="_blank">additional folder package</a> first!)
+(If this is an nightly build, install the <a href="http://github.com/downloads/marcoraddatz/candyCMS/missing_folders.zip" target="_blank">additional folder package</a> first!)
