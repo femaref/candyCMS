@@ -342,9 +342,7 @@ class Model_Gallery extends Model_Main {
         $oQuery = $oDb->prepare("	DELETE FROM
                                     gallery_files
                                   WHERE
-                                    album_id = :album_id
-                                  LIMIT
-                                    1");
+                                    album_id = :album_id");
 
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();

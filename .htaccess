@@ -39,7 +39,7 @@ RewriteRule ^(Blog|Content|User)/([0-9]+)/highlight/(.*)$ index.php?section=$1&i
 RewriteRule ^(Blog|Content|User)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L,QSA] # Show entry with description in url
 RewriteRule ^(Gallery)/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&album_id=$4&page=1 [L,QSA]
 RewriteRule ^(Gallery)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L,QSA] # Show pagination on sub id
-RewriteRule ^(Blog|Search)/([A-Za-z]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA] # Show item sorted by tag
+RewriteRule ^(Blog|Search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA] # Show item sorted by tag
 RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L,QSA]
 RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA]
 RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA]

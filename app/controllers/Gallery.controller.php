@@ -111,7 +111,7 @@ class Gallery extends Main {
   }
 
   protected function _destroy() {
-		$sRedirect = '/Gallery/' . $this->_iId;
+		$sRedirect = '/Gallery';
 
     if($this->_oModel->destroy($this->_iId) === true)
       return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
