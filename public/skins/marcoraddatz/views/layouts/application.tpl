@@ -51,13 +51,15 @@
           {$lang_update_avaiable}
         </div>
       {/if}
-      <div id='js-flash_message'>
-        <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
-             onclick="hideDiv('js-flash_message')">
-          <h4>%FLASH_HEADLINE%</h4>
-          <p>%FLASH_MESSAGE%</p>
+      {if $_flash_type_}
+        <div id='js-flash_message'>
+          <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'
+               onclick="hideDiv('js-flash_message')">
+            <h4>{$_flash_headline_}</h4>
+            <p>{$_flash_message_}</p>
+          </div>
         </div>
-      </div>
+      {/if}
       {$_content_}
     </div>
     {if $USER_RIGHT > 3}
