@@ -149,8 +149,10 @@ class Mail extends Main {
               $sMessage,
               $sReplyTo);
 
-      if ($bStatus == true)
+      if ($bStatus == true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
 				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Start');
+      }
 			else
 				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/Start');
     }
@@ -203,9 +205,8 @@ class Mail extends Main {
       if(!empty($sAttachment))
         $oMail->AddAttachment($sAttachment);
 
-      $oMail->Send();
-
-      return true;
+      return $oMail->Send();
+      #return true;
     }
     catch (phpmailerException $e) {
       return $e->errorMessage();

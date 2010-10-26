@@ -88,7 +88,7 @@ class Gallery extends Main {
 			$sRedirect = '/Gallery';
 
       if ($this->_oModel->create() === true) {
-        Helper::log('gallery_album', $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
         return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
       else
@@ -108,7 +108,7 @@ class Gallery extends Main {
 			$sRedirect = '/Gallery/' . (int) $this->_aRequest['id'];
 
       if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
-        Helper::log('gallery_album', $this->_aRequest['action'], (int)$this->_aRequest['id']);
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
         return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
       }
       else
@@ -121,7 +121,7 @@ class Gallery extends Main {
 		$sRedirect = '/Gallery';
 
     if($this->_oModel->destroy($this->_iId) === true) {
-      Helper::log('gallery_album', $this->_aRequest['action'], (int)$this->_aRequest['id']);
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
       return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
     else {
@@ -206,8 +206,10 @@ class Gallery extends Main {
 
     else {
       if( isset($this->_aRequest['update_file']) ) {
-        if( $this->_oModel->updateFile($this->_iId) === true)
+        if( $this->_oModel->updateFile($this->_iId) === true) {
+          Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
+        }
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
 			}
@@ -222,6 +224,7 @@ class Gallery extends Main {
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
         unset($this->_iId);
       }
