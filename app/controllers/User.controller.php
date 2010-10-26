@@ -29,8 +29,8 @@ class User extends Main {
       return Helper::errorMessage(LANG_GLOBAL_CREATE_SESSION_FIRST);
 
     else {
-      if (isset($this->_aRequest['update_user']))
-        if ($this->_update((int) $this->_iId) === true) {
+      if (isset($this->_aRequest['update_user'])) {
+        if ($this->_update((int) $this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
