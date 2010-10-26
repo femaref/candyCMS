@@ -59,5 +59,5 @@ Installation
 1. Ggf. einen Account auf http://recaptcha.org einrichten.
 2. Die Config ("/config/Config.php.inc") anpassen.
 3. Die Ordner "/backup", "/cache", "/compile" und "/upload" erstellen und mit den Rechten "777" versehen.
-3.1. Ebenfalls die Ordner "/upload/gallery", "/upload/media", "/upload/temp", "/upload/gallery", "/upload/user/32", "/upload/user/64", "/upload/user/100", "/upload/user/200", "/upload/user/POPUP_DEFAULT_X" (Wert aus der Config; Standard: 800), "/upload/user/original" erstellen und mit den CHMOD-Rechten 777 ausstatten.
+3.1. Ebenfalls die Ordner "/upload/gallery", "/upload/media", "/upload/temp", "/upload/user", "/upload/user/32", "/upload/user/64", "/upload/user/100", "/upload/user/200", "/upload/user/popup", "/upload/user/original" erstellen und mit den CHMOD-Rechten 755 / 777 ausstatten.
 4. Installationsscript via "/install" aufrufen und die einzelnen Schritte durchführen.

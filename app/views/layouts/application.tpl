@@ -48,7 +48,7 @@
     </div>
     <div id="footer">
       <p>
-        <a href='/About'>{$lang_about} {$name}</a>
+        <a href='/About'>{$lang_about} {$_website_name_}</a>
         &middot;
         <a href='/Disclaimer'>{$lang_disclaimer}</a>
         &middot;
