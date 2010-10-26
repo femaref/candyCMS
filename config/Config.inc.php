@@ -75,6 +75,7 @@ define('WEBSITE_DEV', true);
 # "public/skins/_static/nameofyourpage.tpl"
 # DEFAULT: Blog
 define('WEBSITE_LANDING_PAGE', 'Blog');
+
 # ------------------------------------------------------------------------------
 
 # Number of seconds between cronjob execution (if enabled)
