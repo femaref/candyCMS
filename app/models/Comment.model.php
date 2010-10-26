@@ -68,6 +68,11 @@ class Model_Comment extends Model_Main {
         else
           $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
 
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
         $this->_aData[$iId] =
                 array(
                     'id'              => $aRow['id'],
@@ -79,6 +84,8 @@ class Model_Comment extends Model_Main {
                     'author_name'     => $aRow['author_name'],
                     'name'            => Helper::formatOutput($aRow['name']),
                     'surname'         => Helper::formatOutput($aRow['surname']),
+                    'full_name'       => $sFullName,
+                    'full_name_seo'   => urlencode($sFullName),
                     'avatar_32'       => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
                     'avatar_64'       => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
                     'date'            => Helper::formatTimestamp($aRow['date'], true),
