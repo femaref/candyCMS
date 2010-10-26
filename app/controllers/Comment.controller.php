@@ -141,8 +141,10 @@ final class Comment extends Main {
 			$sRedirect =	'/' . $this->_sParentSection .
 										'/' . (int) $this->_aRequest['parent_id'];
 
-			if ($this->_oModel->create() == true)
+			if ($this->_oModel->create() === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('comments'));
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+      }
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 		}
@@ -152,8 +154,10 @@ final class Comment extends Main {
 		$sRedirect =	'/' . $this->_sParentSection .
 									'/' . (int) $this->_aRequest['parent_id'];
 
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
+		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}

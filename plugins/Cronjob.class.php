@@ -274,16 +274,16 @@ final class Cronjob {
     # Write into backup log
     try {
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  logs(class_name, action_name, action_id, time_start, time_end, user_id)
+                                  logs(section_name, action_name, action_id, time_start, time_end, user_id)
                                 VALUES
-                                  ( :class_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
+                                  ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
 
-      $sClassName = 'cronjob';
+      $sSectionName = 'cronjob';
       $sActionName = 'create';
-      $sActionId = 0;
-      $oQuery->bindParam('class_name', $sClassName);
+      $iActionId = 0;
+      $oQuery->bindParam('section_name', $sSectionName);
       $oQuery->bindParam('action_name', $sActionName);
-      $oQuery->bindParam('action_id', $sActionId, PDO::PARAM_INT);
+      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
       $oQuery->bindParam('time_start', $iBackupStartTime);
       $oQuery->bindParam('time_end', time());
       $oQuery->bindParam('user_id', $iUserId);
@@ -308,7 +308,7 @@ final class Cronjob {
                               FROM
                                 logs
                               WHERE
-                                class_name = 'cronjob'
+                                section_name = 'cronjob'
                               ORDER BY
                                 time_end DESC
                               LIMIT

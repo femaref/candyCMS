@@ -408,6 +408,10 @@ class Model_Gallery extends Model_Main {
         $oDb->rollBack();
       }
 
+      # Log uploaded image. Request ID = album id
+      if($bResult === true)
+        Helper::log('gallery_file', 'create', (int) $this->_aRequest['id']);
+
 			# TODO: Return true or false?
       return $oUploadFile->sFilePath;
     }
