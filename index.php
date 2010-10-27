@@ -55,11 +55,11 @@ try {
 
 @session_start();
 
-# We avoid the PHP-Request due to problems with $_COOKIE
+# We avoid the $_REQUEST due to problems with $_COOKIE
 $aRequest = array_merge($_POST, $_GET);
-$aFile = isset($_FILES) ? $_FILES : array();
+$aFiles = isset($_FILES) ? $_FILES : array();
 
-$oIndex = new Index($aRequest, $_SESSION, $aFile, $_COOKIE);
+$oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
 $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
 $oIndex->setLanguage();
