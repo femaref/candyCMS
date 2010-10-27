@@ -189,7 +189,7 @@ final class Comment extends Main {
 			$oSmarty->assign('USER_EMAIL', USER_EMAIL);
 			$oSmarty->assign('USER_NAME', USER_NAME);
 			$oSmarty->assign('USER_SURNAME', USER_SURNAME);
-			$oSmarty->assign('_action_url_', $this->_sAction . $iParentId);
+			$oSmarty->assign('_action_url_', $this->_sAction);
 			$oSmarty->assign('content', $sContent);
 			$oSmarty->assign('email', $sEmail);
 			$oSmarty->assign('name', $sName);
