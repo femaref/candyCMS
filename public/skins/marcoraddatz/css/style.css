@@ -305,6 +305,10 @@ table th
   padding-top: 3px;
 }
 
+.element .date:hover, .gallery_album .date:hover {
+  cursor: help;
+}
+
 .element h2, .gallery_album h2 {
   margin: 3px 0px 0px 0px;
 }

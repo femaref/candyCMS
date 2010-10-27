@@ -20,7 +20,7 @@
       <div id='b{$b.id}' class='element'>
         <div class="body">
           <div class='header'>
-            <div class='date'>
+            <div class='date' title="{$b.datetime}">
               {$b.date}
             </div>
             <h2>
@@ -44,6 +44,14 @@
           {/if}
           {$b.content}
           <div class='footer'>
+            {if $b.tags[0] !== ''}
+              {$lang_tags}:
+              {foreach from=$b.tags item=t name=tags}
+                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
+                {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+              {/foreach}
+              <br />
+            {/if}
             {$lang_share}:
             <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'
                class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>

@@ -4,7 +4,7 @@
   </div>
 {else}
   <div id='c{$c.id}' class='element'>
-    <div class='date'>
+    <div class='date' title="{$c.datetime}">
       {$c.date}
     </div>
     <div class='header'>

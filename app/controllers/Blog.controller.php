@@ -156,6 +156,8 @@ class Blog extends Main {
 				$oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
+    $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+
 		# More language
 		$oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 		$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
