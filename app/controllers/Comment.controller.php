@@ -138,11 +138,13 @@ final class Comment extends Main {
 			return $this->_showFormTemplate($bShowCaptcha);
 
 		else {
-			$sRedirect =	'/' . $this->_sParentSection .
-										'/' . (int) $this->_aRequest['parent_id'];
+      $iLastComment = Helper::getLastEntry('comments');
+
+			$sRedirect = '/' . $this->_sParentSection .
+              '/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
 			if ($this->_oModel->create() === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('comments'));
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
 			else
