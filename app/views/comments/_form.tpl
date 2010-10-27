@@ -31,6 +31,7 @@
             {else}
               <div class="input">
                 <input type="text" value="{$email}" name="email" id="email" />
+                <div class='description'>{$lang_email_info}</div>
               </div>
             {/if}
           </td>

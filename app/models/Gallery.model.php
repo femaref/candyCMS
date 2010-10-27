@@ -411,7 +411,6 @@ class Model_Gallery extends Model_Main {
       # Log uploaded image. Request ID = album id
       if($bResult === true)
         Helper::log($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-      print_r($this->_aRequest);
 
 			# TODO: Return true or false?
       return $oUploadFile->sFilePath;

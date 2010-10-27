@@ -88,8 +88,11 @@
         </ul>
       </div>
     {/if}
-    Heavily inspired by <a href="http://arturkim.com/">Artur Kim</a>.
-    Based on <a href="http://candycms.com">CandyCMS</a> by Marco Raddatz.
+    <br />
+    <span class="small">
+      Heavily inspired by <a href="http://arturkim.com/">Artur Kim</a>.
+      Based on <a href="http://candycms.com">CandyCMS</a> by Marco Raddatz.
+    </span>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <script type="text/javascript">
