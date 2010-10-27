@@ -57,13 +57,11 @@
       </table>
     </fieldset>
     <center>
-      {literal}
-        <script type="text/javascript">
-          var RecaptchaOptions = {
-             lang : 'de'
-          };
-        </script>
-      {/literal}
+      <script type="text/javascript">
+        var RecaptchaOptions = {
+           lang : 'de'
+        };
+      </script>
       <div class="{if $error_captcha}error{/if}">
         {$_captcha_}
         {if $error_captcha}

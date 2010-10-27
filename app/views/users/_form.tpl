@@ -159,11 +159,9 @@
 </form>
 <script type="text/javascript">
   var sFilesSuffix = '{$_compress_files_suffix_}';
-  {literal}
     window.addEvent('domready', function() {
-      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
+      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
     });
-  {/literal}
 </script>
 <p></p>
 <a name="js-upload_image"></a>

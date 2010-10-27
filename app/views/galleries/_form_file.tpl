@@ -1,105 +1,101 @@
 <link href='%PATH_PUBLIC%/css/fancyupload-min.css' rel='stylesheet' type='text/css' media='screen, projection' />
-{literal}
   <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.js"></script>
   <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Fx.ProgressBar.js"></script>
   <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/FancyUpload2.js"></script>
-{/literal}
 {if $smarty.get.action == 'createfile'}
-  {literal}
-    <script type='text/javascript'>
-      window.addEvent('domready', function()
+  <script type='text/javascript'>
+    window.addEvent('domready', function()
+    {
+      var up = new FancyUpload2($('fancy-status'), $('fancy-list'),
       {
-        var up = new FancyUpload2($('fancy-status'), $('fancy-list'),
-        {
-          verbose: false,
-          url: $('upload').action,
-          data: $('upload').toQueryString(),
-          path: '%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.swf',
+        verbose: false,
+        url: $('upload').action,
+        data: $('upload').toQueryString(),
+        path: '%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.swf',
 
-          typeFilter: {
-            'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
-          },
+        typeFilter: {
+          'Images (*.jpg, *.jpeg, *.gif, *.png)': '*.jpg; *.jpeg; *.gif; *.png'
+        },
 
-          target: 'fancy-browse',
+        target: 'fancy-browse',
 
-          onLoad: function() {
-            $('fancy-status').removeClass('hide');
-            $('fancy-fallback').destroy();
+        onLoad: function() {
+          $('fancy-status').removeClass('hide');
+          $('fancy-fallback').destroy();
 
-            this.target.addEvents({
-              click: function() {
-                return false;
-              },
-              mouseenter: function() {
-                this.addClass('hover');
-              },
-              mouseleave: function() {
-                this.removeClass('hover');
-                this.blur();
-              },
-              mousedown: function() {
-                this.focus();
-              }
-            });
-
-            $('fancy-upload').addEvent('click', function() {
-              up.start();
+          this.target.addEvents({
+            click: function() {
               return false;
-            });
-          },
+            },
+            mouseenter: function() {
+              this.addClass('hover');
+            },
+            mouseleave: function() {
+              this.removeClass('hover');
+              this.blur();
+            },
+            mousedown: function() {
+              this.focus();
+            }
+          });
 
-          onBeforeStart: function() {
-            up.setOptions({
-              data: $('upload').toQueryString()
-            });
-          },
+          $('fancy-upload').addEvent('click', function() {
+            up.start();
+            return false;
+          });
+        },
 
-          onSelectFail: function(files) {
-            files.each(function(file) {
-              new Element('li', {
-                'class': 'validation-error',
-                html: file.validationErrorMessage || file.validationError,
-                title: MooTools.lang.get('FancyUpload', 'removeTitle'),
-                events: {
-                  click: function() {
-                    this.destroy();
-                  }
+        onBeforeStart: function() {
+          up.setOptions({
+            data: $('upload').toQueryString()
+          });
+        },
+
+        onSelectFail: function(files) {
+          files.each(function(file) {
+            new Element('li', {
+              'class': 'validation-error',
+              html: file.validationErrorMessage || file.validationError,
+              title: MooTools.lang.get('FancyUpload', 'removeTitle'),
+              events: {
+                click: function() {
+                  this.destroy();
                 }
-              }).inject(this.list, 'top');
-            }, this);
-          },
+              }
+            }).inject(this.list, 'top');
+          }, this);
+        },
 
-          onFileSuccess: function(file, response) {
-            var json = new Hash(JSON.decode(response, true) || {});
+        onFileSuccess: function(file, response) {
+          var json = new Hash(JSON.decode(response, true) || {});
 
-            if (json.get('status') == '1') {
-              file.element.addClass('file-success');
-              file.info.set('html', '<strong>Image was uploaded:</strong> ' + json.get('width') + ' x ' + json.get('height') + 'px, <em>' + json.get('mime') + '</em>');
-            } else {
-              file.element.addClass('file-failed');
-              file.info.set('html', '<strong>An error occured:</strong> ' + (json.get('error') ? (json.get('error') + ' #' + json.get('code')) : response));
-            }
-          },
+          if (json.get('status') == '1') {
+            file.element.addClass('file-success');
+            file.info.set('html', '<strong>Image was uploaded:</strong> ' + json.get('width') + ' x ' + json.get('height') + 'px, <em>' + json.get('mime') + '</em>');
+          } else {
+            file.element.addClass('file-failed');
+            file.info.set('html', '<strong>An error occured:</strong> ' + (json.get('error') ? (json.get('error') + ' #' + json.get('code')) : response));
+          }
+        },
 
-          onFail: function(error) {
-            switch (error) {
-              case 'hidden': /* works after enabling the movie and clicking refresh */
-                alert('To enable the embedded uploader, unblock it in your browser and refresh (see Adblock).');
-                break;
-              case 'blocked': /* This no *full* fail, it works after the user clicks the button */
-                alert('To enable the embedded uploader, enable the blocked Flash movie (see Flashblock).');
-                break;
-              case 'empty': /* Oh oh, wrong path */
-                alert('A required file was not found, please be patient and we fix this.');
-                break;
-              case 'flash': /* no flash 9+ :( */
-                alert('To enable the embedded uploader, install the latest Adobe Flash plugin.')
-            }
-          },
-        });
+        onFail: function(error) {
+          switch (error) {
+            case 'hidden': /* works after enabling the movie and clicking refresh */
+              alert('To enable the embedded uploader, unblock it in your browser and refresh (see Adblock).');
+              break;
+            case 'blocked': /* This no *full* fail, it works after the user clicks the button */
+              alert('To enable the embedded uploader, enable the blocked Flash movie (see Flashblock).');
+              break;
+            case 'empty': /* Oh oh, wrong path */
+              alert('A required file was not found, please be patient and we fix this.');
+              break;
+            case 'flash': /* no flash 9+ :( */
+              alert('To enable the embedded uploader, install the latest Adobe Flash plugin.')
+          }
+        },
       });
-    </script>
-  {/literal}
+    });
+  </script>
 {/if}
 <form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='upload'>
   <table>

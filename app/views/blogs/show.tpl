@@ -86,15 +86,12 @@
   {$_blog_comments_}
 {/if}
 <script type="text/javascript">
-  var sFilesSuffix = '{$_compress_files_suffix_}';
-  {literal}
-    window.addEvent('domready', function() {
-      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
-    });
+  window.addEvent('domready', function() {
+    new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
+  });
 
-    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
-      display: -1,
-      alwaysHide: true
-    });
-  {/literal}
+  var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+    display: -1,
+    alwaysHide: true
+  });
 </script>
