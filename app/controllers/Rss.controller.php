@@ -27,18 +27,23 @@ class Rss {
 		$this->_sSection = isset($this->_aRequest['template']) ?
 						(string) ucfirst($this->_aRequest['template']) :
 						'Blog';
-
-		if($this->_sSection == 'Blog')
-			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
 	}
 
 	public function show() {
+		if($this->_sSection == 'Blog') {
+			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+			$this->_showClassic();
+		}
+	}
+
+	private function _showClassic() {
 		$oSmarty = new Smarty();
-		$oSmarty->assign('_copyright_', date('Y'));
-		$oSmarty->assign('_description_', '');
 		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
+		$oSmarty->assign('_pubdate_', date('r'));
 		$oSmarty->assign('_section_', $this->_sSection);
 
+		$oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
+		$oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
 		$oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$oSmarty->assign('data', $this->_oModel->getData());
 
@@ -47,7 +52,7 @@ class Rss {
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = Helper::getTemplateDir('rss/show');
-		return $oSmarty->fetch('rss/show.tpl');
+		$oSmarty->template_dir = Helper::getTemplateDir('rss/content');
+		return $oSmarty->fetch('rss/content.tpl');
 	}
 }

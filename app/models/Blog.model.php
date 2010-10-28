@@ -99,6 +99,7 @@ class Model_Blog extends Model_Main {
                 'date'          => Helper::formatTimestamp($aRow['date'], true),
                 'datetime'      => Helper::formatTimestamp($aRow['date']),
                 'date_raw'      => $aRow['date'],
+                'date_rss'      => date('r', $aRow['date']),
                 'uid'           => $aRow['uid'],
                 'name'          => $sName,
                 'surname'       => $sSurname,
