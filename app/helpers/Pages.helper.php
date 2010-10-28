@@ -72,12 +72,11 @@ final class Pages {
 
     $oSmarty = new Smarty();
     $oSmarty->assign('_action_url_', $sURL);
-    $oSmarty->assign('page_limit', $this->_iLimit);
-    $oSmarty->assign('page_count', $this->_iCount);
-    $oSmarty->assign('page_next', $iNext);
-    $oSmarty->assign('page_previous', $iPrevious);
-
-    $oSmarty->assign('rss_section', $sRssAction);
+    $oSmarty->assign('_page_limit_', $this->_iLimit);
+    $oSmarty->assign('_page_count_', $this->_iCount);
+    $oSmarty->assign('_page_next_', $iNext);
+    $oSmarty->assign('_page_previous_', $iPrevious);
+    $oSmarty->assign('_rss_section_', $sRssAction);
 
     # Language
     $oSmarty->assign('lang_next_entries', LANG_PAGES_NEXT_ENTRIES);

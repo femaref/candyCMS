@@ -1,11 +1,13 @@
 <p>
-  {if $page_previous}
-    <a href='/{$_action_url_}/page/{$page_previous}'>&laquo; {$lang_previous_entries}</a>&nbsp;&nbsp;
+  {if $_page_previous_}
+    <a href='/{$_action_url_}/page/{$_page_previous_}'>&laquo; {$lang_previous_entries}</a>&nbsp;&nbsp;
   {/if}
-  {if $rss_section}
-    <a href='/RSS'><img src='%PATH_IMAGES%/spacer.gif' class="icon-rss" alt='{$lang_rss_feed}' /></a>
+  {if $_rss_section_}
+    <a href='/RSS/{$_rss_section_}'>
+      <img src='%PATH_IMAGES%/spacer.gif' class="icon-rss" alt='{$lang_rss_feed}' />
+    </a>
   {/if}
-  {if $page_next && $page_count > $page_limit}
-    &nbsp;&nbsp;<a href='/{$_action_url_}/page/{$page_next}'>{$lang_next_entries} &raquo;</a>
+  {if $_page_next_ && $_page_count_ > $_page_limit_}
+    &nbsp;&nbsp;<a href='/{$_action_url_}/page/{$_page_next_}'>{$lang_next_entries} &raquo;</a>
   {/if}
 </p>

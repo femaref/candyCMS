@@ -11,6 +11,7 @@ require_once 'app/models/Blog.model.php';
 require_once 'app/helpers/Pages.helper.php';
 
 class Rss {
+
 	private $_sAction;
 	private $_oModel;
 	private $_iLimit;
@@ -18,34 +19,34 @@ class Rss {
 	private $_aSession;
 
 	public function __construct($aRequest, $aSession) {
-		$this->_aRequest =& $aRequest;
-		$this->_aSession =& $aSession;
+		$this->_aRequest = & $aRequest;
+		$this->_aSession = & $aSession;
 	}
 
 	public function __init() {
-		$this->_sAction = isset( $this->_aRequest['action'] ) ?
-				(string)$this->_aRequest['action'] :
-				'blog';
+		$this->_sSection = isset($this->_aRequest['template']) ?
+						(string) ucfirst($this->_aRequest['template']) :
+						'Blog';
 
-		$this->_iLimit = LIMIT_BLOG;
-		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+		if($this->_sSection == 'Blog')
+			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
 	}
 
 	public function show() {
 		$oSmarty = new Smarty();
+		$oSmarty->assign('_copyright_', date('Y'));
+		$oSmarty->assign('_description_', '');
+		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
+		$oSmarty->assign('_section_', $this->_sSection);
+
+		$oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$oSmarty->assign('data', $this->_oModel->getData());
-		$oSmarty->assign('title', LANG_WEBSITE_TITLE);
-		$oSmarty->assign('description', '');
-		$oSmarty->assign('link', WEBSITE_URL);
-		$oSmarty->assign('copyright', date('Y') );
-		$oSmarty->assign('action', $this->_sAction );
 
 		# Language
-		$oSmarty->assign('date', LANG_GLOBAL_DATE );
-		$oSmarty->assign('location', LANG_GLOBAL_LOCATION );
+		$oSmarty->assign('lang_website_title', LANG_WEBSITE_TITLE);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
+		$oSmarty->cache_dir = CACHE_DIR;
+		$oSmarty->compile_dir = COMPILE_DIR;
 		$oSmarty->template_dir = Helper::getTemplateDir('rss/show');
 		return $oSmarty->fetch('rss/show.tpl');
 	}
