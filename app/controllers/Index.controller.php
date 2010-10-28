@@ -156,6 +156,7 @@ class Index {
     $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
     $oSmarty->assign('_website_name_', WEBSITE_NAME);
     $oSmarty->assign('_website_url_', WEBSITE_URL);
+    $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
 
 
     # Get possible flash messages
@@ -236,6 +237,11 @@ class Index {
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
 
       # Include optional plugins
+      if( class_exists('Adsense') ) {
+        $oAdsense = new Adsense();
+        $oSmarty->assign('_plugin_adsense_', $oAdsense->show());
+      }
+
       if (class_exists('Archive')) {
         $oArchive = new Archive($this->_aRequest, $this->_aSession);
         $oSmarty->assign('_plugin_archive_', $oArchive->show());

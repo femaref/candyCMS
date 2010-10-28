@@ -70,6 +70,12 @@ define('WEBSITE_DEV', true);
 
 # ------------------------------------------------------------------------------
 
+# Enter your Google tracking code here
+# DEFAULT: ''
+define('WEBSITE_TRACKING_CODE', 'UA-304730-2');
+
+# ------------------------------------------------------------------------------
+
 # Define the entry point of your website. If you want to use a static page, type
 # "Static/nameofyourpage" and place it at
 # "public/skins/_static/nameofyourpage.tpl"
