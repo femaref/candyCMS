@@ -352,6 +352,7 @@ table th
 
 .gallery_files .image {
   padding:5px;
+  background: #efefef url('../images/loading.gif') no-repeat center;
 }
 
 .video, .audio {

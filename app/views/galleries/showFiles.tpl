@@ -44,10 +44,9 @@
       {else}
         {$f.description}
       {/if}'>
-      <img src='%PATH_IMAGES%/spacer.gif' class='image' width='{$f.dim}'
-           height='{$f.dim}' alt='{$f.description}' id='{$f.loop}{$f.file}'
-           title='{$f.description}'
-           style="background:#EFEFEF url('{$f.full_path}/{$f.dim}/{$f.file}') center no-repeat" />
+      <img src='{$f.full_path}/{$f.dim}/{$f.file}' class='image'
+           alt='{$f.description}' id='{$f.loop}{$f.file}'
+           title='{$f.description}' />
     </a>
   {/foreach}
   <p>{$_album_pages_}</p>
@@ -60,3 +59,6 @@
     new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
   });
 </script>
+{if $_plugin_lazyload_}
+  {$_plugin_lazyload_}
+{/if}

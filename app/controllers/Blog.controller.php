@@ -39,6 +39,11 @@ class Blog extends Main {
 		$oSmarty->assign('_blog_comments_', $oComments->show());
 		$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
+		if (class_exists('LazyLoad')) {
+			$oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
+		}
+
 		# Language
 		$oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
 		$oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);

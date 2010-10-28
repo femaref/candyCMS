@@ -109,8 +109,8 @@ define('ALLOW_ADDONS', false);
 # ------------------------------------------------------------------------------
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive,Headlines');
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines,Adsense,LazyLoad
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive,Headlines,LazyLoad');
 
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
@@ -208,7 +208,7 @@ define('COMPILE_DIR', 'compile');
 
 # Define limit for pictures per page (3 in a row)
 # DEFAULT: 9
-define('LIMIT_ALBUM_IMAGES', 3);
+define('LIMIT_ALBUM_IMAGES', 9999);
 define('LIMIT_ALBUM_THUMBS', 9999);
 
 # Limit of blog entries per page

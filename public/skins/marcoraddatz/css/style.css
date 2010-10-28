@@ -1,6 +1,6 @@
 html {
   text-align: center;
-  font: 13px 	"helvetica neue",helvetica,arial,sans-serif;
+  font: 13px "helvetica neue",helvetica,arial,sans-serif;
   color: #000;
   background: #272930;
 }
@@ -361,6 +361,7 @@ table th
 
 .gallery_files .image {
   padding:5px;
+  background: #efefef url('../../../images/loading.gif') no-repeat center;
 }
 
 .video, .audio {

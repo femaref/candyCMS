@@ -96,3 +96,6 @@
       alwaysHide: true
     });
 </script>
+{if $_plugin_lazyload_}
+  {$_plugin_lazyload_}
+{/if}

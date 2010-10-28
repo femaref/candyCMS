@@ -24,6 +24,11 @@ class Gallery extends Main {
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
     $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 
+		if (class_exists('LazyLoad')) {
+			$oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
+		}
+
     # Language
     $oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
