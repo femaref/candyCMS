@@ -16,7 +16,7 @@
         <img src='{$u.avatar_32}' width="18" height="18" alt='' />
       </td>
       <td style='width:35%' class="left">
-        <a href='/User/{$u.id}'>{$u.name} {$u.surname}</a>
+        <a href='/User/{$u.id}/{$u.full_name_seo}'>{$u.full_name}</a>
       </td>
       <td style='width:25%' title='{$lang_registered_since}'>{$u.date}</td>
       <td style='width:25%' title='{$lang_last_login}'>{$u.last_login}</td>

@@ -112,6 +112,7 @@ define( 'LANG_BLOG_TITLE_CREATE', 'Create blog entry' );
 define( 'LANG_BLOG_TITLE_UPDATE', 'Update: %p' );
 define( 'LANG_BLOG_INFO_TAG', 'Seperate tags by comma and space, i.e. "tag1, tag2"' );
 define( 'LANG_BLOG_INFO_TEASER', 'Write a short teaser!' );
+define( 'LANG_COMMENT_INFO_EMAIL', 'Your Email will not be published.' );
 define( 'LANG_COMMENT_TITLE_CREATE', 'Create comment' );
 define( 'LANG_COMMENT_TITLE_DESTROY', 'Delete comment' );
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Update: %p' );

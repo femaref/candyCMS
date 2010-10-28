@@ -98,6 +98,8 @@ class Newsletter extends Main {
         $oSmarty->assign('error_' . $sField, $sMessage);
     }
 
+    $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
     $oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
@@ -154,8 +156,10 @@ class Newsletter extends Main {
         $bStatusNewsletter = Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
       }
 
-      if($bStatusNewsletter == true && $bStatusUser == true)
+      if($bStatusNewsletter === true && $bStatusUser === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action']);
         return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/Start' );
+      }
       else
         return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/Start');
     }

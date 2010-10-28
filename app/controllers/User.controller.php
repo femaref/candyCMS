@@ -20,6 +20,7 @@ class User extends Main {
 	}
 
 	# @Override
+  # TODO: Merge method with "_update"?
 	public function update() {
     if (empty($this->_iId))
       $this->_iId = USER_ID;
@@ -29,7 +30,7 @@ class User extends Main {
 
     else {
       if (isset($this->_aRequest['update_user'])) {
-        if ($this->_update($this->_iId) === true)
+        if ($this->_update((int) $this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
@@ -79,10 +80,8 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               USER_ID;
 
-      if ($this->_oModel->update($this->_iId) === true)
-        return true;
-      else
-        return false;
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_iId);
+      return $this->_oModel->update($this->_iId);
     }
   }
 
@@ -270,8 +269,10 @@ class User extends Main {
 	# @Override
 	public function destroy() {
     if (USER_RIGHT == 4) {
-      if ($this->_oModel->destroy($this->_iId) === true)
+      if ($this->_oModel->destroy($this->_iId) === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/User');
+      }
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/User');
     }
@@ -331,8 +332,10 @@ class User extends Main {
 												$sMailMessage,
 												WEBSITE_MAIL_NOREPLY);
 
-				if($bStatus == true)
+				if($bStatus == true) {
+          Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
 					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
+        }
 
 				else
 					return Helper::errorMessage (LANG_ERROR_MAIL_ERROR);
@@ -344,7 +347,6 @@ class User extends Main {
 
 	private function _showCreateUserTemplate() {
 		$oSmarty = new Smarty();
-
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
 		$sName = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';

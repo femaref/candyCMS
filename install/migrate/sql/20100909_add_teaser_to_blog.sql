@@ -1,1 +1,0 @@
-ALTER TABLE blogs ADD teaser VARCHAR( 140 ) DEFAULT NULL AFTER title;

@@ -299,7 +299,6 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('published', $iPublished);
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
-
       $oDb = null;
       return $bResult;
     }

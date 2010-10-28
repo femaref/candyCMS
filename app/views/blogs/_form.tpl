@@ -1,36 +1,34 @@
-{literal}
-  <script type="text/javascript">
-    window.addEvent('domready', function() {
+<script type="text/javascript">
+  window.addEvent('domready', function() {
+    var sValue = $('teaser').value;
+    var iLength = sValue.length;
+    var iRemaining = 140 - iLength;
+    $('js-chars').set('html', iRemaining);
+
+    $('teaser').addEvent('keyup', function() {
       var sValue = $('teaser').value;
       var iLength = sValue.length;
       var iRemaining = 140 - iLength;
       $('js-chars').set('html', iRemaining);
-
-      $('teaser').addEvent('keyup', function() {
-        var sValue = $('teaser').value;
-        var iLength = sValue.length;
-        var iRemaining = 140 - iLength;
-        $('js-chars').set('html', iRemaining);
-      });
     });
-  </script>
-  <script language='javascript' type='text/javascript'
-    src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
-  <script language='javascript' type='text/javascript'>
-    tinyMCE.init({
-      mode : "textareas",
-      theme : "advanced",
-      theme_advanced_resize_horizontal : "true",
-      entity_encoding : "raw",
-      plugins : "safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
-      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen",
-      theme_advanced_buttons2 : "styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor",
-      theme_advanced_buttons3 : "hr,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,outdent,indent,|,pagebreak,|,charmap,emotions,media,|,print",
-      theme_advanced_statusbar_location : "bottom",
-      width : "100%"
-    });
-  </script>
-{/literal}
+  });
+</script>
+<script language='javascript' type='text/javascript'
+  src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
+<script language='javascript' type='text/javascript'>
+  tinyMCE.init({
+    mode : "textareas",
+    theme : "advanced",
+    theme_advanced_resize_horizontal : "true",
+    entity_encoding : "raw",
+    plugins : "autosave,safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+    theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen",
+    theme_advanced_buttons2 : "styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor",
+    theme_advanced_buttons3 : "hr,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,outdent,indent,|,pagebreak,|,charmap,emotions,media,|,print",
+    theme_advanced_statusbar_location : "bottom",
+    language : "{$_language_}"
+  });
+</script>
 <form method='post' action='{$_action_url_}' class="form blog">
   <table>
     <tr>

@@ -51,13 +51,15 @@
           {$lang_update_avaiable}
         </div>
       {/if}
-      <div id='js-flash_message'>
-        <div class='%FLASH_TYPE%' id='js-flash_%FLASH_TYPE%'
-             onclick="hideDiv('js-flash_message')">
-          <h4>%FLASH_HEADLINE%</h4>
-          <p>%FLASH_MESSAGE%</p>
+      {if $_flash_type_}
+        <div id='js-flash_message'>
+          <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'
+               onclick="hideDiv('js-flash_message')">
+            <h4>{$_flash_headline_}</h4>
+            <p>{$_flash_message_}</p>
+          </div>
         </div>
-      </div>
+      {/if}
       {$_content_}
     </div>
     {if $USER_RIGHT > 3}
@@ -86,19 +88,22 @@
         </ul>
       </div>
     {/if}
-    Heavily inspired by <a href="http://arturkim.com/">Artur Kim</a>.
-    Based on <a href="http://candycms.com">CandyCMS</a> by Marco Raddatz.
+    <br />
+    <span class="small">
+      Heavily inspired by <a href="http://arturkim.com/">Artur Kim</a>.
+      Based on <a href="http://candycms.com">CandyCMS</a> by Marco Raddatz.
+    </span>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <script type="text/javascript">
-      {literal}
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      try {
-        var pageTracker = _gat._getTracker("UA-304730-2");
-        pageTracker._trackPageview();
-      } catch(err) {}
-      {/literal}
-    </script>
+    {if $_website_tracking_code_}
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        try {
+          var pageTracker = _gat._getTracker("{$_website_tracking_code_}");
+          pageTracker._trackPageview();
+        } catch(err) {}
+      </script>
+    {/if}
   </body>
 </html>

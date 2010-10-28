@@ -104,6 +104,8 @@ final class Content extends Main {
         $oSmarty->assign('error_' . $sField, $sMessage);
     }
 
+    $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+
     # More language
     $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
@@ -129,8 +131,10 @@ final class Content extends Main {
 			return $this->_showFormTemplate(false);
 
 		else {
-			if ($this->_oModel->create() === true)
+			if ($this->_oModel->create() === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
 				return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
+      }
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 		}
@@ -138,15 +142,19 @@ final class Content extends Main {
 
   protected final function _update() {
 		$sRedirect = '/Content/' . (int) $this->_aRequest['id'];
-		if ($this->_oModel->update((int) $this->_aRequest['id']) === true)
+		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
 
 	protected final function _destroy() {
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
+		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 	}

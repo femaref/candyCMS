@@ -156,6 +156,16 @@ class Index {
     $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
     $oSmarty->assign('_website_name_', WEBSITE_NAME);
     $oSmarty->assign('_website_url_', WEBSITE_URL);
+    $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
+
+
+    # Get possible flash messages
+    $aFlashMessages = $this->_getFlashMessage();
+
+    # Replace Flash Message with Content
+    $oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+    $oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+    $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
     # Language
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
@@ -227,6 +237,11 @@ class Index {
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
 
       # Include optional plugins
+      if( class_exists('Adsense') ) {
+        $oAdsense = new Adsense();
+        $oSmarty->assign('_plugin_adsense_', $oAdsense->show());
+      }
+
       if (class_exists('Archive')) {
         $oArchive = new Archive($this->_aRequest, $this->_aSession);
         $oSmarty->assign('_plugin_archive_', $oArchive->show());
@@ -245,14 +260,6 @@ class Index {
       $oSmarty->isCached('layouts/application.tpl');
       $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
     }
-
-    # Get possible flash messages
-    $aFlashMessages = $this->_getFlashMessage();
-
-    # Replace Flash Message with Content
-    $sCachedHTML = str_replace('%FLASH_TYPE%', $aFlashMessages['type'], $sCachedHTML);
-    $sCachedHTML = str_replace('%FLASH_MESSAGE%', $aFlashMessages['message'], $sCachedHTML);
-    $sCachedHTML = str_replace('%FLASH_HEADLINE%', $aFlashMessages['headline'], $sCachedHTML);
 
     # Build absolute Path because of Pretty URLs
     $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);

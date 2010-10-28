@@ -14,7 +14,7 @@
   {else}
     {foreach $albums as $a}
       <div class='gallery_album {cycle values="row1,row2"}'>
-        <div class="date">
+        <div class="date" title="{$a.datetime}">
           {$a.date}
         </div>
         <h2>

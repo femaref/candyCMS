@@ -70,11 +70,18 @@ define('WEBSITE_DEV', true);
 
 # ------------------------------------------------------------------------------
 
+# Enter your Google tracking code here
+# DEFAULT: ''
+define('WEBSITE_TRACKING_CODE', 'UA-304730-2');
+
+# ------------------------------------------------------------------------------
+
 # Define the entry point of your website. If you want to use a static page, type
 # "Static/nameofyourpage" and place it at
 # "public/skins/_static/nameofyourpage.tpl"
 # DEFAULT: Blog
 define('WEBSITE_LANDING_PAGE', 'Blog');
+
 # ------------------------------------------------------------------------------
 
 # Number of seconds between cronjob execution (if enabled)
@@ -176,14 +183,14 @@ define('POPUP_DEFAULT_Y', '800');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', '');
+define('PATH_CSS', 'marcoraddatz');
 
 # DEFAULT: default
 define('PATH_IMAGES', '');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', '');
+define('PATH_TPL', 'marcoraddatz');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'

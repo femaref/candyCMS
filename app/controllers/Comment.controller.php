@@ -138,11 +138,15 @@ final class Comment extends Main {
 			return $this->_showFormTemplate($bShowCaptcha);
 
 		else {
-			$sRedirect =	'/' . $this->_sParentSection .
-										'/' . (int) $this->_aRequest['parent_id'];
+      $iLastComment = Helper::getLastEntry('comments');
 
-			if ($this->_oModel->create() == true)
+			$sRedirect = '/' . $this->_sParentSection .
+              '/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
+
+			if ($this->_oModel->create() === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+      }
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 		}
@@ -152,8 +156,10 @@ final class Comment extends Main {
 		$sRedirect =	'/' . $this->_sParentSection .
 									'/' . (int) $this->_aRequest['parent_id'];
 
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true)
+		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -185,7 +191,7 @@ final class Comment extends Main {
 			$oSmarty->assign('USER_EMAIL', USER_EMAIL);
 			$oSmarty->assign('USER_NAME', USER_NAME);
 			$oSmarty->assign('USER_SURNAME', USER_SURNAME);
-			$oSmarty->assign('_action_url_', $this->_sAction . $iParentId);
+			$oSmarty->assign('_action_url_', $this->_sAction);
 			$oSmarty->assign('content', $sContent);
 			$oSmarty->assign('email', $sEmail);
 			$oSmarty->assign('name', $sName);
@@ -206,6 +212,7 @@ final class Comment extends Main {
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 			$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
 			$oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
+			$oSmarty->assign('lang_email_info', LANG_COMMENT_INFO_EMAIL);
 			$oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 			$oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
 			$oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);

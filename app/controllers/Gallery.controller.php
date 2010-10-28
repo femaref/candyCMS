@@ -76,6 +76,7 @@ class Gallery extends Main {
     }
   }
 
+  # Create gallery album
   protected final function _create() {
     if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
       $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
@@ -86,13 +87,16 @@ class Gallery extends Main {
     else {
 			$sRedirect = '/Gallery';
 
-      if ($this->_oModel->create() === true)
+      if ($this->_oModel->create() === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
         return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+      }
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
   }
 
+  # Update gallery album
   protected final function _update() {
     if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
       $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
@@ -103,24 +107,30 @@ class Gallery extends Main {
     else {
 			$sRedirect = '/Gallery/' . (int) $this->_aRequest['id'];
 
-      if( $this->_oModel->update((int)$this->_aRequest['id']) === true)
+      if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
         return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
+      }
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
   }
 
+  # Destroy gallery album
   protected function _destroy() {
 		$sRedirect = '/Gallery';
 
-    if($this->_oModel->destroy($this->_iId) === true)
+    if($this->_oModel->destroy($this->_iId) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
       return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+    }
     else {
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
       unset($this->_iId);
     }
   }
 
+  # Show gallery album form template
   protected final function _showFormTemplate($bUpdate = true) {
     $oSmarty = new Smarty();
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
@@ -176,12 +186,14 @@ class Gallery extends Main {
     return $oSmarty->fetch('galleries/_form_album.tpl');
   }
 
+  # Create gallery file
   public final function createFile() {
-    if( USER_RIGHT < 3 )
+    if (USER_RIGHT < 3)
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
-      if( isset($this->_aRequest['create_file']) )
+      if (isset($this->_aRequest['create_file']))
+        # TODO: Kick out damn path; log is in model...
         return $this->_oModel->createFile();
       else
         return $this->_showFormFileTemplate(false);
@@ -194,8 +206,10 @@ class Gallery extends Main {
 
     else {
       if( isset($this->_aRequest['update_file']) ) {
-        if( $this->_oModel->updateFile($this->_iId) === true)
+        if( $this->_oModel->updateFile($this->_iId) === true) {
+          Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
+        }
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
 			}
@@ -210,6 +224,7 @@ class Gallery extends Main {
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
+        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
         unset($this->_iId);
       }

@@ -1,6 +1,0 @@
-CREATE TABLE `migrations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `file` varchar(100) DEFAULT NULL,
-  `date` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

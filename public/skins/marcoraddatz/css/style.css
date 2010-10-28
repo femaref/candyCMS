@@ -76,7 +76,6 @@ h3 {
 
 #contact img {
   float: right;
-  /*margin-top: -2px;*/
 }
 
 #contact #about {
@@ -274,15 +273,28 @@ table th
   margin-top: 15px;
   margin-bottom: 10px;
   text-align:left;
+  float: left;
+  width: 484px;
+}
+
+
+.avatar img {
+  float: left;
+  margin: 15px 10px 10px 0px;
+  clear: both;
+  border: 1px solid #fff;
+}
+
+.from_author, .not_from_author {
+  background:#efefef;
+  padding:10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  border-radius:10px;
 }
 
 .from_author {
-  background:#efefef;
-  padding:10px;
-  -moz-border-radius-bottomleft:10px;
-  -moz-border-radius-bottomright:10px;
-  -moz-border-radius-topleft:10px;
-  -moz-border-radius-topright:10px;
+  background: #dedede;
 }
 
 .element .date, .gallery_album .date {
@@ -291,6 +303,10 @@ table th
   text-align: right;
   float: right;
   padding-top: 3px;
+}
+
+.element .date:hover, .gallery_album .date:hover {
+  cursor: help;
 }
 
 .element h2, .gallery_album h2 {

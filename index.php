@@ -54,8 +54,12 @@ try {
 }
 
 @session_start();
-$aFile = isset($_FILES) ? $_FILES : array();
-$oIndex = new Index($_REQUEST, $_SESSION, $aFile, $_COOKIE);
+
+# We avoid the $_REQUEST due to problems with $_COOKIE
+$aRequest = array_merge($_POST, $_GET);
+$aFiles = isset($_FILES) ? $_FILES : array();
+
+$oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
 $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
 $oIndex->setLanguage();
@@ -76,4 +80,5 @@ $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define( 'AJAX_REQUEST', (int)$iAjax );
 
 echo $oIndex->show();
+
 ?>

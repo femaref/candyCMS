@@ -156,6 +156,8 @@ class Blog extends Main {
 				$oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
+    $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+
 		# More language
 		$oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 		$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
@@ -182,22 +184,28 @@ class Blog extends Main {
 		if (isset($this->_aError))
 			return $this->_showFormTemplate(false);
 
-		elseif ($this->_oModel->create() === true)
+		elseif ($this->_oModel->create() === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
 			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
 
 	protected final function _update() {
-		if ($this->_oModel->update((int) $this->_aRequest['id']) === true)
+		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
 
 	protected function _destroy() {
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']))
+		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
+    }
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}

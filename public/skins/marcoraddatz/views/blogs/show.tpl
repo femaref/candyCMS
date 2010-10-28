@@ -20,7 +20,7 @@
       <div id='b{$b.id}' class='element'>
         <div class="body">
           <div class='header'>
-            <div class='date'>
+            <div class='date' title="{$b.datetime}">
               {$b.date}
             </div>
             <h2>
@@ -36,14 +36,22 @@
               {/if}
             </h2>
           </div>
+          {if $b.date_modified != ''}
+            <span class="small">{$lang_last_update}: {$b.date_modified}</span>
+          {/if}
           {if $b.teaser !== ''}
             <div class="teaser">{$b.teaser}</div>
           {/if}
           {$b.content}
-          {if $b.date_modified != ''}
-            <p>{$lang_last_update}: {$b.date_modified}</p>
-          {/if}
           <div class='footer'>
+            {if $b.tags[0] !== ''}
+              {$lang_tags}:
+              {foreach from=$b.tags item=t name=tags}
+                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
+                {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+              {/foreach}
+              <br />
+            {/if}
             {$lang_share}:
             <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'
                class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
@@ -79,7 +87,6 @@
 {/if}
 <script type="text/javascript">
   var sFilesSuffix = '{$_compress_files_suffix_}';
-  {literal}
     window.addEvent('domready', function() {
       new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
     });
@@ -88,5 +95,4 @@
       display: -1,
       alwaysHide: true
     });
-  {/literal}
 </script>
