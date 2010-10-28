@@ -32,7 +32,7 @@ class Rss {
 	public function show() {
 		if($this->_sSection == 'Blog') {
 			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
-			$this->_showClassic();
+			return $this->_showClassic();
 		}
 	}
 
@@ -52,7 +52,7 @@ class Rss {
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = Helper::getTemplateDir('rss/content');
-		return $oSmarty->fetch('rss/content.tpl');
+		$oSmarty->template_dir = Helper::getTemplateDir('rss/classic');
+		return $oSmarty->fetch('rss/classic.tpl');
 	}
 }
