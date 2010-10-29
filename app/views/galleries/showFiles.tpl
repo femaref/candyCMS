@@ -53,6 +53,9 @@
     </a>
   {/foreach}
   <p>{$_album_pages_}</p>
+  <a href='/RSS/gallery/{$id}'>
+    <img src='%PATH_IMAGES%/spacer.gif' class="icon-rss" alt='{$lang_rss_feed}' />
+  </a>
 {/if}
 {if $AJAX_REQUEST == false}
   </div>

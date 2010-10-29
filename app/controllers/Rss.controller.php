@@ -57,8 +57,11 @@ class Rss extends Main {
 	}
 
 	private function _showGallery() {
-    #print_r($this->_aData[$this->_iId]);
 		$oSmarty = new Smarty();
+
+    $aData = $this->_aData[$this->_iId]['files'];
+    rsort($aData);
+
 		$oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
 		$oSmarty->assign('_description_', $this->_aData[$this->_iId]['description']);
 		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
@@ -67,7 +70,7 @@ class Rss extends Main {
 		$oSmarty->assign('_section_', $this->_sSection);
 		$oSmarty->assign('_title_', $this->getTitle());
 
-		$oSmarty->assign('data', $this->_aData[$this->_iId]['files']);
+		$oSmarty->assign('data', $aData);
 
 		# Language
 		$oSmarty->assign('lang_website_title', $this->getTitle());

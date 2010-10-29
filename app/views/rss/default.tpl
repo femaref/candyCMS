@@ -21,7 +21,7 @@
         </description>
         <author>{$d.full_name}</author>
         <comments>{$d.url}</comments>
-        <guid>{$d.url}</guid>
+        <guid isPermaLink="true">{$d.url}</guid>
         <link>{$d.url}</link>
       </item>
     {/foreach}

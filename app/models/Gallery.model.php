@@ -10,7 +10,7 @@
 class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 
-	private final function _setData($bEdit, $bGetDimensions) {
+	private final function _setData($bEdit, $bAdvancedImageInformation) {
     $sWhere = '';
 
 		if (!empty($this->_iId))
@@ -84,18 +84,18 @@ class Model_Gallery extends Model_Main {
 				);
 
 				if ($aRow['filesSum'] > 0)
-          $this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS, $bGetDimensions);
+          $this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS, $bAdvancedImageInformation);
         else
           $this->_aData[$iId]['files'] = '';
 			}
 		}
 	}
 
-	public final function getData($iId = '', $bEdit = false, $bGetDimensions = false) {
+	public final function getData($iId = '', $bEdit = false, $bAdvancedImageInformation = false) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit, $bGetDimensions);
+    $this->_setData($bEdit, $bAdvancedImageInformation);
     return $this->_aData;
   }
 
@@ -103,7 +103,7 @@ class Model_Gallery extends Model_Main {
     return $this->_iId;
   }
 
-	private final function _setThumbs($iId, $iLimit, $bGetDimensions) {
+	private final function _setThumbs($iId, $iLimit, $bAdvancedImageInformation) {
 		# Clear existing array
 		if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
@@ -197,11 +197,17 @@ class Model_Gallery extends Model_Main {
 
         # We want to get the image dimension of the original image
         # This function is not set to default due its long processing time
-        if ($bGetDimensions == true) {
+        if ($bAdvancedImageInformation == true) {
           $aPopupSize = getimagesize($sUrlPopup);
+          $aThumbSize = getimagesize($sUrlThumb);
+          $sRelativeUrl = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
 
           $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
           $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
+          $this->_aThumbs[$iId]['popup_size'] = $sRelativeUrl;
+          $this->_aThumbs[$iId]['popup_mime'] = $aPopupSize['mime'];
+          $this->_aThumbs[$iId]['thumb_width'] = $aThumbSize[0];
+          $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
         }
 
         $iLoop++;
@@ -213,8 +219,8 @@ class Model_Gallery extends Model_Main {
     }
 	}
 
-	public final function getThumbs($iId, $iLimit, $bGetDimensions = false) {
-    $this->_setThumbs($iId, $iLimit, $bGetDimensions);
+	public final function getThumbs($iId, $iLimit, $bAdvancedImageInformation = false) {
+    $this->_setThumbs($iId, $iLimit, $bAdvancedImageInformation);
     return $this->_aThumbs;
   }
 
