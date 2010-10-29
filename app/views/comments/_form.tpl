@@ -47,7 +47,7 @@
                 <div class="description">{$error_content}</div>
               {else}
                 <div class='description'>
-                  <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
+                  <img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" />
                   <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
                 </div>
               {/if}

@@ -7,7 +7,7 @@
 {if $USER_RIGHT > 3}
   <p>
     <a href='/Gallery/{$id}/createfile'>
-      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -16,7 +16,7 @@
   {$gallery_name} ({$file_no} {$lang_files})
   {if $USER_RIGHT > 3}
     <a href='/Gallery/{$id}/update'>
-      <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />
     </a>
   {/if}
@@ -36,10 +36,10 @@
         {$lang_uploaded_at}: {$f.date}
         <br />
         <a href="/Gallery/{$f.id}/updatefile">
-            <img src="%PATH_IMAGES%/spacer.gif" class="icon-update" alt="{$lang_update}" />
+            <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
         </a>
         <a href="/Gallery/{$f.id}/destroyfile">
-            <img src="%PATH_IMAGES%/spacer.gif" class="icon-destroy" alt="{$lang_destroy}" />
+            <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
         </a>
         <br />
         <input type="text" value="{$f.url_popup}" class="inputsmall"
@@ -54,7 +54,7 @@
   {/foreach}
   <p>{$_album_pages_}</p>
   <a href='/RSS/gallery/{$id}'>
-    <img src='%PATH_IMAGES%/spacer.gif' class="icon-rss" alt='{$lang_rss_feed}' />
+    <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' />
   </a>
 {/if}
 {if $AJAX_REQUEST == false}

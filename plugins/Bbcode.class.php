@@ -33,14 +33,14 @@ class Bbcode {
 
 		# External redirect (not W3C strict!)
     $sStr = preg_replace('#\[url=(.*)\](.*)\[\/url\]#Uis',
-            '<img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
+            '<img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
             $sStr);
 
 		# Set anchor easily
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
 
 		# Load specific icon
-    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.gif" class="icon-\1" />', $sStr);
+    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.png" class="icon-\1" />', $sStr);
 
 		# Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
@@ -196,7 +196,7 @@ class Bbcode {
 
     while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU",
-                      "<span class='js-toggle'><img src='%PATH_IMAGES%/spacer.gif' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-element\">\\2</div>",
+                      "<span class='js-toggle'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-element\">\\2</div>",
                       $sStr);
     }
 
