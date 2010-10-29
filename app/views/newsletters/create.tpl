@@ -4,13 +4,14 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   tinyMCE.init({
     mode : "textareas",
     theme : "advanced",
-    theme_advanced_resize_horizontal : "true",
     entity_encoding : "raw",
+    content_css : "%PATH_CSS%/tinymce{$_compress_files_suffix_}.css",
     plugins : "autosave,safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
     theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen",
     theme_advanced_buttons2 : "styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor",
     theme_advanced_buttons3 : "hr,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,outdent,indent,|,pagebreak,|,charmap,emotions,media,|,print",
     theme_advanced_statusbar_location : "bottom",
+    theme_advanced_resizing : true,
     language : "{$_language_}"
   });
 </script>

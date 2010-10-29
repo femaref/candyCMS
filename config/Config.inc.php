@@ -131,13 +131,14 @@ define('DEFAULT_LANGUAGE', 'de_DE');
 
 # ------------------------------------------------------------------------------
 
-# Set the standard date format (http://en.php.net/strftime)
-# DEFAULT: '%d. %b. %Y'
-define('DEFAULT_DATE_FORMAT', '%d. %b. %Y');
+# Set the standard date format (http://php.net/strftime)
+# DEFAULT: '%d.%m.%Y'
+define('DEFAULT_DATE_FORMAT', '%d.%m.%Y');
 
 # ------------------------------------------------------------------------------
 
-# Set the standard time format (with seperator - if wanted) (http://en.php.net/strftime)
+# Set the standard time format (with seperator - if wanted)
+# (http://php.net/strftime)
 # DEFAULT: ', %H:%M %p'
 define('DEFAULT_TIME_FORMAT', ', %H:%M %p');
 
@@ -145,14 +146,14 @@ define('DEFAULT_TIME_FORMAT', ', %H:%M %p');
 
 # Enter a random hash to higher the security of md5 hashs
 # DEFAULT: None. Create one before you install this software
-# NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL DESTROY
-# THEIR LOGINS!
+# NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL
+# DESTROY THEIR LOGINS!
 define('RANDOM_HASH', 'h7da87@#asd0io08');
 
 # ------------------------------------------------------------------------------
 
-# To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there, register
-# yourself and get an account
+# To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
+# register yourself and get an account
 
 # Enter given public key:
 define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
@@ -220,8 +221,8 @@ define('LIMIT_ALBUM_THUMBS', 32);
 define('LIMIT_BLOG', 8);
 
 # Limit of comments per page
-# DEFAULT: 25
-define('LIMIT_COMMENTS', 25);
+# DEFAULT: 10
+define('LIMIT_COMMENTS', 10);
 
 # ------------------------------------------------------------------------------
 

@@ -4,8 +4,8 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   tinyMCE.init({
     mode : "textareas",
     theme : "advanced",
-    theme_advanced_resize_horizontal : "true",
     entity_encoding : "raw",
+    content_css : "%PATH_CSS%/tinymce{$_compress_files_suffix_}.css",
     plugins : "autosave,safari,pagebreak,style,table,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
     theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,styleselect,formatselect,fontselect,fontsizeselect",
     theme_advanced_buttons2 : "cut,copy,paste,pastetext,|,search,replace,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,forecolor,backcolor,|,pagebreak,|,fullscreen",
