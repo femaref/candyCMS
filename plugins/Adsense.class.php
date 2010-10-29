@@ -7,6 +7,11 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+# This plugin loads a template with your adsense code. Copy your code from Google and
+# paste it into "public/skins/_plugins/adsense.tpl".
+# You can include your plugin via "{$_plugin_adsense_}".
+# This does only work at the main template ("app/views/layouts/application.tpl").
+
 class Adsense {
 
   public function show() {

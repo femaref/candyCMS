@@ -7,6 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+# LazyLoad loads your images when the image appears on screen. It keeps the
+# server fast and avoids too many requests at once.
+
 class LazyLoad {
 
 	public function show() {

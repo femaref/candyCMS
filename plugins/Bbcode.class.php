@@ -7,11 +7,17 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+# This plugin is the most powerful plugin, if you don't want to write every
+# text in HTML. It also enables users that are not allowed to post HTML to
+# format their text.
+# A detailed documentation of how to use the tags can be found at
+# http://github.com/marcoraddatz/candyCMS/wiki/BBCode
+
 require_once 'app/helpers/Image.helper.php';
 
-class Bbcode {
+final class Bbcode {
   private final function _setFormatedText($sStr, $bUseParagraph) {
-    # BB Code
+    # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);
     $sStr = preg_replace('/\[left\](.*)\[\/left]/isU', '<left>\1</left>', $sStr);
