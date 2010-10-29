@@ -10,7 +10,7 @@
 class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 
-	private final function _setData($bEdit = false) {
+	private final function _setData($bEdit, $bGetDimensions) {
     $sWhere = '';
 
 		if (!empty($this->_iId))
@@ -60,29 +60,42 @@ class Model_Gallery extends Model_Main {
 		else {
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
+        $sUrl = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $iId;
+
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
 				$this->_aData[$iId] = array(
             'id'          => $aRow['id'],
             'author_id'   => $aRow['author_id'],
             'title'       => Helper::formatOutput($aRow['title']),
-            'description' => Helper::formatOutput($aRow['description'], true),
+            'description' => Helper::formatOutput($aRow['description']),
             'date'        => Helper::formatTimestamp($aRow['date'], true),
             'datetime'    => Helper::formatTimestamp($aRow['date']),
-            'files_sum'   => $aRow['filesSum']
+            'date_raw'    => $aRow['date'],
+            'date_rss'    => date('r', $aRow['date']),
+            'name'        => $sName,
+            'surname'     => $sSurname,
+            'full_name'   => $sFullName,
+            'files_sum'   => $aRow['filesSum'],
+            'url'         => $sUrl
 				);
 
 				if ($aRow['filesSum'] > 0)
-          $this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS);
+          $this->_aData[$iId]['files'] = $this->getThumbs($iId, LIMIT_ALBUM_THUMBS, $bGetDimensions);
         else
           $this->_aData[$iId]['files'] = '';
 			}
 		}
 	}
 
-	public final function getData($iId = '', $bEdit = false) {
+	public final function getData($iId = '', $bEdit = false, $bGetDimensions = false) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit);
+    $this->_setData($bEdit, $bGetDimensions);
     return $this->_aData;
   }
 
@@ -90,7 +103,7 @@ class Model_Gallery extends Model_Main {
     return $this->_iId;
   }
 
-	private final function _setThumbs($iId, $iLimit) {
+	private final function _setThumbs($iId, $iLimit, $bGetDimensions) {
 		# Clear existing array
 		if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
@@ -116,13 +129,19 @@ class Model_Gallery extends Model_Main {
     if($this->_iEntries > 0) {
       try {
         $oQuery = $oDb->prepare("	SELECT
-                                    *
+                                    f.*,
+                                    u.name,
+                                    u.surname
                                   FROM
-                                    gallery_files
+                                    gallery_files f
+                                  LEFT JOIN
+                                    users u
+                                  ON
+                                    f.author_id=u.id
                                   WHERE
-                                    album_id= :album_id
+                                    f.album_id= :album_id
                                   ORDER BY
-                                    date ASC
+                                    f.date ASC
                                   LIMIT
                                     :offset,
                                     :limit");
@@ -142,17 +161,48 @@ class Model_Gallery extends Model_Main {
       $iLoop = 0;
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
+
+        # Set SEO friendly user names
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sFullName  = $sName . ' ' . $sSurname;
+
+        $sUrlAlbum     = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+        $sUrl32        = $sUrlAlbum . '/32/' . $aRow['file'];
+        $sUrlPopup     = $sUrlAlbum . '/popup/' . $aRow['file'];
+        $sUrlOriginal  = $sUrlAlbum . '/original/' . $aRow['file'];
+        $sUrlThumb     = $sUrlAlbum . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
+
         $this->_aThumbs[$iId] = array(
-            'id'          => $aRow['id'],
-            'album_id'    => $aRow['album_id'],
-            'file'        => $aRow['file'],
-            'full_path'   => WEBSITE_URL. '/' .PATH_UPLOAD.	'/gallery/'	.$aRow['album_id'],
-            'description' => Helper::formatOutput($aRow['description']),
-            'date'        => Helper::formatTimestamp($aRow['date']),
-            'extension'   => $aRow['extension'],
-            'dim'         => THUMB_DEFAULT_X,
-            'loop'        => $iLoop
+            'id'            => $aRow['id'],
+            'album_id'      => $aRow['album_id'],
+            'file'          => $aRow['file'],
+            'description'   => Helper::formatOutput($aRow['description']),
+            'date'          => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'      => Helper::formatTimestamp($aRow['date']),
+            'date_raw'      => $aRow['date'],
+            'date_rss'      => date('r', $aRow['date']),
+            'url_32'        => $sUrl32,
+            'url_album'     => $sUrlAlbum,
+            'url_popup'     => $sUrlPopup,
+            'url_original'  => $sUrlOriginal,
+            'url_thumb'     => $sUrlThumb,
+            'name'          => $sName,
+            'surname'       => $sSurname,
+            'full_name'     => $sFullName,
+            'extension'     => $aRow['extension'],
+            'thumb_width'   => THUMB_DEFAULT_X,
+            'loop'          => $iLoop
         );
+
+        # We want to get the image dimension of the original image
+        # This function is not set to default due its long processing time
+        if ($bGetDimensions == true) {
+          $aPopupSize = getimagesize($sUrlPopup);
+
+          $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
+          $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
+        }
 
         $iLoop++;
       }
@@ -163,8 +213,8 @@ class Model_Gallery extends Model_Main {
     }
 	}
 
-	public final function getThumbs($iId, $iLimit) {
-    $this->_setThumbs($iId, $iLimit);
+	public final function getThumbs($iId, $iLimit, $bGetDimensions = false) {
+    $this->_setThumbs($iId, $iLimit, $bGetDimensions);
     return $this->_aThumbs;
   }
 

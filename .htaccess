@@ -47,6 +47,7 @@ RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&sess
 RewriteRule ^(Static|RSS)/([a-z]+)$ index.php?section=$1&template=$2 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA]
 RewriteRule ^Language/([a-z]+)$ index.php?language=$1 [L,QSA]
+RewriteRule ^RSS/([A-Za-z]+)/([0-9]+)$ index.php?section=RSS&template=$1&id=$2 [L,QSA]
 RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA]
 RewriteRule ^Start$ index.php [L]
 RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]

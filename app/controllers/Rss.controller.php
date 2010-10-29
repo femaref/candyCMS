@@ -8,20 +8,10 @@
  */
 
 require_once 'app/models/Blog.model.php';
+require_once 'app/models/Gallery.model.php';
 require_once 'app/helpers/Pages.helper.php';
 
-class Rss {
-
-	private $_sAction;
-	private $_oModel;
-	private $_iLimit;
-	private $_aRequest;
-	private $_aSession;
-
-	public function __construct($aRequest, $aSession) {
-		$this->_aRequest = & $aRequest;
-		$this->_aSession = & $aSession;
-	}
+class Rss extends Main {
 
 	public function __init() {
 		$this->_sSection = isset($this->_aRequest['template']) ?
@@ -32,11 +22,21 @@ class Rss {
 	public function show() {
 		if($this->_sSection == 'Blog') {
 			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
-			return $this->_showClassic();
+      $this->_aData = $this->_oModel->getData();
+			return $this->_showDefault();
+		}
+		elseif($this->_sSection == 'Gallery') {
+			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
+      $this->_aData = $this->_oModel->getData($this->_iId, false, true);
+
+      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY.	': '	.
+              $this->_aData[$this->_iId]['title']));
+
+			return $this->_showGallery();
 		}
 	}
 
-	private function _showClassic() {
+	private function _showDefault() {
 		$oSmarty = new Smarty();
 		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
 		$oSmarty->assign('_pubdate_', date('r'));
@@ -45,14 +45,36 @@ class Rss {
 		$oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
 		$oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
-		$oSmarty->assign('data', $this->_oModel->getData());
+		$oSmarty->assign('data', $this->_aData);
 
 		# Language
 		$oSmarty->assign('lang_website_title', LANG_WEBSITE_TITLE);
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = Helper::getTemplateDir('rss/classic');
-		return $oSmarty->fetch('rss/classic.tpl');
+		$oSmarty->template_dir = Helper::getTemplateDir('rss/default');
+		return $oSmarty->fetch('rss/default.tpl');
+	}
+
+	private function _showGallery() {
+    #print_r($this->_aData[$this->_iId]);
+		$oSmarty = new Smarty();
+		$oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
+		$oSmarty->assign('_description_', $this->_aData[$this->_iId]['description']);
+		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
+		$oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
+		$oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
+		$oSmarty->assign('_section_', $this->_sSection);
+		$oSmarty->assign('_title_', $this->getTitle());
+
+		$oSmarty->assign('data', $this->_aData[$this->_iId]['files']);
+
+		# Language
+		$oSmarty->assign('lang_website_title', $this->getTitle());
+
+		$oSmarty->cache_dir = CACHE_DIR;
+		$oSmarty->compile_dir = COMPILE_DIR;
+		$oSmarty->template_dir = Helper::getTemplateDir('rss/gallery');
+		return $oSmarty->fetch('rss/gallery.tpl');
 	}
 }

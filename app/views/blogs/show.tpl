@@ -56,23 +56,23 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/if}
           {$lang_share}:
-          <a href='http://www.facebook.com/share.php?u={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;t={$b.eTitle}'
+          <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.eTitle}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-facebook" alt='Facebook' width='16' height='16' />
           </a>
-          <a href='http://del.icio.us/post?url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;title={$b.eTitle}'
+          <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.eTitle}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
           </a>
-          <a href='http://technorati.com/cosmos/search.html?url={$URL}/Blog/{$b.id}/{$b.eTitle}'
+          <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-technorati" alt='Technorati' width='16' height='16' />
           </a>
-          <a href='http://digg.com/submit?phase=2&amp;url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;title={$b.eTitle}'
+          <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.eTitle}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-digg" alt='Digg' width='16' height='16' />
           </a>
-          <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$URL}/Blog/{$b.id}/{$b.eTitle}&amp;bm_description={$b.eTitle}'
+          <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.eTitle}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
             <img src='%PATH_IMAGES%/spacer.gif' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>

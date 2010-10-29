@@ -90,6 +90,9 @@ class Model_Content extends Model_Main {
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
+        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
+        $sUrl = WEBSITE_URL . '/Content/' . $aRow['id'] . '/' . $sEncodedTitle;
+
         # Do we need to highlight text?
         $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
                 $this->_aRequest['highlight'] :
@@ -102,12 +105,15 @@ class Model_Content extends Model_Main {
             'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
             'date'          => Helper::formatTimestamp($aRow['date'], true),
             'datetime'      => Helper::formatTimestamp($aRow['date']),
+            'date_raw'      => $aRow['date'],
+            'date_rss'      => date('r', $aRow['date']),
             'uid'           => $aRow['uid'],
             'name'          => $sName,
             'surname'       => $sSurname,
             'full_name'     => $sFullName,
             'full_name_seo' => urlencode($sFullName),
-            'eTitle'        => Helper::formatOutput(urlencode($aRow['title']))
+            'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
+            'url'           => $sUrl
         );
       }
     }

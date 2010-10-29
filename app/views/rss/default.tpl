@@ -7,22 +7,22 @@
     <link>{$WEBSITE_URL}</link>
     <copyright>{$WEBSITE_NAME}</copyright>
     <pubDate>{$_pubdate_}</pubDate>
-    {foreach $data as $rss}
+    {foreach $data as $d}
       <item>
-        <title>{$rss.title}</title>
-        <pubDate>{$rss.date_rss}</pubDate>
+        <title>{$d.title}</title>
+        <pubDate>{$d.date_rss}</pubDate>
         <description>
           <![CDATA[
-            {if $rss.teaser}
-              {$rss.teaser}
+            {if $d.teaser}
+              {$d.teaser}
             {/if}
-            {$rss.content}
+            {$d.content}
           ]]>
         </description>
-        <author>{$rss.name} {$rss.surname}</author>
-        <comments>{$WEBSITE_URL}/{$_section_}/{$rss.id}/{$rss.eTitle}</comments>
-        <guid>{$WEBSITE_URL}/{$_section_}/{$rss.id}/{$rss.eTitle}</guid>
-        <link>{$WEBSITE_URL}/{$_section_}/{$rss.id}/{$rss.eTitle}</link>
+        <author>{$d.full_name}</author>
+        <comments>{$d.url}</comments>
+        <guid>{$d.url}</guid>
+        <link>{$d.url}</link>
       </item>
     {/foreach}
   </channel>

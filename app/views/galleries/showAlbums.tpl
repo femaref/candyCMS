@@ -28,7 +28,7 @@
           {if $a.files_sum > 0}
             <a href='/Gallery/{$a.id}'>
               {foreach $a.files as $f}
-                <img src='{$f.full_path}/32/{$f.file}'
+                <img src='{$f.url_32}'
                      alt='{$f.file}' title='{$f.description}' class='image'
                      height='32' width='32' />
               {/foreach}

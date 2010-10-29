@@ -81,12 +81,13 @@ class Model_Blog extends Model_Main {
 				$iId = $aRow['id'];
 				$aTags = explode(', ', $aRow['tags']);
 				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
+        $sUrl = WEBSITE_URL . '/Blog/' . $iId . '/' . $sEncodedTitle;
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
-
 
         $this->_aData[$iId] = array(
                 'id'            => $aRow['id'],
@@ -108,8 +109,9 @@ class Model_Blog extends Model_Main {
                 'avatar_32'     => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
                 'avatar_64'     => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
                 'comment_sum'   => $aRow['commentSum'],
-                'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
-                'published'     => $aRow['published']
+                'eTitle'        => $sEncodedTitle, # encoded for social networks
+                'published'     => $aRow['published'],
+                'url'           => $sUrl
 				);
 
 				if (!empty($aRow['date_modified']))
@@ -179,6 +181,8 @@ class Model_Blog extends Model_Main {
 			# Give back blog entry
 			else {
 				$aTags = explode(', ', $aRow['tags']);
+        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
+        $sUrl = WEBSITE_URL . '/Blog/' . $aRow['id'] . '/' . $sEncodedTitle;
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -208,10 +212,10 @@ class Model_Blog extends Model_Main {
             'full_name_seo' => urlencode($sFullName),
 						'avatar'        => '',
 						'comment_sum'   => $aRow['commentSum'],
-						'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
-						'published'     => $aRow['published']
+						'eTitle'        => $sEncodedTitle,
+						'published'     => $aRow['published'],
+            'url'           => $sUrl
 				);
-
 
 				if (!empty($aRow['date_modified']))
           $this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
