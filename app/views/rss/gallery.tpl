@@ -11,7 +11,6 @@
       <item>
         <title>{$d.file}</title>
         <pubDate>{$d.date_rss}</pubDate>
-        <author>{$d.full_name}</author>
         <guid isPermaLink="false">{$d.url_popup}</guid>
         <link>{$d.url_popup}</link>
         <description>

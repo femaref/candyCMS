@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>{$lang_website_title}</title>
     <description>{$WEBSITE_SLOGAN}</description>
@@ -19,7 +19,7 @@
             {$d.content}
           ]]>
         </description>
-        <author>{$d.full_name}</author>
+        <dc:creator>{$d.full_name}</dc:creator>
         <comments>{$d.url}</comments>
         <guid isPermaLink="true">{$d.url}</guid>
         <link>{$d.url}</link>

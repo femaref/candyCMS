@@ -38,7 +38,7 @@ class Rss extends Main {
 
 	private function _showDefault() {
 		$oSmarty = new Smarty();
-		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
+		$oSmarty->assign('_language_', str_replace('_', '-', strtolower(DEFAULT_LANGUAGE)));
 		$oSmarty->assign('_pubdate_', date('r'));
 		$oSmarty->assign('_section_', $this->_sSection);
 
@@ -64,7 +64,7 @@ class Rss extends Main {
 
 		$oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
 		$oSmarty->assign('_description_', $this->_aData[$this->_iId]['description']);
-		$oSmarty->assign('_language_', strtolower(DEFAULT_LANGUAGE));
+		$oSmarty->assign('_language_', str_replace('_', '-', strtolower(DEFAULT_LANGUAGE)));
 		$oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
 		$oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
 		$oSmarty->assign('_section_', $this->_sSection);
