@@ -1,3 +1,6 @@
+{if $_plugin_lazyload_}
+  {$_plugin_lazyload_}
+{/if}
 {if $USER_RIGHT > 3}
   <p>
     <a href='/Blog/create'>
@@ -96,6 +99,3 @@
       alwaysHide: true
     });
 </script>
-{if $_plugin_lazyload_}
-  {$_plugin_lazyload_}
-{/if}

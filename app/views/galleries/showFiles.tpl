@@ -1,3 +1,6 @@
+{if $_plugin_lazyload_}
+  {$_plugin_lazyload_}
+{/if}
 {if $AJAX_REQUEST == false}
   <div class='gallery_files' id="js-ajax_reload" name="reload">
 {/if}
@@ -59,6 +62,3 @@
     new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
   });
 </script>
-{if $_plugin_lazyload_}
-  {$_plugin_lazyload_}
-{/if}

@@ -1,10 +1,14 @@
 {if $AJAX_REQUEST == false}
   <div id="js-ajax_reload" name="reload">
+{else}
+  {if $_plugin_lazyload_}
+    {$_plugin_lazyload_}
+  {/if}
 {/if}
 {$_comment_pages_}
 {foreach $comments as $c}
   <div class="avatar">
-    <img src="{$c.avatar_64}" class="{if $author_id == $c.author_id}from_author{else}not_from_author{/if}" alt="{$c.full_name}" />
+    <img src="{$c.avatar_64}" class="image {if $author_id == $c.author_id}from_author{else}not_from_author{/if}" alt="{$c.full_name}" />
   </div>
   <div class='comment {if $author_id == $c.author_id}from_author{else}not_from_author{/if}'>
     <h3 class='{if $author_id == $c.author_id}row1{/if}'>

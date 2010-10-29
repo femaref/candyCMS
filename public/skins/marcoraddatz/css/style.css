@@ -285,12 +285,18 @@ table th
   border: 1px solid #fff;
 }
 
+.avatar .image, .avatar .image:hover {
+  border: none;
+  width: 64px;
+  height: 64px;
+}
+
 .from_author, .not_from_author {
   background:#efefef;
   padding:10px;
-  -moz-border-radius:10px;
-  -webkit-border-radius:10px;
-  border-radius:10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 .from_author {

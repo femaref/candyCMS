@@ -53,6 +53,11 @@ final class Comment extends Main {
 			$oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 			$oSmarty->assign('parent_id', $this->_iId);
 
+      if (class_exists('LazyLoad')) {
+        $oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+        $oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
+      }
+
 			# Do only load comments, if they are avaiable
 			$sReturn = '';
 			if ($this->_iEntries > 0) {
