@@ -332,7 +332,7 @@ class User extends Main {
 												$sMailMessage,
 												WEBSITE_MAIL_NOREPLY);
 
-				if($bStatus == true) {
+        if($bStatus == true) {
           Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
 					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
         }

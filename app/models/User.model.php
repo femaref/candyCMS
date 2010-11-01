@@ -177,9 +177,9 @@ class Model_User extends Model_Main {
       $iUserRight = USER_RIGHT;
 
     # Make sure the password is set and override session due to saving problems
-    if (isset($this->_aRequest['newpw']) && !empty($this->_aRequest['newpw']) &&
-            isset($this->_aRequest['oldpw']) && !empty($this->_aRequest['oldpw']))
-      $this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['newpw']);
+    if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
+            isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']))
+      $this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['password_new']);
     $sPassword = $this->_aSession['userdata']['password'];
 
     try {

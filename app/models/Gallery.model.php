@@ -200,11 +200,11 @@ class Model_Gallery extends Model_Main {
         if ($bAdvancedImageInformation == true) {
           $aPopupSize = getimagesize($sUrlPopup);
           $aThumbSize = getimagesize($sUrlThumb);
-          $sRelativeUrl = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
+          $iImageSize = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
 
           $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
           $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
-          $this->_aThumbs[$iId]['popup_size'] = $sRelativeUrl;
+          $this->_aThumbs[$iId]['popup_size'] = $iImageSize;
           $this->_aThumbs[$iId]['popup_mime'] = $aPopupSize['mime'];
           $this->_aThumbs[$iId]['thumb_width'] = $aThumbSize[0];
           $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
