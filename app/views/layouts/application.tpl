@@ -86,6 +86,7 @@
           </li>
         {/if}
       </ul>
+      {$_version_}
     </div>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>

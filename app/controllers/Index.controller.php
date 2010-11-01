@@ -154,6 +154,7 @@ class Index {
     $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
     $oSmarty->assign('_javascript_language_file_', $sLangVars);
     $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
+    $oSmarty->assign('_version_', VERSION);
     $oSmarty->assign('_website_name_', WEBSITE_NAME);
     $oSmarty->assign('_website_url_', WEBSITE_URL);
     $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
