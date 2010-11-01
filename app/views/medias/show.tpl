@@ -1,7 +1,7 @@
 {if $USER_RIGHT > 3}
   <p>
     <a href='/Media/create'>
-      <img src='%PATH_IMAGES%/spacer.gif' class="icon-upload" alt='' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' />
       {$lang_file_create}
     </a>
   </p>
@@ -25,7 +25,7 @@
               <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
                    width='32' height='32' alt='{$f.type}' />
             {else}
-              <img src='%PATH_IMAGES%/spacer.gif' class="filemanager-{$f.type}"
+              <img src='%PATH_IMAGES%/spacer.png' class="filemanager-{$f.type}"
                    width='32' height='32' alt='{$f.type}' />
             {/if}
           </td>
@@ -50,7 +50,7 @@
             {$f.cdate}
           </td>
           <td style='width:5%'>
-            <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
                  title='{$lang_destroy}'
                  onclick="confirmDelete('/Media/destroy/{$f.name}')" />
           </td>

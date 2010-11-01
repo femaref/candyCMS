@@ -1,7 +1,7 @@
 {if $USER_RIGHT > 3}
   <p>
     <a href='/Gallery/create'>
-      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -18,7 +18,7 @@
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $USER_RIGHT > 3}
             <a href='/Gallery/{$a.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />
             </a>
           {/if}

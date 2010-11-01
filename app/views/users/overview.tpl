@@ -1,7 +1,7 @@
 {if $USER_RIGHT == 4}
   <p>
     <a href='/User/create'>
-      <img src='%PATH_IMAGES%/spacer.gif' class="icon-create" alt='' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create}
     </a>
   </p>
@@ -23,10 +23,10 @@
       <td style='width:10%'>
         {if $USER_RIGHT == 4}
           <a href='/User/{$u.id}/update'>
-            <img src='%PATH_IMAGES%/spacer.gif' class="icon-update" alt='{$lang_update}'
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                  title='{$lang_update}' />
           </a>
-          <img src='%PATH_IMAGES%/spacer.gif' class="icon-destroy" alt='{$lang_destroy}'
+          <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
                title='{$lang_destroy}' class="pointer"
                onclick="confirmDelete('/User/{$u.id}/destroy')" />
         {/if}

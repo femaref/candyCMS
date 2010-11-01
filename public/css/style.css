@@ -8,7 +8,7 @@ html {
 body
 {
   margin: 50px auto auto;
-  width: 800px;
+  width: 712px;
   background: white;
 }
 
@@ -51,15 +51,14 @@ h3 {
 #navigation
 {
   color:white;
-  padding: 8px;
+  padding: 10px 8px;
   font-size:120%;
   font-weight:bold;
   border-bottom:1px solid black;
-  background:#eee url(../images/bg_navigation.png) center repeat-x;
-  border-left:2px solid white;
-  border-right:2px solid white;
-  border-top:1px solid white;
-  border-bottom:1px solid white;
+  background-color: #e06455;
+  background: -moz-linear-gradient(top, #e06455, #d72733);
+  background: -webkit-gradient(linear, left top, left bottom, from(#e06455), to(#d72733));
+  border:2px solid white;
 }
 
 #navigation ul, #footer ul {

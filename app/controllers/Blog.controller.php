@@ -162,6 +162,7 @@ class Blog extends Main {
 		}
 
     $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+		$oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
 		# More language
 		$oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);

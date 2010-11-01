@@ -7,126 +7,111 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+# The cronjob keeps your software backuped, fast and clean. Set up the execution
+# intervals in the "config/Config.inc.php" and lean back.
+
 # Fix for install script
 if(file_exists('app/controllers/Mail.controller.php'))
   require_once 'app/controllers/Mail.controller.php';
 
 final class Cronjob {
   public static final function cleanup() {
-    # Cleanup temp images
-    $sTempPath = PATH_UPLOAD . '/temp/media';
-    $oDir = opendir($sTempPath);
 
-    while ($sFile = readdir($oDir)) {
-      if (substr($sFile, 0, 1) == '.')
-        continue;
+		$aFolders = array('media', 'bbcode');
 
-      unlink($sTempPath . '/' . $sFile);
-    }
+		foreach ($aFolders as $sFolder) {
+			$sTempPath = PATH_UPLOAD . '/temp/' . $sFolder;
+			$oDir = opendir($sTempPath);
 
-    # TODO: Array with both functions
-    $sTempPath = PATH_UPLOAD . '/temp/bbcode';
-    $oDir = opendir($sTempPath);
+			while ($sFile = readdir($oDir)) {
+				if (substr($sFile, 0, 1) == '.' || filemtime($sTempPath . '/' . $sFile) > strtotime("-10 days"))
+					continue;
 
-    while ($sFile = readdir($oDir)) {
-      if (substr($sFile, 0, 1) == '.')
-        continue;
-
-      unlink($sTempPath . '/' . $sFile);
-    }
-
-    # Delete old backups (older than 10 days)
-    $sTempPath = 'backup';
-    $oDir = opendir($sTempPath);
-
-    while ($sFile = readdir($oDir)) {
-      if (substr($sFile, 0, 1) == '.' || filemtime($sTempPath . '/' . $sFile) > strtotime ("-10 days") )
-        continue;
-
-      unlink($sTempPath . '/' . $sFile);
-    }
+				unlink($sFolder . '/' . $sFile);
+			}
+		}
   }
 
   public static final function optimize() {
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->query(" OPTIMIZE TABLE
+			$oQuery = $oDb->query(" OPTIMIZE TABLE
                                 blogs,
                                 comments,
                                 contents,
                                 gallery_albums,
                                 gallery_files,
                                 migrations,
+																logs,
                                 newsletters,
                                 users");
 
-      $oDb = null;
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
-  }
+			$oDb = null;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+		}
+	}
 
   public static final function backup($iUserId, $sPath = '') {
     $sBackupName = date(DEFAULT_DATE_FORMAT);
-    $sBackupFolder = $sPath . 'backup';
-    $sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
-    $iBackupStartTime = time();
+		$sBackupFolder = $sPath . 'backup';
+		$sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
+		$iBackupStartTime = time();
 
-    if (!is_dir($sBackupFolder))
-      mkdir($sBackupFolder, 0777);
+		if (!is_dir($sBackupFolder))
+			mkdir($sBackupFolder, 0777);
 
-    # Create header information
-    $sFileText = "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "# Server OS: " . @php_uname();
-    $sFileText .= "\r\n";
-    $sFileText .= "# MySQL-Version: " . @mysql_get_server_info();
-    $sFileText .= "\r\n";
-    $sFileText .= "# PHP-Version: " . @phpversion();
-    $sFileText .= "\r\n";
-    $sFileText .= "# Database: " . SQL_DB;
-    $sFileText .= "\r\n";
-    $sFileText .= "# Time of backup: " . date('Y-m-d H:i');
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "# Backup includes following tables:";
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "\r\n";
+		# Create header information
+		$sFileText = "\r\n#---------------------------------------------------------------#\r\n";
+		$sFileText .= "# Server OS: " . @php_uname();
+		$sFileText .= "\r\n";
+		$sFileText .= "# MySQL-Version: " . @mysql_get_server_info();
+		$sFileText .= "\r\n";
+		$sFileText .= "# PHP-Version: " . @phpversion();
+		$sFileText .= "\r\n";
+		$sFileText .= "# Database: " . SQL_DB;
+		$sFileText .= "\r\n";
+		$sFileText .= "# Time of backup: " . date('Y-m-d H:i');
+		$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+		$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+		$sFileText .= "# Backup includes following tables:";
+		$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+		$sFileText .= "\r\n";
 
     # Get all tables and name them
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true
-              ));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+									PDO::ATTR_PERSISTENT => true));
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
-      $aResult = $oQuery->fetchAll();
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
+			$oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
+			$aResult = $oQuery->fetchAll();
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+		}
 
     # Show all tables
     foreach ($aResult as $aTable) {
-      $sTable = $aTable[0];
-      $sFileText .= "# " . $sTable . "\r\n";
-    }
+			$sTable = $aTable[0];
+			$sFileText .= "# " . $sTable . "\r\n";
+		}
 
     # Now backup them
     foreach ($aResult as $aTable) {
       $sTable = $aTable[0];
 
-      try {
-        $oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
-        $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iColumns = count($aColumns);
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+			try {
+				$oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
+				$aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$iColumns = count($aColumns);
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+			}
 
       $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
       $sFileText .= "# Table: " . $sTable . ", Columns: " . $iColumns;
@@ -139,16 +124,16 @@ final class Cronjob {
       foreach ($aColumns as $aColumn) {
         $sFileText .= "\r\n`" . $aColumn['Field'] . "` " . $aColumn['Type'];
 
-        if (!empty($aColumn['Default']))
-          $sFileText .= " NOT NULL default '" . $aColumn['Default'] . "'";
+				if (!empty($aColumn['Default']))
+					$sFileText .= " NOT NULL default '" . $aColumn['Default'] . "'";
 
-        elseif ($aColumn['Null'] !== 'YES')
-          $sFileText .= ' NOT NULL';
+				elseif ($aColumn['Null'] !== 'YES')
+					$sFileText .= ' NOT NULL';
 
-        elseif ($aColumn['Null'] == 'YES')
-          $sFileText .= ' default NULL';
+				elseif ($aColumn['Null'] == 'YES')
+					$sFileText .= ' default NULL';
 
-        $sFileText .= ",";
+				$sFileText .= ",";
       }
 
       $sFileText .= "\n";

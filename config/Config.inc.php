@@ -9,7 +9,7 @@
 
 # ------------------------------------------------------------------------------
 
-# SQL Properties
+# Set up your SQL preferences. If they are incorrect, the website won't work.
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
@@ -27,14 +27,14 @@ define('SMTP_PORT', '1025');
 
 # ------------------------------------------------------------------------------
 
-# Define ABSOLUTE path of website
+# Define the ABSOLUTE path of your website.
 # EXAMPLE: http://www.google.com
 define('WEBSITE_URL', 'http://phpcms.localhost');
 
 # ------------------------------------------------------------------------------
 
-# Define ABSOLUTE path of your cdn. If you don't use a cdn,
-# enter your website url.
+# Define the ABSOLUTE path of your cdn. If you don't use a cdn,
+# enter your website url. This is relevant for your public folder.
 # EXAMPLE: http://www.google.com
 define('WEBSITE_CDN', 'http://phpcms.localhost');
 
@@ -46,20 +46,19 @@ define('WEBSITE_CDN', 'http://phpcms.localhost');
 define('WEBSITE_COMPRESS_FILES', false);
 # ------------------------------------------------------------------------------
 
-# Enter full name of Website. This is, where the E-Mails are sent from.
-# NOTE: Also edit your website title and slogan in your language file of choice
-# in config/language/YOURLANG.php
+# Enter the full name of website. This is used for Emails and RSS
+# NOTE: Also edit your website title and slogan in your language file of choice.
 define('WEBSITE_NAME', 'dev.planetk4.de');
 
 # ------------------------------------------------------------------------------
 
-# Define an email, where user responses for mails and newsletters are going to
-# be sent to!
+# Define an admin email for system responses
 define('WEBSITE_MAIL', 'marco@empuxa.com');
 
 # ------------------------------------------------------------------------------
 
 # Define a noreply email for spam etc.
+# EXAMPLE: no-reply@mydomain.tld
 define('WEBSITE_MAIL_NOREPLY', 'no-reply@dev.planetk4.de');
 
 # ------------------------------------------------------------------------------
@@ -97,7 +96,7 @@ define('CRONJOB_GZIP_BACKUP', true);
 # ------------------------------------------------------------------------------
 
 # Do you want to receive a mail with the backup after it's created?
-# DEFAULT: true
+# DEFAULT: false
 define('CRONJOB_SEND_PER_MAIL', false);
 
 # ------------------------------------------------------------------------------
@@ -108,8 +107,8 @@ define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines,Adsense,LazyLoad
+# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
 define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive,Headlines,LazyLoad');
 
 # ------------------------------------------------------------------------------
@@ -127,53 +126,56 @@ define('ALLOW_VERSION_CHECK', true);
 
 # Set the standard language (file must be placed in "languages")
 # NOTE: lower cases required!
-# DEFAULT: 'de'
+# DEFAULT: 'de_DE'
 define('DEFAULT_LANGUAGE', 'de_DE');
 
 # ------------------------------------------------------------------------------
 
-# Set the standard date format (http://en.php.net/strftime)
-# DEFAULT: '%d. %b. %Y'
-define('DEFAULT_DATE_FORMAT', '%d. %b. %Y');
+# Set the standard date format (http://php.net/strftime)
+# DEFAULT: '%d.%m.%Y'
+define('DEFAULT_DATE_FORMAT', '%d.%m.%Y');
 
 # ------------------------------------------------------------------------------
 
-# Set the standard time format (with seperator - if wanted) (http://en.php.net/strftime)
+# Set the standard time format (with seperator - if wanted)
+# (http://php.net/strftime)
 # DEFAULT: ', %H:%M %p'
 define('DEFAULT_TIME_FORMAT', ', %H:%M %p');
 
 # ------------------------------------------------------------------------------
 
 # Enter a random hash to higher the security of md5 hashs
-# NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL DESTROY
-# THEIR LOGINS!
+# DEFAULT: None. Create one before you install this software
+# NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL
+# DESTROY THEIR LOGINS!
 define('RANDOM_HASH', 'h7da87@#asd0io08');
 
 # ------------------------------------------------------------------------------
 
-# To avoid spam, we use ReCaptcha (http://recaptcha.org). Get there, register
-# yourself and get an account
-# Enter given private key here:
-define('RECAPTCHA_PRIVATE', '6LeElLwSAAAAAEm2k4HEN_LiRtG-1QXU_ApVOUC0');
+# To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
+# register yourself and get an account
 
-# Enter given public key here:
+# Enter given public key:
 define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
+
+# Enter given private key:
+define('RECAPTCHA_PRIVATE', '6LeElLwSAAAAAEm2k4HEN_LiRtG-1QXU_ApVOUC0');
 
 # ------------------------------------------------------------------------------
 
 # Set maximum image/video width (MEDIA_DEFAULT_X) and height (MEDIA_DEFAULT_Y) in px.
 # Larger images and videos will be reseized or scaled down!
-# DEFAULT: 748
-define('MEDIA_DEFAULT_X', '593');
+# DEFAULT: 660
+define('MEDIA_DEFAULT_X', '660');
 
-# DEFAULT: 421
-define('MEDIA_DEFAULT_Y', '334');
+# DEFAULT: 371
+define('MEDIA_DEFAULT_Y', '371');
 
 # Set thumb width
-# DEFAULT: 200
+# DEFAULT: 180
 define('THUMB_DEFAULT_X', '180');
 
-# Set popup width
+# Set maximum popup width
 # DEFAULT: 1000 / 800
 define('POPUP_DEFAULT_X', '1000');
 define('POPUP_DEFAULT_Y', '800');
@@ -183,14 +185,14 @@ define('POPUP_DEFAULT_Y', '800');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', 'marcoraddatz');
+define('PATH_CSS', '');
 
 # DEFAULT: default
 define('PATH_IMAGES', '');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', 'marcoraddatz');
+define('PATH_TPL', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'
@@ -207,17 +209,20 @@ define('COMPILE_DIR', 'compile');
 # ------------------------------------------------------------------------------
 
 # Define limit for pictures per page (3 in a row)
-# DEFAULT: 9
-define('LIMIT_ALBUM_IMAGES', 9);
-define('LIMIT_ALBUM_THUMBS', 9999);
+# DEFAULT: 18
+define('LIMIT_ALBUM_IMAGES', 18);
+
+# Limit of thumbs at album preview
+# DEFAULT: 32
+define('LIMIT_ALBUM_THUMBS', 32);
 
 # Limit of blog entries per page
-# DEFAULT: 5
-define('LIMIT_BLOG', 5);
+# DEFAULT: 8
+define('LIMIT_BLOG', 8);
 
 # Limit of comments per page
-# DEFAULT: 25
-define('LIMIT_COMMENTS', 5);
+# DEFAULT: 10
+define('LIMIT_COMMENTS', 10);
 
 # ------------------------------------------------------------------------------
 

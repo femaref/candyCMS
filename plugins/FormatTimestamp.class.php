@@ -7,6 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+# This plugin rewrites the standard date into a nicer "today" / "yesterday"
+# format.
+
 class FormatTimestamp {
   private final function _setDate($iTime, $bDateOnly) {
     if(date('Ymd', $iTime) == date('Ymd', time())) {

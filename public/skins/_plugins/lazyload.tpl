@@ -6,7 +6,7 @@
   window.addEvent('domready',function() {
     var lazyloader = new LazyLoad({
       range: {$_thumb_default_x_},
-      image: '%PATH_IMAGES%/spacer.gif',
+      image: '%PATH_IMAGES%/spacer.png',
       elements: '.image'
     });
   });

@@ -60,28 +60,28 @@
         {if $USER_RIGHT > 3}
           <li>
             <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_send}</a>
           </li>
           <li>
             <a href='/Media' title='{$lang_filemanager}'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-folder" alt='' />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
               {$lang_filemanager}</a>
           </li>
           <li>
             <a href='/Content' title='{$lang_contentmanager}'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-manager" alt='' />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
               {$lang_contentmanager}</a>
           </li>
           <li>
             <a href='/User' title='{$lang_usermanager}'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-user" alt='' />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
               {$lang_usermanager}</a>
           </li>
         {else}
           <li>
             <a href='/Newsletter' title='{$lang_newsletter_handle}'>
-              <img src='%PATH_IMAGES%/spacer.gif' class="icon-email" alt='' />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_handle}</a>
           </li>
         {/if}

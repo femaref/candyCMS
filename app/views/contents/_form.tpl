@@ -4,8 +4,8 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   tinyMCE.init({
     mode : "textareas",
     theme : "advanced",
-    theme_advanced_resize_horizontal : "true",
     entity_encoding : "raw",
+    content_css : "%PATH_CSS%/tinymce{$_compress_files_suffix_}.css",
     plugins : "autosave,safari,pagebreak,style,table,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
     theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,styleselect,formatselect,fontselect,fontsizeselect",
     theme_advanced_buttons2 : "cut,copy,paste,pastetext,|,search,replace,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,forecolor,backcolor,|,pagebreak,|,fullscreen",
@@ -41,7 +41,7 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
         <div class="description">{$error_content}</div>
       {else}
         <div class='description center'>
-          <img src="%PATH_IMAGES%/spacer.gif" class="icon-redirect" alt="" />
+          <img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" />
           <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
         </div>
       {/if}

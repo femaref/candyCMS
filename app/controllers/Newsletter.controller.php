@@ -99,6 +99,7 @@ class Newsletter extends Main {
     }
 
     $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+		$oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
 
     # Language
     $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);

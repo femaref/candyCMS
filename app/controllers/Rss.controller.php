@@ -25,7 +25,7 @@ class Rss extends Main {
       $this->_aData = $this->_oModel->getData();
 			return $this->_showDefault();
 		}
-		elseif($this->_sSection == 'Gallery') {
+		elseif($this->_sSection == 'Gallery' && $this->_iId > 0) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
 
@@ -33,6 +33,10 @@ class Rss extends Main {
               $this->_aData[$this->_iId]['title']));
 
 			return $this->_showGallery();
+		}
+		else {
+      header('Status: 404 Not Found');
+      die(LANG_ERROR_GLOBAL_404);
 		}
 	}
 
@@ -46,9 +50,6 @@ class Rss extends Main {
 		$oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
 		$oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$oSmarty->assign('data', $this->_aData);
-
-		# Language
-		$oSmarty->assign('lang_website_title', LANG_WEBSITE_TITLE);
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
@@ -71,9 +72,6 @@ class Rss extends Main {
 		$oSmarty->assign('_title_', $this->getTitle());
 
 		$oSmarty->assign('data', $aData);
-
-		# Language
-		$oSmarty->assign('lang_website_title', $this->getTitle());
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;

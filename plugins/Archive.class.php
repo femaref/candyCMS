@@ -7,23 +7,26 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+# The archive plugin lists all blog entries by month and date.
+# You can include this plugin only at the "app/views/layouts/application.tpl".
+
 require_once 'app/controllers/Blog.controller.php';
 require_once 'app/models/Blog.model.php';
 
-class Archive extends Blog {
+final class Archive extends Blog {
 
-  public function __construct($aRequest, $aSession) {
+  public final function __construct($aRequest, $aSession) {
     $this->_aRequest = & $aRequest;
     $this->_aSession = & $aSession;
 
     $this->__init();
   }
 
-  public function __init() {
+  public final function __init() {
     $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
   }
 
-  public function show() {
+  public final function show() {
     $this->_aData = $this->_oModel->getData('', false, 1000);
 
     foreach ($this->_aData as $aData) {
