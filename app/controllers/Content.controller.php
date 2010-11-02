@@ -44,7 +44,12 @@ final class Content extends Main {
       $oSmarty->assign('c', $this->_aData[$this->_iId]);
       $oSmarty->assign('URL', WEBSITE_URL);
 
-      $this->_setTitle(Helper::removeSlahes($this->_aData[$this->_iId]['title']));
+			# Quick hack for displaying title without html tags
+			$sTitle = Helper::removeSlahes($this->_aData[$this->_iId]['title']);
+			$sTitle = str_replace('<span class="highlight">', '', $sTitle);
+			$sTitle = str_replace('</span>', '', $sTitle);
+
+      $this->_setTitle($sTitle);
 
       # Language
       $oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);

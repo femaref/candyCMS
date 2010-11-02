@@ -4,13 +4,12 @@
 }
 
 .image_overlay {
-  background: transparent url(../images/imageoverlay.png);
+  background-color: #000;
   z-index:999;
   position: absolute;
   height: 20px;
   padding: 5px;
   color: #fff;
-  opacity: 0;
   visibility: hidden;
   text-align: center;
   margin: -34px 4px 0px;
