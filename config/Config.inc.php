@@ -176,9 +176,9 @@ define('MEDIA_DEFAULT_Y', '371');
 define('THUMB_DEFAULT_X', '180');
 
 # Set maximum popup width
-# DEFAULT: 1000 / 800
-define('POPUP_DEFAULT_X', '1000');
-define('POPUP_DEFAULT_Y', '800');
+# DEFAULT: 800 / 640
+define('POPUP_DEFAULT_X', '800');
+define('POPUP_DEFAULT_Y', '640');
 
 # ------------------------------------------------------------------------------
 

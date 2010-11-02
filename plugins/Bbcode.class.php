@@ -106,7 +106,9 @@ final class Bbcode {
           $sHTML .= '</a>';
           $sHTML .= '</div>';
           $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $iWidth . 'px">';
+          $sHTML .= '<span>';
           $sHTML .= $sText;
+          $sHTML .= '</span>';
           $sHTML .= '</div>';
         }
       }

@@ -26,7 +26,7 @@ RewriteRule ^robots.txt$ public/robots.txt [L]
 RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA]
 RewriteRule ^About$ index.php?section=content&id=3 [L,QSA]
 RewriteRule ^Contact/([A-Za-z0-9]+)$ index.php?section=mail&id=1&subject=$1 [L,QSA]
-RewriteRule ^Help/BB-Code$ http://wiki.github.com/marcoraddatz/candyCMS/bb-code [R=301]
+RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301]
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 
 # Fixes for rules below

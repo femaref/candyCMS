@@ -76,7 +76,8 @@ final class Helper {
         $sSize = POPUP_DEFAULT_X;
 
       $sMail = md5($aGravatar['email']);
-      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize;
+      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize .
+				'&d=' . WEBSITE_CDN . '/public/images/missing_avatar.jpg';
     }
     else {
       $sFile = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId . '.jpg';
