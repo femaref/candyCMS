@@ -80,6 +80,7 @@ class Model_Comment extends Model_Main {
                     'parent_id'       => $aRow['parent_id'],
                     'parent_category' => $aRow['parent_category'],
                     'author_id'       => $aRow['author_id'],
+                    'author_ip'       => $aRow['author_ip'],
                     'author_email'    => $aRow['author_email'],
                     'author_name'     => $aRow['author_name'],
                     'name'            => Helper::formatOutput($aRow['name']),

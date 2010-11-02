@@ -18,7 +18,13 @@
     <div id="c{$c.id}">
       {$c.content}
     </div>
-    <div class='{if $author_id == $c.author_id}row1{/if} footer'>
+    <div class='footer'>
+      {if $USER_RIGHT > 3 && $c.author_email}
+        <a href="mailto:{$c.author_email}">{$c.author_email}</a>
+      {/if}
+      {if $USER_RIGHT > 3 && $c.author_ip}
+        <span>{$c.author_ip}</span>
+      {/if}
       <a href='#add'
          onclick="quoteMessage('{$c.name} {$c.surname}', 'c{$c.id}')">
         <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang_quote}'

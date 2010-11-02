@@ -334,11 +334,7 @@ table th
   margin-top:3px;
 }
 
-.footer img {
-  vertical-align:bottom;
-}
-
-.footer a {
+.footer a, .footer span {
   margin-left: 5px;
 }
 

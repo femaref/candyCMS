@@ -349,7 +349,7 @@ table th
   padding-bottom: 2px;
 }
 
-.footer a {
+.footer a, .footer span {
   margin-left: 5px;
 }
 
