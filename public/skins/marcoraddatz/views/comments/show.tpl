@@ -8,7 +8,9 @@
 {$_comment_pages_}
 {foreach $comments as $c}
   <div class="avatar">
-    <img src="{$c.avatar_64}" class="image {if $author_id == $c.author_id}from_author{else}not_from_author{/if}" alt="{$c.full_name}" />
+    <div class="image">
+      <img src="{$c.avatar_64}" class="{if $author_id == $c.author_id}from_author{else}not_from_author{/if}" alt="{$c.full_name}" />
+    </div>
   </div>
   <div class='comment {if $author_id == $c.author_id}from_author{else}not_from_author{/if}'>
     <h3 class='{if $author_id == $c.author_id}row1{/if}'>

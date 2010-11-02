@@ -7,7 +7,7 @@
     var lazyloader = new LazyLoad({
       range: {$_thumb_default_x_},
       image: '%PATH_IMAGES%/spacer.png',
-      elements: '.image'
+      elements: '.image img'
     });
   });
 </script>
@@ -15,5 +15,10 @@
   .gallery_files .image, .element .image {
     width:{$_thumb_default_x_}px;
     height:{$_thumb_default_x_}px;
+    line-height:{$_thumb_default_x_}px;
+  }
+
+  .gallery_files .image img, .element .image img {
+    vertical-align: middle;
   }
 </style>

@@ -1,15 +1,14 @@
 html {
   text-align: center;
   font: 13px "Trebuchet MS", Arial, Sans-serif;
-  color: #333;
   background: #262626;
+  color: #262626;
 }
 
 body
 {
   margin: 50px auto auto;
   width: 712px;
-  background: white;
 }
 
 a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover, .js-toggle
@@ -48,6 +47,9 @@ h3 {
   font-size: 14px;
 }
 
+#header {
+}
+
 #navigation
 {
   color:white;
@@ -55,10 +57,16 @@ h3 {
   font-size:120%;
   font-weight:bold;
   border-bottom:1px solid black;
-  background-color: #e06455;
+  background-color: #d72733;
   background: -moz-linear-gradient(top, #e06455, #d72733);
   background: -webkit-gradient(linear, left top, left bottom, from(#e06455), to(#d72733));
   border:2px solid white;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 #navigation ul, #footer ul {
@@ -89,10 +97,9 @@ h3 {
 
 #body
 {
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  margin-top:10px;
+  padding: 10px;
+  background: white;
+  color: #333;
 }
 
 #footer {
@@ -229,6 +236,7 @@ table th
 
 .image {
   padding: 2px;
+  display: inline-block;
 }
 
 .pagelink {
@@ -282,13 +290,16 @@ table th
   text-align:left;
 }
 
-.from_author {
+.from_author, .not_from_author {
   background:#efefef;
   padding:10px;
-  -moz-border-radius-bottomleft:10px;
-  -moz-border-radius-bottomright:10px;
-  -moz-border-radius-topleft:10px;
-  -moz-border-radius-topright:10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.from_author {
+  background: #dedede;
 }
 
 .element .header .date {

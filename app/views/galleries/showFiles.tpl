@@ -31,26 +31,28 @@
   {/if}
   {$_album_pages_}
   {foreach $files as $f}
-    <a href='{$f.url_popup}' rel='lightbox[]' title='
-      {if $USER_RIGHT > 3}
-        {$lang_uploaded_at}: {$f.date}
-        <br />
-        <a href="/Gallery/{$f.id}/updatefile">
-            <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
-        </a>
-        <a href="/Gallery/{$f.id}/destroyfile">
-            <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
-        </a>
-        <br />
-        <input type="text" value="{$f.url_popup}" class="inputsmall"
-            onclick="this.focus();this.select();" />
-      {else}
-        {$f.description}
-      {/if}'>
-      <img src='{$f.url_thumb}' class='image'
-           alt='{$f.description}' id='{$f.loop}{$f.file}'
-           title='{$f.description}' />
-    </a>
+    <div class="image">
+      <a href='{$f.url_popup}' rel='lightbox[]' title='
+        {if $USER_RIGHT > 3}
+          {$lang_uploaded_at}: {$f.date}
+          <br />
+          <a href="/Gallery/{$f.id}/updatefile">
+              <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
+          </a>
+          <a href="/Gallery/{$f.id}/destroyfile">
+              <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
+          </a>
+          <br />
+          <input type="text" value="{$f.url_popup}" class="inputsmall"
+              onclick="this.focus();this.select();" />
+        {else}
+          {$f.description}
+        {/if}'>
+        <img src='{$f.url_thumb}'
+             alt='{$f.description}' id='{$f.loop}{$f.file}'
+             title='{$f.description}' />
+      </a>
+    </div>
   {/foreach}
   <p>{$_album_pages_}</p>
   <a href='/RSS/gallery/{$id}'>

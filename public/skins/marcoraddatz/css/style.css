@@ -217,6 +217,7 @@ table th
 
 .image {
   padding: 2px;
+  display: inline-block;
 }
 
 .image:hover {
@@ -277,18 +278,22 @@ table th
   width: 484px;
 }
 
-
-.avatar img {
+.avatar {
   float: left;
-  margin: 15px 10px 10px 0px;
+  margin-top: 15px;
+  margin-right: 8px;
+}
+
+.avatar .image img {
   clear: both;
   border: 1px solid #fff;
+  width: 64px;
+  height: 64px;
 }
 
 .avatar .image, .avatar .image:hover {
   border: none;
-  width: 64px;
-  height: 64px;
+  padding: 0px;
 }
 
 .from_author, .not_from_author {
