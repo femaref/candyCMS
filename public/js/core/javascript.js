@@ -1,25 +1,26 @@
+window.addEvent('domready', function() {
+  $$('.image_overlay').fade('hide');
+});
+
 /********************************************************************************/
 /* Show / Hide Element */
 /********************************************************************************/
 function hideDiv(sDivId) {
-  new Fx.Slide(sDivId).toggle();
+  new Fx.Slide(sDivId).slideOut();
 }
 
-function fadeInDiv(sDivId) {
-  $(sDivId).fade('in');
-}
-
-function fadeOutDiv(sDivId) {
-  $(sDivId).fade('out');
+function fadeDiv(sDivId) {
+  $(sDivId).fade('toggle');
 }
 
 function showDiv(sDivId) {
-  window.addEvent('domready', function() {
-    $(sDivId).setStyle('display', 'inline');
-    if($('js-flash_success') || $('js-flash_error')) {
-      (function(){ hideDiv(sDivId) }).delay(5000);
-    }
-  });
+  $(sDivId).setStyle('display', 'inline');
+
+  if($('js-flash_success') || $('js-flash_error')) {
+    (function(){
+      hideDiv(sDivId)
+    }).delay(5000);
+  }
 }
 
 if($('js-flash_success') || $('js-flash_error')) {
@@ -37,7 +38,7 @@ function quoteMessage(sName, sDivId) {
   return false;
 }
 
-function destroyContent(sDivId) {
+function resetContent(sDivId) {
   $(sDivId).set('html', '');
 }
 
@@ -64,6 +65,7 @@ if($$('.js-tooltip')) {
   myTips.addEvent('show', function(tip){
     tip.fade('in');
   });
+
   myTips.addEvent('hide', function(tip){
     tip.fade('out');
   });

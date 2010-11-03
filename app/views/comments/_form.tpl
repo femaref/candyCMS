@@ -74,7 +74,7 @@
     </div>
     <div class="button">
       <input type='button' value='{$lang_reset}'
-             onclick="destroyContent('createCommentText')" />
+             onclick="resetContent('createCommentText')" />
     </div>
     <input type='hidden' value='formdata' name='create_comment' />
     <input type='hidden' value='{$parent_id}' name='parent_id' />

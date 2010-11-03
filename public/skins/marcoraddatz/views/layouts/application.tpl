@@ -28,8 +28,10 @@
     </div>
     <div id="contact">
       <p>
-        <a href="/upload/user/popup/1.jpg" rel="lightbox">
-          <img src="/upload/user/100/1.jpg" width="100" class="image" alt="" />
+        <a href="http://www.gravatar.com/avatar/1a578e32b3c7216f1ecd8e5f31fe0169.jpg?s=800" 
+           title="Marco Raddatz" rel="lightbox">
+          <img src="http://www.gravatar.com/avatar/1a578e32b3c7216f1ecd8e5f31fe0169.jpg?s=100"
+               width="100" class="image" alt="Marco" />
         </a>
       </p>
       <div id="about">

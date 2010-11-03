@@ -76,6 +76,7 @@ h3 {
 
 #contact img {
   float: right;
+  margin-top: -18px;
 }
 
 #contact #about {

@@ -22,7 +22,7 @@
   {/if}
 </h2>
 {if !$files}
-  <div class='error' id='error' onclick="hideDiv('error')">
+  <div class='error' id='js-error' onclick="hideDiv('js-error')">
     <p>{$lang_no_files_uploaded}</p>
   </div>
 {else}
