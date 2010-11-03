@@ -5,9 +5,12 @@
 <script type="text/javascript">
   window.addEvent('domready',function() {
     var lazyloader = new LazyLoad({
-      range: {$_thumb_default_x_},
+      range: 0,
       image: '%PATH_IMAGES%/spacer.png',
-      elements: '.image img'
+      elements: '.image img',
+      onLoad: function(img) {
+        img.setStyle('opacity',0).fade(1);
+      }
     });
   });
 </script>

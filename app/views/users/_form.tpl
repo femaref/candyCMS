@@ -17,7 +17,7 @@
       </td>
       <td rowspan='5' style='vertical-align:top;min-width:140px'>
         {if $USER_ID === $uid}
-          <a href='{$avatar_popup}' rel='lightbox' title='{$name}'>
+          <a href='{$avatar_popup}' rel='lightbox' title='{$name} {$surname}'>
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
           <br />
