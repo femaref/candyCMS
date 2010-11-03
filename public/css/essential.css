@@ -15,6 +15,10 @@
   margin: -34px 4px 0px;
 }
 
+.image_overlay span {
+  position: relative;
+}
+
 .cancel input {
   color:red;
 }

@@ -35,7 +35,7 @@
         <span>{$c.author_ip}</span>
       {/if}
       <a href='#add'
-         onclick="quoteMessage('{$c.name} {$c.surname}', 'c{$c.id}')">
+         onclick="quoteMessage('{$c.full_name}', 'c{$c.id}')">
         <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang_quote}'
              title='{$lang_quote}' />
       </a>
