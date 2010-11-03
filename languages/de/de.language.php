@@ -210,7 +210,7 @@ define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Bitte gib einen Betreff ein!' );
 # ERROR MESSAGES
 define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Es wurden noch keine Bilder hochgeladen!' );
 define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf!' );
-define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Seite nicht verfügbar!' );
+define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );
 define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'Die Datei konnte nicht gelöscht werden!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );

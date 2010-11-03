@@ -41,7 +41,7 @@ abstract class Main {
     if( $this->_sTitle !== '' )
       return $this->_sTitle;
     else
-      return '';
+      return LANG_ERROR_GLOBAL_404;
   }
 
   /* Manage Page Content */

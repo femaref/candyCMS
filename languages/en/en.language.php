@@ -206,7 +206,7 @@ define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Please enter a subject.' );
 # ERROR MESSAGES
 define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'No files were uploaded yet!' );
 define( 'LANG_ERROR_GLOBAL', 'An error occured!' );
-define( 'LANG_ERROR_GLOBAL_404', 'Error 404 - Page does not exist!' );
+define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );
 define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Please login first!' );
 define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'This file could not be deleted!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'This entry does not exist!' );
