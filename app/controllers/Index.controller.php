@@ -276,17 +276,6 @@ class Index {
         $oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
       }
 
-      if (class_exists('FacebookCMS')) {
-				$oFacebook = new FacebookCMS(array(
-					'appId'  => FACEBOOK_APP_ID,
-					'secret' => FACEBOOK_SECRET,
-					'cookie' => true,
-				));
-
-        $oSmarty->assign('_plugin_facebook_get_session_status_', $oFacebook->getSessionStatus());
-        $oSmarty->assign('_plugin_facebook_get_user_data_', $oFacebook->getUserData());
-      }
-
       $oSmarty->assign('_content_', $oSection->getContent());
 
       $oSmarty->cache_dir = CACHE_DIR;
