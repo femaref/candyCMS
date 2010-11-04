@@ -91,7 +91,6 @@ final class Bbcode {
           $aNewInfo = @getimagesize($sFilePath);
 
           # Devide margin and padding from essential.css
-          $iMarginTop = $aNewInfo[1] - 30;
           $iWidth = $aNewInfo[0] - 10;
 
           # Language
@@ -105,10 +104,8 @@ final class Bbcode {
           $sHTML .= 'onmouseout="fadeDiv(\'' . $sFileName . '\')" />';
           $sHTML .= '</a>';
           $sHTML .= '</div>';
-          $sHTML .= '<div id="' . $sFileName . '" class="image_overlay" style="width:' . $iWidth . 'px">';
-          $sHTML .= '<span>';
+          $sHTML .= '<div id="' . $sFileName . '" class="js-image_overlay" style="width:' . $iWidth . 'px">';
           $sHTML .= $sText;
-          $sHTML .= '</span>';
           $sHTML .= '</div>';
         }
       }

@@ -1,5 +1,5 @@
 window.addEvent('domready', function() {
-  $$('.image_overlay').fade('hide');
+  $$('.js-image_overlay').fade('hide');
 });
 
 /********************************************************************************/
