@@ -40,7 +40,7 @@ final class Archive extends Blog {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = 'public/skins/_plugins';
-    return $oSmarty->fetch('archive.tpl');
+    $oSmarty->template_dir = 'public/skins/_plugins/archive';
+    return $oSmarty->fetch('show.tpl');
   }
 }

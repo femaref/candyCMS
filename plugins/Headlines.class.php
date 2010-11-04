@@ -34,7 +34,7 @@ class Headlines extends Blog {
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = 'public/skins/_plugins';
-		return $oSmarty->fetch('headlines.tpl');
+		$oSmarty->template_dir = 'public/skins/_plugins/headlines';
+		return $oSmarty->fetch('show.tpl');
 	}
 }
