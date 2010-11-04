@@ -9,7 +9,7 @@
             <label for="name">{$lang_name}</label>
           </td>
           <td class='td_right'>
-            {if $USER_RIGHT > 0}
+            {if $USER_NAME}
               {$USER_NAME} {$USER_SURNAME}
             {else}
               <div class="input">
@@ -26,7 +26,7 @@
             <label for="name">{$lang_email} ({$lang_optional})</label>
           </td>
           <td class='td_right'>
-            {if $USER_RIGHT > 0}
+            {if $USER_EMAIL}
               {$USER_EMAIL}
             {else}
               <div class="input">

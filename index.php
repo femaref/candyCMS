@@ -11,7 +11,7 @@
 #--------------------------------------------------
 # 0 = Guests / Unregistered Users
 # 1 = Members
-# 2 = Special Members (VIPs, Paying Members, etc.)
+# 2 = Facebook users
 # 3 = Moderators
 # 4 = Administrators
 #--------------------------------------------------
@@ -67,11 +67,32 @@ $oIndex->loadAddons();
 $oIndex->loadPlugins();
 
 $aUser =& $oIndex->setActiveUser();
+
+# If we use the facebook plugin and are not logged in, fetch user data
+if(empty($aUser))
+	$aFacebookData = $oIndex->loadFacebookPlugin()->getUserData();
+
+# Check whether we use facebook or CMS data
 define( 'USER_ID',	(int)$aUser['id'] );
-define( 'USER_EMAIL', (string)$aUser['email'] );
-define( 'USER_NAME', (string)$aUser['name'] );
-define( 'USER_RIGHT', (int)$aUser['user_right'] );
-define( 'USER_SURNAME', (string)$aUser['surname'] );
+define( 'USER_RIGHT', isset($aFacebookData[0]['uid']) ?
+				2 :
+				(int)$aUser['user_right'] );
+
+define( 'USER_FACEBOOK_ID',	isset($aFacebookData[0]['uid']) ?
+				$aFacebookData[0]['uid'] :
+				'' );
+
+define( 'USER_EMAIL', isset($aFacebookData[0]['email']) ?
+				$aFacebookData[0]['email'] :
+				$aUser['email'] );
+
+define( 'USER_NAME', isset($aFacebookData[0]['first_name']) ?
+				$aFacebookData[0]['first_name'] :
+				$aUser['name'] );
+
+define( 'USER_SURNAME', isset($aFacebookData[0]['last_name']) ?
+				$aFacebookData[0]['last_name'] :
+				$aUser['surname'] );
 
 # Load cronjob
 $oIndex->loadCronjob();

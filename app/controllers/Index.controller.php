@@ -77,6 +77,29 @@ class Index {
 		}
   }
 
+	# Give the users the ability to login via their facebook information
+	public final function loadFacebookPlugin($sPath = '') {
+		if (class_exists('FacebookCMS')) {
+			try {
+				if (!file_exists($sPath . 'config/Facebook.inc.php'))
+					throw new AdvancedException('Missing facebook config file.');
+				else
+					require_once $sPath . 'config/Facebook.inc.php';
+			}
+			catch (AdvancedException $e) {
+				die($e->getMessage());
+			}
+			
+			$oFacebook = new FacebookCMS(array(
+				'appId'  => FACEBOOK_APP_ID,
+				'secret' => FACEBOOK_SECRET,
+				'cookie' => true,
+			));
+
+			return $oFacebook;
+		}
+	}
+
   public final function setActiveUser($iSessionId = '') {
     $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
@@ -251,6 +274,17 @@ class Index {
       if (class_exists('Headlines')) {
         $oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
         $oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
+      }
+
+      if (class_exists('FacebookCMS')) {
+				$oFacebook = new FacebookCMS(array(
+					'appId'  => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+					'cookie' => true,
+				));
+
+        $oSmarty->assign('_plugin_facebook_get_session_status_', $oFacebook->getSessionStatus());
+        $oSmarty->assign('_plugin_facebook_get_user_data_', $oFacebook->getUserData());
       }
 
       $oSmarty->assign('_content_', $oSection->getContent());

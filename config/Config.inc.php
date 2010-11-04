@@ -109,7 +109,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive,Headlines,LazyLoad');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Archive,Headlines,LazyLoad,Facebook');
 
 # ------------------------------------------------------------------------------
 # Allow caching and compiling for better performance?
