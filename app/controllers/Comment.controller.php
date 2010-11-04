@@ -108,7 +108,8 @@ final class Comment extends Main {
 	# We must override the main method due to user right problems
 	public final function create($sInputName) {
 		if (isset($this->_aRequest[$sInputName])) {
-			if (USER_RIGHT == 0)
+			# TODO: This is not safe against spam. Use cookie?
+			if (USER_RIGHT == 0 && !isset($this->_aRequest['facebook_id']))
 				return $this->_checkCaptcha(true);
 			else
 				return $this->_create(false);
@@ -192,8 +193,10 @@ final class Comment extends Main {
 							(int) $this->_iId;
 
       $oSmarty = new Smarty();
+			$oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);
 			$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 			$oSmarty->assign('USER_EMAIL', USER_EMAIL);
+			$oSmarty->assign('USER_FULL_NAME', USER_FULL_NAME);
 			$oSmarty->assign('USER_NAME', USER_NAME);
 			$oSmarty->assign('USER_SURNAME', USER_SURNAME);
 			$oSmarty->assign('_action_url_', $this->_sAction);
@@ -202,11 +205,9 @@ final class Comment extends Main {
 			$oSmarty->assign('name', $sName);
 			$oSmarty->assign('parent_id', $iParentId);
 
-      if ($bShowCaptcha == true)
+      if ($bShowCaptcha === true)
 				$oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
 												$this->_sRecaptchaError));
-			else
-				$oSmarty->assign('_captcha_', '');
 
 			if (!empty($this->_aError)) {
 				foreach ($this->_aError as $sField => $sMessage)

@@ -10,7 +10,11 @@
           </td>
           <td class='td_right'>
             {if $USER_NAME}
-              {$USER_NAME} {$USER_SURNAME}
+              {$USER_FULL_NAME}
+              {if $USER_FACEBOOK_ID}
+                <input type="hidden" value="{$USER_FULL_NAME}" name="name" id="name" />
+                <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" id="facebook_id" />
+              {/if}
             {else}
               <div class="input">
                 <input type="text" value="{$name}" name="name" id="name" />
@@ -28,6 +32,9 @@
           <td class='td_right'>
             {if $USER_EMAIL}
               {$USER_EMAIL}
+              {if $USER_FACEBOOK_ID}
+                <input type="hidden" value="{$USER_EMAIL}" name="email" id="email" />
+              {/if}
             {else}
               <div class="input">
                 <input type="text" value="{$email}" name="email" id="email" />
@@ -56,19 +63,21 @@
         </tr>
       </table>
     </fieldset>
-    <center>
-      <script type="text/javascript">
-        var RecaptchaOptions = {
-           lang : 'de'
-        };
-      </script>
-      <div class="{if $error_captcha}error{/if}">
-        {$_captcha_}
-        {if $error_captcha}
-          <div class="description">{$error_captcha}</div>
-        {/if}
-      </div>
-    </center>
+    {if $_captcha_}
+      <center>
+        <script type="text/javascript">
+          var RecaptchaOptions = {
+             lang : 'de'
+          };
+        </script>
+        <div class="{if $error_captcha}error{/if}">
+          {$_captcha_}
+          {if $error_captcha}
+            <div class="description">{$error_captcha}</div>
+          {/if}
+        </div>
+      </center>
+    {/if}
     <div class="submit">
       <input type='submit' value='{$lang_submit}' />
     </div>
