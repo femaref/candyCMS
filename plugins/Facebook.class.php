@@ -13,14 +13,14 @@ require_once 'lib/facebook/facebook.php';
 
 class FacebookCMS extends Facebook {
 
-	/*public function getSessionStatus() {
+	public function getSessionStatus() {
 		# TODO: Put into template
 		if ($this->getSession())
 			return '<a href="' . $this->getLogoutUrl() . '">' . LANG_GLOBAL_LOGOUT . '</a>';
 
 		else
 			return '<a href="' . $this->getLoginUrl(array('req_perms' => 'email')) . '">' . LANG_GLOBAL_LOGIN . '</a>';
-	}*/
+	}
 
 	public function getConnectButton() {
 		$oSmarty = new Smarty();

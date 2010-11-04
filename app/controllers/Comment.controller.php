@@ -144,7 +144,7 @@ final class Comment extends Main {
 			return $this->_showFormTemplate($bShowCaptcha);
 
 		else {
-      $iLastComment = Helper::getLastEntry('comments');
+      $iLastComment = Helper::getLastEntry('comments') + 1;
 
 			$sRedirect = '/' . $this->_sParentSection .
               '/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;

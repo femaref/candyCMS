@@ -96,6 +96,7 @@ class Index {
 			$oFacebook = new FacebookCMS(array(
 				'appId'  => FACEBOOK_APP_ID,
 				'secret' => FACEBOOK_SECRET,
+				'cookie' => true,
 			));
 
 			return $oFacebook;
