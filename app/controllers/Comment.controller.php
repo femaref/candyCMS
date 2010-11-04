@@ -214,6 +214,16 @@ final class Comment extends Main {
 					$oSmarty->assign('error_' . $sField, $sMessage);
 			}
 
+			# Generate a facebook connect link
+      if (class_exists('FacebookCMS')) {
+				$oFacebook = new FacebookCMS(array(
+					'appId'  => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+				));
+
+        $oSmarty->assign('_plugin_facebook_connect_button_', $oFacebook->getConnectButton());
+      }
+
       # Language
       $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 			$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);

@@ -9,8 +9,8 @@
       {if $c.user_id > 0}
         <a href='/User/{$c.user_id}/{$c.full_name_seo}'>{$c.full_name}</a>
       {elseif $c.author_facebook_id > 0}
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
         <a href='http://www.facebook.com/?uid={$c.author_facebook_id}'>
-          <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
           {$c.author_name}
         </a>
       {elseif $c.author_name}
