@@ -7,16 +7,18 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+# This plugin gives users the opportunity to comment without registration.
+
 require_once 'lib/facebook/facebook.php';
 
 class FacebookCMS extends Facebook {
 
 	public function getSessionStatus() {
 		if ($this->getSession())
-			return '<a href="' . $this->getLogoutUrl() . '">Logout</a>';
+			return '<a href="' . $this->getLogoutUrl() . '">' . LANG_GLOBAL_LOGIN . '</a>';
 
 		else
-			return '<a href="' . $this->getLoginUrl() . '">Login</a>';
+			return '<a href="' . $this->getLoginUrl() . '">' . LANG_GLOBAL_LOGOUT . '</a>';
 	}
 
 	public function getUserData($sKey = '') {
@@ -34,7 +36,7 @@ class FacebookCMS extends Facebook {
 				return!empty($sKey) ? $aData[$sKey] : $aData;
 			}
 			catch (AdvancedException $e) {
-
+				die($e->getMessage());
 			}
 		}
 	}

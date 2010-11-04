@@ -46,6 +46,7 @@
           </div>
         </div>
       {/if}
+      {$_plugin_facebook_get_session_status_}
       {$_content_}
     </div>
     <div id="footer">
