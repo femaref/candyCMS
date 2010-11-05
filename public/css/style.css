@@ -353,7 +353,7 @@ table th
 }
 
 .gallery_album .image, .gallery_files .image {
-  margin: 2px 0px
+  margin: 2px 0px;
 }
 
 .gallery_files .image {

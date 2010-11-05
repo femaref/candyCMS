@@ -8,11 +8,11 @@
   background: rgba(0,0,0,0.75);
   color: #fff;
   text-shadow:1px 1px 0 #202020;
-  min-height: 20px;
-  padding: 5px;
+  padding: 10px 0px;
   text-align: center;
-  margin: -34px 4px 0px;
   position: absolute;
+  z-index:1;
+  margin-top: -33px;
 }
 
 .cancel input {

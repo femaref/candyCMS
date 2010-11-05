@@ -90,22 +90,21 @@ final class Bbcode {
 
           $aNewInfo = @getimagesize($sFilePath);
 
-          # Devide margin and padding from essential.css
-          $iWidth = $aNewInfo[0] - 10;
-
           # Language
           $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
           $sText = str_replace('%h', $aInfo[1], $sText);
 
-          $sHTML = '<div class="image" style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
+          $sHTML = '<div class="image" style="min-width:' . $aNewInfo[0] . 'px;min-height:' . $aNewInfo[1] . 'px;line-height:100%">';
+          $sHTML .= '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
           $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
           $sHTML .= '<img src="' . $sFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
           $sHTML .= 'onmouseover="fadeDiv(\'' . $sFileName . '\')"';
           $sHTML .= 'onmouseout="fadeDiv(\'' . $sFileName . '\')" />';
           $sHTML .= '</a>';
-          $sHTML .= '</div>';
-          $sHTML .= '<div id="' . $sFileName . '" class="js-image_overlay" style="width:' . $iWidth . 'px">';
+          $sHTML .= '<div id="' . $sFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px">';
           $sHTML .= $sText;
+          $sHTML .= '</div>';
+          $sHTML .= '</div>';
           $sHTML .= '</div>';
         }
       }
