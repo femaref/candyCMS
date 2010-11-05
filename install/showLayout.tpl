@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
-    <link href='%PATH_IMAGES%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
+    <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <title>{$title}</title>
   </head>
