@@ -215,7 +215,7 @@ final class Comment extends Main {
 			}
 
 			# Generate a facebook connect link
-      if (class_exists('FacebookCMS')) {
+      if (class_exists('FacebookCMS') && USER_ID == 0) {
 				$oFacebook = new FacebookCMS(array(
 					'appId'  => FACEBOOK_APP_ID,
 					'secret' => FACEBOOK_SECRET,

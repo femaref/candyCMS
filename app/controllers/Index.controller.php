@@ -80,7 +80,6 @@ class Index {
 	# Give the users the ability to login via their facebook information
 	public final function loadFacebookPlugin($sPath = '') {
 		if (class_exists('FacebookCMS')) {
-
 			try {
 				if (!file_exists($sPath . 'config/Facebook.inc.php'))
 					throw new AdvancedException('Missing facebook config file.');

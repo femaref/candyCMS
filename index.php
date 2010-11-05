@@ -68,17 +68,16 @@ $oIndex->loadPlugins();
 
 $aUser = & $oIndex->setActiveUser();
 
-# If we use the facebook plugin and are not logged in, fetch user data
-$oFacebook = $oIndex->loadFacebookPlugin();
-if ($oFacebook == true)
-	$aFacebookData = $oFacebook->getUserData();
-
-# Clean Facebook data if we are logged in
-if (!empty($aUser))
-	unset($aFacebookData);
-
 # Check whether we use facebook or CMS data
 define('USER_ID', (int) $aUser['id']);
+
+if(USER_ID == 0) {
+  # If we use the facebook plugin and are not logged in, fetch user data
+  $oFacebook = $oIndex->loadFacebookPlugin();
+  if ($oFacebook == true)
+    $aFacebookData = $oFacebook->getUserData();
+}
+
 define('USER_RIGHT', isset($aFacebookData[0]['uid']) ?
 								2 :
 								(int) $aUser['user_right']);
