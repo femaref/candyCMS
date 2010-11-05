@@ -109,7 +109,7 @@ final class Comment extends Main {
 	public final function create($sInputName) {
 		if (isset($this->_aRequest[$sInputName])) {
 			# TODO: This is not safe against spam. Use cookie?
-			if (USER_RIGHT == 0 && !isset($this->_aRequest['facebook_id']))
+			if (USER_RIGHT == 0)
 				return $this->_checkCaptcha(true);
 			else
 				return $this->_create(false);

@@ -2,7 +2,7 @@
 <div id="create_comment">
   <form action='{$_action_url_}' method='post'>
     <fieldset>
-      <legend>{$lang_headline}{if !$USER_FACEBOOK_ID} {$_plugin_facebook_connect_button_}{/if}</legend>
+      <legend>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME} {$_plugin_facebook_connect_button_}{/if}</legend>
       <table>
         <tr class='row1{if $error_name} error{/if}'>
           <td class='td_left'>

@@ -13,6 +13,24 @@ require_once 'lib/facebook/facebook.php';
 
 class FacebookCMS extends Facebook {
 
+  # @Override because of OAUTH - Bug
+  protected function _restserver($params) {
+    // generic application level parameters
+    $params['api_key'] = $this->getAppId();
+    $params['format'] = 'json-strings';
+
+    $result = json_decode($this->_oauthRequest(
+      $this->getApiUrl($params['method']),
+      $params
+    ), true);
+
+    // results are returned, errors are thrown
+    if (is_array($result) && isset($result['error_code'])) {
+      #throw new FacebookApiException($result);
+    }
+    return $result;
+  }
+
 	public function getSessionStatus() {
 		# TODO: Put into template
 		if ($this->getSession())
@@ -35,23 +53,23 @@ class FacebookCMS extends Facebook {
 	}
 
 	public function getUserData($sKey = '') {
-		if ($this->getSession()) {
-			try {
-				$iUid = $this->getUser();
-				$aApiCall = array(
-						'method' => 'users.getinfo',
-						'uids' => $iUid,
-						'fields' => 'uid, first_name, last_name, pic_square, pic_big, pic, sex, locale, email, website'
-				);
+    if ($this->getAccessToken()) {
+      try {
+        $iUid = $this->getUser();
+        $aApiCall = array(
+            'method' => 'users.getinfo',
+            'uids' => $iUid,
+            'fields' => 'uid, first_name, last_name, pic_square, pic_big, pic, sex, locale, email, website'
+        );
 
-				$aData = $this->api($aApiCall);
-				return!empty($sKey) ? $aData[$sKey] : $aData;
-			}
-			catch (AdvancedException $e) {
-				die($e->getMessage());
-			}
-		}
-	}
+        $aData = $this->api($aApiCall);
+        return !empty($sKey) ? $aData[$sKey] : $aData;
+      }
+      catch (AdvancedException $e) {
+        die($e->getMessage());
+      }
+    }
+  }
 
 	public function getUserLocale() {
 		return $this->getUserData('locale');

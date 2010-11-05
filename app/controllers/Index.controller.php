@@ -88,11 +88,9 @@ class Index {
 					require_once $sPath . 'config/Facebook.inc.php';
 			}
 			catch (AdvancedException $e) {
-				define('FACEBOOK_APP_ID', '');
-				define('FACEBOOK_SECRET', '');
-				#die($e->getMessage());
+				die($e->getMessage());
 			}
-			
+
 			$oFacebook = new FacebookCMS(array(
 				'appId'  => FACEBOOK_APP_ID,
 				'secret' => FACEBOOK_SECRET,

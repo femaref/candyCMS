@@ -299,7 +299,7 @@ class User extends Main {
 		if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
 			$this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
-		if (Model_User::getExistingUser($this->_aRequest['email']) == false)
+		if (Model_User::getExistingUser($this->_aRequest['email']))
 			$this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
 
 		if (!isset($this->_aRequest['password']) || empty($this->_aRequest['password']))

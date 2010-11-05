@@ -42,8 +42,6 @@ class Model_User extends Model_Main {
       $oDb = null;
 
       if (isset($aResult['email']) && !empty($aResult['email']))
-        return false;
-      else
         return true;
     }
     catch (AdvancedException $e) {
