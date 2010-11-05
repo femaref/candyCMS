@@ -5,12 +5,12 @@ window.addEvent('domready', function() {
     el.fade('hide');
   });
   
-  $each($$('input[type=submit]'), function(el) {
+  /*$each($$('input[type=submit]'), function(el) {
     el.addEvent('click',function(e) {
       this.disabled = 1;
       this.set('value', LANG_SENDING);
     }.bind(el));
-  });
+  });*/
 });
 
 /********************************************************************************/

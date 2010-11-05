@@ -17,6 +17,7 @@ require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
   private final function _setFormatedText($sStr, $bUseParagraph) {
+
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);
@@ -51,62 +52,45 @@ final class Bbcode {
 		# Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
-    # Replace images with image tag (every location allowed)
-    while(preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
-      if(@getimagesize($sUrl[1]) == false)
-        $sHTML = '';
+    # Replace images with image tag (every location allowed, but external is very slow)
+    while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
+      $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
+      $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
+      $sTempFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension;
 
+      $aInfo = @getimagesize($sUrl[1]);
+
+      # Image is small and on our website, so we don't need a preview
+      if ($aInfo[0] <= MEDIA_DEFAULT_X)
+        $sHTML = '<img class=\'image\' src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" />';
+
+      # We do not have a preview, the image is local an biiig
       else {
-        $aInfo = @getimagesize($sUrl[1]);
 
-        if($aInfo[0] <= MEDIA_DEFAULT_X)
-          $sHTML = '<img class=\'image\' src="'	.$sUrl[1].	'" width="'	.$aInfo[0].	'" height="'	.$aInfo[1].	'" alt="'	.$sUrl[1].	'" />';
-
-        # Resize and save temp image
-				else
-        {
-          if ($aInfo['mime'] == 'image/jpeg')
-            $sFileType = 'jpg';
-
-          elseif ($aInfo['mime'] == 'image/png')
-            $sFileType = 'png';
-
-          elseif ($aInfo['mime'] == 'image/gif')
-            $sFileType = 'gif';
-
-          else
-            $sFileType = '';
-
-          $sFileName = md5(MEDIA_DEFAULT_X.$sUrl[1]);
-          $sFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sFileName . '.' . $sFileType;
-
-          if (!file_exists($sFilePath) && !empty($sFileType)) {
-            $oImage = new Image($sFileName, 'temp', $sUrl[1], $sFileType);
-            $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
-          }
-
-          # Override with full path
-          $sFilePath = WEBSITE_URL . '/' . $sFilePath;
-
-          $aNewInfo = @getimagesize($sFilePath);
-
-          # Language
-          $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
-          $sText = str_replace('%h', $aInfo[1], $sText);
-
-          $sHTML = '<div class="image" style="min-width:' . $aNewInfo[0] . 'px;min-height:' . $aNewInfo[1] . 'px;line-height:100%">';
-          $sHTML .= '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
-          $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
-          $sHTML .= '<img src="' . $sFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
-          $sHTML .= 'onmouseover="fadeDiv(\'' . $sFileName . '\')"';
-          $sHTML .= 'onmouseout="fadeDiv(\'' . $sFileName . '\')" />';
-          $sHTML .= '</a>';
-          $sHTML .= '<div id="' . $sFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px">';
-          $sHTML .= $sText;
-          $sHTML .= '</div>';
-          $sHTML .= '</div>';
-          $sHTML .= '</div>';
+        if (!file_exists($sTempFilePath)) {
+          $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
+          $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
+
+        $sTempFilePath = WEBSITE_URL . '/' . $sTempFilePath;
+        $aNewInfo = getimagesize($sTempFilePath);
+
+        # Language
+        $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
+        $sText = str_replace('%h', $aInfo[1], $sText);
+
+        $sHTML = '<div class="image" style="min-width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px;line-height:100%">';
+        $sHTML .= '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
+        $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
+        $sHTML .= '<img src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
+        $sHTML .= 'onmouseover="fadeDiv(\'' . $sTempFileName . '\')"';
+        $sHTML .= 'onmouseout="fadeDiv(\'' . $sTempFileName . '\')" />';
+        $sHTML .= '</a>';
+        $sHTML .= '<div id="' . $sTempFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px">';
+        $sHTML .= $sText;
+        $sHTML .= '</div>';
+        $sHTML .= '</div>';
+        $sHTML .= '</div>';
       }
 
       $sStr = preg_replace('=\[img\](.*)\[\/img\]=isU', $sHTML, $sStr, 1);

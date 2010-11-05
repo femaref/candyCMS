@@ -46,7 +46,7 @@ define( 'LANG_GLOBAL_FILES', 'Dateien' );
 define( 'LANG_GLOBAL_FILEMANAGER', 'Dateiverwaltung' );
 define( 'LANG_GLOBAL_GALLERY', 'Galerie' );
 define( 'LANG_GLOBAL_IMAGE', 'Bild' );
-define( 'LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE', 'Klicke hier, um das Bild auf %w x %h Pixel zu vergrößern!' );
+define( 'LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE', 'Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!' );
 define( 'LANG_GLOBAL_IN', 'in' );
 define( 'LANG_GLOBAL_LAST_UPDATE', 'letzte Änderung' );
 define( 'LANG_GLOBAL_LOCATION', 'Ort' );
