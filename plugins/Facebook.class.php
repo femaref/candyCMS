@@ -8,6 +8,8 @@
  */
 
 # This plugin gives users the opportunity to comment without registration.
+# NOTE: This plugin slows down your page rapidly by sending a request to facebook each load!
+# If you don't need it, keep it disabled.
 
 require_once 'lib/facebook/facebook.php';
 
