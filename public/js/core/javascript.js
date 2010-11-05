@@ -1,7 +1,11 @@
 window.addEvent('domready', function() {
-  $$('.js-image_overlay').fade('hide');
-
-  $each($$('input[type=submit]'),function(el) {
+  $each($$('.js-image_overlay'), function(el) {
+    var oSize = el.getSize();
+    el.setStyle('margin-top', '-' + oSize.y + 'px');
+    el.fade('hide');
+  });
+  
+  $each($$('input[type=submit]'), function(el) {
     el.addEvent('click',function(e) {
       this.disabled = 1;
       this.set('value', LANG_SENDING);
@@ -18,6 +22,11 @@ function hideDiv(sDivId) {
 
 function fadeDiv(sDivId) {
   $(sDivId).fade('toggle');
+}
+
+function imageOverlay(sDivId, iHeight) {
+  fadeDiv(sDivId);
+  $(sDivId).setStyle('margin-top', iHeight);
 }
 
 function showDiv(sDivId) {
