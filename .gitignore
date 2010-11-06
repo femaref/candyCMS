@@ -1,4 +1,4 @@
-config/Facebook.inc.phps
+config/Facebook.inc.php
 lib/facebook/examples/example.php
 .DS_Store
 nbproject/*

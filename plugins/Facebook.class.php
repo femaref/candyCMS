@@ -61,7 +61,7 @@ class FacebookCMS extends Facebook {
         $aApiCall = array(
             'method' => 'users.getinfo',
             'uids' => $iUid,
-            'fields' => 'uid, first_name, last_name, pic_square, pic_big, pic, sex, locale, email, website'
+            'fields' => 'uid, first_name, last_name, pic, pic_square_with_logo, locale, email, website'
         );
 
         $aData = $this->api($aApiCall);
@@ -72,6 +72,21 @@ class FacebookCMS extends Facebook {
       }
     }
   }
+
+	public function getUserAvatar($sUids) {
+		try {
+			$aApiCall = array(
+					'method' => 'users.getinfo',
+					'uids' => $sUids,
+					'fields' => 'pic_square_with_logo'
+			);
+
+			return $this->api($aApiCall);
+		}
+		catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
+	}
 
 	public function getUserLocale() {
 		return $this->getUserData('locale');

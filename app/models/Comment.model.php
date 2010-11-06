@@ -99,6 +99,51 @@ class Model_Comment extends Model_Main {
         $iLoop++;
       }
 
+			# We crawl the facebook avatars
+			# TODO: Put into seperate method
+			if (class_exists('FacebookCMS')) {
+				$oFacebook = new FacebookCMS(array(
+										'appId' => FACEBOOK_APP_ID,
+										'secret' => FACEBOOK_SECRET,
+								));
+
+				# We go through our data and get all facebook posts
+				$sFacebookUids = '';
+				foreach ($aResult as $aRow) {
+
+					# Skip unnecessary data
+					if (empty($aRow['author_facebook_id']))
+						continue;
+
+					else
+						$sFacebookUids .= $aRow['author_facebook_id'] . ',';
+				}
+
+				# Create a new facebook array with avatar urls
+				$aFacebookAvatarCache = array();
+				$aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
+
+				foreach($aFacebookAvatars as $aFacebookAvatar) {
+					$iUid = $aFacebookAvatar['uid'];
+					$sUrl = $aFacebookAvatar['pic_square_with_logo'];
+					$aFacebookAvatarCache[$iUid] = $sUrl;
+				}
+
+				# Finally, we need to rebuild avatar data in main data array
+				foreach ($aResult as $aRow) {
+
+					# Skip unnecessary data
+					if (empty($aRow['author_facebook_id']))
+						continue;
+
+					else {
+						$iId = $aRow['id'];
+						$iAuthorFacebookId = $aRow['author_facebook_id'];
+						$this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId];
+					}
+				}
+			}
+
       return $this->_aData;
     }
   }
