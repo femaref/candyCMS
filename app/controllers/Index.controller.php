@@ -31,6 +31,9 @@ class Index {
     catch (AdvancedException $e) {
       die($e->getMessage());
     }
+
+		if (file_exists($sPath . 'config/Facebook.inc.php'))
+			require_once $sPath . 'config/Facebook.inc.php';
   }
 
   public final function setBasicConfiguration() {
@@ -80,16 +83,6 @@ class Index {
 	# Give the users the ability to login via their facebook information
 	public final function loadFacebookPlugin($sPath = '') {
 		if (class_exists('FacebookCMS')) {
-			try {
-				if (!file_exists($sPath . 'config/Facebook.inc.php'))
-					throw new AdvancedException('Missing facebook config file.');
-				else
-					require_once $sPath . 'config/Facebook.inc.php';
-			}
-			catch (AdvancedException $e) {
-				die($e->getMessage());
-			}
-
 			$oFacebook = new FacebookCMS(array(
 				'appId'  => FACEBOOK_APP_ID,
 				'secret' => FACEBOOK_SECRET,
