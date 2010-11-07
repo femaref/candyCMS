@@ -125,8 +125,8 @@ class Model_Comment extends Model_Main {
 
 				foreach($aFacebookAvatars as $aFacebookAvatar) {
 					$iUid = $aFacebookAvatar['uid'];
-					$sUrl = $aFacebookAvatar['pic_square_with_logo'];
-					$aFacebookAvatarCache[$iUid] = $sUrl;
+					$aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
+					$aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
 				}
 
 				# Finally, we need to rebuild avatar data in main data array
@@ -139,7 +139,8 @@ class Model_Comment extends Model_Main {
 					else {
 						$iId = $aRow['id'];
 						$iAuthorFacebookId = $aRow['author_facebook_id'];
-						$this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId];
+						$this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
+						$this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
 					}
 				}
 			}

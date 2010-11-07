@@ -9,7 +9,7 @@
       {if $c.user_id > 0}
         <a href='/User/{$c.user_id}/{$c.full_name_seo}'>{$c.full_name}</a>
       {elseif $c.author_facebook_id > 0}
-        <a href='http://www.facebook.com/?uid={$c.author_facebook_id}'>
+        <a href='{$c.author_website}'>
           {$c.author_name}
         </a>
       {elseif $c.author_name}

@@ -62,7 +62,7 @@ class FacebookCMS extends Facebook {
         $aApiCall = array(
             'method' => 'users.getinfo',
             'uids' => $iUid,
-            'fields' => 'uid, first_name, last_name, pic, pic_square_with_logo, locale, email, website'
+            'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
         );
 
         $aData = $this->api($aApiCall);
@@ -79,7 +79,7 @@ class FacebookCMS extends Facebook {
 			$aApiCall = array(
 					'method' => 'users.getinfo',
 					'uids' => $sUids,
-					'fields' => 'pic_square_with_logo'
+					'fields' => 'pic_square_with_logo, profile_url'
 			);
 
 			return $this->api($aApiCall);
