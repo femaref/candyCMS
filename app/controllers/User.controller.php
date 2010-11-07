@@ -325,7 +325,7 @@ class User extends Main {
 			if ($this->_oModel->create($iVerificationCode) === true) {
 				$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
 												LANG_MAIL_USER_CREATE_BODY);
-				$sMailMessage = str_replace('%v', $iVerificationCode, $sMailMessage);
+				$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
 				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
 												LANG_MAIL_USER_CREATE_SUBJECT,
