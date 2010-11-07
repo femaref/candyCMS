@@ -175,7 +175,7 @@ class Mail extends Main {
     if (SMTP_ON == true)
       $oMail->IsSMTP();
     else
-      $oMail->IsSendmail();
+      $oMail->IsMail();
 
     try {
       if (SMTP_ON == true) {

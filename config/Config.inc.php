@@ -71,7 +71,7 @@ define('WEBSITE_DEV', true);
 
 # Enter your Google tracking code here
 # DEFAULT: ''
-define('WEBSITE_TRACKING_CODE', 'UA-304730-2');
+define('WEBSITE_TRACKING_CODE', '');
 
 # ------------------------------------------------------------------------------
 

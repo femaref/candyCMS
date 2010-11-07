@@ -48,6 +48,18 @@
       </p>
     </div>
     <div id='body'>
+      <!--[if IE]>
+        <div class="notice">
+          <h3>Beruflich muss ich leider auf den Internet Explorer Rücksicht nehmen.</h3>
+          <p>
+            Privat ist er mir allerdings furchtbar egal.
+            Bitte verwende im eigenen Interesse einen alternativen Browser wie
+            <a href="http://www.opera.com/browser/">Opera</a> oder
+            <a href="http://www.mozilla-europe.org/de/firefox/">Firefox</a>. Du wirst die
+            Entscheidung nicht bereuen!
+          </p>
+        </div>
+      <![endif]-->
       {if $lang_update_avaiable}
         <div class="notice">
           {$lang_update_avaiable}
