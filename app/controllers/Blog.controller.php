@@ -40,7 +40,7 @@ class Blog extends Main {
 		$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
 		if (class_exists('LazyLoad')) {
-			$oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+			$oLazyLoad = new LazyLoad();
 			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
 		}
 

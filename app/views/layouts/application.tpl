@@ -4,6 +4,9 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content="{$meta_description}" />
     <meta name='keywords' content="{$meta_keywords}" />
+    <meta property="og:title" content="{$meta_og_title}"/>
+    <meta property="og:url" content="{$meta_og_url}"/>
+    <meta property="og:site_name" content="{$meta_og_site_name}"/>
     <link href='{$_website_url_}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />

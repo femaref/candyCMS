@@ -244,6 +244,9 @@ class Index {
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
+      $oSmarty->assign('meta_og_title', $oSection->getTitle());
+      $oSmarty->assign('meta_og_url', WEBSITE_URL);
+      $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
       # Include optional plugins
       if( class_exists('Adsense') ) {

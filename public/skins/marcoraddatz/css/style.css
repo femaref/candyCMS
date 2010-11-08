@@ -342,7 +342,7 @@ table th
 .footer {
   font-size: 90%;
   text-align: left;
-  margin-top:35px;
+  margin-top:15px;
 }
 
 .footer img {
@@ -350,8 +350,17 @@ table th
   padding-bottom: 2px;
 }
 
-.footer a, .footer span {
+.footer a, .footer span, .footer iframe {
   margin-left: 5px;
+}
+
+.footer .share, .footer iframe {
+  float: left;
+}
+
+.footer iframe {
+  margin-top: -1px;
+  margin-left: 28px;
 }
 
 .comment .footer {

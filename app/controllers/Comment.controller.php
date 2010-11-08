@@ -54,7 +54,7 @@ final class Comment extends Main {
 			$oSmarty->assign('parent_id', $this->_iId);
 
       if (class_exists('LazyLoad')) {
-        $oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+        $oLazyLoad = new LazyLoad();
         $oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
       }
 

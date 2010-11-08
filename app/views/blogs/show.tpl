@@ -47,6 +47,15 @@
         {/if}
         {$b.content}
         <div class='footer'>
+          <iframe src="http://www.facebook.com/plugins/like.php?href={$b.url}&
+                  layout=button_count&
+                  show_faces=false&
+                  ref={$b.eTitle}"
+                  scrolling="no"
+                  frameborder="0"
+                  style="border:none;overflow:hidden;width:125px;height:21px"
+                  allowTransparency="true">
+          </iframe>
           {if $b.tags[0] !== ''}
             {$lang_tags}:
             {foreach from=$b.tags item=t name=tags}

@@ -338,6 +338,10 @@ table th
   margin-left: 5px;
 }
 
+.footer iframe {
+  float: left;
+}
+
 /* Both gallery options */
 .gallery_files h2 {
   margin-top: 3px;
