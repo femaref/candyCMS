@@ -13,7 +13,7 @@
   {foreach $content as $c}
     <tr class='{cycle values="row1,row2"}'>
       <td style='width:45%' class="left">
-        <a href='/Content/{$c.id}/{$c.eTitle}'>
+        <a href='/Content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>
       </td>

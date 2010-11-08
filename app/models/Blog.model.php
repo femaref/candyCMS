@@ -90,28 +90,28 @@ class Model_Blog extends Model_Main {
         $sFullName  = $sName . ' ' . $sSurname;
 
         $this->_aData[$iId] = array(
-                'id'            => $aRow['id'],
-                'author_id'     => $aRow['author_id'],
-                'tags'          => $aTags,
-                'title'         => Helper::formatOutput($aRow['title']),
-                'title_seo'     => urlencode(Helper::formatOutput($aRow['title'])),
-                'content'       => Helper::formatOutput($aRow['content'], true),
-                'teaser'        => Helper::formatOutput($aRow['teaser'], true),
-                'date'          => Helper::formatTimestamp($aRow['date'], true),
-                'datetime'      => Helper::formatTimestamp($aRow['date']),
-                'date_raw'      => $aRow['date'],
-                'date_rss'      => date('r', $aRow['date']),
-                'uid'           => $aRow['uid'],
-                'name'          => $sName,
-                'surname'       => $sSurname,
-                'full_name'     => $sFullName,
-                'full_name_seo' => urlencode($sFullName),
-                'avatar_32'     => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
-                'avatar_64'     => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
-                'comment_sum'   => $aRow['commentSum'],
-                'eTitle'        => $sEncodedTitle, # encoded for social networks
-                'published'     => $aRow['published'],
-                'url'           => $sUrl
+                'id'                => $aRow['id'],
+                'uid'               => $aRow['uid'],
+                'author_id'         => $aRow['author_id'],
+                'tags'              => $aTags,
+                'title'             => Helper::formatOutput($aRow['title']),
+                'content'           => Helper::formatOutput($aRow['content'], true),
+                'teaser'            => Helper::formatOutput($aRow['teaser'], true),
+                'date'              => Helper::formatTimestamp($aRow['date'], true),
+                'datetime'          => Helper::formatTimestamp($aRow['date']),
+                'date_raw'          => $aRow['date'],
+                'date_rss'          => date('r', $aRow['date']),
+                'encoded_full_name' => urlencode($sFullName),
+                'encoded_title'     => $sEncodedTitle, # encoded for social networks
+                'encoded_url'       => urlencode($sUrl),
+                'avatar_32'         => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
+                'avatar_64'         => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
+                'full_name'         => $sFullName,
+                'name'              => $sName,
+                'surname'           => $sSurname,
+                'comment_sum'       => $aRow['commentSum'],
+                'published'         => $aRow['published'],
+                'url'               => $sUrl
 				);
 
 				if (!empty($aRow['date_modified']))
@@ -195,26 +195,26 @@ class Model_Blog extends Model_Main {
                 '';
 
 				$this->_aData[1] = array(
-						'id'            => $aRow['id'],
-						'author_id'     => $aRow['author_id'],
-						'tags'          => $aTags,
-						'title'         => Helper::formatOutput($aRow['title'], false, $sHighlight),
-            'title_seo'     => urlencode(Helper::formatOutput($aRow['title'])),
-						'teaser'        => Helper::formatOutput($aRow['teaser'], true, $sHighlight),
-						'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
-						'date'          => Helper::formatTimestamp($aRow['date'], true),
-						'datetime'      => Helper::formatTimestamp($aRow['date']),
-            'date_raw'      => $aRow['date'],
-						'uid'           => $aRow['uid'],
-            'name'          => $sName,
-            'surname'       => $sSurname,
-            'full_name'     => $sFullName,
-            'full_name_seo' => urlencode($sFullName),
-						'avatar'        => '',
-						'comment_sum'   => $aRow['commentSum'],
-						'eTitle'        => $sEncodedTitle,
-						'published'     => $aRow['published'],
-            'url'           => $sUrl
+						'id'                => $aRow['id'],
+						'uid'               => $aRow['uid'],
+						'author_id'         => $aRow['author_id'],
+						'tags'              => $aTags,
+						'title'             => Helper::formatOutput($aRow['title'], false, $sHighlight),
+						'teaser'            => Helper::formatOutput($aRow['teaser'], true, $sHighlight),
+						'content'           => Helper::formatOutput($aRow['content'], true, $sHighlight),
+						'date'              => Helper::formatTimestamp($aRow['date'], true),
+						'datetime'          => Helper::formatTimestamp($aRow['date']),
+            'date_raw'          => $aRow['date'],
+            'name'              => $sName,
+            'surname'           => $sSurname,
+            'full_name'         => $sFullName,
+            'encoded_full_name' => urlencode($sFullName),
+						'encoded_title'     => $sEncodedTitle,
+						'encoded_url'       => urlencode($sUrl),
+						'avatar'            => '',
+						'comment_sum'       => $aRow['commentSum'],
+						'published'         => $aRow['published'],
+            'url'               => $sUrl
 				);
 
 				if (!empty($aRow['date_modified']))

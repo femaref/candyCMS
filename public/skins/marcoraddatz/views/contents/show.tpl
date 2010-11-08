@@ -23,10 +23,7 @@
       <div class="share">
         {$lang_share}:
       </div>
-      <iframe src="http://www.facebook.com/plugins/like.php?href={$b.url}&
-              layout=button_count&
-              show_faces=false&
-              ref={$b.eTitle}"
+      <iframe src="http://www.facebook.com/plugins/like.php?href={$c.url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
               scrolling="no"
               frameborder="0"
               style="border:none;overflow:hidden;width:125px;height:21px"

@@ -83,7 +83,7 @@ class Model_User extends Model_Main {
               'name'          => $sName,
               'surname'       => $sSurname,
               'full_name'     => $sFullName,
-              'full_name_seo' => urlencode($sFullName),
+              'encoded_full_name' => urlencode($sFullName),
               'last_login'    => Helper::formatTimestamp($aRow['last_login']),
               'date'          => Helper::formatTimestamp($aRow['date']),
               'id'            => $aRow['id'],

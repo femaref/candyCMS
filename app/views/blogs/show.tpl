@@ -26,7 +26,7 @@
             {if $b.published == false}
               {$lang_not_published}
             {/if}
-            <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
+            <a href='/Blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
             {if $USER_RIGHT > 3}
               <a href='/Blog/{$b.id}/update'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
@@ -36,7 +36,7 @@
           </h2>
           <div class='date'>
             {$b.datetime} {$lang_by}
-            <a href='/User/{$b.author_id}/{$b.full_name_seo}'>{$b.full_name}</a>
+            <a href='/User/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
             {if $b.date_modified != ''}
               - {$lang_last_update}: {$b.date_modified}
             {/if}
@@ -50,7 +50,7 @@
           <iframe src="http://www.facebook.com/plugins/like.php?href={$b.url}&
                   layout=button_count&
                   show_faces=false&
-                  ref={$b.eTitle}"
+                  ref={$b.encoded_title}"
                   scrolling="no"
                   frameborder="0"
                   style="border:none;overflow:hidden;width:125px;height:21px"
@@ -65,11 +65,11 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/if}
           {$lang_share}:
-          <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.eTitle}'
+          <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
           </a>
-          <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.eTitle}'
+          <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.encoded_title}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
           </a>
@@ -77,16 +77,16 @@
              class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
           </a>
-          <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.eTitle}'
+          <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.encoded_title}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
           </a>
-          <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.eTitle}'
+          <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.encoded_title}'
              class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href='/Blog/{$b.id}/{$b.eTitle}#comments'>
+          <a href='/Blog/{$b.id}/{$b.encoded_title}#comments'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
           </a>
         </div>

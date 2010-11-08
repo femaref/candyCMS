@@ -30,7 +30,7 @@
               {if $b.published == false}
                 {$lang_not_published}
               {/if}
-              <a href='/Blog/{$b.id}/{$b.eTitle}'>{$b.title}</a>
+              <a href='/Blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
               {if $USER_RIGHT > 3}
                 <a href='/Blog/{$b.id}/update'>
                   <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
@@ -59,16 +59,13 @@
             <div class="share">
               {$lang_share}:
             </div>
-            <iframe src="http://www.facebook.com/plugins/like.php?href={$b.url}&
-                    layout=button_count&
-                    show_faces=false&
-                    ref={$b.eTitle}"
+            <iframe src="http://www.facebook.com/plugins/like.php?href={$b.encoded_url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
                     scrolling="no"
                     frameborder="0"
                     style="border:none;overflow:hidden;width:125px;height:21px"
                     allowTransparency="true">
             </iframe>
-            <a href='/Blog/{$b.id}/{$b.eTitle}#comments' style="float:right">
+            <a href='/Blog/{$b.id}/{$b.encoded_title}#comments' style="float:right">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
             </a>
           </div>

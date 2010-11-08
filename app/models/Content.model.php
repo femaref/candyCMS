@@ -111,8 +111,8 @@ class Model_Content extends Model_Main {
             'name'          => $sName,
             'surname'       => $sSurname,
             'full_name'     => $sFullName,
-            'full_name_seo' => urlencode($sFullName),
-            'eTitle'        => Helper::formatOutput(urlencode($aRow['title'])),
+            'encoded_full_name' => urlencode($sFullName),
+            'encoded_title' => Helper::formatOutput(urlencode($aRow['title'])),
             'url'           => $sUrl
         );
       }
