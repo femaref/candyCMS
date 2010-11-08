@@ -59,17 +59,17 @@
             <div class="share">
               {$lang_share}:
             </div>
+            <iframe allowtransparency="true"
+                    frameborder="0"
+                    scrolling="no"
+                    src="http://platform.twitter.com/widgets/tweet_button.html?url={$b.url}&amp;text={$b.title}"
+                    style="width:100px;height:21px">
+            </iframe>
             <iframe src="http://www.facebook.com/plugins/like.php?href={$b.encoded_url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
                     scrolling="no"
                     frameborder="0"
                     style="border:none;overflow:hidden;width:125px;height:21px"
                     allowTransparency="true">
-            </iframe>
-            <iframe allowtransparency="true"
-                    frameborder="0"
-                    scrolling="no"
-                    src="http://platform.twitter.com/widgets/tweet_button.html?url={$b.url}&amp;text={$b.title}"
-                    style="width:130px;height:21px">
             </iframe>
             <a href='/Blog/{$b.id}/{$b.encoded_title}#comments' style="float:right">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}

@@ -23,17 +23,17 @@
       <div class="share">
         {$lang_share}:
       </div>
+      <iframe allowtransparency="true"
+              frameborder="0"
+              scrolling="no"
+              src="http://platform.twitter.com/widgets/tweet_button.html?url={$c.url}&amp;text={$c.title}"
+              style="width:100px;height:21px">
+      </iframe>
       <iframe src="http://www.facebook.com/plugins/like.php?href={$c.encoded_url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
               scrolling="no"
               frameborder="0"
               style="border:none;overflow:hidden;width:125px;height:21px"
               allowTransparency="true">
-      </iframe>
-      <iframe allowtransparency="true"
-              frameborder="0"
-              scrolling="no"
-              src="http://platform.twitter.com/widgets/tweet_button.html?url={$c.url}&amp;text={$c.title}"
-              style="width:130px;height:21px">
       </iframe>
     </div>
   </div>
