@@ -65,6 +65,12 @@
                     style="border:none;overflow:hidden;width:125px;height:21px"
                     allowTransparency="true">
             </iframe>
+            <iframe allowtransparency="true"
+                    frameborder="0"
+                    scrolling="no"
+                    src="http://platform.twitter.com/widgets/tweet_button.html?url={$b.url}&amp;text={$b.title}"
+                    style="width:130px;height:21px">
+            </iframe>
             <a href='/Blog/{$b.id}/{$b.encoded_title}#comments' style="float:right">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
             </a>

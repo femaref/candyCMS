@@ -99,21 +99,22 @@ class Model_Content extends Model_Main {
                 '';
 
         $this->_aData[$iId] = array(
-            'id'            => $aRow['id'],
-            'author_id'     => $aRow['author_id'],
-            'title'         => Helper::formatOutput($aRow['title'], false, $sHighlight),
-            'content'       => Helper::formatOutput($aRow['content'], true, $sHighlight),
-            'date'          => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'      => Helper::formatTimestamp($aRow['date']),
-            'date_raw'      => $aRow['date'],
-            'date_rss'      => date('r', $aRow['date']),
-            'uid'           => $aRow['uid'],
-            'name'          => $sName,
-            'surname'       => $sSurname,
-            'full_name'     => $sFullName,
+            'id'                => $aRow['id'],
+            'author_id'         => $aRow['author_id'],
+            'title'             => Helper::formatOutput($aRow['title'], false, $sHighlight),
+            'content'           => Helper::formatOutput($aRow['content'], true, $sHighlight),
+            'date'              => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'          => Helper::formatTimestamp($aRow['date']),
+            'date_raw'          => $aRow['date'],
+            'date_rss'          => date('r', $aRow['date']),
+            'uid'               => $aRow['uid'],
+            'name'              => $sName,
+            'surname'           => $sSurname,
+            'full_name'         => $sFullName,
             'encoded_full_name' => urlencode($sFullName),
-            'encoded_title' => Helper::formatOutput(urlencode($aRow['title'])),
-            'url'           => $sUrl
+            'encoded_title'     => Helper::formatOutput(urlencode($aRow['title'])),
+            'encoded_url'       => urlencode($sUrl),
+            'url'               => $sUrl
         );
       }
     }
