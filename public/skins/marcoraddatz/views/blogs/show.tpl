@@ -48,35 +48,16 @@
           {$b.content}
           <div class='footer'>
             {if $b.tags[0] !== ''}
-              {$lang_tags}:
-              {foreach from=$b.tags item=t name=tags}
-                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
-                {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
-              {/foreach}
-              <br />
+              <p>
+                {$lang_tags}:
+                {foreach from=$b.tags item=t name=tags}
+                  <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
+                  {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+                {/foreach}
+              </p>
             {/if}
             <div class="share">
               {$lang_share}:
-              <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.eTitle}'
-                 class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
-              </a>
-              <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.eTitle}'
-                 class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
-              </a>
-              <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
-                 class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
-              </a>
-              <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.eTitle}'
-                 class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
-              </a>
-              <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.eTitle}'
-                 class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
-              </a>
             </div>
             <iframe src="http://www.facebook.com/plugins/like.php?href={$b.url}&
                     layout=button_count&
