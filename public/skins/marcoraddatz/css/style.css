@@ -358,8 +358,8 @@ table th
   float: left;
 }
 
-.footer iframe {
-  margin-left: 8px;
+.footer .share {
+  margin-right: 5px;
 }
 
 .comment .footer {
