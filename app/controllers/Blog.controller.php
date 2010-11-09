@@ -26,7 +26,6 @@ class Blog extends Main {
 		$oSmarty->assign('USER_ID', USER_ID);
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$oSmarty->assign('URL', WEBSITE_URL);
-		$oSmarty->assign('pid', $this->_iId);
 
 		# Manage Comments
 		$iCommentSum = 0;

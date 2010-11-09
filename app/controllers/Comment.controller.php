@@ -68,8 +68,8 @@ final class Comment extends Main {
 				$oSmarty->assign('comments', $this->_aData);
 
 				# Set author of blog entry
-				$iAuthorID = (int) $this->_aParentData[1]['author_id'];
-				$oSmarty->assign('author_id', $iAuthorID);
+				$iAuthorId = (int) $this->_aParentData[1]['author_id'];
+				$oSmarty->assign('author_id', $iAuthorId);
 
 				# For correct information, do some math to display entries
 				# NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
