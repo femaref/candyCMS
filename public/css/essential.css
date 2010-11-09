@@ -87,7 +87,7 @@
   padding: 2px;
 }
 
-.quote, .box {
+blockquote, .box {
   background:#d7d7d7;
   width:80%;
   padding:15px;
@@ -98,7 +98,7 @@
   border-radius: 10px;
 }
 
-.quote h3 {
+blockquote h3 {
   margin-top:0px;
   margin-bottom:0px;
 }
