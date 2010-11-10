@@ -46,31 +46,43 @@
             <div class="teaser">{$b.teaser}</div>
           {/if}
           {$b.content}
+          <fb:like layout="button_count" href="{$b.encoded_url}" show_faces="false"></fb:like>
           <div class='footer'>
             {if $b.tags[0] !== ''}
-              <p>
-                {$lang_tags}:
-                {foreach from=$b.tags item=t name=tags}
-                  <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
-                  {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
-                {/foreach}
-              </p>
+              {$lang_tags}:
+              {foreach from=$b.tags item=t name=tags}
+                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
+                {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+              {/foreach}
+              <br />
             {/if}
             <div class="share">
               {$lang_share}:
+              <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
+              </a>
+              <a href='http://twitter.com/share?text={$b.title}&url={$b.url}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://www.twitter.com'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-twitter" alt='Twitter' width='16' height='16' />
+              </a>
+              <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.encoded_title}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
+              </a>
+              <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
+              </a>
+              <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.encoded_title}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
+              </a>
+              <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.encoded_title}'
+                 class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
+              </a>
             </div>
-            <iframe allowtransparency="true"
-                    frameborder="0"
-                    scrolling="no"
-                    src="http://platform.twitter.com/widgets/tweet_button.html?url={$b.url}&amp;text={$b.title}"
-                    style="width:100px;height:21px">
-            </iframe>
-            <iframe src="http://www.facebook.com/plugins/like.php?href={$b.encoded_url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
-                    scrolling="no"
-                    frameborder="0"
-                    style="border:none;overflow:hidden;width:125px;height:21px"
-                    allowTransparency="true">
-            </iframe>
             <a href='/Blog/{$b.id}/{$b.encoded_title}#comments' style="float:right">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
             </a>

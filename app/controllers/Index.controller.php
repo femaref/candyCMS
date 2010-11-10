@@ -56,7 +56,8 @@ class Index {
               (string) $this->_aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
 
-    define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
+    define( 'WEBSITE_LANGUAGE_SHORT', $this->_sLanguage);
+    define( 'WEBSITE_LANGUAGE', WEBSITE_LANGUAGE_SHORT . '_' . strtoupper(WEBSITE_LANGUAGE_SHORT));
 
     if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
       require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
@@ -167,6 +168,8 @@ class Index {
     $oSmarty->assign('_website_url_', WEBSITE_URL);
     $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
 
+    if(class_exists('FacebookCMS'))
+      $oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
 
     # Get possible flash messages
     $aFlashMessages = $this->_getFlashMessage();
