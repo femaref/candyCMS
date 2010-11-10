@@ -67,27 +67,33 @@
             {/foreach}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/if}
-          {$lang_share}:
-          <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
-             class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
-          </a>
-          <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.encoded_title}'
-             class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
-          </a>
-          <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
-             class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
-          </a>
-          <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.encoded_title}'
-             class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
-          </a>
-          <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.encoded_title}'
-             class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
-          </a>
+          <div class="share">
+            {$lang_share}:
+            <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://www.facebook.com'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
+            </a>
+            <a href='http://twitter.com/share?text={$b.title}&url={$b.url}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://www.twitter.com'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-twitter" alt='Twitter' width='16' height='16' />
+            </a>
+            <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.encoded_title}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://del.icio.us'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
+            </a>
+            <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://technorati.com'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
+            </a>
+            <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.encoded_title}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://digg.com'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
+            </a>
+            <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.encoded_title}'
+               class='js-tooltip' title='{$lang_add_bookmark}::http://www.mister-wong.de'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
+            </a>
+          </div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <a href='/Blog/{$b.id}/{$b.encoded_title}#comments'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
