@@ -281,13 +281,10 @@ class Model_User extends Model_Main {
 
         $oQuery->bindParam('id', $aResult['id']);
         $bResult = $oQuery->execute();
+        Model_Session::setActiveSession($aResult['id']);
 
         $oDb = null;
-
-        if ($bResult == true)
-          return Model_Session::setActiveSession($aResult['id']) . Helper::redirectTo('/Start');
-        else
-          return false;
+        return $bResult;
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();

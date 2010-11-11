@@ -42,13 +42,13 @@ class Model_Session extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-																	users
-																SET
-																	session = :session,
-																	ip = :ip,
-																	last_login = :last_login
-																WHERE
-																	id = :id");
+                                  users
+                                SET
+                                  session = :session,
+                                  ip = :ip,
+                                  last_login = :last_login
+                                WHERE
+                                  id = :id");
 
       $oQuery->bindParam('session', session_id());
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
@@ -96,9 +96,11 @@ class Model_Session extends Model_Main {
     # Check if user did not verify
     if (isset($aResult['verification_code']) && !empty($aResult['verification_code']))
       return false;
+
     # User did verify his and has id, so log in!
     elseif (isset($aResult['id']) && !empty($aResult['id']))
       return Model_Session::setActiveSession($aResult['id']);
+
     else
       return false;
   }
