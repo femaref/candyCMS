@@ -46,7 +46,6 @@
             <div class="teaser">{$b.teaser}</div>
           {/if}
           {$b.content}
-          <fb:like layout="button_count" href="{$b.encoded_url}" show_faces="false"></fb:like>
           <div class='footer'>
             {if $b.tags[0] !== ''}
               {$lang_tags}:
@@ -87,6 +86,9 @@
               <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
             </a>
           </div>
+          <div class="facebook_like">
+            <fb:like href="{$b.url_clean}" ref="{$b.id}" width="600" show_faces="false"></fb:like>
+          </div>
         </div>
       </div>
     {/if}
@@ -101,8 +103,10 @@
       new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox' + sFilesSuffix + '.js');
     });
 
-    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
-      display: -1,
-      alwaysHide: true
-    });
+    if($$('.js-toggle')) {
+      var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+        display: -1,
+        alwaysHide: true
+      });
+    }
 </script>

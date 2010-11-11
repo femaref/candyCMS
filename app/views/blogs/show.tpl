@@ -47,18 +47,6 @@
         {/if}
         {$b.content}
         <div class='footer'>
-          <iframe allowtransparency="true"
-                  frameborder="0"
-                  scrolling="no"
-                  src="http://platform.twitter.com/widgets/tweet_button.html?url={$b.url}&amp;text={$b.title}"
-                  style="width:100px;height:21px">
-          </iframe>
-          <iframe src="http://www.facebook.com/plugins/like.php?href={$b.encoded_url}&amp;layout=button_count&amp;show_faces=false&amp;width=125&amp;action=like&amp;colorscheme=light&amp;height=21"
-                  scrolling="no"
-                  frameborder="0"
-                  style="border:none;overflow:hidden;width:125px;height:21px"
-                  allowTransparency="true">
-          </iframe>
           {if $b.tags[0] !== ''}
             {$lang_tags}:
             {foreach from=$b.tags item=t name=tags}
@@ -99,6 +87,9 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
           </a>
         </div>
+        <div class="share">
+          <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false"></fb:like>
+        </div>
       </div>
     {/if}
   {/foreach}
@@ -111,8 +102,10 @@
     new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
   });
 
-  var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
-    display: -1,
-    alwaysHide: true
-  });
+  if($$('.js-toggle')) {
+    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+      display: -1,
+      alwaysHide: true
+    });
+  }
 </script>

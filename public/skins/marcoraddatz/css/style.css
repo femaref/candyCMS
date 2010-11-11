@@ -366,6 +366,11 @@ table th
   text-align: right;
 }
 
+.facebook_like {
+  clear: both;
+  padding-top: 10px;
+}
+
 /* Both gallery options */
 .gallery_files h2, .gallery_album {
   text-align: left;

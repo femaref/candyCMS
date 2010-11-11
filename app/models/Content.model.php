@@ -91,7 +91,7 @@ class Model_Content extends Model_Main {
         $sFullName  = $sName . ' ' . $sSurname;
 
         $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/Content/' . $aRow['id'] . '/' . $sEncodedTitle;
+        $sUrl = WEBSITE_URL . '/Content/' . $aRow['id'];
 
         # Do we need to highlight text?
         $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
@@ -114,7 +114,8 @@ class Model_Content extends Model_Main {
             'encoded_full_name' => urlencode($sFullName),
             'encoded_title'     => Helper::formatOutput(urlencode($aRow['title'])),
             'encoded_url'       => urlencode($sUrl),
-            'url'               => $sUrl
+            'url'               => $sUrl . '/' . $sEncodedTitle,
+            'url_clean'         => $sUrl
         );
       }
     }

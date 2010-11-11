@@ -338,8 +338,13 @@ table th
   margin-left: 3px;
 }
 
-.footer iframe {
+.footer .share {
   float: left;
+}
+
+.share {
+  clear: both;
+  padding-top: 10px;
 }
 
 /* Both gallery options */

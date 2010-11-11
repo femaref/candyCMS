@@ -168,6 +168,9 @@ class Index {
     $oSmarty->assign('_website_url_', WEBSITE_URL);
     $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
 
+    if(isset($this->_aRequest['id']))
+      $oSmarty->assign('_id_', WEBSITE_TRACKING_CODE);
+
     if(class_exists('FacebookCMS'))
       $oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
 
@@ -248,7 +251,7 @@ class Index {
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
       $oSmarty->assign('meta_og_title', $oSection->getTitle());
-      $oSmarty->assign('meta_og_url', WEBSITE_URL);
+      $oSmarty->assign('meta_og_url', WEBSITE_URL . $_SERVER['REQUEST_URI']);
       $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
       # Include optional plugins

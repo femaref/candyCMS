@@ -82,7 +82,7 @@ class Model_Blog extends Model_Main {
 				$aTags = explode(', ', $aRow['tags']);
 				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
         $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/Blog/' . $iId . '/' . $sEncodedTitle;
+        $sUrl = WEBSITE_URL . '/Blog/' . $iId;
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -111,7 +111,8 @@ class Model_Blog extends Model_Main {
                 'surname'           => $sSurname,
                 'comment_sum'       => $aRow['commentSum'],
                 'published'         => $aRow['published'],
-                'url'               => $sUrl
+                'url'               => $sUrl . '/' . $sEncodedTitle,
+                'url_clean'         => $sUrl
 				);
 
 				if (!empty($aRow['date_modified']))
