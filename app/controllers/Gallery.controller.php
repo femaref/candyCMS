@@ -25,7 +25,7 @@ class Gallery extends Main {
     $oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 
 		if (class_exists('LazyLoad')) {
-			$oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+			$oLazyLoad = new LazyLoad();
 			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
 		}
 

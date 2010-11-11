@@ -56,7 +56,8 @@ class Index {
               (string) $this->_aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
 
-    define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
+    define( 'WEBSITE_LANGUAGE_SHORT', $this->_sLanguage);
+    define( 'WEBSITE_LANGUAGE', WEBSITE_LANGUAGE_SHORT . '_' . strtoupper(WEBSITE_LANGUAGE_SHORT));
 
     if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
       require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
@@ -152,6 +153,9 @@ class Index {
     # Set expiration date for header
     $sHeaderExpires = gmdate('D, d M Y H:i:s', time() + 60) . ' GMT';
 
+    # Get the actual URL
+    $sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
+
     # Header.tpl
     $oSmarty = new Smarty();
     $oSmarty->assign('user', Helper::formatOutput($this->_aSession['userdata']['name']));
@@ -159,6 +163,7 @@ class Index {
     $oSmarty->assign('USER_RIGHT', USER_RIGHT);
 
     # System variables
+    $oSmarty->assign('_current_url_', $sCurrentUrl);
     $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
     $oSmarty->assign('_javascript_language_file_', $sLangVars);
     $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
@@ -167,6 +172,11 @@ class Index {
     $oSmarty->assign('_website_url_', WEBSITE_URL);
     $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
 
+    if(isset($this->_aRequest['id']))
+      $oSmarty->assign('_id_', WEBSITE_TRACKING_CODE);
+
+    if(class_exists('FacebookCMS'))
+      $oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
 
     # Get possible flash messages
     $aFlashMessages = $this->_getFlashMessage();
@@ -244,6 +254,9 @@ class Index {
       $oSmarty->assign('meta_expires', $sHeaderExpires);
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
+      $oSmarty->assign('meta_og_title', $oSection->getTitle());
+      $oSmarty->assign('meta_og_url', $sCurrentUrl);
+      $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
       # Include optional plugins
       if( class_exists('Adsense') ) {

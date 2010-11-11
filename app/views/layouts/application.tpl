@@ -1,14 +1,24 @@
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:og="http://opengraphprotocol.org/schema/"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content="{$meta_description}" />
     <meta name='keywords' content="{$meta_keywords}" />
+    {if $_id_}
+      <meta property="og:title" content="{$meta_og_title}"/>
+      <meta property="og:url" content="{$meta_og_url}"/>
+      <meta property="og:site_name" content="{$meta_og_site_name}"/>
+    {/if}
+    {if $_facebook_app_id_}
+      <meta property="fb:app_id" content="{$_facebook_app_id_}"/>
+    {/if}
     <link href='{$_website_url_}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/mootools_1.2.4{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script language='javascript' src='%PATH_PUBLIC%/js/core/mootools_1.2.5{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
   </head>
   <body>
@@ -90,6 +100,25 @@
     </div>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    {if $_facebook_app_id_}
+      <div id="fb-root"></div>
+      <script type="text/javascript">
+        var sFacebookAppId = '{$_facebook_app_id_}';
+
+        {literal}
+          window.fbAsyncInit = function() {
+            FB.init({appId: sFacebookAppId, status: true, cookie: true,
+                     xfbml: true});
+          };
+        {/literal}
+        (function() {
+          var e = document.createElement('script'); e.async = true;
+          e.src = document.location.protocol +
+            '//connect.facebook.net/{$_language_}/all.js';
+          document.getElementById('fb-root').appendChild(e);
+        }());
+      </script>
+    {/if}
     {if $_website_tracking_code_}
       <script type="text/javascript">
         var sTrackingCode = '{$_website_tracking_code_}';

@@ -335,7 +335,16 @@ table th
 }
 
 .footer a, .footer span {
-  margin-left: 5px;
+  margin-left: 3px;
+}
+
+.footer .share {
+  float: left;
+}
+
+.share {
+  clear: both;
+  padding-top: 10px;
 }
 
 /* Both gallery options */

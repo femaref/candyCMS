@@ -16,7 +16,7 @@
     <h3 class='{if $author_id == $c.author_id}row1{/if}'>
       <a href='#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
       {if $c.user_id > 0}
-        <a href='/User/{$c.user_id}/{$c.full_name_seo}'>{$c.full_name}</a>
+        <a href='/User/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
       {elseif $c.author_facebook_id > 0}
         <a href='{$c.author_website}'>
           {$c.author_name}

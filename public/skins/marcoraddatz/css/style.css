@@ -342,20 +342,33 @@ table th
 .footer {
   font-size: 90%;
   text-align: left;
-  margin-top:35px;
+  margin-top:15px;
 }
 
 .footer img {
   vertical-align:bottom;
-  padding-bottom: 2px;
+  padding-bottom: 1px;
 }
 
 .footer a, .footer span {
-  margin-left: 5px;
+  margin-left: 3px;
+}
+
+.footer .share, .footer iframe {
+  float: left;
+}
+
+.footer .share {
+  margin-right: 5px;
 }
 
 .comment .footer {
   text-align: right;
+}
+
+.facebook_like {
+  clear: both;
+  padding-top: 10px;
 }
 
 /* Both gallery options */

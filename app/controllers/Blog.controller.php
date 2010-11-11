@@ -26,7 +26,7 @@ class Blog extends Main {
 		$oSmarty->assign('USER_ID', USER_ID);
 		$oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$oSmarty->assign('URL', WEBSITE_URL);
-		$oSmarty->assign('pid', $this->_iId);
+		$oSmarty->assign('_request_id_', $this->_iId);
 
 		# Manage Comments
 		$iCommentSum = 0;
@@ -40,7 +40,7 @@ class Blog extends Main {
 		$oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
 		if (class_exists('LazyLoad')) {
-			$oLazyLoad = new LazyLoad($this->_aRequest, $this->_aSession);
+			$oLazyLoad = new LazyLoad();
 			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
 		}
 

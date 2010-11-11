@@ -157,7 +157,7 @@ class Newsletter extends Main {
         $bStatusNewsletter = Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
       }
 
-      if($bStatusNewsletter === true && $bStatusUser === true) {
+      if(isset($bStatusNewsletter) || isset($bStatusUser)) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action']);
         return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/Start' );
       }

@@ -72,7 +72,7 @@ define( 'LANG_GLOBAL_REQUIRED', 'benötigt' );
 define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
 define( 'LANG_GLOBAL_SEARCH', 'Suche' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
-define( 'LANG_GLOBAL_SHARE', 'Anderen zeigen' );
+define( 'LANG_GLOBAL_SHARE', 'Teilen' );
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
