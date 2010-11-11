@@ -2,7 +2,7 @@
   <ul>
     {foreach from=$data item=d key=month}
       <li>
-        <a href="#" class="js-archive_month">{$month} ({$data|@count})</a>
+        <a href="#" class="js-archive_month">{$month} ({$d|@count})</a>
         <ul class="js-archive_entries">
         {foreach from=$d item=entry}
           <li>
