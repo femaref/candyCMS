@@ -1,6 +1,6 @@
 <h1>1. Readme</h1>
 <p>
-  This installtion does only work <strong>without</strong> a SQL-Prefix and is without any warranty. <strong>CandyCMS
+  This installation does only work <strong>without</strong> a SQL-Prefix and is without any warranty. <strong>CandyCMS
     might override your existing tables if their names match</strong>.
 </p>
 <hr />
