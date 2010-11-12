@@ -17,7 +17,7 @@
     <a href="http://www.google.com/recaptcha">http://www.google.com/recaptcha</a>
   </p>
 </div>
-<h3 class="js-toggle">2.2. Please set all variables in <em>config/Config.inc.php</em> correctly.</h3>
+<h3 class="js-toggle">2.2. Set all variables in <em>config/Config.inc.php</em> correctly.</h3>
 <div class="js-element">
   <p>
     Read each description and modify the software to your needs.
@@ -46,6 +46,9 @@
   <p>
     <a href="http://www.facebook.com/developers/createapp.php">Facebook</a>
   </p>
+  <div class="notice">
+    Don't forget to enter your App ID and Secret into <em>config/Facebook.inc.php</em>!
+  </div>
 </div>
 <script type="text/javascript">
   if($$('.js-toggle')) {
