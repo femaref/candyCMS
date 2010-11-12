@@ -7,6 +7,12 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+require_once '../plugins/Cronjob.class.php';
+
+# Backup database
+if(class_exists('Cronjob'))
+  Cronjob::backup(0, '../');
+
 $sDir = 'migrate/sql';
 $oDir = opendir($sDir);
 

@@ -27,7 +27,7 @@ final class Cronjob {
 				if (substr($sFile, 0, 1) == '.' || filemtime($sTempPath . '/' . $sFile) > strtotime("-10 days"))
 					continue;
 
-				unlink($sFolder . '/' . $sFile);
+        unlink($sTempPath . '/' . $sFile);
 			}
 		}
   }
@@ -56,7 +56,7 @@ final class Cronjob {
 	}
 
   public static final function backup($iUserId, $sPath = '') {
-    $sBackupName = date(DEFAULT_DATE_FORMAT);
+    $sBackupName = date('Y-m-d_H-i');
 		$sBackupFolder = $sPath . 'backup';
 		$sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
 		$iBackupStartTime = time();
@@ -174,29 +174,26 @@ final class Cronjob {
       # Closing bracket
       $sFileText .= "\n)";
 
-      if ($sTable !== 'newsletters') {
-        try {
-          $oQuery = $oDb->query(" SELECT
-                                    id
-                                  FROM
-                                    " . SQL_PREFIX . $sTable . "
-                                  ORDER BY
-                                    id DESC
-                                  LIMIT
-                                    1");
+      try {
+        $oQuery = $oDb->query(" SELECT
+                                  id
+                                FROM
+                                  " . SQL_PREFIX . $sTable . "
+                                ORDER BY
+                                  id DESC
+                                LIMIT
+                                  1");
 
-          $aRow = $oQuery->fetch();
-        }
-        catch (AdvancedException $e) {
-          $oDb->rollBack();
-        }
-
-        # We also use this as count for data entries
-        $iRows = (int) $aRow['id'];
-        $sFileText .= " AUTO_INCREMENT=";
-        $sFileText .= $iRows + 1;
+        $aRow = $oQuery->fetch();
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
       }
 
+      # We also use this as count for data entries
+      $iRows = (int) $aRow['id'];
+      $sFileText .= " AUTO_INCREMENT=";
+      $sFileText .= $iRows + 1;
       $sFileText .= " DEFAULT CHARSET=utf8;";
       $sFileText .= "\r\n";
 

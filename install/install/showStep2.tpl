@@ -1,6 +1,6 @@
 <h1>2. Enter your personal data</h1>
 <fieldset>
-  <legend>2.1. Please enter information below. You can edit your personal information after your first login.</legend>
+  <legend>2.1. Please enter your information below</legend>
   <table>
     <tr class='row1'>
       <td class='td_left'>
@@ -60,7 +60,7 @@
   </table>
 </fieldset>
 <fieldset style="margin-top:25px">
-  <legend>2.2. Example data.</legend>
+  <legend>2.2. Example data</legend>
   <table>
     <tr class='row1'>
       <td class='td_left'>
@@ -76,22 +76,20 @@
   </table>
 </fieldset>
 <div id="loading" style="text-align:center"></div>
-{literal}
-  <script type="text/javascript" language="javascript">
-    window.addEvent('domready', function() {
-      $('nextstep').disabled = 'disabled';
+<script type="text/javascript" language="javascript">
+  window.addEvent('domready', function() {
+    $('nextstep').disabled = 'disabled';
 
-      $('nextstep').addEvent('click', function() {
-        $('loading').set('html', "<img src='../public/images/loading.gif' alt='Loading' />");
-      });
+    $('nextstep').addEvent('click', function() {
+      $('loading').set('html', "<img src='../public/images/loading.gif' alt='Loading' />");
     });
+  });
 
-    function checkPassword() {
-      if( $('password').value == $('password2').value ) {
-        if( $('email').value !== '' ) {
-          $('nextstep').disabled = '';
-        }
+  function checkPassword() {
+    if( $('password').value == $('password2').value ) {
+      if( $('email').value !== '' ) {
+        $('nextstep').disabled = '';
       }
     }
-  </script>
-{/literal}
+  }
+</script>

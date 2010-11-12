@@ -22,7 +22,7 @@ CREATE TABLE `comments` (
   `parent_id` int(9) NOT NULL,
   `parent_category` char(1) NOT NULL DEFAULT 'b',
   `author_id` smallint(5) NOT NULL,
-  `author_facebook_id` int(15) NULL DEFAULT '',
+  `author_facebook_id` int(15) DEFAULT NULL,
   `author_name` varchar(32) DEFAULT '',
   `author_email` varchar(64) DEFAULT '',
   `author_ip` varchar(15) DEFAULT '',
@@ -96,10 +96,11 @@ CREATE TABLE `migrations` (
 DROP TABLE IF EXISTS `newsletters`;
 
 CREATE TABLE `newsletters` (
+  `id` smallint(5) NOT NULL AUTO_INCREMENT,
   `email` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `email` (`email`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `users`;
 

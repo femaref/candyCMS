@@ -14,7 +14,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', 'test_');
+define('SQL_PREFIX', '');
 
 # ------------------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ define('WEBSITE_LANDING_PAGE', 'Blog');
 
 # Number of seconds between cronjob execution (if enabled)
 # DEFAULT: '86400'
-define('CRONJOB_UPDATE_INTERVAL', '86400');
+define('CRONJOB_UPDATE_INTERVAL', '1');
 
 # ------------------------------------------------------------------------------
 
