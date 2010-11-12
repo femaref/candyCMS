@@ -121,7 +121,7 @@ switch ($_REQUEST['step']) {
 
     try {
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  users ( id, name, surname, password, email, ip, user_right, date )
+                                  " . SQL_PREFIX . "users ( id, name, surname, password, email, ip, user_right, date )
                                 VALUES
                                   ( :id, :name, :surname, :password, :email, :ip, :user_right, :date )");
 

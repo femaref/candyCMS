@@ -194,7 +194,7 @@ final class Helper {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->query(" SELECT id FROM " . $sTable . " ORDER BY id DESC LIMIT 1");
+      $oQuery = $oDb->query(" SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
       $aRow = $oQuery->fetch();
       return $aRow['id'];
     }
@@ -212,7 +212,7 @@ final class Helper {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  logs(section_name, action_name, action_id, time_start, time_end, user_id)
+                                  " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
                                 VALUES
                                   ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
 

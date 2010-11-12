@@ -31,9 +31,9 @@ class Model_Comment extends Model_Main {
                                     u.use_gravatar,
                                     u.email
                                   FROM
-                                    comments c
+                                    " . SQL_PREFIX . "comments c
                                   LEFT JOIN
-                                    users u
+                                    " . SQL_PREFIX . "users u
                                   ON
                                     u.id=c.author_id
                                   WHERE
@@ -161,7 +161,7 @@ class Model_Comment extends Model_Main {
       $oQuery = $oDb->prepare(" SELECT
                                   COUNT(*)
                                 FROM
-                                  comments
+                                  " . SQL_PREFIX . "comments
                                 WHERE
                                   parent_id = :parent_id
                                 AND
@@ -197,7 +197,7 @@ class Model_Comment extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  comments (author_id, author_facebook_id, author_name, author_email, author_ip, content, date, parent_category, parent_id)
+                                  " . SQL_PREFIX . "comments (author_id, author_facebook_id, author_name, author_email, author_ip, content, date, parent_category, parent_id)
                                 VALUES
                                   ( :author_id, :author_facebook_id, :author_name, :author_email, :author_ip, :content, :date, :parent_category, :parent_id )");
 
@@ -227,7 +227,7 @@ class Model_Comment extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	DELETE FROM
-                                  comments
+                                  " . SQL_PREFIX . "comments
                                 WHERE
                                   id = :id
                                 LIMIT

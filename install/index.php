@@ -104,7 +104,7 @@ switch ($_REQUEST['action']) {
           $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
           $oQuery = $oDb->prepare(" INSERT INTO
-                                      migrations (file, date)
+                                      " . SQL_PREFIX . "migrations (file, date)
                                     VALUES
                                       ( :file, :date )");
 

@@ -19,7 +19,7 @@ class Model_Search extends Model_Main {
         $oQuery = $oDb->query(" SELECT
                                   id, title, date
                                 FROM
-                                  " . $sTable."
+                                  " . SQL_PREFIX . $sTable."
                                 WHERE
                                   title LIKE '%"  .$sSearch.  "%'
                                 OR
