@@ -334,7 +334,7 @@ table th
   margin-top:3px;
 }
 
-.footer a, .footer span {
+.footer .share a {
   margin-left: 3px;
 }
 
@@ -342,7 +342,7 @@ table th
   float: left;
 }
 
-.share {
+.facebook_like {
   clear: both;
   padding-top: 10px;
 }

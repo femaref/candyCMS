@@ -49,7 +49,7 @@
         </a>
       </div>
     </div>
-    <div class="share">
+    <div class="facebook_like">
       <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false"></fb:like>
     </div>
   </div>

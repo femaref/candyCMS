@@ -107,15 +107,11 @@ define('CRONJOB_SEND_PER_MAIL', false);
 define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
+
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
 define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook');
-
-# ------------------------------------------------------------------------------
-# Allow caching and compiling for better performance?
-# DEFAULT: true
-define('ALLOW_CACHE', true);
 
 # ------------------------------------------------------------------------------
 
