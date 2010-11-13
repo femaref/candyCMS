@@ -291,11 +291,17 @@ blockquote h3 {
 .icon-user{ background: url(../images/sprite_icons.png); background-position: 0 -527px; width: 16px; height: 16px; }
 .icon-zoom{ background: url(../images/sprite_icons.png); background-position: 0 -544px; width: 16px; height: 16px; }
 
-.filemanager-doc { background: url(../images/sprite_filemanager.png); background-position: 0 0; width: 32px; height: 32px; }
-.filemanager-flv { background: url(../images/sprite_filemanager.png); background-position: 0 -82px; width: 32px; height: 32px; }
-.filemanager-gz { background: url(../images/sprite_filemanager.png); background-position: 0 -164px; width: 32px; height: 32px; }
-.filemanager-mp3 { background: url(../images/sprite_filemanager.png); background-position: 0 -246px; width: 32px; height: 32px; }
-.filemanager-mp4 { background: url(../images/sprite_filemanager.png); background-position: 0 -328px; width: 32px; height: 32px; }
-.filemanager-pdf { background: url(../images/sprite_filemanager.png); background-position: 0 -410px; width: 32px; height: 32px; }
-.filemanager-txt { background: url(../images/sprite_filemanager.png); background-position: 0 -492px; width: 32px; height: 32px; }
-.filemanager-zip { background: url(../images/sprite_filemanager.png); background-position: 0 -574px; width: 32px; height: 32px; }
+.filemanager-avi{ background: url(../images/sprite_filemanager.png); background-position: 0 0; width: 32px; height: 32px; }
+.filemanager-doc{ background: url(../images/sprite_filemanager.png); background-position: 0 -33px; width: 32px; height: 32px; }
+.filemanager-flv{ background: url(../images/sprite_filemanager.png); background-position: 0 -66px; width: 32px; height: 32px; }
+.filemanager-gz{ background: url(../images/sprite_filemanager.png); background-position: 0 -99px; width: 32px; height: 32px; }
+.filemanager-mp3{ background: url(../images/sprite_filemanager.png); background-position: 0 -132px; width: 32px; height: 32px; }
+.filemanager-mp4{ background: url(../images/sprite_filemanager.png); background-position: 0 -165px; width: 32px; height: 32px; }
+.filemanager-ogg{ background: url(../images/sprite_filemanager.png); background-position: 0 -198px; width: 32px; height: 32px; }
+.filemanager-ogv{ background: url(../images/sprite_filemanager.png); background-position: 0 -231px; width: 32px; height: 32px; }
+.filemanager-pdf{ background: url(../images/sprite_filemanager.png); background-position: 0 -264px; width: 32px; height: 32px; }
+.filemanager-rar{ background: url(../images/sprite_filemanager.png); background-position: 0 -297px; width: 32px; height: 32px; }
+.filemanager-txt{ background: url(../images/sprite_filemanager.png); background-position: 0 -330px; width: 32px; height: 32px; }
+.filemanager-vcf{ background: url(../images/sprite_filemanager.png); background-position: 0 -363px; width: 32px; height: 32px; }
+.filemanager-webm{ background: url(../images/sprite_filemanager.png); background-position: 0 -396px; width: 32px; height: 32px; }
+.filemanager-zip{ background: url(../images/sprite_filemanager.png); background-position: 0 -429px; width: 32px; height: 32px; }

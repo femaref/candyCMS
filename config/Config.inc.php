@@ -86,7 +86,7 @@ define('WEBSITE_LANDING_PAGE', 'Blog');
 
 # Number of seconds between cronjob execution (if enabled)
 # DEFAULT: '86400'
-define('CRONJOB_UPDATE_INTERVAL', '1');
+define('CRONJOB_UPDATE_INTERVAL', '86400');
 
 # ------------------------------------------------------------------------------
 
