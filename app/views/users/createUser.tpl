@@ -1,7 +1,7 @@
 <form method='post' action='/User/create'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>{$lang_registration}</th>
     </tr>
     <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
@@ -84,7 +84,7 @@
     {/if}
   </table>
   <div class="submit">
-    <input type='submit' class='inputbutton' value='{$lang_submit}' />
+    <input type='submit' class='inputbutton' value='{$lang_register}' />
   </div>
   <input type='hidden' value='formdata' name='create_user' />
 </form>

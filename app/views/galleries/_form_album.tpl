@@ -22,8 +22,7 @@
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='description' value='{$description}' type='text'
-              id='tags' />
+          <input name='description' value='{$description}' type='text' id='tags' />
         </div>
       </td>
     </tr>
@@ -37,9 +36,9 @@
     </div>
     <div class="cancel">
       <input type='button' value='{$lang_destroy_entry}'
-        onclick="confirmDelete('/Gallery/{$id}/destroy')" />
+        onclick="confirmDelete('/Gallery/{$_request_id_}/destroy')" />
     </div>
   {/if}
-  <input type='hidden' value='{$id}' name='id' />
+  <input type='hidden' value='{$_request_id_}' name='id' />
   <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

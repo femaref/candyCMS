@@ -32,18 +32,14 @@ class Media extends Main {
 	}
 
   private function _showUploadFileTemplate() {
-    $oSmarty = new Smarty();
-
     # Language
-    $oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
-    $oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
-    $oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
-    $oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
+    $this->_oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
+    $this->_oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
+    $this->_oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
+    $this->_oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('medias/create');
-    return $oSmarty->fetch('medias/create.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('medias/create');
+    return $this->_oSmarty->fetch('medias/create.tpl');
   }
 
   private function _proceedUpload() {
@@ -94,25 +90,15 @@ class Media extends Main {
 
       closedir($oDir);
 
-      $oSmarty = new Smarty();
-      $oSmarty->assign('files', $aFiles);
-
-      # Constants
-      $oSmarty->assign('USER_RIGHT', USER_RIGHT);
-
-      # System variables
-      $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
+      $this->_oSmarty->assign('files', $aFiles);
 
       # Language
-      $oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
-      $oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
-      $oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
-      $oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
-
-      $oSmarty->cache_dir = CACHE_DIR;
-      $oSmarty->compile_dir = COMPILE_DIR;
-      $oSmarty->template_dir = Helper::getTemplateDir('medias/show');
-      return $oSmarty->fetch('medias/show.tpl');
+      $this->_oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
+      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
+      $this->_oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
+      $this->_oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('medias/show');
+      return $this->_oSmarty->fetch('medias/show.tpl');
     }
   }
 

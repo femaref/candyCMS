@@ -56,9 +56,9 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
     </div>
     <div class="cancel">
       <input type='button' value='{$lang_destroy}'
-             onclick="confirmDelete('/Content/destroy/{$id}')" />
+             onclick="confirmDelete('/Content/destroy/{$_request_id_}')" />
     </div>
 	{/if}
-  <input type='hidden' value='{$id}' name='id' />
+  <input type='hidden' value='{$_request_id_}' name='id' />
   <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

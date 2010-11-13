@@ -28,7 +28,6 @@ class Search extends Main {
     else {
       $aTables = array('blogs', 'contents');
       $sSearch = Helper::formatInput($this->_aRequest['id']);
-      $oSmarty = new Smarty();
 
       # Fetch data
       $this->_aData = $this->_oModel->getData($sSearch, $aTables);
@@ -39,29 +38,19 @@ class Search extends Main {
         $this->_aData[$sTable]['title'] = substr(ucfirst($sTable), 0, $iTableLen);
       }
 
-      # Assign thmen
-      $oSmarty->assign('search', $sSearch);
-      $oSmarty->assign('tables', $this->_aData);
+      $this->_oSmarty->assign('search', $sSearch);
+      $this->_oSmarty->assign('tables', $this->_aData);
 
       # Language
-      $oSmarty->assign('lang_headline', str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE));
+      $this->_oSmarty->assign('lang_headline', str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE));
 
-      $oSmarty->cache_dir = CACHE_DIR;
-      $oSmarty->compile_dir = COMPILE_DIR;
-      $oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
-      return $oSmarty->fetch('searches/show.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
+      return $this->_oSmarty->fetch('searches/show.tpl');
     }
   }
 
   public function showFormTemplate() {
-    $oSmarty = new Smarty();
-
-    # Language
-    $oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
-
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
-    return $oSmarty->fetch('searches/_form.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
+    return $this->_oSmarty->fetch('searches/_form.tpl');
   }
 }

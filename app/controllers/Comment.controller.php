@@ -48,14 +48,13 @@ final class Comment extends Main {
 				}
 			}
 
-			$oSmarty = new Smarty();
-			$oSmarty->assign('USER_RIGHT', USER_RIGHT);
-			$oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
-			$oSmarty->assign('parent_id', $this->_iId);
+			$this->_oSmarty->assign('USER_RIGHT', USER_RIGHT);
+			$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
+			$this->_oSmarty->assign('parent_id', $this->_iId);
 
       if (class_exists('LazyLoad')) {
         $oLazyLoad = new LazyLoad();
-        $oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
+        $this->_oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
       }
 
 			# Do only load comments, if they are avaiable
@@ -65,32 +64,27 @@ final class Comment extends Main {
 				$this->_oPages = new Pages($this->_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
 				$this->_oModel->__init($this->_iEntries, $this->_oPages->getOffset(), $this->_oPages->getLimit());
 				$this->_aData = $this->_oModel->getData($this->_iId, $this->_sParentCategory);
-				$oSmarty->assign('comments', $this->_aData);
+				$this->_oSmarty->assign('comments', $this->_aData);
 
 				# Set author of blog entry
 				$iAuthorId = (int) $this->_aParentData[1]['author_id'];
-				$oSmarty->assign('author_id', $iAuthorId);
+				$this->_oSmarty->assign('author_id', $iAuthorId);
 
 				# For correct information, do some math to display entries
 				# NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
 				# when other people don't see it
 				$iCommentNumber = ($this->_oPages->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS;
-				$oSmarty->assign('comment_number', $iCommentNumber);
+				$this->_oSmarty->assign('comment_number', $iCommentNumber);
 
 				# Do we need Pages?
 				$sPages = $this->_oPages->showPages('Comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
-				$oSmarty->assign('_comment_pages_', $sPages);
+				$this->_oSmarty->assign('_comment_pages_', $sPages);
 
 				# Language
-				$oSmarty->assign('lang_author', LANG_GLOBAL_AUTHOR);
-				$oSmarty->assign('lang_deleted_user', LANG_GLOBAL_DELETED_USER);
-				$oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
-				$oSmarty->assign('lang_quote', LANG_GLOBAL_QUOTE);
+				$this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
-        $oSmarty->cache_dir = CACHE_DIR;
-        $oSmarty->compile_dir = COMPILE_DIR;
-				$oSmarty->template_dir = Helper::getTemplateDir('comments/show');
-				$sReturn .= $oSmarty->fetch('comments/show.tpl');
+				$this->_oSmarty->template_dir = Helper::getTemplateDir('comments/show');
+				$sReturn .= $this->_oSmarty->fetch('comments/show.tpl');
 			}
 
 			# Does the user have enough rights to enter a comment?
@@ -192,53 +186,26 @@ final class Comment extends Main {
 							(int) $this->_aRequest['parent_id'] :
 							(int) $this->_iId;
 
-      $oSmarty = new Smarty();
-			$oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);
-			$oSmarty->assign('USER_RIGHT', USER_RIGHT);
-			$oSmarty->assign('USER_EMAIL', USER_EMAIL);
-			$oSmarty->assign('USER_FULL_NAME', USER_FULL_NAME);
-			$oSmarty->assign('USER_NAME', USER_NAME);
-			$oSmarty->assign('USER_SURNAME', USER_SURNAME);
-			$oSmarty->assign('_action_url_', $this->_sAction);
-			$oSmarty->assign('content', $sContent);
-			$oSmarty->assign('email', $sEmail);
-			$oSmarty->assign('name', $sName);
-			$oSmarty->assign('parent_id', $iParentId);
+			$this->_oSmarty->assign('_action_url_', $this->_sAction);
+			$this->_oSmarty->assign('content', $sContent);
+			$this->_oSmarty->assign('email', $sEmail);
+			$this->_oSmarty->assign('name', $sName);
+			$this->_oSmarty->assign('parent_id', $iParentId);
 
       if ($bShowCaptcha === true)
-				$oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
+				$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
 												$this->_sRecaptchaError));
 
 			if (!empty($this->_aError)) {
 				foreach ($this->_aError as $sField => $sMessage)
-					$oSmarty->assign('error_' . $sField, $sMessage);
+					$this->_oSmarty->assign('error_' . $sField, $sMessage);
 			}
 
-			# Generate a facebook connect link
-      if (class_exists('FacebookCMS') && USER_ID == 0) {
-				$oFacebook = new FacebookCMS(array(
-					'appId'  => FACEBOOK_APP_ID,
-					'secret' => FACEBOOK_SECRET,
-				));
+			# Language
+			$this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 
-        $oSmarty->assign('_plugin_facebook_connect_button_', $oFacebook->getConnectButton());
-      }
-
-      # Language
-      $oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
-			$oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-			$oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-			$oSmarty->assign('lang_email_info', LANG_COMMENT_INFO_EMAIL);
-			$oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
-			$oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
-			$oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
-			$oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
-			$oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
-
-      $oSmarty->cache_dir = CACHE_DIR;
-      $oSmarty->compile_dir = COMPILE_DIR;
-			$oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
-			return $oSmarty->fetch('comments/_form.tpl');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
+			return $this->_oSmarty->fetch('comments/_form.tpl');
     }
   }
 

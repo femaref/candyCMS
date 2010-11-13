@@ -52,39 +52,32 @@ class Mail extends Main {
             (string)$this->_aRequest['content']:
             '';
 
-    $oSmarty = new Smarty();
-    $oSmarty->assign('id', $this->_iId);
-    $oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
-    $oSmarty->assign('content', $sContent);
-    $oSmarty->assign('email', $sEmail);
-    $oSmarty->assign('subject', $sSubject);
+    $this->_oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
+    $this->_oSmarty->assign('content', $sContent);
+    $this->_oSmarty->assign('email', $sEmail);
+    $this->_oSmarty->assign('subject', $sSubject);
 
     if( $bShowCaptcha == true )
-      $oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey, $this->_sRecaptchaError) );
+      $this->_oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey, $this->_sRecaptchaError) );
     else
-      $oSmarty->assign('_captcha_', '');
+      $this->_oSmarty->assign('_captcha_', '');
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $oSmarty->assign('error_' . $sField, $sMessage);
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     # Language
-    $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-    $oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
-    $oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
-    $oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
-    $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
+    $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
+    $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 
     if( isset( $this->_aRequest['subject'] ) && 'Bugreport' == $this->_aRequest['subject'] )
-      $oSmarty->assign('lang_submit', LANG_GLOBAL_REPORT_ERROR);
+      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_REPORT_ERROR);
     else
-      $oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
+      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('mails/create');
-    return $oSmarty->fetch('mails/create.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/create');
+    return $this->_oSmarty->fetch('mails/create.tpl');
   }
 
   private function _checkCaptcha() {

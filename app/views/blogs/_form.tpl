@@ -129,7 +129,7 @@
            onclick="confirmDelete('/Blog/{$id}/destroy')" />
       </div>
 	{/if}
-  <input type='hidden' value='{$id}' name='id' />
+  <input type='hidden' value='{$_request_id_}' name='id' />
   <input type='hidden' value='{$author_id}' name='author_id' />
   <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

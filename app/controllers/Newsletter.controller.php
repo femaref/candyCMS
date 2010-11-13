@@ -49,22 +49,17 @@ class Newsletter extends Main {
 	}
 
   private function _showHandleNewsletterTemplate() {
-    $oSmarty = new Smarty();
-
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $oSmarty->assign('error_' . $sField, $sMessage);
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     # Language
-    $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
-    $oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
+    $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
+    $this->_oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('newsletters/newsletter');
-    return $oSmarty->fetch('newsletters/newsletter.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters/newsletter');
+    return $this->_oSmarty->fetch('newsletters/newsletter.tpl');
   }
 
   # @Override
@@ -89,29 +84,21 @@ class Newsletter extends Main {
             (string) $this->_aRequest['content'] :
             '';
 
-    $oSmarty = new Smarty();
-    $oSmarty->assign('subject', $sSubject);
-    $oSmarty->assign('content', $sContent);
+    $this->_oSmarty->assign('subject', $sSubject);
+    $this->_oSmarty->assign('content', $sContent);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $oSmarty->assign('error_' . $sField, $sMessage);
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
-		$oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
-
     # Language
-    $oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
-    $oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
-    $oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
-    $oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
-    $oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
+    $this->_oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
+    $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
+    $this->_oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('newsletters/create');
-    return $oSmarty->fetch('newsletters/create.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters/create');
+    return $this->_oSmarty->fetch('newsletters/create.tpl');
   }
 
   private function _newsletterMail() {

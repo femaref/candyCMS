@@ -10,8 +10,6 @@
 require_once 'app/models/Session.model.php';
 
 class Session extends Main {
-  #protected $_aRequest;
-  #protected $_aSession;
 
   public function __init() {
     $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
@@ -47,23 +45,16 @@ class Session extends Main {
 	}
 
   public final function showCreateSessionTemplate() {
-    $oSmarty = new Smarty();
-
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $oSmarty->assign('error_' . $sField, $sMessage);
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
+    
+    $this->_oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
+    $this->_oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
-    $oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
-    $oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
-    $oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
-    $oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
-
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('sessions/createSession');
-    return $oSmarty->fetch('sessions/createSession.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sessions/createSession');
+    return $this->_oSmarty->fetch('sessions/createSession.tpl');
   }
 
   public final function createResendActions() {
@@ -132,38 +123,32 @@ class Session extends Main {
   }
 
   private final function _showCreateResendActionsTemplate() {
-    $oSmarty = new Smarty();
-
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
 
-      $oSmarty->assign('_action_url_', '/Session/resendpassword');
+      $this->_oSmarty->assign('_action_url_', '/Session/resendpassword');
 
-      # Language
-      $oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
-      $oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
-      $oSmarty->assign('lang_submit', LANG_SESSION_PASSWORD_LABEL_SUBMIT);
+      $this->_oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
+      $this->_oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
+      $this->_oSmarty->assign('lang_submit', LANG_SESSION_PASSWORD_LABEL_SUBMIT);
     }
     else {
       $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
 
-      $oSmarty->assign('_action_url_', '/Session/resendverification');
+      $this->_oSmarty->assign('_action_url_', '/Session/resendverification');
 
-      # Language
-      $oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
-      $oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
-      $oSmarty->assign('lang_submit', LANG_SESSION_VERIFICATION_LABEL_SUBMIT);
+      $this->_oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
+      $this->_oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
+      $this->_oSmarty->assign('lang_submit', LANG_SESSION_VERIFICATION_LABEL_SUBMIT);
     }
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $oSmarty->assign('error_' . $sField, $sMessage);
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('sessions/createResendActions');
-    return $oSmarty->fetch('sessions/createResendActions.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sessions/createResendActions');
+    return $this->_oSmarty->fetch('sessions/createResendActions.tpl');
   }
 
   public final function destroy() {
