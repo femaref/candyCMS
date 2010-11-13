@@ -17,7 +17,7 @@ class Model_Session extends Model_Main {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM users WHERE session = :session_id AND ip = :ip LIMIT 1");
+      $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "users WHERE session = :session_id AND ip = :ip LIMIT 1");
 
       $oQuery->bindParam('session_id', $iSessionId);
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
@@ -42,13 +42,13 @@ class Model_Session extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-																	users
-																SET
-																	session = :session,
-																	ip = :ip,
-																	last_login = :last_login
-																WHERE
-																	id = :id");
+                                  " . SQL_PREFIX . "users
+                                SET
+                                  session = :session,
+                                  ip = :ip,
+                                  last_login = :last_login
+                                WHERE
+                                  id = :id");
 
       $oQuery->bindParam('session', session_id());
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
@@ -73,7 +73,7 @@ class Model_Session extends Model_Main {
       $oQuery = $oDb->prepare(" SELECT
 																	id, verification_code
 																FROM
-																	users
+																	" . SQL_PREFIX . "users
 																WHERE
 																	email = :email
 																AND
@@ -96,9 +96,11 @@ class Model_Session extends Model_Main {
     # Check if user did not verify
     if (isset($aResult['verification_code']) && !empty($aResult['verification_code']))
       return false;
+
     # User did verify his and has id, so log in!
     elseif (isset($aResult['id']) && !empty($aResult['id']))
       return Model_Session::setActiveSession($aResult['id']);
+
     else
       return false;
   }
@@ -114,7 +116,7 @@ class Model_Session extends Model_Main {
                 ));
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->prepare("SELECT name FROM users WHERE email = :email");
+        $oQuery = $oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
@@ -134,7 +136,7 @@ class Model_Session extends Model_Main {
           $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
           $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-          $oQuery = $oDb->prepare("UPDATE users SET password = :password WHERE email = :email");
+          $oQuery = $oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
           $oQuery->bindParam(':password', $sNewPasswordSecure);
           $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
 
@@ -156,7 +158,7 @@ class Model_Session extends Model_Main {
         $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
         $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $oQuery = $oDb->prepare("SELECT name, verification_code FROM users WHERE email = :email");
+        $oQuery = $oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
@@ -188,7 +190,7 @@ class Model_Session extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("	UPDATE
-                                  users
+                                  " . SQL_PREFIX . "users
                                 SET
                                   session = :session_null
                                 WHERE

@@ -50,8 +50,7 @@
             {if $b.tags[0] !== ''}
               {$lang_tags}:
               {foreach from=$b.tags item=t name=tags}
-                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
-                {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+                <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
               {/foreach}
               <br />
             {/if}

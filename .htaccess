@@ -30,7 +30,7 @@ RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 
 # Fixes for rules below
-RewriteRule ^(Blog|Content|Gallery|Media|Newsletter|RSS|Search|Session|User)$ index.php?section=$1 [L,QSA] # Show Section
+RewriteRule ^(Blog|Content|Gallery|Log|Media|Newsletter|RSS|Search|Session|User)$ index.php?section=$1 [L,QSA] # Show Section
 RewriteRule ^(Blog)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA] # Non AJAX pagination
 RewriteRule ^(Blog|Comment|Content|Gallery|Media|Newsletter|Session|User)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA] # Default actions
 RewriteRule ^(Blog|Comment|Content|Gallery|Session|User)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA] # Show update / destroy actions

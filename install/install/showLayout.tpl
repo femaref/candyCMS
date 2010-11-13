@@ -14,9 +14,9 @@
           %CONTENT%
           <div id="steps" style="margin-top:30px;text-align:right">
             {if $step > 2}
-              <input type="button" id="prevstep" value="Step back" onclick="stepBack({$step})"  />
+              <input type="button" id="prevstep" value="Back" onclick="stepBack({$step})"  />
             {/if}
-            <input type="submit" id="nextstep" value="Next step ({$step})" />
+            <input type="submit" id="nextstep" value="Next ({$step})" />
           </div>
         </form>
       </div>

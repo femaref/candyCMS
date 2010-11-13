@@ -50,8 +50,7 @@
           {if $b.tags[0] !== ''}
             {$lang_tags}:
             {foreach from=$b.tags item=t name=tags}
-              <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>
-              {if $smarty.foreach.tags.iteration < $b.tags_sum}, {/if}
+              <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
             {/foreach}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/if}
@@ -87,7 +86,7 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
           </a>
         </div>
-        <div class="share">
+        <div class="facebook_like">
           <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false"></fb:like>
         </div>
       </div>

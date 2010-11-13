@@ -27,7 +27,7 @@ final class Cronjob {
 				if (substr($sFile, 0, 1) == '.' || filemtime($sTempPath . '/' . $sFile) > strtotime("-10 days"))
 					continue;
 
-				unlink($sFolder . '/' . $sFile);
+        unlink($sTempPath . '/' . $sFile);
 			}
 		}
   }
@@ -38,15 +38,15 @@ final class Cronjob {
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 			$oQuery = $oDb->query(" OPTIMIZE TABLE
-                                blogs,
-                                comments,
-                                contents,
-                                gallery_albums,
-                                gallery_files,
-                                migrations,
-																logs,
-                                newsletters,
-                                users");
+                                " . SQL_PREFIX . "blogs,
+                                " . SQL_PREFIX . "comments,
+                                " . SQL_PREFIX . "contents,
+                                " . SQL_PREFIX . "gallery_albums,
+                                " . SQL_PREFIX . "gallery_files,
+                                " . SQL_PREFIX . "migrations,
+																" . SQL_PREFIX . "logs,
+                                " . SQL_PREFIX . "newsletters,
+                                " . SQL_PREFIX . "users");
 
 			$oDb = null;
 		}
@@ -56,7 +56,7 @@ final class Cronjob {
 	}
 
   public static final function backup($iUserId, $sPath = '') {
-    $sBackupName = date(DEFAULT_DATE_FORMAT);
+    $sBackupName = date('Y-m-d_H-i');
 		$sBackupFolder = $sPath . 'backup';
 		$sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
 		$iBackupStartTime = time();
@@ -87,7 +87,7 @@ final class Cronjob {
 									PDO::ATTR_PERSISTENT => true));
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
+			$oQuery = $oDb->query("SHOW TABLES FROM " . SQL_PREFIX . SQL_DB);
 			$aResult = $oQuery->fetchAll();
 		}
 		catch (AdvancedException $e) {
@@ -105,7 +105,7 @@ final class Cronjob {
       $sTable = $aTable[0];
 
 			try {
-				$oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
+				$oQuery = $oDb->query("SHOW COLUMNS FROM " . SQL_PREFIX . $sTable);
 				$aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 				$iColumns = count($aColumns);
 			}
@@ -140,7 +140,7 @@ final class Cronjob {
 
       # Show extras like auto_increment etc
       try {
-        $oQuery = $oDb->query("SHOW KEYS FROM " . $sTable);
+        $oQuery = $oDb->query("SHOW KEYS FROM " . SQL_PREFIX . $sTable);
         $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iKeys = count($aKeys);
       }
@@ -174,35 +174,32 @@ final class Cronjob {
       # Closing bracket
       $sFileText .= "\n)";
 
-      if ($sTable !== 'newsletters') {
-        try {
-          $oQuery = $oDb->query(" SELECT
-                                    id
-                                  FROM
-                                    " . $sTable . "
-                                  ORDER BY
-                                    id DESC
-                                  LIMIT
-                                    1");
+      try {
+        $oQuery = $oDb->query(" SELECT
+                                  id
+                                FROM
+                                  " . SQL_PREFIX . $sTable . "
+                                ORDER BY
+                                  id DESC
+                                LIMIT
+                                  1");
 
-          $aRow = $oQuery->fetch();
-        }
-        catch (AdvancedException $e) {
-          $oDb->rollBack();
-        }
-
-        # We also use this as count for data entries
-        $iRows = (int) $aRow['id'];
-        $sFileText .= " AUTO_INCREMENT=";
-        $sFileText .= $iRows + 1;
+        $aRow = $oQuery->fetch();
+      }
+      catch (AdvancedException $e) {
+        $oDb->rollBack();
       }
 
+      # We also use this as count for data entries
+      $iRows = (int) $aRow['id'];
+      $sFileText .= " AUTO_INCREMENT=";
+      $sFileText .= $iRows + 1;
       $sFileText .= " DEFAULT CHARSET=utf8;";
       $sFileText .= "\r\n";
 
       # Now fetch content
       try {
-        $oQuery = $oDb->query("SELECT * FROM " . $sTable);
+        $oQuery = $oDb->query("SELECT * FROM " . SQL_PREFIX . $sTable);
         $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iRows = count($aRows);
       }
@@ -216,7 +213,7 @@ final class Cronjob {
       $sFileText .= "\r\n";
 
       foreach ($aRows as $aRow) {
-        $sFileText .= "INSERT INTO `" . $sTable . "` VALUES (";
+        $sFileText .= "INSERT INTO `" . SQL_PREFIX . $sTable . "` VALUES (";
 
         $iEntries = 1;
         foreach ($aRow as $sEntry) {
@@ -259,7 +256,7 @@ final class Cronjob {
     # Write into backup log
     try {
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  logs(section_name, action_name, action_id, time_start, time_end, user_id)
+                                  " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
                                 VALUES
                                   ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
 
@@ -291,7 +288,7 @@ final class Cronjob {
       $oQuery = $oDb->query(" SELECT
                                 time_end
                               FROM
-                                logs
+                                " . SQL_PREFIX . "logs
                               WHERE
                                 section_name = 'cronjob'
                               ORDER BY

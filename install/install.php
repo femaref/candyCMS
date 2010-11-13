@@ -11,9 +11,7 @@ switch ($_REQUEST['step']) {
   default:
   case '1':
 
-    $sHTML = $oSmarty->fetch('showStep1.tpl');
-    $iNextStep = 2;
-
+    # Try to create folders (if not avaiable)
     if (!is_dir('../backup'))
       @mkdir('../backup', '0777', true);
 
@@ -59,27 +57,33 @@ switch ($_REQUEST['step']) {
     if (!is_dir('../upload/user/original'))
       @mkdir('../upload/user/original/', '0777', true);
 
-    $sHTML .= "<ul>";
+    # Visualy print out permissions
+    $sPermissions = "<ul>";
+
     $sColor = substr(decoct(fileperms("../backup")), 2) == '777' ? 'green' : 'red';
-    $sHTML .= "<li style='color:" . $sColor . "'>";
-    $sHTML .= "backup/*";
-    $sHTML .= "</li>";
+    $sPermissions .= "<li style='color:" . $sColor . "'>";
+    $sPermissions .= "backup/*";
+    $sPermissions .= "</li>";
 
     $sColor = substr(decoct(fileperms("../cache")), 2) == '777' ? 'green' : 'red';
-    $sHTML .= "<li style='color:" . $sColor . "'>";
-    $sHTML .= "cache/*";
-    $sHTML .= "</li>";
+    $sPermissions .= "<li style='color:" . $sColor . "'>";
+    $sPermissions .= "cache/*";
+    $sPermissions .= "</li>";
 
     $sColor = substr(decoct(fileperms("../compile")), 2) == '777' ? 'green' : 'red';
-    $sHTML .= "<li style='color:" . $sColor . "'>";
-    $sHTML .= "compile/*";
-    $sHTML .= "</li>";
+    $sPermissions .= "<li style='color:" . $sColor . "'>";
+    $sPermissions .= "compile/*";
+    $sPermissions .= "</li>";
 
     $sColor = substr(decoct(fileperms("../upload")), 2) == '777' ? 'green' : 'red';
-    $sHTML .= "<li style='color:" . $sColor . "'>";
-    $sHTML .= "upload/*";
-    $sHTML .= "</li>";
-    $sHTML .= "</ul>";
+    $sPermissions .= "<li style='color:" . $sColor . "'>";
+    $sPermissions .= "upload/*";
+    $sPermissions .= "</li>";
+    $sPermissions .= "</ul>";
+
+    $iNextStep = 2;
+    $oSmarty->assign('permissions', $sPermissions);
+    $sHTML = $oSmarty->fetch('showStep1.tpl');
 
     break;
   case '2':
@@ -121,7 +125,7 @@ switch ($_REQUEST['step']) {
 
     try {
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  users ( id, name, surname, password, email, ip, user_right, date )
+                                  " . SQL_PREFIX . "users ( id, name, surname, password, email, ip, user_right, date )
                                 VALUES
                                   ( :id, :name, :surname, :password, :email, :ip, :user_right, :date )");
 

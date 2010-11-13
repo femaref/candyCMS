@@ -14,6 +14,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
+define('SQL_PREFIX', '');
 
 # ------------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ define('WEBSITE_LANDING_PAGE', 'Blog');
 
 # Number of seconds between cronjob execution (if enabled)
 # DEFAULT: '86400'
-define('CRONJOB_UPDATE_INTERVAL', '86400');
+define('CRONJOB_UPDATE_INTERVAL', '1');
 
 # ------------------------------------------------------------------------------
 
@@ -106,15 +107,11 @@ define('CRONJOB_SEND_PER_MAIL', false);
 define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
+
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
 define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook');
-
-# ------------------------------------------------------------------------------
-# Allow caching and compiling for better performance?
-# DEFAULT: true
-define('ALLOW_CACHE', true);
 
 # ------------------------------------------------------------------------------
 
@@ -185,14 +182,14 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', '');
+define('PATH_CSS', 'marcoraddatz');
 
 # DEFAULT: default
 define('PATH_IMAGES', '');
 
 # Define, where to search for additional templates
 # DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', '');
+define('PATH_TPL', 'marcoraddatz');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/default/view/_static'

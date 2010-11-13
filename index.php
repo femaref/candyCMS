@@ -17,6 +17,7 @@
 #--------------------------------------------------
 
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 ini_set('arg_separator.output', '&amp;');
 ini_set('zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
