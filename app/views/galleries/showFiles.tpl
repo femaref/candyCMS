@@ -27,7 +27,7 @@
   </div>
 {else}
   {if $gallery_description}
-    <div class='quote'>{$gallery_description}</div>
+    <blockquote>{$gallery_description}</blockquote>
   {/if}
   {$_album_pages_}
   {foreach $files as $f}

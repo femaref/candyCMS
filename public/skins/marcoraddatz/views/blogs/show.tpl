@@ -90,6 +90,9 @@
           </div>
         </div>
       </div>
+      {if $b@index == 1}
+        {$_plugin_adsense_}
+      {/if}
     {/if}
   {/foreach}
   {$_blog_pages_}

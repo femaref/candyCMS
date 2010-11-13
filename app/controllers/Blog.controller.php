@@ -44,6 +44,11 @@ class Blog extends Main {
 			$oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
 		}
 
+		if (class_exists('Adsense')) {
+			$oAdsense = new Adsense();
+			$oSmarty->assign('_plugin_adsense_', $oAdsense->show());
+		}
+
 		# Language
 		$oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
 		$oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
