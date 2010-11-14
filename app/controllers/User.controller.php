@@ -26,7 +26,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_GLOBAL_CREATE_SESSION_FIRST);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST);
 
     else {
       if (isset($this->_aRequest['update_user'])) {
