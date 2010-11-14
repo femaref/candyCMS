@@ -37,6 +37,7 @@ class User extends Main {
       }
       elseif (isset($this->_aRequest['create_avatar']))
         return $this->_createAvatar($this->_iId);
+
       else
         return $this->_showFormTemplate();
     }

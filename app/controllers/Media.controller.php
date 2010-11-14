@@ -11,14 +11,11 @@ require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
 class Media extends Main {
-  public function __init() {
-
-  }
-
   # @Override
   public function create() {
 		if (USER_RIGHT < 3)
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
 		else {
 			if (isset($this->_aRequest['upload_file'])) {
 				if ($this->_proceedUpload() === true)
@@ -105,6 +102,7 @@ class Media extends Main {
   public function destroy() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id']);

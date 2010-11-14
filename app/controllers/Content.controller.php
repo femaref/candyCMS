@@ -19,7 +19,6 @@ final class Content extends Main {
 
     if(empty($this->_iId)) {
       $this->_oSmarty->assign('content', $this->_oModel->getData());
-
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/overview');
@@ -44,43 +43,42 @@ final class Content extends Main {
   }
 
   protected final function _showFormTemplate($bUpdate = true) {
+    if ($bUpdate == true) {
+			$this->_aData = $this->_oModel->getData($this->_iId, true);
+			$this->_oSmarty->assign('_action_url_', '/Content/update');
+			$this->_oSmarty->assign('_formdata_', 'update_content');
+			$this->_oSmarty->assign('c', $this->_aData);
 
-    if($bUpdate == true) {
-      $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_oSmarty->assign('_action_url_', '/Content/update');
-      $this->_oSmarty->assign('_formdata_', 'update_content');
-      $this->_oSmarty->assign('c', $this->_aData);
+			# Language
+			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
+			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
-      # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
-
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
-    }
+			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+		}
     # We create new content
     else {
-      $sTitle = isset($this->_aRequest['title']) ?
-              $this->_aRequest['title'] :
-              '';
+			$sTitle = isset($this->_aRequest['title']) ?
+							$this->_aRequest['title'] :
+							'';
 
-      $sContent = isset($this->_aRequest['content']) ?
-              $this->_aRequest['content'] :
-              '';
+			$sContent = isset($this->_aRequest['content']) ?
+							$this->_aRequest['content'] :
+							'';
 
-      $this->_oSmarty->assign('_action_url_', '/Content/create');
-      $this->_oSmarty->assign('_formdata_', 'create_content');
-      $this->_oSmarty->assign('_request_id_', '');
+			$this->_oSmarty->assign('_action_url_', '/Content/create');
+			$this->_oSmarty->assign('_formdata_', 'create_content');
+			$this->_oSmarty->assign('_request_id_', '');
 
 			# Create title
-      $aContent = array('title' => $sTitle, 'content' => $sContent);
-      $this->_oSmarty->assign('c', $aContent);
+			$aContent = array('title' => $sTitle, 'content' => $sContent);
+			$this->_oSmarty->assign('c', $aContent);
 
-      # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
+			# Language
+			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
+			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 
-      # INFO: _setTitle comes from section helper
-    }
+			# INFO: _setTitle comes from section helper
+		}
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
@@ -106,7 +104,6 @@ final class Content extends Main {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
 				return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
       }
-
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 		}
@@ -118,7 +115,6 @@ final class Content extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -128,7 +124,6 @@ final class Content extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 	}

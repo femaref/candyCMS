@@ -136,7 +136,6 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
 			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
@@ -146,7 +145,6 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
@@ -156,7 +154,6 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}

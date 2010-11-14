@@ -59,7 +59,8 @@ class Mail extends Main {
 
     if( $bShowCaptcha == true )
       $this->_oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey, $this->_sRecaptchaError) );
-    else
+
+		else
       $this->_oSmarty->assign('_captcha_', '');
 
     if (!empty($this->_aError)) {
@@ -71,9 +72,11 @@ class Mail extends Main {
     $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 
+		# TODO: Kick this off?
     if( isset( $this->_aRequest['subject'] ) && 'Bugreport' == $this->_aRequest['subject'] )
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_REPORT_ERROR);
-    else
+
+		else
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/create');
@@ -203,9 +206,6 @@ class Mail extends Main {
     }
     catch (phpmailerException $e) {
       return $e->errorMessage();
-    }
-    catch (Exception $e) {
-      return $e->getMessage();
     }
   }
 }

@@ -100,7 +100,6 @@ final class Comment extends Main {
 			else
 				return $this->_create(false);
 		}
-
 		else {
 			$bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
 			return $this->_showFormTemplate($bShowCaptcha);
@@ -153,7 +152,6 @@ final class Comment extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
-
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -219,7 +217,6 @@ final class Comment extends Main {
 				return $this->_showFormTemplate($bShowCaptcha);
 			}
 		}
-
 		else
 			return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
 	}

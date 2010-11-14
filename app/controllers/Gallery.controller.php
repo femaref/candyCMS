@@ -73,6 +73,7 @@ class Gallery extends Main {
 
         return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
+
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
@@ -125,13 +126,11 @@ class Gallery extends Main {
       $this->_oSmarty->assign('_formdata_', 'update_gallery');
 
       # Language
-      $this->_oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
-
     else {
       $sTitle = isset($this->_aRequest['title']) ?
               $this->_aRequest['title'] :
@@ -168,9 +167,8 @@ class Gallery extends Main {
 
     else {
       if (isset($this->_aRequest['create_file']))
-        # TODO: Kick out damn path; log is in model...
+        # TODO: Kick out damn path; log is in model... -> Path extra method
         return $this->_oModel->createFile();
-
       else
         return $this->_showFormFileTemplate(false);
     }
@@ -186,11 +184,9 @@ class Gallery extends Main {
           Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
         }
-
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
 			}
-
       else
         return $this->_showFormFileTemplate(true);
     }
@@ -206,7 +202,6 @@ class Gallery extends Main {
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
         unset($this->_iId);
       }
-
 			else
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/Gallery');
     }
@@ -216,13 +211,11 @@ class Gallery extends Main {
     if($bUpdate === true) {
       $this->_oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/updatefile');
       $this->_oSmarty->assign('_formdata_', 'update_file');
-      #$this->_oSmarty->assign('_album_id_', (int)$this->_aRequest['album_id']);
       $this->_oSmarty->assign('description', Model_Gallery::getFileDescription($this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
     }
-
     else {
       # See helper/Image.helper.php for details!
       $sDefault = isset($this->_aRequest['cut']) ?

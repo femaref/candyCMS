@@ -28,53 +28,47 @@ class Model_Blog extends Model_Main {
       }
 
 			try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                    PDO::ATTR_PERSISTENT => true
-                ));
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
+        $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
 
 			$this->oPages = new Pages($this->_aRequest, (int)$iResult, $iLimit);
  
 			try {
-				$oQuery = $oDb->query("	SELECT
-																b.*,
-																u.id AS uid,
-																u.name,
-																u.surname,
-																u.email,
-																u.use_gravatar,
-																COUNT(c.id) AS commentSum
-															FROM
-																" . SQL_PREFIX . "blogs b
-															LEFT JOIN
-																" . SQL_PREFIX . "users u
-															ON
-																b.author_id=u.id
-															LEFT JOIN
-																" . SQL_PREFIX . "comments c
-															ON
-																c.parent_id=b.id AND c.parent_category='b'
-															" . $sWhere . "
-															GROUP BY
-																b.id
-															ORDER BY
-																b.date DESC
-															LIMIT
-																" . $this->oPages->getOffset() . ",
-																" . $this->oPages->getLimit());
+				$oQuery = $this->_oDb->query("SELECT
+																				b.*,
+																				u.id AS uid,
+																				u.name,
+																				u.surname,
+																				u.email,
+																				u.use_gravatar,
+																				COUNT(c.id) AS commentSum
+																			FROM
+																				" . SQL_PREFIX . "blogs b
+																			LEFT JOIN
+																				" . SQL_PREFIX . "users u
+																			ON
+																				b.author_id=u.id
+																			LEFT JOIN
+																				" . SQL_PREFIX . "comments c
+																			ON
+																				c.parent_id=b.id AND c.parent_category='b'
+																			" . $sWhere . "
+																			GROUP BY
+																				b.id
+																			ORDER BY
+																				b.date DESC
+																			LIMIT
+																				" . $this->oPages->getOffset() . ",
+																				" . $this->oPages->getLimit());
 
 				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
-				$oDb = null;
 			}
 			catch (AdvancedException $e) {
-				$oDb->rollBack();
+				$this->_oDb->rollBack();
 			}
 
 			foreach ($aResult as $aRow) {
@@ -117,6 +111,7 @@ class Model_Blog extends Model_Main {
 
 				if (!empty($aRow['date_modified']))
 					$this->_aData[$iId]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
+
 				else
 					$this->_aData[$iId]['date_modified'] = '';
 			}
@@ -129,37 +124,33 @@ class Model_Blog extends Model_Main {
 			$this->oPages = new Pages($this->_aRequest, 1);
 
 			try {
-				$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-				$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-				$oQuery = $oDb->query("	SELECT
-																	b.*,
-																	u.id AS uid,
-																	u.name,
-																	u.surname,
-																	COUNT(c.id) AS commentSum
-																FROM
-																	" . SQL_PREFIX . "blogs b
-																LEFT JOIN
-																	" . SQL_PREFIX . "users u
-																ON
-																	b.author_id=u.id
-																LEFT JOIN
-																	" . SQL_PREFIX . "comments c
-																ON
-																	c.parent_id=b.id AND c.parent_category='b'
-																WHERE
-																	b.id = '" . Helper::formatInput($this->_iId) . "'
-																" . $sWhere . "
-																GROUP BY
-																	b.title
-																LIMIT 1");
+				$oQuery = $this->_oDb->query("SELECT
+																				b.*,
+																				u.id AS uid,
+																				u.name,
+																				u.surname,
+																				COUNT(c.id) AS commentSum
+																			FROM
+																				" . SQL_PREFIX . "blogs b
+																			LEFT JOIN
+																				" . SQL_PREFIX . "users u
+																			ON
+																				b.author_id=u.id
+																			LEFT JOIN
+																				" . SQL_PREFIX . "comments c
+																			ON
+																				c.parent_id=b.id AND c.parent_category='b'
+																			WHERE
+																				b.id = '" . Helper::formatInput($this->_iId) . "'
+																			" . $sWhere . "
+																			GROUP BY
+																				b.title
+																			LIMIT 1");
 
 				$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-				$oDb = null;
 			}
 			catch (AdvancedException $e) {
-				$oDb->rollBack();
+				$this->_oDb->rollBack();
 			}
 
 			$aRow =& $aResult;
@@ -220,6 +211,7 @@ class Model_Blog extends Model_Main {
 
 				if (!empty($aRow['date_modified']))
           $this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
+
         else
           $this->_aData[1]['date_modified'] = '';
 			}
@@ -240,13 +232,11 @@ class Model_Blog extends Model_Main {
             0;
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "blogs(author_id, title, tags, teaser, content, date, published)
-                                VALUES
-                                  ( :author_id, :title, :tags, :teaser, :content, :date, :published )");
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+																				" . SQL_PREFIX . "blogs
+																				(author_id, title, tags, teaser, content, date, published)
+																			VALUES
+																				( :author_id, :title, :tags, :teaser, :content, :date, :published )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -256,13 +246,12 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('published', $this->_aRequest['published']);
-      $bResult = $oQuery->execute();
 
-      $oDb = null;
+			$bResult = $oQuery->execute();
       return $bResult;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 	}
 
@@ -280,10 +269,7 @@ class Model_Blog extends Model_Main {
             (int) $this->_aRequest['author_id'];
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	UPDATE
+      $oQuery = $this->_oDb->prepare("	UPDATE
                                   " . SQL_PREFIX . "blogs
                                 SET
                                   author_id = :author_id,
@@ -304,54 +290,48 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('date_modified', $iDateModified);
       $oQuery->bindParam('published', $iPublished);
       $oQuery->bindParam('id', $iId);
+
       $bResult = $oQuery->execute();
-      $oDb = null;
       return $bResult;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 	}
 
 	public final function destroy($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true
-              ));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	DELETE FROM
-                                  " . SQL_PREFIX . "blogs
-                                WHERE
-                                  id = :id
-                                LIMIT
-                                  1");
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+																				" . SQL_PREFIX . "blogs
+																			WHERE
+																				id = :id
+																			LIMIT
+																				1");
 
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
     try {
-      $oQuery = $oDb->prepare("	DELETE FROM
-                                  " . SQL_PREFIX . "comments
-                                WHERE
-                                  parent_id = :parent_id
-																AND
-																	parent_category = :parent_category");
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+																				" . SQL_PREFIX . "comments
+																			WHERE
+																				parent_id = :parent_id
+																			AND
+																				parent_category = :parent_category");
 
       $sParentCategory = 'b';
       $oQuery->bindParam('parent_category', $sParentCategory);
       $oQuery->bindParam('parent_id', $iId);
-      $bResult = $oQuery->execute();
 
-      $oDb = null;
+      $bResult = $oQuery->execute();
       return $bResult;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 }

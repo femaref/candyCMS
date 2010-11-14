@@ -17,36 +17,32 @@ class Model_Gallery extends Model_Main {
       $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->query("	SELECT
-                                a.*,
-                                u.id AS uid,
-                                u.name,
-                                u.surname,
-                                COUNT(f.id) AS filesSum
-                              FROM
-                                " . SQL_PREFIX . "gallery_albums a
-                              LEFT JOIN
-                                " . SQL_PREFIX . "users u
-                              ON
-                                a.author_id=u.id
-                              LEFT JOIN
-                                " . SQL_PREFIX . "gallery_files f
-                              ON
-                                f.album_id=a.id
-                              "	.$sWhere.	"
-                              GROUP BY
-                                a.id
-                              ORDER BY
-                                a.id DESC");
+      $oQuery = $this->_oDb->query("SELECT
+																			a.*,
+																			u.id AS uid,
+																			u.name,
+																			u.surname,
+																			COUNT(f.id) AS filesSum
+																		FROM
+																			" . SQL_PREFIX . "gallery_albums a
+																		LEFT JOIN
+																			" . SQL_PREFIX . "users u
+																		ON
+																			a.author_id=u.id
+																		LEFT JOIN
+																			" . SQL_PREFIX . "gallery_files f
+																		ON
+																			f.album_id=a.id
+																		"	.$sWhere.	"
+																		GROUP BY
+																			a.id
+																		ORDER BY
+																			a.id DESC");
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
 		if($bEdit == true) {
@@ -109,18 +105,13 @@ class Model_Gallery extends Model_Main {
       unset($this->_aThumbs);
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true
-              ));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
+      $oQuery = $this->_oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
-
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
     $this->_iEntries = count($aResult);
@@ -128,34 +119,33 @@ class Model_Gallery extends Model_Main {
 
     if($this->_iEntries > 0) {
       try {
-        $oQuery = $oDb->prepare("	SELECT
-                                    f.*,
-                                    u.name,
-                                    u.surname
-                                  FROM
-                                    " . SQL_PREFIX . "gallery_files f
-                                  LEFT JOIN
-                                    " . SQL_PREFIX . "users u
-                                  ON
-                                    f.author_id=u.id
-                                  WHERE
-                                    f.album_id= :album_id
-                                  ORDER BY
-                                    f.date ASC
-                                  LIMIT
-                                    :offset,
-                                    :limit");
+        $oQuery = $this->_oDb->prepare("SELECT
+																					f.*,
+																					u.name,
+																					u.surname
+																				FROM
+																					" . SQL_PREFIX . "gallery_files f
+																				LEFT JOIN
+																					" . SQL_PREFIX . "users u
+																				ON
+																					f.author_id=u.id
+																				WHERE
+																					f.album_id= :album_id
+																				ORDER BY
+																					f.date ASC
+																				LIMIT
+																					:offset,
+																					:limit");
 
         $oQuery->bindParam('album_id', $iId);
         $oQuery->bindParam('limit', $this->oPages->getLimit(), PDO::PARAM_INT);
         $oQuery->bindParam('offset', $this->oPages->getOffset(), PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $oDb = null;
+				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
 
       $iLoop = 0;
@@ -214,7 +204,7 @@ class Model_Gallery extends Model_Main {
       }
     }
     else {
-      $oDb = null;
+      $this->_oDb = null;
       return false;
     }
 	}
@@ -229,17 +219,17 @@ class Model_Gallery extends Model_Main {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
-
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			$oDb = null;
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
     }
 
-    if($bReturn == true)
+    if($bReturn === true)
       return $aResult['title'];
   }
 
@@ -248,48 +238,42 @@ class Model_Gallery extends Model_Main {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
-
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			$oDb = null;
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
     }
 
-    if($bReturn == true)
+    if($bReturn === true)
       return $aResult['description'];
   }
 
   public final function getFileDescription($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-
+      $oQuery = $this->_oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
-    if($bReturn == true)
+    if($bReturn === true)
       return $aResult['description'];
   }
 
 	public function create() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "gallery_albums (author_id, title, description, date)
-                                VALUES
-                                  ( :author_id, :title, :description, :date )");
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+																				" . SQL_PREFIX . "gallery_albums (author_id, title, description, date)
+																			VALUES
+																				( :author_id, :title, :description, :date )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -298,14 +282,13 @@ class Model_Gallery extends Model_Main {
       $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
-      $this->_iId = $oDb->lastInsertId();
-      $oDb = null;
+      $this->_iId = $this->_oDb->lastInsertId();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
-    if ($bResult == true) {
+    if ($bResult === true) {
       $sPath = PATH_UPLOAD . '/gallery/' . (int) $this->_iId;
 
       $sPathThumbS = $sPath . '/32';
@@ -334,27 +317,21 @@ class Model_Gallery extends Model_Main {
 
 	public function update($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	UPDATE
-                                  " . SQL_PREFIX . "gallery_albums
-                                SET
-                                  title = :title,
-                                  description = :description
-                                WHERE
-                                  id = :where");
+      $oQuery = $this->_oDb->prepare("UPDATE
+																				" . SQL_PREFIX . "gallery_albums
+																			SET
+																				title = :title,
+																				description = :description
+																			WHERE
+																				id = :where");
 
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
       $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
       $oQuery->bindParam('where', $iId);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 
@@ -362,21 +339,17 @@ class Model_Gallery extends Model_Main {
     $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true
-              ));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
+      $oQuery = $this->_oDb->prepare("SELECT file FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
-    if ($bReturn == true) {
+    if ($bReturn === true) {
       foreach ($aResult as $aRow) {
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
@@ -392,44 +365,32 @@ class Model_Gallery extends Model_Main {
       @rmdir($sPath);
 
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("	DELETE FROM
-                                    " . SQL_PREFIX . "gallery_files
-                                  WHERE
-                                    album_id = :album_id");
+        $oQuery = $this->_oDb->prepare("DELETE FROM
+																					" . SQL_PREFIX . "gallery_files
+																				WHERE
+																					album_id = :album_id");
 
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
 
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("	DELETE FROM
-                                    " . SQL_PREFIX . "gallery_albums
-                                  WHERE
-                                    id = :album_id
-                                  LIMIT
-                                    1");
+        $oQuery = $this->_oDb->prepare("DELETE FROM
+																					" . SQL_PREFIX . "gallery_albums
+																				WHERE
+																					id = :album_id
+																				LIMIT
+																					1");
 
         $oQuery->bindParam('album_id', $iId);
-        $bResult = $oQuery->execute();
-        $oDb = null;
-        return $bResult;
+        return $oQuery->execute();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
-    }
-    else {
-      $oDb = null;
-      return false;
     }
   }
 
@@ -442,13 +403,11 @@ class Model_Gallery extends Model_Main {
               '';
 
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare(" INSERT INTO
-                                    " . SQL_PREFIX . "gallery_files (album_id, author_id, file, extension, description, date)
-                                  VALUES
-                                    ( :album_id, :author_id, :file, :extension, :description, :date )");
+        $oQuery = $this->_oDb->prepare("INSERT INTO
+																					" . SQL_PREFIX . "gallery_files
+																						(album_id, author_id, file, extension, description, date)
+																				VALUES
+																					( :album_id, :author_id, :file, :extension, :description, :date )");
 
         $oQuery->bindParam('album_id', $this->_aRequest['id']);
         $oQuery->bindParam('author_id', $iUserId);
@@ -458,10 +417,9 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('date', time());
 
         $bResult = $oQuery->execute();
-        $oDb = null;
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
 
       # Log uploaded image. Request ID = album id
@@ -471,52 +429,39 @@ class Model_Gallery extends Model_Main {
 			# TODO: Return true or false?
       return $oUploadFile->sFilePath;
     }
-    else
-			return false;
-      #return Helper::errorMessage (LANG_ERROR_UPLOAD_CREATE);
   }
 
 	public final function updateFile($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	UPDATE
-                                  " . SQL_PREFIX . "gallery_files
-                                SET
-                                  description = :description
-                                WHERE
-                                  id = :where");
+      $oQuery = $this->_oDb->prepare("UPDATE
+																				" . SQL_PREFIX . "gallery_files
+																			SET
+																				description = :description
+																			WHERE
+																				id = :where");
 
       $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
       $oQuery->bindParam('where', $iId);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 
 	public final function destroyFile($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true
-              ));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT file, album_id FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-
+      $oQuery = $this->_oDb->prepare("SELECT file, album_id FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
+
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
-    if ($bReturn == true) {
+    if ($bReturn === true) {
       foreach ($aResult as $aRow) {
         $sPath = PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
         @unlink($sPath . '/32/' . $aRow['file']);
@@ -526,28 +471,19 @@ class Model_Gallery extends Model_Main {
       }
 
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("	DELETE FROM
-                                    " . SQL_PREFIX . "gallery_files
-                                  WHERE
-                                    id = :id
-                                  LIMIT
-                                    1");
+        $oQuery = $this->_oDb->prepare("DELETE FROM
+																					" . SQL_PREFIX . "gallery_files
+																				WHERE
+																					id = :id
+																				LIMIT
+																					1");
 
         $oQuery->bindParam('id', $iId);
-        $bResult = $oQuery->execute();
-        $oDb = null;
-        return $bResult;
+        return $oQuery->execute();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
-    }
-    else {
-      $oDb = null;
-      return false;
     }
 	}
 }

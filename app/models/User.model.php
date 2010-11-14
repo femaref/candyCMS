@@ -52,21 +52,18 @@ class Model_User extends Model_Main {
   private function _setData() {
     if (empty($this->_iId)) {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->query(" SELECT
-                                    id,
-                                    name,
-                                    email,
-                                    surname,
-                                    last_login,
-                                    date,
-                                    use_gravatar
-                                  FROM
-                                    " . SQL_PREFIX . "users
-                                  ORDER BY
-                                    id ASC");
+        $oQuery = $this->_oDb->query("SELECT
+																				id,
+																				name,
+																				email,
+																				surname,
+																				last_login,
+																				date,
+																				use_gravatar
+																			FROM
+																				" . SQL_PREFIX . "users
+																			ORDER BY
+																				id ASC");
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -92,28 +89,25 @@ class Model_User extends Model_Main {
           );
         }
       } catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
     } else {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("	SELECT
-                                    name,
-                                    surname,
-                                    last_login,
-                                    email,
-                                    date,
-                                    description,
-                                    user_right,
-                                    receive_newsletter,
-                                    use_gravatar
-                                  FROM
-                                    " . SQL_PREFIX . "users
-                                  WHERE
-                                    id = :id
-                                  LIMIT 1");
+        $oQuery = $this->_oDb->prepare("SELECT
+																					name,
+																					surname,
+																					last_login,
+																					email,
+																					date,
+																					description,
+																					user_right,
+																					receive_newsletter,
+																					use_gravatar
+																				FROM
+																					" . SQL_PREFIX . "users
+																				WHERE
+																					id = :id
+																				LIMIT 1");
 
         $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
@@ -121,7 +115,7 @@ class Model_User extends Model_Main {
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
       } catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
     }
   }
@@ -139,13 +133,11 @@ class Model_User extends Model_Main {
 
   public function create($iVerificationCode) {
 		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-			$oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "users (name, surname, password, email, date, verification_code)
-                                VALUES
-                                  ( :name, :surname, :password, :email, :date, :verification_code )");
+			$oQuery = $this->_oDb->prepare("INSERT INTO
+																				" . SQL_PREFIX . "users
+																					(name, surname, password, email, date, verification_code)
+																			VALUES
+																				( :name, :surname, :password, :email, :date, :verification_code )");
 
 			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
 			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
@@ -153,13 +145,11 @@ class Model_User extends Model_Main {
 			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
 			$oQuery->bindParam('date', time());
 			$oQuery->bindParam('verification_code', $iVerificationCode);
-			$bResult = $oQuery->execute();
 
-			$oDb = null;
-			return $bResult;
+			return $oQuery->execute();
 		}
 		catch (AdvancedException $e) {
-			$oDb->rollBack();
+			$this->_oDb->rollBack();
 		}
 	}
 
@@ -181,22 +171,19 @@ class Model_User extends Model_Main {
     $sPassword = $this->_aSession['userdata']['password'];
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	UPDATE
-                                  " . SQL_PREFIX . "users
-                                SET
-                                  name = :name,
-                                  surname = :surname,
-                                  email = :email,
-                                  description = :description,
-                                  receive_newsletter = :receive_newsletter,
-                                  use_gravatar = :use_gravatar,
-                                  password = :password,
-                                  user_right = :user_right
-                                WHERE
-                                  id = :id");
+      $oQuery = $this->_oDb->prepare("UPDATE
+																				" . SQL_PREFIX . "users
+																			SET
+																				name = :name,
+																				surname = :surname,
+																				email = :email,
+																				description = :description,
+																				receive_newsletter = :receive_newsletter,
+																				use_gravatar = :use_gravatar,
+																				password = :password,
+																				user_right = :user_right
+																			WHERE
+																				id = :id");
 
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
@@ -207,13 +194,11 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('password', $sPassword);
       $oQuery->bindParam('user_right', $iUserRight);
       $oQuery->bindParam('id', $iId);
-      $bResult = $oQuery->execute();
 
-      $oDb = null;
-      return $bResult;
+			return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 
@@ -227,39 +212,30 @@ class Model_User extends Model_Main {
     @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	DELETE FROM
-                                  " . SQL_PREFIX . "users
-                                WHERE
-                                  id = :id
-                                LIMIT
-                                  1");
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+																				" . SQL_PREFIX . "users
+																			WHERE
+																				id = :id
+																			LIMIT
+																				1");
 
       $oQuery->bindParam('id', $iId);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 
 	public function verifyEmail($iVerificationCode) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	SELECT
-																	id
-																FROM
-																	" . SQL_PREFIX . "users
-																WHERE
-																	verification_code = :verification_code
-																LIMIT 1");
+      $oQuery = $this->_oDb->prepare("SELECT
+																				id
+																			FROM
+																				" . SQL_PREFIX . "users
+																			WHERE
+																				verification_code = :verification_code
+																			LIMIT 1");
 
       $oQuery->bindParam('verification_code', $iVerificationCode);
       $oQuery->execute();
@@ -267,32 +243,25 @@ class Model_User extends Model_Main {
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
     if (!empty($aResult['id'])) {
       try {
-        $oQuery = $oDb->prepare("	UPDATE
-																		" . SQL_PREFIX . "users
-																	SET
-																		verification_code = ''
-																	WHERE
-																		id = :id");
+        $oQuery = $this->_oDb->prepare("UPDATE
+																					" . SQL_PREFIX . "users
+																				SET
+																					verification_code = ''
+																				WHERE
+																					id = :id");
 
         $oQuery->bindParam('id', $aResult['id']);
-        $bResult = $oQuery->execute();
         Model_Session::setActiveSession($aResult['id']);
-
-        $oDb = null;
-        return $bResult;
+        return $oQuery->execute();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
-    }
-    else {
-      $oDb = null;
-      return false;
     }
   }
 }

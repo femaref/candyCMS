@@ -25,6 +25,7 @@ class Rss extends Main {
       $this->_aData = $this->_oModel->getData();
 			return $this->_showDefault();
 		}
+
 		elseif($this->_sSection == 'Gallery' && $this->_iId > 0) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
@@ -34,6 +35,7 @@ class Rss extends Main {
 
 			return $this->_showGallery();
 		}
+
 		else {
       header('Status: 404 Not Found');
       die(LANG_ERROR_GLOBAL_404);

@@ -23,7 +23,7 @@ class Model_Session extends Model_Main {
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
       $bReturn = $oQuery->execute();
 
-      if ($bReturn == false)
+      if ($bReturn === false)
         $this->destroy();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -67,19 +67,16 @@ class Model_Session extends Model_Main {
   # Create session
   public final function create() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare(" SELECT
-																	id, verification_code
-																FROM
-																	" . SQL_PREFIX . "users
-																WHERE
-																	email = :email
-																AND
-																	password = :password
-																LIMIT
-																	1");
+      $oQuery = $this->_oDb->prepare("SELECT
+																				id, verification_code
+																			FROM
+																				" . SQL_PREFIX . "users
+																			WHERE
+																				email = :email
+																			AND
+																				password = :password
+																			LIMIT
+																				1");
 
       $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
@@ -87,10 +84,9 @@ class Model_Session extends Model_Main {
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
 
     # Check if user did not verify
@@ -111,71 +107,48 @@ class Model_Session extends Model_Main {
 
     if ($this->_aRequest['action'] == 'resendpassword') {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                    PDO::ATTR_PERSISTENT => true
-                ));
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
+        $oQuery = $this->_oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
 
-      if (empty($this->_aData['name']) || $bResult == false) {
-        $oDb = null;
+      if (empty($this->_aData['name']) || $bResult == false)
         return false;
-      }
+
       else {
         # Set new password
         try {
-          $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-          $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-          $oQuery = $oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
+          $oQuery = $this->_oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
           $oQuery->bindParam(':password', $sNewPasswordSecure);
           $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
 
-          $bResult = $oQuery->execute();
-          $oDb = null;
+          return $oQuery->execute();
         }
         catch (AdvancedException $e) {
-          $oDb->rollBack();
+          $this->_oDb->rollBack();
         }
-
-        if ($bResult == true)
-          return true;
-        else
-          return false;
       }
     }
     elseif ($this->_aRequest['action'] == 'resendverification') {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $oQuery = $oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
+        $oQuery = $this->_oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
         $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
-        $oDb = null;
 
         if (empty($this->_aData['verification_code']) || $bResult == false)
           return false;
-        else {
-          if ($bResult == true)
-            return true;
-          else
-            return false;
-        }
+        else
+					return $bResult;
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
     }
   }
@@ -186,27 +159,21 @@ class Model_Session extends Model_Main {
 
   public final function destroy() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	UPDATE
-                                  " . SQL_PREFIX . "users
-                                SET
-                                  session = :session_null
-                                WHERE
-                                  session = :session_id");
+      $oQuery = $this->_oDb->prepare("UPDATE
+																				" . SQL_PREFIX . "users
+																			SET
+																				session = :session_null
+																			WHERE
+																				session = :session_id");
 
       $sNull = 'NULL';
       $iSessionId = session_id();
       $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
       $oQuery->bindParam('session_id', $iSessionId);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 }
