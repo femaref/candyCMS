@@ -21,7 +21,6 @@ abstract class Main {
 
 	# Plugins
 	protected $_oAdsense;
-	protected $_oFacebook;
 	protected $_oLazyLoad;
 	protected $_oSmarty;
 
@@ -46,6 +45,14 @@ abstract class Main {
 	public function __autoload($sClass) {
     require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
   }
+
+	protected function _setFacebook() {
+		return new FacebookCMS(array(
+				'appId' => FACEBOOK_APP_ID,
+				'secret' => FACEBOOK_SECRET,
+				'cookie' => true,
+		));
+	}
 
 	protected function _setSmarty() {
 		# Initialize smarty
@@ -74,7 +81,8 @@ abstract class Main {
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
-    $this->_oSmarty->assign('_language_', substr(DEFAULT_LANGUAGE, 0, 2));
+    $this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
+    $this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_pubdate_', date('r'));
 		$this->_oSmarty->assign('_request_id_', $this->_iId);
 
@@ -85,15 +93,8 @@ abstract class Main {
 		}
 
 		# Generate a facebook connect link
-		if (class_exists('FacebookCMS')) {
-			$this->_oFacebook = new FacebookCMS(array(
-				'appId'  => FACEBOOK_APP_ID,
-				'secret' => FACEBOOK_SECRET,
-				'cookie' => true,
-			));
-
-			$this->_oSmarty->assign('_plugin_facebook_connect_button_', $this->_oFacebook->getConnectButton());
-		}
+		#if(class_exists('FacebookCMS') && USER_ID == 0)
+		#	$this->_oSmarty->assign('_plugin_facebook_connect_button_', $this->_setFacebook()->getConnectButton());
 
 		# Enable LazyLoad
 		if (class_exists('LazyLoad')) {

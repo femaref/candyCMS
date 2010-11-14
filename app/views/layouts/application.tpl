@@ -114,7 +114,7 @@
         (function() {
           var e = document.createElement('script'); e.async = true;
           e.src = document.location.protocol +
-            '//connect.facebook.net/{$_language_}/all.js';
+            '//connect.facebook.net/{$_locale_}/all.js';
           document.getElementById('fb-root').appendChild(e);
         }());
       </script>

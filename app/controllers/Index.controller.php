@@ -56,8 +56,9 @@ class Index extends Main {
               (string) $this->_aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
 
-    define( 'WEBSITE_LANGUAGE_SHORT', $this->_sLanguage);
-    define( 'WEBSITE_LANGUAGE', WEBSITE_LANGUAGE_SHORT . '_' . strtoupper(WEBSITE_LANGUAGE_SHORT));
+		# TODO: Real ISO support
+    define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
+    define( 'WEBSITE_LOCALE', WEBSITE_LANGUAGE . '_' . strtoupper(WEBSITE_LANGUAGE));
 
     if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
       require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
@@ -83,7 +84,8 @@ class Index extends Main {
 
 	# Give the users the ability to login via their facebook information
 	public final function loadFacebookPlugin() {
-		return $this->_oFacebook;
+		if(class_exists('FacebookCMS'))
+			return $this->_setFacebook();
 	}
 
   public final function setActiveUser($iSessionId = '') {
