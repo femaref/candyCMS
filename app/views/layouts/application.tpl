@@ -60,7 +60,7 @@
     </div>
     <div id="footer">
       <p>
-        <a href='/About'>{$lang_about} {$_website_name_}</a>
+        <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
         &middot;
         <a href='/Disclaimer'>{$lang_disclaimer}</a>
         &middot;
@@ -69,7 +69,7 @@
       <ul>
         {if $USER_RIGHT > 3}
           <li>
-            <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
+            <a href='/Newsletter/create' title='{$lang_newsletter_create}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_create}</a>
           </li>

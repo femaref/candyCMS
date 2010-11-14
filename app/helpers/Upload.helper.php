@@ -89,7 +89,7 @@ final class Upload {
 
 			$oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
 			$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
-			$oImage->resizeDefault(THUMB_DEFAULT_X);
+			#$oImage->resizeDefault(THUMB_DEFAULT_X);
 			$oImage->resizeDefault('100');
 			$oImage->resizeAndCut('64');
 			$oImage->resizeAndCut('32');

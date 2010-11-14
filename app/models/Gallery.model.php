@@ -252,13 +252,16 @@ class Model_Gallery extends Model_Main {
       return $aResult['description'];
   }
 
-  public final function getFileDescription($iId) {
+  public final static function getFileDescription($iId) {
     try {
-      $oQuery = $this->_oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			$oDb = null;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();

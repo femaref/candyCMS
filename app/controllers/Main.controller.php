@@ -119,6 +119,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_cronjob_exec', LANG_GLOBAL_CRONJOB_EXEC);
 		$this->_oSmarty->assign('lang_deleted_user', LANG_GLOBAL_DELETED_USER);
 		$this->_oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
+		$this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
 		$this->_oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
 		$this->_oSmarty->assign('lang_disclaimer', LANG_GLOBAL_DISCLAIMER);
 		$this->_oSmarty->assign('lang_disclaimer_read', LANG_GLOBAL_TERMS_READ);

@@ -50,15 +50,15 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   <div class="submit">
     <input type='submit' class='inputbutton' value='{$lang_submit}' />
   </div>
-	{if $smarty.get.action == 'update'}
-    <div class="button">
-      <input type='reset' value='{$lang_reset}' />
-    </div>
-    <div class="cancel">
-      <input type='button' value='{$lang_destroy}'
-             onclick="confirmDelete('/Content/destroy/{$_request_id_}')" />
-    </div>
-	{/if}
+  {if $smarty.get.action == 'update'}
+  <div class="button">
+    <input type='reset' value='{$lang_reset}' />
+  </div>
+  <div class="cancel">
+    <input type='button' value='{$lang_destroy_entry}'
+           onclick="confirmDelete('/Content/{$_request_id_}/destroy')" />
+  </div>
+  {/if}
   <input type='hidden' value='{$_request_id_}' name='id' />
   <input type='hidden' value='formdata' name='{$_formdata_}' />
 </form>

@@ -126,7 +126,7 @@
       </div>
       <div class="cancel">
         <input type='button' value='{$lang_destroy_entry}'
-           onclick="confirmDelete('/Blog/{$id}/destroy')" />
+           onclick="confirmDelete('/Blog/{$_request_id_}/destroy')" />
       </div>
 	{/if}
   <input type='hidden' value='{$_request_id_}' name='id' />

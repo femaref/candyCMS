@@ -169,7 +169,7 @@
     </div>
     <div class="cancel">
       <input type='button' value='{$lang_destroy}'
-             onclick="confirmDelete('/Gallery/destroyfile/{$_request_id_}')" />
+             onclick="confirmDelete('/Gallery/{$_request_id_}/destroyfile')" />
     </div>
   {else}
     <div class="submit">
