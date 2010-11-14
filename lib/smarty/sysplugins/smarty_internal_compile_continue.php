@@ -26,7 +26,7 @@ class Smarty_Internal_Compile_Continue extends Smarty_Internal_CompileBase {
      * @return string compiled code
      */
     public function compile($args, $compiler, $parameter)
-    {    {
+    {
         $this->compiler = $compiler;
         $this->smarty = $compiler->smarty;
         // check and get attributes
@@ -58,8 +58,7 @@ class Smarty_Internal_Compile_Continue extends Smarty_Internal_CompileBase {
         // this tag does not return compiled code
         $this->compiler->has_code = true;
         return "<?php continue {$_levels}?>";
-    }
-  }
+    } 
 } 
 
 ?>
