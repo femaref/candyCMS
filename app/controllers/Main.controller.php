@@ -34,7 +34,7 @@ abstract class Main {
                   (int)$this->_aRequest['id'] :
                   '';
 
-		# Start Smarty
+		# Define all output
 		$this->_setSmarty();
   }
 
@@ -45,14 +45,6 @@ abstract class Main {
 	public function __autoload($sClass) {
     require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
   }
-
-	protected function _setFacebook() {
-		return new FacebookCMS(array(
-				'appId' => FACEBOOK_APP_ID,
-				'secret' => FACEBOOK_SECRET,
-				'cookie' => true,
-		));
-	}
 
 	protected function _setSmarty() {
 		# Initialize smarty
@@ -92,9 +84,17 @@ abstract class Main {
 			$this->_oSmarty->assign('_plugin_adsense_', $this->_oAdsense->show());
 		}
 
-		# Generate a facebook connect link
-		#if(class_exists('FacebookCMS') && USER_ID == 0)
-		#	$this->_oSmarty->assign('_plugin_facebook_connect_button_', $this->_setFacebook()->getConnectButton());
+		# Include news archive
+		if (class_exists('Archive')) {
+			$this->_oArchive = new Archive();
+			$this->_oSmarty->assign('_plugin_archive_', $this->_oArchive->show());
+		}
+
+		# Include latest headlines
+		if (class_exists('Headlines')) {
+			$this->_oHeadlines = new Headlines();
+			$this->_oSmarty->assign('_plugin_headlines_', $this->_oHeadlines->show());
+		}
 
 		# Enable LazyLoad
 		if (class_exists('LazyLoad')) {
@@ -169,7 +169,6 @@ abstract class Main {
 		return $this->_oSmarty;
 	}
 
-  /* Manage Page Title */
   protected function _setTitle($sTitle) {
     $this->_sTitle =& $sTitle;
   }
@@ -181,7 +180,6 @@ abstract class Main {
       return LANG_ERROR_GLOBAL_404;
   }
 
-  /* Manage Page Content */
   protected function _setContent($sContent) {
     $this->_sContent =& $sContent;
   }

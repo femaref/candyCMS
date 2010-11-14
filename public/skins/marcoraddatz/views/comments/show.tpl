@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class='comment {if $author_id == $c.author_id}from_author{else}not_from_author{/if}'>
-    <h3 class='{if $author_id == $c.author_id}row1{/if}'>
+    <h3>
       <a href='#{$c.id}' name='{$c.id}'>#{$c.loop+$comment_number}</a>
       {if $c.user_id > 0}
         <a href='/User/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>

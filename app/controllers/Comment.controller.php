@@ -94,7 +94,6 @@ final class Comment extends Main {
 	# We must override the main method due to user right problems
 	public final function create($sInputName) {
 		if (isset($this->_aRequest[$sInputName])) {
-			# TODO: This is not safe against spam. Use cookie?
 			if (USER_RIGHT == 0)
 				return $this->_checkCaptcha(true);
 
@@ -132,15 +131,15 @@ final class Comment extends Main {
 			return $this->_showFormTemplate($bShowCaptcha);
 
 		else {
-      $iLastComment = Helper::getLastEntry('comments') + 1;
+			$iLastComment = Helper::getLastEntry('comments') + 1;
 
 			$sRedirect = '/' . $this->_sParentSection .
-              '/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
+							'/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
 			if ($this->_oModel->create() === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
+				Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
-      }
+			}
 
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
@@ -148,8 +147,7 @@ final class Comment extends Main {
   }
 
   protected final function _destroy() {
-		$sRedirect =	'/' . $this->_sParentSection .
-									'/' . (int) $this->_aRequest['parent_id'];
+		$sRedirect = '/' . $this->_sParentSection . '/' . (int) $this->_aRequest['parent_id'];
 
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
@@ -161,7 +159,7 @@ final class Comment extends Main {
 	}
 
   protected final function _showFormTemplate($bShowCaptcha) {
-    # We search for parent category
+    # Do we know, in which parent category we want to post?
     if( empty($this->_sAction) )
       return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
 
@@ -217,11 +215,11 @@ final class Comment extends Main {
 				return $this->_create($bShowCaptcha);
 
 			else {
-				#$this->_sRecaptchaError = $this->_oRecaptchaResponse->error;
 				$this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
 				return $this->_showFormTemplate($bShowCaptcha);
 			}
 		}
+
 		else
 			return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
 	}

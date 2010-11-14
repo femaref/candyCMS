@@ -45,8 +45,6 @@ try {
 		require_once 'app/helpers/AdvancedException.helper.php';
 		require_once 'app/helpers/Section.helper.php';
 		require_once 'app/helpers/Helper.helper.php';
-
-		# Smarty template parsing
 		require_once 'lib/smarty/Smarty.class.php';
 	}
 }
@@ -67,13 +65,13 @@ $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
 
-$aUser = & $oIndex->setActiveUser();
+$aUser = & $oIndex->getActiveUser();
 
 # Check whether we use facebook or CMS data
 define('USER_ID', (int) $aUser['id']);
 
+# If we use the facebook plugin and are not logged in, fetch user data
 if(USER_ID == 0) {
-  # If we use the facebook plugin and are not logged in, fetch user data
   $oFacebook = $oIndex->loadFacebookPlugin();
   if ($oFacebook == true)
     $aFacebookData = $oFacebook->getUserData();
@@ -104,6 +102,7 @@ define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
 # Load cronjob if plugin if enabled
 $oIndex->loadCronjob();
 
+# If this is an ajax request, no layout is loaded
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define('AJAX_REQUEST', (int) $iAjax);
 

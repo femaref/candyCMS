@@ -56,7 +56,7 @@ class Index extends Main {
               (string) $this->_aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
 
-		# TODO: Real ISO support
+		# TODO: Real ISO locale code support
     define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
     define( 'WEBSITE_LOCALE', WEBSITE_LANGUAGE . '_' . strtoupper(WEBSITE_LANGUAGE));
 
@@ -84,16 +84,21 @@ class Index extends Main {
 
 	# Give the users the ability to login via their facebook information
 	public final function loadFacebookPlugin() {
-		if(class_exists('FacebookCMS'))
-			return $this->_setFacebook();
+		if (class_exists('FacebookCMS')) {
+			return new FacebookCMS(array(
+					'appId' => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+					'cookie' => true,
+			));
+		}
 	}
 
-  public final function setActiveUser($iSessionId = '') {
+  public final function getActiveUser($iSessionId = '') {
     $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
     return $this->_aSession['userdata'];
   }
 
-  protected final function _getFlashMessage() {
+  private final function _getFlashMessage() {
     $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
 						$this->_aSession['flash_message']['type'] :
 						'';
@@ -104,23 +109,21 @@ class Index extends Main {
 						$this->_aSession['flash_message']['headline'] :
 						'';
 
-		# This must be a global
     unset($_SESSION['flash_message']);
     return $aFlashMessage;
   }
 
   public final function loadCronjob() {
-    if (class_exists('Cronjob')) {
-      if(Cronjob::getNextUpdate() === true) {
-        Cronjob::cleanup();
-        Cronjob::optimize();
-        Cronjob::backup(USER_ID);
-      }
-    }
-  }
+		if (class_exists('Cronjob')) {
+			if (Cronjob::getNextUpdate() === true) {
+				Cronjob::cleanup();
+				Cronjob::optimize();
+				Cronjob::backup(USER_ID);
+			}
+		}
+	}
 
   public final function show() {
-
     # Redirect to landing page if we got no section
     if (!isset($this->_aRequest['section'])) {
 			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
@@ -144,23 +147,22 @@ class Index extends Main {
       $sVersionContent &= ($sVersionContent > VERSION) ? (int) $sVersionContent : '';
     }
 
-    # Set expiration date for header
-    $sHeaderExpires = gmdate('D, d M Y H:i:s', time() + 60) . ' GMT';
-
     # Get the actual URL
     $sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
 
     # Header.tpl
 		$oSmarty = $this->_setSmarty();
-    $oSmarty->assign('user', Helper::formatOutput($this->_aSession['userdata']['name']));
+    $oSmarty->assign('user', USER_NAME);
 
 		# Check for update
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
-            '';
+						str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+						'';
 
-    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
-
+    $sLangUpdateAvaiable = str_replace(
+										'%l',
+										Helper::createLinkTo('http://candycms.com', true),
+										$sLangUpdateAvaiable);
 
     # System variables
 		$oSmarty->assign('_current_url_', $sCurrentUrl);
@@ -177,11 +179,9 @@ class Index extends Main {
 
     # Language
     $oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
-    $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE_TITLE);
+    $oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
 
-    /* Define Core Modules - check if we use a standard action. If yes, forward to
-     * Section.class.php where we check for an override of this core modules. If we
-     * want to override the core module, we got to load Addons later in Section.class.php */
+    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
     if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						ucfirst($this->_aRequest['section']) == 'Blog' ||
@@ -201,9 +201,12 @@ class Index extends Main {
       $oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }
-    /* We do not have a standard action, so let's take a look, if we have the required
-     * Addon in addon. If we do have, proceed with own action. */ elseif (ALLOW_ADDONS == true)
+
+		# We do not have a standard action, so fetch it from the addon folder.
+		# If addon exists, proceed with override.
+		elseif (ALLOW_ADDONS == true)
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+
     # There's no request on a core module and Addons are disabled. */
     else {
       header('Status: 404 Not Found');
@@ -216,8 +219,7 @@ class Index extends Main {
       $sCachedHTML = $oSection->getContent();
 
     else {
-      $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
-      $oSmarty->assign('meta_expires', $sHeaderExpires);
+      $oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
       $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
       $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
       $oSmarty->assign('meta_og_title', $oSection->getTitle());
@@ -225,9 +227,9 @@ class Index extends Main {
       $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
       $oSmarty->assign('_content_', $oSection->getContent());
+      $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
-      $oSmarty->isCached('layouts/application.tpl');
       $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
     }
 
@@ -250,11 +252,8 @@ class Index extends Main {
     $sCachedHTML = & $sCachedImages;
 
     # Cut spaces to minimize filesize
-    # Normal tab
-    $sCachedHTML = str_replace('	', '', $sCachedHTML);
-
-    # Tab as two spaces
-    $sCachedHTML = str_replace('  ', '', $sCachedHTML);
+    $sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
+    $sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
 
     # Compress Data
     if (extension_loaded('zlib'))

@@ -71,7 +71,7 @@
           <li>
             <a href='/Newsletter/create' title='{$lang_newsletter_send}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
-              {$lang_newsletter_send}</a>
+              {$lang_newsletter_create}</a>
           </li>
           <li>
             <a href='/Media' title='{$lang_filemanager}'>
