@@ -153,10 +153,25 @@ class Model_User extends Model_Main {
 		}
 	}
 
+	private function _getPassword($iId) {
+    try {
+      $oQuery = $this->_oDb->prepare("SELECT password FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
+      $oQuery->bindParam('id', $iId);
+      $oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+			return $aResult['password'];
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+	}
+
   public function update($iId) {
     $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
+		# Set other peoples user right
     if (($iId !== USER_ID) && USER_RIGHT == 4)
       $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
               (int) $this->_aRequest['user_right'] :
@@ -165,10 +180,17 @@ class Model_User extends Model_Main {
       $iUserRight = USER_RIGHT;
 
     # Make sure the password is set and override session due to saving problems
+		# If I'm the active user
     if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
-            isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']))
-      $this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['password_new']);
-    $sPassword = $this->_aSession['userdata']['password'];
+						isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
+						USER_ID === $iId) {
+			$this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['password_new']);
+			$sPassword = $this->_aSession['userdata']['password'];
+		}
+
+		# I'm admin and want to change user rights
+		elseif (($iId !== USER_ID) && USER_RIGHT == 4)
+			$sPassword = $this->_getPassword($iId);
 
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
