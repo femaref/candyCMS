@@ -20,7 +20,7 @@
 <h3 class="js-toggle">2.2. Set all variables in <em>config/Config.inc.php</em> correctly.</h3>
 <div class="js-element">
   <p>
-    Read each description and modify the software to your needs.
+    Read each description and modify the software for your needs.
   </p>
 </div>
 <h3 class="js-toggle">2.3. Edit your website title and slogan in <em>languages/yl/yourlanguage.language.php</em>:</h3>

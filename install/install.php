@@ -149,7 +149,7 @@ switch ($_REQUEST['step']) {
 
     # Create sample content if wanted
     if (isset($_POST['create_content'])) {
-      $sUrl = "sql/data.sql";
+      $sUrl = "sql/sampledata.sql";
       if (file_exists($sUrl)) {
         $oFo = fopen($sUrl, 'r');
         $sData = fread($oFo, filesize($sUrl));
