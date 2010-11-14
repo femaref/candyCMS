@@ -4,13 +4,6 @@ window.addEvent('domready', function() {
     el.setStyle('margin-top', '-' + oSize.y + 'px');
     el.fade('hide');
   });
-  
-  /*$each($$('input[type=submit]'), function(el) {
-    el.addEvent('click',function(e) {
-      this.disabled = 1;
-      this.set('value', LANG_SENDING);
-    }.bind(el));
-  });*/
 });
 
 /********************************************************************************/

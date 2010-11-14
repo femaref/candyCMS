@@ -44,23 +44,23 @@ define('WEBSITE_CDN', 'http://phpcms.localhost');
 # Use compressed or non-compressed files. Note that compressed files must be
 # updated every time you work on a non-compressed file!
 # DEFAULT: 'true'
-define('WEBSITE_COMPRESS_FILES', false);
+define('WEBSITE_COMPRESS_FILES', true);
 # ------------------------------------------------------------------------------
 
 # Enter the full name of website. This is used for Emails and RSS
 # NOTE: Also edit your website title and slogan in your language file of choice.
-define('WEBSITE_NAME', 'dev.planetk4.de');
+define('WEBSITE_NAME', 'CandyCMS');
 
 # ------------------------------------------------------------------------------
 
 # Define an admin email for system responses
-define('WEBSITE_MAIL', 'marco@empuxa.com');
+define('WEBSITE_MAIL', 'marco@candycms.com');
 
 # ------------------------------------------------------------------------------
 
 # Define a noreply email for spam etc.
 # EXAMPLE: no-reply@mydomain.tld
-define('WEBSITE_MAIL_NOREPLY', 'no-reply@dev.planetk4.de');
+define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 
 # ------------------------------------------------------------------------------
 
@@ -111,7 +111,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,LazyLoad,Facebook');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook');
 
 # ------------------------------------------------------------------------------
 
@@ -192,7 +192,7 @@ define('PATH_IMAGES', '');
 define('PATH_TPL', '');
 
 # Define, where to find static HTML-Templates
-# DEFAULT: 'public/skins/default/view/_static'
+# DEFAULT: 'public/skins/_static'
 define('PATH_TPL_STATIC', 'public/skins/_static');
 
 # Define, where files are uploaded to

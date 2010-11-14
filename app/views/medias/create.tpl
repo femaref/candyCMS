@@ -31,7 +31,15 @@
     </tr>
   </table>
   <div class="submit">
-    <input type='submit' value='{$lang_headline}' class='inputbutton' />
+    <input type='submit' value='{$lang_headline}' id="submit" />
   </div>
   <input type='hidden' value='formdata' name='upload_file' />
 </form>
+<script type="text/javascript">
+  window.addEvent('domready', function() {
+    $('submit').addEvent('click', function() {
+      this.disabled = true;
+      $('.description').set('html', "<img class='js-loading' src='%PATH_IMAGES%/loading.gif' alt='' />");
+    });
+  });
+</script>
