@@ -93,6 +93,7 @@ class Gallery extends Main {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
         return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
       }
+
       else
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
@@ -106,6 +107,7 @@ class Gallery extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
       return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
+
     else {
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
       unset($this->_iId);
@@ -129,6 +131,7 @@ class Gallery extends Main {
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
+
     else {
       $sTitle = isset($this->_aRequest['title']) ?
               $this->_aRequest['title'] :
@@ -167,6 +170,7 @@ class Gallery extends Main {
       if (isset($this->_aRequest['create_file']))
         # TODO: Kick out damn path; log is in model...
         return $this->_oModel->createFile();
+
       else
         return $this->_showFormFileTemplate(false);
     }
@@ -182,9 +186,11 @@ class Gallery extends Main {
           Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
         }
+
         else
           return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
 			}
+
       else
         return $this->_showFormFileTemplate(true);
     }
@@ -200,6 +206,7 @@ class Gallery extends Main {
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
         unset($this->_iId);
       }
+
 			else
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/Gallery');
     }
@@ -215,6 +222,7 @@ class Gallery extends Main {
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
     }
+
     else {
       # See helper/Image.helper.php for details!
       $sDefault = isset($this->_aRequest['cut']) ?

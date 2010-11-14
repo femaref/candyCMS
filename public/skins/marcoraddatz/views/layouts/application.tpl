@@ -12,9 +12,9 @@
       <meta property="og:site_name" content="{$meta_og_site_name}"/>
     {/if}
     {if $_facebook_app_id_}
-      <meta property="fb:app_id" content="{$_facebook_app_id_}"/>
+      <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
-    <link href='{$_website_url_}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
+    <link href='{$WEBSITE_URL}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
@@ -70,9 +70,9 @@
           </p>
         </div>
       <![endif]-->
-      {if $lang_update_avaiable}
+      {if $_update_avaiable_}
         <div class="notice">
-          {$lang_update_avaiable}
+          {$_update_avaiable_}
         </div>
       {/if}
       {if $_flash_type_}
@@ -119,10 +119,10 @@
     </span>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/javascript{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    {if $_facebook_app_id_}
+    {if $FACEBOOK_APP_ID}
       <div id="fb-root"></div>
       <script type="text/javascript">
-        var sFacebookAppId = '{$_facebook_app_id_}';
+        var sFacebookAppId = '{$FACEBOOK_APP_ID}';
 
         {literal}
           window.fbAsyncInit = function() {
@@ -138,9 +138,9 @@
         }());
       </script>
     {/if}
-    {if $_website_tracking_code_}
+    {if $WEBSITE_TRACKING_CODE}
       <script type="text/javascript">
-        var sTrackingCode = '{$_website_tracking_code_}';
+        var sTrackingCode = '{$WEBSITE_TRACKING_CODE}';
         {literal}
           var _gaq = _gaq || [];
           _gaq.push(['_setAccount', sTrackingCode]);

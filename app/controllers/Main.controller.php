@@ -11,6 +11,7 @@ abstract class Main {
   protected $_aRequest;
   protected $_aSession;
   protected $_aFile;
+  protected $_aCookie;
   protected $_iId;
   protected $_aError;
   private $_aData = array();
@@ -24,10 +25,11 @@ abstract class Main {
 	protected $_oLazyLoad;
 	protected $_oSmarty;
 
-	public function __construct($aRequest, $aSession, $aFile = '') {
-    $this->_aRequest	=& $aRequest;
-    $this->_aSession	=& $aSession;
-    $this->_aFile			=& $aFile;
+	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+    $this->_aRequest	= & $aRequest;
+		$this->_aSession	= & $aSession;
+		$this->_aFile			= & $aFile;
+		$this->_aCookie		= & $aCookie;
 
     $this->_iId = isset($this->_aRequest['id']) ?
                   (int)$this->_aRequest['id'] :
@@ -62,6 +64,13 @@ abstract class Main {
 		$this->_oSmarty->assign('USER_NAME', USER_NAME);
 		$this->_oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->_oSmarty->assign('USER_SURNAME', USER_SURNAME);
+    $this->_oSmarty->assign('VERSION', VERSION);
+    $this->_oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
+    $this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
+    $this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
+
+    if(class_exists('FacebookCMS'))
+      $this->_oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID);
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
@@ -76,10 +85,11 @@ abstract class Main {
 		}
 
 		# Generate a facebook connect link
-		if (class_exists('FacebookCMS') && USER_ID == 0) {
+		if (class_exists('FacebookCMS')) {
 			$this->_oFacebook = new FacebookCMS(array(
 				'appId'  => FACEBOOK_APP_ID,
 				'secret' => FACEBOOK_SECRET,
+				'cookie' => true,
 			));
 
 			$this->_oSmarty->assign('_plugin_facebook_connect_button_', $this->_oFacebook->getConnectButton());
@@ -92,27 +102,36 @@ abstract class Main {
 		}
 
 		# Initialize language
+		$this->_oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);
 		$this->_oSmarty->assign('lang_add_bookmark', LANG_GLOBAL_ADD_BOOKMARK);
 		$this->_oSmarty->assign('lang_author', LANG_GLOBAL_AUTHOR);
 		$this->_oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
+		$this->_oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
 		$this->_oSmarty->assign('lang_by', LANG_GLOBAL_BY);
 		$this->_oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
+		$this->_oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);
 		$this->_oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
 		$this->_oSmarty->assign('lang_currently', LANG_GLOBAL_CURRENTLY);
 		$this->_oSmarty->assign('lang_cut', LANG_GLOBAL_CUT);
 		$this->_oSmarty->assign('lang_comments', LANG_GLOBAL_COMMENTS);
 		$this->_oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT);
+		$this->_oSmarty->assign('lang_cronjob_exec', LANG_GLOBAL_CRONJOB_EXEC);
 		$this->_oSmarty->assign('lang_deleted_user', LANG_GLOBAL_DELETED_USER);
 		$this->_oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
 		$this->_oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
+		$this->_oSmarty->assign('lang_disclaimer', LANG_GLOBAL_DISCLAIMER);
 		$this->_oSmarty->assign('lang_disclaimer_read', LANG_GLOBAL_TERMS_READ);
 		$this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
 		$this->_oSmarty->assign('lang_email_info', LANG_COMMENT_INFO_EMAIL);
 		$this->_oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
+		$this->_oSmarty->assign('lang_filemanager', LANG_GLOBAL_FILEMANAGER);
+		$this->_oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
+		$this->_oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
 		$this->_oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
 		$this->_oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
 		$this->_oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
 		$this->_oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
+		$this->_oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
 		$this->_oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 		$this->_oSmarty->assign('lang_not_published', LANG_ERROR_GLOBAL_NOT_PUBLISHED);
 		$this->_oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
@@ -122,9 +141,11 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_quote', LANG_GLOBAL_QUOTE);
 		$this->_oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
 		$this->_oSmarty->assign('lang_registration', LANG_GLOBAL_REGISTRATION);
+		$this->_oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
 		$this->_oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
 		$this->_oSmarty->assign('lang_required', LANG_GLOBAL_REQUIRED);
 		$this->_oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
+		$this->_oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
 		$this->_oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
 		$this->_oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
@@ -141,6 +162,10 @@ abstract class Main {
     $this->_oSmarty->assign('lang_user_right_2', LANG_GLOBAL_USERRIGHT_2);
     $this->_oSmarty->assign('lang_user_right_3', LANG_GLOBAL_USERRIGHT_3);
     $this->_oSmarty->assign('lang_user_right_4', LANG_GLOBAL_USERRIGHT_4);
+    $this->_oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
+    $this->_oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
+
+		return $this->_oSmarty;
 	}
 
   /* Manage Page Title */

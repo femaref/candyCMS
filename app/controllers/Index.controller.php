@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Index {
+class Index extends Main {
 
   protected $_aRequest;
   protected $_aSession;
@@ -82,16 +82,8 @@ class Index {
   }
 
 	# Give the users the ability to login via their facebook information
-	public final function loadFacebookPlugin($sPath = '') {
-		if (class_exists('FacebookCMS')) {
-			$oFacebook = new FacebookCMS(array(
-				'appId'  => FACEBOOK_APP_ID,
-				'secret' => FACEBOOK_SECRET,
-				'cookie' => true,
-			));
-
-			return $oFacebook;
-		}
+	public final function loadFacebookPlugin() {
+		return $this->_oFacebook;
 	}
 
   public final function setActiveUser($iSessionId = '') {
@@ -157,26 +149,21 @@ class Index {
     $sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
 
     # Header.tpl
-    $oSmarty = new Smarty();
+		$oSmarty = $this->_setSmarty();
     $oSmarty->assign('user', Helper::formatOutput($this->_aSession['userdata']['name']));
-    $oSmarty->assign('USER_ID', USER_ID);
-    $oSmarty->assign('USER_RIGHT', USER_RIGHT);
+
+		# Check for update
+    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+            '';
+
+    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+
 
     # System variables
-    $oSmarty->assign('_current_url_', $sCurrentUrl);
-    $oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
+		$oSmarty->assign('_current_url_', $sCurrentUrl);
     $oSmarty->assign('_javascript_language_file_', $sLangVars);
-    $oSmarty->assign('_language_', WEBSITE_LANGUAGE);
-    $oSmarty->assign('_version_', VERSION);
-    $oSmarty->assign('_website_name_', WEBSITE_NAME);
-    $oSmarty->assign('_website_url_', WEBSITE_URL);
-    $oSmarty->assign('_website_tracking_code_', WEBSITE_TRACKING_CODE);
-
-    if(isset($this->_aRequest['id']))
-      $oSmarty->assign('_id_', WEBSITE_TRACKING_CODE);
-
-    if(class_exists('FacebookCMS'))
-      $oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
+    $oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
 
     # Get possible flash messages
     $aFlashMessages = $this->_getFlashMessage();
@@ -187,31 +174,8 @@ class Index {
     $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
     # Language
-    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
-            '';
-
-    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
-
-    $oSmarty->assign('lang_about', LANG_GLOBAL_ABOUT);
-    $oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
-    $oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);
-    $oSmarty->assign('lang_cronjob_exec', LANG_GLOBAL_CRONJOB_EXEC);
-    $oSmarty->assign('lang_disclaimer', LANG_GLOBAL_DISCLAIMER);
-    $oSmarty->assign('lang_filemanager', LANG_GLOBAL_FILEMANAGER);
-    $oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
-    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
-    $oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
-    $oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
     $oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
     $oSmarty->assign('lang_newsletter_send', LANG_NEWSLETTER_CREATE_TITLE);
-    $oSmarty->assign('lang_register', LANG_GLOBAL_REGISTER);
-    $oSmarty->assign('lang_report_error', LANG_GLOBAL_REPORT_ERROR);
-    $oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
-    $oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
-    $oSmarty->assign('lang_update_avaiable', $sLangUpdateAvaiable);
-    $oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
-    $oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
 
     /* Define Core Modules - check if we use a standard action. If yes, forward to
      * Section.class.php where we check for an override of this core modules. If we
@@ -258,26 +222,8 @@ class Index {
       $oSmarty->assign('meta_og_url', $sCurrentUrl);
       $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
-      # Include optional plugins
-      if( class_exists('Adsense') ) {
-        $oAdsense = new Adsense();
-        $oSmarty->assign('_plugin_adsense_', $oAdsense->show());
-      }
-
-      if (class_exists('Archive')) {
-        $oArchive = new Archive($this->_aRequest, $this->_aSession);
-        $oSmarty->assign('_plugin_archive_', $oArchive->show());
-      }
-
-      if (class_exists('Headlines')) {
-        $oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
-        $oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
-      }
-
       $oSmarty->assign('_content_', $oSection->getContent());
 
-      $oSmarty->cache_dir = CACHE_DIR;
-      $oSmarty->compile_dir = COMPILE_DIR;
       $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
       $oSmarty->isCached('layouts/application.tpl');
       $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
