@@ -17,7 +17,7 @@ class LazyLoad {
 
 		# System variables
 		$oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
-		$oSmarty->assign('_thumb_default_x_', THUMB_DEFAULT_X);
+		$oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;

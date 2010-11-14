@@ -20,7 +20,6 @@ final class Content extends Main {
     if(empty($this->_iId)) {
       $this->_oSmarty->assign('content', $this->_oModel->getData());
 
-      # Language
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/overview');
@@ -54,7 +53,6 @@ final class Content extends Main {
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->_oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
@@ -108,6 +106,7 @@ final class Content extends Main {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
 				return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
       }
+
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 		}
@@ -119,6 +118,7 @@ final class Content extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -128,6 +128,7 @@ final class Content extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
 	}

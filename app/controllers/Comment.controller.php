@@ -24,8 +24,8 @@ final class Comment extends Main {
 	private $_sRecaptchaError = '';
 
   public function __init($iEntries = '', $aParentData = '') {
-    $this->_aParentData =& $aParentData;
     $this->_iEntries    =& $iEntries;
+    $this->_aParentData =& $aParentData;
 
     $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
 
@@ -43,19 +43,11 @@ final class Comment extends Main {
 					$this->__autoload('Blog');
 					$oBlog = new Blog($this->_aRequest, $this->_aSession);
 					$oBlog->__init();
+
 					$this->_aParentData = & $oBlog->_oModel->getData($this->_iId);
 					$this->_iEntries = & $this->_aParentData[1]['comment_sum'];
 				}
 			}
-
-			$this->_oSmarty->assign('USER_RIGHT', USER_RIGHT);
-			$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
-			$this->_oSmarty->assign('parent_id', $this->_iId);
-
-      if (class_exists('LazyLoad')) {
-        $oLazyLoad = new LazyLoad();
-        $this->_oSmarty->assign('_plugin_lazyload_', $oLazyLoad->show());
-      }
 
 			# Do only load comments, if they are avaiable
 			$sReturn = '';
@@ -105,9 +97,11 @@ final class Comment extends Main {
 			# TODO: This is not safe against spam. Use cookie?
 			if (USER_RIGHT == 0)
 				return $this->_checkCaptcha(true);
+
 			else
 				return $this->_create(false);
 		}
+
 		else {
 			$bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
 			return $this->_showFormTemplate($bShowCaptcha);
@@ -147,6 +141,7 @@ final class Comment extends Main {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
+
 			else
 				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 		}
@@ -160,6 +155,7 @@ final class Comment extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -187,10 +183,10 @@ final class Comment extends Main {
 							(int) $this->_iId;
 
 			$this->_oSmarty->assign('_action_url_', $this->_sAction);
+			$this->_oSmarty->assign('_parent_id_', $iParentId);
 			$this->_oSmarty->assign('content', $sContent);
 			$this->_oSmarty->assign('email', $sEmail);
 			$this->_oSmarty->assign('name', $sName);
-			$this->_oSmarty->assign('parent_id', $iParentId);
 
       if ($bShowCaptcha === true)
 				$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,

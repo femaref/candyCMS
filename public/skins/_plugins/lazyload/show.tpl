@@ -16,9 +16,9 @@
 </script>
 <style type="text/css">
   .gallery_files .image, .element .image {
-    width:{$_thumb_default_x_}px;
-    height:{$_thumb_default_x_}px;
-    line-height:{$_thumb_default_x_}px;
+    width:{$THUMB_DEFAULT_X}px;
+    height:{$THUMB_DEFAULT_X}px;
+    line-height:{$THUMB_DEFAULT_X}px;
   }
 
   .gallery_files .image img, .element .image img {

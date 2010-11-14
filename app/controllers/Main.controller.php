@@ -53,6 +53,7 @@ abstract class Main {
 
 		# Define constants
 		$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
+		$this->_oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 		$this->_oSmarty->assign('URL', WEBSITE_URL);
 		$this->_oSmarty->assign('USER_EMAIL', USER_EMAIL);
 		$this->_oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);

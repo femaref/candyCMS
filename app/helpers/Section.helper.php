@@ -19,7 +19,7 @@ class Section extends Main {
       # Are addons avaiable? If yes, use them
       if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS == true) {
         new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-        $sClassName = 'Extension_' . (string) ucfirst($this->_aRequest['section']);
+        $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
         $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
       }
 
@@ -218,11 +218,7 @@ class Section extends Main {
                 (string)$this->_aRequest['template'] :
                 LANG_ERROR_GLOBAL_NO_TEMPLATE;
 
-        $oSmarty = new Smarty();
-        $oSmarty->cache_dir = CACHE_DIR;
-        $oSmarty->compile_dir = COMPILE_DIR;
-        $oSmarty->template_dir = PATH_TPL_STATIC.	'/';
-        parent::_setContent($oSmarty->fetch($sTpl.	'.tpl'));
+        parent::_setContent($this->_oSmarty->fetch($sTpl.	'.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 
         break;

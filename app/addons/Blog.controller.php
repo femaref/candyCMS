@@ -11,7 +11,7 @@
 
 require_once 'app/models/Blog.model.php';
 
-class Extension_Blog {
+class Addon_Blog {
 
   public function __construct($aRequest, $aSession, $aFile = '') {
     $this->_aRequest  = & $aRequest;

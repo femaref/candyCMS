@@ -312,11 +312,18 @@ class User extends Main {
 	}
 
 	private function _showCreateUserTemplate() {
-		$sName = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
+		$sName = isset($this->_aRequest['name']) ?
+						Helper::formatInput($this->_aRequest['name']) :
+						'';
 		$this->_oSmarty->assign('name', $sName);
-		$sSurname = isset($this->_aRequest['surname']) ? Helper::formatInput($this->_aRequest['surname']) : '';
+
+		$sSurname = isset($this->_aRequest['surname']) ?
+						Helper::formatInput($this->_aRequest['surname']) :
+						'';
 		$this->_oSmarty->assign('surname', $sSurname);
-		$sEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) : '';
+
+		$sEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) :
+						'';
 		$this->_oSmarty->assign('email', $sEmail);
 
     if (!empty($this->_aError)) {

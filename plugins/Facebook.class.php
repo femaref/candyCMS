@@ -45,7 +45,6 @@ class FacebookCMS extends Facebook {
 	public function getConnectButton() {
 		$oSmarty = new Smarty();
 
-		#$oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email')));
 		$oSmarty->assign('_url_', $this->getLoginUrl());
 		$oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
 

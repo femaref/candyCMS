@@ -78,15 +78,12 @@ final class Upload {
     if ($this->_iId == '0')
       return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
 
-    elseif ($this->_aFile['image']['size'] > 409600) {
-      $oSmarty = new Smarty();
-      $oSmarty->assign('action', $this->_sFormAction);
+    elseif ($this->_aFile['image']['size'] > 409600)
       return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
-    }
-    elseif ($this->_aFile['image']['type'] !== 'image/jpeg') {
-      $oSmarty = new Smarty();
+
+    elseif ($this->_aFile['image']['type'] !== 'image/jpeg')
       return Helper::errorMessage(LANG_ERROR_MEDIA_WRONG_FILETYPE);
-    }
+
     else {
 			$bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
 

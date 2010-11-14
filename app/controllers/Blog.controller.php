@@ -22,18 +22,19 @@ class Blog extends Main {
 		$this->_aData = $this->_oModel->getData($this->_iId);
 		$this->_oSmarty->assign('blog', $this->_aData);
 
-		# Manage Comments
+		# Count comments
 		$iCommentSum = 0;
 		if (!empty($this->_iId))
 			$iCommentSum = $this->_aData[1]['comment_sum'];
 
-		# System variables
+		# Load Comments
 		$oComments = new Comment($this->_aRequest, $this->_aSession);
 		$oComments->__init($iCommentSum, $this->_aData);
+
 		$this->_oSmarty->assign('_blog_comments_', $oComments->show());
 		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
 
-		# Create Page-Title
+		# Create page title
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
 
 		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs/show');
@@ -63,9 +64,7 @@ class Blog extends Main {
 
 		# Blog overview with pages
 		else {
-			$iPage = isset($this->_aRequest['page']) ?
-							(int) $this->_aRequest['page'] :
-							1;
+			$iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
 
 			if ($iPage > 1)
 				return LANG_GLOBAL_BLOG . ' - ' . LANG_GLOBAL_PAGE . ' ' . $iPage;
@@ -76,9 +75,8 @@ class Blog extends Main {
 
 	protected final function _showFormTemplate($bUpdate = true) {
 
-		# Show Update Template
+		# Show update template
 		if ($bUpdate == true) {
-			# collect data array
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
 			$this->_oSmarty->assign('_action_url_', '/Blog/update');
 			$this->_oSmarty->assign('_formdata_', 'update_blog');
@@ -92,42 +90,25 @@ class Blog extends Main {
 			# Build up title
 			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
-			# Language
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-			$this->_oSmarty->assign('lang_reset', LANG_GLOBAL_RESET);
 			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 		}
-		# Add Blog Template
+		# Create blog
 		else {
-			$sTitle = isset($this->_aRequest['title']) ?
-							$this->_aRequest['title'] :
-							'';
-
-			$sTags = isset($this->_aRequest['tags']) ?
-							$this->_aRequest['tags'] :
-							'';
-
-			$sTeaser = isset($this->_aRequest['teaser']) ?
-							$this->_aRequest['teaser'] :
-							'';
-
-			$sContent = isset($this->_aRequest['content']) ?
-							$this->_aRequest['content'] :
-							'';
-
-			$iPublished = isset($this->_aRequest['published']) ?
-							$this->_aRequest['published'] :
-							'';
+			$sTitle			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+			$sTags			= isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+			$sTeaser		= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+			$sContent		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+			$iPublished = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
 
 			$this->_oSmarty->assign('_action_url_', '/Blog/create');
 			$this->_oSmarty->assign('_formdata_', 'create_blog');
-			$this->_oSmarty->assign('id', '');
+			$this->_oSmarty->assign('_request_id_', '');
 			$this->_oSmarty->assign('title', $sTitle);
 			$this->_oSmarty->assign('tags', $sTags);
 			$this->_oSmarty->assign('content', $sContent);
 			$this->_oSmarty->assign('published', $iPublished);
 
-			# Language
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
 			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 		}
@@ -137,7 +118,6 @@ class Blog extends Main {
 				$this->_oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		# Language
 		$this->_oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
 		$this->_oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 
@@ -156,6 +136,7 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
 			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
@@ -165,6 +146,7 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}
@@ -174,6 +156,7 @@ class Blog extends Main {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
     }
+
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
 	}

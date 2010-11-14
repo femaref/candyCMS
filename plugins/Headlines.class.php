@@ -29,12 +29,8 @@ class Headlines extends Blog {
 	public function show() {
 		$this->_aData = $this->_oModel->getData('', false, 6);
 
-		$oSmarty = new Smarty();
-		$oSmarty->assign('data', $this->_aData);
-
-		$oSmarty->cache_dir = CACHE_DIR;
-		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = 'public/skins/_plugins/headlines';
-		return $oSmarty->fetch('show.tpl');
+		$this->_oSmarty->assign('data', $this->_aData);
+		$this->_oSmarty->template_dir = 'public/skins/_plugins/headlines';
+		return $this->_oSmarty->fetch('show.tpl');
 	}
 }

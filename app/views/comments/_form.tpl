@@ -86,7 +86,7 @@
              onclick="resetContent('createCommentText')" />
     </div>
     <input type='hidden' value='formdata' name='create_comment' />
-    <input type='hidden' value='{$parent_id}' name='parent_id' />
+    <input type='hidden' value='{$_parent_id_}' name='parent_id' />
     {if $error_parent_id}
       <div class="description">{$error_parent_id}</div>
     {/if}

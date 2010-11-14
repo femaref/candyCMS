@@ -35,12 +35,8 @@ final class Archive extends Blog {
       $aMonth[$m][$id] = $aData;
     }
 
-    $oSmarty = new Smarty();
-    $oSmarty->assign('data', $aMonth);
-
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = 'public/skins/_plugins/archive';
-    return $oSmarty->fetch('show.tpl');
+    $this->_oSmarty->assign('data', $aMonth);
+    $this->_oSmarty->template_dir = 'public/skins/_plugins/archive';
+    return $this->_oSmarty->fetch('show.tpl');
   }
 }
