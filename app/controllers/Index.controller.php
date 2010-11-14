@@ -23,64 +23,92 @@ class Index extends Main {
 
   public final function loadConfig($sPath = '') {
 		try {
-      if (!file_exists($sPath . 'config/Config.inc.php'))
-        throw new AdvancedException('Missing config file.');
-      else
-        require_once $sPath . 'config/Config.inc.php';
-    }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
+			if (!file_exists($sPath . 'config/Config.inc.php'))
+				throw new AdvancedException('Missing config file.');
+			else
+				require_once $sPath . 'config/Config.inc.php';
+		}
+		catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
 
 		if (file_exists($sPath . 'config/Facebook.inc.php'))
 			require_once $sPath . 'config/Facebook.inc.php';
-  }
+	}
 
   public final function setBasicConfiguration() {
 		try {
-      if (is_dir('install') && WEBSITE_DEV == false)
-        throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
-    }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
-  }
+			if (is_dir('install') && WEBSITE_DEV == false)
+				throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+		}
+		catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
+	}
 
   public final function setLanguage($sPath = '') {
-    if (isset($this->_aRequest['language'])) {
-      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      $this->_sLanguage = (string) $this->_aRequest['language'];
+		# We got a language request? Let's change it!
+		if (isset($this->_aRequest['language'])) {
+			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+			$this->_sLanguage = (string) $this->_aRequest['language'];
 
-    } else
-      $this->_sLanguage = isset($this->_aRequest['default_language']) ?
-              (string) $this->_aRequest['default_language'] :
-              substr(DEFAULT_LANGUAGE, 0, 2);
+			# There is no request, but there might be a cookie
+		}
+		else {
+			$aRequest = array_merge($this->_aRequest, $this->_aCookie);
+			$this->_sLanguage = isset($aRequest['default_language']) ?
+							(string) $aRequest['default_language'] :
+							substr(DEFAULT_LANGUAGE, 0, 2);
+		}
 
-		# TODO: Real ISO locale code support
-    define( 'WEBSITE_LANGUAGE', $this->_sLanguage);
-    define( 'WEBSITE_LOCALE', WEBSITE_LANGUAGE . '_' . strtoupper(WEBSITE_LANGUAGE));
+		# Set iso language codes
+		switch ($this->_sLanguage) {
+			default:
+			case 'de':
+				$sLocale = 'de_DE';
+				break;
 
-    if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
-      require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
+			case 'en':
+				$sLocale = 'en_US';
+				break;
 
-    else
-      die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
-  }
+			case 'es':
+				$sLocale = 'es_ES';
+				break;
+
+			case 'fr':
+				$sLocale = 'fr_FR';
+				break;
+
+			case 'pt':
+				$sLocale = 'pt_PT';
+				break;
+		}
+
+		define('WEBSITE_LANGUAGE', $this->_sLanguage);
+		define('WEBSITE_LOCALE', $sLocale);
+
+		if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
+			require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
+
+		else
+			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
+	}
 
   public final function loadAddons() {
-    if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
-      require_once 'helpers/Addon.helper.php';
-  }
+		if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
+			require_once 'helpers/Addon.helper.php';
+	}
 
   public final function loadPlugins() {
 		$sPlugins = ALLOW_PLUGINS;
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
 
-		foreach($aPlugins as $sPluginName) {
+		foreach ($aPlugins as $sPluginName) {
 			if (file_exists('plugins/' . (string) ucfirst($sPluginName) . '.class.php'))
 				require_once 'plugins/' . (string) ucfirst($sPluginName) . '.class.php';
 		}
-  }
+	}
 
 	# Give the users the ability to login via their facebook information
 	public final function loadFacebookPlugin() {
@@ -94,12 +122,12 @@ class Index extends Main {
 	}
 
   public final function getActiveUser($iSessionId = '') {
-    $this->_aSession['userdata'] =  Model_Session::getSessionData($iSessionId);
-    return $this->_aSession['userdata'];
-  }
+		$this->_aSession['userdata'] = Model_Session::getSessionData($iSessionId);
+		return $this->_aSession['userdata'];
+	}
 
   private final function _getFlashMessage() {
-    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+		$aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
 						$this->_aSession['flash_message']['type'] :
 						'';
 		$aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
@@ -109,9 +137,9 @@ class Index extends Main {
 						$this->_aSession['flash_message']['headline'] :
 						'';
 
-    unset($_SESSION['flash_message']);
-    return $aFlashMessage;
-  }
+		unset($_SESSION['flash_message']);
+		return $aFlashMessage;
+	}
 
   public final function loadCronjob() {
 		if (class_exists('Cronjob')) {
@@ -124,65 +152,65 @@ class Index extends Main {
 	}
 
   public final function show() {
-    # Redirect to landing page if we got no section
-    if (!isset($this->_aRequest['section'])) {
+		# Redirect to landing page if we got no section
+		if (!isset($this->_aRequest['section'])) {
 			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
 			die();
 		}
 
-    # Load JS language
-    $sLangVars = '';
-    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
+		# Load JS language
+		$sLangVars = '';
+		$oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
 
-    while (!feof($oFile)) {
-      $sLangVars .= fgets($oFile);
-    }
+		while (!feof($oFile)) {
+			$sLangVars .= fgets($oFile);
+		}
 
-    # Check for new version of script
-    if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-      $oFile = fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
-      $sVersionContent = stream_get_contents($oFile);
-      fclose($oFile);
+		# Check for new version of script
+		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+			$oFile = fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
+			$sVersionContent = stream_get_contents($oFile);
+			fclose($oFile);
 
-      $sVersionContent &= ($sVersionContent > VERSION) ? (int) $sVersionContent : '';
-    }
+			$sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
+		}
 
-    # Get the actual URL
-    $sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
+		# Get the actual URL
+		$sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
 
-    # Header.tpl
+		# Header.tpl
 		$oSmarty = $this->_setSmarty();
-    $oSmarty->assign('user', USER_NAME);
+		$oSmarty->assign('user', USER_NAME);
 
 		# Check for update
-    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+		$sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
 						str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
 						'';
 
-    $sLangUpdateAvaiable = str_replace(
+		$sLangUpdateAvaiable = str_replace(
 										'%l',
 										Helper::createLinkTo('http://candycms.com', true),
 										$sLangUpdateAvaiable);
 
-    # System variables
+		# System variables
 		$oSmarty->assign('_current_url_', $sCurrentUrl);
-    $oSmarty->assign('_javascript_language_file_', $sLangVars);
-    $oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
+		$oSmarty->assign('_javascript_language_file_', $sLangVars);
+		$oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
 
-    # Get possible flash messages
-    $aFlashMessages = $this->_getFlashMessage();
+		# Get possible flash messages
+		$aFlashMessages = $this->_getFlashMessage();
 
-    # Replace Flash Message with Content
-    $oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-    $oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-    $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+		# Replace Flash Message with Content
+		$oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+		$oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+		$oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
-    # Language
-    $oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
-    $oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
+		# Language
+		$oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
+		$oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
 
-    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
-    if (!isset($this->_aRequest['section']) ||
+		# Define out core modules. All of them are separately handled in app/helper/Section.helper.php
+		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						ucfirst($this->_aRequest['section']) == 'Blog' ||
 						ucfirst($this->_aRequest['section']) == 'Comment' ||
@@ -198,67 +226,66 @@ class Index extends Main {
 						ucfirst($this->_aRequest['section']) == 'Static' ||
 						ucfirst($this->_aRequest['section']) == 'User') {
 
-      $oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oSection->getSection();
-    }
+			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oSection->getSection();
+		}
 
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
 		elseif (ALLOW_ADDONS == true)
-      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
-    # There's no request on a core module and Addons are disabled. */
-    else {
-      header('Status: 404 Not Found');
-      die(LANG_ERROR_GLOBAL_404);
-    }
+		# There's no request on a core module and Addons are disabled. */
+		else {
+			header('Status: 404 Not Found');
+			die(LANG_ERROR_GLOBAL_404);
+		}
 
-    # Avoid Header and Footer HTML if RSS or AJAX are requested
-    if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
-            (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
-      $sCachedHTML = $oSection->getContent();
+		# Avoid Header and Footer HTML if RSS or AJAX are requested
+		if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
+						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
+			$sCachedHTML = $oSection->getContent();
 
-    else {
-      $oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-      $oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
-      $oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
-      $oSmarty->assign('meta_og_title', $oSection->getTitle());
-      $oSmarty->assign('meta_og_url', $sCurrentUrl);
-      $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+		else {
+			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
+			$oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
+			$oSmarty->assign('meta_og_title', $oSection->getTitle());
+			$oSmarty->assign('meta_og_url', $sCurrentUrl);
+			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
-      $oSmarty->assign('_content_', $oSection->getContent());
-      $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
+			$oSmarty->assign('_content_', $oSection->getContent());
+			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
-      $oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
-      $sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
-    }
+			$oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
+			$sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
+		}
 
-    # Build absolute Path because of Pretty URLs
-    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
+		# Build absolute Path because of Pretty URLs
+		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
-    # Check for user custom css
-    $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-    if (PATH_CSS !== '')
-      $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
+		# Check for user custom css
+		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
+		if (PATH_CSS !== '')
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
-    $sCachedHTML = & $sCachedCss;
+		$sCachedHTML = & $sCachedCss;
 
-    # Check for user custom icons etc.
-    $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-    if (PATH_IMAGES !== '')
-      $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
+		# Check for user custom icons etc.
+		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
+		if (PATH_IMAGES !== '')
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
 
-    $sCachedHTML = & $sCachedImages;
+		$sCachedHTML = & $sCachedImages;
 
-    # Cut spaces to minimize filesize
-    $sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
-    $sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
+		# Cut spaces to minimize filesize
+		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
+		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
+		# Compress Data
+		if (extension_loaded('zlib'))
+			@ob_start('ob_gzhandler');
 
-    # Compress Data
-    if (extension_loaded('zlib'))
-      @ob_start('ob_gzhandler');
-
-    return $sCachedHTML;
-  }
+		return $sCachedHTML;
+	}
 }

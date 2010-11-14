@@ -20,7 +20,6 @@ class User extends Main {
 	}
 
 	# @Override
-  # TODO: Merge method with "_update"?
 	public function update() {
     if (empty($this->_iId))
       $this->_iId = USER_ID;

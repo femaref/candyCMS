@@ -111,7 +111,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,LazyLoad');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,LazyLoad,Facebook');
 
 # ------------------------------------------------------------------------------
 
@@ -123,8 +123,8 @@ define('ALLOW_VERSION_CHECK', true);
 
 # Set the standard language (file must be placed in "languages")
 # NOTE: lower cases required!
-# DEFAULT: 'de_DE'
-define('DEFAULT_LANGUAGE', 'de_DE');
+# DEFAULT: 'de'
+define('DEFAULT_LANGUAGE', 'de');
 
 # ------------------------------------------------------------------------------
 

@@ -162,17 +162,21 @@ class Gallery extends Main {
 
   # Create gallery file
   public final function createFile() {
-    if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+		if (USER_RIGHT < 3)
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
-    else {
-      if (isset($this->_aRequest['create_file']))
-        # TODO: Kick out damn path; log is in model... -> Path extra method
-        return $this->_oModel->createFile();
-      else
-        return $this->_showFormFileTemplate(false);
-    }
-  }
+		else {
+			if (isset($this->_aRequest['create_file'])) {
+				if ($this->_oModel->createFile() === true) {
+					# Log uploaded image. Request ID = album id
+					Helper::log($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
+					return $this->_oModel->getFilePath();
+				}
+			}
+			else
+				return $this->_showFormFileTemplate(false);
+		}
+	}
 
   public final function updateFile() {
     if( USER_RIGHT < 3 )

@@ -9,6 +9,7 @@
 
 class Model_Gallery extends Model_Main {
 	private $_aThumbs;
+	private $_sFilePath;
 
 	private final function _setData($bEdit, $bAdvancedImageInformation) {
     $sWhere = '';
@@ -405,6 +406,9 @@ class Model_Gallery extends Model_Main {
               $this->_aRequest['description'] :
               '';
 
+			# Set path for upload.php
+			$this->_sFilePath =& $oUploadFile->sFilePath;
+
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
 																					" . SQL_PREFIX . "gallery_files
@@ -425,14 +429,13 @@ class Model_Gallery extends Model_Main {
         $this->_oDb->rollBack();
       }
 
-      # Log uploaded image. Request ID = album id
-      if($bResult === true)
-        Helper::log($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-
-			# TODO: Return true or false?
-      return $oUploadFile->sFilePath;
+			return $bResult;
     }
   }
+
+	public final function getFilePath() {
+		return $this->_sFilePath;
+	}
 
 	public final function updateFile($iId) {
     try {

@@ -52,21 +52,24 @@ final class Multiple_Upload extends Index {
 	}
 
 	public final function createFiles() {
-		# TODO: Cleanup into sperate methods
 		if (isset($this->_aRequest['section']) && 'gallery' == $this->_aRequest['section']) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
-			$this->_sFilePath = $this->_oModel->createFile(USER_ID);
+			$this->_oModel->createFile(USER_ID);
+
+			$this->_sFilePath =& $this->_oModel->getFilePath();
 			$this->_aReturn['link'] = $this->_sFilePath;
 		}
 	}
 
 	public final function returnStatus($sError) {
-		if (!empty($sError))
+		if (!empty($sError)) {
 			$this->_aReturn = array('status' => '0', 'error' => $sError);
+			# TODO: Make this work!
+			return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL);
+		}
 
 		else {
-			$this->_aReturn = array('status' => '1',
-					'name' => $this->_aFile['Filedata']['name']);
+			$this->_aReturn = array('status' => '1', 'name' => $this->_aFile['Filedata']['name']);
 
 			if (file_exists($this->_aFile['Filedata']['tmp_name']))
 				$this->_aReturn['hash'] = md5_file($this->_aFile['Filedata']['tmp_name']);

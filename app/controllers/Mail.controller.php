@@ -71,13 +71,7 @@ class Mail extends Main {
     # Language
     $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
-
-		# TODO: Kick this off?
-    if( isset( $this->_aRequest['subject'] ) && 'Bugreport' == $this->_aRequest['subject'] )
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_REPORT_ERROR);
-
-		else
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
+		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/create');
     return $this->_oSmarty->fetch('mails/create.tpl');

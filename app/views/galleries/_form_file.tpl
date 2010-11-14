@@ -78,6 +78,10 @@
           }
         },
 
+        onComplete: function() {
+          window.location.href = '/Gallery/{$_request_id_}';
+        },
+
         onFail: function(error) {
           switch (error) {
             case 'hidden': /* works after enabling the movie and clicking refresh */

@@ -56,7 +56,7 @@ class Rss extends Main {
 
 		$this->_oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
 		$this->_oSmarty->assign('_description_', $this->_aData[$this->_iId]['description']);
-		$this->_oSmarty->assign('_language_', str_replace('_', '-', strtolower(DEFAULT_LANGUAGE)));
+		$this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
 		$this->_oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
 		$this->_oSmarty->assign('_section_', $this->_sSection);

@@ -3,7 +3,7 @@
   <channel>
     <title>{$_title_}</title>
     <description>{$_description_}</description>
-    <language>{$_language_}</language>
+    <language>{$_locale_}</language>
     <link>{$_link_}</link>
     <copyright>{$_copyright_}</copyright>
     <pubDate>{$_pubdate_}</pubDate>

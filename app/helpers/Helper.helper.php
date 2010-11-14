@@ -152,7 +152,7 @@ final class Helper {
   public static final function formatTimestamp($iTime, $bDateOnly = false) {
 
     # Set active locale
-    setlocale(LC_ALL, DEFAULT_LANGUAGE);
+    setlocale(LC_ALL, WEBSITE_LOCALE);
 
     if (class_exists('FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
