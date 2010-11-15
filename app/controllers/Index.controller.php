@@ -55,7 +55,7 @@ class Index extends Main {
 			# There is no request, but there might be a cookie
 		}
 		else {
-			$aRequest = array_merge($this->_aRequest, $this->_aCookie);
+			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 			$this->_sLanguage = isset($aRequest['default_language']) ?
 							(string) $aRequest['default_language'] :
 							substr(DEFAULT_LANGUAGE, 0, 2);

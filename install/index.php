@@ -38,11 +38,12 @@ session_start();
 
 $oIndex = new Index($_REQUEST, $_SESSION);
 $oIndex->loadConfig('../');
-$oIndex->setLanguage('../');
 
 $oSmarty = new Smarty();
 $oSmarty->compile_dir = '../compile';
 $oSmarty->cache_dir = '../cache';
+
+define( 'LANG_WEBSITE_TITLE', 'CandyCMS' );
 
 $sHTML = '';
 
@@ -76,9 +77,6 @@ switch ($_REQUEST['action']) {
     $oSmarty->template_dir = 'migrate/';
     $oSmarty->assign('title', LANG_WEBSITE_TITLE . ' - Migration');
     $oSmarty->assign('action', $_SERVER['PHP_SELF']);
-
-    # Backup database
-    #Cronjob::backup(0, '../');
 
     if (isset($_REQUEST['file'])) {
       $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');
