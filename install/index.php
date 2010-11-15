@@ -64,7 +64,7 @@ switch ($_REQUEST['action']) {
     $_REQUEST['step'] = isset($_REQUEST['step']) ? (int) $_REQUEST['step'] : 1;
     $oSmarty->template_dir = 'install/';
 
-    require_once 'install.php';
+    require_once 'install/install.php';
 
     $oSmarty->assign('title', LANG_WEBSITE_TITLE . ' - Installation');
     $oSmarty->assign('step', $iNextStep);
@@ -120,7 +120,7 @@ switch ($_REQUEST['action']) {
       }
     }
     else
-      require_once 'migrate.php';
+      require_once 'migrate/migrate.php';
 
     break;
 }
