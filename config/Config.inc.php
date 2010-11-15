@@ -66,7 +66,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 
 # Is the website in development mode?
 # DEFAULT: false
-define('WEBSITE_DEV', true);
+define('WEBSITE_DEV', false);
 
 # ------------------------------------------------------------------------------
 
