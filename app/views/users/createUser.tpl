@@ -67,7 +67,7 @@
     </tr>
     {if $USER_RIGHT < 4}
       <tr class='row2{if $error_disclaimer} error{/if}'>
-        <td class='td_left vat'>
+        <td class='td_left'>
           <a href='#reload' onclick="reloadPage('/Help/Registration', '{$_public_folder_}')">
             {$lang_disclaimer_read}
           </a>
@@ -83,9 +83,9 @@
       </tr>
     {/if}
   </table>
+  <div id="js-ajax_reload" name="reload" style="display:none"></div>
   <div class="submit">
     <input type='submit' class='inputbutton' value='{$lang_register}' />
   </div>
   <input type='hidden' value='formdata' name='create_user' />
 </form>
-<div id="js-ajax_reload" name="reload" class="box" style="display:none"></div>
