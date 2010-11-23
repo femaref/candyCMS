@@ -1,16 +1,16 @@
 <link href='%PATH_PUBLIC%/css/fancyupload-min.css' rel='stylesheet' type='text/css' media='screen, projection' />
-  <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.js"></script>
-  <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Fx.ProgressBar.js"></script>
-  <script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/FancyUpload2.js"></script>
+<script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.js"></script>
+<script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/Fx.ProgressBar.js"></script>
+<script type='text/javascript' src="%PATH_PUBLIC%/lib/fancyupload/source/FancyUpload2.js"></script>
 {if $smarty.get.action == 'createfile'}
   <script type='text/javascript'>
     window.addEvent('domready', function()
     {
-      var up = new FancyUpload2($('fancy-status'), $('fancy-list'),
+      var up = new FancyUpload2(document.id('fancy-status'), document.id('fancy-list'),
       {
         verbose: false,
-        url: $('upload').action,
-        data: $('upload').toQueryString(),
+        url: document.id('upload').action,
+        data: document.id('upload').toQueryString(),
         path: '%PATH_PUBLIC%/lib/fancyupload/source/Swiff.Uploader.swf',
 
         typeFilter: {
@@ -20,8 +20,8 @@
         target: 'fancy-browse',
 
         onLoad: function() {
-          $('fancy-status').removeClass('hide');
-          $('fancy-fallback').destroy();
+          document.id('fancy-status').removeClass('hide');
+          document.id('fancy-fallback').destroy();
 
           this.target.addEvents({
             click: function() {
@@ -39,7 +39,7 @@
             }
           });
 
-          $('fancy-upload').addEvent('click', function() {
+          document.id('fancy-upload').addEvent('click', function() {
             up.start();
             return false;
           });
@@ -47,7 +47,7 @@
 
         onBeforeStart: function() {
           up.setOptions({
-            data: $('upload').toQueryString()
+            data: document.id('upload').toQueryString()
           });
         },
 

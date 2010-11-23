@@ -101,8 +101,8 @@
     new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
   });
 
-  if($$('.js-toggle')) {
-    var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {
+  if(document.search('.js-toggle')) {
+    var myAccordion = new Fx.Accordion(document.search('.js-toggle'), document.search('.js-element'), {
       display: -1,
       alwaysHide: true
     });

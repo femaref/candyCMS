@@ -1,15 +1,15 @@
 <script type="text/javascript">
   window.addEvent('domready', function() {
-    var sValue = $('teaser').value;
+    var sValue = document.id('teaser').value;
     var iLength = sValue.length;
     var iRemaining = 140 - iLength;
-    $('js-chars').set('html', iRemaining);
+    document.id('js-chars').set('html', iRemaining);
 
-    $('teaser').addEvent('keyup', function() {
+    document.id('teaser').addEvent('keyup', function() {
       var sValue = $('teaser').value;
       var iLength = sValue.length;
       var iRemaining = 140 - iLength;
-      $('js-chars').set('html', iRemaining);
+      document.id('js-chars').set('html', iRemaining);
     });
   });
 </script>
