@@ -1,5 +1,5 @@
 window.addEvent('domready', function() {
-  each(document.search('.js-image_overlay'), function(el) {
+  $each($$('.js-image_overlay'), function(el) {
     var oSize = el.getSize();
     el.setStyle('margin-top', '-' + oSize.y + 'px');
     el.fade('hide');
@@ -63,8 +63,8 @@ function confirmDelete(sUrl) {
 /* Tooltips */
 /********************************************************************************/
 /* Show Tooltips on Blog */
-if(document.search('.js-tooltip')) {
-  document.search('.js-tooltip').each(function(element, index) {
+if($$('.js-tooltip')) {
+  $$('.js-tooltip').each(function(element, index) {
     var content = element.get('title').split('::');
     element.store('tip:title', content[0]);
     element.store('tip:text', content[1]);
