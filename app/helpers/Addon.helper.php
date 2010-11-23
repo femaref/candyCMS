@@ -7,6 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+if (!class_exists('Section'))
+  require_once 'app/helpers/Section.helper.php';
+
 final class Addon extends Section {
 
   public final function __construct($aRequest, $aSession, $aFile = '') {

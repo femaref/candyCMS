@@ -14,7 +14,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', '');
+define('SQL_PREFIX', 'test_');
 
 # ------------------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 
 # Is the website in development mode?
 # DEFAULT: false
-define('WEBSITE_DEV', false);
+define('WEBSITE_DEV', true);
 
 # ------------------------------------------------------------------------------
 

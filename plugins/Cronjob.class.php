@@ -87,7 +87,7 @@ final class Cronjob {
 									PDO::ATTR_PERSISTENT => true));
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-			$oQuery = $oDb->query("SHOW TABLES FROM " . SQL_PREFIX . SQL_DB);
+			$oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
 			$aResult = $oQuery->fetchAll();
 		}
 		catch (AdvancedException $e) {
@@ -105,7 +105,7 @@ final class Cronjob {
       $sTable = $aTable[0];
 
 			try {
-				$oQuery = $oDb->query("SHOW COLUMNS FROM " . SQL_PREFIX . $sTable);
+				$oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
 				$aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 				$iColumns = count($aColumns);
 			}
@@ -140,7 +140,7 @@ final class Cronjob {
 
       # Show extras like auto_increment etc
       try {
-        $oQuery = $oDb->query("SHOW KEYS FROM " . SQL_PREFIX . $sTable);
+        $oQuery = $oDb->query("SHOW KEYS FROM " . $sTable);
         $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iKeys = count($aKeys);
       }
@@ -178,7 +178,7 @@ final class Cronjob {
         $oQuery = $oDb->query(" SELECT
                                   id
                                 FROM
-                                  " . SQL_PREFIX . $sTable . "
+                                  " . $sTable . "
                                 ORDER BY
                                   id DESC
                                 LIMIT
@@ -199,7 +199,7 @@ final class Cronjob {
 
       # Now fetch content
       try {
-        $oQuery = $oDb->query("SELECT * FROM " . SQL_PREFIX . $sTable);
+        $oQuery = $oDb->query("SELECT * FROM " . $sTable);
         $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iRows = count($aRows);
       }
@@ -213,7 +213,7 @@ final class Cronjob {
       $sFileText .= "\r\n";
 
       foreach ($aRows as $aRow) {
-        $sFileText .= "INSERT INTO `" . SQL_PREFIX . $sTable . "` VALUES (";
+        $sFileText .= "INSERT INTO `" . $sTable . "` VALUES (";
 
         $iEntries = 1;
         foreach ($aRow as $sEntry) {
