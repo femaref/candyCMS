@@ -1,5 +1,5 @@
 window.addEvent('domready', function() {
-  $each($$('.js-image_overlay'), function(el) {
+  each(document.search('.js-image_overlay'), function(el) {
     var oSize = el.getSize();
     el.setStyle('margin-top', '-' + oSize.y + 'px');
     el.fade('hide');
@@ -14,25 +14,25 @@ function hideDiv(sDivId) {
 }
 
 function fadeDiv(sDivId) {
-  $(sDivId).fade('toggle');
+  document.id(sDivId).fade('toggle');
 }
 
 function imageOverlay(sDivId, iHeight) {
   fadeDiv(sDivId);
-  $(sDivId).setStyle('margin-top', iHeight);
+  document.id(sDivId).setStyle('margin-top', iHeight);
 }
 
 function showDiv(sDivId) {
-  $(sDivId).setStyle('display', 'inline');
+  document.id(sDivId).setStyle('display', 'inline');
 
-  if($('js-flash_success') || $('js-flash_error')) {
+  if(document.id('js-flash_success') || document.id('js-flash_error')) {
     (function(){
       hideDiv(sDivId)
     }).delay(5000);
   }
 }
 
-if($('js-flash_success') || $('js-flash_error')) {
+if(document.id('js-flash_success') || document.id('js-flash_error')) {
   showDiv('js-flash_message');
 }
 
@@ -40,15 +40,15 @@ if($('js-flash_success') || $('js-flash_error')) {
 /* Quote messages in Comments */
 /********************************************************************************/
 function quoteMessage(sName, sDivId) {
-  var sMessage = $(sDivId).get('html');
+  var sMessage = document.id(sDivId).get('html');
   var sQuote = "[quote=" + sName + "]" + sMessage + "[/quote]\n";
   var sOldMessage = $('js-create_commment_text').get('value');
-  $('js-create_commment_text').set('html', sOldMessage + sQuote);
+  document.id('js-create_commment_text').set('html', sOldMessage + sQuote);
   return false;
 }
 
 function resetContent(sDivId) {
-  $(sDivId).set('html', '');
+  document.id(sDivId).set('html', '');
 }
 
 /********************************************************************************/
@@ -63,8 +63,8 @@ function confirmDelete(sUrl) {
 /* Tooltips */
 /********************************************************************************/
 /* Show Tooltips on Blog */
-if($$('.js-tooltip')) {
-  $$('.js-tooltip').each(function(element, index) {
+if(document.search('.js-tooltip')) {
+  document.search('.js-tooltip').each(function(element, index) {
     var content = element.get('title').split('::');
     element.store('tip:title', content[0]);
     element.store('tip:text', content[1]);
@@ -103,18 +103,18 @@ function stripSlash(sValue) {
 
 function reloadPage(sURL, sRoot) {
   var sId = 'js-ajax_reload';
-  $(sId).setStyle('display', 'block').addClass('center');
-  $(sId).set('html', "<img class='js-loading' src='" + sRoot + "/loading.gif' alt='" + LANG_LOADING + "' />");
-  $(sId).load(sURL);
+  document.id(sId).setStyle('display', 'block').addClass('center');
+  document.id(sId).set('html', "<img class='js-loading' src='" + sRoot + "/loading.gif' alt='" + LANG_LOADING + "' />");
+  document.id(sId).load(sURL);
 }
 
 function checkPasswords() {
-  if($('password') && $('password2')) {
-    if( $('password').value == $('password2').value ) {
-      $('icon').set('class', 'icon-success');
+  if(document.id('password') && document.id('password2')) {
+    if( document.id('password').value == document.id('password2').value ) {
+      document.id('icon').set('class', 'icon-success');
     }
     else {
-      $('icon').set('class', 'icon-close');
+      document.id('icon').set('class', 'icon-close');
     }
   }
 }
