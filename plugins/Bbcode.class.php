@@ -84,11 +84,10 @@ final class Bbcode {
         $sHTML .= '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
         $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
         $sHTML .= '<img src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
-        $sHTML .= 'onmouseover="fadeDiv(\'' . $sTempFileName . '\')"';
-        $sHTML .= 'onmouseout="fadeDiv(\'' . $sTempFileName . '\')" />';
+        $sHTML .= 'onmouseover="fadeDiv(\'' . $sTempFileName . '\', \'' . $sText . '\')"';
+        $sHTML .= 'onmouseout="fadeDiv(\'' . $sTempFileName . '\', \'\')" />';
         $sHTML .= '</a>';
-        $sHTML .= '<div id="' . $sTempFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px">';
-        $sHTML .= $sText;
+        $sHTML .= '<div id="' . $sTempFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px" title="' . $sText . '">';
         $sHTML .= '</div>';
         $sHTML .= '</div>';
         $sHTML .= '</div>';

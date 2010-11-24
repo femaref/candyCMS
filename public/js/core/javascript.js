@@ -1,5 +1,6 @@
 window.addEvent('domready', function() {
   $each($$('.js-image_overlay'), function(el) {
+    el.set('text', el.get('title'));
     var oSize = el.getSize();
     el.setStyle('margin-top', '-' + oSize.y + 'px');
     el.fade('hide');
