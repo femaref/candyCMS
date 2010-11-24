@@ -30,7 +30,7 @@ RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 
 # Fixes for rules below
-RewriteRule ^(Blog|Content|Gallery|Log|Media|Newsletter|RSS|Search|Session|User)$ index.php?section=$1 [L,QSA] # Show Section
+RewriteRule ^(Blog|Content|Gallery|Log|Media|Newsletter|Search|Session|User)$ index.php?section=$1 [L,QSA] # Show Section
 RewriteRule ^(Blog)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA] # Non AJAX pagination
 RewriteRule ^(Blog|Comment|Content|Gallery|Media|Newsletter|Session|User)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA] # Default actions
 RewriteRule ^(Blog|Comment|Content|Gallery|Session|User)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA] # Show update / destroy actions
@@ -44,7 +44,7 @@ RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comme
 RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA]
 RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA]
 RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L,QSA]
-RewriteRule ^(Static|RSS)/([a-z]+)$ index.php?section=$1&template=$2 [L]
+RewriteRule ^(Static|RSS)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&template=$2 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA]
 RewriteRule ^Language/([a-z]+)$ index.php?language=$1 [L,QSA]
 RewriteRule ^RSS/([A-Za-z]+)/([0-9]+)$ index.php?section=RSS&template=$1&id=$2 [L,QSA]

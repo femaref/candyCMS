@@ -177,7 +177,6 @@ class Section extends Main {
       case 'rss':
 
         parent::_setContent($this->_oObject->show());
-        parent::_setTitle(LANG_GLOBAL_RSS);
 
         break;
 

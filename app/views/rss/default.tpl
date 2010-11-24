@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{$lang_website_title}</title>
+    <title>{$_title_}</title>
     <description>{$WEBSITE_SLOGAN}</description>
     <language>{$_language_}</language>
     <link>{$WEBSITE_URL}</link>
     <copyright>{$WEBSITE_NAME}</copyright>
     <pubDate>{$_pubdate_}</pubDate>
+    <atom:link href="{$CURRENT_URL}" rel="self" type="application/rss+xml" />
     {foreach $data as $d}
       <item>
         <title>{$d.title}</title>

@@ -14,15 +14,24 @@ require_once 'app/helpers/Pages.helper.php';
 class Rss extends Main {
 
 	public function __init() {
+    Header('Content-Type: application/rss+xml');
+
 		$this->_sSection = isset($this->_aRequest['template']) ?
 						(string) ucfirst($this->_aRequest['template']) :
 						'Blog';
+
+    # We might need to add a file extension to the rss feed
+    if (substr($this->_sSection, 0, 4) == 'Blog')
+      $this->_sSection = 'Blog';
+
 	}
 
 	public function show() {
 		if($this->_sSection == 'Blog') {
 			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData();
+      $this->_setTitle(LANG_GLOBAL_BLOG . ' - ' . WEBSITE_NAME);
+
 			return $this->_showDefault();
 		}
 
@@ -45,6 +54,7 @@ class Rss extends Main {
 	private function _showDefault() {
 		$this->_oSmarty->assign('_section_', $this->_sSection);
 		$this->_oSmarty->assign('data', $this->_aData);
+		$this->_oSmarty->assign('_title_', $this->getTitle());
 
 		$this->_oSmarty->template_dir = Helper::getTemplateDir('rss/default');
 		return $this->_oSmarty->fetch('rss/default.tpl');

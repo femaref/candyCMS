@@ -175,9 +175,6 @@ class Index extends Main {
 			$sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
 		}
 
-		# Get the actual URL
-		$sCurrentUrl = WEBSITE_URL . $_SERVER['REQUEST_URI'];
-
 		# Header.tpl
 		$oSmarty = $this->_setSmarty();
 		$oSmarty->assign('user', USER_NAME);
@@ -193,7 +190,6 @@ class Index extends Main {
 										$sLangUpdateAvaiable);
 
 		# System variables
-		$oSmarty->assign('_current_url_', $sCurrentUrl);
 		$oSmarty->assign('_javascript_language_file_', $sLangVars);
 		$oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
 
@@ -251,7 +247,7 @@ class Index extends Main {
 			$oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
 			$oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
 			$oSmarty->assign('meta_og_title', $oSection->getTitle());
-			$oSmarty->assign('meta_og_url', $sCurrentUrl);
+			$oSmarty->assign('meta_og_url', CURRENT_URL);
 			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
 			$oSmarty->assign('_content_', $oSection->getContent());

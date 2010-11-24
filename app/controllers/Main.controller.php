@@ -54,6 +54,7 @@ abstract class Main {
 
 		# Define constants
 		$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
+		$this->_oSmarty->assign('CURRENT_URL', CURRENT_URL);
 		$this->_oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 		$this->_oSmarty->assign('URL', WEBSITE_URL);
 		$this->_oSmarty->assign('USER_EMAIL', USER_EMAIL);
@@ -65,6 +66,7 @@ abstract class Main {
 		$this->_oSmarty->assign('USER_SURNAME', USER_SURNAME);
     $this->_oSmarty->assign('VERSION', VERSION);
     $this->_oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
+    $this->_oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
     $this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
     $this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
 

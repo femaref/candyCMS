@@ -106,5 +106,7 @@ $oIndex->loadCronjob();
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define('AJAX_REQUEST', (int) $iAjax);
 
+define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
+
 echo $oIndex->show();
 ?>
