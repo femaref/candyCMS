@@ -92,9 +92,9 @@ class Model_Content extends Model_Main {
         $this->_aData[$iId] = array(
             'id'                => $aRow['id'],
             'author_id'         => $aRow['author_id'],
-            'title'             => Helper::formatOutput($aRow['title'], false, $sHighlight),
-            'content'           => Helper::formatOutput($aRow['content'], true, $sHighlight),
-            'date'              => Helper::formatTimestamp($aRow['date'], true),
+            'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
+            'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
+            'date'              => Helper::formatTimestamp($aRow['date']),
             'datetime'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'          => $aRow['date'],
             'date_rss'          => date('r', $aRow['date']),

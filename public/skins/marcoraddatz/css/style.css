@@ -43,6 +43,7 @@ legend {
 h2 {
   font-size: 24px;
   word-spacing: 0.1em;
+  margin: 0px 0px 8px;
 }
 
 h3 {
@@ -321,10 +322,6 @@ table th
   cursor: help;
 }
 
-.element h2, .gallery_album h2 {
-  margin: 3px 0px 0px 0px;
-}
-
 .element h2 img, .gallery_album h2 img, .gallery_files h2 img {
   vertical-align: baseline;
 }
@@ -377,7 +374,8 @@ table th
 }
 
 .gallery_album p {
-  margin-bottom: 8px;
+  margin-bottom: 15px;
+  margin-top: 0px;
 }
 
 .gallery_album .image, .gallery_files .image {

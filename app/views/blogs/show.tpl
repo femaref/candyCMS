@@ -43,7 +43,7 @@
           </div>
         </div>
         {if $b.teaser !== ''}
-          <div class="teaser">{$b.teaser}</div>
+          <p class="teaser">{$b.teaser}</p>
         {/if}
         {$b.content}
         <div class='footer'>

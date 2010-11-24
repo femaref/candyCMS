@@ -43,7 +43,7 @@
             <span class="small">{$lang_last_update}: {$b.date_modified}</span>
           {/if}
           {if $b.teaser !== ''}
-            <div class="teaser">{$b.teaser}</div>
+            <p class="teaser">{$b.teaser}</p>
           {/if}
           {$b.content}
           <div class='footer'>

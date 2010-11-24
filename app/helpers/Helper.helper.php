@@ -166,7 +166,7 @@ final class Helper {
     }
   }
 
-  public static final function formatOutput($sStr, $bUseParagraph = false, $highlight = '') {
+  public static final function formatOutput($sStr, $highlight = '') {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
@@ -184,7 +184,7 @@ final class Helper {
 
     if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();
-      return $oBbcode->getFormatedText($sStr, $bUseParagraph);
+      return $oBbcode->getFormatedText($sStr);
     }
     else
       return $sStr;

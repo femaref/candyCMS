@@ -16,7 +16,7 @@
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
-  private final function _setFormatedText($sStr, $bUseParagraph) {
+  private final function _setFormatedText($sStr) {
 
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
@@ -188,17 +188,11 @@ final class Bbcode {
                       $sStr);
     }
 
-    # Add a paragraph to create similar BB-Code for TinyMCE
-    if( $bUseParagraph == true ) {
-      if( substr($sStr, 0, 3) !== '<p>' )
-        $sStr = '<p>'	.$sStr.	'</p>';
-    }
-
     return $sStr;
   }
 
-	public final function getFormatedText($sStr, $bUseParagraph) {
-		return $this->_setFormatedText($sStr, $bUseParagraph);
+	public final function getFormatedText($sStr) {
+		return $this->_setFormatedText($sStr);
   }
 
   private final function _getVideo($sFile) {
