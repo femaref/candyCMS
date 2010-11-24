@@ -83,7 +83,7 @@ final class Bbcode {
         $sHTML = '<div class="image" style="min-width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px;line-height:100%">';
         $sHTML .= '<div style="width:' . $aNewInfo[0] . 'px;height:' . $aNewInfo[1] . 'px">';
         $sHTML .= '<a href="' . $sUrl[1] . '" rel=\'lightbox\'>';
-        $sHTML .= '<img src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'\'';
+        $sHTML .= '<img src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'' . $sText . '\'';
         $sHTML .= 'onmouseover="fadeDiv(\'' . $sTempFileName . '\', \'' . $sText . '\')"';
         $sHTML .= 'onmouseout="fadeDiv(\'' . $sTempFileName . '\', \'\')" />';
         $sHTML .= '</a>';
