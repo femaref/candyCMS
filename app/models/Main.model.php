@@ -8,24 +8,25 @@
  */
 
 abstract class Model_Main {
-	protected $_aRequest;
-	protected $_aSession;
-	protected $_aData;
-	protected $_iId;
-	protected $_oDb;
-	public $oPages;
 
-	public function __construct($aRequest = '', $aSession = '', $aFile = '') {
-		$this->_aRequest	=& $aRequest;
-		$this->_aSession	=& $aSession;
-		$this->_aFile			=& $aFile;
+  protected $_aRequest;
+  protected $_aSession;
+  protected $_aData;
+  protected $_iId;
+  protected $_oDb;
+  public $oPages;
 
-		$this->_oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-								PDO::ATTR_PERSISTENT => true));
-		$this->_oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
+  public function __construct($aRequest = '', $aSession = '', $aFile = '') {
+    $this->_aRequest = & $aRequest;
+    $this->_aSession = & $aSession;
+    $this->_aFile = & $aFile;
 
-	public function create() {
+    $this->_oDb = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                PDO::ATTR_PERSISTENT => true));
+    $this->_oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  }
+
+  public function create() {
 
   }
 

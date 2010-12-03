@@ -5,7 +5,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ */
 
 # This plugin is the most powerful plugin, if you don't want to write every
 # text in HTML. It also enables users that are not allowed to post HTML to
@@ -16,6 +16,7 @@
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
+
   private final function _setFormatedText($sStr) {
 
     # BBCode
@@ -36,21 +37,21 @@ final class Bbcode {
     $sStr = preg_replace('#\[color=(.*)\](.*)\[\/color\]#Uis', '<span style="color:\1">\2</span>', $sStr);
     $sStr = preg_replace('#\[size=(.*)\](.*)\[\/size\]#Uis', '<span style="font-size:\1%">\2</span>', $sStr);
 
-		# Internal redirect
-		$sStr = preg_replace('#\[site=(.*)\](.*)\[\/site\]#Uis', '<a href="\1">\2</a>', $sStr);
+    # Internal redirect
+    $sStr = preg_replace('#\[site=(.*)\](.*)\[\/site\]#Uis', '<a href="\1">\2</a>', $sStr);
 
-		# External redirect (not W3C strict!)
+    # External redirect (not W3C strict!)
     $sStr = preg_replace('#\[url=(.*)\](.*)\[\/url\]#Uis',
-            '<img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
-            $sStr);
+                    '<img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" /> <a href="\1" target="_blank">\2</a>',
+                    $sStr);
 
-		# Set anchor easily
+    # Set anchor easily
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
 
-		# Load specific icon
+    # Load specific icon
     $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/spacer.png" class="icon-\1" />', $sStr);
 
-		# Insert uploaded image
+    # Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
     # Replace images with image tag (every location allowed, but external is very slow)
@@ -98,17 +99,20 @@ final class Bbcode {
     }
 
     # Image with description
-    $sStr = preg_replace(	"/\[img\=(.+)\](.*)\[\/img]/isU",
-            "<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
-            $sStr);
+    $sStr = preg_replace("/\[img\=(.+)\](.*)\[\/img]/isU",
+                    "<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
+                    $sStr);
 
     # [video]file[/video]
-    if(preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
+    if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
       preg_match_all('#\[video\](.*)\[\/video\]#Uis', $sStr, $aOutput);
+
+      $sFile = trim($aOutput[1][0]);
+      $sFlashFile = $this->_getFlashVideo($sFile);
 
       $sFlash = '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
       $sFlash .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-      $sFlash .= '<param name="FlashVars" value="mediaURL=\1.mp4&amp;controlColor=0xffffff&amp;showTimecode=true" />';
+      $sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;controlColor=0xffffff&amp;showTimecode=true" />';
       $sFlash .= '<param name="allowFullScreen" value="true" />';
       $sFlash .= '</object>';
 
@@ -120,20 +124,22 @@ final class Bbcode {
       $sVideo .= $sFlash;
       $sVideo .= '</video>';
 
-      $sFile  = trim($aOutput[1][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
-      $sStr = preg_replace(	'#\[video\](.*)\[\/video\]#Uis',
-              '<div class="video">' . $sVideo . '</div>',
-              $sStr);
+      $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis',
+                      '<div class="video">' . $sVideo . '</div>',
+                      $sStr);
     }
 
     # [video width height]file[/video]
-    if(preg_match('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr)) {
+    if (preg_match('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr)) {
       preg_match_all('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr, $aOutput);
+
+      $sFile = trim($aOutput[3][0]);
+      $sFlashFile = $this->_getFlashVideo($sFile);
 
       $sFlash = '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
       $sFlash .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-      $sFlash .= '<param name="FlashVars" value="mediaURL=\3.mp4&amp;controlColor=0xffffff&amp;showTimecode=true" />';
+      $sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;controlColor=0xffffff&amp;showTimecode=true" />';
       $sFlash .= '<param name="allowFullScreen" value="true" />';
       $sFlash .= '</object>';
 
@@ -143,7 +149,6 @@ final class Bbcode {
       $sVideo .= '<source src="\3.ogv"  type="video/ogg" />';
       $sVideo .= '</video>';
 
-      $sFile  = trim($aOutput[3][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis',
                       '<div class="video">' . $sVideo . '</div>',
@@ -151,12 +156,15 @@ final class Bbcode {
     }
 
     # [video width height thumb]file[/video]
-    if(preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr)) {
+    if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr)) {
       preg_match_all('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aOutput);
+
+      $sFile = trim($aOutput[4][0]);
+      $sFlashFile = $this->_getFlashVideo($sFile);
 
       $sFlash = '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf">';
       $sFlash .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-      $sFlash .= '<param name="FlashVars" value="mediaURL=\4.mp4&amp;teaserURL=\3&amp;controlColor=0xffffff&amp;showTimecode=true" />';
+      $sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;teaserURL=\3&amp;controlColor=0xffffff&amp;showTimecode=true" />';
       $sFlash .= '<param name="allowFullScreen" value="true" />';
       $sFlash .= '<img src="\3" width="\1" height="\2" alt="\3" />';
       $sFlash .= '</object>';
@@ -168,18 +176,17 @@ final class Bbcode {
       $sVideo .= $sFlash;
       $sVideo .= '</video>';
 
-      $sFile  = trim($aOutput[4][0]);
       $sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
-      $sStr = preg_replace(	'#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
-              '<div class="video">' . $sVideo . '</div>',
-              $sStr);
+      $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
+                      '<div class="video">' . $sVideo . '</div>',
+                      $sStr);
     }
 
     # Quote
-    while(	preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU",$sStr) ||
-            preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
+    while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
+    preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<blockquote>\\1</blockquote>", $sStr);
-      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h3>"	.LANG_GLOBAL_QUOTE_BY.	" \\1</h3>\\2</blockquote>", $sStr);
+      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h3>" . LANG_GLOBAL_QUOTE_BY . " \\1</h3>\\2</blockquote>", $sStr);
     }
 
     while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
@@ -191,25 +198,32 @@ final class Bbcode {
     return $sStr;
   }
 
-	public final function getFormatedText($sStr) {
-		return $this->_setFormatedText($sStr);
+  public final function getFormatedText($sStr) {
+    return $this->_setFormatedText($sStr);
+  }
+
+  private final function _getFlashVideo($sFile) {
+    if (preg_match('#\youtube#Uis', $sFile) || preg_match('#\vimeo#Uis', $sFile))
+      return $sFile;
+    else
+      return $sFile . '.mp4';
   }
 
   private final function _getVideo($sFile) {
     # If external link, make local
-    if(preg_match('/http:\/\/(.*)/', $sFile))
+    if (preg_match('/http:\/\/(.*)/', $sFile))
       $sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
 
     # We have WebM (and mp4) and do use any browser exept FF
-    if ( file_exists($sFile . '.webm') && !preg_match('/Firefox/', $_SERVER['HTTP_USER_AGENT']) )
+    if (file_exists($sFile . '.webm') && !preg_match('/Firefox/', $_SERVER['HTTP_USER_AGENT']))
       return true;
 
     # We have ogg (and mp4) - serves all
-    elseif ( file_exists($sFile . '.ogv') )
+    elseif (file_exists($sFile . '.ogv'))
       return true;
 
     # We do only have mp4, so use flash for Firefox and Opera
-    elseif( preg_match('/(Firefox|Opera)/', $_SERVER['HTTP_USER_AGENT']) )
+    elseif (preg_match('/(Firefox|Opera)/', $_SERVER['HTTP_USER_AGENT']))
       return false;
 
     # We try HTML5 anyways or it's external
