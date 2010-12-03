@@ -13,6 +13,8 @@ class Index extends Main {
   protected $_aSession;
   protected $_aFile;
   protected $_aCookie;
+  private $_sSkin;
+  private $_sLanguage;
 
   public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
     $this->_aRequest  = & $aRequest;
@@ -46,13 +48,29 @@ class Index extends Main {
 		}
 	}
 
+  public final function setSkin() {
+		# We got a skin request? Let's change it!
+		if (isset($this->_aRequest['skin'])) {
+			setcookie('default_skin', (string) $this->_aRequest['skin'], time() + 2592000, '/');
+			$this->_sSkin = (string) $this->_aRequest['skin'];
+
+    # There is no request, but there might be a cookie
+		}
+		else {
+			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+			$this->_sSkin = isset($aRequest['default_skin']) ?
+							(string) $aRequest['default_skin'] :
+							'';
+		}
+  }
+
   public final function setLanguage($sPath = '') {
 		# We got a language request? Let's change it!
 		if (isset($this->_aRequest['language'])) {
 			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
 			$this->_sLanguage = (string) $this->_aRequest['language'];
 
-			# There is no request, but there might be a cookie
+    # There is no request, but there might be a cookie
 		}
 		else {
 			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
@@ -263,14 +281,18 @@ class Index extends Main {
 
 		# Check for user custom css
 		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-		if (PATH_CSS !== '')
+		if (!empty($this->_sSkin))
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/css', $sCachedHTML);
+		elseif (PATH_CSS !== '')
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedCss;
 
 		# Check for user custom icons etc.
 		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-		if (PATH_IMAGES !== '')
+		if (!empty($this->_sSkin))
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/images', $sCachedHTML);
+		elseif (PATH_IMAGES !== '')
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedImages;
