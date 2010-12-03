@@ -33,19 +33,10 @@ class FacebookCMS extends Facebook {
     return $result;
   }
 
-	/*public function getSessionStatus() {
-		# TODO: Put into template
-		if ($this->getSession())
-			return '<a href="' . $this->getLogoutUrl() . '">' . LANG_GLOBAL_LOGOUT . '</a>';
-
-		else
-			return '<a href="' . $this->getLoginUrl(array('req_perms' => 'email')) . '">' . LANG_GLOBAL_LOGIN . '</a>';
-	}*/
-
 	public function getConnectButton() {
 		$oSmarty = new Smarty();
 
-		$oSmarty->assign('_url_', $this->getLoginUrl());
+		$oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
 		$oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
 
 		$oSmarty->cache_dir = CACHE_DIR;
