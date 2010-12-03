@@ -42,7 +42,7 @@ class Mail extends Main {
       $sEmail = $this->_aSession['userdata']['email'];
 
     else
-      $sEmail = '';
+      $sEmail = USER_EMAIL;
 
     $sSubject = isset($this->_aRequest['subject']) ?
             (string)$this->_aRequest['subject']:
@@ -140,7 +140,7 @@ class Mail extends Main {
               $sReplyTo);
 
       if ($bStatus == true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Helper::log($this->_aRequest['section'], 'create', (int) $this->_iId);
 				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Start');
       }
 			else

@@ -2,7 +2,7 @@
 <div id="create_comment">
   <form action='{$_action_url_}' method='post'>
     <fieldset>
-      <legend>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME} <fb:login-button></fb:login-button>{/if}</legend>
+      <legend>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</legend>
       <table>
         <tr class='row1{if $error_name} error{/if}'>
           <td class='td_left'>

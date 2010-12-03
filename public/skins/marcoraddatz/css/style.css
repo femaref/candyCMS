@@ -47,7 +47,6 @@ h2 {
 }
 
 h3 {
-  margin-top: 0px;
   font-size: 14px;
 }
 
@@ -268,7 +267,7 @@ table th
   text-align:justify;
   line-height: 140%;
   font-size: 14px;
-  padding-bottom: 35px;
+  padding-bottom: 30px;
   border-bottom: 1px solid #CCCCCC;
 }
 

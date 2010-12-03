@@ -13,7 +13,10 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
     theme_advanced_statusbar_location : "bottom",
     theme_advanced_resizing : true,
     height : "300px",
-    language : "{$_language_}"
+    language : "{$_language_}",
+    relative_urls : false,
+    remove_script_host : false,
+    document_base_url : "{$WEBSITE_URL}"
   });
 </script>
 <form method='post' action='{$_action_url_}'>

@@ -217,7 +217,7 @@ class Section extends Main {
                 (string)$this->_aRequest['template'] :
                 LANG_ERROR_GLOBAL_NO_TEMPLATE;
 
-        parent::_setContent($this->_oSmarty->fetch($sTpl.	'.tpl'));
+        parent::_setContent($this->_oSmarty->fetch(PATH_TPL_STATIC . '/' . $sTpl . '.tpl'));
         parent::_setTitle(ucfirst($sTpl));
 
         break;

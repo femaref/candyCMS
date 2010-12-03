@@ -61,6 +61,7 @@ $aFiles = isset($_FILES) ? $_FILES : array();
 $oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
 $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
+$oIndex->setSkin();
 $oIndex->setLanguage();
 $oIndex->loadAddons();
 $oIndex->loadPlugins();
