@@ -12,7 +12,10 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
     theme_advanced_buttons3 : "hr,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,outdent,indent,|,pagebreak,|,charmap,emotions,media,|,print",
     theme_advanced_statusbar_location : "bottom",
     theme_advanced_resizing : true,
-    language : "{$_language_}"
+    language : "{$_language_}",
+    relative_urls : false,
+    remove_script_host : false,
+    document_base_url : "{$WEBSITE_URL}"
   });
 </script>
 <form method='post' action='/Newsletter/create'>
