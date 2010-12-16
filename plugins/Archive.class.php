@@ -8,8 +8,6 @@
  */
 
 # The archive plugin lists all blog entries by month and date.
-# You can include this plugin only at the "app/views/layouts/application.tpl".
-
 require_once 'app/controllers/Blog.controller.php';
 require_once 'app/models/Blog.model.php';
 
@@ -18,7 +16,6 @@ final class Archive extends Blog {
   public final function __construct($aRequest, $aSession) {
     $this->_aRequest = & $aRequest;
     $this->_aSession = & $aSession;
-
     $this->__init();
   }
 
@@ -35,8 +32,12 @@ final class Archive extends Blog {
       $aMonth[$m][$id] = $aData;
     }
 
-    $this->_oSmarty->assign('data', $aMonth);
-    $this->_oSmarty->template_dir = 'public/skins/_plugins/archive';
-    return $this->_oSmarty->fetch('show.tpl');
+    $oSmarty = new Smarty();
+		$oSmarty->cache_dir = CACHE_DIR;
+		$oSmarty->compile_dir = COMPILE_DIR;
+
+    $oSmarty->assign('data', $aMonth);
+    $oSmarty->template_dir = 'public/skins/_plugins/archive';
+    return $oSmarty->fetch('show.tpl');
   }
 }

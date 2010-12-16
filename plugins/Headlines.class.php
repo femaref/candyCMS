@@ -11,14 +11,11 @@ require_once 'app/controllers/Blog.controller.php';
 require_once 'app/models/Blog.model.php';
 
 # Show the last six headlines of your blog entries.
-# This works only at the "app/views/layouts/application.tpl".
-
 class Headlines extends Blog {
 
 	public function __construct($aRequest, $aSession) {
 		$this->_aRequest = & $aRequest;
 		$this->_aSession = & $aSession;
-
 		$this->__init();
 	}
 
@@ -29,8 +26,12 @@ class Headlines extends Blog {
 	public function show() {
 		$this->_aData = $this->_oModel->getData('', false, 6);
 
-		$this->_oSmarty->assign('data', $this->_aData);
-		$this->_oSmarty->template_dir = 'public/skins/_plugins/headlines';
-		return $this->_oSmarty->fetch('show.tpl');
+    $oSmarty = new Smarty();
+		$oSmarty->cache_dir = CACHE_DIR;
+		$oSmarty->compile_dir = COMPILE_DIR;
+
+    $oSmarty->assign('data', $this->_aData);
+    $oSmarty->template_dir = 'public/skins/_plugins/headlines';
+		return $oSmarty->fetch('show.tpl');
 	}
 }
