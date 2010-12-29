@@ -6,7 +6,7 @@
         <ul class="js-archive_entries">
         {foreach from=$d item=entry}
           <li>
-            <a href="/Blog/{$entry.id}/{$entry.title_seo}" title="{$entry.date}">
+            <a href="/Blog/{$entry.id}/{$entry.encoded_title}" title="{$entry.date}">
               {$entry.title}
             </a>
           </li>

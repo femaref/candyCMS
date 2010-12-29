@@ -88,13 +88,13 @@ abstract class Main {
 
 		# Include news archive
 		if (class_exists('Archive')) {
-			$this->_oArchive = new Archive();
+			$this->_oArchive = new Archive($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_archive_', $this->_oArchive->show());
 		}
 
 		# Include latest headlines
 		if (class_exists('Headlines')) {
-			$this->_oHeadlines = new Headlines();
+			$this->_oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_headlines_', $this->_oHeadlines->show());
 		}
 
