@@ -113,11 +113,6 @@ class Index extends Main {
 			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
 	}
 
-  public final function loadAddons() {
-		if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
-			require_once 'helpers/Addon.helper.php';
-	}
-
   public final function loadPlugins() {
 		$sPlugins = ALLOW_PLUGINS;
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
@@ -244,20 +239,24 @@ class Index extends Main {
 			$oSection->getSection();
 		}
 
+		# We do not have a standard action, so fetch it from the addon folder.
+		# If addon exists, proceed with override.
+		elseif (ALLOW_ADDONS === true && file_exists('app/helpers/Addon.helper.php')) {
+			require_once 'app/helpers/Addon.helper.php';
+      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oSection->setModules();
+      $oSection->getSection();
+    }
+
     # Redirect to start page
     elseif (strtolower($this->_aRequest['section']) == 'start')
       Helper::redirectTo('/');
 
-		# We do not have a standard action, so fetch it from the addon folder.
-		# If addon exists, proceed with override.
-		elseif (ALLOW_ADDONS == true)
-			$oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-
 		# There's no request on a core module and Addons are disabled. */
 		else {
 			header('Status: 404 Not Found');
-			die(LANG_ERROR_GLOBAL_404);
-		}
+      Helper::redirectTo('/public/404.html');
+    }
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested
 		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||

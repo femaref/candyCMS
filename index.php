@@ -62,7 +62,6 @@ $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
 $oIndex->setSkin();
 $oIndex->setLanguage();
-$oIndex->loadAddons();
 $oIndex->loadPlugins();
 
 $aUser = & $oIndex->getActiveUser();

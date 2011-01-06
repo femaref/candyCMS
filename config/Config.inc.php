@@ -105,7 +105,7 @@ define('CRONJOB_SEND_PER_MAIL', false);
 
 # If you want to override existing classes (placed in "app/addons/"), turn true
 # DEFAULT: false
-define('ALLOW_ADDONS', false);
+define('ALLOW_ADDONS', true);
 
 # ------------------------------------------------------------------------------
 

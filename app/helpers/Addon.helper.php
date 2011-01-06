@@ -16,12 +16,9 @@ final class Addon extends Section {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
-
-    $this->_setModules();
-    $this->_getSection();
   }
 
-  private final function _setModules() {
+  public final function setModules() {
     $oDir = opendir('app/addons');
 
     while ($aFile = readdir($oDir)) {
@@ -32,14 +29,14 @@ final class Addon extends Section {
     }
   }
 
-  private final function _getSection() {
+  public final function getSection() {
     switch (strtolower($this->_aRequest['section'])) {
       default:
       case '404':
 
         # TODO: Real 404 page
         header('Status: 404 Not Found');
-        die(LANG_ERROR_GLOBAL_404);
+        Helper::redirectTo('/public/404.html');
 
         break;
 
