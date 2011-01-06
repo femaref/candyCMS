@@ -14,7 +14,7 @@
     {if $_facebook_app_id_}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
-    <link href='{$WEBSITE_URL}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
+    <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS' />
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />

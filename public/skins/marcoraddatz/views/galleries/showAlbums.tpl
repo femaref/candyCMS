@@ -1,6 +1,6 @@
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Gallery/create'>
+    <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
@@ -20,7 +20,7 @@
         <h2>
           <a href='/Gallery/{$a.id}'>{$a.title}</a>
           {if $USER_RIGHT > 3}
-            <a href='/Gallery/{$a.id}/update'>
+            <a href='/gallery/{$a.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />
             </a>
@@ -28,7 +28,7 @@
         </h2>
         <p>
           {if $a.files_sum > 0}
-            <a href='/Gallery/{$a.id}'>
+            <a href='/gallery/{$a.id}'>
               {foreach from=$a.files item=f}
                 <img src='{$f.url_32}'
                      alt='{$f.file}' title='{$f.description}' class='image'

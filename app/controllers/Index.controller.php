@@ -260,7 +260,7 @@ class Index extends Main {
 		}
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested
-		if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
+		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
 			$sCachedHTML = $oSection->getContent();
 
