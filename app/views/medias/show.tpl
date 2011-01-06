@@ -1,6 +1,6 @@
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Media/create'>
+    <a href='/media/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' />
       {$lang_file_create}
     </a>
@@ -52,7 +52,7 @@
           <td style='width:5%'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
                  title='{$lang_destroy}'
-                 onclick="confirmDelete('/Media/destroy/{$f.name}')" />
+                 onclick="confirmDelete('/media/destroy/{$f.name}')" />
           </td>
         </tr>
       {/foreach}

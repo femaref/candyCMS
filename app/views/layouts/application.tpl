@@ -63,8 +63,6 @@
         <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
         &middot;
         <a href='/Disclaimer'>{$lang_disclaimer}</a>
-        &middot;
-        <a href='/Contact/Bugreport'>{$lang_report_error}</a>
       </p>
       <ul>
         {if $USER_RIGHT > 3}

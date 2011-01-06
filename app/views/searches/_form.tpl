@@ -1,4 +1,4 @@
-<form action="/Search" method='post'>
+<form action="/search" method='post'>
   <fieldset>
     <legend>{$lang_search}</legend>
     <div class="input">

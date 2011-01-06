@@ -25,7 +25,6 @@ RewriteRule ^robots.txt$ public/robots.txt [L]
 # Nice to have
 RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA,NC]
 RewriteRule ^About$ index.php?section=content&id=3 [L,QSA,NC]
-RewriteRule ^Contact/([A-Za-z0-9]+)$ index.php?section=mail&id=1&subject=$1 [L,QSA,NC]
 RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301]
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 
@@ -47,7 +46,7 @@ RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&sess
 RewriteRule ^(Static|RSS)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&template=$2 [L]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA,NC]
 RewriteRule ^Language/([a-z]+)$ index.php?language=$1 [L,QSA,NC]
-RewriteRule ^RSS/([A-Za-z]+)/([0-9]+)$ index.php?section=RSS&template=$1&id=$2 [L,QSA,NC]
+RewriteRule ^RSS/([A-Za-z]+)/([0-9]+)$ index.php?section=rss&template=$1&id=$2 [L,QSA,NC]
 RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA,NC]
 RewriteRule ^Start$ index.php [L]
 RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L]

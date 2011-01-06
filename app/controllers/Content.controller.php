@@ -45,7 +45,7 @@ final class Content extends Main {
   protected final function _showFormTemplate($bUpdate = true) {
     if ($bUpdate == true) {
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
-			$this->_oSmarty->assign('_action_url_', '/Content/update');
+			$this->_oSmarty->assign('_action_url_', '/content/update');
 			$this->_oSmarty->assign('_formdata_', 'update_content');
 			$this->_oSmarty->assign('c', $this->_aData);
 
@@ -65,7 +65,7 @@ final class Content extends Main {
 							$this->_aRequest['content'] :
 							'';
 
-			$this->_oSmarty->assign('_action_url_', '/Content/create');
+			$this->_oSmarty->assign('_action_url_', '/content/create');
 			$this->_oSmarty->assign('_formdata_', 'create_content');
 			$this->_oSmarty->assign('_request_id_', '');
 
@@ -102,15 +102,15 @@ final class Content extends Main {
 		else {
 			if ($this->_oModel->create() === true) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
-				return Helper::successMessage(LANG_SUCCESS_CREATE, '/Content');
+				return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
       }
 			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
 		}
 	}
 
   protected final function _update() {
-		$sRedirect = '/Content/' . (int) $this->_aRequest['id'];
+		$sRedirect = '/content/' . (int) $this->_aRequest['id'];
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
@@ -122,9 +122,9 @@ final class Content extends Main {
 	protected final function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
-			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Content');
+			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/content');
     }
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Content');
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
 	}
 }

@@ -1,5 +1,5 @@
 <div id="newsletter">
-  <form method='post' action='/Newsletter'>
+  <form method='post' action='/newsletter'>
     {if $error_email}
       <div class="error">{$error_email}</div>
     {/if}

@@ -32,7 +32,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('gallery_description', Model_Gallery::getAlbumDescription($this->_iId));
 
       # System variables
-      $this->_oSmarty->assign('_album_pages_', $this->_oModel->oPages->showPages('Gallery/'	.$this->_iId));
+      $this->_oSmarty->assign('_album_pages_', $this->_oModel->oPages->showPages('gallery/'	.$this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
@@ -65,7 +65,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate(false);
 
     else {
-			$sRedirect = '/Gallery';
+			$sRedirect = '/gallery';
 
       if ($this->_oModel->create() === true) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'],
@@ -88,7 +88,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate(true);
 
     else {
-			$sRedirect = '/Gallery/' . (int) $this->_aRequest['id'];
+			$sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
 
       if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
@@ -102,7 +102,7 @@ class Gallery extends Main {
 
   # Destroy gallery album
   protected function _destroy() {
-		$sRedirect = '/Gallery';
+		$sRedirect = '/gallery';
 
     if($this->_oModel->destroy($this->_iId) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
@@ -122,7 +122,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('title', $this->_aData['title']);
       $this->_oSmarty->assign('description', $this->_aData['description']);
 
-      $this->_oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/update');
+      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/update');
       $this->_oSmarty->assign('_formdata_', 'update_gallery');
 
       # Language
@@ -140,7 +140,7 @@ class Gallery extends Main {
               $this->_aRequest['description'] :
               '';
 
-      $this->_oSmarty->assign('_action_url_', '/Gallery/create');
+      $this->_oSmarty->assign('_action_url_', '/gallery/create');
       $this->_oSmarty->assign('_formdata_', 'create_gallery');
       $this->_oSmarty->assign('title', $sTitle);
       $this->_oSmarty->assign('description', $sDescription);
@@ -186,10 +186,10 @@ class Gallery extends Main {
       if( isset($this->_aRequest['update_file']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true) {
           Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Gallery');
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
         }
         else
-          return Helper::errorMessage(LANG_ERROR_GLOBAL, '/Gallery');
+          return Helper::errorMessage(LANG_ERROR_GLOBAL, '/gallery');
 			}
       else
         return $this->_showFormFileTemplate(true);
@@ -203,17 +203,17 @@ class Gallery extends Main {
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Gallery');
+        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
         unset($this->_iId);
       }
 			else
-				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/Gallery');
+				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/gallery');
     }
   }
 
   protected final function _showFormFileTemplate($bUpdate = false) {
     if($bUpdate === true) {
-      $this->_oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId. '/updatefile');
+      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/updatefile');
       $this->_oSmarty->assign('_formdata_', 'update_file');
       $this->_oSmarty->assign('description', Model_Gallery::getFileDescription($this->_iId));
 
@@ -226,7 +226,7 @@ class Gallery extends Main {
               Helper::formatInput($this->_aRequest['cut']) :
               'c'; # r = resize, c = cut
 
-      $this->_oSmarty->assign('_action_url_', '/Gallery/'	.$this->_iId.	'/upload/' .session_id());
+      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/upload/' .session_id());
       $this->_oSmarty->assign('_formdata_', 'create_file');
       $this->_oSmarty->assign('default', $sDefault);
       $this->_oSmarty->assign('description', '');

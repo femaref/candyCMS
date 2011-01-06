@@ -1,4 +1,4 @@
-<form method='post' action='/User/create'>
+<form method='post' action='/user/create'>
   <table>
     <tr>
       <th colspan='2'>{$lang_registration}</th>
@@ -68,7 +68,7 @@
     {if $USER_RIGHT < 4}
       <tr class='row2{if $error_disclaimer} error{/if}'>
         <td class='td_left'>
-          <a href='#reload' onclick="reloadPage('/Help/Registration', '{$_public_folder_}')">
+          <a href='#reload' onclick="reloadPage('/help/Registration', '{$_public_folder_}')">
             {$lang_disclaimer_read}
           </a>
         </td>

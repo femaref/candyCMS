@@ -141,10 +141,10 @@ class Mail extends Main {
 
       if ($bStatus == true) {
         Helper::log($this->_aRequest['section'], 'create', (int) $this->_iId);
-				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Start');
+				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/start');
       }
 			else
-				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/Start');
+				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/start');
     }
   }
 

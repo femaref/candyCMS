@@ -69,7 +69,7 @@ final class Comment extends Main {
 				$this->_oSmarty->assign('comment_number', $iCommentNumber);
 
 				# Do we need Pages?
-				$sPages = $this->_oPages->showPages('Comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
+				$sPages = $this->_oPages->showPages('comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
 				$this->_oSmarty->assign('_comment_pages_', $sPages);
 
 				# Language
@@ -122,7 +122,7 @@ final class Comment extends Main {
 		}
 
     # Set new action for form template
-    $this->_sAction = '/Comment/create/' . $this->_aRequest['parent_category'] .
+    $this->_sAction = '/comment/create/' . $this->_aRequest['parent_category'] .
 						'/' . (int) $this->_aRequest['parent_id'] . '#' .
 						(int) $this->_aRequest['parent_id'];
 

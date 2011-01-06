@@ -30,7 +30,7 @@ class User extends Main {
     else {
       if (isset($this->_aRequest['update_user'])) {
         if ($this->_update((int) $this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
       }
@@ -172,15 +172,15 @@ class User extends Main {
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
       if ($oUpload->uploadAvatarFile(false) === true)
-        return Helper::successMessage(LANG_SUCCESS_UPDATE, '/User/' . $this->_iId);
+        return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
 
       else
-        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/User/' . $this->_iId);
+        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
     }
   }
 
 	public function show($iUserId = '') {
-		# Fix to avoid empty UID on /User/Settings shortcut
+		# Fix to avoid empty UID on /user/Settings shortcut
 		if (!empty($iUserId))
 			$this->_iId = (int) $iUserId;
 
@@ -237,10 +237,10 @@ class User extends Main {
     if (USER_RIGHT == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
         Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/User');
+        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/User');
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
     }
     else
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -340,12 +340,12 @@ class User extends Main {
 
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/Start');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/start');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/Start');
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/start');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/Start');
+			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/start');
 	}
 }

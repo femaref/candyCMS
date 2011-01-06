@@ -3,7 +3,7 @@
     <a href='/{$_action_url_}/page/{$_page_previous_}'>&laquo; {$lang_previous_entries}</a>&nbsp;&nbsp;
   {/if}
   {if $_rss_section_}
-    <a href='/RSS/{$_rss_section_}'>
+    <a href='/rss/{$_rss_section_}'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' />
     </a>
   {/if}
