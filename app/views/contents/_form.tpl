@@ -45,7 +45,7 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
       {else}
         <div class='description center'>
           <img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" />
-          <a href='/Help/BB-Code' target='_blank'>{$lang_bb_help}</a>
+          <a href='/help/BB-Code' target='_blank'>{$lang_bb_help}</a>
         </div>
       {/if}
     </div>
@@ -59,7 +59,7 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   </div>
   <div class="cancel">
     <input type='button' value='{$lang_destroy_entry}'
-           onclick="confirmDelete('/Content/{$_request_id_}/destroy')" />
+           onclick="confirmDelete('/content/{$_request_id_}/destroy')" />
   </div>
   {/if}
   <input type='hidden' value='{$_request_id_}' name='id' />

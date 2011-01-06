@@ -7,11 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-/* This class could override the existing blog class easily. Perfect for project specific functions. */
-
-require_once 'app/models/Blog.model.php';
-
-class Addon_Blog {
+/* This is an example for a single addon. */
+class Addon_Projects {
 
   public function __construct($aRequest, $aSession, $aFile = '') {
     $this->_aRequest  = & $aRequest;
@@ -20,11 +17,10 @@ class Addon_Blog {
   }
 
   public function __init() {
-    $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+    #$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
   }
 
   public function show() {
-
+    return 'This is an example!';
   }
 }
-?>

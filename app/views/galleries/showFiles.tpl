@@ -6,7 +6,7 @@
 {/if}
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Gallery/{$_request_id_}/createfile'>
+    <a href='/gallery/{$_request_id_}/createfile'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
@@ -15,7 +15,7 @@
 <h2>
   {$gallery_name} ({$file_no} {$lang_files})
   {if $USER_RIGHT > 3}
-    <a href='/Gallery/{$_request_id_}/update'>
+    <a href='/gallery/{$_request_id_}/update'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />
     </a>
@@ -55,7 +55,7 @@
     </div>
   {/foreach}
   <p>{$_album_pages_}</p>
-  <a href='/RSS/gallery/{$_request_id_}'>
+  <a href='/rss/gallery/{$_request_id_}'>
     <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' />
   </a>
 {/if}

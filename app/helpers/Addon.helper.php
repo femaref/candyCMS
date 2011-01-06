@@ -42,6 +42,16 @@ final class Addon extends Section {
 
         break;
 
+      # This is a sample addon to display your projects
+      case 'projects':
+
+        $oProjects = new Addon_Projects($this->_aRequest, $this->_aSession, $this->_aFile);
+
+        parent::_setContent($oProjects->show());
+        parent::_setTitle('Projekte');
+
+        break;
+
       # Enter your addon information here
     }
   }

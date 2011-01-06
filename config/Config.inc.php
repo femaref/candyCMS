@@ -105,14 +105,14 @@ define('CRONJOB_SEND_PER_MAIL', false);
 
 # If you want to override existing classes (placed in "app/addons/"), turn true
 # DEFAULT: false
-define('ALLOW_ADDONS', false);
+define('ALLOW_ADDONS', true);
 
 # ------------------------------------------------------------------------------
 
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Archive,Headlines');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad');
 
 # ------------------------------------------------------------------------------
 

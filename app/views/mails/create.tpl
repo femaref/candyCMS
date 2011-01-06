@@ -1,4 +1,4 @@
-<form method='post' action='/Mail/{$_request_id_}'>
+<form method='post' action='/mail/{$_request_id_}'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>

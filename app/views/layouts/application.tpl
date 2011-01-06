@@ -28,15 +28,15 @@
           {if $USER_ID > 0}
             <li><strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong></li>
           {/if}
-          <li><a href='/Blog'>{$lang_blog}</a></li>
-          <li><a href='/Gallery'>{$lang_gallery}</a></li>
-          <li><a href='/Search'>{$lang_search}</a></li>
+          <li><a href='/blog'>{$lang_blog}</a></li>
+          <li><a href='/gallery'>{$lang_gallery}</a></li>
+          <li><a href='/search'>{$lang_search}</a></li>
           {if $USER_ID == 0}
-            <li><a href='/Session/create'>{$lang_login}</a></li>
-            <li><a href='/User/create'>{$lang_register}</a></li>
+            <li><a href='/session/create'>{$lang_login}</a></li>
+            <li><a href='/user/create'>{$lang_register}</a></li>
           {else}
-            <li><a href='/User/update'>{$lang_settings}</a></li>
-            <li><a href='/Session/destroy'>{$lang_logout}</a></li>
+            <li><a href='/user/update'>{$lang_settings}</a></li>
+            <li><a href='/dession/destroy'>{$lang_logout}</a></li>
           {/if}
         </ul>
       </div>
@@ -69,28 +69,28 @@
       <ul>
         {if $USER_RIGHT > 3}
           <li>
-            <a href='/Newsletter/create' title='{$lang_newsletter_create}'>
+            <a href='/newsletter/create' title='{$lang_newsletter_create}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_create}</a>
           </li>
           <li>
-            <a href='/Media' title='{$lang_filemanager}'>
+            <a href='/media' title='{$lang_filemanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
               {$lang_filemanager}</a>
           </li>
           <li>
-            <a href='/Content' title='{$lang_contentmanager}'>
+            <a href='/content' title='{$lang_contentmanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
               {$lang_contentmanager}</a>
           </li>
           <li>
-            <a href='/User' title='{$lang_usermanager}'>
+            <a href='/user' title='{$lang_usermanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
               {$lang_usermanager}</a>
           </li>
         {else}
           <li>
-            <a href='/Newsletter' title='{$lang_newsletter_handle}'>
+            <a href='/newsletter' title='{$lang_newsletter_handle}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_handle}</a>
           </li>

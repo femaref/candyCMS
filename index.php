@@ -57,7 +57,6 @@ catch (AdvancedException $e) {
 # We avoid the $_REQUEST due to problems with $_COOKIE
 $aRequest = array_merge($_POST, $_GET);
 $aFiles = isset($_FILES) ? $_FILES : array();
-
 $oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
 $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
