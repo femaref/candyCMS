@@ -244,6 +244,10 @@ class Index extends Main {
 			$oSection->getSection();
 		}
 
+    # Redirect to start page
+    elseif (strtolower($this->_aRequest['section']) == 'start')
+      Helper::redirectTo('/');
+
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
 		elseif (ALLOW_ADDONS == true)
