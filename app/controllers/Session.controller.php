@@ -37,7 +37,7 @@ class Session extends Main {
       return $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/start');
+			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).

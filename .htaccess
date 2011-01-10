@@ -21,7 +21,6 @@ RewriteBase /
 RewriteRule ^favicon.ico$ public/favicon.ico [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
 
-# Static rules
 # Nice to have
 RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA,NC]
 RewriteRule ^About$ index.php?section=content&id=3 [L,QSA,NC]
@@ -31,19 +30,18 @@ RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 # Universal rules
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1 [L,QSA,NC] # Show Section
 RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with id
-RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with description in url
+RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L,QSA,NC] # Show pagination on sub id
 RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC] # Show entry with highlighted background
 RewriteRule ^([A-Za-z]+)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
 RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA,NC] # Non AJAX pagination
 RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA,NC] # Show update / destroy actions
 
 # Section specific rules
-RewriteRule ^(Gallery)/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&album_id=$4&page=1 [L,QSA,NC]
-RewriteRule ^(Gallery)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L,QSA,NC] # Show pagination on sub id
 RewriteRule ^(Blog|Search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA,NC] # Show item sorted by tag
 RewriteRule ^Comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L,QSA,NC]
 RewriteRule ^Comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^Comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA,NC]
+RewriteRule ^Gallery/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=$1&action=$3&id=$2&album_id=$4&page=1 [L,QSA,NC]
 RewriteRule ^Gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L,QSA,NC]
 RewriteRule ^(Static|Rss)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&template=$2 [L,NC]
 RewriteRule ^Media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA,NC]
@@ -51,6 +49,9 @@ RewriteRule ^Language/([a-z]+)$ index.php?language=$1 [L,QSA,NC]
 RewriteRule ^Rss/([A-Za-z]+)/([0-9]+)$ index.php?section=rss&template=$1&id=$2 [L,QSA,NC]
 RewriteRule ^Session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA,NC]
 RewriteRule ^User/resendverification$ index.php?section=user&action=verification [L,NC]
+
+# Evil rule. Last one to avoid breaks.
+RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with description in url
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
