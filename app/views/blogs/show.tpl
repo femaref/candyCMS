@@ -3,7 +3,7 @@
 {/if}
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Blog/create'>
+    <a href='/blog/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
@@ -26,9 +26,9 @@
             {if $b.published == false}
               {$lang_not_published}
             {/if}
-            <a href='/Blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
+            <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
             {if $USER_RIGHT > 3}
-              <a href='/Blog/{$b.id}/update'>
+              <a href='/blog/{$b.id}/update'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />
               </a>
@@ -50,7 +50,7 @@
           {if $b.tags[0] !== ''}
             {$lang_tags}:
             {foreach from=$b.tags item=t name=tags}
-              <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/Blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
+              <a class='js-tooltip' title='{$lang_tags_info}::{$t}' href='/blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
             {/foreach}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {/if}
@@ -82,7 +82,7 @@
             </a>
           </div>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href='/Blog/{$b.id}/{$b.encoded_title}#comments'>
+          <a href='/blog/{$b.id}/{$b.encoded_title}#comments'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' /> {$b.comment_sum} {$lang_comments}
           </a>
         </div>

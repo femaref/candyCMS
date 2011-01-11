@@ -3,7 +3,7 @@
     <th colspan='3'>
       {$user.name} {$user.surname}
       {if $USER_RIGHT == 4}
-        <a href='/User/{$uid}/update'>
+        <a href='/user/{$uid}/update'>
           <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' style='vertical-align:baseline' />
         </a>
       {/if}

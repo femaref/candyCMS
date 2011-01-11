@@ -1,4 +1,4 @@
-<form method='post' action='/User/{$uid}/update'>
+<form method='post' action='/user/{$uid}/update'>
   <table>
     <tr>
       <th colspan='3'>{$lang_headline}</th>

@@ -17,17 +17,17 @@ class Rss extends Main {
     Header('Content-Type: application/rss+xml');
 
 		$this->_sSection = isset($this->_aRequest['template']) ?
-						(string) ucfirst($this->_aRequest['template']) :
+						(string) strtolower($this->_aRequest['template']) :
 						'Blog';
 
     # We might need to add a file extension to the rss feed
-    if (substr($this->_sSection, 0, 4) == 'Blog')
-      $this->_sSection = 'Blog';
+    if (substr($this->_sSection, 0, 4) == 'blog')
+      $this->_sSection = 'blog';
 
 	}
 
 	public function show() {
-		if($this->_sSection == 'Blog') {
+		if($this->_sSection == 'blog') {
 			$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData();
       $this->_setTitle(LANG_GLOBAL_BLOG . ' - ' . WEBSITE_NAME);
@@ -35,7 +35,7 @@ class Rss extends Main {
 			return $this->_showDefault();
 		}
 
-		elseif($this->_sSection == 'Gallery' && $this->_iId > 0) {
+		elseif($this->_sSection == 'gallery' && $this->_iId > 0) {
 			$this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
 

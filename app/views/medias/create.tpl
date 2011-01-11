@@ -1,4 +1,4 @@
-<form action='/Media/create' method='post' enctype='multipart/form-data'>
+<form action='/media/create' method='post' enctype='multipart/form-data'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>

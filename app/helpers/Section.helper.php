@@ -14,11 +14,13 @@ class Section extends Main {
 
   private function _getController() {
     # Check, whether we need to load controllers or if we only want to print out html
-    if ((string) ucfirst($this->_aRequest['section']) !== 'Static') {
+    if ((string) strtolower($this->_aRequest['section']) !== 'static') {
+      # Are addons for existing controllers avaiable? If yes, use them
+      if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
+        $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+        $oAddon->setModules();
 
-      # Are addons avaiable? If yes, use them
-      if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS == true) {
-        new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+
         $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
         $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
       }

@@ -113,11 +113,6 @@ class Index extends Main {
 			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
 	}
 
-  public final function loadAddons() {
-		if (ALLOW_ADDONS == true && file_exists('helpers/Addon.helper.php'))
-			require_once 'helpers/Addon.helper.php';
-	}
-
   public final function loadPlugins() {
 		$sPlugins = ALLOW_PLUGINS;
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
@@ -226,19 +221,19 @@ class Index extends Main {
 		# Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
-						ucfirst($this->_aRequest['section']) == 'Blog' ||
-						ucfirst($this->_aRequest['section']) == 'Comment' ||
-						ucfirst($this->_aRequest['section']) == 'Content' ||
-						ucfirst($this->_aRequest['section']) == 'Gallery' ||
-						ucfirst($this->_aRequest['section']) == 'Language' ||
-						ucfirst($this->_aRequest['section']) == 'Mail' ||
-						ucfirst($this->_aRequest['section']) == 'Media' ||
-						ucfirst($this->_aRequest['section']) == 'Newsletter' ||
-						ucfirst($this->_aRequest['section']) == 'RSS' ||
-						ucfirst($this->_aRequest['section']) == 'Search' ||
-						ucfirst($this->_aRequest['section']) == 'Session' ||
-						ucfirst($this->_aRequest['section']) == 'Static' ||
-						ucfirst($this->_aRequest['section']) == 'User') {
+						strtolower($this->_aRequest['section']) == 'blog' ||
+						strtolower($this->_aRequest['section']) == 'comment' ||
+						strtolower($this->_aRequest['section']) == 'content' ||
+						strtolower($this->_aRequest['section']) == 'gallery' ||
+						strtolower($this->_aRequest['section']) == 'language' ||
+						strtolower($this->_aRequest['section']) == 'mail' ||
+						strtolower($this->_aRequest['section']) == 'media' ||
+						strtolower($this->_aRequest['section']) == 'newsletter' ||
+            strtolower($this->_aRequest['section']) == 'rss' ||
+            strtolower($this->_aRequest['section']) == 'search' ||
+						strtolower($this->_aRequest['section']) == 'session' ||
+            strtolower($this->_aRequest['section']) == 'static' ||
+						strtolower($this->_aRequest['section']) == 'user') {
 
 			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
 			$oSection->getSection();
@@ -246,17 +241,25 @@ class Index extends Main {
 
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
-		elseif (ALLOW_ADDONS == true)
-			$oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+		elseif (ALLOW_ADDONS === true && file_exists('app/helpers/Addon.helper.php')) {
+			require_once 'app/helpers/Addon.helper.php';
+      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oSection->setModules();
+      $oSection->getSection();
+    }
+
+    # Redirect to start page
+    elseif (strtolower($this->_aRequest['section']) == 'start')
+      Helper::redirectTo('/');
 
 		# There's no request on a core module and Addons are disabled. */
 		else {
 			header('Status: 404 Not Found');
-			die(LANG_ERROR_GLOBAL_404);
-		}
+      Helper::redirectTo('/public/404.html');
+    }
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested
-		if ((isset($this->_aRequest['section']) && 'RSS' == $this->_aRequest['section']) ||
+		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
 			$sCachedHTML = $oSection->getContent();
 

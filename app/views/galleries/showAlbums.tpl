@@ -1,6 +1,6 @@
 {if $USER_RIGHT > 3}
   <p>
-    <a href='/Gallery/create'>
+    <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
     </a>
@@ -15,9 +15,9 @@
     {foreach $albums as $a}
       <div class='gallery_album {cycle values="row1,row2"}'>
         <h2>
-          <a href='/Gallery/{$a.id}'>{$a.title}</a>
+          <a href='/gallery/{$a.id}'>{$a.title}</a>
           {if $USER_RIGHT > 3}
-            <a href='/Gallery/{$a.id}/update'>
+            <a href='/gallery/{$a.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />
             </a>
@@ -26,7 +26,7 @@
         <span class='small'>{$a.datetime} - {$a.files_sum} {$lang_files}</span>
         <p>
           {if $a.files_sum > 0}
-            <a href='/Gallery/{$a.id}'>
+            <a href='/gallery/{$a.id}'>
               {foreach $a.files as $f}
                 <img src='{$f.url_32}'
                      alt='{$f.file}' title='{$f.description}' class='image'

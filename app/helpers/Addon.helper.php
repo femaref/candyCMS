@@ -16,12 +16,9 @@ final class Addon extends Section {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
-
-    $this->_setModules();
-    $this->_getSection();
   }
 
-  private final function _setModules() {
+  public final function setModules() {
     $oDir = opendir('app/addons');
 
     while ($aFile = readdir($oDir)) {
@@ -32,13 +29,24 @@ final class Addon extends Section {
     }
   }
 
-  private final function _getSection() {
+  public final function getSection() {
     switch (strtolower($this->_aRequest['section'])) {
       default:
       case '404':
 
-        parent::_setContent(Helper::errorMessage(LANG_ERROR_GLOBAL_404));
-        parent::_setTitle(LANG_ERROR_GLOBAL_404);
+        # TODO: Real 404 page
+        header('Status: 404 Not Found');
+        Helper::redirectTo('/public/404.html');
+
+        break;
+
+      # This is a sample addon to display your projects
+      case 'projects':
+
+        $oProjects = new Addon_Projects($this->_aRequest, $this->_aSession, $this->_aFile);
+
+        parent::_setContent($oProjects->show());
+        parent::_setTitle('Projekte');
 
         break;
 

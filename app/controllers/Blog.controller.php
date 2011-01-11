@@ -78,7 +78,7 @@ class Blog extends Main {
 		# Show update template
 		if ($bUpdate == true) {
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
-			$this->_oSmarty->assign('_action_url_', '/Blog/update');
+			$this->_oSmarty->assign('_action_url_', '/blog/update');
 			$this->_oSmarty->assign('_formdata_', 'update_blog');
 			$this->_oSmarty->assign('author_id', $this->_aData['author_id']);
 			$this->_oSmarty->assign('tags', $this->_aData['tags']);
@@ -101,7 +101,7 @@ class Blog extends Main {
 			$sContent		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
 			$iPublished = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
 
-			$this->_oSmarty->assign('_action_url_', '/Blog/create');
+			$this->_oSmarty->assign('_action_url_', '/blog/create');
 			$this->_oSmarty->assign('_formdata_', 'create_blog');
 			$this->_oSmarty->assign('_request_id_', '');
 			$this->_oSmarty->assign('title', $sTitle);
@@ -134,27 +134,27 @@ class Blog extends Main {
 
 		elseif ($this->_oModel->create() === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
-			return Helper::successMessage(LANG_SUCCESS_CREATE, '/Blog');
+			return Helper::successMessage(LANG_SUCCESS_CREATE, '/blog');
     }
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
 	}
 
 	protected final function _update() {
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
-			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/Blog/' . (int) $this->_aRequest['id']);
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
     }
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
 	}
 
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
-			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/Blog');
+			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/blog');
     }
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Blog');
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
 	}
 }

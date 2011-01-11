@@ -98,6 +98,11 @@ abstract class Main {
 			$this->_oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_headlines_', $this->_oHeadlines->show());
 		}
+		# Include latest teaser
+		if (class_exists('Teaser')) {
+			$this->_oTeaser = new Teaser($this->_aRequest, $this->_aSession);
+			$this->_oSmarty->assign('_plugin_teaser_', $this->_oTeaser->show());
+		}
 
 		# Enable LazyLoad
 		if (class_exists('LazyLoad')) {

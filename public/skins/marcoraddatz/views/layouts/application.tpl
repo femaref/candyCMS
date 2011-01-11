@@ -14,7 +14,7 @@
     {if $_facebook_app_id_}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
-    <link href='{$WEBSITE_URL}/RSS/blog' rel='alternate' type='application/rss+xml' title='RSS' />
+    <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS' />
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
@@ -28,11 +28,11 @@
         <li><a href='/Gallery'>{$lang_gallery}</a></li>
         <li><a href='/Disclaimer'>{$lang_disclaimer}</a></li>
         {if $USER_ID == 0}
-          <li style="float:right"><a href='/User/create'>{$lang_register}</a></li>
-          <li style="float:right"><a href='/Session/create'>{$lang_login}</a></li>
+          <li style="float:right"><a href='/user/create'>{$lang_register}</a></li>
+          <li style="float:right"><a href='/session/create'>{$lang_login}</a></li>
         {else}
-          <li style="float:right"><a href='/Session/destroy'>{$lang_logout}</a></li>
-          <li style="float:right"><a href='/User/update'>{$lang_settings}</a></li>
+          <li style="float:right"><a href='/session/destroy'>{$lang_logout}</a></li>
+          <li style="float:right"><a href='/user/update'>{$lang_settings}</a></li>
         {/if}
       </ul>
     </div>
@@ -53,7 +53,7 @@
         <a href='http://www.studivz.net/Profile/Z8-9k7vbFJJbnaEhntaQVHnGTppx4Mj1fVE6GfIbLXY' rel='external'>studiVZ</a>
         <a href='https://twitter.com/marcoraddatz' rel='external'>Twitter</a>
         <a href='https://www.xing.com/profile/Marco_Raddatz2' rel='external'>XING</a>
-        <a href='/Mail/1'>E-Mail</a>
+        <a href='/mail/1'>E-Mail</a>
         <a href='/upload/media/marcoraddatz.vcf'>vCard</a>
       </p>
     </div>
@@ -90,22 +90,22 @@
       <div id="footer">
         <ul>
           <li>
-            <a href='/Newsletter/create' title='{$lang_newsletter_create}'>
+            <a href='/newsletter/create' title='{$lang_newsletter_create}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
               {$lang_newsletter_create}</a>
           </li>
           <li>
-            <a href='/Media' title='{$lang_filemanager}'>
+            <a href='/media' title='{$lang_filemanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
               {$lang_filemanager}</a>
           </li>
           <li>
-            <a href='/Content' title='{$lang_contentmanager}'>
+            <a href='/content' title='{$lang_contentmanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
               {$lang_contentmanager}</a>
           </li>
           <li>
-            <a href='/User' title='{$lang_usermanager}'>
+            <a href='/user' title='{$lang_usermanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
               {$lang_usermanager}</a>
           </li>

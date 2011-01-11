@@ -37,7 +37,7 @@ class Session extends Main {
       return $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/Start');
+			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
@@ -85,7 +85,7 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Session/create');
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create');
             else
               return Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
@@ -107,7 +107,7 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/Session/create');
+              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create');
             else
               return $this->showCreateSessionTemplate();
           }
@@ -126,7 +126,7 @@ class Session extends Main {
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
 
-      $this->_oSmarty->assign('_action_url_', '/Session/resendpassword');
+      $this->_oSmarty->assign('_action_url_', '/session/resendpassword');
 
       $this->_oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
       $this->_oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
@@ -135,7 +135,7 @@ class Session extends Main {
     else {
       $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
 
-      $this->_oSmarty->assign('_action_url_', '/Session/resendverification');
+      $this->_oSmarty->assign('_action_url_', '/session/resendverification');
 
       $this->_oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
       $this->_oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
@@ -153,10 +153,10 @@ class Session extends Main {
 
   public final function destroy() {
     if ($oStatus = & $this->_oModel->destroy() === true) {
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/Start');
+      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/start');
       unset($_SESSION);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/Start');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/start');
   }
 }

@@ -9,7 +9,7 @@
         <h2>
           {$c.title}
           {if $USER_RIGHT > 3}
-            <a href='/Content/{$c.id}/update'>
+            <a href='/content/{$c.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                    title='{$lang_update}' />
             </a>
@@ -17,7 +17,7 @@
         </h2>
         <div class='date'>
           {$lang_last_update}: {$c.datetime} {$lang_by}
-          <a href='/User/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
+          <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
         </div>
       </div>
     {/if}

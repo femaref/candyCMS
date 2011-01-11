@@ -22,7 +22,7 @@ ini_set('arg_separator.output', '&amp;');
 ini_set('zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
 
-define('VERSION', '20101115');
+define('VERSION', '20110106');
 
 try {
 	if (!file_exists('app/models/Main.model.php') ||
@@ -57,13 +57,11 @@ catch (AdvancedException $e) {
 # We avoid the $_REQUEST due to problems with $_COOKIE
 $aRequest = array_merge($_POST, $_GET);
 $aFiles = isset($_FILES) ? $_FILES : array();
-
 $oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
 $oIndex->loadConfig();
 $oIndex->setBasicConfiguration();
 $oIndex->setSkin();
 $oIndex->setLanguage();
-$oIndex->loadAddons();
 $oIndex->loadPlugins();
 
 $aUser = & $oIndex->getActiveUser();

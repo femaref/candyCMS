@@ -18,7 +18,7 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
     document_base_url : "{$WEBSITE_URL}"
   });
 </script>
-<form method='post' action='/Newsletter/create'>
+<form method='post' action='/newsletter/create'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline}</th>

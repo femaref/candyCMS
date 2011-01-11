@@ -19,9 +19,9 @@ class Media extends Main {
 		else {
 			if (isset($this->_aRequest['upload_file'])) {
 				if ($this->_proceedUpload() === true)
-					return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/Media');
+					return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
 				else
-					return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/Media');
+					return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
 			}
 			else
 				return $this->_showUploadFileTemplate();
@@ -106,10 +106,10 @@ class Media extends Main {
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id'])) {
         unlink(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id']);
-        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/Media');
+        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/media');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/Media');
+        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/media');
     }
   }
 }
