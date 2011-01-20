@@ -12,10 +12,10 @@ require_once 'lib/recaptcha/recaptchalib.php';
 require_once 'app/controllers/User.controller.php';
 
 class Mail extends Main {
-  private $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
-  private $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
-  private $_oRecaptchaResponse = '';
-  private $_sRecaptchaError = '';
+  protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
+  protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
+  protected $_oRecaptchaResponse = '';
+  protected $_sRecaptchaError = '';
 
   # Empty, but required from section helper
   public function __init() {}
@@ -33,7 +33,7 @@ class Mail extends Main {
     }
   }
 
-  private function _showCreateMailTemplate($bShowCaptcha = true) {
+  protected function _showCreateMailTemplate($bShowCaptcha = true) {
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
       $sEmail = (string)$this->_aRequest['email'];
