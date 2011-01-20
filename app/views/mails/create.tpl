@@ -28,7 +28,7 @@
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='subject' class='inputtext' id='subject'
+          <input name='subject' class='' id='subject'
                  value='{$subject}' type='text' />
         </div>
       </td>

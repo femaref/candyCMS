@@ -77,7 +77,7 @@ class Mail extends Main {
     return $this->_oSmarty->fetch('mails/create.tpl');
   }
 
-  private function _checkCaptcha() {
+  protected function _checkCaptcha() {
     if( isset($this->_aRequest['recaptcha_response_field']) ) {
       $this->_oRecaptchaResponse = recaptcha_check_answer (
               $this->_sRecaptchaPrivateKey,
@@ -98,7 +98,7 @@ class Mail extends Main {
       return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
   }
 
-  private function _standardMail($bShowCaptcha = true) {
+  protected function _standardMail($bShowCaptcha = true) {
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 

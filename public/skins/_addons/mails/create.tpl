@@ -1,65 +1,11 @@
-<form method='post' action='/mail/{$_request_id_}'>
+<form method='post' action='/mail/1'>
   <table>
     <tr>
       <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>
     </tr>
-    <tr class='row1{if $error_email} error{/if}'>
-      <td class='td_left'>
-        <label for='email'>{$lang_email}</label>
-      </td>
-      <td class='td_right'>
-        {if $email == ''}
-          <div class="input">
-            <input name='email' id='email' value='{$email}' type='text' />
-            {if $error_email}
-              <div class="description">{$error_email}</div>
-            {/if}
-          </div>
-        {else}
-          {$email}
-          <input name='email' id='email' value='{$email}' type='hidden' />
-        {/if}
-      </td>
-    </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <label for='subject'>{$lang_subject}</label>
-        ({$lang_optional})
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='subject' class='inputtext' id='subject'
-                 value='{$subject}' type='text' />
-        </div>
-      </td>
-    </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <label for='subject'>{$lang_subject}</label>
-        ({$lang_optional})
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='subject' class='inputtext' id='subject'
-                 value='{$subject}' type='text' />
-        </div>
-      </td>
-    </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <label for='subject'>{$lang_subject}</label>
-        ({$lang_optional})
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='subject' class='inputtext' id='subject'
-                 value='{$subject}' type='text' />
-        </div>
-      </td>
-    </tr>
     <tr class='row1{if $error_content} error{/if}'>
       <td class='td_left'>
-        <label for='content'>{$lang_content}</label>
+        <label for='content'>Ihre Nachricht</label>
       </td>
       <td class='td_right'>
         <div class="textarea">
@@ -71,23 +17,88 @@
         </div>
       </td>
     </tr>
+    <tr class='row2{if $error_name} error{/if}'>
+      <td class='td_left'>
+        <label for='name'>Wer sind Sie?</label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='name' id='name' value='{$name}' type='text' />
+          {if $error_name}
+            <div class="description">{$error_name}</div>
+          {/if}
+        </div>
+      </td>
+    </tr>
+    <tr class='row1'>
+      <td class='td_left'>
+        Wie können wie Sie erreichen?
+      </td>
+      <td class='td_right'>
+        <div class="checkbox">
+          <input name='contact_via_mail' class='' id='contact_via_mail'
+                 value='{$subject}' type='checkbox' onclick="showEmail()" />
+          <label for='contact_via_mail'>E-Mail</label>
+          <input name='contact_via_phone' class='' id='contact_via_phone'
+                 value='{$subject}' type='checkbox' onclick="showPhone()" />
+          <label for='contact_via_phone'>Telefon</label>
+        </div>
+      </td>
+    </tr>
+    <tr class='row2 email_hidden'>
+      <td class='td_left'>
+        <label for='subject'>Ihre E-Mail</label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='subject' class='' id='subject'
+                 value='{$subject}' type='text' />
+        </div>
+      </td>
+    </tr>
+    <tr class='row1 email_hidden'>
+      <td class='td_left'>
+        <label for='subject'>Betreff</label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='subject' class='' id='subject'
+                 value='{$subject}' type='text' />
+        </div>
+      </td>
+    </tr>
+    <tr class='row2 phone_hidden'>
+      <td class='td_left'>
+        <label for='subject'>Ihre Telefonnummer</label>
+      </td>
+      <td class='td_right'>
+        <div class="input">
+          <input name='subject' class='' id='subject'
+                 value='{$subject}' type='text' />
+        </div>
+      </td>
+    </tr>
   </table>
-  <br />
-  <center>
-    <script type="text/javascript">
-      var RecaptchaOptions = {
-         lang : 'de'
-      };
-    </script>
-    <div class="{if $error_captcha}error{/if}">
-      {$_captcha_}
-      {if $error_captcha}
-        <div class="description">{$error_captcha}</div>
-      {/if}
-    </div>
-  </center>
   <div class="submit">
-    <input type='submit' value='{$lang_submit}' />
+    <input type='submit' value='Absenden' />
   </div>
   <input type='hidden' value='formdata' name='send_mail' />
 </form>
+<style>
+  .email_hidden, .phone_hidden {
+    display:none;
+}
+</style>
+<script>
+  function showEmail() {
+    $each($$('.email_hidden'), function(el) {
+      el.set('class', '');
+    });
+  };
+
+  function showPhone() {
+    $each($$('.phone_hidden'), function(el) {
+      el.set('class', '');
+    });
+  }
+</script>
