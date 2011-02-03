@@ -36,7 +36,7 @@
             <li><a href='/user/create'>{$lang_register}</a></li>
           {else}
             <li><a href='/user/update'>{$lang_settings}</a></li>
-            <li><a href='/dession/destroy'>{$lang_logout}</a></li>
+            <li><a href='/session/destroy'>{$lang_logout}</a></li>
           {/if}
         </ul>
       </div>

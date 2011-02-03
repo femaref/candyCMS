@@ -43,7 +43,8 @@ abstract class Main {
 	}
 
 	public function __autoload($sClass) {
-    require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
+		if(!class_exists((string)ucfirst($sClass)))
+			require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
   }
 
 	protected function _setSmarty() {
