@@ -14,10 +14,10 @@ abstract class Main {
   protected $_aCookie;
   protected $_iId;
   protected $_aError;
+  protected $_oModel;
   private $_aData = array();
   private $_sContent;
   private $_sTitle;
-  private $_oModel;
 
 	# Plugins
 	protected $_oAdsense;

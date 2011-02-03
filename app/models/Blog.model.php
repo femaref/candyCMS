@@ -91,7 +91,7 @@ class Model_Blog extends Model_Main {
                 'title'             => Helper::formatOutput($aRow['title']),
                 'content'           => Helper::formatOutput($aRow['content']),
                 'teaser'            => Helper::formatOutput($aRow['teaser']),
-                'date'              => Helper::formatTimestamp($aRow['date']),
+                'date'              => Helper::formatTimestamp($aRow['date'], true),
                 'datetime'          => Helper::formatTimestamp($aRow['date']),
                 'date_raw'          => $aRow['date'],
                 'date_rss'          => date('r', $aRow['date']),
