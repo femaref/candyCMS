@@ -27,7 +27,7 @@ final class Archive extends Blog {
     $this->_aData = $this->_oModel->getData('', false, 1000);
 
     foreach ($this->_aData as $aData) {
-      $m = date('F Y', $aData['date_raw']);
+      $m = strftime('%B %Y', $aData['date_raw']);
       $id = $aData['id'];
       $aMonth[$m][$id] = $aData;
     }

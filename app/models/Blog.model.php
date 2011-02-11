@@ -35,7 +35,7 @@ class Model_Blog extends Model_Main {
         $this->_oDb->rollBack();
       }
 
-			$this->oPages = new Pages($this->_aRequest, (int)$iResult, $iLimit);
+			$this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
  
 			try {
 				$oQuery = $this->_oDb->query("SELECT
@@ -62,8 +62,8 @@ class Model_Blog extends Model_Main {
 																			ORDER BY
 																				b.date DESC
 																			LIMIT
-																				" . $this->oPages->getOffset() . ",
-																				" . $this->oPages->getLimit());
+																				" . $this->oPage->getOffset() . ",
+																				" . $this->oPage->getLimit());
 
 				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
 			}
@@ -121,7 +121,7 @@ class Model_Blog extends Model_Main {
 			if (USER_RIGHT < 3)
 				$sWhere = "AND b.published = '1'";
 
-			$this->oPages = new Pages($this->_aRequest, 1);
+			$this->oPage = new Page($this->_aRequest, 1);
 
 			try {
 				$oQuery = $this->_oDb->query("SELECT

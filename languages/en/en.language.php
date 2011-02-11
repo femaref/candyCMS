@@ -159,7 +159,7 @@ define( 'LANG_USER_UPDATE_GRAVATAR_INFO', 'If checked, we will automatically sea
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHANGE', 'Change avatar?' );
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE', 'Choose image' );
 define( 'LANG_USER_UPDATE_IMAGE_TITLE', 'Upload image' );
-define( 'LANG_USER_UPDATE_IMAGE_INFO', 'You are only allowed to upload *.jpg images less than 400KB.' );
+define( 'LANG_USER_UPDATE_IMAGE_INFO', 'You are only allowed images less than 400KB.' );
 define( 'LANG_USER_UPDATE_LABEL_DESCRIPTION', 'Describe yourself' );
 define( 'LANG_USER_UPDATE_LABEL_GRAVATAR', 'Use Gravatar?' );
 define( 'LANG_USER_UPDATE_LABEL_NEWSLETTER', 'Subscribe to newsletter?' );

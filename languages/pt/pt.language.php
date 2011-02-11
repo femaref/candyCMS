@@ -161,7 +161,7 @@ define( 'LANG_USER_UPDATE_GRAVATAR_INFO', 'Se marcada, vamos procurar automatica
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHANGE', 'Altera avatar?' );
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE', 'Escolha a imagem' );
 define( 'LANG_USER_UPDATE_IMAGE_TITLE', 'Enviar imagem' );
-define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Você só é permitido fazer upload de imagens *.jpg menos de 400KB.' );
+define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Você só é permitido fazer upload imagens menos de 400KB.' );
 define( 'LANG_USER_UPDATE_LABEL_DESCRIPTION', 'Descreva-se' );
 define( 'LANG_USER_UPDATE_LABEL_GRAVATAR', 'Use Gravatar?' );
 define( 'LANG_USER_UPDATE_LABEL_NEWSLETTER', 'Assine a newsletter?' );

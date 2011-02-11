@@ -163,7 +163,7 @@ define( 'LANG_USER_UPDATE_GRAVATAR_INFO', 'Aktivierst du dieses Kästchen, wird 
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHANGE', 'Userbild &#xE4;ndern?' );
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE', 'Bild ausw&#xE4;hlen' );
 define( 'LANG_USER_UPDATE_IMAGE_TITLE', 'Bild hochladen' );
-define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Bitte nur *.jpg Dateien mit einer Größe von bis zu 400KB hochladen!' );
+define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!' );
 define( 'LANG_USER_UPDATE_LABEL_DESCRIPTION', 'Über dich' );
 define( 'LANG_USER_UPDATE_LABEL_GRAVATAR', 'Gravatar verwenden?' );
 define( 'LANG_USER_UPDATE_LABEL_NEWSLETTER', 'Newsletter abonieren?' );

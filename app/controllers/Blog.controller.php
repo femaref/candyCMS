@@ -8,11 +8,11 @@
  */
 
 require_once 'app/models/Blog.model.php';
-require_once 'app/helpers/Pages.helper.php';
+require_once 'app/helpers/Page.helper.php';
 require_once 'app/controllers/Comment.controller.php';
 
 class Blog extends Main {
-	public $oPages;
+	public $oPage;
 
 	public function __init() {
 		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
@@ -32,7 +32,7 @@ class Blog extends Main {
 		$oComments->__init($iCommentSum, $this->_aData);
 
 		$this->_oSmarty->assign('_blog_comments_', $oComments->show());
-		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPages->showSurrounding('Blog', 'blog'));
+		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('Blog', 'blog'));
 
 		# Create page title
 		$this->_setTitle($this->_setBlogTitle($this->_aData));

@@ -7,11 +7,11 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-final class Pages {
+final class Page {
   private $_aRequest;
   private $_iLimit;
   private $_iOffset;
-  private $_iPages;
+  private $_iPage;
   private $_iCount;
   private $_iCurrentPage;
 
@@ -21,16 +21,16 @@ final class Pages {
     $this->_iLimit    =& $iLimit;
 
     $this->_iCurrentPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
-    $this->_iPages = ceil($this->_iCount / $this->_iLimit);
+    $this->_iPage = ceil($this->_iCount / $this->_iLimit);
 
-    if (!$this->_iPages)
-      $this->_iPages = 1;
+    if (!$this->_iPage)
+      $this->_iPage = 1;
 
     if ($this->_iCurrentPage < 1)
       $this->_iCurrentPage = 1;
 
-    if ($this->_iCurrentPage > $this->_iPages)
-      $this->_iCurrentPage = $this->_iPages;
+    if ($this->_iCurrentPage > $this->_iPage)
+      $this->_iCurrentPage = $this->_iPage;
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
   }
@@ -50,21 +50,21 @@ final class Pages {
   public final function showPages($sURL, $sRssAction = 'blog') {
     $oSmarty = new Smarty();
     $oSmarty->assign('page_current', $this->_iCurrentPage);
-    $oSmarty->assign('page_count', $this->_iPages);
+    $oSmarty->assign('page_count', $this->_iPage);
     $oSmarty->assign('_action_url_', $sURL);
     $oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages/pages');
-    return $oSmarty->fetch('pages/pages.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages/show');
+    return $oSmarty->fetch('pages/show.tpl');
   }
 
   public final function showSurrounding($sURL, $sRssAction = '') {
     $iNext = '';
     $iPrevious = '';
 
-    if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
+    if ($this->_iPage > 1 && $this->_iCurrentPage < $this->_iPage)
       $iNext = $this->_iCurrentPage + 1;
 
     if ($this->_iCurrentPage > 1)

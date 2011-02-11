@@ -116,7 +116,7 @@ class Model_Gallery extends Model_Main {
     }
 
     $this->_iEntries = count($aResult);
-    $this->oPages = new Pages($this->_aRequest, $this->_iEntries, $iLimit);
+    $this->oPage = new Page($this->_aRequest, $this->_iEntries, $iLimit);
 
     if($this->_iEntries > 0) {
       try {
@@ -139,8 +139,8 @@ class Model_Gallery extends Model_Main {
 																					:limit");
 
         $oQuery->bindParam('album_id', $iId);
-        $oQuery->bindParam('limit', $this->oPages->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPages->getOffset(), PDO::PARAM_INT);
+        $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
+        $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
         $oQuery->execute();
 
 				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);

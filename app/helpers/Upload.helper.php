@@ -18,21 +18,21 @@ final class Upload {
   public $sFilePath;
 
   public final function __construct($aRequest, $aFile, $sRename = '') {
-    $this->_aRequest  = & $aRequest;
-    $this->_aFile     = & $aFile;
-    $this->_sRename   = & $sRename;
+    $this->_aRequest = & $aRequest;
+    $this->_aFile = & $aFile;
+    $this->_sRename = & $sRename;
   }
 
   public function uploadMediaFile() {
     $this->_iId = $this->_replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
-    $this->_sFormAction   = 'Media/upload';
+    $this->_sFormAction = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
     if (!empty($this->_sRename)) {
-      $this->_sRename   = & $this->_replaceNonAlphachars($this->_sRename);
-      $this->sFilePath  = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_sRename . '.' . $this->_sFileExtension;
+      $this->_sRename = & $this->_replaceNonAlphachars($this->_sRename);
+      $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_sRename . '.' . $this->_sFileExtension;
     }
     else
       $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
@@ -72,8 +72,7 @@ final class Upload {
     $this->_iId = USER_ID;
     $this->_sFormAction = 'User/Settings';
     $this->_sUploadFolder = 'user';
-    $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId .
-            '.' . $this->_sFileExtension;
+    $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId;
 
     if ($this->_iId == '0')
       return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
@@ -81,24 +80,80 @@ final class Upload {
     elseif ($this->_aFile['image']['size'] > 409600)
       return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
 
-    elseif ($this->_aFile['image']['type'] !== 'image/jpeg')
-      return Helper::errorMessage(LANG_ERROR_MEDIA_WRONG_FILETYPE);
-
     else {
-			$bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath);
 
-			$oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath, $this->_sFileExtension);
-			$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
-			$oImage->resizeDefault(THUMB_DEFAULT_X);
-			$oImage->resizeDefault('100');
-			$oImage->resizeAndCut('64');
-			$oImage->resizeAndCut('32');
+      $this->_deleteAvatarFiles();
 
-			if ($bReturnPath == true)
-				return $this->_sFilePath;
-			else
-				return $bReturn;
-		}
+      $bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath . '.' . $this->_sFileExtension);
+
+      $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->_sFilePath . '.' . $this->_sFileExtension, $this->_sFileExtension);
+      $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
+      $oImage->resizeDefault(THUMB_DEFAULT_X);
+      $oImage->resizeDefault('100');
+      $oImage->resizeAndCut('64');
+      $oImage->resizeAndCut('32');
+
+      if ($bReturnPath == true)
+        return $this->_sFilePath . '.' . $this->_sFileExtension;
+      else
+        return $bReturn;
+    }
+  }
+
+  private function _deleteAvatarFiles() {
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.jpg'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.jpg');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.png'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.png');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.gif');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_iId . '.gif');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_iId . '.gif');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_iId . '.gif');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_iId . '.gif');
+
+    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.gif'))
+      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_iId . '.gif');
   }
 
   private function _replaceNonAlphachars($sStr) {
@@ -116,16 +171,10 @@ final class Upload {
   }
 
   public function getExtension() {
-		return $this->_sFileExtension;
-	}
+    return $this->_sFileExtension;
+  }
 
-	public function getId() {
-		return $this->_iId . '.' . $this->_sFileExtension;
-	}
-
-	public final function uploadFile($sFilePath = '') {
-		$sFilePath = isset($this->_sFilePath) && !empty($this->_sFilePath) ? $this->_sFilePath : $sFilePath;
-		move_uploaded_file($this->_aFile['file']['tmp_name'], $sFilePath);
-		return $this->_sFilePath;
-	}
+  public function getId() {
+    return $this->_iId . '.' . $this->_sFileExtension;
+  }
 }

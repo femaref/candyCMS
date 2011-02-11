@@ -51,6 +51,8 @@ final class Image {
     }
     elseif ($this->_sImgType == 'png') {
       $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
+      imagealphablending($oNewImg, false);
+      imagesavealpha($oNewImg, true);
       imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
       ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 5);
     }
@@ -103,8 +105,11 @@ final class Image {
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       ImageJPEG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
 
-    elseif ($this->_sImgType == 'png')
+    elseif ($this->_sImgType == 'png') {
+      imagealphablending($oNewImg, false);
+      imagesavealpha($oNewImg, true);
       ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
+    }
 
     elseif ($this->_sImgType == 'gif')
       ImageGIF($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');

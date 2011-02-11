@@ -9,7 +9,7 @@
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Gallery.model.php';
-require_once 'app/helpers/Pages.helper.php';
+require_once 'app/helpers/Page.helper.php';
 
 class Rss extends Main {
 

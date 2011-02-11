@@ -14,7 +14,7 @@ abstract class Model_Main {
   protected $_aData;
   protected $_iId;
   protected $_oDb;
-  public $oPages;
+  public $oPage;
 
   public function __construct($aRequest = '', $aSession = '', $aFile = '') {
     $this->_aRequest = & $aRequest;

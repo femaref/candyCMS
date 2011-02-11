@@ -8,7 +8,7 @@
  */
 
 require_once 'app/models/Gallery.model.php';
-require_once 'app/helpers/Pages.helper.php';
+require_once 'app/helpers/Page.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
@@ -32,7 +32,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('gallery_description', Model_Gallery::getAlbumDescription($this->_iId));
 
       # System variables
-      $this->_oSmarty->assign('_album_pages_', $this->_oModel->oPages->showPages('gallery/'	.$this->_iId));
+      $this->_oSmarty->assign('_album_pages_', $this->_oModel->oPage->showPages('gallery/'	.$this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);

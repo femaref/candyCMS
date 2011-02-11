@@ -271,6 +271,10 @@ table th
   border-bottom: 1px solid #CCCCCC;
 }
 
+.element .header {
+  text-align: left;
+}
+
 .comment {
   margin-top: 15px;
   margin-bottom: 10px;

@@ -8,12 +8,12 @@
 */
 
 require_once 'app/models/Comment.model.php';
-require_once 'app/helpers/Pages.helper.php';
+require_once 'app/helpers/Page.helper.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
 final class Comment extends Main {
   private $_aParentData;
-	private $_oPages;
+	private $_oPage;
 	private $_iEntries;
 	private $_sParentCategory;
 	private $_sParentSection;
@@ -53,8 +53,8 @@ final class Comment extends Main {
 			$sReturn = '';
 			if ($this->_iEntries > 0) {
 				# @Override __init here due to AJAX reasons
-				$this->_oPages = new Pages($this->_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
-				$this->_oModel->__init($this->_iEntries, $this->_oPages->getOffset(), $this->_oPages->getLimit());
+				$this->_oPage = new Page($this->_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
+				$this->_oModel->__init($this->_iEntries, $this->_oPage->getOffset(), $this->_oPage->getLimit());
 				$this->_aData = $this->_oModel->getData($this->_iId, $this->_sParentCategory);
 				$this->_oSmarty->assign('comments', $this->_aData);
 
@@ -65,12 +65,12 @@ final class Comment extends Main {
 				# For correct information, do some math to display entries
 				# NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
 				# when other people don't see it
-				$iCommentNumber = ($this->_oPages->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS;
+				$iCommentNumber = ($this->_oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS;
 				$this->_oSmarty->assign('comment_number', $iCommentNumber);
 
 				# Do we need Pages?
-				$sPages = $this->_oPages->showPages('comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
-				$this->_oSmarty->assign('_comment_pages_', $sPages);
+				$sPage = $this->_oPage->showPages('comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
+				$this->_oSmarty->assign('_comment_pages_', $sPage);
 
 				# Language
 				$this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
