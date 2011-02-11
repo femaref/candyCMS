@@ -71,14 +71,21 @@ if($$('.js-tooltip')) {
     element.store('tip:text', content[1]);
   });
 
-  var myTips = new Tips('.js-tooltip');
-  myTips.addEvent('show', function(tip){
-    tip.fade('in');
+  var oTips = new Tips('.js-tooltip',{
+    fixed: true,
+    hideDelay: 100,
+    showDelay: 100
   });
 
-  myTips.addEvent('hide', function(tip){
-    tip.fade('out');
+  oTips.addEvents({
+    'show': function(tip) {
+      tip.fade('in');
+    },
+    'hide': function(tip) {
+      tip.fade('out');
+    }
   });
+
 }
 
 /********************************************************************************/
