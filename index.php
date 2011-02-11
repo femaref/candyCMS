@@ -30,6 +30,7 @@ try {
 					!file_exists('app/controllers/Search.controller.php') ||
 					!file_exists('app/controllers/Session.controller.php') ||
 					!file_exists('app/controllers/Index.controller.php') ||
+					!file_exists('app/controllers/Log.controller.php') ||
 					!file_exists('app/helpers/AdvancedException.helper.php') ||
 					!file_exists('app/helpers/Section.helper.php') ||
 					!file_exists('app/helpers/Helper.helper.php') ||
@@ -42,6 +43,7 @@ try {
 		require_once 'app/controllers/Search.controller.php';
 		require_once 'app/controllers/Session.controller.php';
 		require_once 'app/controllers/Index.controller.php';
+		require_once 'app/controllers/Log.controller.php';
 		require_once 'app/helpers/AdvancedException.helper.php';
 		require_once 'app/helpers/Section.helper.php';
 		require_once 'app/helpers/Helper.helper.php';

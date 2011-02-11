@@ -51,6 +51,7 @@ define( 'LANG_GLOBAL_IN', 'in' );
 define( 'LANG_GLOBAL_LAST_UPDATE', 'last Update' );
 define( 'LANG_GLOBAL_LOCATION', 'Location' );
 define( 'LANG_GLOBAL_LOGIN', 'Login' );
+define( 'LANG_GLOBAL_LOGS', 'Logs' );
 define( 'LANG_GLOBAL_LOGOUT', 'Logout' );
 define( 'LANG_GLOBAL_MAIL_SEND', 'Send Mail' );
 define( 'LANG_GLOBAL_MESSAGE_CLOSE', 'Close this message with a click.' );

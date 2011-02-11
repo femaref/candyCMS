@@ -210,32 +210,4 @@ final class Helper {
       $oDb->rollBack();
     }
   }
-
-  public static function log($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
-
-    $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
-    $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
-
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
-                                VALUES
-                                  ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
-
-      $oQuery->bindParam('section_name', strtolower($sSectionName));
-      $oQuery->bindParam('action_name', strtolower($sActionName));
-      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
-      $oQuery->bindParam('time_start', $iTimeStart);
-      $oQuery->bindParam('time_end', $iTimeEnd);
-      $oQuery->bindParam('user_id', $iUserId);
-      $bResult = $oQuery->execute();
-      $oDb = null;
-      return $bResult;
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
-  }
 }

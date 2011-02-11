@@ -53,6 +53,7 @@ define( 'LANG_GLOBAL_LANGUAGE_SHORT_CODE', 'Language (short code)' );
 define( 'LANG_GLOBAL_LAST_UPDATE', 'Última actualização' );
 define( 'LANG_GLOBAL_LOCATION', 'Localização' );
 define( 'LANG_GLOBAL_LOGIN', 'Login' );
+define( 'LANG_GLOBAL_LOGS', 'Logs' );
 define( 'LANG_GLOBAL_LOGOUT', 'Logout' );
 define( 'LANG_GLOBAL_MAIL_SEND', 'Enviar e-mail' );
 define( 'LANG_GLOBAL_MESSAGE_CLOSE', 'Fechar esta mensagem com um clique.' );

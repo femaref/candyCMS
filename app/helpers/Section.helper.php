@@ -138,6 +138,13 @@ class Section extends Main {
 
         break;
 
+      case 'log':
+
+        parent::_setContent($this->_oObject->overview());
+        parent::_setTitle(LANG_GLOBAL_LOGS);
+
+        break;
+
       case 'mail':
 
         parent::_setContent($this->_oObject->create());

@@ -225,7 +225,8 @@ class Index extends Main {
 						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
 						strtolower($this->_aRequest['section']) == 'gallery' ||
-						strtolower($this->_aRequest['section']) == 'language' ||
+						#strtolower($this->_aRequest['section']) == 'language' ||
+						strtolower($this->_aRequest['section']) == 'log' ||
 						strtolower($this->_aRequest['section']) == 'mail' ||
 						strtolower($this->_aRequest['section']) == 'media' ||
 						strtolower($this->_aRequest['section']) == 'newsletter' ||
