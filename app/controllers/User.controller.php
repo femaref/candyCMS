@@ -137,7 +137,7 @@ class User extends Main {
     $this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 
     # Set Form params
-    $this->_oSmarty->assign('_action_url_', '/User/update');
+    #$this->_oSmarty->assign('_action_url_', '/user/update');
     $this->_oSmarty->assign('style', 'display:none');
 
     # Language

@@ -72,12 +72,12 @@ final class Helper {
 
   public final static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
     if (!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
-      if(!is_int($sSize))
+      if (!is_int($sSize))
         $sSize = POPUP_DEFAULT_X;
 
       $sMail = md5($aGravatar['email']);
       return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize .
-				'&d=' . WEBSITE_CDN . '/public/images/missing_avatar.jpg';
+        '&d=' . WEBSITE_CDN . '/public/images/missing_avatar.jpg';
     }
     else {
       $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
@@ -167,7 +167,7 @@ final class Helper {
       return $oDate->getDate($iTime, $bDateOnly);
     }
     else {
-      if( $bDateOnly == true )
+      if ($bDateOnly == true)
         return strftime(DEFAULT_DATE_FORMAT, $iTime);
       else
         return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
@@ -187,7 +187,7 @@ final class Helper {
     $sStr = str_replace('&quot;', '"', $sStr);
 
     # Highlight string
-    if(!empty($highlight))
+    if (!empty($highlight))
       $sStr = str_ireplace($highlight, '<span class="highlight">' . $highlight . '</span>', $sStr);
 
     if (class_exists('Bbcode') == true) {

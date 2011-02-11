@@ -69,7 +69,7 @@ final class Upload {
 
   public function uploadAvatarFile($bReturnPath = true) {
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['image']['name'], '.'), 1));
-    $this->_iId = USER_ID;
+    $this->_iId = isset($this->_aRequest['id']) && USER_RIGHT == 4 ? (int)$this->_aRequest['id'] : USER_ID;
     $this->_sFormAction = 'User/Settings';
     $this->_sUploadFolder = 'user';
     $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId;
