@@ -82,13 +82,13 @@ final class Helper {
     else {
       $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
 
-      if (is_file($sFileJpg))
+      if (is_file($sFilePath . '.jpg'))
         return WEBSITE_URL . '/' . $sFilePath . '.jpg';
 
-      elseif (is_file($sFilePng))
+      elseif (is_file($sFilePath . '.png'))
         return WEBSITE_URL . '/' . $sFilePath . '.png';
 
-      elseif (is_file($sFileGif))
+      elseif (is_file($sFilePath . '.gif'))
         return WEBSITE_URL . '/' . $sFilePath . '.gif';
 
       else
