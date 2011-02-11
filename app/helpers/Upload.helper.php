@@ -18,16 +18,16 @@ final class Upload {
   public $sFilePath;
 
   public final function __construct($aRequest, $aFile, $sRename = '') {
-    $this->_aRequest = & $aRequest;
-    $this->_aFile = & $aFile;
-    $this->_sRename = & $sRename;
+    $this->_aRequest  = & $aRequest;
+    $this->_aFile     = & $aFile;
+    $this->_sRename   = & $sRename;
   }
 
   public function uploadMediaFile() {
     $this->_iId = $this->_replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
-    $this->_sFormAction = 'Media/upload';
+    $this->_sFormAction   = 'Media/upload';
     $this->_sUploadFolder = 'media';
 
     if (!empty($this->_sRename)) {

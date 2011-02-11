@@ -27,11 +27,11 @@ define('SMTP_USER', '');
 define('SMTP_PASSWORD', '');
 define('SMTP_PORT', '1025');*/
 
-define('SMTP_ON', true);
-define('SMTP_HOST', 'mail.planetk4.de');
-define('SMTP_USER', 'm01c9361');
-define('SMTP_PASSWORD', 'KXMSthhdaPqF5KgX');
-define('SMTP_PORT', '1025');
+define('SMTP_ON', false);
+define('SMTP_HOST', '');
+define('SMTP_USER', '');
+define('SMTP_PASSWORD', '');
+define('SMTP_PORT', '');
 
 # ------------------------------------------------------------------------------
 

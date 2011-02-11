@@ -80,18 +80,16 @@ final class Helper {
 				'&d=' . WEBSITE_CDN . '/public/images/missing_avatar.jpg';
     }
     else {
-      $sFileJpg = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId . '.jpg';
-      $sFilePng = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId . '.png';
-      $sFileGif = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId . '.gif';
+      $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
 
       if (is_file($sFileJpg))
-        return WEBSITE_URL . '/' . $sFileJpg;
+        return WEBSITE_URL . '/' . $sFilePath . '.jpg';
 
       elseif (is_file($sFilePng))
-        return WEBSITE_URL . '/' . $sFilePng;
+        return WEBSITE_URL . '/' . $sFilePath . '.png';
 
       elseif (is_file($sFileGif))
-        return WEBSITE_URL . '/' . $sFileGif;
+        return WEBSITE_URL . '/' . $sFilePath . '.gif';
 
       else
         return WEBSITE_CDN . '/public/images/missing_avatar.jpg';
