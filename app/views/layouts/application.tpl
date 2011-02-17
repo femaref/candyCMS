@@ -20,6 +20,9 @@
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <script language='javascript' src='%PATH_PUBLIC%/js/core/mootools_1.2.5{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
+    <!--[if IE]>
+      <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
+    <![endif]-->
   </head>
   <body>
     <div id="header">
