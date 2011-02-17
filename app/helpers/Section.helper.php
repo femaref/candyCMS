@@ -140,8 +140,14 @@ class Section extends Main {
 
       case 'log':
 
-        parent::_setContent($this->_oObject->overview());
-        parent::_setTitle(LANG_GLOBAL_LOGS);
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
+					parent::_setContent($this->_oObject->destroy());
+					parent::_setTitle(LANG_GLOBAL_LOGS);
+				}
+				else {
+					parent::_setContent($this->_oObject->overview());
+					parent::_setTitle(LANG_GLOBAL_LOGS);
+				}
 
         break;
 

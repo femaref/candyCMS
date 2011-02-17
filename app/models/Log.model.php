@@ -39,7 +39,7 @@ class Model_Log extends Model_Main {
 		return $this->_setData();
   }
 
-  public static function log($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
+  public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
 
     $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
     $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
@@ -66,4 +66,23 @@ class Model_Log extends Model_Main {
       $oDb->rollBack();
     }
   }
+
+  public function destroy($iId) {
+    try {
+			$oQuery = $this->_oDb->prepare("DELETE FROM
+																				" . SQL_PREFIX . "logs
+																			WHERE
+																				id = :id
+																			LIMIT
+																				1");
+
+			$oQuery->bindParam('id', $iId);
+
+			$bResult = $oQuery->execute();
+			return $bResult;
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
 }

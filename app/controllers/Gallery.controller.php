@@ -68,8 +68,8 @@ class Gallery extends Main {
 			$sRedirect = '/gallery';
 
       if ($this->_oModel->create() === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'],
-								Helper::getLastEntry('gallery_albums'));
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'],
+												Helper::getLastEntry('gallery_albums'));
 
         return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
@@ -91,7 +91,7 @@ class Gallery extends Main {
 			$sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
 
       if( $this->_oModel->update((int)$this->_aRequest['id']) === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
         return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
       }
 
@@ -105,7 +105,7 @@ class Gallery extends Main {
 		$sRedirect = '/gallery';
 
     if($this->_oModel->destroy($this->_iId) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
       return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
 
@@ -169,7 +169,7 @@ class Gallery extends Main {
 			if (isset($this->_aRequest['create_file'])) {
 				if ($this->_oModel->createFile() === true) {
 					# Log uploaded image. Request ID = album id
-					Helper::log($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
+					Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
 					return $this->_oModel->getFilePath();
 				}
 			}
@@ -185,7 +185,7 @@ class Gallery extends Main {
     else {
       if( isset($this->_aRequest['update_file']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true) {
-          Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
         }
         else
@@ -202,7 +202,7 @@ class Gallery extends Main {
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
         unset($this->_iId);
       }

@@ -101,7 +101,7 @@ final class Content extends Main {
 
 		else {
 			if ($this->_oModel->create() === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
 				return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
       }
 			else
@@ -112,7 +112,7 @@ final class Content extends Main {
   protected final function _update() {
 		$sRedirect = '/content/' . (int) $this->_aRequest['id'];
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
     }
 		else
@@ -121,7 +121,7 @@ final class Content extends Main {
 
 	protected final function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/content');
     }
 		else

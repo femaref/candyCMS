@@ -77,6 +77,11 @@
               {$lang_filemanager}</a>
           </li>
           <li>
+            <a href='/log' title='{$lang_logs}'>
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
+              {$lang_logs}</a>
+          </li>
+          <li>
             <a href='/content' title='{$lang_contentmanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
               {$lang_contentmanager}</a>

@@ -140,7 +140,7 @@ class Mail extends Main {
               $sReplyTo);
 
       if ($bStatus == true) {
-        Helper::log($this->_aRequest['section'], 'create', (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
 				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/start');
       }
 			else

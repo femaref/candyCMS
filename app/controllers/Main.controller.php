@@ -136,6 +136,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
 		$this->_oSmarty->assign('lang_filemanager', LANG_GLOBAL_FILEMANAGER);
 		$this->_oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
+		$this->_oSmarty->assign('lang_logs', LANG_GLOBAL_LOGS);
 		$this->_oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
 		$this->_oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
 		$this->_oSmarty->assign('lang_name', LANG_GLOBAL_NAME);

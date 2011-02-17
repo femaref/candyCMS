@@ -80,7 +80,7 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               USER_ID;
 
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_iId);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_iId);
       return $this->_oModel->update($this->_iId);
     }
   }
@@ -236,7 +236,7 @@ class User extends Main {
 	public function destroy() {
     if (USER_RIGHT == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
-        Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
       }
       else
@@ -299,7 +299,7 @@ class User extends Main {
 												WEBSITE_MAIL_NOREPLY);
 
         if($bStatus == true) {
-          Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
 					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
         }
 
