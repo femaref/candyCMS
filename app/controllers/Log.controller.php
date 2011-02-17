@@ -28,13 +28,13 @@ class Log extends Main {
 			return $this->_oSmarty->fetch('logs/overview.tpl');
 		}
 	}
-	# Insert log entry into database
 
+	# Insert log entry into database
 	public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
 		Model_Log::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
 	}
-	# @Override
 
+	# @Override
 	public function destroy() {
 		if (USER_RIGHT < 4)
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
