@@ -80,20 +80,22 @@
               {$lang_filemanager}</a>
           </li>
           <li>
-            <a href='/log' title='{$lang_logs}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
-              {$lang_logs}</a>
-          </li>
-          <li>
             <a href='/content' title='{$lang_contentmanager}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
               {$lang_contentmanager}</a>
           </li>
-          <li>
-            <a href='/user' title='{$lang_usermanager}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
-              {$lang_usermanager}</a>
-          </li>
+          {if $USER_RIGHT == 4}
+            <li>
+              <a href='/log' title='{$lang_logs}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
+                {$lang_logs}</a>
+            </li>
+            <li>
+              <a href='/user' title='{$lang_usermanager}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
+                {$lang_usermanager}</a>
+            </li>
+          {/if}
         {else}
           <li>
             <a href='/newsletter' title='{$lang_newsletter_handle}'>
