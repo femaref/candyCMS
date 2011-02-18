@@ -8,7 +8,7 @@
       <div class='header'>
         <h2>
           {$c.title}
-          {if $USER_RIGHT > 3}
+          {if $USER_RIGHT >= 3}
             <a href='/content/{$c.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                    title='{$lang_update}' />

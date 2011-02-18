@@ -1,4 +1,4 @@
-{if $USER_RIGHT > 3}
+{if $USER_RIGHT >= 3}
   <p>
     <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
@@ -16,7 +16,7 @@
       <div class='gallery_album {cycle values="row1,row2"}'>
         <h2>
           <a href='/gallery/{$a.id}'>{$a.title}</a>
-          {if $USER_RIGHT > 3}
+          {if $USER_RIGHT >= 3}
             <a href='/gallery/{$a.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                     title='{$lang_update}' />

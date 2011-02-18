@@ -1,4 +1,4 @@
-{if $USER_RIGHT > 3}
+{if $USER_RIGHT >= 3}
   <p>
     <a href='/media/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' />

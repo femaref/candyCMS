@@ -65,7 +65,7 @@
         <a href='/Disclaimer'>{$lang_disclaimer}</a>
       </p>
       <ul>
-        {if $USER_RIGHT > 3}
+        {if $USER_RIGHT >= 3}
           <li>
             <a href='/newsletter/create' title='{$lang_newsletter_create}'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />

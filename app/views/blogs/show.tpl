@@ -1,7 +1,7 @@
 {if $_plugin_lazyload_}
   {$_plugin_lazyload_}
 {/if}
-{if $USER_RIGHT > 3}
+{if $USER_RIGHT >= 3}
   <p>
     <a href='/blog/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
@@ -27,7 +27,7 @@
               {$lang_not_published}
             {/if}
             <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
-            {if $USER_RIGHT > 3}
+            {if $USER_RIGHT >= 3}
               <a href='/blog/{$b.id}/update'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                      title='{$lang_update}' />

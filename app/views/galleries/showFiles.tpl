@@ -4,7 +4,7 @@
 {if $AJAX_REQUEST == false}
   <div class='gallery_files' id="js-ajax_reload" name="reload">
 {/if}
-{if $USER_RIGHT > 3}
+{if $USER_RIGHT >= 3}
   <p>
     <a href='/gallery/{$_request_id_}/createfile'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
@@ -14,7 +14,7 @@
 {/if}
 <h2>
   {$gallery_name} ({$file_no} {$lang_files})
-  {if $USER_RIGHT > 3}
+  {if $USER_RIGHT >= 3}
     <a href='/gallery/{$_request_id_}/update'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
             title='{$lang_update}' />
@@ -33,7 +33,7 @@
   {foreach $files as $f}
     <div class="image">
       <a href='{$f.url_popup}' rel='lightbox[]' title='
-        {if $USER_RIGHT > 3}
+        {if $USER_RIGHT >= 3}
           {$lang_uploaded_at}: {$f.date}
           <br />
           <a href="/Gallery/{$f.id}/updatefile">

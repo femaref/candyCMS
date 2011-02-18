@@ -1,4 +1,4 @@
-{if $USER_RIGHT > 3}
+{if $USER_RIGHT >= 3}
   <p>
     <a href='/content/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
@@ -24,7 +24,7 @@
         </a>
       </td>
       <td style='width:10%'>
-        {if $USER_RIGHT > 3}
+        {if $USER_RIGHT >= 3}
           <a href='/content/{$c.id}/update'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
               title='{$lang_update}' />

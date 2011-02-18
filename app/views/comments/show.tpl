@@ -23,10 +23,10 @@
       {$c.content}
     </div>
     <div class='footer'>
-      {if $USER_RIGHT > 3 && $c.author_email}
+      {if $USER_RIGHT >= 3 && $c.author_email}
         <a href="mailto:{$c.author_email}">{$c.author_email}</a>
       {/if}
-      {if $USER_RIGHT > 3 && $c.author_ip}
+      {if $USER_RIGHT >= 3 && $c.author_ip}
         <span>{$c.author_ip}</span>
       {/if}
       <a href='#add'
@@ -34,7 +34,7 @@
         <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang_quote}'
              title='{$lang_quote}' />
       </a>
-      {if $USER_RIGHT > 3}
+      {if $USER_RIGHT >= 3}
         <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
              onclick="confirmDelete('/Comment/{$c.id}/destroy/{$c.parent_id}')"
              title='{$lang_destroy}' />
