@@ -133,7 +133,7 @@ class Blog extends Main {
 			return $this->_showFormTemplate(false);
 
 		elseif ($this->_oModel->create() === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
 			return Helper::successMessage(LANG_SUCCESS_CREATE, '/blog');
     }
 		else
@@ -142,7 +142,7 @@ class Blog extends Main {
 
 	protected final function _update() {
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
     }
 		else
@@ -151,7 +151,7 @@ class Blog extends Main {
 
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, '/blog');
     }
 		else

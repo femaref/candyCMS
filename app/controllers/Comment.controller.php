@@ -136,7 +136,7 @@ final class Comment extends Main {
 							'/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
 			if ($this->_oModel->create() === true) {
-				Helper::log($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
+				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
 				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
 			}
 
@@ -149,7 +149,7 @@ final class Comment extends Main {
 		$sRedirect = '/' . $this->_sParentSection . '/' . (int) $this->_aRequest['parent_id'];
 
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Helper::log($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
 		else

@@ -5,7 +5,7 @@
   {foreach $logs as $l}
     <tr class='{cycle values="row1,row2"}'>
       <td style='width:25%' class="left">
-        <a href='/user/{$l.uid}'>{$l.name} {$l.surname}</a>
+        <a href='/user/{$l.uid}'>{$l.full_name}</a>
       </td>
       <td style='width:10%' class="left">
         {$l.section_name}
