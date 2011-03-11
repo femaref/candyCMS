@@ -6,6 +6,7 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content="{$meta_description}" />
     <meta name='keywords' content="{$meta_keywords}" />
+    <meta name="google-site-verification" content="lQ0NQ4LxSrq_3ouY1zEma88E0Zf8h91-bh_25tDStrE" />
     {if $_id_}
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
