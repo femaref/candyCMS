@@ -302,8 +302,9 @@ class Index extends Main {
 		$sCachedHTML = & $sCachedImages;
 
 		# Cut spaces to minimize filesize
-		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
-		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
+		#$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
+		#$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
+
 		# Compress Data
 		if (extension_loaded('zlib'))
 			@ob_start('ob_gzhandler');

@@ -103,6 +103,20 @@ final class Bbcode {
                     "<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
                     $sStr);
 
+    if (preg_match('#\[code=(.*)\](.*)\[\/code\]#Uis', $sStr)) {
+      preg_match_all('#\[code=(.*)\](.*)\[\/code\]#Uis', $sStr, $aOutput);
+
+      require_once 'lib/geshi/geshi.php';
+
+      $sCode = str_replace('<br />', '\n', $aOutput[2][0]);
+
+      $oGeshi = new GeSHi($sCode, $aOutput[1][0]);
+
+      $sStr = preg_replace('#\[code=(.*)\](.*)\[\/code\]#Uis',
+                      str_replace('\n', '<br />', $oGeshi->parse_code()),
+                      $sStr);
+    }
+
     # [video]file[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
       preg_match_all('#\[video\](.*)\[\/video\]#Uis', $sStr, $aOutput);

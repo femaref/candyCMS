@@ -87,6 +87,12 @@
   padding: 2px;
 }
 
+pre {
+  overflow: auto;
+  padding:10px;
+  background: #eee;
+}
+
 blockquote, .box {
   background:#d7d7d7;
   width:80%;
