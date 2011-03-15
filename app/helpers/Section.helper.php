@@ -65,6 +65,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
+          parent::_setDescription($this->_oObject->getDescription());
         }
 
         break;
@@ -101,6 +102,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
+          parent::_setDescription($this->_oObject->getTitle());
         }
 
         break;
@@ -134,6 +136,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
+          parent::_setDescription($this->_oObject->getTitle());
         }
 
         break;
@@ -154,7 +157,8 @@ class Section extends Main {
       case 'mail':
 
         parent::_setContent($this->_oObject->create());
-        parent::_setTitle(LANG_GLOBAL_CONTACT);
+        parent::_setTitle();
+        parent::_setDescription(LANG_GLOBAL_CONTACT);
 
         break;
 
@@ -171,6 +175,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle(LANG_GLOBAL_FILEMANAGER);
+          parent::_setDescription(LANG_GLOBAL_FILEMANAGER);
         }
 
         break;
@@ -185,6 +190,7 @@ class Section extends Main {
         {
           parent::_setContent($this->_oObject->handleNewsletter());
           parent::_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
+          parent::_setDescription(LANG_NEWSLETTER_HANDLE_TITLE);
         }
 
         break;
@@ -204,6 +210,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle(LANG_GLOBAL_SEARCH);
+          parent::_setDescription(LANG_GLOBAL_SEARCH);
         }
 
         break;
@@ -258,6 +265,7 @@ class Section extends Main {
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());
+          parent::_setDescription($this->_oObject->getTitle());
         }
 
         break;

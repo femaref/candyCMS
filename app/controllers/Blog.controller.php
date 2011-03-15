@@ -35,11 +35,23 @@ class Blog extends Main {
 		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('Blog', 'blog'));
 
 		# Create page title
+    $this->_setDescription($this->_setBlogDescription());
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
 
 		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs/show');
 		return $this->_oSmarty->fetch('blogs/show.tpl');
 	}
+
+  private final function _setBlogDescription() {
+    if ($this->_iId !== '') {
+      if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
+        return $this->_aData[1]['teaser'];
+      else
+        return $this->_aData[1]['title'];
+
+    } else
+      return LANG_GLOBAL_BLOG;
+  }
 
 	private final function _setBlogTitle($aData) {
 		# Create blog

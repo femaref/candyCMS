@@ -17,6 +17,7 @@ abstract class Main {
   protected $_oModel;
   private $_aData = array();
   private $_sContent;
+  private $_sDescription;
   private $_sTitle;
 
 	# Plugins
@@ -188,6 +189,17 @@ abstract class Main {
       return $this->_sTitle;
     else
       return LANG_ERROR_GLOBAL_404;
+  }
+
+  protected function _setDescription($sDescription) {
+    $this->_sDescription =& $sDescription;
+  }
+
+  public function getDescription() {
+    if( $this->_sDescription !== '' )
+      return $this->_sDescription;
+    else
+      return LANG_WEBSITE_SLOGAN;
   }
 
   protected function _setContent($sContent) {
