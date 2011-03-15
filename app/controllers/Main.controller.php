@@ -185,7 +185,7 @@ abstract class Main {
   }
 
   public function getTitle() {
-    if( $this->_sTitle !== '' )
+    if (!empty($this->_sTitle))
       return $this->_sTitle;
     else
       return LANG_ERROR_GLOBAL_404;
@@ -196,7 +196,7 @@ abstract class Main {
   }
 
   public function getDescription() {
-    if( $this->_sDescription !== '' )
+    if (!empty($this->_sDescription))
       return $this->_sDescription;
     else
       return LANG_WEBSITE_SLOGAN;

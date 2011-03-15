@@ -186,6 +186,7 @@ class User extends Main {
 
 		if (empty($this->_iId)) {
 			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
+			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
 
 			if (USER_RIGHT < 3)
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
@@ -217,9 +218,10 @@ class User extends Main {
 			$this->_oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 
-			# Manage PageTitle
+			# Manage title and description
 			$this->_sName = $this->_aData['name'];
 			$this->_setTitle($this->_sName . ' ' . $this->_aData['surname']);
+			$this->_setDescription($this->_sName . ' ' . $this->_aData['surname']);
 
 			# Language
 			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_SHOW_USER_LABEL_DESCRIPTION));

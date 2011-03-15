@@ -68,6 +68,10 @@ class Mail extends Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
+    # Create page title and description
+    $this->_setDescription(LANG_GLOBAL_CONTACT);
+    $this->_setTitle(LANG_GLOBAL_CONTACT);
+
     # Language
     $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);

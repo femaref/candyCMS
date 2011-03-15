@@ -125,6 +125,7 @@ class Session extends Main {
   private final function _showCreateResendActionsTemplate() {
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
+      $this->_setDescription(LANG_SESSION_PASSWORD_INFO);
 
       $this->_oSmarty->assign('_action_url_', '/session/resendpassword');
 
@@ -134,6 +135,7 @@ class Session extends Main {
     }
     else {
       $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
+      $this->_setDescription(LANG_SESSION_VERIFICATION_INFO);
 
       $this->_oSmarty->assign('_action_url_', '/session/resendverification');
 

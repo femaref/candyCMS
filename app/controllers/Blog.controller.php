@@ -34,7 +34,7 @@ class Blog extends Main {
 		$this->_oSmarty->assign('_blog_comments_', $oComments->show());
 		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('Blog', 'blog'));
 
-		# Create page title
+		# Create page title and description
     $this->_setDescription($this->_setBlogDescription());
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
 
@@ -43,7 +43,11 @@ class Blog extends Main {
 	}
 
   private final function _setBlogDescription() {
-    if ($this->_iId !== '') {
+    if (isset($this->_aRequest['action']) &&
+            'search' == $this->_aRequest['action'])
+      return LANG_Helper::removeSlahes($this->_aRequest['id']);
+
+    elseif ($this->_iId !== '') {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
         return $this->_aData[1]['teaser'];
       else
@@ -55,24 +59,24 @@ class Blog extends Main {
 
 	private final function _setBlogTitle($aData) {
 		# Create blog
-		if (isset($this->_aRequest['action']) &&
-						'create' == $this->_aRequest['action'] &&
-						'blog' == $this->_aRequest['section'])
-			return Helper::removeSlahes($this->_aRequest['title']);
+    if (isset($this->_aRequest['action']) &&
+            'create' == $this->_aRequest['action'] &&
+            'blog' == $this->_aRequest['section'])
+      return Helper::removeSlahes($this->_aRequest['title']);
 
-		# Tags
-		elseif (isset($this->_aRequest['action']) &&
-						'search' == $this->_aRequest['action'])
-			return Helper::removeSlahes($this->_aRequest['id']);
+    # Tags
+    elseif (isset($this->_aRequest['action']) &&
+            'search' == $this->_aRequest['action'])
+      return Helper::removeSlahes($this->_aRequest['id']);
 
-		# Default blog
-		elseif ($this->_iId !== '') {
-			# Quick hack for displaying title without html tags
-			$sTitle = Helper::removeSlahes($this->_aData[1]['title']);
-			$sTitle = str_replace('<span class="highlight">', '', $sTitle);
-			$sTitle = str_replace('</span>', '', $sTitle);
-			return $sTitle;
-		}
+    # Default blog
+    elseif ($this->_iId !== '') {
+      # Quick hack for displaying title without html tags
+      $sTitle = Helper::removeSlahes($this->_aData[1]['title']);
+      $sTitle = str_replace('<span class="highlight">', '', $sTitle);
+      $sTitle = str_replace('</span>', '', $sTitle);
+      return $sTitle;
+    }
 
 		# Blog overview with pages
 		else {

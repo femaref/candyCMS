@@ -28,6 +28,7 @@ class Search extends Main {
     else {
       $aTables = array('blogs', 'contents');
       $sSearch = Helper::formatInput($this->_aRequest['id']);
+      $sHeadline = str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE);
 
       # Fetch data
       $this->_aData = $this->_oModel->getData($sSearch, $aTables);
@@ -41,8 +42,12 @@ class Search extends Main {
       $this->_oSmarty->assign('search', $sSearch);
       $this->_oSmarty->assign('tables', $this->_aData);
 
+      # Create page title and description
+      $this->_setDescription($sHeadline);
+      $this->_setTitle($sHeadline);
+
       # Language
-      $this->_oSmarty->assign('lang_headline', str_replace('%s', $sSearch, LANG_SEARCH_SHOW_TITLE));
+      $this->_oSmarty->assign('lang_headline', $sHeadline);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
       return $this->_oSmarty->fetch('searches/show.tpl');
@@ -50,6 +55,9 @@ class Search extends Main {
   }
 
   public function showFormTemplate() {
+    $this->_setDescription(LANG_GLOBAL_SEARCH);
+    $this->_setTitle(LANG_GLOBAL_SEARCH);
+
     $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
     return $this->_oSmarty->fetch('searches/_form.tpl');
   }

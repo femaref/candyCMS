@@ -58,6 +58,9 @@ class Newsletter extends Main {
     $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
     $this->_oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
+    $this->_setDescription(LANG_NEWSLETTER_HANDLE_INFO);
+    $this->_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
+
     $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters/newsletter');
     return $this->_oSmarty->fetch('newsletters/newsletter.tpl');
   }

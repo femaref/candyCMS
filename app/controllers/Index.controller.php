@@ -225,7 +225,6 @@ class Index extends Main {
 						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
 						strtolower($this->_aRequest['section']) == 'gallery' ||
-						#strtolower($this->_aRequest['section']) == 'language' ||
 						strtolower($this->_aRequest['section']) == 'log' ||
 						strtolower($this->_aRequest['section']) == 'mail' ||
 						strtolower($this->_aRequest['section']) == 'media' ||
@@ -266,7 +265,7 @@ class Index extends Main {
 
 		else {
 			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oSmarty->assign('meta_description', LANG_WEBSITE_SLOGAN);
+			$oSmarty->assign('meta_description', $oSection->getDescription());
 			$oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
 			$oSmarty->assign('meta_og_title', $oSection->getTitle());
 			$oSmarty->assign('meta_og_url', CURRENT_URL);
