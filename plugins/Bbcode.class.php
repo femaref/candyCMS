@@ -215,7 +215,7 @@ final class Bbcode {
       $sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
 
     # We have WebM (and mp4) and do use any browser exept FF
-    if (file_exists($sFile . '.webm') && !preg_match('/Firefox/', $_SERVER['HTTP_USER_AGENT']))
+    if (file_exists($sFile . '.webm') && !preg_match('/Firefox\/3/', $_SERVER['HTTP_USER_AGENT']))
       return true;
 
     # We have ogg (and mp4) - serves all
