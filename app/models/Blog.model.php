@@ -7,6 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+if(!class_exists('Pages'))
+  require_once 'app/helpers/Page.helper.php';
+
 class Model_Blog extends Model_Main {
 
 	private function _setData($bEdit = false, $iLimit = '') {

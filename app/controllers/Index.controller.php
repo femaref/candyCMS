@@ -230,6 +230,7 @@ class Index extends Main {
 						strtolower($this->_aRequest['section']) == 'media' ||
 						strtolower($this->_aRequest['section']) == 'newsletter' ||
             strtolower($this->_aRequest['section']) == 'rss' ||
+            strtolower($this->_aRequest['section']) == 'sitemap' ||
             strtolower($this->_aRequest['section']) == 'search' ||
 						strtolower($this->_aRequest['section']) == 'session' ||
             strtolower($this->_aRequest['section']) == 'static' ||

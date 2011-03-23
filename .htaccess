@@ -20,6 +20,7 @@ RewriteBase /
 # Redirect from root to public folder
 RewriteRule ^favicon.ico$ public/favicon.ico [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
+RewriteRule ^sitemap.xml$ index.php?section=sitemap&action=xml&ajax=1 [L]
 
 # Nice to have
 RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA,NC]

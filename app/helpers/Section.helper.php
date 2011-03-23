@@ -231,6 +231,13 @@ class Section extends Main {
 
         break;
 
+      case 'sitemap':
+
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'xml')
+          parent::_setContent($this->_oObject->show());
+
+        break;
+
       case 'session':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
