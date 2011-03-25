@@ -104,7 +104,9 @@
 <form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='upload'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     {if $smarty.get.action == 'createfile'}
       <tr class='row1'>

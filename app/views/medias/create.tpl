@@ -1,7 +1,9 @@
 <form action='/media/create' method='post' enctype='multipart/form-data'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     <tr class='row1'>
       <td class='td_left'>

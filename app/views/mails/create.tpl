@@ -1,7 +1,9 @@
 <form method='post' action='/mail/{$_request_id_}'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>
+      <th colspan='2'>
+        <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
+      </th>
     </tr>
     <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>

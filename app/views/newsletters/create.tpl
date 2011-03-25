@@ -21,7 +21,9 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
 <form method='post' action='/newsletter/create'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     <tr class='row1{if $error_subject} error{/if}'>
       <td class='td_left'>

@@ -7,7 +7,9 @@
   </p>
   <table>
     <tr>
-      <th colspan='5'>{$lang_headline}</th>
+      <th colspan='5'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     {if !$files}
       <tr>

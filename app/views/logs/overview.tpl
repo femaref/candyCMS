@@ -1,6 +1,8 @@
 <table>
   <tr>
-    <th colspan='7'>{$lang_headline}</th>
+    <th colspan='7'>
+      <h1>{$lang_headline}</h1>
+    </th>
   </tr>
   {foreach $logs as $l}
     <tr class='{cycle values="row1,row2"}'>

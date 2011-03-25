@@ -37,7 +37,7 @@ legend {
   font-size: 120%;
 }
 
-h2 {
+h1, h2 {
   font-size: 24px;
   word-spacing: 0.1em;
 }
@@ -220,11 +220,9 @@ form table td {
   padding:2px 5px 2px 5px;
 }
 
-table th
+table th h1
 {
-  padding-bottom: 8px;
-  font-weight:bold;
-  font-size:150%;
+  margin: 0px 0px 10px;
 }
 
 /* Surround Image with Border */
@@ -302,20 +300,25 @@ table th
   background: #dedede;
 }
 
-.element .header .date {
-  font-size: 85%;
+.element h1,
+.element h2 {
+  margin: 3px 0px;
 }
 
-.element h2, .gallery_album h2 {
-  margin: 3px 0px 0px 0px;
+.gallery_files h1,
+.gallery_album h2 {
+  margin:3px 0px 0px;
 }
 
+.element h1 img, .gallery_album h1 img, .gallery_files h1 img,
 .element h2 img, .gallery_album h2 img, .gallery_files h2 img {
   vertical-align: baseline;
 }
 
-.element .header .date {
-  margin-left:15px;
+.element .header h4 {
+  margin: 0px 0px 0px 15px;
+  font-weight: normal;
+  font-size: 90%;
 }
 
 .element_body img {
@@ -334,22 +337,17 @@ table th
   margin-top:3px;
 }
 
-.footer .share a {
-  margin-left: 3px;
-}
-
 .footer .share {
   float: left;
+}
+
+.footer .share a {
+  margin-left: 3px;
 }
 
 .facebook_like {
   clear: both;
   padding-top: 10px;
-}
-
-/* Both gallery options */
-.gallery_files h2 {
-  margin-top: 3px;
 }
 
 .gallery_album {

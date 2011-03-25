@@ -1,7 +1,9 @@
 <form method='post' action='{$_action_url_}'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline}</th>
+      <th colspan='2'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     <tr class='row1{if $error_title} error{/if}'>
       <td class='td_left'>

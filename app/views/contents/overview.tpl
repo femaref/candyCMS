@@ -8,7 +8,9 @@
 {/if}
 <table>
   <tr>
-    <th colspan='4'>{$lang_headline}</th>
+    <th colspan='4'>
+      <h1>{$lang_headline}</h1>
+    </th>
   </tr>
   {foreach $content as $c}
     <tr class='{cycle values="row1,row2"}'>

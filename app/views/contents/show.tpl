@@ -6,7 +6,7 @@
   <div id='c{$c.id}' class='element'>
     {if $AJAX_REQUEST == false}
       <div class='header'>
-        <h2>
+        <h1>
           {$c.title}
           {if $USER_RIGHT >= 3}
             <a href='/content/{$c.id}/update'>
@@ -14,11 +14,11 @@
                    title='{$lang_update}' />
             </a>
           {/if}
-        </h2>
-        <div class='date'>
+        </h1>
+        <h4>
           {$lang_last_update}: {$c.datetime} {$lang_by}
           <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
-        </div>
+        </h4>
       </div>
     {/if}
     {$c.content}

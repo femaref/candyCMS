@@ -34,13 +34,13 @@
               </a>
             {/if}
           </h2>
-          <div class='date'>
+          <h4>
             {$b.datetime} {$lang_by}
             <a href='/user/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
             {if $b.date_modified != ''}
               - {$lang_last_update}: {$b.date_modified}
             {/if}
-          </div>
+          </h4>
         </div>
         {if $b.teaser !== ''}
           <p class="teaser">{$b.teaser}</p>

@@ -12,7 +12,7 @@
     </a>
   </p>
 {/if}
-<h2>
+<h1>
   {$gallery_name} ({$file_no} {$lang_files})
   {if $USER_RIGHT >= 3}
     <a href='/gallery/{$_request_id_}/update'>
@@ -20,7 +20,7 @@
             title='{$lang_update}' />
     </a>
   {/if}
-</h2>
+</h1>
 {if !$files}
   <div class='error' id='js-error' onclick="hideDiv('js-error')">
     <p>{$lang_no_files_uploaded}</p>

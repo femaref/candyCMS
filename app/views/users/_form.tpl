@@ -1,7 +1,9 @@
 <form method='post' action='/user/{$uid}/update'>
   <table>
     <tr>
-      <th colspan='3'>{$lang_headline}</th>
+      <th colspan='3'>
+        <h1>{$lang_headline}</h1>
+      </th>
     </tr>
     <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>

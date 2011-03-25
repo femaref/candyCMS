@@ -1,7 +1,9 @@
 <form method='post' action='/user/create'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_registration}</th>
+      <th colspan='2'>
+        <h1>{$lang_registration}</h1>
+      </th>
     </tr>
     <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
