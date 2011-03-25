@@ -22,10 +22,10 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
 <form method='post' action='{$_action_url_}'>
   <fieldset class="left{if $error_title} error{/if}">
     <legend>
-      {$lang_title}
+      {$lang_title} *
     </legend>
     <div class="input">
-      <input type='text' name='title' title='{$lang_title}' value='{$c.title}' />
+      <input type='text' name='title' title='{$lang_title}' value='{$c.title}' autofocus required />
       {if $error_title}
         <div class="description">{$error_title}</div>
       {/if}
@@ -36,10 +36,10 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
     {/if}
   </fieldset>
   <fieldset class="left{if $error_content} error{/if}">
-    <legend>{$lang_content}</legend>
+    <legend>{$lang_content} *</legend>
     <div class="textarea">
       <textarea name='content' title='{$lang_content}'
-                rows='20' cols='75'>{$c.content}</textarea>
+                rows='20' cols='75' required>{$c.content}</textarea>
       {if $error_content}
         <div class="description">{$error_content}</div>
       {else}

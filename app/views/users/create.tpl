@@ -7,11 +7,11 @@
     </tr>
     <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
-        <label for='name'>{$lang_name}</label>
+        <label for='name'>{$lang_name} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='name' id='name' value='{$name}' type='text' />
+          <input name='name' id='name' value='{$name}' type='name' autofocus required />
           {if $error_name}
             <div class="description">{$error_name}</div>
           {/if}
@@ -20,7 +20,7 @@
     </tr>
     <tr class='row2'>
       <td class='td_left'>
-        <label for='surname'>{$lang_surname} ({$lang_optional})</label>
+        <label for='surname'>{$lang_surname}</label>
       </td>
       <td class='td_right'>
         <div class="input">
@@ -30,11 +30,11 @@
     </tr>
     <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>
-        <label for='email'>{$lang_email}</label>
+        <label for='email'>{$lang_email} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='email' id='email' value='{$email}' type='text' />
+          <input name='email' id='email' value='{$email}' type='email' required />
           {if $error_email}
             <div class="description">{$error_email}</div>
           {/if}
@@ -43,12 +43,12 @@
     </tr>
     <tr class='row2{if $error_password} error{/if}'>
       <td class='td_left'>
-        <label for='password'>{$lang_password}</label>
+        <label for='password'>{$lang_password} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='password' class='inputtext' id='password'
-                 value='' type='password' />
+                 value='' type='password' required />
           {if $error_password}
             <div class="description">{$error_password}</div>
           {/if}
@@ -57,12 +57,12 @@
     </tr>
     <tr class='row1'>
       <td class='td_left'>
-        <label for='password2'>{$lang_password_repeat}</label>
+        <label for='password2'>{$lang_password_repeat} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
           <input name='password2' class='inputtext' id='password2'
-                 value='' type='password' onkeyup="checkPasswords()" />
+                 value='' type='password' onkeyup="checkPasswords()" required />
           <img id="icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" />
         </div>
       </td>
@@ -71,12 +71,12 @@
       <tr class='row2{if $error_disclaimer} error{/if}'>
         <td class='td_left'>
           <a href='#reload' onclick="reloadPage('/help/Registration', '{$_public_folder_}')">
-            {$lang_disclaimer_read}
+            {$lang_disclaimer_read} *
           </a>
         </td>
         <td class='td_right'>
           <div class="checkbox">
-            <input name='disclaimer' value='' type='checkbox' />
+            <input name='disclaimer' value='' type='checkbox' required />
             {if $error_disclaimer}
               <div class="description">{$error_disclaimer}</div>
             {/if}

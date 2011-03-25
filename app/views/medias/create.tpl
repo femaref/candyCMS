@@ -7,7 +7,7 @@
     </tr>
     <tr class='row1'>
       <td class='td_left'>
-        <label for='file'>{$lang_file_choose}</label>
+        <label for='file'>{$lang_file_choose} *</label>
       </td>
       <td class='td_right'>
         <div class="input">

@@ -42,11 +42,11 @@
     </tr>
     <tr class='row1{if $error_title} error{/if}'>
       <td class='td_left'>
-        <label for='title'>{$lang_title}</label>
+        <label for='title'>{$lang_title} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='title' value='{$title}' type='text' id='title' />
+          <input name='title' value='{$title}' type='text' id='title' required />
           {if $error_title}
             <div class="description">{$error_title}</div>
           {/if}
@@ -80,12 +80,12 @@
     </tr>
     <tr class='row2{if $error_content} error{/if}'>
       <td class='td_left'>
-        <label for='content'>{$lang_content}</label>
+        <label for='content'>{$lang_content} *</label>
       </td>
       <td class='td_right'>
         <div class="textarea">
           <textarea name='content'
-            id='content' rows='16' cols='50'>{$content}</textarea>
+            id='content' rows='16' cols='50' required>{$content}</textarea>
           {if $error_content}
             <div class="description">{$error_content}</div>
           {else}

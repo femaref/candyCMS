@@ -7,11 +7,11 @@
     </tr>
     <tr class='row1{if $error_name} error{/if}'>
       <td class='td_left'>
-        <label for='name'>{$lang_name} ({$lang_required})</label>
+        <label for='name'>{$lang_name} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='name' value='{$name}' type='text' id='name' />
+          <input name='name' value='{$name}' type='name' id='name' required />
           {if $error_name}
             <div class="description">{$error_name}</div>
           {/if}
@@ -41,11 +41,11 @@
     </tr>
     <tr class='row1{if $error_email} error{/if}'>
       <td class='td_left'>
-        <label for='email'>{$lang_email}</label>
+        <label for='email'>{$lang_email} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='email' value='{$email}' type='text' id='email' />
+          <input name='email' value='{$email}' type='email' id='email'  required />
           {if $error_email}
             <div class="description">{$error_email}</div>
           {/if}

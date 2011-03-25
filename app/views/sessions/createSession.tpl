@@ -13,15 +13,15 @@
     <fieldset>
       <legend>{$lang_login}</legend>
       <div class="input">
-        <label for='email'>{$lang_email}:</label>
+        <label for='email'>{$lang_email}</label>
         &nbsp;
-        <input name='email' type='text' id='email' value='' />
+        <input name='email' type='text' id='email' value='' autofocus required />
       </div>
       &nbsp;
       <div class="input">
-        <label for='password'>{$lang_password}:</label>
+        <label for='password'>{$lang_password}</label>
         &nbsp;
-        <input name='password' type='password' id='password' value='' />
+        <input name='password' type='password' id='password' value='' required />
       </div>
       <div class="submit">
         <input type='submit' value='{$lang_login}' />

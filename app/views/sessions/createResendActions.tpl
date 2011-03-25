@@ -7,7 +7,7 @@
       <legend>{$lang_headline}</legend>
       <p class='small'>{$lang_description}</p>
       <div class="input">
-        <input name='email' title='' />
+        <input name='email' type="email" title='' autofocus required />
       </div>
       <div class="submit">
         <input type='submit' value='{$lang_submit}' />

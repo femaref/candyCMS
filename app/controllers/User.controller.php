@@ -336,8 +336,8 @@ class User extends Main {
 		# AJAX reload disclaimer
 		$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('users/createUser');
-		return $this->_oSmarty->fetch('users/createUser.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('users/create');
+		return $this->_oSmarty->fetch('users/create.tpl');
 	}
 
 	public function verifyEmail() {

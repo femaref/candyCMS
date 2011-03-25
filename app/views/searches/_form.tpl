@@ -2,7 +2,7 @@
   <fieldset>
     <legend>{$lang_search}</legend>
     <div class="input">
-      <input type="text" value="" name="id" />
+      <input type="search" value="" name="id" autofocus  required />
     </div>
     <div class="submit">
       <input type="submit" value="{$lang_search}" />

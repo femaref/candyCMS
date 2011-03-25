@@ -7,11 +7,11 @@
     </tr>
     <tr class='row1{if $error_title} error{/if}'>
       <td class='td_left'>
-        <label for='title'>{$lang_title}</label>
+        <label for='title'>{$lang_title} *</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='title' value='{$title}' type='text' id='title' />
+          <input name='title' value='{$title}' type='text' id='title' autofocus required />
           {if $error_title}
             <div class="description">{$error_title}</div>
           {/if}

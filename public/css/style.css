@@ -155,7 +155,6 @@ li {
   margin-bottom:5px;
 }
 
-
 /* All form actions */
 .submit, .input, .textarea, .dropdown, .cancel, .checkbox, .button {
   display:inline;
@@ -371,7 +370,6 @@ table th h1
 .video, .audio {
   text-align: center;
 }
-
 
 .form .input input {
   float: left;

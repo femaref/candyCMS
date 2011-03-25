@@ -6,7 +6,7 @@
       <table>
         <tr class='row1{if $error_name} error{/if}'>
           <td class='td_left'>
-            <label for="name">{$lang_name}</label>
+            <label for="name">{$lang_name} *</label>
           </td>
           <td class='td_right'>
             {if $USER_NAME}
@@ -17,7 +17,7 @@
               {/if}
             {else}
               <div class="input">
-                <input type="text" value="{$name}" name="name" id="name" />
+                <input type="text" value="{$name}" name="name" id="name" autofocus required />
                 {if $error_name}
                   <div class="description">{$error_name}</div>
                 {/if}
@@ -27,7 +27,7 @@
         </tr>
         <tr class='row2'>
           <td class='td_left'>
-            <label for="name">{$lang_email} ({$lang_optional})</label>
+            <label for="name">{$lang_email}</label>
           </td>
           <td class='td_right'>
             {if $USER_EMAIL}
@@ -37,7 +37,7 @@
               {/if}
             {else}
               <div class="input">
-                <input type="text" value="{$email}" name="email" id="email" />
+                <input type="email" value="{$email}" name="email" id="email" />
                 <div class='description'>{$lang_email_info}</div>
               </div>
             {/if}
@@ -45,11 +45,11 @@
         </tr>
         <tr class='row1{if $error_content} error{/if}'>
           <td class='td_left'>
-            <label for='js-create_commment_text'>{$lang_content}</label>
+            <label for='js-create_commment_text'>{$lang_content} *</label>
           </td>
           <td class='td_right'>
             <div class="textarea">
-              <textarea name='content' id='js-create_commment_text' rows='10' cols='50'>{$content}</textarea>
+              <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
               {if $error_content}
                 <div class="description">{$error_content}</div>
               {else}
