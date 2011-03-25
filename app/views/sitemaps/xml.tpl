@@ -19,4 +19,18 @@
       <changefreq>monthly</changefreq>
     </url>
   {/foreach}
+  {foreach $gallery as $g}
+    <url>
+      <loc>{$g.url}</loc>
+      <priority>0.5</priority>
+      <changefreq>weekly</changefreq>
+    </url>
+  {/foreach}
+  {foreach $user as $u}
+    <url>
+      <loc>{$u.url}</loc>
+      <priority>0.1</priority>
+      <changefreq>monthly</changefreq>
+    </url>
+  {/foreach}
 </urlset>

@@ -5,11 +5,12 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ */
 
 require_once 'app/helpers/Addon.helper.php';
 
 class Section extends Main {
+
   protected $_oObject;
 
   private function _getController() {
@@ -40,8 +41,8 @@ class Section extends Main {
       return $this->_oObject;
     }
   }
-
   # Handle the pre-defined sections
+
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
       $this->_aRequest['section'] = 'blog';
@@ -219,7 +220,7 @@ class Section extends Main {
 
       case 'search':
 
-        if( isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create' ) {
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
           parent::_setTitle(LANG_GLOBAL_LOGIN);
         }

@@ -76,6 +76,9 @@ class Model_User extends Model_Main {
           $sSurname   = Helper::formatOutput($aRow['surname']);
           $sFullName  = $sName . ' ' . $sSurname;
 
+          $sEncodedTitle = Helper::formatOutput(urlencode($sFullName));
+          $sUrl = WEBSITE_URL . '/user/' . $aRow['id'];
+
           $this->_aData[$iId] = array(
               'name'          => $sName,
               'surname'       => $sSurname,
@@ -85,7 +88,9 @@ class Model_User extends Model_Main {
               'date'          => Helper::formatTimestamp($aRow['date']),
               'id'            => $aRow['id'],
               'use_gravatar'  => $aRow['use_gravatar'],
-              'avatar_32'     => Helper::getAvatar('user', 32, $aRow['id'], $aGravatar)
+              'avatar_32'     => Helper::getAvatar('user', 32, $aRow['id'], $aGravatar),
+              'url'           => $sUrl . '/' . $sEncodedTitle,
+              'url_clean'     => $sUrl
           );
         }
       } catch (AdvancedException $e) {

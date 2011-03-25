@@ -57,12 +57,14 @@ class Model_Gallery extends Model_Main {
 		else {
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
-        $sUrl = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $iId;
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
         $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
+
+        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
+        $sUrl = WEBSITE_URL . '/gallery/' . $iId;
 
 				$this->_aData[$iId] = array(
             'id'          => $aRow['id'],
@@ -77,7 +79,8 @@ class Model_Gallery extends Model_Main {
             'surname'     => $sSurname,
             'full_name'   => $sFullName,
             'files_sum'   => $aRow['filesSum'],
-            'url'         => $sUrl
+            'url'         => $sUrl . '/' . $sEncodedTitle,
+            'url_clean'   => $sUrl
 				);
 
 				if ($aRow['filesSum'] > 0)

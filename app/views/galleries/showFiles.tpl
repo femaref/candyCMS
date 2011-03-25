@@ -36,10 +36,10 @@
         {if $USER_RIGHT >= 3}
           {$lang_uploaded_at}: {$f.date}
           <br />
-          <a href="/Gallery/{$f.id}/updatefile">
+          <a href="/gallery/{$f.id}/updatefile">
               <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
           </a>
-          <a href="/Gallery/{$f.id}/destroyfile">
+          <a href="/gallery/{$f.id}/destroyfile">
               <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
           </a>
           <br />

@@ -15,7 +15,7 @@
     {foreach $albums as $a}
       <div class='gallery_album {cycle values="row1,row2"}'>
         <h2>
-          <a href='/gallery/{$a.id}'>{$a.title}</a>
+          <a href='{$a.url}'>{$a.title}</a>
           {if $USER_RIGHT >= 3}
             <a href='/gallery/{$a.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'

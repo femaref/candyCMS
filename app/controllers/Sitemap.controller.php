@@ -9,6 +9,7 @@
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
+require_once 'app/models/Gallery.model.php';
 
 class Sitemap extends Main {
 
@@ -16,32 +17,35 @@ class Sitemap extends Main {
     Header('Content-Type: text/xml');
   }
 
-  public final function show() {
+  public function show() {
     # start
     $sWebsiteLandingPage = WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE;
-
 
     # blog
     $oBlog = new Model_Blog();
     $aBlog = $oBlog->getData('', false, 1000);
 
-
     # content
     $oContent = new Model_Content();
-    $aContent = $oContent->getData('', false);
+    $aContent = $oContent->getData();
 
     # gallery
+    $oGallery = new Model_Gallery();
+    $aGallery = $oGallery->getData();
 
-    # projects
+    # user
+    $oUser = new Model_User();
+    $aUser = $oUser->getData();
 
     $this->_oSmarty->assign('_website_landing_page_', $sWebsiteLandingPage);
+    $this->_oSmarty->assign('_website_url_', WEBSITE_URL);
 
     $this->_oSmarty->assign('blog', $aBlog);
     $this->_oSmarty->assign('content', $aContent);
+    $this->_oSmarty->assign('gallery', $aGallery);
+    $this->_oSmarty->assign('user', $aUser);
 
-
-
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/xml');
-		return $this->_oSmarty->fetch('sitemaps/xml.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/xml');
+    return $this->_oSmarty->fetch('sitemaps/xml.tpl');
   }
 }
