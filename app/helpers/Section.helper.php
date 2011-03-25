@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'app/helpers/Addon.helper.php';
+require_once 'app/addons/Addon.helper.php';
 
 class Section extends Main {
 

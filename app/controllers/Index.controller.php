@@ -242,8 +242,8 @@ class Index extends Main {
 
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
-		elseif (ALLOW_ADDONS === true && file_exists('app/helpers/Addon.helper.php')) {
-			require_once 'app/helpers/Addon.helper.php';
+		elseif (ALLOW_ADDONS === true && file_exists('app/addons/Addon.helper.php')) {
+			require_once 'app/addons/Addon.helper.php';
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->setModules();
       $oSection->getSection();
