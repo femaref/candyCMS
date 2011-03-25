@@ -17,7 +17,7 @@
               {/if}
             {else}
               <div class="input">
-                <input type="text" value="{$name}" name="name" id="name" autofocus required />
+                <input type="text" value="{$name}" name="name" id="name" required />
                 {if $error_name}
                   <div class="description">{$error_name}</div>
                 {/if}
