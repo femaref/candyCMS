@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-/* This is an example for a single addon. */
+# This is an example for a single addon. Properties were set in Addon.helper.php
 class Addon_Projects {
 
   public function __construct($aRequest, $aSession, $aFile = '') {
@@ -17,7 +17,7 @@ class Addon_Projects {
   }
 
   public function __init() {
-    #$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+    # Your init functions
   }
 
   public function show() {

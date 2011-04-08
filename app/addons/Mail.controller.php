@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-/* This is an example for extending a standard class. */
+# This is an example for extending a standard class.
 class Addon_Mail extends Mail {
 
   public function create() {

@@ -34,7 +34,7 @@ final class Addon extends Section {
       default:
       case '404':
 
-        # TODO: Real 404 page
+        # There is no such requested addon
         header('Status: 404 Not Found');
         Helper::redirectTo('/public/404.html');
 
