@@ -285,9 +285,8 @@ table th h1
   line-height: 140%;
 }
 
-.comment {
-  margin-top: 15px;
-  margin-bottom: 10px;
+.comment, #create_comment {
+  margin: 15px auto 15px auto;
   width: 85%;
   text-align:left;
 }

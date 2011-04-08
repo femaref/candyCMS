@@ -9,148 +9,134 @@
 
 class Model_Comment extends Model_Main {
 
-  private $_iEntries;
+  private final function _setData($iId, $iEntries, $iLimit) {
+    $this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
 
-  public function __init($iEntries, $iOffset, $iLimit) {
-    $this->_iEntries	= & $iEntries;
-    $this->_iOffset		= & $iOffset;
-    $this->_iLimit		= & $iLimit;
-  }
+    try {
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        c.*,
+                                        u.name,
+                                        u.surname,
+                                        u.id AS user_id,
+                                        u.use_gravatar,
+                                        u.email
+                                      FROM
+                                        " . SQL_PREFIX . "comments c
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "users u
+                                      ON
+                                        u.id=c.author_id
+                                      WHERE
+                                        c.parent_id = :parent_id
+                                      ORDER BY
+                                        c.date ASC,
+                                        c.id ASC
+                                      LIMIT
+                                        :offset,
+                                        :limit");
 
-  private final function _setData($parentId, $parentCategory) {
-    if ($this->_iEntries > 0) {
-      try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery->bindParam('parent_id', $iId);
+      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->execute();
 
-        $oQuery = $oDb->prepare("	SELECT
-                                    c.*,
-                                    u.name,
-                                    u.surname,
-                                    u.id AS user_id,
-                                    u.use_gravatar,
-                                    u.email
-                                  FROM
-                                    " . SQL_PREFIX . "comments c
-                                  LEFT JOIN
-                                    " . SQL_PREFIX . "users u
-                                  ON
-                                    u.id=c.author_id
-                                  WHERE
-                                    c.parent_id = :parent_id
-                                  AND
-                                    c.parent_category = :parent_category
-                                  ORDER BY
-                                    c.date ASC,
-                                    c.id ASC
-                                  LIMIT
-                                    :offset,
-                                    :limit");
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
-        $oQuery->bindParam('parent_id', $parentId);
-        $oQuery->bindParam('parent_category', $parentCategory);
-        $oQuery->bindParam('offset', $this->_iOffset, PDO::PARAM_INT);
-        $oQuery->bindParam('limit', $this->_iLimit, PDO::PARAM_INT);
-        $oQuery->execute();
-
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-
-      } catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
-
-      $iLoop = 1;
-      foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
-
-        if(isset($aRow['user_id']))
-          $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
-        else
-          $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
-
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        $this->_aData[$iId] =
-                array(
-                    'id'							    => $aRow['id'],
-                    'user_id'					    => $aRow['user_id'],
-                    'parent_id'				    => $aRow['parent_id'],
-                    'parent_category'			=> $aRow['parent_category'],
-                    'author_id'						=> $aRow['author_id'],
-                    'author_facebook_id'	=> $aRow['author_facebook_id'],
-                    'author_ip'						=> $aRow['author_ip'],
-                    'author_email'			  => $aRow['author_email'],
-                    'author_name'					=> $aRow['author_name'],
-                    'name'								=> Helper::formatOutput($aRow['name']),
-                    'surname'							=> Helper::formatOutput($aRow['surname']),
-                    'full_name'						=> $sFullName,
-                    'encoded_full_name' 	=> urlencode($sFullName),
-                    'avatar_32'						=> Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
-                    'avatar_64'						=> Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
-                    'date'								=> Helper::formatTimestamp($aRow['date'], true),
-                    'datetime'						=> Helper::formatTimestamp($aRow['date']),
-                    'content'							=> Helper::formatOutput($aRow['content']),
-                    'loop'								=> $iLoop
-        );
-
-        $iLoop++;
-      }
-
-			# We crawl the facebook avatars
-			# TODO: Put into seperate method
-			if (class_exists('FacebookCMS')) {
-				$oFacebook = new FacebookCMS(array(
-										'appId' => FACEBOOK_APP_ID,
-										'secret' => FACEBOOK_SECRET,
-								));
-
-				# We go through our data and get all facebook posts
-				$sFacebookUids = '';
-				foreach ($aResult as $aRow) {
-
-					# Skip unnecessary data
-					if (empty($aRow['author_facebook_id']))
-						continue;
-
-					else
-						$sFacebookUids .= $aRow['author_facebook_id'] . ',';
-				}
-
-				# Create a new facebook array with avatar urls
-				$aFacebookAvatarCache = array();
-				$aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
-
-				foreach($aFacebookAvatars as $aFacebookAvatar) {
-					$iUid = $aFacebookAvatar['uid'];
-					$aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
-					$aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
-				}
-
-				# Finally, we need to rebuild avatar data in main data array
-				foreach ($aResult as $aRow) {
-
-					# Skip unnecessary data
-					if (empty($aRow['author_facebook_id']))
-						continue;
-
-					else {
-						$iId = $aRow['id'];
-						$iAuthorFacebookId = $aRow['author_facebook_id'];
-						$this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
-						$this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
-					}
-				}
-			}
-
-      return $this->_aData;
+    } catch (AdvancedException $e) {
+      $oDb->rollBack();
     }
+
+    $iLoop = 1;
+    foreach ($aResult as $aRow) {
+      $iId = $aRow['id'];
+
+      if(isset($aRow['user_id']))
+        $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+      else
+        $aGravatar = array('use_gravatar' => 1, 'email' => $aRow['author_email']);
+
+      # Set SEO friendly user names
+      $sName      = Helper::formatOutput($aRow['name']);
+      $sSurname   = Helper::formatOutput($aRow['surname']);
+      $sFullName  = $sName . ' ' . $sSurname;
+
+      $this->_aData[$iId] =
+              array(
+                  'id'							    => $aRow['id'],
+                  'user_id'					    => $aRow['user_id'],
+                  'parent_id'				    => $aRow['parent_id'],
+                  'parent_category'			=> $aRow['parent_category'],
+                  'author_id'						=> $aRow['author_id'],
+                  'author_facebook_id'	=> $aRow['author_facebook_id'],
+                  'author_ip'						=> $aRow['author_ip'],
+                  'author_email'			  => $aRow['author_email'],
+                  'author_name'					=> $aRow['author_name'],
+                  'name'								=> Helper::formatOutput($aRow['name']),
+                  'surname'							=> Helper::formatOutput($aRow['surname']),
+                  'full_name'						=> $sFullName,
+                  'encoded_full_name' 	=> urlencode($sFullName),
+                  'avatar_32'						=> Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
+                  'avatar_64'						=> Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
+                  'date'								=> Helper::formatTimestamp($aRow['date'], true),
+                  'datetime'						=> Helper::formatTimestamp($aRow['date']),
+                  'content'							=> Helper::formatOutput($aRow['content']),
+                  'loop'								=> $iLoop
+      );
+
+      $iLoop++;
+    }
+
+    # We crawl the facebook avatars
+    # TODO: Put into seperate method
+    if (class_exists('FacebookCMS')) {
+      $oFacebook = new FacebookCMS(array(
+                  'appId' => FACEBOOK_APP_ID,
+                  'secret' => FACEBOOK_SECRET,
+              ));
+
+      # We go through our data and get all facebook posts
+      $sFacebookUids = '';
+      foreach ($aResult as $aRow) {
+
+        # Skip unnecessary data
+        if (empty($aRow['author_facebook_id']))
+          continue;
+
+        else
+          $sFacebookUids .= $aRow['author_facebook_id'] . ',';
+      }
+
+      # Create a new facebook array with avatar urls
+      $aFacebookAvatarCache = array();
+      $aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
+
+      foreach($aFacebookAvatars as $aFacebookAvatar) {
+        $iUid = $aFacebookAvatar['uid'];
+        $aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
+        $aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
+      }
+
+      # Finally, we need to rebuild avatar data in main data array
+      foreach ($aResult as $aRow) {
+
+        # Skip unnecessary data
+        if (empty($aRow['author_facebook_id']))
+          continue;
+
+        else {
+          $iId = $aRow['id'];
+          $iAuthorFacebookId = $aRow['author_facebook_id'];
+          $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
+          $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
+        }
+      }
+    }
+
+    return $this->_aData;
   }
 
-  public final function getData($iParentId, $sParentCategory) {
-    return $this->_setData($iParentId, $sParentCategory);
+  public final function getData($iId, $iEntries, $iLimit) {
+    return $this->_setData($iId, $iEntries, $iLimit);
   }
 
   public final function countData($iParentId, $sParentCategory = 'b') {

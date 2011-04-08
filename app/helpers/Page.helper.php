@@ -13,15 +13,17 @@ final class Page {
   private $_iLimit;
   private $_iOffset;
   private $_iPages;
-  private $_iCount;
+  private $_iEntries;
   private $_iCurrentPage;
 
-  public final function __construct($aRequest, $iCount, $iLimit = 10) {
-    $this->_aRequest = & $aRequest;
-    $this->_iCount = & $iCount;
-    $this->_iLimit = & $iLimit;
+  public final function __construct($aRequest, $iEntries, $iLimit = 10) {
+    $this->_aRequest =& $aRequest;
+    $this->_iEntries =& $iEntries;
+    $this->_iLimit =& $iLimit;
 
-    $this->_iPages = ceil($this->_iCount / $this->_iLimit); # All pages
+    #die(print_r($this));
+
+    $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
     $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ? (int) $this->_aRequest['page'] : 1;
 
     if (!$this->_iPages)
@@ -79,7 +81,6 @@ final class Page {
     $oSmarty = new Smarty();
     $oSmarty->assign('_action_url_', $sUrl);
     $oSmarty->assign('_page_limit_', $this->_iLimit);
-    $oSmarty->assign('_page_count_', $this->_iCount);
     $oSmarty->assign('_page_next_', $iNext);
     $oSmarty->assign('_page_previous_', $iPrevious);
     $oSmarty->assign('_rss_section_', $sRssAction);

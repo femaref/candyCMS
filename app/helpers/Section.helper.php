@@ -85,8 +85,8 @@ class Section extends Main {
           parent::_setTitle(LANG_COMMENT_TITLE_DESTROY);
           parent::_setDescription(LANG_COMMENT_TITLE_DESTROY);
         }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'show')
-          parent::_setContent($this->_oObject->show());
+        #elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'show')
+        #  parent::_setContent($this->_oObject->show());
 
         break;
 

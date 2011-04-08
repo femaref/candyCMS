@@ -19,24 +19,24 @@ class Blog extends Main {
 	}
 
 	public function show() {
-		$this->_aData = $this->_oModel->getData($this->_iId);
-		$this->_oSmarty->assign('blog', $this->_aData);
+    $this->_aData = $this->_oModel->getData($this->_iId);
 
-		# Count comments
-		$iCommentSum = 0;
-		if (!empty($this->_iId))
-			$iCommentSum = $this->_aData[1]['comment_sum'];
+    # Load comments
+    if( !empty($this->_iId) ) {
+      $oComments = new Comment($this->_aRequest, $this->_aSession);
+      $oComments->__init($this->_aData);
 
-		# Load Comments
-		$oComments = new Comment($this->_aRequest, $this->_aSession);
-		$oComments->__init($iCommentSum, $this->_aData);
+      $this->_oSmarty->assign('_blog_comments_', $oComments->show());
 
-		$this->_oSmarty->assign('_blog_comments_', $oComments->show());
-		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
+    # Load blog pages
+    } else
+      $this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
 
 		# Create page title and description
     $this->_setDescription($this->_setBlogDescription());
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
+
+		$this->_oSmarty->assign('blog', $this->_aData);
 
 		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs/show');
 		return $this->_oSmarty->fetch('blogs/show.tpl');

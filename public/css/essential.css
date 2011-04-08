@@ -16,6 +16,7 @@
 
 #create_comment {
   margin-top: 30px;
+  text-align: center !important;
 }
 
 .cancel input {

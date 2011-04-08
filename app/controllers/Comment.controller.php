@@ -13,80 +13,36 @@ require_once 'lib/recaptcha/recaptchalib.php';
 
 final class Comment extends Main {
   private $_aParentData;
-	private $_oPage;
-	private $_iEntries;
-	private $_sParentCategory;
-	private $_sParentSection;
-	private $_sAction;
 	private $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
 	private $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
 	private $_oRecaptchaResponse = '';
 	private $_sRecaptchaError = '';
 
-  public function __init($iEntries = '', $aParentData = '') {
-    $this->_iEntries    =& $iEntries;
+  public function __init($aParentData) {
     $this->_aParentData =& $aParentData;
-
     $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
-
-    # Define Blog as standard category
-    # b = blog
-    $this->_sParentCategory = 'b';
-    $this->_sParentSection	= 'blog';
-    $this->_sAction         = '/comment/create/'.	$this->_sParentCategory.	'/'	.$this->_iId; #TODO
   }
 
   public final function show() {
 		if ($this->_iId) {
-			if (isset($this->_aRequest['ajax'])) {
-				if ($this->_sParentCategory == 'b') {
-					$this->__autoload('Blog');
-					$oBlog = new Blog($this->_aRequest, $this->_aSession);
-					$oBlog->__init();
+      $this->_oSmarty->assign('comments', $this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
-					$this->_aParentData = & $oBlog->_oModel->getData($this->_iId);
-					$this->_iEntries = & $this->_aParentData[1]['comment_sum'];
-				}
-			}
+      # Set author of blog entry
+      $this->_oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
 
-			# Do only load comments, if they are avaiable
-			$sReturn = '';
-			if ($this->_iEntries > 0) {
-				# @Override __init here due to AJAX reasons
-				$this->_oPage = new Page($this->_aRequest, $this->_iEntries, LIMIT_COMMENTS, 1);
-				$this->_oModel->__init($this->_iEntries, $this->_oPage->getOffset(), $this->_oPage->getLimit());
-				$this->_aData = $this->_oModel->getData($this->_iId, $this->_sParentCategory);
-				$this->_oSmarty->assign('comments', $this->_aData);
+      # For correct information, do some math to display entries
+      # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
+      # when other people don't see it
+      $this->_oSmarty->assign('comment_number', ($this->_oModel->oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
-				# Set author of blog entry
-				$iAuthorId = (int) $this->_aParentData[1]['author_id'];
-				$this->_oSmarty->assign('author_id', $iAuthorId);
+      # Do we need pages?
+      $this->_oSmarty->assign('_comment_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
 
-				# For correct information, do some math to display entries
-				# NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
-				# when other people don't see it
-				$iCommentNumber = ($this->_oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS;
-				$this->_oSmarty->assign('comment_number', $iCommentNumber);
+      # Language
+      $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
-				# Do we need Pages?
-				$sPage = $this->_oPage->showPages($this->_iId);
-				$this->_oSmarty->assign('_comment_pages_', $sPage);
-
-				# Language
-				$this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
-
-				$this->_oSmarty->template_dir = Helper::getTemplateDir('comments/show');
-				$sReturn .= $this->_oSmarty->fetch('comments/show.tpl');
-			}
-
-			# Does the user have enough rights to enter a comment?
-			# Show createComment Template if we don't have an action - description below
-			if (!empty($this->_iId) || isset($this->_aRequest['parent_category'])) {
-				if (!isset($this->_aRequest['ajax']) && !empty($this->_aParentData[1]['title']))
-					$sReturn .= $this->create('create_comment');
-			}
-
-			return $sReturn;
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('comments/show');
+      return $this->_oSmarty->fetch('comments/show.tpl') . $this->create('create_comment');
 		}
 	}
 
@@ -157,48 +113,42 @@ final class Comment extends Main {
 	}
 
   protected final function _showFormTemplate($bShowCaptcha) {
-    # Do we know, in which parent category we want to post?
-    if( empty($this->_sAction) )
-      return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
+    $sName = isset($this->_aRequest['name']) ?
+            (string) $this->_aRequest['name'] :
+            '';
 
-    else {
-      $sName = isset($this->_aRequest['name']) ?
-							(string) $this->_aRequest['name'] :
-							'';
+    $sEmail = isset($this->_aRequest['email']) ?
+            (string) $this->_aRequest['email'] :
+            '';
 
-			$sEmail = isset($this->_aRequest['email']) ?
-							(string) $this->_aRequest['email'] :
-							'';
+    $sContent = isset($this->_aRequest['content']) ?
+            (string) $this->_aRequest['content'] :
+            '';
 
-			$sContent = isset($this->_aRequest['content']) ?
-							(string) $this->_aRequest['content'] :
-							'';
+    $iParentId = isset($this->_aRequest['parent_id']) ?
+            (int) $this->_aRequest['parent_id'] :
+            (int) $this->_iId;
 
-			$iParentId = isset($this->_aRequest['parent_id']) ?
-							(int) $this->_aRequest['parent_id'] :
-							(int) $this->_iId;
+    #$this->_oSmarty->assign('_action_url_', $this->_sAction);
+    $this->_oSmarty->assign('_parent_id_', $iParentId);
+    $this->_oSmarty->assign('content', $sContent);
+    $this->_oSmarty->assign('email', $sEmail);
+    $this->_oSmarty->assign('name', $sName);
 
-			$this->_oSmarty->assign('_action_url_', $this->_sAction);
-			$this->_oSmarty->assign('_parent_id_', $iParentId);
-			$this->_oSmarty->assign('content', $sContent);
-			$this->_oSmarty->assign('email', $sEmail);
-			$this->_oSmarty->assign('name', $sName);
+    if ($bShowCaptcha === true)
+      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
+                      $this->_sRecaptchaError));
 
-      if ($bShowCaptcha === true)
-				$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
-												$this->_sRecaptchaError));
-
-			if (!empty($this->_aError)) {
-				foreach ($this->_aError as $sField => $sMessage)
-					$this->_oSmarty->assign('error_' . $sField, $sMessage);
-			}
-
-			# Language
-			$this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
-
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
-			return $this->_oSmarty->fetch('comments/_form.tpl');
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
+
+    # Language
+    $this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
+
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
+    return $this->_oSmarty->fetch('comments/_form.tpl');
   }
 
   private function _checkCaptcha($bShowCaptcha = true) {

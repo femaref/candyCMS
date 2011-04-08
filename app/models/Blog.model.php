@@ -48,7 +48,7 @@ class Model_Blog extends Model_Main {
 																				u.surname,
 																				u.email,
 																				u.use_gravatar,
-																				COUNT(c.id) AS commentSum
+																				COUNT(c.id) AS comment_sum
 																			FROM
 																				" . SQL_PREFIX . "blogs b
 																			LEFT JOIN
@@ -106,7 +106,7 @@ class Model_Blog extends Model_Main {
                 'full_name'         => $sFullName,
                 'name'              => $sName,
                 'surname'           => $sSurname,
-                'comment_sum'       => $aRow['commentSum'],
+                'comment_sum'       => $aRow['comment_sum'],
                 'published'         => $aRow['published'],
                 'url'               => $sUrl . '/' . $sEncodedTitle,
                 'url_clean'         => $sUrl
@@ -124,60 +124,58 @@ class Model_Blog extends Model_Main {
 			if (USER_RIGHT < 3)
 				$sWhere = "AND b.published = '1'";
 
-			$this->oPage = new Page($this->_aRequest, 1);
+      try {
+        $oQuery = $this->_oDb->query("SELECT
+                                        b.*,
+                                        u.id AS uid,
+                                        u.name,
+                                        u.surname,
+                                        COUNT(c.id) AS commentSum
+                                      FROM
+                                        " . SQL_PREFIX . "blogs b
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "users u
+                                      ON
+                                        b.author_id=u.id
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "comments c
+                                      ON
+                                        c.parent_id=b.id AND c.parent_category='b'
+                                      WHERE
+                                        b.id = '" . Helper::formatInput($this->_iId) . "'
+                                      " . $sWhere . "
+                                      GROUP BY
+                                        b.title
+                                      LIMIT 1");
 
-			try {
-				$oQuery = $this->_oDb->query("SELECT
-																				b.*,
-																				u.id AS uid,
-																				u.name,
-																				u.surname,
-																				COUNT(c.id) AS commentSum
-																			FROM
-																				" . SQL_PREFIX . "blogs b
-																			LEFT JOIN
-																				" . SQL_PREFIX . "users u
-																			ON
-																				b.author_id=u.id
-																			LEFT JOIN
-																				" . SQL_PREFIX . "comments c
-																			ON
-																				c.parent_id=b.id AND c.parent_category='b'
-																			WHERE
-																				b.id = '" . Helper::formatInput($this->_iId) . "'
-																			" . $sWhere . "
-																			GROUP BY
-																				b.title
-																			LIMIT 1");
+        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      }
+      catch (AdvancedException $e) {
+        $this->_oDb->rollBack();
+      }
 
-				$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      $aRow =& $aResult;
 
-			$aRow =& $aResult;
-
-			# Edit only
-			if ($bEdit == true) {
-				$this->_aData = array(
-						'id'        => $aRow['id'],
-						'author_id'	=> $aRow['author_id'],
-						'tags'      => Helper::removeSlahes($aRow['tags']),
-						'title'     => Helper::removeSlahes($aRow['title']),
-						'teaser'    => Helper::removeSlahes($aRow['teaser']),
-						'content'   => Helper::removeSlahes($aRow['content']),
-						'date'      => Helper::formatTimestamp($aRow['date'], true),
-						'datetime'  => Helper::formatTimestamp($aRow['date']),
-						'published' => $aRow['published']
-				);
-				unset($sContent);
-			}
-			# Give back blog entry
-			else {
-				$aTags = explode(', ', $aRow['tags']);
+      # Edit only
+      if ($bEdit == true) {
+        $this->_aData = array(
+            'id'        => $aRow['id'],
+            'author_id'	=> $aRow['author_id'],
+            'tags'      => Helper::removeSlahes($aRow['tags']),
+            'title'     => Helper::removeSlahes($aRow['title']),
+            'teaser'    => Helper::removeSlahes($aRow['teaser']),
+            'content'   => Helper::removeSlahes($aRow['content']),
+            'date'      => Helper::formatTimestamp($aRow['date'], true),
+            'datetime'  => Helper::formatTimestamp($aRow['date']),
+            'published' => $aRow['published']
+        );
+        unset($sContent);
+      }
+      # Give back blog entry
+      else {
+        $aTags = explode(', ', $aRow['tags']);
         $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/Blog/' . $aRow['id'];
+        $sUrl = WEBSITE_URL . '/blog/' . $aRow['id'];
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -189,37 +187,37 @@ class Model_Blog extends Model_Main {
                 $this->_aRequest['highlight'] :
                 '';
 
-				$this->_aData[1] = array(
-						'id'                => $aRow['id'],
-						'uid'               => $aRow['uid'],
-						'author_id'         => $aRow['author_id'],
-						'tags'              => $aTags,
-						'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
-						'teaser'            => Helper::formatOutput($aRow['teaser'], $sHighlight),
-						'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
-						'date'              => Helper::formatTimestamp($aRow['date']),
-						'datetime'          => Helper::formatTimestamp($aRow['date']),
+        $this->_aData[1] = array(
+            'id'                => $aRow['id'],
+            'uid'               => $aRow['uid'],
+            'author_id'         => $aRow['author_id'],
+            'tags'              => $aTags,
+            'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
+            'teaser'            => Helper::formatOutput($aRow['teaser'], $sHighlight),
+            'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
+            'date'              => Helper::formatTimestamp($aRow['date']),
+            'datetime'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'          => $aRow['date'],
             'name'              => $sName,
             'surname'           => $sSurname,
             'full_name'         => $sFullName,
             'encoded_full_name' => urlencode($sFullName),
-						'encoded_title'     => $sEncodedTitle,
-						'encoded_url'       => urlencode($sUrl),
-						'avatar'            => '',
-						'comment_sum'       => $aRow['commentSum'],
-						'published'         => $aRow['published'],
+            'encoded_title'     => $sEncodedTitle,
+            'encoded_url'       => urlencode($sUrl),
+            'avatar'            => '',
+            'comment_sum'       => $aRow['commentSum'],
+            'published'         => $aRow['published'],
             'url'               => $sUrl . '#' . $sEncodedTitle,
             'url_clean'         => $sUrl
-				);
+        );
 
-				if (!empty($aRow['date_modified']))
+        if (!empty($aRow['date_modified']))
           $this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
 
         else
           $this->_aData[1]['date_modified'] = '';
-			}
-		}
+      }
+    }
 	}
 
 	public final function getData($iId = '', $bEdit = false, $iLimit = LIMIT_BLOG) {
