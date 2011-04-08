@@ -1,17 +1,5 @@
 <script type="text/javascript">
-  window.addEvent('domready', function() {
-    var sValue = document.id('teaser').value;
-    var iLength = sValue.length;
-    var iRemaining = 140 - iLength;
-    document.id('js-chars').set('html', iRemaining);
-
-    document.id('teaser').addEvent('keyup', function() {
-      var sValue = $('teaser').value;
-      var iLength = sValue.length;
-      var iRemaining = 140 - iLength;
-      document.id('js-chars').set('html', iRemaining);
-    });
-  });
+  // TODO: Count 140 letters
 </script>
 <script language='javascript' type='text/javascript'
   src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>

@@ -50,7 +50,7 @@
   </tr>
 </table>
 <script type="text/javascript">
-    window.addEvent('domready', function() {
-      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-    });
+  //window.addEvent('domready', function() {
+  //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
+  //});
 </script>

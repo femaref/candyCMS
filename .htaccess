@@ -31,7 +31,7 @@ RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R]
 # Universal rules
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1 [L,QSA,NC] # Show Section
 RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with id
-RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3&ajax=1 [L,QSA,NC] # Show pagination on sub id
+RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC] # Show pagination on sub id #TODO
 RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC] # Show entry with highlighted background
 RewriteRule ^([A-Za-z]+)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
 RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA,NC] # Non AJAX pagination
@@ -39,7 +39,6 @@ RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)/(update|destroy|verification)$ index.php
 
 # Section specific rules
 RewriteRule ^(blog|search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA,NC] # Show item sorted by tag
-RewriteRule ^comment/([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=comment&action=show&parent_category=$1&id=$2&page=$3&ajax=1 [L,QSA,NC]
 RewriteRule ^comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^gallery/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=gallery&action=$2&id=$1&page=1 [L,QSA,NC]

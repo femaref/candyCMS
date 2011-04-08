@@ -32,8 +32,8 @@ final class Comment extends Main {
     # Define Blog as standard category
     # b = blog
     $this->_sParentCategory = 'b';
-    $this->_sParentSection	= 'Blog';
-    $this->_sAction         = '/Comment/create/'.	$this->_sParentCategory.	'/'	.$this->_iId;
+    $this->_sParentSection	= 'blog';
+    $this->_sAction         = '/comment/create/'.	$this->_sParentCategory.	'/'	.$this->_iId; #TODO
   }
 
   public final function show() {
@@ -69,7 +69,7 @@ final class Comment extends Main {
 				$this->_oSmarty->assign('comment_number', $iCommentNumber);
 
 				# Do we need Pages?
-				$sPage = $this->_oPage->showPages('comment/' . $this->_sParentCategory . '/' . $this->_iId, '');
+				$sPage = $this->_oPage->showPages($this->_iId);
 				$this->_oSmarty->assign('_comment_pages_', $sPage);
 
 				# Language

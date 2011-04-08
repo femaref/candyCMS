@@ -38,10 +38,11 @@
   <input type='hidden' value='formdata' name='upload_file' />
 </form>
 <script type="text/javascript">
-  window.addEvent('domready', function() {
-    document.id('submit').addEvent('click', function() {
-      this.disabled = true;
-      document.id('.description').set('html', "<img class='js-loading' src='%PATH_IMAGES%/loading.gif' alt='' />");
-    });
-  });
+  // TODO: Reset loading button
+  //window.addEvent('domready', function() {
+  //  document.id('submit').addEvent('click', function() {
+  //    this.disabled = true;
+  //    document.id('.description').set('html', "<img class='js-loading' src='%PATH_IMAGES%/loading.gif' alt='' />");
+  //  });
+  //});
 </script>

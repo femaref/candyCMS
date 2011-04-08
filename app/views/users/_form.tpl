@@ -23,7 +23,7 @@
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
           <br />
-          <a href="#js-upload_image" onclick="javascript:showDiv('js-upload_image');" class='small'>
+          <a href="#js-upload_image" onclick="$('#js-upload_image').toggle(100)" class='small'>
             {$lang_image_change}
           </a>
         {/if}
@@ -62,7 +62,7 @@
                  value='1' {if $use_gravatar == 1}checked='checked'{/if} />
           <span class="description">
             {$lang_image_gravatar_info}
-            <a href="#js-upload_image" onclick="javascript:showDiv('js-upload_image');">
+            <a href="#js-upload_image" onclick="$('#js-upload_image').toggle(100)">
               {$lang_image_change}
             </a>
           </span>
@@ -161,9 +161,10 @@
 </form>
 <script type="text/javascript">
   var sFilesSuffix = '{$_compress_files_suffix_}';
-    window.addEvent('domready', function() {
-      new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-    });
+    // TODO: Load slimbox
+    //window.addEvent('domready', function() {
+    //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
+    //});
 </script>
 <p></p>
 <a name="js-upload_image"></a>

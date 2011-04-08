@@ -82,8 +82,7 @@
       <input type='submit' value='{$lang_submit}' />
     </div>
     <div class="button">
-      <input type='button' value='{$lang_reset}'
-             onclick="resetContent('createCommentText')" />
+      <input type='reset' value='{$lang_reset}' />
     </div>
     <input type='hidden' value='formdata' name='create_comment' />
     <input type='hidden' value='{$_parent_id_}' name='parent_id' />

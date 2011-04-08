@@ -40,6 +40,11 @@ legend {
 h1, h2 {
   font-size: 24px;
   word-spacing: 0.1em;
+  margin: 3px 0px;
+}
+
+h1 img, h2 img {
+  vertical-align: baseline;
 }
 
 h3 {
@@ -297,21 +302,6 @@ table th h1
 
 .from_author {
   background: #dedede;
-}
-
-.element h1,
-.element h2 {
-  margin: 3px 0px;
-}
-
-.gallery_files h1,
-.gallery_album h2 {
-  margin:3px 0px 0px;
-}
-
-.element h1 img, .gallery_album h1 img, .gallery_files h1 img,
-.element h2 img, .gallery_album h2 img, .gallery_files h2 img {
-  vertical-align: baseline;
 }
 
 .element .header h4 {

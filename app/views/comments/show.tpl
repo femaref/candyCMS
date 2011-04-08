@@ -30,7 +30,7 @@
         <span>{$c.author_ip}</span>
       {/if}
       <a href='#add'
-         onclick="quoteMessage('{$c.full_name}{$c.author_name}', 'c{$c.id}')">
+         onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'c{$c.id}')">
         <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang_quote}'
              title='{$lang_quote}' />
       </a>

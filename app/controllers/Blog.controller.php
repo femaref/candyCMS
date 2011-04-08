@@ -32,7 +32,7 @@ class Blog extends Main {
 		$oComments->__init($iCommentSum, $this->_aData);
 
 		$this->_oSmarty->assign('_blog_comments_', $oComments->show());
-		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('Blog', 'blog'));
+		$this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
 
 		# Create page title and description
     $this->_setDescription($this->_setBlogDescription());
