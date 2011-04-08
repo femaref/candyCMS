@@ -108,7 +108,7 @@ class Model_Blog extends Model_Main {
                 'surname'           => $sSurname,
                 'comment_sum'       => $aRow['commentSum'],
                 'published'         => $aRow['published'],
-                'url'               => $sUrl . '#' . $sEncodedTitle,
+                'url'               => $sUrl . '/' . $sEncodedTitle,
                 'url_clean'         => $sUrl
 				);
 
