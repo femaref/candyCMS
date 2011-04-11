@@ -103,118 +103,94 @@ class Model_Gallery extends Model_Main {
     return $this->_iId;
   }
 
-	private final function _setThumbs($iId, $iLimit, $bAdvancedImageInformation) {
+	private final function _setThumbs($iId, $bAdvancedImageInformation) {
 		# Clear existing array
 		if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
 
     try {
-      $oQuery = $this->_oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        f.*,
+                                        u.name,
+                                        u.surname
+                                      FROM
+                                        " . SQL_PREFIX . "gallery_files f
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "users u
+                                      ON
+                                        f.author_id=u.id
+                                      WHERE
+                                        f.album_id= :album_id
+                                      ORDER BY
+                                        f.date ASC");
+
       $oQuery->bindParam('album_id', $iId);
-      $bReturn = $oQuery->execute();
+      $oQuery->execute();
+
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
-    $this->_iEntries = count($aResult);
-    $this->oPage = new Page($this->_aRequest, $this->_iEntries, $iLimit);
+    $iLoop = 0;
+    foreach ($aResult as $aRow) {
+      $iId = $aRow['id'];
 
-    if($this->_iEntries > 0) {
-      try {
-        $oQuery = $this->_oDb->prepare("SELECT
-																					f.*,
-																					u.name,
-																					u.surname
-																				FROM
-																					" . SQL_PREFIX . "gallery_files f
-																				LEFT JOIN
-																					" . SQL_PREFIX . "users u
-																				ON
-																					f.author_id=u.id
-																				WHERE
-																					f.album_id= :album_id
-																				ORDER BY
-																					f.date ASC
-																				LIMIT
-																					:offset,
-																					:limit");
+      # Set SEO friendly user names
+      $sName      = Helper::formatOutput($aRow['name']);
+      $sSurname   = Helper::formatOutput($aRow['surname']);
+      $sFullName  = $sName . ' ' . $sSurname;
 
-        $oQuery->bindParam('album_id', $iId);
-        $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
-        $oQuery->execute();
+      $sUrlAlbum     = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+      $sUrl32        = $sUrlAlbum . '/32/' . $aRow['file'];
+      $sUrlPopup     = $sUrlAlbum . '/popup/' . $aRow['file'];
+      $sUrlOriginal  = $sUrlAlbum . '/original/' . $aRow['file'];
+      $sUrlThumb     = $sUrlAlbum . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+      $this->_aThumbs[$iId] = array(
+          'id'            => $aRow['id'],
+          'album_id'      => $aRow['album_id'],
+          'file'          => $aRow['file'],
+          'description'   => Helper::formatOutput($aRow['description']),
+          'date'          => Helper::formatTimestamp($aRow['date'], true),
+          'datetime'      => Helper::formatTimestamp($aRow['date']),
+          'date_raw'      => $aRow['date'],
+          'date_rss'      => date('r', $aRow['date']),
+          'url_32'        => $sUrl32,
+          'url_album'     => $sUrlAlbum,
+          'url_popup'     => $sUrlPopup,
+          'url_original'  => $sUrlOriginal,
+          'url_thumb'     => $sUrlThumb,
+          'name'          => $sName,
+          'surname'       => $sSurname,
+          'full_name'     => $sFullName,
+          'extension'     => $aRow['extension'],
+          'thumb_width'   => THUMB_DEFAULT_X,
+          'loop'          => $iLoop
+      );
 
-      $iLoop = 0;
-      foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
+      # We want to get the image dimension of the original image
+      # This function is not set to default due its long processing time
+      /*if ($bAdvancedImageInformation == true) {
+        $aPopupSize = getimagesize($sUrlPopup);
+        $aThumbSize = getimagesize($sUrlThumb);
+        $iImageSize = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
 
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
+        $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
+        $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
+        $this->_aThumbs[$iId]['popup_size'] = $iImageSize;
+        $this->_aThumbs[$iId]['popup_mime'] = $aPopupSize['mime'];
+        $this->_aThumbs[$iId]['thumb_width'] = $aThumbSize[0];
+        $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
+      }*/
 
-        $sUrlAlbum     = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
-        $sUrl32        = $sUrlAlbum . '/32/' . $aRow['file'];
-        $sUrlPopup     = $sUrlAlbum . '/popup/' . $aRow['file'];
-        $sUrlOriginal  = $sUrlAlbum . '/original/' . $aRow['file'];
-        $sUrlThumb     = $sUrlAlbum . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
-
-        $this->_aThumbs[$iId] = array(
-            'id'            => $aRow['id'],
-            'album_id'      => $aRow['album_id'],
-            'file'          => $aRow['file'],
-            'description'   => Helper::formatOutput($aRow['description']),
-            'date'          => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'      => Helper::formatTimestamp($aRow['date']),
-            'date_raw'      => $aRow['date'],
-            'date_rss'      => date('r', $aRow['date']),
-            'url_32'        => $sUrl32,
-            'url_album'     => $sUrlAlbum,
-            'url_popup'     => $sUrlPopup,
-            'url_original'  => $sUrlOriginal,
-            'url_thumb'     => $sUrlThumb,
-            'name'          => $sName,
-            'surname'       => $sSurname,
-            'full_name'     => $sFullName,
-            'extension'     => $aRow['extension'],
-            'thumb_width'   => THUMB_DEFAULT_X,
-            'loop'          => $iLoop
-        );
-
-        # We want to get the image dimension of the original image
-        # This function is not set to default due its long processing time
-        if ($bAdvancedImageInformation == true) {
-          $aPopupSize = getimagesize($sUrlPopup);
-          $aThumbSize = getimagesize($sUrlThumb);
-          $iImageSize = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
-
-          $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
-          $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
-          $this->_aThumbs[$iId]['popup_size'] = $iImageSize;
-          $this->_aThumbs[$iId]['popup_mime'] = $aPopupSize['mime'];
-          $this->_aThumbs[$iId]['thumb_width'] = $aThumbSize[0];
-          $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
-        }
-
-        $iLoop++;
-      }
-    }
-    else {
-      $this->_oDb = null;
-      return false;
+      $iLoop++;
     }
 	}
 
-	public final function getThumbs($iId, $iLimit, $bAdvancedImageInformation = false) {
-    $this->_setThumbs($iId, $iLimit, $bAdvancedImageInformation);
+	public final function getThumbs($iId, $bAdvancedImageInformation = false) {
+    $this->_setThumbs($iId, $bAdvancedImageInformation);
     return $this->_aThumbs;
   }
 

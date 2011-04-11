@@ -11,7 +11,7 @@ body
   width: 712px;
 }
 
-a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .gallery_files a:hover, .js-toggle
+a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .js-toggle
 {
   color: #FF0000;
   text-decoration: none;
@@ -347,13 +347,18 @@ table th h1
   margin-bottom: 8px;
 }
 
-.gallery_album .image, .gallery_files .image {
+.gallery_album .image, #gallery_files .image {
   margin: 2px 0px;
 }
 
-.gallery_files .image {
+#gallery_files li {
+  line-height: 100%;
+}
+
+#gallery_files .image {
   padding:5px;
   background: #efefef url('../images/loading.gif') no-repeat center;
+  vertical-align: middle;
 }
 
 .video, .audio {
@@ -362,9 +367,4 @@ table th h1
 
 .form .input input {
   float: left;
-}
-
-#js-chars {
-  color: #666;
-  margin-left: 10px;
 }

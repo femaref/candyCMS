@@ -97,9 +97,11 @@
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(".image a").fancybox();
   $('.js-tooltip').tipTip();
+  $("img").lazyload();
   
   // Add VideoJS to all video tags on the page when the DOM is ready
   VideoJS.setupAllWhenReady();

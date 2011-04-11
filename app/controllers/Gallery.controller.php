@@ -22,23 +22,23 @@ class Gallery extends Main {
     $this->_oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
     # Specific gallery
-    if( !empty($this->_iId) ) {
+    if (!empty($this->_iId)) {
       # collect data array
-      $sAlbumName	= Model_Gallery::getAlbumName($this->_iId);
+      $sAlbumName = Model_Gallery::getAlbumName($this->_iId);
       $sAlbumDescription = Model_Gallery::getAlbumDescription($this->_iId);
 
-      $this->_oSmarty->assign('files', $this->_oModel->getThumbs($this->_iId, LIMIT_ALBUM_IMAGES));
-      $this->_oSmarty->assign('file_no', $this->_oModel->_iEntries);
+      # Get data and count afterwards
+      $this->_aData = $this->_oModel->getThumbs($this->_iId);
+
+      $this->_oSmarty->assign('files', $this->_aData);
+      $this->_oSmarty->assign('file_no', count($this->_aData));
       $this->_oSmarty->assign('gallery_name', $sAlbumName);
       $this->_oSmarty->assign('gallery_description', $sAlbumDescription);
-
-      # System variables
-      $this->_oSmarty->assign('_album_pages_', $this->_oModel->oPage->showPages('/gallery/'	.$this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
 
-      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY.	': '	. $sAlbumName));
+      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
       $this->_setDescription($sAlbumDescription);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/showFiles');

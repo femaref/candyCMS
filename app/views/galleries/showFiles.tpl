@@ -28,7 +28,7 @@
 {else}
   <ul id="gallery_files" class="image-overlay">
     {foreach $files as $f}
-      <li class="gallery_files">
+      <li>
         <div class="image">
           <a href='{$f.url_popup}' rel="images">
             <img src='{$f.url_thumb}'
@@ -52,33 +52,16 @@
     {/foreach}
   </ul>
 {/if}
-<div class="navigation">
-  {$_album_pages_}
-</div>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $('#gallery_files').infinitescroll({
-      navSelector  : "div.navigation",
-      nextSelector : "div.navigation a:first",
-      itemSelector : ".gallery_files",
-      loadingImg   : "%PATH_IMAGES%/loading.gif",
-      loadingText  : '',
-      donetext     : ''
-    }, function() {
-      $(".image a").fancybox();
-      $('#gallery_files').ImageOverlay({
-        overlay_speed: 'fast',
-        overlay_speed_out: 'slow'
-      });
-    });
-
     $(".image a").fancybox();
     $('#gallery_files').ImageOverlay({
       overlay_speed: 'fast',
       overlay_speed_out: 'slow'
     });
+    $("img").lazyload();
   });
 </script>
