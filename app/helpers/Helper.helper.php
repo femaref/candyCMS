@@ -82,7 +82,7 @@ final class Helper {
     else {
       $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
 
-      if (is_file($sFilePath . '.jpg'))
+			if (is_file($sFilePath . '.jpg'))
         return WEBSITE_URL . '/' . $sFilePath . '.jpg';
 
       elseif (is_file($sFilePath . '.png'))

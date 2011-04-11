@@ -21,8 +21,6 @@ final class Page {
     $this->_iEntries =& $iEntries;
     $this->_iLimit =& $iLimit;
 
-    #die(print_r($this));
-
     $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
     $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ? (int) $this->_aRequest['page'] : 1;
 
@@ -80,6 +78,7 @@ final class Page {
 
     $oSmarty = new Smarty();
     $oSmarty->assign('_action_url_', $sUrl);
+    $oSmarty->assign('_page_entries_', $this->_iEntries);
     $oSmarty->assign('_page_limit_', $this->_iLimit);
     $oSmarty->assign('_page_next_', $iNext);
     $oSmarty->assign('_page_previous_', $iPrevious);

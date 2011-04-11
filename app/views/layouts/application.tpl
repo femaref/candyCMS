@@ -19,9 +19,6 @@
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
     <!--[if IE]>
       <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
@@ -32,7 +29,7 @@
       <div id='navigation'>
         <ul>
           {if $USER_ID > 0}
-            <li><strong>{$lang_welcome} <a href='/User/{$USER_ID}'>{$user}</a>!</strong></li>
+            <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$user}</a>!</strong></li>
           {/if}
           <li><a href='/blog'>{$lang_blog}</a></li>
           <li><a href='/gallery'>{$lang_gallery}</a></li>

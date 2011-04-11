@@ -45,7 +45,7 @@ class Blog extends Main {
   private final function _setBlogDescription() {
     if (isset($this->_aRequest['action']) &&
             'search' == $this->_aRequest['action'])
-      return LANG_Helper::removeSlahes($this->_aRequest['id']);
+      return Helper::removeSlahes($this->_aRequest['id']);
 
     elseif ($this->_iId !== '') {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))

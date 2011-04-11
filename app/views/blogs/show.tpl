@@ -1,6 +1,3 @@
-{if $_plugin_lazyload_}
-  {$_plugin_lazyload_}
-{/if}
 {if $USER_RIGHT >= 3}
   <p>
     <a href='/blog/create'>
@@ -96,10 +93,16 @@
   <a name='comments'></a>
   {$_blog_comments_}
 {/if}
+<script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
-  //window.addEvent('domready', function() {
-  //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-  //});
+  $(".image a").fancybox();
+  $('.js-tooltip').tipTip();
+  
+  // Add VideoJS to all video tags on the page when the DOM is ready
+  VideoJS.setupAllWhenReady();
 
   //if($$('.js-toggle')) {
   //  var myAccordion = new Fx.Accordion($$('.js-toggle'), $$('.js-element'), {

@@ -22,7 +22,6 @@ abstract class Main {
 
 	# Plugins
 	protected $_oAdsense;
-	protected $_oLazyLoad;
 	protected $_oSmarty;
 
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
@@ -103,12 +102,6 @@ abstract class Main {
 		if (class_exists('Teaser')) {
 			$this->_oTeaser = new Teaser($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_teaser_', $this->_oTeaser->show());
-		}
-
-		# Enable LazyLoad
-		if (class_exists('LazyLoad')) {
-			$this->_oLazyLoad = new LazyLoad();
-			$this->_oSmarty->assign('_plugin_lazyload_', $this->_oLazyLoad->show());
 		}
 
 		# Initialize language

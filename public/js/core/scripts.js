@@ -56,11 +56,6 @@ if($('#js-flash_success') || $('#js-flash_error')) {
   candy.system.show('#js-flash_message');
 }
 
-/* Initialize TipTip (Tooltips) */
-$(function(){
-  $('.js-tooltip').tipTip();
-});
-
 /* Ask if user is sure to delete content */
 function confirmDelete(sUrl) {
   if( confirm(LANG_DELETE_FILE_OR_CONTENT) )

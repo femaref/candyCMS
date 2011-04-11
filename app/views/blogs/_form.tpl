@@ -1,6 +1,3 @@
-<script type="text/javascript">
-  // TODO: Count 140 letters
-</script>
 <script language='javascript' type='text/javascript'
   src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
 <script language='javascript' type='text/javascript'>
@@ -61,7 +58,8 @@
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='teaser' value='{$teaser}' type='text' id='teaser' />
+          <input name='teaser' value='{$teaser}' type='text' id='teaser'
+                 onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
           <div class='description'>{$lang_create_teaser_info}</div>
         </div>
       </td>

@@ -65,7 +65,6 @@ class Model_Comment extends Model_Main {
                   'id'							    => $aRow['id'],
                   'user_id'					    => $aRow['user_id'],
                   'parent_id'				    => $aRow['parent_id'],
-                  'parent_category'			=> $aRow['parent_category'],
                   'author_id'						=> $aRow['author_id'],
                   'author_facebook_id'	=> $aRow['author_facebook_id'],
                   'author_ip'						=> $aRow['author_ip'],
@@ -139,7 +138,7 @@ class Model_Comment extends Model_Main {
     return $this->_setData($iId, $iEntries, $iLimit);
   }
 
-  public final function countData($iParentId, $sParentCategory = 'b') {
+  public final function countData($iParentId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -149,12 +148,9 @@ class Model_Comment extends Model_Main {
                                 FROM
                                   " . SQL_PREFIX . "comments
                                 WHERE
-                                  parent_id = :parent_id
-                                AND
-                                  parent_category = :parent_category");
+                                  parent_id = :parent_id");
 
       $oQuery->bindParam('parent_id', $iParentId);
-      $oQuery->bindParam('parent_category', $sParentCategory);
 
       $iResult = $oQuery->fetchColumn();
     }
@@ -195,7 +191,6 @@ class Model_Comment extends Model_Main {
       $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
-      $oQuery->bindParam('parent_category', $this->_aRequest['parent_category']);
       $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
       $bResult = $oQuery->execute();
 

@@ -58,7 +58,7 @@ class Model_Blog extends Model_Main {
 																			LEFT JOIN
 																				" . SQL_PREFIX . "comments c
 																			ON
-																				c.parent_id=b.id AND c.parent_category='b'
+																				c.parent_id=b.id
 																			" . $sWhere . "
 																			GROUP BY
 																				b.id
@@ -140,7 +140,7 @@ class Model_Blog extends Model_Main {
                                       LEFT JOIN
                                         " . SQL_PREFIX . "comments c
                                       ON
-                                        c.parent_id=b.id AND c.parent_category='b'
+                                        c.parent_id=b.id
                                       WHERE
                                         b.id = '" . Helper::formatInput($this->_iId) . "'
                                       " . $sWhere . "

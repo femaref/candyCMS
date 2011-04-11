@@ -19,11 +19,11 @@
       </td>
       <td rowspan='5' style='vertical-align:top;min-width:140px'>
         {if $USER_ID === $uid}
-          <a href='{$avatar_popup}' rel='lightbox' title='{$name} {$surname}'>
+          <a href='{$avatar_popup}' class="js-fancybox" title='{$name} {$surname}'>
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
           <br />
-          <a href="#js-upload_image" onclick="$('#js-upload_image').toggle(100)" class='small'>
+          <a href="#" onclick="$('#js-upload_image').toggle(100)" class='small'>
             {$lang_image_change}
           </a>
         {/if}
@@ -62,7 +62,7 @@
                  value='1' {if $use_gravatar == 1}checked='checked'{/if} />
           <span class="description">
             {$lang_image_gravatar_info}
-            <a href="#js-upload_image" onclick="$('#js-upload_image').toggle(100)">
+            <a href="#" onclick="$('#js-upload_image').toggle(100)">
               {$lang_image_change}
             </a>
           </span>
@@ -159,13 +159,6 @@
   </div>
   <input type='hidden' value='formdata' name='update_user' />
 </form>
-<script type="text/javascript">
-  var sFilesSuffix = '{$_compress_files_suffix_}';
-    // TODO: Load slimbox
-    //window.addEvent('domready', function() {
-    //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-    //});
-</script>
 <p></p>
 <a name="js-upload_image"></a>
 <form id='js-upload_image' style='{$style}' action='/user/{$uid}/update' method='post' enctype='multipart/form-data'>
@@ -201,3 +194,8 @@
   <input type='hidden' value='formdata' name='create_avatar' />
   <input type='hidden' name='MAX_FILE_SIZE' value='409600' />
 </form>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".js-fancybox").fancybox();
+  });
+</script>

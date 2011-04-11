@@ -14,7 +14,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', 'test_');
+define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
 # ------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ define('LIMIT_ALBUM_THUMBS', 32);
 
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 8);
+define('LIMIT_BLOG', 1);
 
 # Limit of comments per page
 # DEFAULT: 10
