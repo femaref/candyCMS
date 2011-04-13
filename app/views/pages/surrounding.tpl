@@ -1,4 +1,4 @@
-<p>
+<section class="pages">
   {if $_page_previous_}
     <a href='{$_action_url_}/page/{$_page_previous_}' rel="prev">&laquo; {$lang_previous_entries}</a>&nbsp;&nbsp;
   {/if}
@@ -10,4 +10,4 @@
   {if $_page_next_ && $_page_entries_ > $_page_limit_}
     &nbsp;&nbsp;<a href='{$_action_url_}/page/{$_page_next_}' rel="next">{$lang_next_entries} &raquo;</a>
   {/if}
-</p>
+</section>

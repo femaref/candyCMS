@@ -5,7 +5,7 @@
     {/if}
     <fieldset>
       <legend>{$lang_headline}</legend>
-      <p class='small'>{$lang_description}</p>
+      <small>{$lang_description}</small>
       <div class="input">
         <input type="email" name='email' title='{$lang_email}' autofocus />
       </div>

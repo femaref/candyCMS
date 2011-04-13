@@ -1,41 +1,15 @@
+/* show loading button not directly next to elements */
 .js-loading {
   margin: 20px;
 }
 
+/* count down remaining chars at blog entry */
 #js-chars {
   color: #666;
   margin-left: 10px;
 }
 
-#create_comment {
-  margin-top: 30px;
-  text-align: center !important;
-}
-
-.cancel input {
-  color:red;
-}
-
-/* Used for file manager to select link directly */
-.inputsmall {
-  width:180px;
-  height:12px;
-  font-size:10px;
-  background:transparent;
-  border:0px;
-  color:black;
-}
-
-.inputsmall:hover {
-  cursor:pointer;
-}
-
-/* Shortcut to display small fonts */
-.small, .description {
-  font-size: 85%;
-}
-
-/* Quote Boxes, Success and Error Messages */
+/* Success and error Messages */
 .success, .error, .notice {
   margin: 0px 0px 10px 0px;
   padding: 10px;
@@ -71,48 +45,10 @@
   margin: 0px;
 }
 
-.highlight {
-  background: #FFD324;
-  padding: 2px;
-}
-
 pre {
   overflow: auto;
   padding:10px;
   background: #eee;
-}
-
-blockquote, .box {
-  background:#d7d7d7;
-  width:80%;
-  padding:15px;
-  margin:10px auto 10px auto;
-  text-align:left;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
-blockquote h3 {
-  margin-top:0px;
-  margin-bottom:0px;
-}
-
-.pointer {
-  cursor:pointer;
-}
-
-/* Simulate table */
-.td_left, .td_right {
-  margin: 10px 5px 5px 10px;
-  vertical-align:middle;
-  text-align:left;
-  height: 30px;
-}
-
-.td_left {
-  font-weight:bold;
-  width: 25%;
 }
 
 .center {
@@ -127,16 +63,61 @@ blockquote h3 {
   text-align: right;
 }
 
-#create_comment fieldset {
-  max-width: 700px;
-}
-
 .pointer {
   cursor: pointer;
 }
 
 .nom {
   margin: 0px !important;
+}
+
+form {
+  width: 600px;
+  margin: 30px auto;
+}
+
+form p {
+  display: table;
+  margin:5px 0px;
+  width: 100%;
+}
+
+/* Display icons correctly */
+form p img {
+  margin: 5px;
+}
+
+form label {
+  display: table-cell;
+  width: 25%;
+  padding-right: 20px;
+  text-align: right;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="password"],
+form input[type="name"] {
+  display: table-cell;
+  width: 75%;
+  height: 20px;
+}
+
+form input[type="checkbox"] {}
+
+form textarea {
+  width: 100%;
+  height: 100px;
+}
+
+form #recaptcha_widget_div {
+  margin-left: 25%;
+}
+
+form input[type="reset"] {
+  margin-left: 5px;
 }
 
 /********************************************************************************/
@@ -850,12 +831,19 @@ div.vjs-big-play-button span {
 /* Image overlay */
 /********************************************************************************/
 
-#gallery_files {
+.js-image_overlay {
   padding:0px;
+  margin: 0px;
 }
 
-.image-overlay { list-style: none;; }
-.image-overlay li { display: inline; }
+.image-overlay {
+  list-style: none;
+}
+
+.image-overlay li {
+  display: inline-block;
+  overflow: auto
+}
 
 .image-overlay a
 {
@@ -874,7 +862,6 @@ div.vjs-big-play-button span {
 {
   position: absolute;
   background-color: #000;
-  width: 100%;
   cursor: pointer;
   /* The way to change overlay opacity is the follow properties. Opacity is a tricky issue due to
 		longtime IE abuse of it, so opacity is not offically supported - use at your own risk.
@@ -886,6 +873,7 @@ div.vjs-big-play-button span {
   /* For IE 8 */
   -MS-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   color: #fff !important;
+  width:100%;
 }
 .image-overlay .caption h1, .image-overlay .caption h2, .image-overlay .caption h3,
 .image-overlay .caption h4, .image-overlay .caption h5, .image-overlay .caption h6
@@ -894,6 +882,7 @@ div.vjs-big-play-button span {
   font-size: 14px;
   font-weight: bold;
   padding: 0 0 0 5px;
+  text-align: center;
 }
 .image-overlay p
 {

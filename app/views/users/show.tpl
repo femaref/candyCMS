@@ -19,7 +19,7 @@
       {$date}
     </td>
     <td rowspan='4' style='vertical-align:top'>
-      <a href='{$avatar_popup}' rel='lightbox' title='{$user.name} {$user.surname}'>
+      <a href='{$avatar_popup}' class="js-fancybox" title='{$user.name} {$user.surname}'>
         <img class='image' alt='{$user.name}' src="{$avatar_100}" />
       </a>
     </td>
@@ -45,12 +45,14 @@
       {$lang_contact}
     </td>
     <td class='td_right'>
-      <a href='/Mail/{$uid}'>{$lang_contact_via_mail}</a>
+      <a href='/mail/{$uid}/ajax' class="js-fancybox">{$lang_contact_via_mail}</a>
     </td>
   </tr>
 </table>
-<script type="text/javascript">
-  //window.addEvent('domready', function() {
-  //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-  //});
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' type="text/javascript">
+  $(document).ready(function(){
+    $(".js-fancybox").fancybox();
+    $(".js-fancybox").fancybox();
+  });
 </script>

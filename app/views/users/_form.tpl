@@ -23,8 +23,8 @@
             <img class='image' alt='{$name}' src="{$avatar_100}" />
           </a>
           <br />
-          <a href="#" onclick="$('#js-upload_image').toggle(100)" class='small'>
-            {$lang_image_change}
+          <a href="#" onclick="$('#js-upload_image').toggle(100)">
+            <small>{$lang_image_change}</small>
           </a>
         {/if}
       </td>

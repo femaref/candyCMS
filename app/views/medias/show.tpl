@@ -14,7 +14,7 @@
     {if !$files}
       <tr>
         <td colspan="5">
-          <div class='error nom' id='js-error' title='{$lang_no_files}' onclick="hideDiv('js-error')">
+          <div class='error nom' id='js-error' title='{$lang_no_files}'>
             <p>{$lang_no_files}</p>
           </div>
         </td>

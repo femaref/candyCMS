@@ -22,15 +22,15 @@
   <blockquote>{$gallery_description}</blockquote>
 {/if}
 {if !$files}
-  <div class='error' id='js-error' onclick="hideDiv('js-error')">
+  <div class='error' id='js-error'>
     <p>{$lang_no_files_uploaded}</p>
   </div>
 {else}
-  <ul id="gallery_files" class="image-overlay">
+  <ul id="gallery_images" class="js-image_overlay image-overlay">
     {foreach $files as $f}
       <li>
         <div class="image">
-          <a href='{$f.url_popup}' rel="images">
+          <a href='{$f.url_popup}' class="js-fancybox" rel="images">
             <img src='{$f.url_thumb}'
                  alt='{$f.description}'
                  title='{$f.description}' />
@@ -55,10 +55,10 @@
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script type="text/javascript">
+<script language='javascript' type="text/javascript">
   $(document).ready(function(){
-    $(".image a").fancybox();
-    $('#gallery_files').ImageOverlay({
+    $(".js-fancybox").fancybox();
+    $('.js-image_overlay').ImageOverlay({
       overlay_speed: 'fast',
       overlay_speed_out: 'slow'
     });

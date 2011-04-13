@@ -1,4 +1,4 @@
-<div id="archive">
+<section>
   <ul>
     {foreach from=$data item=d key=month}
       <li>
@@ -15,7 +15,7 @@
       </li>
     {/foreach}
   </ul>
-</div>
+</section>
 {literal}
   <script type="text/javascript">
     var myAccordion = new Fx.Accordion($$('.js-archive_month'), $$('.js-archive_entries'), {

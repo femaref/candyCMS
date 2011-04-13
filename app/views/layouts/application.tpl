@@ -25,31 +25,24 @@
     <![endif]-->
   </head>
   <body>
-    <div id="header">
-      <div id='navigation'>
-        <ul>
-          {if $USER_ID > 0}
-            <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$user}</a>!</strong></li>
-          {/if}
-          <li><a href='/blog'>{$lang_blog}</a></li>
-          <li><a href='/gallery'>{$lang_gallery}</a></li>
-          <li><a href='/search'>{$lang_search}</a></li>
-          {if $USER_ID == 0}
-            <li><a href='/session/create'>{$lang_login}</a></li>
-            <li><a href='/user/create'>{$lang_register}</a></li>
-          {else}
-            <li><a href='/user/update'>{$lang_settings}</a></li>
-            <li><a href='/session/destroy'>{$lang_logout}</a></li>
-          {/if}
-        </ul>
-      </div>
-    </div>
-    <div id='body'>
-      {if $_update_avaiable_}
-        <div class="notice">
-          {$_update_avaiable_}
-        </div>
-      {/if}
+    <nav>
+      <ul>
+        {if $USER_ID > 0}
+          <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$user}</a>!</strong></li>
+        {/if}
+        <li><a href='/blog'>{$lang_blog}</a></li>
+        <li><a href='/gallery'>{$lang_gallery}</a></li>
+        <li><a href='/search'>{$lang_search}</a></li>
+        {if $USER_ID == 0}
+          <li><a href='/session/create'>{$lang_login}</a></li>
+          <li><a href='/user/create'>{$lang_register}</a></li>
+        {else}
+          <li><a href='/user/update'>{$lang_settings}</a></li>
+          <li><a href='/session/destroy'>{$lang_logout}</a></li>
+        {/if}
+      </ul>
+    </nav>
+    <div id="content">
       {if $_flash_type_}
         <div id='js-flash_message'>
           <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
@@ -58,53 +51,70 @@
           </div>
         </div>
       {/if}
+      {if $_update_avaiable_}
+        <div class="notice">
+          {$_update_avaiable_}
+        </div>
+      {/if}
       {$_content_}
     </div>
-    <div id="footer">
-      <p>
-        <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
-        &middot;
-        <a href='/Disclaimer'>{$lang_disclaimer}</a>
-      </p>
-      <ul>
-        {if $USER_RIGHT >= 3}
+    <footer id="footer">
+      <section id="about">
+        <header>
+          <h3>About</h3>
+        </header>
+        <ul>
           <li>
-            <a href='/newsletter/create' title='{$lang_newsletter_create}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
-              {$lang_newsletter_create}</a>
+            <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
           </li>
           <li>
-            <a href='/media' title='{$lang_filemanager}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
-              {$lang_filemanager}</a>
+            <a href='/Disclaimer'>{$lang_disclaimer}</a>
           </li>
-          <li>
-            <a href='/content' title='{$lang_contentmanager}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
-              {$lang_contentmanager}</a>
-          </li>
-          {if $USER_RIGHT == 4}
+        </ul>
+      </section>
+      <section id="settings">
+        <header>
+          <h3>Settings</h3>
+        </header>
+        <ul>
+          {if $USER_RIGHT >= 3}
             <li>
-              <a href='/log' title='{$lang_logs}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
-                {$lang_logs}</a>
+              <a href='/newsletter/create' title='{$lang_newsletter_create}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
+                {$lang_newsletter_create}</a>
             </li>
             <li>
-              <a href='/user' title='{$lang_usermanager}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
-                {$lang_usermanager}</a>
+              <a href='/media' title='{$lang_filemanager}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
+                {$lang_filemanager}</a>
+            </li>
+            <li>
+              <a href='/content' title='{$lang_contentmanager}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
+                {$lang_contentmanager}</a>
+            </li>
+            {if $USER_RIGHT == 4}
+              <li>
+                <a href='/log' title='{$lang_logs}'>
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
+                  {$lang_logs}</a>
+              </li>
+              <li>
+                <a href='/user' title='{$lang_usermanager}'>
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
+                  {$lang_usermanager}</a>
+              </li>
+            {/if}
+          {else}
+            <li>
+              <a href='/newsletter' title='{$lang_newsletter_handle}'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
+                {$lang_newsletter_handle}</a>
             </li>
           {/if}
-        {else}
-          <li>
-            <a href='/newsletter' title='{$lang_newsletter_handle}'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
-              {$lang_newsletter_handle}</a>
-          </li>
-        {/if}
-      </ul>
-      {$VERSION}
-    </div>
+        </ul>
+      </section>
+    </footer>
     <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
     {if $FACEBOOK_APP_ID}

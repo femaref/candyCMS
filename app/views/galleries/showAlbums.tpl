@@ -8,7 +8,7 @@
 {/if}
 <div class='gallery'>
   {if !$albums}
-    <div class='error' id='js-error' title='{$lang_no_entries}' onclick="hideDiv('js-error')">
+    <div class='error' id='js-error' title='{$lang_no_entries}'>
       <p>{$lang_no_entries}</p>
     </div>
   {else}
@@ -23,7 +23,7 @@
             </a>
           {/if}
         </h2>
-        <span class='small'>{$a.datetime} - {$a.files_sum} {$lang_files}</span>
+        <small>{$a.datetime} - {$a.files_sum} {$lang_files}</small>
         <p>
           {if $a.files_sum > 0}
             <a href='/gallery/{$a.id}'>

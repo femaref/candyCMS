@@ -1,11 +1,11 @@
 {if !$c}
-  <div class='error' id='js-error' title='{$lang_missing_entry}' onclick="hideDiv('js-error')">
+  <div class='error' id='js-error' title='{$lang_missing_entry}'>
     <p>{$lang_missing_entry}</p>
   </div>
 {else}
-  <div id='c{$c.id}' class='element'>
-    {if $AJAX_REQUEST == false}
-      <div class='header'>
+  <section>
+    <article class="contents">
+      <header>
         <h1>
           {$c.title}
           {if $USER_RIGHT >= 3}
@@ -15,15 +15,18 @@
             </a>
           {/if}
         </h1>
-        <h4>
-          {$lang_last_update}: {$c.datetime} {$lang_by}
+        <p>
+          <time datetime="2009-06-29T23:31+01:00">
+            {$lang_last_update}: {$c.datetime}
+          </time>
+          {$lang_by}
           <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
-        </h4>
-      </div>
-    {/if}
-    {$c.content}
-    {if $AJAX_REQUEST == false}
-      <div class='footer'>
+        </p>
+      </header>
+      <details>
+        {$c.content}
+      </details>
+      <footer>
         <div class="share">
           {$lang_share}:
           <a href='http://www.facebook.com/share.php?u={$c.url}&amp;t={$c.encoded_title}'
@@ -51,10 +54,30 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
         </div>
-      </div>
-      <div class="facebook_like">
-        <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false"></fb:like>
-      </div>
-    {/if}
-  </div>
+        <div class="facebook_like">
+          <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false"></fb:like>
+        </div>
+      </footer>
+    </article>
+  </section>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' type="text/javascript">
+    $(document).ready(function(){
+      VideoJS.setupAllWhenReady();
+      $(".js-fancybox").fancybox();
+      $('.js-tooltip').tipTip();
+
+      $('.js-image_overlay').ImageOverlay({
+        overlay_speed: 'fast',
+        overlay_speed_out: 'slow'
+      });
+
+      $("img").lazyload();
+    });
+  </script>
 {/if}

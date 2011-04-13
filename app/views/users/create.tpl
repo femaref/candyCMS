@@ -1,93 +1,48 @@
 <form method='post' action='/user/create'>
-  <table>
-    <tr>
-      <th colspan='2'>
-        <h1>{$lang_registration}</h1>
-      </th>
-    </tr>
-    <tr class='row1{if $error_name} error{/if}'>
-      <td class='td_left'>
-        <label for='name'>{$lang_name} *</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='name' id='name' value='{$name}' type='name' autofocus required />
-          {if $error_name}
-            <div class="description">{$error_name}</div>
-          {/if}
-        </div>
-      </td>
-    </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <label for='surname'>{$lang_surname}</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='surname' id='surname' value='{$surname}' type='text' />
-        </div>
-      </td>
-    </tr>
-    <tr class='row1{if $error_email} error{/if}'>
-      <td class='td_left'>
-        <label for='email'>{$lang_email} *</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='email' id='email' value='{$email}' type='email' required />
-          {if $error_email}
-            <div class="description">{$error_email}</div>
-          {/if}
-        </div>
-      </td>
-    </tr>
-    <tr class='row2{if $error_password} error{/if}'>
-      <td class='td_left'>
-        <label for='password'>{$lang_password} *</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='password' class='inputtext' id='password'
-                 value='' type='password' required />
-          {if $error_password}
-            <div class="description">{$error_password}</div>
-          {/if}
-        </div>
-      </td>
-    </tr>
-    <tr class='row1'>
-      <td class='td_left'>
-        <label for='password2'>{$lang_password_repeat} *</label>
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='password2' class='inputtext' id='password2'
-                 value='' type='password' onkeyup="checkPasswords()" required />
-          <img id="icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" />
-        </div>
-      </td>
-    </tr>
-    {if $USER_RIGHT < 4}
-      <tr class='row2{if $error_disclaimer} error{/if}'>
-        <td class='td_left'>
-          <a href='#reload' onclick="reloadPage('/help/Registration', '{$_public_folder_}')">
-            {$lang_disclaimer_read} *
-          </a>
-        </td>
-        <td class='td_right'>
-          <div class="checkbox">
-            <input name='disclaimer' value='' type='checkbox' required />
-            {if $error_disclaimer}
-              <div class="description">{$error_disclaimer}</div>
-            {/if}
-          </div>
-        </td>
-      </tr>
-    {/if}
-  </table>
-  <div id="js-ajax_reload" name="reload" style="display:none"></div>
-  <div class="submit">
-    <input type='submit' class='inputbutton' value='{$lang_register}' />
-  </div>
-  <input type='hidden' value='formdata' name='create_user' />
+  <h1>{$lang_registration}</h1>
+  <p {if $error_name}class="error"{/if}>
+    <label for='name'>{$lang_name} *</label>
+    <input name='name' id='name' value='{$name}' type='name' autofocus required />
+  </p>
+  <p>
+    <label for='surname'>{$lang_surname}</label>
+    <input name='surname' id='surname' value='{$surname}' type='text' />
+  </p>
+  <p {if $error_email}class="error"{/if}>
+    <label for='email'>{$lang_email} *</label>
+    <input name='email' id='email' value='{$email}' type='email' required />
+  </p>
+  <p {if $error_password}class="error"{/if}>
+    <label for='password'>{$lang_password} *</label>
+    <input name='password' id='password' type='password' required />
+  </p>
+  <p>
+    <label for='password2'>{$lang_password_repeat} *</label>
+    <input name='password2' id='password2' type='password' required />
+    <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" />
+  </p>
+  {if $USER_RIGHT < 4}
+    <p {if $error_email}class="error"{/if}>
+      <label>
+        <a href='/help/Registration' id="js-fancybox">
+          {$lang_disclaimer_read} *
+        </a>
+      </label>
+      <input name='disclaimer' value='' type='checkbox' required />
+    </p>
+  {/if}
+  <p class="center">
+    <input type='submit' value='{$lang_register}' />
+    <input type='hidden' value='formdata' name='create_user' />
+  </p>
 </form>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' type="text/javascript">
+  $(document).ready(function(){
+    $("#js-fancybox").fancybox();
+
+    $('#password2').function({
+      
+    }});
+  });
+</script>

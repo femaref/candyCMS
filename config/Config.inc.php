@@ -170,7 +170,7 @@ define('RECAPTCHA_PRIVATE', '6LeElLwSAAAAAEm2k4HEN_LiRtG-1QXU_ApVOUC0');
 # Set maximum image/video width (MEDIA_DEFAULT_X) and height (MEDIA_DEFAULT_Y) in px.
 # Larger images and videos will be reseized or scaled down!
 # DEFAULT: 660
-define('MEDIA_DEFAULT_X', '660');
+define('MEDIA_DEFAULT_X', '600');
 
 # DEFAULT: 371
 define('MEDIA_DEFAULT_Y', '371');
@@ -216,13 +216,9 @@ define('COMPILE_DIR', 'compile');
 # DEFAULT: 18
 define('LIMIT_ALBUM_IMAGES', 18);
 
-# Limit of thumbs at album preview
-# DEFAULT: 32
-define('LIMIT_ALBUM_THUMBS', 32);
-
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 1);
+define('LIMIT_BLOG', 2);
 
 # Limit of comments per page
 # DEFAULT: 10

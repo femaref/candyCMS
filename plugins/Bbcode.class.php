@@ -81,13 +81,17 @@ final class Bbcode {
 				$sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
 				$sText = str_replace('%h', $aInfo[1], $sText);
 
-				$sHTML = '<div class="image">';
-				$sHTML .= '<a href="' . $sUrl[1] . '">';
-				$sHTML .= '<img src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" alt=\'' . $sText . '\' />';
-				$sHTML .= '</a>';
-				$sHTML .= '</div>';
-				$sHTML .= '<div id="' . $sTempFileName . '" class="js-image_overlay" style="width:' . $aNewInfo[0] . 'px" title="' . $sText . '">';
-				$sHTML .= '</div>';
+        $sHTML = '<ul class="js-image_overlay image-overlay">';
+        $sHTML .= '<div class="image">';
+        $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';
+        $sHTML .= '<img title="" alt="' . $sText . '" src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
+        $sHTML .= '<div class="caption" style="top: 180px; background-color: rgb(0, 0, 0); color: rgb(102, 102, 102);">';
+        $sHTML .= '<h3>' . $sText . '</h3>';
+        $sHTML .= '</div>';
+        $sHTML .= '</a>';
+        $sHTML .= '</div>';
+        $sHTML .= '</li>';
+        $sHTML .= '</ul>';
 			}
 
 			$sStr = preg_replace('=\[img\](.*)\[\/img\]=isU', $sHTML, $sStr, 1);

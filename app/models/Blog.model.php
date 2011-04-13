@@ -98,6 +98,7 @@ class Model_Blog extends Model_Main {
                 'datetime'          => Helper::formatTimestamp($aRow['date']),
                 'date_raw'          => $aRow['date'],
                 'date_rss'          => date('r', $aRow['date']),
+                'date_w3c'          => date(DATE_W3C),
                 'encoded_full_name' => urlencode($sFullName),
                 'encoded_title'     => $sEncodedTitle, # encoded for social networks
                 'encoded_url'       => urlencode($sUrl),
@@ -198,6 +199,7 @@ class Model_Blog extends Model_Main {
             'date'              => Helper::formatTimestamp($aRow['date']),
             'datetime'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'          => $aRow['date'],
+            'date_w3c'          => date(DATE_W3C),
             'name'              => $sName,
             'surname'           => $sSurname,
             'full_name'         => $sFullName,

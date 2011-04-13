@@ -98,6 +98,7 @@ class Model_Content extends Model_Main {
             'datetime'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'          => $aRow['date'],
             'date_rss'          => date('r', $aRow['date']),
+            'date_w3c'          => date(DATE_W3C),
             'uid'               => $aRow['uid'],
             'name'              => $sName,
             'surname'           => $sSurname,

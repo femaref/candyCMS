@@ -1,24 +1,33 @@
+/* Tell the browser to render HTML 5 elements as block */
+header, footer, section, aside, nav, article {
+  display: block;
+}
+
 html {
   text-align: center;
-  font: 13px "Trebuchet MS", Arial, Sans-serif;
-  background: #262626;
-  color: #262626;
+  font: 13px "helvetica neue",helvetica,arial,sans-serif;
+  color: #000;
+  background: #272930;
 }
 
 body
 {
-  margin: 50px auto auto;
-  width: 712px;
+  margin: 20px auto;
+  padding: 20px 50px;
+  width: 600px;
+  background: #fff;
+  border: 12px solid #000000;
+  text-align: left;
 }
 
-a:link, a:visited, .element_body a, .comment_body a, .gallery_album a:hover, .js-toggle
+a:link, a:visited
 {
-  color: #FF0000;
+  color: #555555;
   text-decoration: none;
   cursor: pointer;
 }
 
-a:hover, .js-toggle:hover
+a:hover
 {
   text-decoration: underline;
 }
@@ -28,15 +37,7 @@ img {
   vertical-align: bottom;
 }
 
-a:hover img {
-  text-decoration: none;
-}
-
-legend {
-  font-weight: bold;
-  font-size: 120%;
-}
-
+/* headlines */
 h1, h2 {
   font-size: 24px;
   word-spacing: 0.1em;
@@ -52,319 +53,182 @@ h3 {
   font-size: 14px;
 }
 
-#header {
+/* Main navigation */
+nav {
+  color: #999999;
+  text-align: justify;
+  padding: 20px 0px 10px;
+  border-bottom: 1px solid #CCCCCC;
+  text-transform: uppercase;
 }
 
-#navigation
-{
-  color:white;
-  padding: 10px 8px;
-  font-size:120%;
-  font-weight:bold;
-  border-bottom:1px solid black;
-  background-color: #d72733;
-  background: -moz-linear-gradient(top, #e06455, #d72733);
-  background: -webkit-gradient(linear, left top, left bottom, from(#e06455), to(#d72733));
-  border:2px solid white;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-topright: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -webkit-border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-}
-
-#navigation ul, #footer ul {
+nav ul {
   padding: 0px;
   margin: 0px;
 }
 
-#navigation ul li, #footer ul li {
+nav ul li {
   display: inline;
-  margin: 0px 8px 0px 8px;
-  word-spacing: 2px;
-}
-
-#footer ul li {
   margin: 0px 3px 0px 3px;
 }
 
-#navigation a
-{
-  text-align:center;
-  color:white;
-}
-
-#navigation a:hover
-{
-  color:#f5f5f5;
-}
-
-#body
-{
-  padding: 10px;
-  background: white;
-  color: #333;
-}
-
+/* Footer at end of page. Got an ID because of conflicts with other footers */
 #footer {
-  clear: both;
-  background: #262626;
-  padding-top: 10px;
+  display: table;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #CCCCCC;
+  width: 100%;
 }
 
-#search legend {
-  font-size: 180%;
+#footer section {
+  display: table-cell;
+  width: 50%;
 }
 
-#search fieldset {
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-#search fieldset li {
-  padding-left: 30px;
-}
-
-#search fieldset li a {
-  margin-left: 30px;
-}
-
-/* Display archive plugin in the right way */
-#archive, #headlines {
-  text-align: left;
-}
-
-#archive ul, #headlines ul {
-  margin: 0px !important;
+#footer ul {
+  list-style: none;
   padding: 0px;
 }
 
-#archive ul li, #headlines ul li {
-  list-style: none;
-  display: block;
-  margin-bottom: 2px;
-  margin-top: 2px;
+/* Main content area */
+#content {
+  display: table;
+  width: 100%;
 }
 
-#archive ul li ul {
-  margin-left: 10px !important;
+/* pagination */
+#content .pages {
+  text-align: center;
 }
 
-ul
-{
-  margin-bottom:10px;
-}
-
-li {
-  margin-bottom:5px;
-}
-
-/* All form actions */
-.submit, .input, .textarea, .dropdown, .cancel, .checkbox, .button {
-  display:inline;
-}
-
-.input img {
-  margin:5px;
-}
-
-.submit input, .input input, .textarea textarea, .dropdown select, .dropdown option, .cancel input,
-.checkbox input, .button input {
-  padding:3px;
-  cursor:pointer;
-}
-
-.submit input, .cancel input, .button input {
-  text-align:center;
-  margin: 5px;
-}
-
-.input input, .dropdown select {
-  text-align:left;
-  min-width:280px;
-}
-
-.dropdown option {
-  padding:1px;
-}
-
-.textarea textarea {
-  width:98%;
-  cursor:auto;
-  min-width:280px;
-}
-
-fieldset .textarea textarea {
-  width:80%;
-}
-
-#login .submit, #resend_actions .submit, #newsletter .submit {
-  padding:5px;
-}
-
-#login .input input, #resend_actions .input input, #newsletter .input input {
-  min-width:100px;
-}
-
-/* General table alignments */
-table, fieldset, .element, .comment {
-  margin:0px auto auto;
-}
-
-table {
-  width: 90%;
-}
-
-table td {
-  padding:8px;
-}
-
-form table td {
-  padding:2px 5px 2px 5px;
-}
-
-table th h1
-{
-  margin: 0px 0px 10px;
-}
-
-/* Surround Image with Border */
-.image, .currentpagelink {
+#content .pages .currentpagelink {
   border:1px solid #ababab;
   padding:5px;
   margin:1px;
 }
 
-.image {
-  padding: 2px;
-  display: inline-block;
+/* blog and content pages */
+.blogs, .contents {
+  clear: both;
+  margin: 0px auto 25px auto;
+  text-align: justify;
 }
 
-.pagelink {
-  padding:5px;
+.blogs header, .contents header {
+  margin-bottom: 10px;
 }
 
-/* Small Info on special functions etc. Used primary as help */
-.description {
-  color: #666;
-  padding: 3px;
+.blogs header p, .contents header p {
+  margin: 0px;
 }
 
-/* Fixes the create / update view */
-.blog .input .description {
-  margin-left: 300px;
-  padding: 0px;
+.blogs details summary {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 110%;
 }
 
-.error .description {
-  padding-top: 6px;
+.blogs footer .share {
+  float: left;
+}
+
+.blogs footer .comments {
+  float: right;
+}
+
+/* Comments */
+#comments header {
+  padding-top: 22px;
+}
+
+#comments a {
+  font-weight: bold;
   color: #000;
 }
 
-/* Colors of switching rows */
-/* Also change directly in tpl: mediaShowMedia.tpl, contentShowOverview.tpl */
-.row1, .row2 {
-  background:transparent;
-}
-
-/* Highlight content or code */
-.box {
-  padding: 10px;
-  width:90%;
-}
-
-/* Main DIV container at blog, comments etc. */
-.element {
-  margin: 0px auto 15px auto;
-  overflow: auto;
-  text-align:left;
-  padding: 0px 12px 0px 12px;
-  overflow: hidden;
-  text-align:justify;
-  line-height: 140%;
-}
-
-.comment, #create_comment {
-  margin: 15px auto 15px auto;
-  width: 85%;
+#comments article {
+  display: table;
+  padding: 22px;
+  width: 560px;
+  margin-bottom:30px;
   text-align:left;
 }
 
-.from_author, .not_from_author {
-  background:#efefef;
-  padding:10px;
+#comments .from_author {
+  background: #E3E3E3;
+  border: 1px solid #d7d7d7;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
 
-.from_author {
-  background: #dedede;
+#comments article header {
+  display: table-cell;
+  width: 175px;
+  padding: 0px 22px 0px 0px;
 }
 
-.element .header h4 {
-  margin: 0px 0px 0px 15px;
-  font-weight: normal;
-  font-size: 90%;
+#comments article .count {
+  display: table-cell;
+  width: 30px;
 }
 
-.element_body img {
-  margin-right:4px;
-  margin-left:4px;
+#comments article header a:hover {
+  text-decoration: none;
 }
 
-.teaser {
-  font-weight: bold;
+#comments article p {
+  padding: 0;
 }
 
-/* Element footer */
-.footer {
-  font-size: 90%;
+#comments article footer {
+  padding: 0;
   text-align: right;
-  margin-top:3px;
 }
 
-.footer .share {
-  float: left;
-}
-
-.footer .share a {
-  margin-left: 3px;
-}
-
-.facebook_like {
-  clear: both;
-  padding-top: 10px;
-}
-
-.gallery_album {
-  padding: 5px 12px 5px 12px;
-  text-align:left;
-}
-
-.gallery_album p {
-  margin-bottom: 8px;
-}
-
-.gallery_album .image, #gallery_files .image {
-  margin: 2px 0px;
-}
-
-#gallery_files li {
-  line-height: 100%;
-}
-
-#gallery_files .image {
+/* gallery */
+/* Show loading images at gallery only
+#gallery_images .image {
   padding:5px;
   background: #efefef url('../images/loading.gif') no-repeat center;
-  vertical-align: middle;
+} */
+
+/* quotes */
+blockquote, .box {
+  padding:15px;
+  margin:10px auto 10px auto;
+  text-align:left;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
-.video, .audio {
-  text-align: center;
+blockquote h3 {
+  margin-top:0px;
+  margin-bottom:0px;
 }
 
-.form .input input {
-  float: left;
+/* highlight a word in a text */
+.highlight {
+  background: #FFD324;
+  padding: 2px;
+}
+
+/* form fixes */
+form h1, form h2, form h3 {
+  font-size: 20px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="password"],
+form input[type="name"],
+form textarea {
+  border: 1px solid #d7d7d7;
+  padding: 2px;
 }
