@@ -102,10 +102,14 @@ nav ul li {
   text-align: center;
 }
 
-#content .pages .currentpagelink {
+#content .pages span {
   border:1px solid #ababab;
   padding:5px;
   margin:1px;
+}
+
+#content .pages a {
+  padding:5px;
 }
 
 /* blog and content pages */
@@ -228,6 +232,7 @@ form input[type="email"],
 form input[type="url"],
 form input[type="password"],
 form input[type="name"],
+form input[type="search"],
 form textarea {
   border: 1px solid #d7d7d7;
   padding: 2px;

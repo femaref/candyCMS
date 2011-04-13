@@ -41,8 +41,12 @@
   $(document).ready(function(){
     $("#js-fancybox").fancybox();
 
-    $('#password2').function({
-      
-    }});
+    $("input#password2").keyup(function(){
+      if ($("input#password").val() === $("input#password2").val()){
+        $('#js-icon').attr('class', 'icon-success');
+      } else {
+        $('#js-icon').attr('class', 'icon-close');
+      }
+    });
   });
 </script>

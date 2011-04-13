@@ -77,7 +77,7 @@
         overlay_speed_out: 'slow'
       });
 
-      $("img").lazyload();
+      $(".image img").lazyload();
     });
   </script>
 {/if}
