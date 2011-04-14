@@ -93,6 +93,7 @@ form label {
   padding-right: 20px;
   text-align: right;
   font-weight: bold;
+  vertical-align: middle;
 }
 
 form input[type="text"],

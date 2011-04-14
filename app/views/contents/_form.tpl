@@ -1,5 +1,4 @@
-<script language='javascript' type='text/javascript'
-src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
+<script language='javascript' type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
 <script language='javascript' type='text/javascript'>
   tinyMCE.init({
     mode : "textareas",
@@ -20,48 +19,26 @@ src='%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js'></script>
   });
 </script>
 <form method='post' action='{$_action_url_}'>
-  <fieldset class="left{if $error_title} error{/if}">
-    <legend>
-      {$lang_title} *
-    </legend>
-    <div class="input">
-      <input type='text' name='title' title='{$lang_title}' value='{$c.title}' autofocus required />
-      {if $error_title}
-        <div class="description">{$error_title}</div>
-      {/if}
-    </div>
+  <h1>_Content bearbeiten_</h1>
     {if $smarty.get.action == 'update'}
-      &nbsp;
-      {$lang_last_update}: {$c.date}
+      <p>{$lang_last_update}: {$c.date}</p>
     {/if}
-  </fieldset>
-  <fieldset class="left{if $error_content} error{/if}">
-    <legend>{$lang_content} *</legend>
-    <div class="textarea">
-      <textarea name='content' title='{$lang_content}'
-                rows='20' cols='75' required>{$c.content}</textarea>
-      {if $error_content}
-        <div class="description">{$error_content}</div>
-      {else}
-        <div class='description center'>
-          <img src="%PATH_IMAGES%/spacer.png" class="icon-redirect" alt="" />
-          <a href='/help/BB-Code' target='_blank'>{$lang_bb_help}</a>
-        </div>
-      {/if}
-    </div>
-  </fieldset>
-  <div class="submit">
-    <input type='submit' class='inputbutton' value='{$lang_submit}' />
-  </div>
-  {if $smarty.get.action == 'update'}
-  <div class="button">
-    <input type='reset' value='{$lang_reset}' />
-  </div>
-  <div class="cancel">
-    <input type='button' value='{$lang_destroy_entry}'
-           onclick="confirmDelete('/content/{$_request_id_}/destroy')" />
-  </div>
-  {/if}
-  <input type='hidden' value='{$_request_id_}' name='id' />
-  <input type='hidden' value='formdata' name='{$_formdata_}' />
+  <p {if $error_title}class="error"{/if}>
+    <label for="title">{$lang_title} *</label>
+    <input type='text' name='title' title='{$lang_title}' value='{$c.title}' autofocus required />
+  </p>
+  <p {if $error_content}class="error"{/if}>
+    <label for="title">{$lang_content} *</label>
+    <textarea name='content' title='{$lang_content}' required>{$c.content}</textarea>
+  </p>
+  <p class="center">
+    <input type='submit' value='{$lang_submit}' />
+    <input type='hidden' value='{$_request_id_}' name='id' />
+    <input type='hidden' value='formdata' name='{$_formdata_}' />
+    {if $smarty.get.action == 'update'}
+      <input type='reset' value='{$lang_reset}' />
+      <input type='button' value='{$lang_destroy_entry}'
+             onclick="confirmDelete('/content/{$_request_id_}/destroy')" />
+    {/if}
+  </p>
 </form>

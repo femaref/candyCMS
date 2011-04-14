@@ -1,71 +1,30 @@
 <form method='post' action='/mail/{$_request_id_}'>
-  <table>
-    <tr>
-      <th colspan='2'>
-        <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
-      </th>
-    </tr>
-    <tr class='row1{if $error_email} error{/if}'>
-      <td class='td_left'>
-        <label for='email'>{$lang_email}</label>
-      </td>
-      <td class='td_right'>
-        {if $email == ''}
-          <div class="input">
-            <input name='email' id='email' value='{$email}' type='text' />
-            {if $error_email}
-              <div class="description">{$error_email}</div>
-            {/if}
-          </div>
-        {else}
-          {$email}
-          <input name='email' id='email' value='{$email}' type='hidden' />
-        {/if}
-      </td>
-    </tr>
-    <tr class='row2'>
-      <td class='td_left'>
-        <label for='subject'>{$lang_subject}</label>
-        ({$lang_optional})
-      </td>
-      <td class='td_right'>
-        <div class="input">
-          <input name='subject' class='' id='subject'
-                 value='{$subject}' type='text' />
-        </div>
-      </td>
-    </tr>
-    <tr class='row1{if $error_content} error{/if}'>
-      <td class='td_left'>
-        <label for='content'>{$lang_content}</label>
-      </td>
-      <td class='td_right'>
-        <div class="textarea">
-          <textarea name='content' id='content'
-                    rows='12' cols='50'>{$content}</textarea>
-          {if $error_content}
-            <div class="description">{$error_content}</div>
-          {/if}
-        </div>
-      </td>
-    </tr>
-  </table>
-  <br />
-  <center>
-    <script type="text/javascript">
-      var RecaptchaOptions = {
-         lang : 'de'
-      };
-    </script>
-    <div class="{if $error_captcha}error{/if}">
-      {$_captcha_}
-      {if $error_captcha}
-        <div class="description">{$error_captcha}</div>
+  <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
+  <p {if $error_email}class="error"{/if}>
+    <label for='email'>{$lang_email} *</label>
+    {if $email == ''}
+      <input name='email' id='email' value='{$email}' type='email' required />
+      {if $error_email}
+        <div class="description">{$error_email}</div>
       {/if}
-    </div>
-  </center>
-  <div class="submit">
+    {else}
+      <input name='email' id='email' value='{$email}' type='hidden' disabled />
+    {/if}
+  </p>
+  <p>
+    <label for='subject'>{$lang_subject}</label>
+    <input name='subject' class='' id='subject' value='{$subject}' type='text' />
+  </p>
+  <p {if $error_content}class="error"{/if}>
+    <label for='content'>{$lang_content} *</label>
+    <textarea name='content' id='content' required>{$content}</textarea>
+  </p>
+  {if $_captcha_}
+    <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
+    {$_captcha_}
+  {/if}
+  <p class="center">
     <input type='submit' value='{$lang_submit}' />
-  </div>
-  <input type='hidden' value='formdata' name='send_mail' />
+    <input type='hidden' value='formdata' name='send_mail' />
+  </p>
 </form>

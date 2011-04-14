@@ -34,7 +34,6 @@ a:hover
 
 img {
   border: none;
-  vertical-align: bottom;
 }
 
 /* headlines */
@@ -113,7 +112,7 @@ nav ul li {
 }
 
 /* blog and content pages */
-.blogs, .contents {
+.blogs, .contents, .gallery_albums {
   clear: both;
   margin: 0px auto 25px auto;
   text-align: justify;
@@ -123,7 +122,7 @@ nav ul li {
   margin-bottom: 10px;
 }
 
-.blogs header p, .contents header p {
+.blogs header p, .contents header p, .gallery_albums p {
   margin: 0px;
 }
 
@@ -139,6 +138,18 @@ nav ul li {
 
 .blogs footer .comments {
   float: right;
+}
+
+.gallery_albums {
+  text-align: left;
+}
+
+.gallery header {
+  font-size: 90%;
+}
+
+.gallery_albums article details img {
+  border: 1px solid #ccc;
 }
 
 /* Comments */
