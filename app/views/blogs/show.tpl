@@ -61,7 +61,7 @@
             <div class="share">
               {$lang_share}:
               <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
-                 title='http://www.facebook.com'>
+                 class='js-tooltip' title='http://www.facebook.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
               </a>
               <a href='http://twitter.com/share?text={$b.title}&url={$b.url}'
@@ -111,7 +111,7 @@
   $(document).ready(function(){
     VideoJS.setupAllWhenReady();
     $(".js-fancybox").fancybox();
-    $('.js-tooltip').tipTip();
+    $('.js-tooltip').tipTip({ maxWidth:"auto" });
 
     $('.js-image_overlay').ImageOverlay({
       overlay_speed: 'fast',

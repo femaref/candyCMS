@@ -118,7 +118,7 @@ form #recaptcha_widget_div {
   margin-left: 25%;
 }
 
-form input[type="reset"] {
+form input[type="reset"], form input[type="button"] {
   margin-left: 5px;
 }
 
