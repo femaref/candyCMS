@@ -58,16 +58,17 @@
         <input name='password_new2' type='password' />
       </p>
       <p class="center">
-        <input type='hidden' value='formdata' name='update_user' />
         <input type='submit' class='inputbutton' value='{$lang_submit}' />
       </p>
     </div>
   {/if}
+</form>
+<form enctype='multipart/form-data' method='post' action='/user/{$uid}/update'>
   <h2><a href="#">3. {$lang_image_upload}</a></h2>
   <div>
     <p>
       <label for='image'>{$lang_image_choose}</label>
-      <input type='file' name='image' title='' />
+      <input type='file' name='image' accept="image/jpg,image/gif,image/png" />
       <span class="description">{$lang_image_upload_info}</span>
     </p>
     <p>

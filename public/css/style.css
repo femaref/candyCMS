@@ -90,6 +90,10 @@ nav ul li {
   padding: 0px;
 }
 
+#create_mail {
+  width:600px;
+}
+
 /* Main content area */
 #content {
   display: table;

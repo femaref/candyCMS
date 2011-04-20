@@ -1,4 +1,4 @@
-<form method='post' action='/mail/{$_request_id_}'>
+<form method='post' action='/mail/{$_request_id_}' id="create_mail">
   <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
   <p {if $error_email}class="error"{/if}>
     <label for='email'>{$lang_email} *</label>
@@ -8,7 +8,7 @@
         <div class="description">{$error_email}</div>
       {/if}
     {else}
-      <input name='email' value='{$email}' type='email' disabled />
+      <input name='email' value='{$email}' type='email' required />
     {/if}
   </p>
   <p>

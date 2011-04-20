@@ -2,12 +2,12 @@
   <tr>
     <th colspan='3'>
       <h1>
+        {$user.name} {$user.surname}
         {if $USER_RIGHT == 4}
           <a href='/user/{$uid}/update'>
-            <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' style='vertical-align:baseline' />
+            <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' />
           </a>
         {/if}
-        {$user.name} {$user.surname}
       </h1>
     </th>
   </tr>

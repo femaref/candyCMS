@@ -28,14 +28,15 @@ class User extends Main {
       return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST);
 
     else {
-      if (isset($this->_aRequest['update_user'])) {
+      if (isset($this->_aRequest['create_avatar']))
+        return $this->_createAvatar($this->_iId);
+
+      elseif (isset($this->_aRequest['update_user'])) {
         if ($this->_update((int) $this->_iId) === true)
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
       }
-      elseif (isset($this->_aRequest['create_avatar']))
-        return $this->_createAvatar($this->_iId);
 
       else
         return $this->_showFormTemplate();

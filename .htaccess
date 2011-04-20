@@ -43,7 +43,6 @@ RewriteRule ^(blog|search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id
 RewriteRule ^comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^gallery/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=gallery&action=$2&id=$1&page=1 [L,QSA,NC]
-#RewriteRule ^gallery/([0-9]+)/upload/(.*)$ upload.php?section=gallery&id=$1&session_id=$2 [L,QSA,NC]
 RewriteRule ^(static|rss)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&template=$2 [L,NC]
 RewriteRule ^media/destroy/(.*)$ index.php?section=media&action=destroy&id=$1 [L,QSA,NC]
 RewriteRule ^language/([a-z]+)$ index.php?language=$1 [L,QSA,NC]

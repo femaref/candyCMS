@@ -171,11 +171,14 @@ class Gallery extends Main {
 
 		else {
 			if (isset($this->_aRequest['create_file'])) {
-				if ($this->_oModel->createFile() === true) {
+        
+				if ($this->_createFile() === true) {
 					# Log uploaded image. Request ID = album id
 					Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-					return $this->_oModel->getFilePath();
+					return Helper::successMessage('_Upload erfolgreich_', '/gallery/' . $this->_iId); #TODO
 				}
+        else
+          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId . '/createfile');
 			}
 			else
 				return $this->_showFormFileTemplate(false);
@@ -230,7 +233,7 @@ class Gallery extends Main {
               Helper::formatInput($this->_aRequest['cut']) :
               'c'; # r = resize, c = cut
 
-      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/upload');
+      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/createfile');
       $this->_oSmarty->assign('_formdata_', 'create_file');
       $this->_oSmarty->assign('default', $sDefault);
       $this->_oSmarty->assign('description', '');
@@ -246,7 +249,7 @@ class Gallery extends Main {
     return $this->_oSmarty->fetch('galleries/_form_file.tpl');
   }
 
-  public function uploadFiles() {
+  private function _createFile() {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
 
       $oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
@@ -262,9 +265,7 @@ class Gallery extends Main {
         $oModel->createFile($aFile);
       }
 
-      return Helper::successMessage('_Upload erfolgreich!_', '/gallery/' . $this->_iId);
+      return true;
     }
-    else
-      return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId);
   }
 }

@@ -212,10 +212,6 @@ define('COMPILE_DIR', 'compile');
 
 # ------------------------------------------------------------------------------
 
-# Define limit for pictures per page (3 in a row)
-# DEFAULT: 18
-define('LIMIT_ALBUM_IMAGES', 18);
-
 # Limit of blog entries per page
 # DEFAULT: 8
 define('LIMIT_BLOG', 2);

@@ -25,7 +25,6 @@
       <input type='button' value='{$lang_destroy}' onclick="confirmDelete('/gallery/{$_request_id_}/destroyfile')" />
     {/if}
   </p>
-  <div class="center" id="js-loading"></div>
 </form>
 <script type="text/javascript">
   $("input[type='file']").change(function(){
@@ -35,6 +34,6 @@
   });
 
   $("input[type='submit']").click(function() {
-    $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + LANG_LOADING + "' />");
+    $(this).val(LANG_LOADING).attr('disabled',true);
   });
 </script>
