@@ -1,5 +1,5 @@
 {if $USER_RIGHT >= 3}
-  <p>
+  <p class="center">
     <a href='/blog/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}
@@ -54,34 +54,34 @@
               <div class="tags">
                 {$lang_tags}:
                 {foreach from=$b.tags item=t name=tags}
-                  <a class='js-tooltip' title='{$lang_tags_info}: {$t}' href='/blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
+                  <a title='{$lang_tags_info}: {$t}' href='/blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
                 {/foreach}
               </div>
             {/if}
             <div class="share">
               {$lang_share}:
               <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
-                 class='js-tooltip' title='http://www.facebook.com'>
+                 title='http://www.facebook.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
               </a>
               <a href='http://twitter.com/share?text={$b.title}&url={$b.url}'
-                 class='js-tooltip' title='http://www.twitter.com'>
+                 title='http://www.twitter.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-twitter" alt='Twitter' width='16' height='16' />
               </a>
               <a href='http://del.icio.us/post?url={$b.url}&amp;title={$b.encoded_title}'
-                 class='js-tooltip' title='http://del.icio.us'>
+                 title='http://del.icio.us'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
               </a>
               <a href='http://technorati.com/cosmos/search.html?url={$b.url}'
-                 class='js-tooltip' title='http://technorati.com'>
+                 title='http://technorati.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
               </a>
               <a href='http://digg.com/submit?phase=2&amp;url={$b.url}&amp;title={$b.encoded_title}'
-                 class='js-tooltip' title='http://digg.com'>
+                 title='http://digg.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
               </a>
               <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$b.url}&amp;bm_description={$b.encoded_title}'
-                 class='js-tooltip' title='http://www.mister-wong.de'>
+                 title='http://www.mister-wong.de'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
               </a>
             </div>
@@ -102,7 +102,6 @@
 {$_blog_pages_}
 {$_blog_comments_}
 <script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
@@ -111,7 +110,6 @@
   $(document).ready(function(){
     VideoJS.setupAllWhenReady();
     $(".js-fancybox").fancybox();
-    $('.js-tooltip').tipTip({ maxWidth:"auto" });
 
     $('.js-image_overlay').ImageOverlay({
       overlay_speed: 'fast',

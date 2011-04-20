@@ -3,21 +3,21 @@
   <p {if $error_email}class="error"{/if}>
     <label for='email'>{$lang_email} *</label>
     {if $email == ''}
-      <input name='email' id='email' value='{$email}' type='email' required />
+      <input name='email' value='{$email}' type='email' required />
       {if $error_email}
         <div class="description">{$error_email}</div>
       {/if}
     {else}
-      <input name='email' id='email' value='{$email}' type='hidden' disabled />
+      <input name='email' value='{$email}' type='email' disabled />
     {/if}
   </p>
   <p>
     <label for='subject'>{$lang_subject}</label>
-    <input name='subject' class='' id='subject' value='{$subject}' type='text' />
+    <input name='subject' class='' value='{$subject}' type='text' />
   </p>
   <p {if $error_content}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>
-    <textarea name='content' id='content' required>{$content}</textarea>
+    <textarea name='content' cols="30" required>{$content}</textarea>
   </p>
   {if $_captcha_}
     <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>

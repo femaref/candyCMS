@@ -147,6 +147,11 @@ class Section extends Main {
           parent::_setTitle(LANG_GLOBAL_GALLERY);
           parent::_setDescription(LANG_GLOBAL_GALLERY);
         }
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'upload') {
+          parent::_setContent($this->_oObject->uploadFiles());
+          parent::_setTitle('Bilder werden hochgeladen'); # TODO
+          parent::_setDescription('Bilder werden hochgeladen');
+        }
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setTitle($this->_oObject->getTitle());

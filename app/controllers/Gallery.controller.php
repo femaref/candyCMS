@@ -230,7 +230,7 @@ class Gallery extends Main {
               Helper::formatInput($this->_aRequest['cut']) :
               'c'; # r = resize, c = cut
 
-      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/upload/' .session_id());
+      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/upload');
       $this->_oSmarty->assign('_formdata_', 'create_file');
       $this->_oSmarty->assign('default', $sDefault);
       $this->_oSmarty->assign('description', '');
@@ -240,10 +240,31 @@ class Gallery extends Main {
       $this->_oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
       $this->_oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-      $this->_oSmarty->assign('lang_same_filetype', LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE);
     }
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_file');
     return $this->_oSmarty->fetch('galleries/_form_file.tpl');
+  }
+
+  public function uploadFiles() {
+    if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
+
+      $oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
+
+      for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
+
+        $aFile['name']      = $this->_aFile['file']['name'][$iI];
+        $aFile['type']      = $this->_aFile['file']['type'][$iI];
+        $aFile['tmp_name']  = $this->_aFile['file']['tmp_name'][$iI];
+        $aFile['error']     = $this->_aFile['file']['error'][$iI];
+        $aFile['size']      = $this->_aFile['file']['size'][$iI];
+
+        $oModel->createFile($aFile);
+      }
+
+      return Helper::successMessage('_Upload erfolgreich!_', '/gallery/' . $this->_iId);
+    }
+    else
+      return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId);
   }
 }

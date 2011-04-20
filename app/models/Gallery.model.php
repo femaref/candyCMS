@@ -379,8 +379,8 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public final function createFile($iUserId = '') {
-    $oUploadFile = new Upload($this->_aRequest, $this->_aFile);
+	public final function createFile($aFile) {
+    $oUploadFile = new Upload($this->_aRequest, $aFile);
 
     if($oUploadFile->uploadGalleryFile() == true) {
       $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
@@ -397,6 +397,7 @@ class Model_Gallery extends Model_Main {
 																				VALUES
 																					( :album_id, :author_id, :file, :extension, :description, :date )");
 
+        $iUserId = USER_ID;
         $oQuery->bindParam('album_id', $this->_aRequest['id']);
         $oQuery->bindParam('author_id', $iUserId);
         $oQuery->bindParam('file', $oUploadFile->getId());

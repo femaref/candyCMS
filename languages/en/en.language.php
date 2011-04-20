@@ -119,7 +119,6 @@ define( 'LANG_COMMENT_TITLE_DESTROY', 'Delete comment' );
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Update: %p' );
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Create album' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Update: %p' );
-define( 'LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE', 'You are only allowed to upload images with same file type!' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Choose file(s)' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Cut and resize' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Resize only' );

@@ -121,7 +121,6 @@ define( 'LANG_COMMENT_TITLE_DESTROY', 'Excluir comentário' );
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Update: %p' );
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Criar um álbum' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Update: %p' );
-define( 'LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE', 'Vocô só é permitido fazer upload de imagens com o mesmo tipo de arquivo!' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Escolha arquivo (s)' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Recortar e redimensionar' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Redimensionar apenas' );

@@ -119,7 +119,6 @@ define( 'LANG_COMMENT_TITLE_DESTROY', 'Kommentar löschen' );
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Editieren: %p' );
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Album hinzufügen' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Editieren: %p' );
-define( 'LANG_GALLERY_FILE_CREATE_INFO_SAME_FILETYPE', 'Bitte nur Bilder mit der gleichen Dateiendung auswählen!' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Bild proportional verkleinern' );

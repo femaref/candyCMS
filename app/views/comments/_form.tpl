@@ -6,11 +6,11 @@
     {if $USER_NAME}
       {$USER_FULL_NAME}
       {if $USER_FACEBOOK_ID}
-        <input type="hidden" value="{$USER_FULL_NAME}" name="name" id="name" />
-        <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" id="facebook_id" />
+        <input type="hidden" value="{$USER_FULL_NAME}" name="name" />
+        <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" />
       {/if}
     {else}
-      <input type="text" value="{$name}" name="name" id="name" required />
+      <input type="text" value="{$name}" name="name" required />
       {if $error_name}
         <div class="description">{$error_name}</div>
       {/if}
@@ -21,10 +21,10 @@
     {if $USER_EMAIL}
       {$USER_EMAIL}
       {if $USER_FACEBOOK_ID}
-        <input type="hidden" value="{$USER_EMAIL}" name="email" id="email" />
+        <input type="hidden" value="{$USER_EMAIL}" name="email" />
       {/if}
     {else}
-      <input type="email" value="{$email}" name="email" id="email" title="{$lang_email_info}" />
+      <input type="email" value="{$email}" name="email" title="{$lang_email_info}" />
     {/if}
   </p>
   <p {if $error_content}class="error"{/if}>

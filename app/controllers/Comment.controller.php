@@ -63,9 +63,6 @@ final class Comment extends Main {
 	}
 
   protected final function _create($bShowCaptcha = false) {
-    if (!isset($this->_aRequest['parent_category']) || empty($this->_aRequest['parent_category']))
-			$this->_aError['parent_category'] = LANG_ERROR_FORM_MISSING_CATEGORY;
-
 		if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
 			$this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
@@ -76,11 +73,6 @@ final class Comment extends Main {
 			if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
 				$this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 		}
-
-    # Set new action for form template
-    $this->_sAction = '/comment/create/' . $this->_aRequest['parent_category'] .
-						'/' . (int) $this->_aRequest['parent_id'] . '#' .
-						(int) $this->_aRequest['parent_id'];
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate($bShowCaptcha);

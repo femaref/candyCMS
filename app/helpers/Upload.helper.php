@@ -42,14 +42,13 @@ final class Upload {
 
   public function uploadGalleryFile($sResize = '') {
     $this->_aRequest['cut'] = !empty($sResize) ? $sResize : $this->_aRequest['cut'];
-
-    $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['Filedata']['name'], '.'), 1));
-    $this->_iId = $this->_replaceNonAlphachars($this->_aFile['Filedata']['name']);
+    $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['name'], '.'), 1));
+    $this->_iId = $this->_replaceNonAlphachars($this->_aFile['name']);
     $this->_iId = substr($this->_iId, 0, strlen($this->_iId) - strlen($this->_sFileExtension) - 1) . rand(100, 999);
     $this->_sUploadFolder = 'gallery/' . (int) $this->_aRequest['id'];
     $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.' . $this->_sFileExtension;
 
-    $bReturn = move_uploaded_file($this->_aFile['Filedata']['tmp_name'], $this->sFilePath);
+    $bReturn = move_uploaded_file($this->_aFile['tmp_name'], $this->sFilePath);
 
     $oImage = new Image($this->_iId, $this->_sUploadFolder, $this->sFilePath, $this->_sFileExtension);
     if (isset($this->_aRequest['cut']) && 'c' == $this->_aRequest['cut'])
@@ -70,7 +69,7 @@ final class Upload {
   public function uploadAvatarFile($bReturnPath = true) {
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['image']['name'], '.'), 1));
     $this->_iId = isset($this->_aRequest['id']) && USER_RIGHT == 4 ? (int)$this->_aRequest['id'] : USER_ID;
-    $this->_sFormAction = 'User/Settings';
+    $this->_sFormAction = 'user/settings';
     $this->_sUploadFolder = 'user';
     $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId;
 

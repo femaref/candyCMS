@@ -14,7 +14,7 @@ body
 {
   margin: 20px auto;
   padding: 20px 50px;
-  width: 600px;
+  width: 700px;
   background: #fff;
   border: 12px solid #000000;
   text-align: left;
@@ -111,10 +111,14 @@ nav ul li {
   padding:5px;
 }
 
+/* Add / edit content links */
+#content p a img, #content .pages a img {
+  vertical-align: bottom;
+}
+
 /* blog and content pages */
 .blogs, .contents, .gallery_albums {
   clear: both;
-  margin: 0px auto 25px auto;
   text-align: justify;
 }
 
@@ -126,14 +130,22 @@ nav ul li {
   margin: 0px;
 }
 
+.blogs footer {
+  margin: 0px auto 50px auto;
+}
+
 .blogs details summary {
   font-weight: bold;
   margin-bottom: 10px;
   font-size: 110%;
 }
 
-.blogs footer .share {
+.blogs footer .share, .contents footer .share {
   float: left;
+}
+
+.blogs footer .share img, .contents footer .share img {
+  vertical-align: middle;
 }
 
 .blogs footer .comments {
@@ -230,12 +242,20 @@ blockquote h3 {
   padding: 2px;
 }
 
+.video, .audio, .vjs-flash-fallback {
+  text-align: center;
+}
+
 /* form fixes */
 form h1, form h2, form h3 {
   font-size: 20px;
   padding-bottom: 5px;
   margin-bottom: 20px;
   border-bottom: 1px solid #CCCCCC;
+}
+
+form h4 {
+  font-weight:normal;
 }
 
 form input[type="text"],

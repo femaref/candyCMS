@@ -1,5 +1,5 @@
 {if $USER_RIGHT >= 3}
-  <p>
+  <p class="center">
     <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
       {$lang_create_entry_headline}

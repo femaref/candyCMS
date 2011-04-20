@@ -1,5 +1,5 @@
 {if $USER_RIGHT >= 3}
-  <p>
+  <p class="center">
     <a href='/media/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' />
       {$lang_file_create}
@@ -33,7 +33,7 @@
           </td>
           <td style='text-align:left;width:45%'>
             {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
-              <a href='%PATH_UPLOAD%/media/{$f.name}' rel='lightbox[]' title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
+              <a href='%PATH_UPLOAD%/media/{$f.name}' class="js-fancybox" title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
                 {$f.name}
               </a> ({$f.dim[0]} x {$f.dim[1]} px)
             {else}
@@ -42,8 +42,7 @@
               </a>
             {/if}
             <br />
-            <input type='text' value='%PATH_UPLOAD%/media/{$f.name}' class='inputsmall'
-                   onclick="this.focus();this.select();" />
+            <input type='text' value='%PATH_UPLOAD%/media/{$f.name}' onclick="this.focus();this.select();" />
           </td>
           <td style='20%'>
             {$f.size}
@@ -60,10 +59,10 @@
       {/foreach}
     {/if}
   </table>
-  <script type="text/javascript">
-    // TODO: Load js after
-    //window.addEvent('domready', function() {
-    //  new Asset.javascript('%PATH_PUBLIC%/js/core/slimbox{$_compress_files_suffix_}.js');
-    //});
+  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script language='javascript' type="text/javascript">
+    $(document).ready(function(){
+      $(".js-fancybox").fancybox();
+    });
   </script>
 {/if}

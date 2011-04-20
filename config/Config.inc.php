@@ -170,10 +170,10 @@ define('RECAPTCHA_PRIVATE', '6LeElLwSAAAAAEm2k4HEN_LiRtG-1QXU_ApVOUC0');
 # Set maximum image/video width (MEDIA_DEFAULT_X) and height (MEDIA_DEFAULT_Y) in px.
 # Larger images and videos will be reseized or scaled down!
 # DEFAULT: 660
-define('MEDIA_DEFAULT_X', '600');
+define('MEDIA_DEFAULT_X', '700');
 
 # DEFAULT: 371
-define('MEDIA_DEFAULT_Y', '371');
+define('MEDIA_DEFAULT_Y', '400');
 
 # Set thumb width
 # DEFAULT: 180

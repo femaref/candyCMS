@@ -6,7 +6,8 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content="{$meta_description}" />
     <meta name='keywords' content="{$meta_keywords}" />
-    {if $_id_}
+    <!-- TODO: Facebook check -->
+    {if _request_id_}
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
       <meta property="og:site_name" content="{$meta_og_site_name}"/>

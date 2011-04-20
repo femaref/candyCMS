@@ -4,7 +4,7 @@
     $('textarea.js-tinymce').tinymce({
       script_url : '%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js',
       theme : "advanced",
-      plugins : "autosave,safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
+      plugins : "autosave,safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,table",
       theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,styleselect,formatselect,fontselect,fontsizeselect",
       theme_advanced_buttons2 : "cut,copy,paste,pastetext,|,search,replace,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,forecolor,backcolor,|,pagebreak,|,fullscreen",
       theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,media,|,print,|,ltr,rtl,|,help",
@@ -26,12 +26,12 @@
       <p>{$lang_last_update}: {$c.date}</p>
     {/if}
   <p {if $error_title}class="error"{/if}>
-    <label for="form-title">{$lang_title} *</label>
-    <input type='text' name='form-title' title='{$lang_title}' value='{$c.title}' autofocus required />
+    <label for="title">{$lang_title} *</label>
+    <input type='text' name='title' title='{$lang_title}' value='{$c.title}' autofocus required />
   </p>
   <p {if $error_content}class="error"{/if}>
-    <label for="form-content">{$lang_content} *</label>
-    <textarea name='form-content' title='{$lang_content}' class="js-tinymce" required>{$c.content}</textarea>
+    <label for="content">{$lang_content} *</label>
+    <textarea name='content' title='{$lang_content}' class="js-tinymce" required>{$c.content}</textarea>
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

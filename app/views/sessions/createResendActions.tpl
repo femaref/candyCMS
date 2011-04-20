@@ -1,17 +1,11 @@
-<div id="resend_actions">
-  <form method='post' action='{$_action_url_}'>
-    {if $error_email}
-      <div class="error">{$error_email}</div>
-    {/if}
-    <fieldset>
-      <legend>{$lang_headline}</legend>
-      <small>{$lang_description}</small>
-      <div class="input">
-        <input name='email' type="email" title='' autofocus required />
-      </div>
-      <div class="submit">
-        <input type='submit' value='{$lang_submit}' />
-      </div>
-    </fieldset>
-  </form>
-</div>
+<form method='post' action='{$_action_url_}'>
+  <h1>{$lang_headline}</h1>
+  <h4>{$lang_description}</h4>
+  <p>
+    <label for="email">{$lang_email}</label>
+    <input name='email' type="email" title='' autofocus required />
+  </p>
+  <p class="center">
+    <input type='submit' value='{$lang_submit}' />
+  </p>
+</form>

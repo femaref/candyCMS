@@ -30,27 +30,27 @@
         <div class="share">
           {$lang_share}:
           <a href='http://www.facebook.com/share.php?u={$c.url}&amp;t={$c.encoded_title}'
-             class='js-tooltip' title='http://www.facebook.com'>
+             title='http://www.facebook.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
           </a>
           <a href='http://twitter.com/share?text={$c.title}&url={$c.url}'
-             class='js-tooltip' title='http://www.twitter.com'>
+             title='http://www.twitter.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-twitter" alt='Twitter' width='16' height='16' />
           </a>
           <a href='http://del.icio.us/post?url={$c.url}&amp;title={$c.encoded_title}'
-             class='js-tooltip' title='http://del.icio.us'>
+             title='http://del.icio.us'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-delicious" alt='del.icio.us' width='16' height='16' />
           </a>
           <a href='http://technorati.com/cosmos/search.html?url={$c.url}'
-             class='js-tooltip' title='http://technorati.com'>
+             title='http://technorati.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-technorati" alt='Technorati' width='16' height='16' />
           </a>
           <a href='http://digg.com/submit?phase=2&amp;url={$c.url}&amp;title={$c.encoded_title}'
-             class='js-tooltip' title='http://digg.com'>
+             title='http://digg.com'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-digg" alt='Digg' width='16' height='16' />
           </a>
           <a href='http://www.mister-wong.de/index.php?action=addurl&amp;bm_url={$c.url}&amp;bm_description={$c.encoded_title}'
-             class='js-tooltip' title='http://www.mister-wong.de'>
+             title='http://www.mister-wong.de'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
         </div>
@@ -61,23 +61,17 @@
     </article>
   </section>
   <script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script language='javascript' type="text/javascript">
     $(document).ready(function(){
       VideoJS.setupAllWhenReady();
       $(".js-fancybox").fancybox();
-      $('.js-tooltip').tipTip();
 
       $('.js-image_overlay').ImageOverlay({
         overlay_speed: 'fast',
         overlay_speed_out: 'slow'
       });
-
-      $(".image img").lazyload();
     });
   </script>
 {/if}
