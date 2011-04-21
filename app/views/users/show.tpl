@@ -7,8 +7,8 @@
   {/if}
 </h1>
 <table>
-  <tr class='row1'>
-    <td class='td_left'>
+  <tr>
+    <td>
       {$lang_registered_since}
     </td>
     <td class='td_right'>
@@ -20,24 +20,24 @@
       </a>
     </td>
   </tr>
-  <tr class='row2'>
-    <td class='td_left'>
+  <tr>
+    <td>
       {$lang_last_login}
     </td>
     <td class='td_right'>
       {$last_login}
     </td>
   </tr>
-  <tr class='row1'>
-    <td class='td_left'>
+  <tr>
+    <td>
       {$lang_about_himself}
     </td>
     <td class='td_right'>
       {$user.description}
     </td>
   </tr>
-  <tr class='row2'>
-    <td class='td_left'>
+  <tr>
+    <td>
       {$lang_contact}
     </td>
     <td class='td_right'>
