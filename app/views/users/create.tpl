@@ -1,4 +1,4 @@
-<form method='post' action='/user/create'>
+<form method='post'>
   <h1>{$lang_registration}</h1>
   <p {if $error_name}class="error"{/if}>
     <label for='name'>{$lang_name} *</label>

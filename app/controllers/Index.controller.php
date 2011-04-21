@@ -222,7 +222,7 @@ class Index extends Main {
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						strtolower($this->_aRequest['section']) == 'blog' ||
-						#strtolower($this->_aRequest['section']) == 'comment' ||
+						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
 						strtolower($this->_aRequest['section']) == 'gallery' ||
 						strtolower($this->_aRequest['section']) == 'log' ||

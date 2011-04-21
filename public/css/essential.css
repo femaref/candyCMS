@@ -73,7 +73,7 @@ pre {
 
 form {
   width: 90%;
-  margin: 30px auto;
+  margin: 15px auto;
 }
 
 form p {
@@ -121,7 +121,7 @@ form textarea {
 }
 
 form #recaptcha_widget_div {
-  margin-left: 25%;
+  margin-left:167px;
 }
 
 form input[type="reset"], form input[type="button"] {

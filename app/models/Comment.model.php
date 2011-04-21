@@ -179,9 +179,9 @@ class Model_Comment extends Model_Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "comments (author_id, author_facebook_id, author_name, author_email, author_ip, content, date, parent_category, parent_id)
+                                  " . SQL_PREFIX . "comments (author_id, author_facebook_id, author_name, author_email, author_ip, content, date, parent_id)
                                 VALUES
-                                  ( :author_id, :author_facebook_id, :author_name, :author_email, :author_ip, :content, :date, :parent_category, :parent_id )");
+                                  ( :author_id, :author_facebook_id, :author_name, :author_email, :author_ip, :content, :date, :parent_id )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);

@@ -216,6 +216,8 @@ class User extends Main {
 			$this->_oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));
 			$this->_oSmarty->assign('date', Helper::formatTimestamp($this->_aData['date']));
 			$this->_oSmarty->assign('user', $this->_aData);
+			$this->_oSmarty->assign('avatar_32', Helper::getAvatar('user', 32, $this->_iId, $aGravatar));
+			$this->_oSmarty->assign('avatar_64', Helper::getAvatar('user', 64, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 
@@ -303,7 +305,7 @@ class User extends Main {
 
         if($bStatus == true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
-					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/Session/create');
+					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/session/create');
         }
 
 				else

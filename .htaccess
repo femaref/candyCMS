@@ -40,7 +40,6 @@ RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)/(update|destroy|upload|verification)$ in
 
 # Section specific rules
 RewriteRule ^(blog|search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA,NC] # Show item sorted by tag
-RewriteRule ^comment/create/([a-z])/([0-9]+)$ index.php?section=comment&action=create&parent_category=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA,NC]
 RewriteRule ^gallery/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=gallery&action=$2&id=$1&page=1 [L,QSA,NC]
 RewriteRule ^(static|rss)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&template=$2 [L,NC]

@@ -181,8 +181,8 @@ nav ul li {
 #comments article {
   display: table;
   padding: 22px;
-  width: 560px;
-  margin-bottom:30px;
+  width: 600px;
+  margin:0px auto 30px;
   text-align:left;
 }
 
@@ -271,4 +271,17 @@ form input[type="search"],
 form textarea {
   border: 1px solid #d7d7d7;
   padding: 2px;
+}
+
+table {
+  width:100%;
+  display: table;
+}
+
+table td {
+  padding: 2px 2px 2px 0px;
+}
+
+table tr td:first-child {
+  font-weight: bold;
 }

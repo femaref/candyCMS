@@ -1,20 +1,10 @@
-<form method='post' action='/session/create'>
+<form method='post'>
   <h1>{$lang_login}</h1>
-  {if $error_email || $error_password}
-    <div class="error">
-      {if $error_email}
-        <p>{$error_email}</p>
-      {/if}
-      {if $error_password}
-        <p>{$error_password}</p>
-      {/if}
-    </div>
-  {/if}
-  <p>
+  <p {if $error_email}class="error"{/if}>
     <label for="name">{$lang_email}</label>
     <input name='email' type='text' id='email' value='' autofocus required />
   </p>
-  <p>
+  <p {if $error_password}class="error"{/if}>
     <label for='password'>{$lang_password}</label>
     <input name='password' type='password' id='password' value='' required />
   </p>

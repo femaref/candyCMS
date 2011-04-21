@@ -40,8 +40,7 @@ class Session extends Main {
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST).
-				$this->showCreateSessionTemplate();
+      Helper::errorMessage('_Die Kombination aus E-Mail-Adresse und Passwort stimmt nicht überein._', '/session/create'); #TODO
 	}
 
   public final function showCreateSessionTemplate() {

@@ -1,4 +1,4 @@
-<form action="/search" method='post'>
+<form method='post'>
   <h1>{$lang_search}</h1>
   <p>
     <label for='search'>_Begriffe_</label>

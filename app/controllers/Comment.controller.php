@@ -18,7 +18,7 @@ final class Comment extends Main {
 	private $_oRecaptchaResponse = '';
 	private $_sRecaptchaError = '';
 
-  public function __init($aParentData) {
+  public function __init($aParentData = '') {
     $this->_aParentData =& $aParentData;
     $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
   }
@@ -42,67 +42,67 @@ final class Comment extends Main {
       $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('comments/show');
-      return $this->_oSmarty->fetch('comments/show.tpl') . $this->create('create_comment');
+
+      # Try to post comments directly
+      return $this->_oSmarty->fetch('comments/show.tpl') . $this->create('create_comment'); 
 		}
 	}
 
   # @Override
 	# We must override the main method due to user right problems
 	public final function create($sInputName) {
-		if (isset($this->_aRequest[$sInputName])) {
-			if (USER_RIGHT == 0)
-				return $this->_checkCaptcha(true);
+    if (isset($this->_aRequest[$sInputName])) {
+      if (USER_RIGHT == 0)
+        return $this->_checkCaptcha(true);
 
-			else
-				return $this->_create(false);
-		}
-		else {
-			$bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
-			return $this->_showFormTemplate($bShowCaptcha);
-		}
-	}
+      else
+        return $this->_create(false);
+    }
+    else {
+      $bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
+      return $this->_showFormTemplate($bShowCaptcha);
+    }
+  }
 
   protected final function _create($bShowCaptcha = false) {
-		if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
-			$this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
+    if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
+      $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
-		if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
+    if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
+      $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
-		if (USER_ID < 1) {
-			if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
-				$this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
-		}
+    if (USER_ID < 1) {
+      if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
+        $this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
+    }
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate($bShowCaptcha);
+    if (isset($this->_aError))
+      return $this->_showFormTemplate($bShowCaptcha);
 
-		else {
-			$iLastComment = Helper::getLastEntry('comments') + 1;
+    else {
+      $iLastComment = Helper::getLastEntry('comments') + 1;
+      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
-			$sRedirect = '/' . $this->_sParentSection .
-							'/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
+      if ($this->_oModel->create() === true) {
+        Log::insert('comment', 'create', $iLastComment);
+        return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+      }
 
-			if ($this->_oModel->create() === true) {
-				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iLastComment);
-				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
-			}
-
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
-		}
+      else
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+    }
   }
 
   protected final function _destroy() {
-		$sRedirect = '/' . $this->_sParentSection . '/' . (int) $this->_aRequest['parent_id'];
+    $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-			return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Log::insert('comment', 'destroy', (int) $this->_aRequest['id']);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
-		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
-	}
+    else
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+  }
 
   protected final function _showFormTemplate($bShowCaptcha) {
     $sName = isset($this->_aRequest['name']) ?
@@ -121,7 +121,6 @@ final class Comment extends Main {
             (int) $this->_aRequest['parent_id'] :
             (int) $this->_iId;
 
-    #$this->_oSmarty->assign('_action_url_', $this->_sAction);
     $this->_oSmarty->assign('_parent_id_', $iParentId);
     $this->_oSmarty->assign('content', $sContent);
     $this->_oSmarty->assign('email', $sEmail);

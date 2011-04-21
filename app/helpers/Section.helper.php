@@ -75,18 +75,11 @@ class Section extends Main {
 
       case 'comment':
 
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->_oObject->create('create_comment'));
-          parent::_setTitle(LANG_COMMENT_TITLE_CREATE);
-          parent::_setDescription(LANG_COMMENT_TITLE_CREATE);
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
           parent::_setTitle(LANG_COMMENT_TITLE_DESTROY);
           parent::_setDescription(LANG_COMMENT_TITLE_DESTROY);
         }
-        #elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'show')
-        #  parent::_setContent($this->_oObject->show());
 
         break;
 

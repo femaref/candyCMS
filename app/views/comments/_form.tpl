@@ -1,5 +1,5 @@
 <a name='create'></a>
-<form action="{$_action_url_}" method="post">
+<form method="post">
   <h3>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
   <p {if $error_name}class="error"{/if}>
     <label for="name">{$lang_name} *</label>
@@ -32,8 +32,10 @@
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
   </p>
   {if $_captcha_}
-    <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
-    {$_captcha_}
+    <div {if $error_captcha}class="error"{/if}>
+      <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
+      {$_captcha_}
+    </div>
   {/if}
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

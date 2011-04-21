@@ -1,16 +1,12 @@
+<h1>
+  {$user.name} {$user.surname}
+  {if $USER_RIGHT == 4}
+    <a href='/user/{$uid}/update'>
+      <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' />
+    </a>
+  {/if}
+</h1>
 <table>
-  <tr>
-    <th colspan='3'>
-      <h1>
-        {$user.name} {$user.surname}
-        {if $USER_RIGHT == 4}
-          <a href='/user/{$uid}/update'>
-            <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' />
-          </a>
-        {/if}
-      </h1>
-    </th>
-  </tr>
   <tr class='row1'>
     <td class='td_left'>
       {$lang_registered_since}
@@ -20,7 +16,7 @@
     </td>
     <td rowspan='4' style='vertical-align:top'>
       <a href='{$avatar_popup}' class="js-fancybox" title='{$user.name} {$user.surname}'>
-        <img class='image' alt='{$user.name}' src="{$avatar_100}" />
+        <img class='image' alt='{$user.name}' src="{$avatar_64}" />
       </a>
     </td>
   </tr>
@@ -52,7 +48,6 @@
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' type="text/javascript">
   $(document).ready(function(){
-    $(".js-fancybox").fancybox();
     $(".js-fancybox").fancybox();
   });
 </script>
