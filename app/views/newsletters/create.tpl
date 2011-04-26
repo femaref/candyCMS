@@ -28,7 +28,7 @@
   </p>
   <p {if $error_content}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>
-    <textarea name='content' rows='20' cols='50' class="js-tinymce" required>{$content}</textarea>
+    <textarea name='content' rows='20' cols='50' class="js-tinymce">{$content}</textarea>
     <div class='description'>{$lang_content_info}</div>
   </p>
   <p class="center">

@@ -21,6 +21,10 @@ class Log extends Main {
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 		else {
 			$this->_oSmarty->assign('logs', $this->_oModel->getData());
+
+      # Do we need pages?
+      $this->_oSmarty->assign('_log_pages_', $this->_oModel->oPage->showPages('/log'));
+
 			$this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
 

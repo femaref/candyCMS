@@ -9,6 +9,11 @@
   margin-left: 10px;
 }
 
+/* Hide toggle on load */
+.js-toggle-element {
+  display:none;
+}
+
 /* Success and error Messages */
 .success, .error, .notice {
   margin: 0px 0px 10px 0px;
@@ -63,12 +68,19 @@ pre {
   text-align: right;
 }
 
-.pointer {
+.pointer, .js-toggle:hover, .copybox:hover {
   cursor: pointer;
 }
 
 .nom {
   margin: 0px !important;
+}
+
+.copybox {
+  display: block;
+  font-size: 80%;
+  border: none;
+  width:95%;
 }
 
 form {
@@ -113,7 +125,7 @@ form input[type="name"] {
   height: 20px;
 }
 
-form input[type="checkbox"] {}
+form input[type="copy"] {}
 
 form textarea {
   width: 98%;

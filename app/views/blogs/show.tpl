@@ -118,8 +118,8 @@
 
     $(".image img").lazyload();
 
-    if($('.js-toggle')) {
-      $('.js-toggle').click(function(){
+    if($('.js-toggle-headline')) {
+      $('.js-toggle-headline').click(function(){
         $(this).next().toggle();
       });
     };

@@ -1,7 +1,7 @@
 <form method='post'>
   <h1>{$lang_search}</h1>
   <p>
-    <label for='search'>_Begriffe_</label>
+    <label for='search'>_#Begriffe#_</label>
     <input type="search" name="id" autofocus required />
   </p>
   <p class="center">

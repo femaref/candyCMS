@@ -191,7 +191,7 @@ final class Bbcode {
 
 		while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
 			$sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU",
-											"<span class='js-toggle'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-element\">\\2</div>",
+											"<span class='js-toggle-headline'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>",
 											$sStr);
 		}
 

@@ -1,5 +1,5 @@
 <form method='post' action='/user/{$uid}/update'>
-  <h2><a href="#">1. _Stammdaten_</a></h2>
+  <h2><a href="#">1. _#Stammdaten#_</a></h2>
   <div>
     <p {if $error_name}class="error"{/if}>
       <label for='name'>{$lang_name} *</label>

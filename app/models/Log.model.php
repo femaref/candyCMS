@@ -10,22 +10,38 @@
 class Model_Log extends Model_Main {
 
 	private function _setData() {
+    # Count entries
+    try {
+      $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
+      $iResult = $oQuery->fetchColumn();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+
+    $this->oPage = new Page($this->_aRequest, $iResult, 50);
+
 		try {
-			$oQuery = $this->_oDb->query("SELECT
-																			l.*,
-																			u.id AS uid,
-																			u.name,
-																			u.surname
-																		FROM
-																			" . SQL_PREFIX . "logs l
-																		LEFT JOIN
-																			" . SQL_PREFIX . "users u
-																		ON
-																			l.user_id=u.id
-																		ORDER BY
-																			l.time_end DESC
-																		LIMIT
-																			25");
+			$oQuery = $this->_oDb->prepare("SELECT
+                                        l.*,
+                                        u.id AS uid,
+                                        u.name,
+                                        u.surname
+                                      FROM
+                                        " . SQL_PREFIX . "logs l
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "users u
+                                      ON
+                                        l.user_id=u.id
+                                      ORDER BY
+                                        l.time_end DESC
+                                      LIMIT
+                                          :offset,
+                                          :limit");
+
+      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->execute();
 
 			$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 		}

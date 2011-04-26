@@ -56,7 +56,7 @@
     $('#js-commments').infinitescroll({
       navSelector  : "div.navigation",
       nextSelector : "div.navigation a:first",
-      itemSelector : "#js-commments",
+      itemSelector : "#js-commments article",
       loadingImg   : "%PATH_IMAGES%/loading.gif",
       loadingText  : '',
       donetext     : ''

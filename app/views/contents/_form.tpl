@@ -21,7 +21,7 @@
   });
 </script>
 <form method='post' action='{$_action_url_}'>
-  <h1>_Content bearbeiten_</h1>
+  <h1>_#Content bearbeiten#_</h1>
     {if $smarty.get.action == 'update'}
       <p>{$lang_last_update}: {$c.date}</p>
     {/if}
@@ -31,7 +31,7 @@
   </p>
   <p {if $error_content}class="error"{/if}>
     <label for="content">{$lang_content} *</label>
-    <textarea name='content' title='{$lang_content}' class="js-tinymce" required>{$c.content}</textarea>
+    <textarea name='content' title='{$lang_content}' class="js-tinymce">{$c.content}</textarea>
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

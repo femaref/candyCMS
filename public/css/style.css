@@ -116,7 +116,7 @@ nav ul li {
 }
 
 /* Add / edit content links */
-#content p a img, #content .pages a img {
+#content p a img, #content .pages a img, .js-toggle-headline img {
   vertical-align: bottom;
 }
 

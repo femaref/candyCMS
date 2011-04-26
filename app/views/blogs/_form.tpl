@@ -18,7 +18,7 @@
   </p>
   <p {if $error_content}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>
-    <textarea name='content' class="js-tinymce" rows='16' cols='50' required>{$content}</textarea>
+    <textarea name='content' class="js-tinymce" rows='16' cols='50' >{$content}</textarea>
   </p>
   <p>
     <label for='published'>{$lang_published}</label>
@@ -35,10 +35,10 @@
     <input type='hidden' value='{$author_id}' name='author_id' />
     <input type='hidden' value='formdata' name='{$_formdata_}' />
     <input type='submit' value='{$lang_submit}' />
-      {if $smarty.get.action == 'update'}
-        <input type='reset' value='{$lang_reset}' />
-        <input type='button' value='{$lang_destroy_entry}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
-      {/if}
+    {if $smarty.get.action == 'update'}
+      <input type='reset' value='{$lang_reset}' />
+      <input type='button' value='{$lang_destroy_entry}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
+    {/if}
   </p>
 </form>
 <script language='javascript' type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/jquery.tinymce.js'></script>

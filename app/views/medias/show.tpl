@@ -5,16 +5,12 @@
       {$lang_file_create}
     </a>
   </p>
+  <h1>{$lang_headline}</h1>
   <table>
-    <tr>
-      <th colspan='5'>
-        <h1>{$lang_headline}</h1>
-      </th>
-    </tr>
     {if !$files}
       <tr>
         <td colspan="5">
-          <div class='error nom' id='js-error' title='{$lang_no_files}'>
+          <div class='error' id='js-error' title='{$lang_no_files}'>
             <p>{$lang_no_files}</p>
           </div>
         </td>
@@ -41,19 +37,18 @@
                 {$f.name}
               </a>
             {/if}
-            <br />
-            <input type='text' value='%PATH_UPLOAD%/media/{$f.name}' onclick="this.focus();this.select();" />
+            <input type='text' class="copybox" value='%PATH_UPLOAD%/media/{$f.name}' onclick="this.focus();this.select();" />
           </td>
-          <td style='20%'>
+          <td style='width:20%'>
             {$f.size}
           </td>
           <td style='width:20%'>
             {$f.cdate}
           </td>
           <td style='width:5%'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
                  title='{$lang_destroy}'
-                 onclick="confirmDelete('/media/destroy/{$f.name}')" />
+                 onclick="confirmDelete('/media/{$f.name}/destroy')" />
           </td>
         </tr>
       {/foreach}
