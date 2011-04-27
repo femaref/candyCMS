@@ -142,8 +142,10 @@ define( 'LANG_NEWSLETTER_SHOW_DEFAULT_NAME', 'Receptor' ); # Singular
 define( 'LANG_PAGES_NEXT_ENTRIES', 'Em seguida entradas' );
 define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Entradas mais antigas' );
 define( 'LANG_SEARCH_SHOW_TITLE', 'Resultados da pesquisa por "%s":' );
+define( 'LANG_SEARCH_SHOW_LABEL_TERMS', 'Terms' ); #TODO
 define( 'LANG_SESSION_CREATE_SUCCESSFUL', 'Entrar com sucesso!' );
 define( 'LANG_SESSION_DESTROY_SUCCESSFUL', 'Sair com sucesso!' );
+define( 'LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL', 'You got a mail with a new password.' ); #TODO
 define( 'LANG_SESSION_PASSWORD_TITLE', 'Esqueceu a senha?' );
 define( 'LANG_SESSION_PASSWORD_INFO', 'Digite o seu e-mail e nós lhe enviaremos uma nova senha dentro de alguns minutos.' );
 define( 'LANG_SESSION_PASSWORD_LABEL_SUBMIT', 'Enviar senha' );
@@ -168,6 +170,7 @@ define( 'LANG_USER_UPDATE_LABEL_NEWSLETTER', 'Assine a newsletter?' );
 define( 'LANG_USER_UPDATE_LABEL_PASSWORD_CHANGE', 'Alterar senha' );
 define( 'LANG_USER_UPDATE_LABEL_PASSWORD_NEW', 'Nova senha' );
 define( 'LANG_USER_UPDATE_LABEL_PASSWORD_OLD', 'A senha antiga' );
+define( 'LANG_USER_UPDATE_LABEL_PERSONAL_DATA', 'Personal data' ); #TODO
 define( 'LANG_USER_UPDATE_LABEL_SUBMIT', 'Atualize seu perfil' );
 define( 'LANG_USER_VERIFICATION_SUCCESSFUL', 'Obrigado. Seu e-mail foi verificado!' );
 define( 'LANG_USER_UPDATE_LABEL_TERMS', 'Estou autorizado a fazer upload dessa imagem e não vai entrar em conflito com outros direitos de autor.' );

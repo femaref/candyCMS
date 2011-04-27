@@ -58,6 +58,8 @@ class Search extends Main {
     $this->_setDescription(LANG_GLOBAL_SEARCH);
     $this->_setTitle(LANG_GLOBAL_SEARCH);
 
+    $this->_oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
+
     $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
     return $this->_oSmarty->fetch('searches/_form.tpl');
   }

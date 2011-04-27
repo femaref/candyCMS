@@ -10,7 +10,7 @@
 require_once '../plugins/Cronjob.class.php';
 
 # Backup database
-if(class_exists('Cronjob') && !file_exists('migrate/sql/20101112_add_id_to_newsletter.sql'))
+if(class_exists('Cronjob'))
   Cronjob::backup(0, '../');
 
 $sDir = 'migrate/sql';

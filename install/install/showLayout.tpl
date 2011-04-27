@@ -4,30 +4,36 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <link href='%PATH_CSS%/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/mootools_1.2.5.js' type='text/javascript'></script>
+    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.5.2-min.js' type='text/javascript'></script>
+    <style stype="text/css">
+      div.hidden{ display:none }
+      h3:hover{ cursor:pointer }
+    </style>
     <title>{$title}</title>
   </head>
   <body>
     <div id='container'>
       <div id='body' style="text-align:left;padding:10px">
+        <p class="error">
+          This installation does only work <strong>without</strong> a SQL-Prefix and is without any warranty. <strong>CandyCMS
+            might override your existing tables if their names match</strong>.
+        </p>
         <form action="index.php?step={$step}&action=install" method="post">
           %CONTENT%
           <div id="steps" style="margin-top:30px;text-align:right">
             {if $step > 2}
               <input type="button" id="prevstep" value="Back" onclick="stepBack({$step})"  />
             {/if}
-            <input type="submit" id="nextstep" value="Next ({$step})" />
+            <input type="submit" id="nextstep" value="Next ({$step})" disabled />
           </div>
         </form>
       </div>
     </div>
   </body>
 </html>
-{literal}
-  <script type="text/javascript" language="javascript">
-    function stepBack(step){
-      var sPrevStep = step-2;
-      location.href = "index.php?action=install&step=" + sPrevStep;
-    }
-  </script>
-{/literal}
+<script type="text/javascript" language="javascript">
+  function stepBack(step){
+    var sPrevStep = step-2;
+    location.href = "index.php?action=install&step=" + sPrevStep;
+  }
+</script>

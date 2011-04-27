@@ -169,7 +169,7 @@ final class Bbcode {
 			$sFlash .= '<img src="\3" width="\1" height="\2" alt="\3" />';
 			$sFlash .= '</object>';
 
-			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls">';
+			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls" poster="\3">';
 			$sVideo .= '<source src="\4.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="\4.webm" type="video/webm" />';
 			$sVideo .= '<source src="\4.ogv" type="video/ogg" />';

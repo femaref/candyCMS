@@ -68,7 +68,7 @@ pre {
   text-align: right;
 }
 
-.pointer, .js-toggle:hover, .copybox:hover {
+.pointer, .js-toggle-headline:hover, .copybox:hover {
   cursor: pointer;
 }
 

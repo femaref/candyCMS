@@ -116,9 +116,9 @@ define('ALLOW_ADDONS', false);
 # ------------------------------------------------------------------------------
 
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,LazyLoad,Facebook'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,LazyLoad');
+# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Facebook');
 
 # ------------------------------------------------------------------------------
 

@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id='container'>
-      <div id='body' style="padding:10px">
+      <div id='body' class="center" style="padding:10px">
         <a href="?action=install">Install</a>
         |
         <a href="?action=migrate">Migrate</a>

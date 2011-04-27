@@ -156,6 +156,7 @@ class User extends Main {
     $this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_LABEL_PASSWORD_NEW);
     $this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_LABEL_PASSWORD_OLD);
     $this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
+    $this->_oSmarty->assign('lang_personal_data', LANG_USER_UPDATE_LABEL_PERSONAL_DATA);
     $this->_oSmarty->assign('lang_submit', LANG_USER_UPDATE_LABEL_SUBMIT);
     $this->_oSmarty->assign('lang_use_gravatar', LANG_USER_UPDATE_LABEL_GRAVATAR);
 
@@ -345,12 +346,12 @@ class User extends Main {
 
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/start');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/start');
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/start');
+			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
 	}
 }

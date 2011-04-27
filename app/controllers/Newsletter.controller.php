@@ -149,10 +149,10 @@ class Newsletter extends Main {
 
       if(isset($bStatusNewsletter) || isset($bStatusUser)) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action']);
-        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/start' );
+        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/start');
+        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 }

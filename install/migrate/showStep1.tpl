@@ -1,20 +1,14 @@
-<h1>1. Select migration(s)</h1>
+<h1>1. Migrate database</h1>
 {foreach from=$files item=f}
-  <div style="margin-bottom:20px">
-    <a href="#" onclick="sendPost('{$f.name}')">
-      {$f.name}
-    </a>
-    <div class="description" id="{$f.name}">
+  <div id="{$f@index}" style="margin-bottom:20px">
+    <h2 style="margin-bottom:0px">
+      <a href="#" onclick="$('#{$f@index}').load('{$action}?file={$f.name}&action=migrate');return false;">
+        {$f.name}
+      </a>
+    </h2>
+    <textarea cols="85" rows="6">
       {$f.query}
-    </div>
+    </textarea>
   </div>
 {/foreach}
-<script type="text/javascript" language="javascript">
-  var sAction = '{$action}';
-  {literal}
-    function sendPost(sFile) {
-      $(sFile).set('html', "<img src='../../public/images/loading.gif' alt='' />");
-      $(sFile).load(sAction + '?file=' + sFile + '&action=migrate');
-    }
-  {/literal}
-</script>
+<a href="/install">Back to start</a>

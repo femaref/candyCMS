@@ -6,11 +6,14 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <meta name='description' content="{$meta_description}" />
     <meta name='keywords' content="{$meta_keywords}" />
-    <!-- TODO: Facebook check -->
-    {if _request_id_}
+    {if $_request_id_}
+      <meta property="og:description" content="{$meta_og_description}"/>
+      <meta property="og:site_name" content="{$meta_og_site_name}"/>
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
-      <meta property="og:site_name" content="{$meta_og_site_name}"/>
+    {/if}
+    {if $_facebook_admin_id_}
+      <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>
     {/if}
     {if $_facebook_app_id_}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
@@ -28,17 +31,19 @@
   <body>
     <nav>
       <ul>
-        {if $USER_ID > 0}
+        {if $USER_RIGHT > 0}
           <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$user}</a>!</strong></li>
         {/if}
         <li><a href='/blog'>{$lang_blog}</a></li>
         <li><a href='/gallery'>{$lang_gallery}</a></li>
         <li><a href='/search'>{$lang_search}</a></li>
-        {if $USER_ID == 0}
+        {if $USER_RIGHT == 0}
           <li><a href='/session/create'>{$lang_login}</a></li>
           <li><a href='/user/create'>{$lang_register}</a></li>
         {else}
-          <li><a href='/user/update'>{$lang_settings}</a></li>
+          {if $USER_ID > 0}
+            <li><a href='/user/update'>{$lang_settings}</a></li>
+          {/if}
           <li><a href='/session/destroy'>{$lang_logout}</a></li>
         {/if}
       </ul>

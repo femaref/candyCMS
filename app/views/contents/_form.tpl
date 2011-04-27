@@ -21,7 +21,7 @@
   });
 </script>
 <form method='post' action='{$_action_url_}'>
-  <h1>_#Content bearbeiten#_</h1>
+  <h1>{$lang_headline}</h1>
     {if $smarty.get.action == 'update'}
       <p>{$lang_last_update}: {$c.date}</p>
     {/if}

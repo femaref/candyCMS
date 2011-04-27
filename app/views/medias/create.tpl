@@ -11,15 +11,17 @@
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='upload_file' />
-    <input type='submit' value='{$lang_headline}' id="submit" />
+    <input type='submit' value='{$lang_headline}' disabled />
   </p>
 </form>
 <script type="text/javascript">
-  // TODO: Reset loading button
-  //window.addEvent('domready', function() {
-  //  document.id('submit').addEvent('click', function() {
-  //    this.disabled = true;
-  //    document.id('.description').set('html', "<img class='js-loading' src='%PATH_IMAGES%/loading.gif' alt='' />");
-  //  });
-  //});
+  $("input[type='file']").change(function(){
+    if ($(this).val()) {
+      $("input[type='submit']").attr('disabled',false);
+    }
+  });
+
+  $("input[type='submit']").click(function() {
+    $(this).val(LANG_LOADING).attr('disabled',true);
+  });
 </script>

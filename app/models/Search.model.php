@@ -9,14 +9,11 @@
 
 class Model_Search extends Model_Main {
 
-  # Get userdata; static function and direct return due to uncritical action
   private function _setData($sSearch, $aTables) {
 
     foreach ($aTables as $sTable) {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $oQuery = $oDb->query(" SELECT
+        $this->oQuery = $this->_oDb->query(" SELECT
                                   id, title, date
                                 FROM
                                   " . SQL_PREFIX . $sTable."
@@ -28,8 +25,7 @@ class Model_Search extends Model_Main {
                                   date
                                 DESC");
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $oDb = null;
+        $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($aResult as $aRow) {
           $iId = $aRow['id'];

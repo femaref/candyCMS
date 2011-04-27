@@ -268,11 +268,16 @@ class Index extends Main {
 			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
 			$oSmarty->assign('meta_description', $oSection->getDescription());
 			$oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
+			$oSmarty->assign('meta_og_description', $oSection->getDescription());
+			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 			$oSmarty->assign('meta_og_title', $oSection->getTitle());
 			$oSmarty->assign('meta_og_url', CURRENT_URL);
-			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 
 			$oSmarty->assign('_content_', $oSection->getContent());
+			$oSmarty->assign('_facebook_admin_id_', FACEBOOK_ADMIN_ID);
+			$oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
+      # We must recreate the request id
+			$oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
 			$oSmarty->template_dir = Helper::getTemplateDir('layouts/application');

@@ -40,7 +40,7 @@ class Session extends Main {
 			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
-      Helper::errorMessage('_Die Kombination aus E-Mail-Adresse und Passwort stimmt nicht überein._', '/session/create'); #TODO
+      return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
 	}
 
   public final function showCreateSessionTemplate() {
@@ -84,7 +84,7 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create');
+              return Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create');
             else
               return Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
@@ -153,11 +153,22 @@ class Session extends Main {
   }
 
   public final function destroy() {
-    if ($oStatus = & $this->_oModel->destroy() === true) {
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/start');
+    if(USER_RIGHT == 2) {
+      $oFacebook = new FacebookCMS(array(
+                  'appId'   => FACEBOOK_APP_ID,
+                  'secret'  => FACEBOOK_SECRET,
+                  'cookie'  => true,
+              ));
+      Header('Location:' . $oFacebook->getLogoutUrl());
+
+      # Message will not be printed
+      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
+    }
+    elseif ($this->_oModel->destroy() === true) {
+      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
       unset($_SESSION);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/start');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
   }
 }
