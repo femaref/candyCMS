@@ -20,7 +20,6 @@ DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `parent_id` int(9) NOT NULL,
-  `parent_category` char(1) NOT NULL DEFAULT 'b',
   `author_id` smallint(5) NOT NULL,
   `author_facebook_id` int(15) DEFAULT NULL,
   `author_name` varchar(32) DEFAULT '',

@@ -27,13 +27,19 @@
   </p>
 </form>
 <script type="text/javascript">
-  $("input[type='file']").change(function(){
-    if ($(this).val()) {
+  {if $smarty.get.action == 'updatefile'}
+    $(document).ready(function(){
       $("input[type='submit']").attr('disabled',false);
-    }
-  });
+    });
+  {else}
+    $("input[type='file']").change(function(){
+      if ($(this).val()) {
+        $("input[type='submit']").attr('disabled',false);
+      }
+    });
 
-  $("input[type='submit']").click(function() {
-    $(this).val(LANG_LOADING).attr('disabled',true);
-  });
+    $("input[type='submit']").click(function() {
+      $(this).val(LANG_LOADING).attr('disabled',true);
+    });
+  {/if}
 </script>

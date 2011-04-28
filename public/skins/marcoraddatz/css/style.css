@@ -381,15 +381,6 @@ table th
   margin-top: 0px;
 }
 
-.gallery_album .image, .gallery_files .image {
-  margin: 2px 0px
-}
-
-.gallery_files .image {
-  padding:5px;
-  background: #efefef url('../../../images/loading.gif') no-repeat center;
-}
-
 .video, .audio {
   text-align: center;
 }

@@ -44,9 +44,3 @@
     <input type='hidden' value='{$_parent_id_}' name='parent_id' />
   </p>
 </form>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.tipTip{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script language='javascript' type="text/javascript">
-  $(document).ready(function(){
-    $('#email').tipTip();
-  });
-</script>

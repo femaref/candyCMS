@@ -27,27 +27,26 @@
       <p>{$lang_no_files_uploaded}</p>
     </div>
   {else}
-    <ul class="js-image_overlay image-overlay">
+    <ul class="js-caption">
       {foreach $files as $f}
         <li>
-          <div class="image">
-            <a href='{$f.url_popup}' class="js-fancybox" rel="images">
-              <img src='{$f.url_thumb}'
-                   alt='{$f.description}'
-                   title='{$f.description}' />
-              <div class="caption">
-                <h3>{$f.description}</h3>
-                <p>
-                  {$lang_uploaded_at}: {$f.date}
-                </p>
-              </div>
-            </a>
-            <a href="/gallery/{$f.id}/updatefile">
-              <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
-            </a>
-            <a href="/gallery/{$f.id}/destroyfile">
-              <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
-            </a>
+          <a href='{$f.url_popup}' class="js-fancybox" rel="images">
+            <img src='{$f.url_thumb}'
+                 alt='{$f.description}'
+                 title='{$f.description}'
+                 class="js-image"
+                 rel="js-captify-{$f.id}" />
+          </a>
+          <div id="js-captify-{$f.id}">
+            <h3>{$f.date}</h3>
+            {if $USER_RIGHT >= 3}
+              <a href="#" onclick="window.location='/gallery/{$f.id}/updatefile';return false">
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
+              </a>
+              <a href="#" onclick="confirmDelete('/gallery/{$f.id}/destroyfile');return false">
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
+              </a>
+            {/if}
           </div>
         </li>
       {/foreach}
@@ -55,15 +54,15 @@
   {/if}
 </section>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.captify{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' type="text/javascript">
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
-    $('.js-image_overlay').ImageOverlay({
-      overlay_speed: 'fast',
-      overlay_speed_out: 'slow'
-    });
-    $("img").lazyload();
+    $('img.js-image').captify({
+      className: 'js-caption_bottom',
+      opacity: '0.75',
+      hideDelay: 0 });
+    $(".js-image").lazyload();
   });
 </script>
