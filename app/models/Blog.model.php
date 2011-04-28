@@ -102,7 +102,6 @@ class Model_Blog extends Model_Main {
                 'encoded_full_name' => urlencode($sFullName),
                 'encoded_title'     => $sEncodedTitle, # encoded for social networks
                 'encoded_url'       => urlencode($sUrl),
-                'avatar_32'         => Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar),
                 'avatar_64'         => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
                 'full_name'         => $sFullName,
                 'name'              => $sName,

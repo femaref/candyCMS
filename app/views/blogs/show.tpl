@@ -87,6 +87,7 @@
             </div>
             <div class="comments">
               <a href='/blog/{$b.id}/{$b.encoded_title}#comments'>
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' width='16' height='16' />
                 {$b.comment_sum} {$lang_comments}
               </a>
             </div>

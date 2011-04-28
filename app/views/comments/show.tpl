@@ -6,8 +6,9 @@
   <div id="js-commments">
     {foreach $comments as $c}
       <article class='{if $author_id == $c.author_id}from_author{/if}'>
-        <a href='#{$c.id}' name='{$c.id}' class="count">#{$c.loop+$comment_number}</a>
         <header>
+          <a href='#{$c.id}' name='{$c.id}' class="count">#{$c.loop+$comment_number}</a>
+          <img class="avatar" src="{$c.avatar_64}" width="32" height="32" alt="" />
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
           {elseif $c.author_facebook_id > 0}

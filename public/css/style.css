@@ -43,6 +43,10 @@ h1, h2 {
   margin: 3px 0px;
 }
 
+h1 {
+  font-size:26px;
+}
+
 h1 img, h2 img {
   vertical-align: baseline;
 }
@@ -68,7 +72,11 @@ nav ul {
 
 nav ul li {
   display: inline;
-  margin: 0px 3px 0px 3px;
+  margin: 0px 3px;
+}
+
+nav ul li.right {
+  float:right;
 }
 
 /* Footer at end of page. Got an ID because of conflicts with other footers */
@@ -148,12 +156,18 @@ nav ul li {
   float: left;
 }
 
-.blogs footer .share img, .contents footer .share img {
-  vertical-align: middle;
+.blogs footer .share img, .contents footer .share img, .blogs footer .comments img {
+  vertical-align: bottom;
+  margin: 0px 1px;
 }
 
 .blogs footer .comments {
   float: right;
+}
+
+.blogs iframe {
+  display:block;
+  margin-top: 10px;
 }
 
 .gallery_albums {
@@ -181,7 +195,7 @@ nav ul li {
 #comments article {
   display: table;
   padding: 22px;
-  width: 600px;
+  width: 90%;
   margin:0px auto 30px;
   text-align:left;
 }
@@ -196,13 +210,20 @@ nav ul li {
 
 #comments article header {
   display: table-cell;
-  width: 175px;
+  width: 235px;
   padding: 0px 22px 0px 0px;
 }
 
-#comments article .count {
-  display: table-cell;
-  width: 30px;
+#comments article header img {
+  float:left;
+  margin-right: 10px;
+}
+
+#comments article header .count {
+  font-size: 24px;
+  color: #CCCCCC;
+  width: 50px;
+  float:left;
 }
 
 #comments article header a:hover {

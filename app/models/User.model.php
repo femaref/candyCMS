@@ -88,7 +88,7 @@ class Model_User extends Model_Main {
               'date'          => Helper::formatTimestamp($aRow['date']),
               'id'            => $aRow['id'],
               'use_gravatar'  => $aRow['use_gravatar'],
-              'avatar_32'     => Helper::getAvatar('user', 32, $aRow['id'], $aGravatar),
+              'avatar_64'     => Helper::getAvatar('user', 64, $aRow['id'], $aGravatar),
               'url'           => $sUrl . '/' . $sEncodedTitle,
               'url_clean'     => $sUrl
           );

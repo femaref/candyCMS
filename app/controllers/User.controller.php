@@ -217,7 +217,6 @@ class User extends Main {
 			$this->_oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));
 			$this->_oSmarty->assign('date', Helper::formatTimestamp($this->_aData['date']));
 			$this->_oSmarty->assign('user', $this->_aData);
-			$this->_oSmarty->assign('avatar_32', Helper::getAvatar('user', 32, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_64', Helper::getAvatar('user', 64, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
 			$this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));

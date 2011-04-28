@@ -38,13 +38,13 @@
         <li><a href='/gallery'>{$lang_gallery}</a></li>
         <li><a href='/search'>{$lang_search}</a></li>
         {if $USER_RIGHT == 0}
-          <li><a href='/session/create'>{$lang_login}</a></li>
-          <li><a href='/user/create'>{$lang_register}</a></li>
+          <li class="right"><a href='/user/create'>{$lang_register}</a></li>
+          <li class="right"><a href='/session/create'>{$lang_login}</a></li>
         {else}
           {if $USER_ID > 0}
             <li><a href='/user/update'>{$lang_settings}</a></li>
           {/if}
-          <li><a href='/session/destroy'>{$lang_logout}</a></li>
+          <li class="right"><a href='/session/destroy'>{$lang_logout}</a></li>
         {/if}
       </ul>
     </nav>

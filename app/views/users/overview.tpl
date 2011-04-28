@@ -13,9 +13,9 @@
     </th>
   </tr>
   {foreach $user as $u}
-    <tr class='{cycle values="row1,row2"}'>
+    <tr>
       <td style='width:5%'>
-        <img src='{$u.avatar_32}' width="18" height="18" alt='' />
+        <img src='{$u.avatar_64}' width="18" height="18" alt='' />
       </td>
       <td style='width:35%' class="left">
         <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>

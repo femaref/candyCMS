@@ -90,7 +90,6 @@ final class Upload {
       $oImage->resizeDefault(THUMB_DEFAULT_X);
       $oImage->resizeDefault('100');
       $oImage->resizeAndCut('64');
-      $oImage->resizeAndCut('32');
 
       if ($bReturnPath == true)
         return $this->_sFilePath . '.' . $this->_sFileExtension;
