@@ -18,6 +18,7 @@ abstract class Main {
   private $_aData = array();
   private $_sContent;
   private $_sDescription;
+  private $_sKeywords;
   private $_sTitle;
 
 	# Plugins
@@ -193,6 +194,17 @@ abstract class Main {
       return $this->_sDescription;
     else
       return LANG_WEBSITE_SLOGAN;
+  }
+
+  protected function _setKeywords($sKeywords) {
+    $this->_sKeywords = & $sKeywords;
+  }
+
+  public function getKeywords() {
+    if (!empty($this->_sKeywords))
+      return $this->_sKeywords;
+    else
+      return LANG_WEBSITE_KEYWORDS;
   }
 
   protected function _setContent($sContent) {

@@ -267,7 +267,7 @@ class Index extends Main {
 		else {
 			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
 			$oSmarty->assign('meta_description', $oSection->getDescription());
-			$oSmarty->assign('meta_keywords', LANG_WEBSITE_KEYWORDS);
+			$oSmarty->assign('meta_keywords', $oSection->getKeywords());
 			$oSmarty->assign('meta_og_description', $oSection->getDescription());
 			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 			$oSmarty->assign('meta_og_title', $oSection->getTitle());

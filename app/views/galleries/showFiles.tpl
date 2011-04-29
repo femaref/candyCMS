@@ -61,8 +61,7 @@
     $(".js-fancybox").fancybox();
     $('img.js-image').captify({
       className: 'js-caption_bottom',
-      opacity: '0.75',
-      hideDelay: 0 });
+      opacity: '0.75' });
     $(".js-image").lazyload();
   });
 </script>

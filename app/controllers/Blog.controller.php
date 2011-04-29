@@ -34,6 +34,7 @@ class Blog extends Main {
 
 		# Create page title and description
     $this->_setDescription($this->_setBlogDescription());
+    $this->_setKeywords($this->_setBlogKeywords());
 		$this->_setTitle($this->_setBlogTitle($this->_aData));
 
 		$this->_oSmarty->assign('blog', $this->_aData);
@@ -47,18 +48,22 @@ class Blog extends Main {
             'search' == $this->_aRequest['action'])
       return Helper::removeSlahes($this->_aRequest['id']);
 
-    elseif ($this->_iId !== '') {
+    elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
         return $this->_aData[1]['teaser'];
       else
         return $this->_aData[1]['title'];
-
     } else
       return LANG_GLOBAL_BLOG;
   }
 
+  private final function _setBlogKeywords() {
+    if (!empty($this->_iId) && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
+      return $this->_aData[1]['tags_raw'];
+  }
+
 	private final function _setBlogTitle($aData) {
-		# Create blog
+    # Create blog
     if (isset($this->_aRequest['action']) &&
             'create' == $this->_aRequest['action'] &&
             'blog' == $this->_aRequest['section'])
@@ -70,7 +75,7 @@ class Blog extends Main {
       return Helper::removeSlahes($this->_aRequest['id']);
 
     # Default blog
-    elseif ($this->_iId !== '') {
+    elseif (!empty($this->_iId)) {
       # Quick hack for displaying title without html tags
       $sTitle = Helper::removeSlahes($this->_aData[1]['title']);
       $sTitle = str_replace('<span class="highlight">', '', $sTitle);
