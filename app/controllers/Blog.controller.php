@@ -102,11 +102,12 @@ class Blog extends Main {
 			$this->_oSmarty->assign('_action_url_', '/blog/update');
 			$this->_oSmarty->assign('_formdata_', 'update_blog');
 			$this->_oSmarty->assign('author_id', $this->_aData['author_id']);
-			$this->_oSmarty->assign('tags', $this->_aData['tags']);
-			$this->_oSmarty->assign('title', $this->_aData['title']);
-			$this->_oSmarty->assign('teaser', $this->_aData['teaser']);
 			$this->_oSmarty->assign('content', $this->_aData['content']);
+			$this->_oSmarty->assign('keywords', $this->_aData['keywords']);
 			$this->_oSmarty->assign('published', $this->_aData['published']);
+			$this->_oSmarty->assign('tags', $this->_aData['tags']);
+			$this->_oSmarty->assign('teaser', $this->_aData['teaser']);
+			$this->_oSmarty->assign('title', $this->_aData['title']);
 
 			# Build up title
 			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
@@ -116,19 +117,21 @@ class Blog extends Main {
 		}
 		# Create blog
 		else {
-			$sTitle			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+			$sContent		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+			$iKeywords = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+			$iPublished = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
 			$sTags			= isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
 			$sTeaser		= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-			$sContent		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-			$iPublished = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+			$sTitle			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 
 			$this->_oSmarty->assign('_action_url_', '/blog/create');
 			$this->_oSmarty->assign('_formdata_', 'create_blog');
 			$this->_oSmarty->assign('_request_id_', '');
-			$this->_oSmarty->assign('title', $sTitle);
-			$this->_oSmarty->assign('tags', $sTags);
 			$this->_oSmarty->assign('content', $sContent);
+			$this->_oSmarty->assign('keywords', $iKeywords);
 			$this->_oSmarty->assign('published', $iPublished);
+			$this->_oSmarty->assign('tags', $sTags);
+			$this->_oSmarty->assign('title', $sTitle);
 
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
 			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
@@ -139,6 +142,7 @@ class Blog extends Main {
 				$this->_oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
+		$this->_oSmarty->assign('lang_create_keywords_info', LANG_BLOG_INFO_KEYWORDS);
 		$this->_oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
 		$this->_oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 

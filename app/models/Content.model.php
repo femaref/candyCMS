@@ -68,8 +68,10 @@ class Model_Content extends Model_Main {
         $this->_aData = array(
             'id'        => $aRow['id'],
             'author_id' => $aRow['author_id'],
-            'title'     => Helper::removeSlahes($aRow['title']),
             'content'   => Helper::removeSlahes($aRow['content']),
+            'keywords'  => Helper::removeSlahes($aRow['keywords']),
+            'teaser'    => Helper::removeSlahes($aRow['teaser']),
+            'title'     => Helper::removeSlahes($aRow['title']),
             'date'      => Helper::formatTimestamp($aRow['date'], true),
             'datetime'  => Helper::formatTimestamp($aRow['date'])
         );
@@ -93,6 +95,8 @@ class Model_Content extends Model_Main {
             'id'                => $aRow['id'],
             'author_id'         => $aRow['author_id'],
             'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
+            'teaser'            => Helper::formatOutput($aRow['teaser']),
+            'keywords'          => Helper::formatOutput($aRow['keywords']),
             'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
             'date'              => Helper::formatTimestamp($aRow['date']),
             'datetime'          => Helper::formatTimestamp($aRow['date']),
@@ -124,13 +128,15 @@ class Model_Content extends Model_Main {
   public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "contents(author_id, title, content, date)
+																				" . SQL_PREFIX . "contents(author_id, title, teaser, keywords, content, date)
 																			VALUES
-																				( :author_id, :title, :content, :date )");
+																				( :author_id, :title, :teaser, :keywords, :content, :date )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
 
@@ -148,6 +154,8 @@ class Model_Content extends Model_Main {
 																				" . SQL_PREFIX . "contents
 																			SET
 																				title = :title,
+																				teaser = :teaser,
+																				keywords = :keywords,
 																				content = :content,
 																				date = :date,
 																				author_id = :user_id
@@ -157,6 +165,8 @@ class Model_Content extends Model_Main {
       $iUserId = USER_ID;
       $oQuery->bindParam('user_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
       $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('where', $iId);

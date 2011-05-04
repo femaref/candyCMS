@@ -54,21 +54,22 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_blog'));
-          parent::_setTitle(LANG_BLOG_TITLE_CREATE);
           parent::_setDescription(LANG_BLOG_TITLE_CREATE);
+          parent::_setTitle(LANG_BLOG_TITLE_CREATE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_blog'));
-          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_BLOG_TITLE_UPDATE));
           parent::_setDescription(str_replace('%p', $this->_oObject->getTitle(), LANG_BLOG_TITLE_UPDATE));
+          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_BLOG_TITLE_UPDATE));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy')
           parent::_setContent($this->_oObject->destroy());
 
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setKeywords($this->_oObject->getKeywords());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;
@@ -77,8 +78,8 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_COMMENT_TITLE_DESTROY);
           parent::_setDescription(LANG_COMMENT_TITLE_DESTROY);
+          parent::_setTitle(LANG_COMMENT_TITLE_DESTROY);
         }
 
         break;
@@ -87,23 +88,24 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_content'));
-          parent::_setTitle(LANG_GLOBAL_CONTENTMANAGER . ': ' . LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
           parent::_setDescription(LANG_GLOBAL_CONTENTMANAGER . ': ' . LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
+          parent::_setTitle(LANG_GLOBAL_CONTENTMANAGER . ': ' . LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_content'));
-          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_TITLE_UPDATE));
           parent::_setDescription(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_TITLE_UPDATE));
+          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_CONTENT_TITLE_UPDATE));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setKeywords($this->_oObject->getKeywords());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;
@@ -112,38 +114,38 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_gallery'));
-          parent::_setTitle(LANG_GALLERY_ALBUM_CREATE_TITLE);
           parent::_setDescription(LANG_GALLERY_ALBUM_CREATE_TITLE);
+          parent::_setTitle(LANG_GALLERY_ALBUM_CREATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'createfile') {
           parent::_setContent($this->_oObject->createFile());
-          parent::_setTitle(LANG_GALLERY_FILE_CREATE_TITLE);
           parent::_setDescription(LANG_GALLERY_FILE_CREATE_TITLE);
+          parent::_setTitle(LANG_GALLERY_FILE_CREATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_gallery'));
-          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE));
           parent::_setDescription($this->_oObject->getDescription(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE)));
+          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'updatefile') {
           parent::_setContent($this->_oObject->updateFile());
-          parent::_setTitle(LANG_GALLERY_FILE_UPDATE_TITLE);
           parent::_setDescription(LANG_GALLERY_FILE_UPDATE_TITLE);
+          parent::_setTitle(LANG_GALLERY_FILE_UPDATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_GLOBAL_GALLERY);
           parent::_setDescription(LANG_GLOBAL_GALLERY);
+          parent::_setTitle(LANG_GLOBAL_GALLERY);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile') {
           parent::_setContent($this->_oObject->destroyFile());
-          parent::_setTitle(LANG_GLOBAL_GALLERY);
           parent::_setDescription(LANG_GLOBAL_GALLERY);
+          parent::_setTitle(LANG_GLOBAL_GALLERY);
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;
@@ -152,13 +154,13 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_GLOBAL_LOGS);
           parent::_setDescription(LANG_GLOBAL_LOGS);
+          parent::_setTitle(LANG_GLOBAL_LOGS);
         }
         else {
           parent::_setContent($this->_oObject->overview());
-          parent::_setTitle(LANG_GLOBAL_LOGS);
           parent::_setDescription(LANG_GLOBAL_LOGS);
+          parent::_setTitle(LANG_GLOBAL_LOGS);
         }
 
         break;
@@ -166,8 +168,8 @@ class Section extends Main {
       case 'mail':
 
         parent::_setContent($this->_oObject->create());
-        parent::_setTitle($this->_oObject->getTitle());
         parent::_setDescription($this->_oObject->getDescription());
+        parent::_setTitle($this->_oObject->getTitle());
 
         break;
 
@@ -175,18 +177,18 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle(LANG_MEDIA_FILE_CREATE_TITLE);
           parent::_setDescription(LANG_MEDIA_FILE_CREATE_TITLE);
+          parent::_setTitle(LANG_MEDIA_FILE_CREATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_MEDIA_FILE_DESTROY_TITLE);
           parent::_setDescription(LANG_MEDIA_FILE_DESTROY_TITLE);
+          parent::_setTitle(LANG_MEDIA_FILE_DESTROY_TITLE);
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle(LANG_GLOBAL_FILEMANAGER);
           parent::_setDescription(LANG_GLOBAL_FILEMANAGER);
+          parent::_setTitle(LANG_GLOBAL_FILEMANAGER);
         }
 
         break;
@@ -199,8 +201,8 @@ class Section extends Main {
         }
         else { # CREATE and DESTROY functions
           parent::_setContent($this->_oObject->handleNewsletter());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;
@@ -219,8 +221,8 @@ class Section extends Main {
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;
@@ -236,19 +238,19 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle(LANG_GLOBAL_LOGIN);
           parent::_setDescription(LANG_GLOBAL_LOGIN);
+          parent::_setTitle(LANG_GLOBAL_LOGIN);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendpassword' ||
                 $this->_aRequest['action'] == 'resendverification') {
           parent::_setContent($this->_oObject->createResendActions());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
         else {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_GLOBAL_LOGOUT);
           parent::_setDescription(LANG_GLOBAL_LOGOUT);
+          parent::_setTitle(LANG_GLOBAL_LOGOUT);
         }
 
         break;
@@ -260,8 +262,8 @@ class Section extends Main {
                 LANG_ERROR_GLOBAL_NO_TEMPLATE;
 
         parent::_setContent($this->_oSmarty->fetch(PATH_TPL_STATIC . '/' . $sTpl . '.tpl'));
-        parent::_setTitle(ucfirst($sTpl));
         parent::_setDescription(ucfirst($sTpl));
+        parent::_setTitle(ucfirst($sTpl));
 
         break;
 
@@ -269,28 +271,28 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update());
-          parent::_setTitle(LANG_USER_UPDATE_TITLE);
           parent::_setDescription(LANG_USER_UPDATE_TITLE);
+          parent::_setTitle(LANG_USER_UPDATE_TITLE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle(LANG_GLOBAL_REGISTRATION);
           parent::_setDescription(LANG_GLOBAL_REGISTRATION);
+          parent::_setTitle(LANG_GLOBAL_REGISTRATION);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setTitle(LANG_GLOBAL_DESTROY);
           parent::_setDescription(LANG_GLOBAL_DESTROY);
+          parent::_setTitle(LANG_GLOBAL_DESTROY);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification') {
           parent::_setContent($this->_oObject->verifyEmail());
-          parent::_setTitle(LANG_GLOBAL_EMAIL_VERIFICATION);
           parent::_setDescription(LANG_GLOBAL_EMAIL_VERIFICATION);
+          parent::_setTitle(LANG_GLOBAL_EMAIL_VERIFICATION);
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setTitle($this->_oObject->getTitle());
           parent::_setDescription($this->_oObject->getDescription());
+          parent::_setTitle($this->_oObject->getTitle());
         }
 
         break;

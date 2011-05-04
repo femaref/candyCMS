@@ -5,16 +5,20 @@
     <input name='title' value='{$title}' type='text' required />
   </p>
   <p>
+    <label for='teaser'>
+      {$lang_teaser}
+    </label>
+    <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
+           title='{$lang_create_teaser_info}' onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
+    <span id="js-chars">140</span>
+  </p>
+  <p>
     <label for='tags'>{$lang_tags}</label>
     <input name='tags' value='{$tags}' type='text' placeholder='{$lang_create_tag_info}' title='{$lang_create_tag_info}' />
   </p>
   <p>
-    <label for='teaser'>
-      {$lang_teaser}
-      <span id="js-chars">140</span>
-    </label>
-    <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
-           title='{$lang_create_teaser_info}' onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
+    <label for='keywords'>{$lang_keywords}</label>
+    <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' />
   </p>
   <p {if $error_content}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>

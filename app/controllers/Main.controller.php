@@ -135,6 +135,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
 		$this->_oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
 		$this->_oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
+		$this->_oSmarty->assign('lang_keywords', LANG_GLOBAL_KEYWORDS);
 		$this->_oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
 		$this->_oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
 		$this->_oSmarty->assign('lang_logout', LANG_GLOBAL_LOGOUT);
@@ -174,17 +175,6 @@ abstract class Main {
 		return $this->_oSmarty;
 	}
 
-  protected function _setTitle($sTitle) {
-    $this->_sTitle =& $sTitle;
-  }
-
-  public function getTitle() {
-    if (!empty($this->_sTitle))
-      return $this->_sTitle;
-    else
-      return LANG_ERROR_GLOBAL_404;
-  }
-
   protected function _setDescription($sDescription) {
     $this->_sDescription =& $sDescription;
   }
@@ -205,6 +195,17 @@ abstract class Main {
       return $this->_sKeywords;
     else
       return LANG_WEBSITE_KEYWORDS;
+  }
+
+  protected function _setTitle($sTitle) {
+    $this->_sTitle =& $sTitle;
+  }
+
+  public function getTitle() {
+    if (!empty($this->_sTitle))
+      return $this->_sTitle;
+    else
+      return LANG_ERROR_GLOBAL_404;
   }
 
   protected function _setContent($sContent) {

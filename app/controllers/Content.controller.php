@@ -17,7 +17,7 @@ final class Content extends Main {
   public final function show() {
     $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
 
-    if(empty($this->_iId)) {
+    if (empty($this->_iId)) {
       $this->_oSmarty->assign('content', $this->_oModel->getData());
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
@@ -30,11 +30,13 @@ final class Content extends Main {
       # create output
       $this->_oSmarty->assign('c', $this->_aData[$this->_iId]);
 
-			# Quick hack for displaying title without html tags
-			$sTitle = Helper::removeSlahes($this->_aData[$this->_iId]['title']);
-			$sTitle = str_replace('<span class="highlight">', '', $sTitle);
-			$sTitle = str_replace('</span>', '', $sTitle);
+      # Quick hack for displaying title without html tags
+      $sTitle = Helper::removeSlahes($this->_aData[$this->_iId]['title']);
+      $sTitle = str_replace('<span class="highlight">', '', $sTitle);
+      $sTitle = str_replace('</span>', '', $sTitle);
 
+      $this->_setDescription($this->_aData[$this->_iId]['teaser']);
+      $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
       $this->_setTitle($sTitle);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/show');
@@ -44,26 +46,34 @@ final class Content extends Main {
 
   protected final function _showFormTemplate($bUpdate = true) {
     if ($bUpdate == true) {
-			$this->_aData = $this->_oModel->getData($this->_iId, true);
-			$this->_oSmarty->assign('_action_url_', '/content/update');
-			$this->_oSmarty->assign('_formdata_', 'update_content');
-			$this->_oSmarty->assign('c', $this->_aData);
+      $this->_aData = $this->_oModel->getData($this->_iId, true);
+      $this->_oSmarty->assign('_action_url_', '/content/update');
+      $this->_oSmarty->assign('_formdata_', 'update_content');
+      $this->_oSmarty->assign('c', $this->_aData);
 
-			# Language
-			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-			$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
+      # Language
+      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
-			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
-		}
+      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+    }
     # We create new content
     else {
 			$sTitle = isset($this->_aRequest['title']) ?
-							$this->_aRequest['title'] :
-							'';
+              $this->_aRequest['title'] :
+              '';
 
-			$sContent = isset($this->_aRequest['content']) ?
-							$this->_aRequest['content'] :
-							'';
+      $sTeaser = isset($this->_aRequest['teaser']) ?
+              $this->_aRequest['teaser'] :
+              '';
+
+      $sKeywords = isset($this->_aRequest['keywords']) ?
+              $this->_aRequest['keywords'] :
+              '';
+
+      $sContent = isset($this->_aRequest['content']) ?
+              $this->_aRequest['content'] :
+              '';
 
 			$this->_oSmarty->assign('_action_url_', '/content/create');
 			$this->_oSmarty->assign('_formdata_', 'create_content');
@@ -85,28 +95,31 @@ final class Content extends Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
+    $this->_oSmarty->assign('lang_create_keywords_info', LANG_CONTENT_INFO_KEYWORDS);
+    $this->_oSmarty->assign('lang_create_teaser_info', LANG_CONTENT_INFO_TEASER);
+
     $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/_form');
     return $this->_oSmarty->fetch('contents/_form.tpl');
   }
 
   protected final function _create() {
 		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
+      $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
-		if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
+    if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
+      $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate(false);
+    if (isset($this->_aError))
+      return $this->_showFormTemplate(false);
 
-		else {
-			if ($this->_oModel->create() === true) {
+    else {
+      if ($this->_oModel->create() === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
-				return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
+        return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
       }
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
-		}
+      else
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
+    }
 	}
 
   protected final function _update() {

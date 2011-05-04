@@ -1,1 +1,0 @@
-ALTER TABLE `comments` ADD `author_facebook_id` int(15) NULL DEFAULT NULL  AFTER `author_id`;
