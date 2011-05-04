@@ -14,7 +14,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', 'test_');
+define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
 # ------------------------------------------------------------------------------
@@ -117,8 +117,8 @@ define('ALLOW_ADDONS', false);
 
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob,Facebook');
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser, Facebook
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob');
 
 # ------------------------------------------------------------------------------
 

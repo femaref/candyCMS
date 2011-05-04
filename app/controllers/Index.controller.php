@@ -181,9 +181,9 @@ class Index extends Main {
 
 		# Check for new version of script
 		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-			$oFile = fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
-			$sVersionContent = stream_get_contents($oFile);
-			fclose($oFile);
+			$oFile = @fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
+			$sVersionContent = @stream_get_contents($oFile);
+			@fclose($oFile);
 
 			$sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
 		}

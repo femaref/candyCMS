@@ -111,12 +111,6 @@
   $(document).ready(function(){
     VideoJS.setupAllWhenReady();
     $(".js-fancybox").fancybox();
-
-    $('.js-image_overlay').ImageOverlay({
-      overlay_speed: 'fast',
-      overlay_speed_out: 'slow'
-    });
-
     $(".image img").lazyload();
 
     if($('.js-toggle-headline')) {

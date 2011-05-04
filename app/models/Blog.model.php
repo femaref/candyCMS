@@ -79,7 +79,7 @@ class Model_Blog extends Model_Main {
 				$aTags = explode(', ', $aRow['tags']);
 				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
         $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/Blog/' . $iId;
+        $sUrl = WEBSITE_URL . '/blog/' . $iId;
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -93,8 +93,9 @@ class Model_Blog extends Model_Main {
                 'tags'              => $aTags,
                 'tags_raw'          => $aRow['tags'],
                 'title'             => Helper::formatOutput($aRow['title']),
-                'content'           => Helper::formatOutput($aRow['content']),
                 'teaser'            => Helper::formatOutput($aRow['teaser']),
+                'keywords'          => Helper::formatOutput($aRow['keywords']),
+                'content'           => Helper::formatOutput($aRow['content']),
                 'date'              => Helper::formatTimestamp($aRow['date'], true),
                 'datetime'          => Helper::formatTimestamp($aRow['date']),
                 'date_raw'          => $aRow['date'],
@@ -165,6 +166,7 @@ class Model_Blog extends Model_Main {
             'tags'      => Helper::removeSlahes($aRow['tags']),
             'title'     => Helper::removeSlahes($aRow['title']),
             'teaser'    => Helper::removeSlahes($aRow['teaser']),
+            'keywords'  => Helper::removeSlahes($aRow['keywords']),
             'content'   => Helper::removeSlahes($aRow['content']),
             'date'      => Helper::formatTimestamp($aRow['date'], true),
             'datetime'  => Helper::formatTimestamp($aRow['date']),
@@ -196,6 +198,7 @@ class Model_Blog extends Model_Main {
             'tags_raw'          => $aRow['tags'],
             'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
             'teaser'            => Helper::formatOutput($aRow['teaser'], $sHighlight),
+            'keywords'          => Helper::formatOutput($aRow['keywords']),
             'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
             'date'              => Helper::formatTimestamp($aRow['date']),
             'datetime'          => Helper::formatTimestamp($aRow['date']),
@@ -239,15 +242,16 @@ class Model_Blog extends Model_Main {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
 																				" . SQL_PREFIX . "blogs
-																				(author_id, title, tags, teaser, content, date, published)
+																				(author_id, title, tags, teaser, keywords, content, date, published)
 																			VALUES
-																				( :author_id, :title, :tags, :teaser, :content, :date, :published )");
+																				( :author_id, :title, :tags, :teaser, :keywords, :content, :date, :published )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
       $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('published', $this->_aRequest['published']);
@@ -281,6 +285,7 @@ class Model_Blog extends Model_Main {
                                   title = :title,
                                   tags = :tags,
                                   teaser = :teaser,
+																	keywords = :keywords,
                                   content = :content,
                                   date_modified = :date_modified,
 																	published = :published
@@ -291,6 +296,7 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
       $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date_modified', $iDateModified);
       $oQuery->bindParam('published', $iPublished);
