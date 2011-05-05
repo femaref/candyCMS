@@ -1,10 +1,10 @@
 <form method='post' action='/mail/{$_request_id_}' id="create_mail">
   <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
-  <p {if $error_email}class="error"{/if}>
+  <p {if isset($error_email)}class="error"{/if}>
     <label for='email'>{$lang_email} *</label>
     {if $email == ''}
       <input name='email' value='{$email}' type='email' required />
-      {if $error_email}
+      {if isset($error_email)}
         <div class="description">{$error_email}</div>
       {/if}
     {else}
@@ -15,7 +15,7 @@
     <label for='subject'>{$lang_subject}</label>
     <input name='subject' class='' value='{$subject}' type='text' />
   </p>
-  <p {if $error_content}class="error"{/if}>
+  <p {if isset($error_content)}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>
     <textarea name='content' cols="30" required>{$content}</textarea>
   </p>

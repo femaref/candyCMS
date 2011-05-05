@@ -3,7 +3,7 @@
   <h4>
     {$lang_description}
   </h4>
-  <p {if $error_email}class="error"{/if}>
+  <p {if isset($error_email)}class="error"{/if}>
     <label for="email">{$lang_email} *</label>
     <input type="email" name='email' title='{$lang_email}' autofocus />
   </p>

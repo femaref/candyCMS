@@ -26,11 +26,11 @@ class Blog extends Main {
       $oComments = new Comment($this->_aRequest, $this->_aSession);
       $oComments->__init($this->_aData);
 
-      $this->_oSmarty->assign('_blog_comments_', $oComments->show());
+      $this->_oSmarty->assign('_blog_footer_', $oComments->show());
 
     # Load blog pages
     } else
-      $this->_oSmarty->assign('_blog_pages_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
+      $this->_oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
 
 		# Create page title and description
     $this->_setDescription($this->_setBlogDescription());

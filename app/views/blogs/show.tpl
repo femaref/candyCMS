@@ -100,8 +100,7 @@
     {/foreach}
   {/if}
 </section>
-{$_blog_pages_}
-{$_blog_comments_}
+{$_blog_footer_}
 <script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>

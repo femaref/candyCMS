@@ -1,10 +1,10 @@
 <form method='post'>
   <h1>{$lang_login}</h1>
-  <p {if $error_email}class="error"{/if}>
+  <p {if isset($error_email)}class="error"{/if}>
     <label for="name">{$lang_email}</label>
     <input name='email' type='text' id='email' value='' autofocus required />
   </p>
-  <p {if $error_password}class="error"{/if}>
+  <p {if isset($error_password)}class="error"{/if}>
     <label for='password'>{$lang_password}</label>
     <input name='password' type='password' id='password' value='' required />
   </p>
