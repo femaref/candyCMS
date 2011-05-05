@@ -104,7 +104,7 @@
 {$_blog_comments_}
 <script language='javascript' src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script language='javascript' type="text/javascript">
@@ -112,6 +112,7 @@
     VideoJS.setupAllWhenReady();
     $(".js-fancybox").fancybox();
     $(".image img").lazyload();
+    $('.js-image').capty();
 
     if($('.js-toggle-headline')) {
       $('.js-toggle-headline').click(function(){

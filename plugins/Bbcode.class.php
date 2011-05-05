@@ -64,7 +64,7 @@ final class Bbcode {
 
 			# Image is small and on our website, so we don't need a preview
 			if ($aInfo[0] <= MEDIA_DEFAULT_X)
-				$sHTML = '<img class=\'image\' src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" />';
+				$sHTML = '<div class=\'image\'><img src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" /></div>';
 
 			# We do not have a preview, the image is local an biiig
 			else {
@@ -81,17 +81,11 @@ final class Bbcode {
 				$sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
 				$sText = str_replace('%h', $aInfo[1], $sText);
 
-        $sHTML = '<ul class="js-image_overlay image-overlay">';
-        $sHTML .= '<div class="image">';
+        $sHTML = '<div class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';
-        $sHTML .= '<img title="" alt="' . $sText . '" src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
-        $sHTML .= '<div class="caption" style="top: 180px; background-color: rgb(0, 0, 0); color: rgb(102, 102, 102);">';
-        $sHTML .= '<h3>' . $sText . '</h3>';
-        $sHTML .= '</div>';
+        $sHTML .= '<img class="js-image" alt="' . $sText . '" src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
         $sHTML .= '</a>';
         $sHTML .= '</div>';
-        $sHTML .= '</li>';
-        $sHTML .= '</ul>';
 			}
 
 			$sStr = preg_replace('=\[img\](.*)\[\/img\]=isU', $sHTML, $sStr, 1);
@@ -100,7 +94,7 @@ final class Bbcode {
 
 		# Image with description
 		$sStr = preg_replace("/\[img\=(.+)\](.*)\[\/img]/isU",
-										"<div class='center' style='font-style:italic'><img class='image' src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
+										"<div class='image' style='font-style:italic'><img src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
 										$sStr);
 
 		# [video]file[/video]

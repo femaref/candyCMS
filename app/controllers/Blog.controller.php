@@ -43,6 +43,14 @@ class Blog extends Main {
 		return $this->_oSmarty->fetch('blogs/show.tpl');
 	}
 
+  # Quick hack for displaying title without html tags
+  private final function _removeHighlight($sTitle) {
+    $sTitle = Helper::removeSlahes($sTitle);
+    $sTitle = str_replace('<span class="highlight">', '', $sTitle);
+    $sTitle = str_replace('</span>', '', $sTitle);
+    return $sTitle;
+  }
+
   private final function _setBlogDescription() {
     if (isset($this->_aRequest['action']) &&
             'search' == $this->_aRequest['action'])
@@ -51,8 +59,9 @@ class Blog extends Main {
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
         return $this->_aData[1]['teaser'];
+
       else
-        return $this->_aData[1]['title'];
+        return $this->_removeHighlight($this->_aData[1]['title']);
     } else
       return LANG_GLOBAL_BLOG;
   }
@@ -75,13 +84,8 @@ class Blog extends Main {
       return Helper::removeSlahes($this->_aRequest['id']);
 
     # Default blog
-    elseif (!empty($this->_iId)) {
-      # Quick hack for displaying title without html tags
-      $sTitle = Helper::removeSlahes($this->_aData[1]['title']);
-      $sTitle = str_replace('<span class="highlight">', '', $sTitle);
-      $sTitle = str_replace('</span>', '', $sTitle);
-      return $sTitle;
-    }
+    elseif (!empty($this->_iId))
+      return $this->_removeHighlight($this->_aData[1]['title']);
 
 		# Blog overview with pages
 		else {

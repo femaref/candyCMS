@@ -4,7 +4,7 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <link href='%PATH_CSS%/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.5.2-min.js' type='text/javascript'></script>
+    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.6-min.js' type='text/javascript'></script>
     <style stype="text/css">
       div.hidden{ display:none }
       h3:hover{ cursor:pointer }

@@ -734,6 +734,7 @@ div.vjs-big-play-button span {
 /* Image overlay */
 /********************************************************************************/
 
+/* Wrapper */
 .js-caption {
   padding:0px;
   margin: 0px;
@@ -749,11 +750,12 @@ div.vjs-big-play-button span {
   background: transparent url('../../../images/loading.gif') no-repeat center;
 }
 
-.js-caption_bottom {
-	color: #fff;
-  background:#000;
-  padding: 5px 0px;
-  font-size:12px;
+div.capty-caption {
+	background-color: #000;
+	color: #FFF;
+	text-shadow: 1px 1px 0 #222;
+  padding:5px;
+  text-align:center;
 }
 
 
