@@ -101,7 +101,12 @@ final class Bbcode {
 		if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
 			preg_match_all('#\[video\](.*)\[\/video\]#Uis', $sStr, $aOutput);
 
+			# Get file name without extension
+			# TODO: Put into method
 			$sFile = trim($aOutput[1][0]);
+			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
+			
+			$sFile = substr($sFile, 0, $iExtensionLength);
 			$sFlashFile = $this->_getFlashVideo($sFile);
 
 			$sFlash = '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" class="vjs-flash-fallback">';
@@ -112,9 +117,9 @@ final class Bbcode {
 
 			# HTML 5 Video
 			$sVideo = '<video class="video-js" width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls">';
-			$sVideo .= '<source src="\1.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="\1.webm" type="video/webm" />';
-			$sVideo .= '<source src="\1.ogv" type="video/ogg" />';
+			$sVideo .= '<source src="' .$sFile. '.mp4" type="video/mp4" />';
+			$sVideo .= '<source src="' .$sFile. '.webm" type="video/webm" />';
+			$sVideo .= '<source src="' .$sFile. '.ogv" type="video/ogg" />';
 			$sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
@@ -128,7 +133,11 @@ final class Bbcode {
 		if (preg_match('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr)) {
 			preg_match_all('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr, $aOutput);
 
+			# Get file name without extension
 			$sFile = trim($aOutput[3][0]);
+			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
+
+			$sFile = substr($sFile, 0, $iExtensionLength);
 			$sFlashFile = $this->_getFlashVideo($sFile);
 
 			$sFlash = '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" class="vjs-flash-fallback">';
@@ -138,9 +147,9 @@ final class Bbcode {
 			$sFlash .= '</object>';
 
 			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls">';
-			$sVideo .= '<source src="\3.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="\3.webm" type="video/webm" />';
-			$sVideo .= '<source src="\3.ogv" type="video/ogg" />';
+			$sVideo .= '<source src="' .$sFile. '.mp4" type="video/mp4" />';
+			$sVideo .= '<source src="' .$sFile. '.webm" type="video/webm" />';
+			$sVideo .= '<source src="' .$sFile. '.ogv" type="video/ogg" />';
 			$sVideo .= '</video>';
 
 			$sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
@@ -153,7 +162,11 @@ final class Bbcode {
 		if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr)) {
 			preg_match_all('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aOutput);
 
+			# Get file name without extension
 			$sFile = trim($aOutput[4][0]);
+			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
+
+			$sFile = substr($sFile, 0, $iExtensionLength);
 			$sFlashFile = $this->_getFlashVideo($sFile);
 
 			$sFlash = '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" class="vjs-flash-fallback">';
@@ -164,9 +177,9 @@ final class Bbcode {
 			$sFlash .= '</object>';
 
 			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls" poster="\3">';
-			$sVideo .= '<source src="\4.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="\4.webm" type="video/webm" />';
-			$sVideo .= '<source src="\4.ogv" type="video/ogg" />';
+			$sVideo .= '<source src="' .$sFile. '.mp4" type="video/mp4" />';
+			$sVideo .= '<source src="' .$sFile. '.webm" type="video/webm" />';
+			$sVideo .= '<source src="' .$sFile. '.ogv" type="video/ogg" />';
 			$sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
