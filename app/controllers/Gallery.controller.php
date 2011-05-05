@@ -175,7 +175,7 @@ class Gallery extends Main {
 				if ($this->_createFile() === true) {
 					# Log uploaded image. Request ID = album id
 					Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-					return Helper::successMessage('_Upload erfolgreich_', '/gallery/' . $this->_iId); #TODO
+					return Helper::successMessage(LANG_GALLERY_FILE_CREATE_SUCCESS, '/gallery/' . $this->_iId);
 				}
         else
           return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId . '/createfile');

@@ -126,7 +126,8 @@ define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Editieren: %p' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Bild proportional verkleinern' );
-define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei hinzufügen' );
+define( 'LANG_GALLERY_FILE_CREATE_SUCCESS', 'Datei(en) erfolgreich hochgeladen!' ); #TODO
+define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei(en) hinzufügen' );
 define( 'LANG_GALLERY_FILE_UPDATE_TITLE', 'Datei bearbeiten' );
 define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.' );
 define( 'LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE', 'Datei auswählen' );
