@@ -59,7 +59,7 @@ class Blog extends Main {
 
   private final function _setBlogKeywords() {
     if (!empty($this->_iId) && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
-      return $this->_aData[1]['tags_raw'];
+      return $this->_aData[1]['keywords'];
   }
 
 	private final function _setBlogTitle($aData) {

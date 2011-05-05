@@ -20,8 +20,6 @@
           {else}
             <em style="text-decoration:line-through">{$lang_deleted_user}</em>
           {/if}
-          {if $author_id == $c.author_id}&nbsp;({$lang_author}){/if}
-          <br />
           <time datetime="2009-06-29T23:35:20+01:00">{$c.datetime}</time>
         </header>
         <div id="js-comment_{$c.id}">

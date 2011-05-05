@@ -38,16 +38,16 @@ class Gallery extends Main {
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
 
-      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
       $this->_setDescription($sAlbumDescription);
+      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/showFiles');
       return $this->_oSmarty->fetch('galleries/showFiles.tpl');
     }
     # Overview
     else {
-      $this->_setTitle(LANG_GLOBAL_GALLERY);
       $this->_setDescription(LANG_GLOBAL_GALLERY);
+      $this->_setTitle(LANG_GLOBAL_GALLERY);
 
       $this->_oSmarty->assign('albums', $this->_oModel->getData());
 
