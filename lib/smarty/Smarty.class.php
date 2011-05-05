@@ -3,7 +3,7 @@
 /**
  * Project:     Smarty: the PHP compiling template engine
  * File:        Smarty.class.php
- * SVN:         $Id: Smarty.class.php 3788 2010-11-13 18:32:50Z uwe.tews@googlemail.com $
+ * SVN:         $Id: Smarty.class.php 3895 2010-12-31 13:47:12Z uwe.tews@googlemail.com $
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,7 @@
  * @author Monte Ohrt <monte at ohrt dot com> 
  * @author Uwe Tews 
  * @package Smarty
- * @version 3.0.4
+ * @version 3.0.7
  */
 
 /**
@@ -87,7 +87,7 @@ class Smarty extends Smarty_Internal_Data {
 	* constant definitions
 	*/
     // smarty version
-    const SMARTY_VERSION = 'Smarty-3.0.4'; 
+    const SMARTY_VERSION = 'Smarty-3.0.7'; 
   	//define variable scopes
 	const SCOPE_LOCAL = 0;
 	const SCOPE_PARENT = 1;
@@ -181,7 +181,7 @@ class Smarty extends Smarty_Internal_Data {
     // config var settings
     public $config_overwrite = true; //Controls whether variables with the same name overwrite each other.
     public $config_booleanize = true; //Controls whether config values of on/true/yes and off/false/no get converted to boolean
-    public $config_read_hidden = true; //Controls whether hidden config sections/vars are read from the file.                                                      
+    public $config_read_hidden = false; //Controls whether hidden config sections/vars are read from the file.                                                      
     // config vars
     public $config_vars = array(); 
     // assigned tpl vars
@@ -223,7 +223,7 @@ class Smarty extends Smarty_Internal_Data {
     // default modifier
     public $default_modifiers = array(); 
     // global internal smarty  vars
-    public $_smarty_vars = array(); 
+    static $_smarty_vars = array(); 
     // start time for execution time calculation
     public $start_time = 0; 
     // default file permissions
@@ -238,6 +238,8 @@ class Smarty extends Smarty_Internal_Data {
     public $deprecation_notices = true;
     // Smarty 2 BC
     public $_version = self::SMARTY_VERSION;
+    // self pointer to Smarty object
+    public $smarty;
 
     /**
      * Class constructor, initializes basic smarty properties
@@ -257,6 +259,44 @@ class Smarty extends Smarty_Internal_Data {
         $this->cache_dir = '.' . DS . 'cache' . DS;
         $this->config_dir = '.' . DS . 'configs' . DS;
         $this->debug_tpl = SMARTY_DIR . 'debug.tpl';
+        if (isset($_SERVER['SCRIPT_NAME'])) {
+            $this->assignGlobal('SCRIPT_NAME', $_SERVER['SCRIPT_NAME']);
+        } 
+    } 
+
+    /**
+     * Class destructor
+     */
+    public function __destruct()
+    { 
+    } 
+
+    /**
+     * fetches a rendered Smarty template
+     * 
+     * @param string $template the resource handle of the template file or template object
+     * @param mixed $cache_id cache id to be used with this template
+     * @param mixed $compile_id compile id to be used with this template
+     * @param object $ |null $parent next higher level of Smarty variables
+     * @return string rendered template output
+     */
+    public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
+    {
+        if (!empty($cache_id) && is_object($cache_id)) {
+            $parent = $cache_id;
+            $cache_id = null;
+        } 
+        if ($parent === null) {
+            // get default Smarty data object
+            $parent = $this;
+        } 
+        // create template object if necessary
+        ($template instanceof $this->template_class)? $_template = $template :
+        $_template = $this->createTemplate ($template, $cache_id, $compile_id, $parent, false);
+        if (isset($this->error_reporting)) {
+        	$_smarty_old_error_level = error_reporting($this->error_reporting);
+    	}
+    	// check URL debugging control
         if (!$this->debugging && $this->debugging_ctrl == 'URL') {
             if (isset($_SERVER['QUERY_STRING'])) {
                 $_query_string = $_SERVER['QUERY_STRING'];
@@ -282,43 +322,6 @@ class Smarty extends Smarty_Internal_Data {
                 } 
             } 
         } 
-        if (isset($_SERVER['SCRIPT_NAME'])) {
-            $this->assignGlobal('SCRIPT_NAME', $_SERVER['SCRIPT_NAME']);
-        } 
-    } 
-
-    /**
-     * Class destructor
-     */
-    public function __destruct()
-    { 
-    } 
-
-    /**
-     * fetches a rendered Smarty template
-     * 
-     * @param string $template the resource handle of the template file or template object
-     * @param mixed $cache_id cache id to be used with this template
-     * @param mixed $compile_id compile id to be used with this template
-     * @param object $ |null $parent next higher level of Smarty variables
-     * @return string rendered template output
-     */
-    public function fetch($template, $cache_id = null, $compile_id = null, $parent = null, $display = false)
-    {
-        if (is_object($cache_id)) {
-            $parent = $cache_id;
-            $cache_id = null;
-        } 
-        if ($parent === null) {
-            // get default Smarty data object
-            $parent = $this;
-        } 
-        // create template object if necessary
-        ($template instanceof $this->template_class)? $_template = $template :
-        $_template = $this->createTemplate ($template, $cache_id, $compile_id, $parent);
-        if (isset($this->error_reporting)) {
-        	$_smarty_old_error_level = error_reporting($this->error_reporting);
-    	}
         // obtain data for cache modified check
         if ($this->cache_modified_check && $this->caching && $display) {
             $_isCached = $_template->isCached() && !$_template->has_nocache_code;
@@ -328,9 +331,9 @@ class Smarty extends Smarty_Internal_Data {
                 $_gmt_mtime = '';
             } 
         } 
-        // return redered template
-        if (isset($this->autoload_filters['output']) || isset($this->registered_filters['output'])) {
-            $_output = Smarty_Internal_Filter_Handler::runFilter('output', $_template->getRenderedTemplate(), $this, $_template);
+        // return rendered template
+        if ((!$this->caching || $_template->resource_object->isEvaluated) && (isset($this->autoload_filters['output']) || isset($this->registered_filters['output']))) {
+            $_output = Smarty_Internal_Filter_Handler::runFilter('output', $_template->getRenderedTemplate(), $_template);
         } else {
             $_output = $_template->getRenderedTemplate();
         } 
@@ -394,7 +397,7 @@ class Smarty extends Smarty_Internal_Data {
     		$parent = $this;
     	}
         if (!($template instanceof $this->template_class)) {
-            $template = $this->createTemplate ($template, $cache_id, $compile_id, $parent);
+            $template = $this->createTemplate ($template, $cache_id, $compile_id, $parent, false);
         } 
         // return cache status of template
         return $template->isCached();
@@ -415,18 +418,19 @@ class Smarty extends Smarty_Internal_Data {
      * creates a template object
      * 
      * @param string $template the resource handle of the template file
-     * @param object $parent next higher level of Smarty variables
      * @param mixed $cache_id cache id to be used with this template
      * @param mixed $compile_id compile id to be used with this template
+     * @param object $parent next higher level of Smarty variables
+     * @param boolean $do_clone flag is Smarty object shall be cloned
      * @returns object template object
      */
-    public function createTemplate($template, $cache_id = null, $compile_id = null, $parent = null)
+    public function createTemplate($template, $cache_id = null, $compile_id = null, $parent = null, $do_clone = true)
     {
-        if (is_object($cache_id) || is_array($cache_id)) {
+        if (!empty($cache_id) && (is_object($cache_id) || is_array($cache_id))) {
             $parent = $cache_id;
             $cache_id = null;
         } 
-        if (is_array($parent)) {
+        if (!empty($parent) && is_array($parent)) {
             $data = $parent;
             $parent = null;
         } else {
@@ -441,14 +445,18 @@ class Smarty extends Smarty_Internal_Data {
                 $tpl = $this->template_objects[$_templateId];
             } else {
                 // create new template object
-                $tpl = new $this->template_class($template, clone $this, $parent, $cache_id, $compile_id);
+                if ($do_clone) {
+                	$tpl = new $this->template_class($template, clone $this, $parent, $cache_id, $compile_id);
+                } else {
+                	$tpl = new $this->template_class($template, $this, $parent, $cache_id, $compile_id);
+                }
             } 
         } else {
             // just return a copy of template class
             $tpl = $template;
         } 
         // fill data if present
-        if (is_array($data)) {
+        if (!empty($data) && is_array($data)) {
             // set up variable values
             foreach ($data as $_key => $_val) {
                 $tpl->tpl_vars[$_key] = new Smarty_variable($_val);

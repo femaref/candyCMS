@@ -57,6 +57,7 @@ abstract class Main {
 		# Define constants
 		$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->_oSmarty->assign('CURRENT_URL', CURRENT_URL);
+		$this->_oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID);
 		$this->_oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 		$this->_oSmarty->assign('URL', WEBSITE_URL);
 		$this->_oSmarty->assign('USER_EMAIL', USER_EMAIL);
@@ -71,9 +72,6 @@ abstract class Main {
     $this->_oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
     $this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
     $this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
-
-    if(class_exists('FacebookCMS'))
-      $this->_oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID);
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
