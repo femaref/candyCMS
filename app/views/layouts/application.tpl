@@ -3,9 +3,9 @@
       xmlns:og="http://opengraphprotocol.org/schema/"
       xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
-    <meta http-equiv='content-type' content='text/html;charset=utf-8' />
-    <meta name='description' content="{$meta_description}" />
-    <meta name='keywords' content="{$meta_keywords}" />
+    <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
+    <meta name='description' content="{$meta_description}"/>
+    <meta name='keywords' content="{$meta_keywords}"/>
     {if $_request_id_}
       <meta property="og:description" content="{$meta_og_description}"/>
       <meta property="og:site_name" content="{$meta_og_site_name}"/>
@@ -18,14 +18,14 @@
     {if $FACEBOOK_APP_ID}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
-    <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS' />
-    <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon' />
-    <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
+    <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
+    <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+    <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
     <!--[if IE]>
-      <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection' />
+      <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <![endif]-->
   </head>
   <body>
