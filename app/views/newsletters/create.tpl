@@ -1,3 +1,19 @@
+<form method='post' action='/newsletter/create'>
+  <h1>{$lang_headline}</h1>
+  <p {if isset($error_subject)}class="error"{/if}>
+    <label for='subject'>{$lang_subject} *</label>
+    <input name='subject' value='{$subject}' type='text' required autofocus />
+  </p>
+  <p {if isset($error_content)}class="error"{/if}>
+    <label for='content'>{$lang_content} *</label>
+    <textarea name='content' rows='20' cols='50' class="js-tinymce">{$content}</textarea>
+    <div class='description'>{$lang_content_info}</div>
+  </p>
+  <p class="center">
+    <input type='hidden' value='formdata' name='send_newsletter' />
+    <input type='submit' value='{$lang_submit}' />
+  </p>
+</form>
 <script language='javascript' type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/jquery.tinymce.js'></script>
 <script language='javascript' type='text/javascript'>
   $(document).ready(function(){
@@ -20,19 +36,3 @@
     });
   });
 </script>
-<form method='post' action='/newsletter/create'>
-  <h1>{$lang_headline}</h1>
-  <p {if $error_subject}class="error"{/if}>
-    <label for='subject'>{$lang_subject} *</label>
-    <input name='subject' value='{$subject}' type='text' required autofocus />
-  </p>
-  <p {if $error_content}class="error"{/if}>
-    <label for='content'>{$lang_content} *</label>
-    <textarea name='content' rows='20' cols='50' class="js-tinymce">{$content}</textarea>
-    <div class='description'>{$lang_content_info}</div>
-  </p>
-  <p class="center">
-    <input type='hidden' value='formdata' name='send_newsletter' />
-    <input type='submit' value='{$lang_submit}' />
-  </p>
-</form>

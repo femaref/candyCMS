@@ -29,7 +29,10 @@
           </td>
           <td style='text-align:left;width:45%'>
             {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
-              <a href='%PATH_UPLOAD%/media/{$f.name}' class="js-fancybox" title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
+              <a href='%PATH_UPLOAD%/media/{$f.name}' 
+                 class="js-fancybox" 
+                 rel="image" 
+                 title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
                 {$f.name}
               </a> ({$f.dim[0]} x {$f.dim[1]} px)
             {else}

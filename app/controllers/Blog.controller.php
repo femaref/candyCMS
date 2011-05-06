@@ -135,6 +135,7 @@ class Blog extends Main {
 			$this->_oSmarty->assign('keywords', $iKeywords);
 			$this->_oSmarty->assign('published', $iPublished);
 			$this->_oSmarty->assign('tags', $sTags);
+			$this->_oSmarty->assign('teaser', $sTeaser);
 			$this->_oSmarty->assign('title', $sTitle);
 
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);

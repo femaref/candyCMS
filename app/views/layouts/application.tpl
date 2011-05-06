@@ -12,10 +12,10 @@
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
     {/if}
-    {if $_facebook_admin_id_}
+    {if $FACEBOOK_ADMIN_ID}
       <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>
     {/if}
-    {if $_facebook_app_id_}
+    {if $FACEBOOK_APP_ID}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
     <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS' />
@@ -86,36 +86,36 @@
           {if $USER_RIGHT >= 3}
             <li>
               <a href='/newsletter/create' title='{$lang_newsletter_create}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
-                {$lang_newsletter_create}</a>
+                {$lang_newsletter_create}
+              </a>
             </li>
             <li>
               <a href='/media' title='{$lang_filemanager}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-folder" alt='' />
-                {$lang_filemanager}</a>
+                {$lang_filemanager}
+              </a>
             </li>
             <li>
               <a href='/content' title='{$lang_contentmanager}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
-                {$lang_contentmanager}</a>
+                {$lang_contentmanager}
+              </a>
             </li>
             {if $USER_RIGHT == 4}
               <li>
                 <a href='/log' title='{$lang_logs}'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-manager" alt='' />
-                  {$lang_logs}</a>
+                  {$lang_logs}
+                </a>
               </li>
               <li>
                 <a href='/user' title='{$lang_usermanager}'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-user" alt='' />
-                  {$lang_usermanager}</a>
+                  {$lang_usermanager}
+                </a>
               </li>
             {/if}
           {else}
             <li>
               <a href='/newsletter' title='{$lang_newsletter_handle}'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-email" alt='' />
-                {$lang_newsletter_handle}</a>
+                {$lang_newsletter_handle}
+              </a>
             </li>
           {/if}
         </ul>
@@ -129,9 +129,9 @@
         var sFacebookAppId = '{$FACEBOOK_APP_ID}';
         {literal}
           window.fbAsyncInit = function() {
-            FB.init({appId: sFacebookAppId, status: true, cookie: true,
-                     xfbml: true});
-          };
+                  FB.init({appId: sFacebookAppId, status: true, cookie: true,
+                    xfbml: true});
+                };
         {/literal}
         (function() {
           var e = document.createElement('script'); e.async = true;

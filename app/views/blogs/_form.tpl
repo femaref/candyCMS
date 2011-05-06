@@ -1,6 +1,6 @@
 <form method='post' action='{$_action_url_}' enctype="multipart/form-data">
   <h1>{$lang_headline}</h1>
-  <p {if $error_title}class="error"{/if}>
+  <p {if isset($error_title)}class="error"{/if}>
     <label for='title'>{$lang_title} *</label>
     <input name='title' value='{$title}' type='text' required />
   </p>
@@ -20,7 +20,7 @@
     <label for='keywords'>{$lang_keywords}</label>
     <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' />
   </p>
-  <p {if $error_content}class="error"{/if}>
+  <p {if isset($error_content)}class="error"{/if}>
     <label for='content'>{$lang_content} *</label>
     <textarea name='content' class="js-tinymce" rows='16' cols='50' >{$content}</textarea>
   </p>

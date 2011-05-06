@@ -274,9 +274,7 @@ class Index extends Main {
 			$oSmarty->assign('meta_og_url', CURRENT_URL);
 
 			$oSmarty->assign('_content_', $oSection->getContent());
-			$oSmarty->assign('_facebook_admin_id_', FACEBOOK_ADMIN_ID);
-			$oSmarty->assign('_facebook_app_id_', FACEBOOK_APP_ID);
-      # We must recreate the request id
+      # We must recreate the request id because it's yet only set in the Main.controller.php
 			$oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 

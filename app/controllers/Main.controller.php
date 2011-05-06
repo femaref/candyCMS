@@ -57,7 +57,8 @@ abstract class Main {
 		# Define constants
 		$this->_oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->_oSmarty->assign('CURRENT_URL', CURRENT_URL);
-		$this->_oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID);
+		$this->_oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
+		$this->_oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
 		$this->_oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 		$this->_oSmarty->assign('URL', WEBSITE_URL);
 		$this->_oSmarty->assign('USER_EMAIL', USER_EMAIL);

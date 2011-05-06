@@ -5,7 +5,7 @@
   </h4>
   <p {if isset($error_email)}class="error"{/if}>
     <label for="email">{$lang_email} *</label>
-    <input type="email" name='email' title='{$lang_email}' autofocus />
+    <input type="email" name='email' title='{$lang_email}' autofocus required />
   </p>
   <p class="center">
     <input type='submit' value='{$lang_headline}' />
