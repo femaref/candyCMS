@@ -57,8 +57,8 @@
       {/foreach}
     {/if}
   </table>
-  <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script language='javascript' type="text/javascript">
+  <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script type="text/javascript">
     $(document).ready(function(){
       $(".js-fancybox").fancybox();
     });

@@ -22,7 +22,7 @@
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <title>{$_title_}</title>
     <!--[if IE]>
       <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
@@ -121,8 +121,8 @@
         </ul>
       </section>
     </footer>
-    <script language='javascript' type='text/javascript'>{$_javascript_language_file_}</script>
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script type='text/javascript'>{$_javascript_language_file_}</script>
+    <script src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
     {if $FACEBOOK_APP_ID}
       <div id="fb-root"></div>
       <script type="text/javascript">

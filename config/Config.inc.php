@@ -21,11 +21,6 @@ define('SQL_PORT', '3306');
 
 # Do you want to use SMTP to send your mails instead of mail()?
 # DEFAULT: false
-/*define('SMTP_ON', false);
-define('SMTP_HOST', 'localhost');
-define('SMTP_USER', '');
-define('SMTP_PASSWORD', '');
-define('SMTP_PORT', '1025');*/
 
 define('SMTP_ON', false);
 define('SMTP_HOST', '');

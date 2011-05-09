@@ -35,7 +35,7 @@
 <div class="navigation">
   {$_log_pages_}
 </div>
-<script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $('#js-logs').infinitescroll({

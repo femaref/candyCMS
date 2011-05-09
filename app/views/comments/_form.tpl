@@ -31,7 +31,7 @@
     <label for='js-create_commment_text'>{$lang_content} *</label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
   </p>
-  {if $_captcha_}
+  {if isset($_captcha_)}
     <div {if isset($error_captcha)}class="error"{/if}>
       <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
       {$_captcha_}

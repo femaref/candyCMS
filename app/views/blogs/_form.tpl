@@ -45,8 +45,8 @@
     {/if}
   </p>
 </form>
-<script language='javascript' type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/jquery.tinymce.js'></script>
-<script language='javascript' type='text/javascript'>
+<script type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/jquery.tinymce.js'></script>
+<script type='text/javascript'>
   $(document).ready(function(){
     $('.js-tinymce').tinymce({
       script_url : '%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js',

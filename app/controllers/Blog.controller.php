@@ -58,7 +58,7 @@ class Blog extends Main {
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
-        return $this->_aData[1]['teaser'];
+        return $this->_removeHighlight($this->_aData[1]['teaser']);
 
       else
         return $this->_removeHighlight($this->_aData[1]['title']);
