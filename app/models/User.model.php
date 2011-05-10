@@ -85,7 +85,11 @@ class Model_User extends Model_Main {
               'full_name'     => $sFullName,
               'encoded_full_name' => urlencode($sFullName),
               'last_login'    => Helper::formatTimestamp($aRow['last_login']),
-              'date'          => Helper::formatTimestamp($aRow['date']),
+              'date'          => Helper::formatTimestamp($aRow['date'], true),
+              'datetime'      => Helper::formatTimestamp($aRow['date']),
+              'date_raw'      => $aRow['date'],
+              'date_rss'      => date('r', $aRow['date']),
+              'date_w3c'      => date(DATE_W3C),
               'id'            => $aRow['id'],
               'use_gravatar'  => $aRow['use_gravatar'],
               'avatar_64'     => Helper::getAvatar('user', 64, $aRow['id'], $aGravatar),
@@ -117,11 +121,41 @@ class Model_User extends Model_Main {
         $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
 
-        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
       } catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
+      
+      $aGravatar = array('use_gravatar' => $aData['use_gravatar'], 'email' => $aData['email']);
+
+      # Set SEO friendly user names
+      $sName      = Helper::formatOutput($aData['name']);
+      $sSurname   = Helper::formatOutput($aData['surname']);
+      $sFullName  = $sName . ' ' . $sSurname;
+
+      $sEncodedTitle = Helper::formatOutput(urlencode($sFullName));
+      $sUrl = WEBSITE_URL . '/user/' . $this->_iId;
+
+      $this->_aData = array(
+          'name'          => $sName,
+          'surname'       => $sSurname,
+          'full_name'     => $sFullName,
+          'encoded_full_name' => urlencode($sFullName),
+          'last_login'    => Helper::formatTimestamp($aData['last_login']),
+          'date'          => Helper::formatTimestamp($aData['date'], true),
+          'datetime'      => Helper::formatTimestamp($aData['date']),
+          'date_raw'      => $aData['date'],
+          'date_rss'      => date('r', $aData['date']),
+          'date_w3c'      => date(DATE_W3C),
+          'description'   => Helper::formatOutput($aData['description']),
+          'use_gravatar'  => $aData['use_gravatar'],
+          'avatar_64'     => Helper::getAvatar('user', 64, $this->_iId, $aGravatar),
+          'avatar_100'    => Helper::getAvatar('user', 100, $this->_iId, $aGravatar),
+          'avatar_popup'  => Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar),
+          'url'           => $sUrl . '/' . $sEncodedTitle,
+          'url_clean'     => $sUrl
+      );
     }
   }
 

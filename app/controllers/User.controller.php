@@ -207,28 +207,15 @@ class User extends Main {
 		}
 		else {
 			$this->_aData = $this->_oModel->getData($this->_iId);
-			$aGravatar = array('use_gravatar' => $this->_aData['use_gravatar'],
-					'email' => $this->_aData['email']);
-
-			# Description Fix, format Code to BB
-			$this->_aData['description'] = Helper::formatOutput($this->_aData['description']);
-
-			$this->_oSmarty->assign('uid', $this->_iId);
-			$this->_oSmarty->assign('last_login', Helper::formatTimestamp($this->_aData['last_login']));
-			$this->_oSmarty->assign('date', Helper::formatTimestamp($this->_aData['date']));
-			$this->_oSmarty->assign('user', $this->_aData);
-			$this->_oSmarty->assign('avatar_64', Helper::getAvatar('user', 64, $this->_iId, $aGravatar));
-			$this->_oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
-			$this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
+			$this->_oSmarty->assign('u', $this->_aData);
 
 			# Manage title and description
-			$this->_sName = $this->_aData['name'];
-			$this->_setTitle($this->_sName . ' ' . $this->_aData['surname']);
-			$this->_setDescription($this->_sName . ' ' . $this->_aData['surname']);
+			$this->_setTitle($this->_aData['full_name']);
+			$this->_setDescription($this->_aData['full_name']);
 
 			# Language
-			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_sName, LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
-			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_sName, LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
+			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
+			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
       $this->_oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
       $this->_oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 

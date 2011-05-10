@@ -1,7 +1,7 @@
 <h1>
-  {$user.name} {$user.surname}
+  {$u.full_name}
   {if $USER_RIGHT == 4}
-    <a href='/user/{$uid}/update'>
+    <a href='/user/{$_request_id_}/update'>
       <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' />
     </a>
   {/if}
@@ -11,12 +11,12 @@
     <td>
       {$lang_registered_since}
     </td>
-    <td class='td_right'>
-      {$date}
+    <td>
+      {$u.date}
     </td>
     <td rowspan='4' style='vertical-align:top'>
-      <a href='{$avatar_popup}' class="js-fancybox" title='{$user.name} {$user.surname}'>
-        <img class='image' alt='{$user.name}' src="{$avatar_64}" />
+      <a href='{$u.avatar_popup}' class="js-fancybox" title='{$u.full_name}'>
+        <img alt='{$u.full_name}' src="{$u.avatar_64}" />
       </a>
     </td>
   </tr>
@@ -24,24 +24,24 @@
     <td>
       {$lang_last_login}
     </td>
-    <td class='td_right'>
-      {$last_login}
+    <td>
+      {$u.last_login}
     </td>
   </tr>
   <tr>
     <td>
       {$lang_about_himself}
     </td>
-    <td class='td_right'>
-      {$user.description}
+    <td>
+      {$u.description}
     </td>
   </tr>
   <tr>
     <td>
       {$lang_contact}
     </td>
-    <td class='td_right'>
-      <a href='/mail/{$uid}/ajax' class="js-fancybox">{$lang_contact_via_mail}</a>
+    <td>
+      <a href='/mail/{$_request_id_}/ajax' class="js-fancybox">{$lang_contact_via_mail}</a>
     </td>
   </tr>
 </table>

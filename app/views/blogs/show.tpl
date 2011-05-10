@@ -109,7 +109,7 @@
   $(document).ready(function(){
     VideoJS.setupAllWhenReady();
     $(".js-fancybox").fancybox();
-    $(".image img").lazyload();
+    $(".image img").lazyload({ effect : "fadeIn" });
     $('.js-image').capty();
 
     if($('.js-toggle-headline')) {

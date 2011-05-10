@@ -48,7 +48,7 @@ define( 'LANG_GLOBAL_GALLERY', 'Galerie' );
 define( 'LANG_GLOBAL_IMAGE', 'Bild' );
 define( 'LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE', 'Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!' );
 define( 'LANG_GLOBAL_IN', 'in' );
-define( 'LANG_GLOBAL_KEYWORDS', 'Schlagworte' ); # TODO
+define( 'LANG_GLOBAL_KEYWORDS', 'Schlagworte' );
 define( 'LANG_GLOBAL_LAST_UPDATE', 'letzte Änderung' );
 define( 'LANG_GLOBAL_LOCATION', 'Ort' );
 define( 'LANG_GLOBAL_LOGIN', 'Login' );
@@ -112,21 +112,21 @@ define( 'LANG_SUCCESS_MAIL_SENT', 'E-Mail erfolgreich verschickt!' );
 # SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_TITLE_CREATE', 'Blogeintrag hinzufügen' );
 define( 'LANG_BLOG_TITLE_UPDATE', 'Editieren: %p' );
-define( 'LANG_BLOG_INFO_KEYWORDS', 'Gib die wichtigsten Schlagworte dieses Eintrags an.' ); #TODO
+define( 'LANG_BLOG_INFO_KEYWORDS', 'Gib die wichtigsten Schlagworte dieses Eintrags an.' );
 define( 'LANG_BLOG_INFO_TAG', 'Trenne Kategorien durch Komma u. Leerzeichen ("Tag, Tag2")' );
 define( 'LANG_BLOG_INFO_TEASER', 'Schreib einen Teaser um den Blogeintrag interessanter zu machen!' );
 define( 'LANG_COMMENT_INFO_EMAIL', 'Die E-Mail-Adresse wird nicht veröffentlicht.' );
 define( 'LANG_COMMENT_TITLE_CREATE', 'Kommentar hinzufügen' );
 define( 'LANG_COMMENT_TITLE_DESTROY', 'Kommentar löschen' );
-define( 'LANG_CONTENT_INFO_KEYWORDS', 'Gib die wichtigsten Schlagworte dieser Seite an.' ); #TODO
-define( 'LANG_CONTENT_INFO_TEASER', 'Schreib eine Zusammenfassung für die Suchmaschinen.' ); #TODO
+define( 'LANG_CONTENT_INFO_KEYWORDS', 'Gib die wichtigsten Schlagworte dieser Seite an.' );
+define( 'LANG_CONTENT_INFO_TEASER', 'Schreib eine Zusammenfassung für die Suchmaschinen.' );
 define( 'LANG_CONTENT_TITLE_UPDATE', '%p bearbeiten' );
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Album hinzufügen' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Editieren: %p' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Datei(en) auswählen' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Bild quadratisch zuschneiden' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Bild proportional verkleinern' );
-define( 'LANG_GALLERY_FILE_CREATE_SUCCESS', 'Datei(en) erfolgreich hochgeladen!' ); #TODO
+define( 'LANG_GALLERY_FILE_CREATE_SUCCESS', 'Datei(en) erfolgreich hochgeladen!' );
 define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Datei(en) hinzufügen' );
 define( 'LANG_GALLERY_FILE_UPDATE_TITLE', 'Datei bearbeiten' );
 define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.' );

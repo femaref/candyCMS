@@ -48,6 +48,7 @@ define( 'LANG_GLOBAL_GALLERY', 'Galeria' );
 define( 'LANG_GLOBAL_IMAGE', 'Imagem' );
 define( 'LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE', 'Clique para ampliar a imagem até px% W x H%.' );
 define( 'LANG_GLOBAL_IN', 'em' );
+define( 'LANG_GLOBAL_KEYWORDS', 'Palavras' );
 define( 'LANG_GLOBAL_KEYWORD', 'Palavra' );
 define( 'LANG_GLOBAL_LANGUAGE_SHORT_CODE', 'Language (short code)' );
 define( 'LANG_GLOBAL_LAST_UPDATE', 'Última actualização' );
@@ -113,17 +114,21 @@ define( 'LANG_SUCCESS_MAIL_SENT', 'E-mail foi enviado com sucesso!' );
 # SECTIONS AND SPECIAL FUNCTIONS
 define( 'LANG_BLOG_TITLE_CREATE', 'Criar um blog' );
 define( 'LANG_BLOG_TITLE_UPDATE', 'Update: %p' );
+define( 'LANG_BLOG_INFO_KEYWORDS', 'Please enter the most relevant keywords.' ); # TODO
 define( 'LANG_BLOG_INFO_TAG', 'Separe tags por vírgula e espaço, ou seja, "tag1, tag2"' );
 define( 'LANG_BLOG_INFO_TEASER', 'Escrever um teaser curto!' );
 define( 'LANG_COMMENT_INFO_EMAIL', 'Seu email não será publicado.' );
 define( 'LANG_COMMENT_TITLE_CREATE', 'Criar comentário' );
 define( 'LANG_COMMENT_TITLE_DESTROY', 'Excluir comentário' );
+define( 'LANG_CONTENT_INFO_KEYWORDS', 'Enter the most important keywords.' ); # TODO
+define( 'LANG_CONTENT_INFO_TEASER', 'Write a teaser for SEO.' ); # TODO
 define( 'LANG_CONTENT_TITLE_UPDATE', 'Update: %p' );
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Criar um álbum' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Update: %p' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Escolha arquivo (s)' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CUT', 'Recortar e redimensionar' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_RESIZE', 'Redimensionar apenas' );
+define( 'LANG_GALLERY_FILE_CREATE_SUCCESS', 'Files successfully uploaded!' ); # TODO
 define( 'LANG_GALLERY_FILE_CREATE_TITLE', 'Adicionar arquivo' );
 define( 'LANG_GALLERY_FILE_UPDATE_TITLE', 'Edite o arquivo' );
 define( 'LANG_MEDIA_FILE_CREATE_INFO', 'Verifique se o seu arquivo (s) são vírus verificados para evitar danos em seu servidor!' );

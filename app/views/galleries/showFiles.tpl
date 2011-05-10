@@ -30,7 +30,7 @@
     <ul class="js-caption">
       {foreach $files as $f}
         <li>
-          <a href='{$f.url_popup}' class="js-fancybox" rel="images">
+          <a href='{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.description}'>
             <img src='{$f.url_thumb}'
                  alt='{$f.description}'
                  title='{$f.description}'
@@ -56,6 +56,6 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
-    $(".js-image").lazyload({ threshold : 200 });
+    $(".js-image").lazyload({ threshold : 200, effect : "fadeIn" });
   });
 </script>
