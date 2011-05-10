@@ -69,8 +69,8 @@ abstract class Main {
 		$this->_oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->_oSmarty->assign('USER_SURNAME', USER_SURNAME);
     $this->_oSmarty->assign('VERSION', VERSION);
+    $this->_oSmarty->assign('WEBSITE_DESCRIPTION', LANG_WEBSITE_DESCRIPTION);
     $this->_oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
-    $this->_oSmarty->assign('WEBSITE_SLOGAN', LANG_WEBSITE_SLOGAN);
     $this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
     $this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
 
@@ -179,10 +179,17 @@ abstract class Main {
   }
 
   public function getDescription() {
-    if (!empty($this->_sDescription))
+    # If this is our landing page / start page, show default description
+    if(WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1 ,strlen($_SERVER['REQUEST_URI'])))
+      return LANG_WEBSITE_DESCRIPTION;
+    
+    # We got a description, so show it
+    elseif (!empty($this->_sDescription))
       return $this->_sDescription;
+    
+    # We got no description. Fall back to default description
     else
-      return LANG_WEBSITE_SLOGAN;
+      return LANG_WEBSITE_DESCRIPTION;
   }
 
   protected function _setKeywords($sKeywords) {

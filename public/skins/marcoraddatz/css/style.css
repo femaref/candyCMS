@@ -69,33 +69,6 @@ h3 {
   margin: 0px 3px 0px 3px;
 }
 
-#contact {
-  text-align: left;
-  padding: 20px 0px;
-}
-
-#contact img {
-  float: right;
-  margin-top: -18px;
-}
-
-#contact #about {
-  font-size: 150%;
-  padding: 0px;
-  color: #999999;
-  font-family: "Georgia";
-  font-style: italic;
-  text-align: left;
-}
-
-#contact a {
-  margin-right: 15px;
-}
-
-#contact p {
-  margin-bottom: 0px;
-}
-
 #body {
   border-top: 1px solid #CCCCCC;
   clear: both;
@@ -103,12 +76,12 @@ h3 {
   padding-top: 20px;
 }
 
-#footer {
+footer#footer {
   clear: both;
   padding-top: 10px;
 }
 
-#footer ul li {
+footer#footer ul li {
   margin: 0px 3px 0px 3px;
 }
 

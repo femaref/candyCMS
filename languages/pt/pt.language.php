@@ -9,7 +9,7 @@
 
 # Multilingual website title and slogan
 define( 'LANG_WEBSITE_TITLE', 'CandyCMS' );
-define( 'LANG_WEBSITE_SLOGAN', 'Free, fast and simple PHP CMS.' );
+define( 'LANG_WEBSITE_DESCRIPTION', 'Free, fast and simple PHP CMS.' );
 define( 'LANG_WEBSITE_KEYWORDS', 'PHP, CMS, Free CMS, Open Source CMS' );
 
 

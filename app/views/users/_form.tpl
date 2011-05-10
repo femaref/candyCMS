@@ -30,10 +30,10 @@
       <p>
         <label for='user_right'>{$lang_user_right}</label>
         <select name='user_right'>
-          <option value='1' {if $user_right == 1}selected='selectsed'{/if}>{$lang_user_right_1}</option>
-          <option value='2' {if $user_right == 2}selected='selectsed'{/if}>{$lang_user_right_2}</option>
-          <option value='3' {if $user_right == 3}selected='selectsed'{/if}>{$lang_user_right_3}</option>
-          <option value='4' {if $user_right == 4}selected='selectsed'{/if}>{$lang_user_right_4}</option>
+          <option value='1' {if $user_right == 1}selected{/if}>{$lang_user_right_1}</option>
+          <option value='2' {if $user_right == 2}selected{/if}>{$lang_user_right_2}</option>
+          <option value='3' {if $user_right == 3}selected{/if}>{$lang_user_right_3}</option>
+          <option value='4' {if $user_right == 4}selected{/if}>{$lang_user_right_4}</option>
         </select>
       </p>
     {/if}
@@ -58,7 +58,7 @@
         <input name='password_new2' type='password' />
       </p>
       <p class="center">
-        <input type='submit' class='inputbutton' value='{$lang_submit}' />
+        <input type='submit' value='{$lang_submit}' />
       </p>
     </div>
   {/if}

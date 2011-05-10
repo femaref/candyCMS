@@ -29,8 +29,7 @@ CREATE TABLE `comments` (
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `parent_id` (`parent_id`),
-  KEY `parent_category` (`parent_category`)
+  KEY `parent_id` (`parent_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
