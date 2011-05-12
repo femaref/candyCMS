@@ -80,7 +80,7 @@ final class Content extends Main {
 			$this->_oSmarty->assign('_request_id_', '');
 
 			# Create title
-			$aContent = array('title' => $sTitle, 'content' => $sContent);
+			$aContent = array('title' => $sTitle, 'content' => $sContent, 'teaser' => $sTeaser, 'keywords' => $sKeywords);
 			$this->_oSmarty->assign('c', $aContent);
 
 			# Language

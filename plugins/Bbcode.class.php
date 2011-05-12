@@ -129,36 +129,37 @@ final class Bbcode {
 											$sStr);
 		}
 
-		# [video width height]file[/video]
-		if (preg_match('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr)) {
-			preg_match_all('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis', $sStr, $aOutput);
+		# [video thumbnail]file[/video]
+		if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr)) {
+			preg_match_all('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aOutput);
 
 			# Get file name without extension
-			$sFile = trim($aOutput[3][0]);
+			$sFile = trim($aOutput[2][0]);
 			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
 
 			$sFile = substr($sFile, 0, $iExtensionLength);
 			$sFlashFile = $this->_getFlashVideo($sFile);
 
-			$sFlash = '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" class="vjs-flash-fallback">';
+			$sFlash = '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" class="vjs-flash-fallback">';
 			$sFlash .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
-			$sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;controlColor=0xffffff&amp;showTimecode=true" />';
+			$sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;controlColor=0xffffff&amp;showTimecode=true&amp;teaserURL=\1" />';
 			$sFlash .= '<param name="allowFullScreen" value="true" />';
 			$sFlash .= '</object>';
 
-			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls">';
+			$sVideo = '<video class="video-js" width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" poster="\1">';
 			$sVideo .= '<source src="' .$sFile. '.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="' .$sFile. '.webm" type="video/webm" />';
 			$sVideo .= '<source src="' .$sFile. '.ogv" type="video/ogg" />';
+      $sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
 			$sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
-			$sStr = preg_replace('#\[video ([0-9]+) ([0-9]+)\](.*)\[\/video]#Uis',
+			$sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis',
 											'<div class="video video-js-box">' . $sVideo . '</div>',
 											$sStr);
 		}
 
-		# [video width height thumb]file[/video]
+		# [video width height thumbnail]file[/video]
 		if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr)) {
 			preg_match_all('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aOutput);
 
@@ -173,7 +174,6 @@ final class Bbcode {
 			$sFlash .= '<param name="movie" value="%PATH_PUBLIC%/lib/nonverblaster/NonverBlaster.swf" />';
 			$sFlash .= '<param name="FlashVars" value="mediaURL=' . $sFlashFile . '&amp;teaserURL=\3&amp;controlColor=0xffffff&amp;showTimecode=true" />';
 			$sFlash .= '<param name="allowFullScreen" value="true" />';
-			$sFlash .= '<img src="\3" width="\1" height="\2" alt="\3" />';
 			$sFlash .= '</object>';
 
 			$sVideo = '<video class="video-js" width="\1" height="\2" controls="controls" poster="\3">';

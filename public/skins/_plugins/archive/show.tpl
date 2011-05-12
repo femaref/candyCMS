@@ -16,11 +16,10 @@
     {/foreach}
   </ul>
 </section>
-{literal}
-  <script type="text/javascript">
-    var myAccordion = new Fx.Accordion($$('.js-archive_month'), $$('.js-archive_entries'), {
-      display: -1,
-      alwaysHide: true
+<script type="text/javascript">
+  if($('.js-archive_month')) {
+    $('.js-archive_month').click(function(){
+      $(this).next().toggle();
     });
-  </script>
-{/literal}
+  };
+</script>

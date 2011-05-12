@@ -16,7 +16,7 @@
           {/if}
         </h1>
         <p>
-          <time datetime="2009-06-29T23:31+01:00">
+          <time datetime="{$c.date_w3c}">
             {$lang_last_update}: {$c.datetime}
           </time>
           {$lang_by}
@@ -62,16 +62,11 @@
   </section>
   <script src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script src='%PATH_PUBLIC%/js/core/jquery.ImageOverlay{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       VideoJS.setupAllWhenReady();
       $(".js-fancybox").fancybox();
-
-      $('.js-image_overlay').ImageOverlay({
-        overlay_speed: 'fast',
-        overlay_speed_out: 'slow'
-      });
-    });
+      $('.js-image').capty();
   </script>
 {/if}
