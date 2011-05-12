@@ -32,7 +32,8 @@ class Model_Search extends Model_Main {
           $this->_aData[$sTable][$iId] = array(
               'id'      => $aRow['id'],
               'title'   => Helper::formatOutput($aRow['title']),
-              'date'    => Helper::formatTimestamp($aRow['date'])
+              'date'    => Helper::formatTimestamp($aRow['date'], true),
+              'datetime'=> Helper::formatTimestamp($aRow['date'])
           );
         }
       }
