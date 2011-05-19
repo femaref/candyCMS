@@ -1,12 +1,12 @@
 <form method='post'>
   <h1>{$lang_login}</h1>
   <p {if isset($error_email)}class="error"{/if}>
-    <label for="name">{$lang_email} *</label>
-    <input name='email' type='text' id='email' value='' autofocus required />
+    <label for="email">{$lang_email} *</label>
+    <input name='email' type='text' autofocus required />
   </p>
   <p {if isset($error_password)}class="error"{/if}>
     <label for='password'>{$lang_password} *</label>
-    <input name='password' type='password' id='password' value='' required />
+    <input name='password' type='password' required />
   </p>
   <p class="center">
     <a href='/session/resendpassword'>{$lang_lost_password}</a>
