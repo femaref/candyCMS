@@ -11,7 +11,7 @@
     <p>{$lang_no_entries}</p>
   </div>
 {else}
-  <section>
+  <section id="blog">
     {foreach $blog as $b}
       {if !$b.id}
         <div class='error' id='js-error' title='{$lang_missing_entry}'>
@@ -92,7 +92,7 @@
               </a>
             </div>
             <div class="facebook_like">
-              <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false"></fb:like>
+              <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
             </div>
           </footer>
         </article>

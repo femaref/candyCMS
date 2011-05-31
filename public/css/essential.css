@@ -1,51 +1,51 @@
-/* show loading button not directly next to elements */
-.js-loading {
-  margin: 20px;
-}
-
 /* count down remaining chars at blog entry */
-#js-chars {
+span#js-chars {
   color: #666;
   margin-left: 10px;
 }
 
 /* Hide toggle on load */
-.js-toggle-element {
+span.js-toggle-element {
   display:none;
 }
 
 /* Success and error Messages */
-.success, .error, .notice {
+div.success,
+div.error,
+div.notice {
   margin: 0px 0px 10px 0px;
   padding: 10px;
   cursor:pointer;
 }
 
-.success p, .notice p, .error p {
+div.success p,
+div.notice p,
+div.error p {
   margin: 0px;
 }
 
-.success h4, .notice h4 {
+div.success h4,
+div.notice h4 {
   display: none;
 }
 
-.success {
+div.success {
   border: 1px solid #41a62a;
   background: #cbe472;
 }
 
-.notice {
+div.notice {
   border: 1px solid #FFD324;
   background: #FFF6BF;
 }
 
-.error {
+div.error {
   background:#EED0D0 !important; /* Override .row1 and .row2 */
   color:#333;
   border:1px solid red;
 }
 
-.error h4 {
+div.error h4 {
   font-size:125%;
   margin: 0px;
 }
@@ -56,27 +56,25 @@ pre {
   background: #eee;
 }
 
-.center {
+div.center {
   text-align:center;
 }
 
-.left {
+div.left {
   text-align: left;
 }
 
-.right {
+div.right {
   text-align: right;
 }
 
-.pointer, .js-toggle-headline:hover, .copybox:hover {
+img.pointer,
+span.js-toggle-headline:hover,
+input.copybox:hover {
   cursor: pointer;
 }
 
-.nom {
-  margin: 0px !important;
-}
-
-.copybox {
+input.copybox {
   display: block;
   font-size: 80%;
   border: none;
@@ -109,7 +107,7 @@ form label {
   vertical-align: middle;
 }
 
-form .description {
+form span.description {
   font-size: 90%;
   display: block;
 }
@@ -132,11 +130,12 @@ form textarea {
   height: 100px;
 }
 
-form #recaptcha_widget_div {
+form div#recaptcha_widget_div {
   margin-left:167px;
 }
 
-form input[type="reset"], form input[type="button"] {
+form input[type="reset"],
+form input[type="button"] {
   margin-left: 5px;
 }
 

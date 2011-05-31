@@ -80,7 +80,7 @@ nav ul li.right {
 }
 
 /* Footer at end of page. Got an ID because of conflicts with other footers */
-#footer {
+footer#footer {
   display: table;
   margin-top: 25px;
   padding-top: 25px;
@@ -88,111 +88,122 @@ nav ul li.right {
   width: 100%;
 }
 
-#footer section {
+footer#footer section {
   display: table-cell;
   width: 50%;
 }
 
-#footer ul {
+footer#footer ul {
   list-style: none;
   padding: 0px;
 }
 
-#create_mail {
+form#create_mail {
   width:600px;
 }
 
 /* Main content area */
-#content {
+div#content {
   display: table;
   width: 100%;
 }
 
 /* pagination */
-#content .pages {
+div#content section.pages {
   text-align: center;
 }
 
-#content .pages span {
+div#content section.pages span {
   border:1px solid #ababab;
   padding:5px;
   margin:1px;
 }
 
-#content .pages a {
+div#content section.pages a {
   padding:5px;
 }
 
 /* Add / edit content links */
-#content p a img, #content .pages a img, .js-toggle-headline img {
+div#content p a img,
+div#content section.pages a img,
+span.js-toggle-headline img {
   vertical-align: bottom;
 }
 
 /* blog and content pages */
-.blogs, .contents, .gallery_albums {
+section#blog article.blogs,
+section#content article.contents,
+section#gallery article.gallery_albums {
   clear: both;
   text-align: justify;
 }
 
-.blogs header, .contents header {
+section#blog article.blogs header,
+section#content article.contents header {
   margin-bottom: 10px;
 }
 
-.blogs header p, .contents header p, .gallery_albums p {
+section#blog article.blogs header p,
+section#content article.contents header p,
+section.gallery_albums p {
   margin: 0px;
 }
 
-.blogs footer {
+section#blog article.blogs footer {
   margin: 0px auto 50px auto;
 }
 
-.blogs details summary {
+section#blog article.blogs details summary {
   font-weight: bold;
   margin-bottom: 10px;
   font-size: 110%;
 }
 
-.blogs footer .share, .contents footer .share {
+section#blog article.blogs footer div.share,
+section#content article footer div.share {
   float: left;
 }
 
-.blogs footer .share img, .contents footer .share img, .blogs footer .comments img {
+section#blog article.blogs footer div.share img,
+section#content article footer div.share img, 
+section article.blogs footer div.comments img {
   vertical-align: bottom;
   margin: 0px 1px;
 }
 
-.blogs footer .comments {
+section#blog article.blogs footer div.comments {
   float: right;
 }
 
-.blogs iframe {
+section#blog article.blogs iframe, 
+section#content article.contents iframe {
   display:block;
   margin-top: 10px;
 }
 
-.gallery_albums {
-  text-align: left;
-}
-
-.gallery header {
+section#gallery header {
   font-size: 90%;
 }
 
-.gallery_albums article details img {
+section#gallery article.gallery_albums {
+  text-align: left;
+}
+
+section#gallery article.gallery_albums details img {
   border: 1px solid #ccc;
 }
 
 /* Comments */
-#comments header {
+section#comments header {
   padding-top: 22px;
 }
 
-#comments a {
+section#comments a {
   font-weight: bold;
   color: #000;
 }
 
-#comments article {
+section#comments article {
   display: table;
   padding: 22px;
   width: 90%;
@@ -200,7 +211,7 @@ nav ul li.right {
   text-align:left;
 }
 
-#comments .from_author {
+section#comments article.from_author {
   background: #E3E3E3;
   border: 1px solid #d7d7d7;
   -moz-border-radius: 10px;
@@ -208,46 +219,39 @@ nav ul li.right {
   border-radius: 10px;
 }
 
-#comments article header {
+section#comments article header {
   display: table-cell;
   width: 235px;
   padding: 0px 22px 0px 0px;
 }
 
-#comments article header img {
+section#comments article header img {
   float:left;
   margin-right: 10px;
 }
 
-#comments article header .count {
+section#comments article header a.count {
   font-size: 24px;
   color: #CCCCCC;
   width: 50px;
   float:left;
 }
 
-#comments article header a:hover {
+section#comments article header a:hover {
   text-decoration: none;
 }
 
-#comments article p {
+section#comments article p {
   padding: 0;
 }
 
-#comments article footer {
+section#comments article footer {
   padding: 0;
   text-align: right;
 }
 
-/* gallery */
-/* Show loading images at gallery only
-#gallery_images .image {
-  padding:5px;
-  background: #efefef url('../images/loading.gif') no-repeat center;
-} */
-
 /* quotes */
-blockquote, .box {
+blockquote, div.box {
   padding:15px;
   margin:10px auto 10px auto;
   text-align:left;
@@ -262,12 +266,12 @@ blockquote h3 {
 }
 
 /* highlight a word in a text */
-.highlight {
+span.highlight {
   background: #FFD324;
   padding: 2px;
 }
 
-.video, .audio, .vjs-flash-fallback {
+div.video, div.audio, div.vjs-flash-fallback {
   text-align: center;
 }
 

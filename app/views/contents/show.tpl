@@ -3,7 +3,7 @@
     <p>{$lang_missing_entry}</p>
   </div>
 {else}
-  <section>
+  <section id="content">
     <article class="contents">
       <header>
         <h1>
@@ -55,7 +55,7 @@
           </a>
         </div>
         <div class="facebook_like">
-          <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false"></fb:like>
+          <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false" send="true"></fb:like>
         </div>
       </footer>
     </article>
