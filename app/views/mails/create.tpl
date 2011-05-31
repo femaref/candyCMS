@@ -1,3 +1,4 @@
+<!-- TODO: Change ID to mail -->
 <form method='post' action='/mail/{$_request_id_}' id="create_mail">
   <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
   <p {if isset($error_email)}class="error"{/if}>

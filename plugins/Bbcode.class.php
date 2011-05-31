@@ -201,6 +201,14 @@ final class Bbcode {
 											"<span class='js-toggle-headline'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>",
 											$sStr);
 		}
+    
+    
+    # Fix quote bug and allow these tags only
+    $sStr = str_replace("&lt;blockquote&gt;", "<blockquote>", $sStr);
+    $sStr = str_replace("&lt;/blockquote&gt;", "</blockquote>", $sStr);
+    $sStr = str_replace("&lt;h3&gt;", "<h3>", $sStr);
+    $sStr = str_replace("&lt;/h3&gt;", "</h3>", $sStr);
+
 
 		return $sStr;
 	}

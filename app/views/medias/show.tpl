@@ -1,4 +1,4 @@
-<section>
+<section id="media">
   {if $USER_RIGHT >= 3}
     <p class="center">
       <a href='/media/create'>

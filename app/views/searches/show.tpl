@@ -1,4 +1,4 @@
-<section>
+<section id="search">
   <h1>{$lang_headline}</h1>
   {foreach $tables as $table}
     <h2>{$table.title}</h2>

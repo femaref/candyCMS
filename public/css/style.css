@@ -251,13 +251,11 @@ section#comments article footer {
 }
 
 /* quotes */
-blockquote, div.box {
-  padding:15px;
-  margin:10px auto 10px auto;
+blockquote {
+  padding:0px 15px;
+  margin:10px auto;
   text-align:left;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  border-left:5px solid #eee;
 }
 
 blockquote h3 {

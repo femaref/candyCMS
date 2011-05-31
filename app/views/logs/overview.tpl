@@ -1,4 +1,4 @@
-<section>
+<section id="log">
   <h1>{$lang_headline}</h1>
   <div id="js-logs">
     <table>

@@ -56,15 +56,18 @@ pre {
   background: #eee;
 }
 
-div.center {
+div.center,
+p.center {
   text-align:center;
 }
 
-div.left {
+div.left,
+p.left {
   text-align: left;
 }
 
-div.right {
+div.right,
+p.right {
   text-align: right;
 }
 
