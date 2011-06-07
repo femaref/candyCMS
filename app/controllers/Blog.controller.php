@@ -1,8 +1,6 @@
 <?php
 
 /*
- * This software is licensed under GPL <http://www.gnu.org/licenses/gpl.html>.
- *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
@@ -60,8 +58,12 @@ class Blog extends Main {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
         return $this->_removeHighlight($this->_aData[1]['teaser']);
 
-      else
+      elseif (isset($this->_aData[1]['title']))
         return $this->_removeHighlight($this->_aData[1]['title']);
+
+      else
+        return $this->_setBlogTitle();
+
     } else
       return LANG_GLOBAL_BLOG;
   }
@@ -122,7 +124,7 @@ class Blog extends Main {
 		# Create blog
 		else {
 			$sContent		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-			$iKeywords = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+			$iKeywords  = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
 			$iPublished = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
 			$sTags			= isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
 			$sTeaser		= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';

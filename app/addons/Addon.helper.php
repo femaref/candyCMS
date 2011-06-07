@@ -1,8 +1,6 @@
 <?php
 
 /*
- * This software is licensed under GPL <http://www.gnu.org/licenses/gpl.html>.
- *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
@@ -40,17 +38,19 @@ final class Addon extends Section {
 
         break;
 
-      # This is a sample addon to display your projects
+      # This is a sample addon to display your projects and can be removed
       case 'projects':
 
         $oProjects = new Addon_Projects($this->_aRequest, $this->_aSession, $this->_aFile);
 
         parent::_setContent($oProjects->show());
-        parent::_setTitle('Projekte');
+        parent::_setDescription('My description');
+        parent::_setKeywords('Keyword,Keyword,Keyword');
+        parent::_setTitle('My new title');
 
         break;
 
-      # Enter your addon information here
+      # Enter your addons here
     }
   }
 }
