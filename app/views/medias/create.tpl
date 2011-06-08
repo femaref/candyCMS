@@ -6,7 +6,7 @@
   </p>
   <p>
     <label for='rename'>{$lang_file_rename}</label>
-    <input type='text' name='rename' onkeyup="this.value = stripNoAlphaChars(this.value)" />
+    <input type='text' name='rename' onkeyup="this.value = candy.system.stripNoAlphaChars(this.value)" />
     <span class='description'>{$lang_file_create_info}</span>
   </p>
   <p class="center">
@@ -21,7 +21,9 @@
     }
   });
 
-  $("input[type='submit']").click(function() {
-    $(this).val(LANG_LOADING).attr('disabled',true);
-  });
+  if(!$.browser.opera) {
+    $("input[type='submit']").click(function() {
+      $(this).val(LANG_LOADING).attr('disabled',true);
+    });
+  }
 </script>

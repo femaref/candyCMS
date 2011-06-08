@@ -6,7 +6,9 @@ var candy = candy || {};
   candy.system = {
     show: show,
     hide: hide,
-    quote: quote
+    quote: quote,
+    stripNoAlphaChars: stripNoAlphaChars,
+    stripSlash: stripSlash
   }
 
   function show(sDivId) {
