@@ -1,12 +1,16 @@
 CandyCMS
 ========================================================================================================================
 
-CandyCMS is a small and leightweight PHP-Framework with main focus on usability, speed (98 points at ySlow) and security.
+What is CandyCMS?
+------------------------------------------------------------------------------------------------------------------------
+
+CandyCMS is a modern, small and leightweight PHP-Framework with main focus on usability, speed (98 points at ySlow) and security.
 
 Its main functions are:
+
 - a blog that supports tags, comments, RSS and full social media integration
 - content pages
-- a gallery with multiple file upload (HTML5) and Media RSS
+- a gallery with multiple file upload (based on HTML5) and Media RSS
 - user management
 - file management
 - newsletter management
@@ -16,10 +20,10 @@ Its main functions are:
 Additional reasons, why CandyCMS might be interessting for you
 ------------------------------------------------------------------------------------------------------------------------
 - easy internationalization and localization
-- WYSIWYG-Editor (TinyMCE - http://tinymce.moxiecode.com/) and support of BB-Code
-- uses the Smarty template engine and lots of HTML5 (http://smarty.org)
-- supports CAPTCHAs (http://recaptcha.org)
-- object oriented programming and use of MVC
+- WYSIWYG-Editor ([TinyMCE](http://tinymce.moxiecode.com/) and support of [BB-Code](https://github.com/marcoraddatz/candyCMS/wiki/BBCode)
+- uses the [Smarty template engine](http://smarty.org) and lots of HTML5
+- supports [reCAPTCHA](http://recaptcha.org)
+- completly object oriented and use of MVC
 - easy to use addons or modify
 - supports skins
 - clean URLs due to mod_rewrite
@@ -30,7 +34,7 @@ Additional reasons, why CandyCMS might be interessting for you
 
 Requirements
 ------------------------------------------------------------------------------------------------------------------------
-- PHP 5.1 & PDO supported database (http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html#2)
+- PHP 5.1 & [PDO supported database](http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html#2)
 - Imagemagick, GD2 Support and mod_rewrite
 - an account at http://recaptcha.org to use captchas
 - about 5MB webspace
