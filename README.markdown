@@ -20,7 +20,7 @@ Its main functions are:
 Additional reasons, why CandyCMS might be interessting for you
 ------------------------------------------------------------------------------------------------------------------------
 - easy internationalization and localization
-- WYSIWYG-Editor ([TinyMCE](http://tinymce.moxiecode.com/) and support of [BB-Code](https://github.com/marcoraddatz/candyCMS/wiki/BBCode)
+- WYSIWYG-Editor ([TinyMCE](http://tinymce.moxiecode.com/)) and support of [BB-Code](https://github.com/marcoraddatz/candyCMS/wiki/BBCode)
 - uses the [Smarty template engine](http://smarty.org) and lots of HTML5
 - supports [reCAPTCHA](http://recaptcha.org)
 - completly object oriented and use of MVC
