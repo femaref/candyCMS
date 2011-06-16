@@ -162,22 +162,24 @@ define( 'LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL', 'Clique aqui para enviar
 define( 'LANG_USER_SHOW_USER_LABEL_DESCRIPTION', 'Sobre %u' );
 define( 'LANG_USER_SHOW_USER_LABEL_LAST_LOGIN', 'Último login' );
 define( 'LANG_USER_SHOW_USER_REGISTERED_SINCE', 'Registrado desde' );
-define( 'LANG_USER_UPDATE_GRAVATAR_INFO', 'Se marcada, vamos procurar automaticamente <a href="http://gravatar.com" target="_blank">Gravatar.com</a> para um avatar de você.' );
+define( 'LANG_USER_UPDATE_ACCOUNT_INFO', 'Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.' );
+define( 'LANG_USER_UPDATE_ACCOUNT_TITLE', 'Delete account' );
+define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Você só é permitido fazer upload imagens menos de 400KB.' );
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHANGE', 'Altera avatar?' );
 define( 'LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE', 'Escolha a imagem' );
+define( 'LANG_USER_UPDATE_IMAGE_LABEL_TERMS', 'Estou autorizado a fazer upload dessa imagem e não vai entrar em conflito com outros direitos de autor.' );
 define( 'LANG_USER_UPDATE_IMAGE_TITLE', 'Enviar imagem' );
-define( 'LANG_USER_UPDATE_IMAGE_INFO', 'Você só é permitido fazer upload imagens menos de 400KB.' );
-define( 'LANG_USER_UPDATE_LABEL_DESCRIPTION', 'Descreva-se' );
-define( 'LANG_USER_UPDATE_LABEL_GRAVATAR', 'Use Gravatar?' );
-define( 'LANG_USER_UPDATE_LABEL_NEWSLETTER', 'Assine a newsletter?' );
-define( 'LANG_USER_UPDATE_LABEL_PASSWORD_CHANGE', 'Alterar senha' );
-define( 'LANG_USER_UPDATE_LABEL_PASSWORD_NEW', 'Nova senha' );
-define( 'LANG_USER_UPDATE_LABEL_PASSWORD_OLD', 'A senha antiga' );
-define( 'LANG_USER_UPDATE_LABEL_PERSONAL_DATA', 'Personal data' ); #TODO
-define( 'LANG_USER_UPDATE_LABEL_SUBMIT', 'Atualize seu perfil' );
-define( 'LANG_USER_VERIFICATION_SUCCESSFUL', 'Obrigado. Seu e-mail foi verificado!' );
-define( 'LANG_USER_UPDATE_LABEL_TERMS', 'Estou autorizado a fazer upload dessa imagem e não vai entrar em conflito com outros direitos de autor.' );
+define( 'LANG_USER_UPDATE_PASSWORD_TITLE', 'Alterar senha' );
+define( 'LANG_USER_UPDATE_PASSWORD_LABEL_NEW', 'Nova senha' );
+define( 'LANG_USER_UPDATE_PASSWORD_LABEL_OLD', 'A senha antiga' );
 define( 'LANG_USER_UPDATE_TITLE', 'Atualize seu perfil' );
+define( 'LANG_USER_UPDATE_USER_GRAVATAR_INFO', 'Se marcada, vamos procurar automaticamente <a href="http://gravatar.com" target="_blank">Gravatar.com</a> para um avatar de você.' );
+define( 'LANG_USER_UPDATE_USER_LABEL_DESCRIPTION', 'Descreva-se' );
+define( 'LANG_USER_UPDATE_USER_LABEL_GRAVATAR', 'Use Gravatar?' );
+define( 'LANG_USER_UPDATE_USER_LABEL_NEWSLETTER', 'Assine a newsletter?' );
+define( 'LANG_USER_UPDATE_USER_LABEL_SUBMIT', 'Atualize seu perfil' );
+define( 'LANG_USER_UPDATE_USER_TITLE', 'Personal data' ); #TODO
+define( 'LANG_USER_VERIFICATION_SUCCESSFUL', 'Obrigado. Seu e-mail foi verificado!' );
 
 
 # MAIL CONTENT GLOBAL

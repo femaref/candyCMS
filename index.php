@@ -68,6 +68,7 @@ $aUser = & $oIndex->getActiveUser();
 
 # Check whether we use facebook or CMS data
 define('USER_ID', (int) $aUser['id']);
+define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');
 
 # If we use the facebook plugin and are not logged in, fetch user data
 if(USER_ID == 0) {

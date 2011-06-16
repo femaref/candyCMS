@@ -140,32 +140,33 @@ class User extends Main {
     $this->_oSmarty->assign('style', 'display:none');
 
     # Language
-    $this->_oSmarty->assign('lang_about_you', LANG_USER_UPDATE_LABEL_DESCRIPTION);
-    $this->_oSmarty->assign('lang_headline', LANG_USER_UPDATE_TITLE);
-    $this->_oSmarty->assign('lang_image_agreement', LANG_USER_UPDATE_LABEL_TERMS);
+    $this->_oSmarty->assign('lang_account_title', LANG_USER_UPDATE_ACCOUNT_TITLE);
+    $this->_oSmarty->assign('lang_account_info', LANG_USER_UPDATE_ACCOUNT_INFO);
     $this->_oSmarty->assign('lang_image_change', LANG_USER_UPDATE_IMAGE_LABEL_CHANGE);
     $this->_oSmarty->assign('lang_image_choose', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
     $this->_oSmarty->assign('lang_image_headline', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
-    $this->_oSmarty->assign('lang_image_gravatar_info', LANG_USER_UPDATE_GRAVATAR_INFO);
+    $this->_oSmarty->assign('lang_image_terms', LANG_USER_UPDATE_IMAGE_LABEL_TERMS);
     $this->_oSmarty->assign('lang_image_upload', LANG_USER_UPDATE_IMAGE_TITLE);
     $this->_oSmarty->assign('lang_image_upload_info', LANG_USER_UPDATE_IMAGE_INFO);
-    $this->_oSmarty->assign('lang_newsletter', LANG_USER_UPDATE_LABEL_NEWSLETTER);
-    $this->_oSmarty->assign('lang_password_change', LANG_USER_UPDATE_LABEL_PASSWORD_CHANGE);
-    $this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_LABEL_PASSWORD_NEW);
-    $this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_LABEL_PASSWORD_OLD);
+    $this->_oSmarty->assign('lang_password_change', LANG_USER_UPDATE_PASSWORD_TITLE);
+    $this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
+    $this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
     $this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
-    $this->_oSmarty->assign('lang_personal_data', LANG_USER_UPDATE_LABEL_PERSONAL_DATA);
-    $this->_oSmarty->assign('lang_submit', LANG_USER_UPDATE_LABEL_SUBMIT);
-    $this->_oSmarty->assign('lang_use_gravatar', LANG_USER_UPDATE_LABEL_GRAVATAR);
+    $this->_oSmarty->assign('lang_user_description', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION);
+    $this->_oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
+    $this->_oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
+    $this->_oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);
+    $this->_oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
+    $this->_oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('users/_form');
     return $this->_oSmarty->fetch('users/_form.tpl');
   }
 
 	private function _createAvatar() {
-    $iAgreement = isset($this->_aRequest['agreement']) ? 1 : 0;
+    $iTerms = isset($this->_aRequest['terms']) ? 1 : 0;
 
-    if ($iAgreement == false)
+    if ($iTerms == false)
       return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD) .
 				$this->_showFormTemplate();
 
@@ -224,7 +225,18 @@ class User extends Main {
 
 	# @Override
 	public function destroy() {
-    if (USER_RIGHT == 4) {
+    # We are a user and want to delete our account
+    if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
+      if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
+        if ($this->_oModel->destroy($this->_iId) === true)
+          return Helper::successMessage(LANG_SUCCESS_DESTROY, '/start');
+        else
+          return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
+      } else
+        return Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
+
+      # We are admin and can delete users
+    } elseif (USER_RIGHT == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
@@ -233,7 +245,7 @@ class User extends Main {
         return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/start');
   }
 
   # @ Override due registration (avoid user right level 3)

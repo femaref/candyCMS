@@ -1,5 +1,5 @@
 <form method='post' action='/user/{$uid}/update'>
-  <h2><a href="#">1. {$lang_personal_data}</a></h2>
+  <h2><a href="#">1. {$lang_user_title}</a></h2>
   <div>
     <p {if isset($error_name)}class="error"{/if}>
       <label for='name'>{$lang_name} *</label>
@@ -14,16 +14,16 @@
       <input name='email' value='{$email}' type='email' required />
     </p>
     <p>
-      <label for='use_gravatar'>{$lang_use_gravatar}</label>
+      <label for='use_gravatar'>{$lang_user_gravatar}</label>
       <input type='checkbox' name='use_gravatar' />
-      <span class="description">{$lang_image_gravatar_info}</span>
+      <span class="description">{$lang_user_gravatar_info}</span>
     </p>
     <p>
-      <label for='description'>{$lang_about_you}</label>
+      <label for='description'>{$lang_user_description}</label>
       <textarea name='description' rows='6' cols='30'>{$description}</textarea>
     </p>
     <p>
-      <label for='receive_newsletter'>{$lang_newsletter}</label>
+      <label for='receive_newsletter'>{$lang_user_newsletter}</label>
       <input name='receive_newsletter' value='1' type='checkbox' {if $receive_newsletter == 1}checked='checked'{/if} />
     </p>
     {if $USER_RIGHT === 4 && $USER_ID !== $uid}
@@ -39,7 +39,7 @@
     {/if}
     <p class="center">
       <input type='hidden' value='formdata' name='update_user' />
-      <input type='submit' class='inputbutton' value='{$lang_submit}' />
+      <input type='submit' value='{$lang_user_submit}' />
     </p>
   </div>
   {if $USER_ID === $uid}
@@ -58,7 +58,7 @@
         <input name='password_new2' type='password' />
       </p>
       <p class="center">
-        <input type='submit' value='{$lang_submit}' />
+        <input type='submit' value='{$lang_password_change}' />
       </p>
     </div>
   {/if}
@@ -72,8 +72,8 @@
       <span class="description">{$lang_image_upload_info}</span>
     </p>
     <p>
-      <label for='agreement'>{$lang_image_agreement}</label>
-      <input type='checkbox' name='agreement' value='1' />
+      <label for='terms'>{$lang_image_terms}</label>
+      <input type='checkbox' name='terms' value='1' />
     </p>
     <p class="center">
       <input type='submit' value='{$lang_image_upload}' />
@@ -82,6 +82,24 @@
     </p>
   </div>
 </form>
+{if $USER_RIGHT < 4}
+  <form enctype='multipart/form-data' method='post' action='/user/{$uid}/destroy'>
+    <h2><a href="#">4. {$lang_account_title}</a></h2>
+    <div>
+      <div class="error">
+        {$lang_account_info}
+      </div>
+      <p>
+        <label for='password'>{$lang_password}</label>
+        <input name='password' type='password' />
+      </p>
+      <p class="center">
+        <input type='submit' value='{$lang_account_title}' />
+        <input type='hidden' value='formdata' name='destroy_user' />
+      </p>
+    </div>
+  </form>
+{/if}
 <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){

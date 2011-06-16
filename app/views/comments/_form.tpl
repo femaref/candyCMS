@@ -17,7 +17,7 @@
     {/if}
   </p>
   <p>
-    <label for="name">{$lang_email}</label>
+    <label for="email">{$lang_email}</label>
     {if $USER_EMAIL}
       {$USER_EMAIL}
       {if $USER_FACEBOOK_ID}
