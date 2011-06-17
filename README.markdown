@@ -4,7 +4,7 @@ CandyCMS
 What is CandyCMS?
 ------------------------------------------------------------------------------------------------------------------------
 
-CandyCMS is a modern, small and leightweight PHP-Framework with main focus on usability, speed (98 points at ySlow) and security.
+CandyCMS is a modern, small and lightweight PHP-Framework with main focus on usability, speed (98 points at ySlow) and security.
 
 Its main functions are:
 
@@ -23,7 +23,7 @@ Additional reasons, why CandyCMS might be interessting for you
 - WYSIWYG-Editor ([TinyMCE](http://tinymce.moxiecode.com/)) and support of [BB-Code](https://github.com/marcoraddatz/candyCMS/wiki/BBCode)
 - uses the [Smarty template engine](http://smarty.org) and lots of HTML5
 - supports [reCAPTCHA](http://recaptcha.org)
-- completly object oriented and use of MVC
+- completely object oriented and use of MVC
 - easy to use addons or modify
 - supports skins
 - clean URLs due to mod_rewrite
