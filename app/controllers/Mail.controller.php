@@ -20,7 +20,7 @@ class Mail extends Main {
 
   public function create() {
     if( isset($this->_aRequest['send_mail']) ) {
-      if( USER_RIGHT == 0 )
+      if( USER_RIGHT == 0 && RECAPTCHA_ENABLED == true )
         return $this->_checkCaptcha();
       else
         return $this->_standardMail(false);
@@ -31,7 +31,7 @@ class Mail extends Main {
     }
   }
 
-  protected function _showCreateMailTemplate($bShowCaptcha = true) {
+  protected function _showCreateMailTemplate($bShowCaptcha) {
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
       $sEmail = (string)$this->_aRequest['email'];
@@ -93,7 +93,7 @@ class Mail extends Main {
       else {
         #$this->_sRecaptchaError   = $this->_oRecaptchaResponse->error;
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
-        return $this->_showCreateMailTemplate();
+        return $this->_showCreateMailTemplate(true);
       }
     }
     else

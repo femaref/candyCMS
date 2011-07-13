@@ -152,6 +152,12 @@ define('RANDOM_HASH', 'h7da87@#asd0io08');
 # To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
 # register yourself and get an account
 
+# ------------------------------------------------------------------------------
+
+# Do you want to use a captcha? ReCaptcha account required!
+# DEFAULT: true
+define('RECAPTCHA_ENABLED', true);
+
 # Enter given public key:
 define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
 
