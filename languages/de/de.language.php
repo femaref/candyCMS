@@ -182,9 +182,10 @@ define( 'LANG_USER_VERIFICATION_SUCCESSFUL', 'Vielen Dank für die Bestätigung 
 
 # MAIL CONTENT GLOBAL
 define( 'LANG_MAIL_GLOBAL_NO_REPLY', '<p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>' );
+define( 'LANG_MAIL_GLOBAL_SENT_TITLE', 'Nachricht wurde erfolgreich verschickt.' );
+define( 'LANG_MAIL_GLOBAL_SENT_INFO', 'Du wirst in 15 Sekunden auf die Startseite weitergeleitet.' );
 define( 'LANG_MAIL_GLOBAL_SIGNATURE', '<p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>' );
 define( 'LANG_MAIL_GLOBAL_SUBJECT_BY', 'Neue Nachricht von %u' );
-define( 'LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL', 'Deine E-Mail Adresse' );
 
 
 # MAIL CONTENT BY SECTION

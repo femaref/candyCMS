@@ -6,8 +6,8 @@
 */
 
 require_once 'app/models/Blog.model.php';
-require_once 'lib/recaptcha/recaptchalib.php';
 require_once 'app/controllers/User.controller.php';
+require_once 'lib/recaptcha/recaptchalib.php';
 
 class Mail extends Main {
   protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
@@ -19,8 +19,8 @@ class Mail extends Main {
   public function __init() {}
 
   public function create() {
-    if( isset($this->_aRequest['send_mail']) ) {
-      if( USER_RIGHT == 0 && RECAPTCHA_ENABLED == true )
+    if (isset($this->_aRequest['send_mail'])) {
+      if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
         return $this->_checkCaptcha();
       else
         return $this->_standardMail(false);
@@ -55,11 +55,9 @@ class Mail extends Main {
     $this->_oSmarty->assign('email', $sEmail);
     $this->_oSmarty->assign('subject', $sSubject);
 
-    if( $bShowCaptcha == true )
-      $this->_oSmarty->assign('_captcha_', recaptcha_get_html(	$this->_sRecaptchaPublicKey, $this->_sRecaptchaError) );
-
-		else
-      $this->_oSmarty->assign('_captcha_', '');
+    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
+      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
+                      $this->_sRecaptchaError));
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
@@ -71,7 +69,7 @@ class Mail extends Main {
     $this->_setTitle(LANG_GLOBAL_CONTACT);
 
     # Language
-    $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
+    $this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
@@ -91,7 +89,6 @@ class Mail extends Main {
         return $this->_standardMail(true);
 
       else {
-        #$this->_sRecaptchaError   = $this->_oRecaptchaResponse->error;
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
         return $this->_showCreateMailTemplate(true);
       }
@@ -142,11 +139,21 @@ class Mail extends Main {
 
       if ($bStatus == true) {
         Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
-				return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/');
+				return $this->_showSuccessMessage();
       }
 			else
 				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
+  }
+  
+  private function _showSuccessMessage() {
+    $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
+
+    $this->_oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
+    $this->_oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
+    
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/success');
+    return $this->_oSmarty->fetch('mails/success.tpl');
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {

@@ -182,9 +182,10 @@ define( 'LANG_USER_VERIFICATION_SUCCESSFUL', 'Thank you. Your Email has been ver
 
 # MAIL CONTENT GLOBAL
 define( 'LANG_MAIL_GLOBAL_NO_REPLY', '<p>(This is a generated Mail. Do not reply!)</p>' );
+define( 'LANG_MAIL_GLOBAL_SENT_TITLE', 'Message successfully sent!' );
+define( 'LANG_MAIL_GLOBAL_SENT_INFO', 'You will be redirect to the front page in 15 seconds.' );
 define( 'LANG_MAIL_GLOBAL_SIGNATURE', '<p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>' );
 define( 'LANG_MAIL_GLOBAL_SUBJECT_BY', 'New message from %u' );
-define( 'LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL', 'Own Email' );
 
 
 # MAIL CONTENT BY SECTION

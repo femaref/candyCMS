@@ -50,8 +50,8 @@ final class Comment extends Main {
 	# We must override the main method due to user right problems
 	public final function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
-      if (USER_RIGHT == 0)
-        return $this->_checkCaptcha(true);
+      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED === true)
+        return $this->_checkCaptcha();
 
       else
         return $this->_create(false);
@@ -62,7 +62,7 @@ final class Comment extends Main {
     }
   }
 
-  protected final function _create($bShowCaptcha = false) {
+  protected final function _create($bShowCaptcha = true) {
     if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
       $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
@@ -124,7 +124,7 @@ final class Comment extends Main {
     $this->_oSmarty->assign('email', $sEmail);
     $this->_oSmarty->assign('name', $sName);
 
-    if ($bShowCaptcha === true)
+    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
       $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
                       $this->_sRecaptchaError));
 
@@ -140,7 +140,7 @@ final class Comment extends Main {
     return $this->_oSmarty->fetch('comments/_form.tpl');
   }
 
-  private function _checkCaptcha($bShowCaptcha = true) {
+  private function _checkCaptcha() {
     if (isset($this->_aRequest['recaptcha_response_field'])) {
 			$this->_oRecaptchaResponse = recaptcha_check_answer(
 											$this->_sRecaptchaPrivateKey,
@@ -149,11 +149,11 @@ final class Comment extends Main {
 											$this->_aRequest['recaptcha_response_field']);
 
 			if ($this->_oRecaptchaResponse->is_valid)
-				return $this->_create($bShowCaptcha);
+				return $this->_create(true);
 
 			else {
 				$this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
-				return $this->_showFormTemplate($bShowCaptcha);
+				return $this->_showFormTemplate(true);
 			}
 		}
 		else
