@@ -103,6 +103,9 @@ class Mail extends Main {
   protected function _standardMail($bShowCaptcha = true) {
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
+		
+		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
     if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
        $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
@@ -115,15 +118,11 @@ class Mail extends Main {
       require_once 'app/models/User.model.php';
       $aRow = Model_User::getUserNamesAndEmail($this->_iId);
 
-      $sMailTo = $aRow['email'];
-
-      if(empty($sMailTo)) {
-        $sReplyTo = isset($this->_aRequest['email']) && !empty($this->_aRequest['email']) ?
-                Helper::formatInput($this->_aRequest['email']):
-                WEBSITE_MAIL_NOREPLY;
-      }
-      else
-        $sReplyTo = $sMailTo;
+			# When mail is set, send to mail. Otherwise send to system mail
+      $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
+			
+			# Reply to mail
+			$sReplyTo = Helper::formatInput($this->_aRequest['email']);
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
