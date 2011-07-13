@@ -121,7 +121,6 @@ final class Bbcode {
 			$sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
-			$sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
 			$sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis',
 											'<div class="video video-js-box">' . $sVideo . '</div>',
 											$sStr);
@@ -151,7 +150,6 @@ final class Bbcode {
       $sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
-			$sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
 			$sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis',
 											'<div class="video video-js-box">' . $sVideo . '</div>',
 											$sStr);
@@ -181,7 +179,6 @@ final class Bbcode {
 			$sVideo .= $sFlash;
 			$sVideo .= '</video>';
 
-			$sVideo = $this->_getVideo($sFile) ? $sVideo : $sFlash;
 			$sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
 											'<div class="video video-js-box">' . $sVideo . '</div>',
 											$sStr);
@@ -220,27 +217,5 @@ final class Bbcode {
 			return $sFile;
 		else
 			return $sFile . '.mp4';
-	}
-
-	private final function _getVideo($sFile) {
-		# If external link, make local
-		if (preg_match('/http:\/\/(.*)/', $sFile))
-			$sFile = str_replace(WEBSITE_URL . '/', '', $sFile);
-
-		# We have WebM (and mp4) and do use any browser exept FF
-		if (file_exists($sFile . '.webm') && !preg_match('/Firefox\/3/', $_SERVER['HTTP_USER_AGENT']))
-			return true;
-
-		# We have ogg (and mp4) - serves all
-		elseif (file_exists($sFile . '.ogv'))
-			return true;
-
-		# We do only have mp4, so use flash for Firefox and Opera
-		elseif (preg_match('/(Firefox|Opera)/', $_SERVER['HTTP_USER_AGENT']))
-			return false;
-
-		# We try HTML5 anyways or it's external
-		else
-			return true;
 	}
 }

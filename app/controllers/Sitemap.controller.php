@@ -8,6 +8,7 @@
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
 require_once 'app/models/Gallery.model.php';
+require_once 'app/models/User.model.php';
 
 class Sitemap extends Main {
 

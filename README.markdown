@@ -34,15 +34,16 @@ Additional reasons, why CandyCMS might be interessting for you
 
 Requirements
 ------------------------------------------------------------------------------------------------------------------------
-- PHP 5.1 & [PDO supported database](http://www.phpro.org/tutorials/Introduction-to-PHP-PDO.html#2)
-- Imagemagick, GD2 Support and mod_rewrite
+- PHP 5.1 & PDO supported database
+- Imagemagick, GD2 and mod_rewrite
 - an account at http://recaptcha.org to use captchas
 - about 5MB webspace
 
 
 Setup
 ------------------------------------------------------------------------------------------------------------------------
-Simply upload all files and execute the "/install/index.php" file. Make sure, you really delete this dir after installation.
+Configure your website at "config/Config.inc.php, upload all files and execute the "/install/index.php" file.
+Follow the instructions and make sure, you really delete this dir after installation.
 
 
 Credits
