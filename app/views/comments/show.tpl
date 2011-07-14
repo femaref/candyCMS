@@ -20,7 +20,8 @@
           {else}
             <em style="text-decoration:line-through">{$lang_deleted_user}</em>
           {/if}
-          <time datetime="2009-06-29T23:35:20+01:00">{$c.datetime}</time>
+          <br />
+          <time datetime="{$c.date_w3c}">{$c.datetime}</time>
         </header>
         <div id="js-comment_{$c.id}">
           {$c.content}

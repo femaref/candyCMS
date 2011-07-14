@@ -75,6 +75,9 @@ class Model_Comment extends Model_Main {
                   'avatar_64'						=> Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
                   'date'								=> Helper::formatTimestamp($aRow['date'], true),
                   'datetime'						=> Helper::formatTimestamp($aRow['date']),
+                  'date_raw'            => $aRow['date'],
+                  'date_rss'            => date('D, d M Y H:i:s O', $aRow['date']),
+                  'date_w3c'            => date('Y-m-d\TH:i:sP', $aRow['date']),
                   'content'							=> Helper::formatOutput($aRow['content']),
                   'loop'								=> $iLoop
       );
