@@ -20,6 +20,7 @@ class Mail extends Main {
 
   public function create() {
     if (isset($this->_aRequest['send_mail'])) {
+      # Disable at AJAX due to a bug in reloading JS code
       if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
         return $this->_checkCaptcha();
       else
@@ -94,7 +95,7 @@ class Mail extends Main {
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
+      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
   }
 
   protected function _standardMail($bShowCaptcha = true) {
@@ -204,7 +205,6 @@ class Mail extends Main {
         $oMail->AddAttachment($sAttachment);
 
       return $oMail->Send();
-      #return true;
     }
     catch (phpmailerException $e) {
       return $e->errorMessage();

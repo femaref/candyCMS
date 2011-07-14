@@ -185,7 +185,7 @@ class Gallery extends Main {
 
   public final function updateFile() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
     else {
       if( isset($this->_aRequest['update_file']) ) {
@@ -203,7 +203,7 @@ class Gallery extends Main {
 
   public final function destroyFile() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {

@@ -157,6 +157,6 @@ final class Comment extends Main {
 			}
 		}
 		else
-			return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED);
+			return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
 	}
 }

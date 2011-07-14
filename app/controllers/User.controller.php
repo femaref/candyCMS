@@ -23,7 +23,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
@@ -167,8 +167,7 @@ class User extends Main {
     $iTerms = isset($this->_aRequest['terms']) ? 1 : 0;
 
     if ($iTerms == false)
-      return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD) .
-				$this->_showFormTemplate();
+      return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD, '/user/' . $this->_iId);
 
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
@@ -190,7 +189,7 @@ class User extends Main {
 			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
 
 			if (USER_RIGHT < 3)
-				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 			else {
 				$this->_aData = $this->_oModel->getData();
@@ -288,7 +287,7 @@ class User extends Main {
 			$this->_oModel = new Model_User($this->_aRequest, $this->_aSession);
 
 			$iVerificationCode = Helper::createRandomChar(12, true);
-			$sVerificationUrl = Helper::createLinkTo('/User/' . $iVerificationCode . '/verification');
+			$sVerificationUrl = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
 
 			if ($this->_oModel->create($iVerificationCode) === true) {
 				$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']),
@@ -306,10 +305,10 @@ class User extends Main {
         }
 
 				else
-					return Helper::errorMessage (LANG_ERROR_MAIL_ERROR);
+					return Helper::errorMessage (LANG_ERROR_MAIL_ERROR, '/');
 			}
 			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
 		}
 	}
 

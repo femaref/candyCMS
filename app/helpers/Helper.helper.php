@@ -17,18 +17,14 @@ final class Helper {
       Helper::redirectTo ($sRedirectTo);
   }
 
-  public static final function errorMessage($sMSG, $sRedirectTo = '', $sHL = '') {
-    if(empty($sHL))
-      $sHL = LANG_ERROR_GLOBAL;
-
+  public static final function errorMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
-    $_SESSION['flash_message']['headline']  = $sHL;
+    $_SESSION['flash_message']['headline']  = LANG_ERROR_GLOBAL;
+    $_SESSION['flash_message']['show']		= '0';
 
-    if(!empty($sRedirectTo)) {
-			$_SESSION['flash_message']['show']		= '0';
+    if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);
-		}
   }
 
   public static final function redirectTo($sURL) {
@@ -39,7 +35,7 @@ final class Helper {
   public static final function checkEmailAddress($sMail) {
     if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
       return true;
-    else
+    else # TODO: Redunant
       return false;
   }
 
@@ -48,8 +44,6 @@ final class Helper {
 
     if ($bIntegerOnly == true)
       $sChars = '0123456789';
-
-    srand(microtime() * 1000000);
 
     $sString = '';
     for ($iI = 1; $iI <= $iLength; $iI++) {
@@ -61,8 +55,8 @@ final class Helper {
     return $sString;
   }
 
-	public final static function createLinkTo($sUrl, $bExtern = false) {
-		if($bExtern == false)
+	public final static function createLinkTo($sUrl, $bExternal = false) {
+		if($bExternal == false)
 			return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
 		else
 			return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
@@ -116,11 +110,15 @@ final class Helper {
     try {
       if (file_exists('public/skins/' . PATH_TPL . '/views/' . $sTemplate . '.tpl'))
         return 'public/skins/' . PATH_TPL . '/views/';
+
       elseif (file_exists('public/skins/_addons/views/' . $sTemplate . '.tpl'))
         return 'public/skins/_addons/views/';
+
       else {
+
         if (!file_exists('app/views/' . $sTemplate . '.tpl'))
           throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+
         else
           return 'app/views/';
       }
@@ -165,8 +163,10 @@ final class Helper {
       return $oDate->getDate($iTime, $bDateOnly);
     }
     else {
+
       if ($bDateOnly == true)
         return strftime(DEFAULT_DATE_FORMAT, $iTime);
+
       else
         return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
     }
@@ -177,12 +177,7 @@ final class Helper {
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
     # Remove Slashes
-    $sStr = str_replace('\&quot;', '"', $sStr);
-    $sStr = str_replace('\"', '"', $sStr);
-    $sStr = str_replace("\'", "'", $sStr);
-
-    # Format SpecialChars
-    $sStr = str_replace('&quot;', '"', $sStr);
+    $sStr = Helper::removeSlahes($sStr);
 
     # Highlight string
     if (!empty($highlight))

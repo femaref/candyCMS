@@ -230,7 +230,7 @@ abstract class Main {
 
   public function create($sInputName) {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
     else {
       if( isset($this->_aRequest[$sInputName]) )
         return $this->_create();
@@ -241,7 +241,7 @@ abstract class Main {
 
   public function update($sInputName) {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
     else {
       if( isset($this->_aRequest[$sInputName]) )
         return $this->_update();
@@ -252,7 +252,7 @@ abstract class Main {
 
   public function destroy() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
     else
       return $this->_destroy();
   }

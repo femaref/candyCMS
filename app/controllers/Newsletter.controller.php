@@ -66,7 +66,7 @@ class Newsletter extends Main {
   # @Override
   public function create() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       if (isset($this->_aRequest['send_newsletter']))

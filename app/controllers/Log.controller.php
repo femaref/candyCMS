@@ -16,7 +16,7 @@ class Log extends Main {
 
 	public function overview() {
 		if (USER_RIGHT < 4)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 		else {
 			$this->_oSmarty->assign('logs', $this->_oModel->getData());
 
@@ -39,7 +39,7 @@ class Log extends Main {
 	# @Override
 	public function destroy() {
 		if (USER_RIGHT < 4)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 		else
 			return $this->_destroy();
 	}

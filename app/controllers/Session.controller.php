@@ -87,13 +87,13 @@ class Session extends Main {
               return Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
           else
-            return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+            return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
         }
         elseif ($this->_aRequest['action'] == 'resendverification') {
           if($this->_oModel->createResendActions() === true) {
             $aData = $this->_oModel->getData();
 
-            $sVerificationUrl = Helper::createLinkTo('/User/' . $aData['verification_code'] . '/verification');
+            $sVerificationUrl = Helper::createLinkTo('/user/' . $aData['verification_code'] . '/verification');
 
             $sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
             $sContent = str_replace('%v', $sVerificationUrl, $sContent);
@@ -109,10 +109,10 @@ class Session extends Main {
               return $this->showCreateSessionTemplate();
           }
           else
-            return Helper::errorMessage(LANG_ERROR_SQL_QUERY);
+            return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
         }
         else
-          return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION);
+          return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
       }
     }
     else

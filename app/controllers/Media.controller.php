@@ -12,7 +12,7 @@ class Media extends Main {
   # @Override
   public function create() {
 		if (USER_RIGHT < 3)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
 			if (isset($this->_aRequest['upload_file'])) {
@@ -44,7 +44,7 @@ class Media extends Main {
 
   public function show() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       $sOriginalPath = PATH_UPLOAD.	'/media';
@@ -99,7 +99,7 @@ class Media extends Main {
 
   public function destroy() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       if(is_file(PATH_UPLOAD.	'/media/'	.$this->_aRequest['id'])) {
