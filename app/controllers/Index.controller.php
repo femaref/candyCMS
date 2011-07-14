@@ -179,7 +179,7 @@ class Index extends Main {
 
 		# Check for new version of script
 		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-			$oFile = @fopen('http://candycms.marcoraddatz.com/version.txt', 'rb');
+			$oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
 			$sVersionContent = @stream_get_contents($oFile);
 			@fclose($oFile);
 

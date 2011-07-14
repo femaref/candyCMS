@@ -26,7 +26,7 @@
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang_files}</p>
         </header>
-        <details>
+        <details open='open'>
           {if $a.files_sum > 0}
             <a href='/gallery/{$a.id}'>
               {foreach $a.files as $f}

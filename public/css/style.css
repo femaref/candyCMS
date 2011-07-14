@@ -263,12 +263,6 @@ blockquote h3 {
   margin-bottom:0px;
 }
 
-/* highlight a word in a text */
-span.highlight {
-  background: #FFD324;
-  padding: 2px;
-}
-
 div.video, div.audio, div.vjs-flash-fallback {
   text-align: center;
 }

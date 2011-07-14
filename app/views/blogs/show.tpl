@@ -43,7 +43,7 @@
               <a href='/user/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
             </p>
           </header>
-          <details>
+          <details open='open'>
             {if $b.teaser !== ''}
               <summary>{$b.teaser}</summary>
             {/if}

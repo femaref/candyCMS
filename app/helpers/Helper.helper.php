@@ -181,7 +181,7 @@ final class Helper {
 
     # Highlight string
     if (!empty($highlight))
-      $sStr = str_ireplace($highlight, '<span class="highlight">' . $highlight . '</span>', $sStr);
+      $sStr = str_ireplace($highlight, '<mark>' . $highlight . '</mark>', $sStr);
 
     if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();

@@ -30,8 +30,8 @@ final class Content extends Main {
 
       # Quick hack for displaying title without html tags
       $sTitle = Helper::removeSlahes($this->_aData[$this->_iId]['title']);
-      $sTitle = str_replace('<span class="highlight">', '', $sTitle);
-      $sTitle = str_replace('</span>', '', $sTitle);
+      $sTitle = str_replace('<mark>', '', $sTitle);
+      $sTitle = str_replace('</mark>', '', $sTitle);
 
       $this->_setDescription($this->_aData[$this->_iId]['teaser']);
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);

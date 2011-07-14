@@ -44,8 +44,8 @@ class Blog extends Main {
   # Quick hack for displaying title without html tags
   private final function _removeHighlight($sTitle) {
     $sTitle = Helper::removeSlahes($sTitle);
-    $sTitle = str_replace('<span class="highlight">', '', $sTitle);
-    $sTitle = str_replace('</span>', '', $sTitle);
+    $sTitle = str_replace('<mark>', '', $sTitle);
+    $sTitle = str_replace('</mark>', '', $sTitle);
     return $sTitle;
   }
 

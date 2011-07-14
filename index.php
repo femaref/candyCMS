@@ -20,7 +20,7 @@ ini_set('arg_separator.output', '&amp;');
 ini_set('zlib.output_compression_level', 9);
 date_default_timezone_set('Europe/Berlin');
 
-define('VERSION', '20110616');
+define('VERSION', '20110714');
 
 try {
 	if (!file_exists('app/models/Main.model.php') ||
