@@ -212,15 +212,17 @@ class Model_User extends Model_Main {
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
 		# Set other peoples user right
-    if (($iId !== USER_ID) && USER_RIGHT == 4)
+    if (($iId !== USER_ID) && USER_RIGHT === 4)
       $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
               (int) $this->_aRequest['user_right'] :
               0;
     else
       $iUserRight = USER_RIGHT;
 
+    # Get my active password
+    $sPassword = $this->_aSession['userdata']['password'];
+
     # Make sure the password is set and override session due to saving problems
-		# If I'm the active user
     if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
 						isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
 						USER_ID === $iId) {
@@ -229,7 +231,7 @@ class Model_User extends Model_Main {
 		}
 
 		# I'm admin and want to change user rights
-		elseif (($iId !== USER_ID) && USER_RIGHT == 4)
+		elseif (($iId !== USER_ID) && USER_RIGHT === 4)
 			$sPassword = $this->_getPassword($iId);
 
     try {
