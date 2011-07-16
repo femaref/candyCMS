@@ -19,6 +19,7 @@ RewriteBase /
 
 # Redirect from root to public folder
 RewriteRule ^favicon.ico$ public/favicon.ico [L]
+RewriteRule ^human.txt$ public/human.txt [L]
 RewriteRule ^robots.txt$ public/robots.txt [L]
 RewriteRule ^sitemap.xml$ index.php?section=sitemap&action=xml&ajax=1 [L]
 

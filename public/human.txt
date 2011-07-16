@@ -1,0 +1,3 @@
+/* CMS */
+Name: CandyCMS
+URL: http://www.candycms.com
