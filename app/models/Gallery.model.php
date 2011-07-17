@@ -34,7 +34,7 @@ class Model_Gallery extends Model_Main {
 																			u.id AS uid,
 																			u.name,
 																			u.surname,
-																			COUNT(f.id) AS filesSum
+																			COUNT(f.id) AS files_sum
 																		FROM
 																			" . SQL_PREFIX . "gallery_albums a
 																		LEFT JOIN
@@ -90,12 +90,12 @@ class Model_Gallery extends Model_Main {
             'name'        => $sName,
             'surname'     => $sSurname,
             'full_name'   => $sFullName,
-            'files_sum'   => $aRow['filesSum'],
+            'files_sum'   => $aRow['files_sum'],
             'url'         => $sUrl . '/' . $sEncodedTitle,
             'url_clean'   => $sUrl
 				);
 
-				if ($aRow['filesSum'] > 0)
+				if ($aRow['files_sum'] > 0)
           $this->_aData[$iId]['files'] = $this->getThumbs($iId, $bAdvancedImageInformation);
         else
           $this->_aData[$iId]['files'] = '';

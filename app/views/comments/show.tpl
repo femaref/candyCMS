@@ -48,15 +48,13 @@
     {/foreach}
   </div>
 </section>
-<div class="navigation">
-  {$_pages_}
-</div>
+{$_pages_}
 <script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $('#js-commments').infinitescroll({
-      navSelector  : "div.navigation",
-      nextSelector : "div.navigation a:first",
+      navSelector  : "section.pages",
+      nextSelector : "section.pages a:first",
       itemSelector : "#js-commments article",
       loadingImg   : "%PATH_IMAGES%/loading.gif",
       loadingText  : '',

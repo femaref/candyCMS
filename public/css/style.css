@@ -111,6 +111,7 @@ div#content {
 /* pagination */
 div#content section.pages {
   text-align: center;
+  margin-top:10px;
 }
 
 div#content section.pages span {
