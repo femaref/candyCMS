@@ -11,11 +11,24 @@ class Model_Gallery extends Model_Main {
 
 	private final function _setData($bEdit, $bAdvancedImageInformation) {
     $sWhere = '';
+		$iResult = 1000;
 
 		if (!empty($this->_iId))
-      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
+			$sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
-    try {
+		else {
+			try {
+				$oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
+				$iResult = $oQuery->fetchColumn();
+			}
+			catch (AdvancedException $e) {
+				$this->_oDb->rollBack();
+			}
+		}
+
+		$this->oPage = new Page($this->_aRequest, (int) $iResult, LIMIT_ALBUMS);
+
+		try {
       $oQuery = $this->_oDb->query("SELECT
 																			a.*,
 																			u.id AS uid,
@@ -384,9 +397,6 @@ class Model_Gallery extends Model_Main {
       $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
               $this->_aRequest['description'] :
               '';
-
-			# Set path for upload.php
-			$this->_sFilePath =& $oUploadFile->sFilePath;
 
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO

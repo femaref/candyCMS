@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-final class Upload {
+class Upload {
 
   private $_aFile;
   private $_iId;
@@ -15,7 +15,7 @@ final class Upload {
   private $_sUploadFolder;
   public $sFilePath;
 
-  public final function __construct($aRequest, $aFile, $sRename = '') {
+  public function __construct($aRequest, $aFile, $sRename = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aFile     = & $aFile;
     $this->_sRename   = & $sRename;

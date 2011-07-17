@@ -5,14 +5,16 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-final class Image {
-  private $_sOriginalPath;
-  private $_sFolder;
-  private $_aInfo;
-  private $_iId;
-  private $_sImgType;
+# TODO: MERGE METHODS
 
-  public final function __construct($iId, $sFolder, $sOriginalPath, $sImgType = 'jpg') {
+class Image {
+  protected $_sOriginalPath;
+  protected $_sFolder;
+  protected $_aInfo;
+  protected $_iId;
+  protected $_sImgType;
+
+  public function __construct($iId, $sFolder, $sOriginalPath, $sImgType = 'jpg') {
     $this->_iId = & $iId;
     $this->_sOriginalPath = & $sOriginalPath;
     $this->_sFolder = & $sFolder;
@@ -25,7 +27,7 @@ final class Image {
     }
   }
 
-  public final function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
+  public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
     if(empty($sFolder))
       $sFolder = $iWidth;
 
@@ -45,25 +47,25 @@ final class Image {
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg') {
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
       imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImageJPEG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.jpg', 75);
+      ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.jpg', 75);
     }
     elseif ($this->_sImgType == 'png') {
       $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
       imagealphablending($oNewImg, false);
       imagesavealpha($oNewImg, true);
       imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 5);
+      ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 5);
     }
     elseif ($this->_sImgType == 'gif') {
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
       imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImageGIF($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
+      ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
     }
 
     imagedestroy($oNewImg);
   }
 
-  public final function resizeAndCut($iWidth, $sFolder = '') {
+  public function resizeAndCut($iWidth, $sFolder = '') {
     if(empty($sFolder))
       $sFolder = $iWidth;
 
@@ -101,16 +103,15 @@ final class Image {
     imagecopyresampled($oNewImg, $oOldImg, $iDstX, $iDstY, $iSrcX, $iSrcY, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
+			ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
 
-    elseif ($this->_sImgType == 'png') {
-      imagealphablending($oNewImg, false);
-      imagesavealpha($oNewImg, true);
-      ImagePNG($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
-    }
-
-    elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, 'upload/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
+		elseif ($this->_sImgType == 'png') {
+			imagealphablending($oNewImg, false);
+			imagesavealpha($oNewImg, true);
+			ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
+		}
+		elseif ($this->_sImgType == 'gif')
+			ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
 
     imagedestroy($oNewImg);
   }

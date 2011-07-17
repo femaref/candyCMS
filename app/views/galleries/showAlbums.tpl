@@ -41,5 +41,8 @@
         </details>
       </article>
     {/foreach}
+    <div class="navigation">
+      {$_pages_}
+    </div>
   </section>
 {/if}

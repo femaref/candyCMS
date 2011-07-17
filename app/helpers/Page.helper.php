@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-final class Page {
+class Page {
 
   private $_aRequest;
   private $_iLimit;
@@ -14,7 +14,7 @@ final class Page {
   private $_iEntries;
   private $_iCurrentPage;
 
-  public final function __construct($aRequest, $iEntries, $iLimit = 10) {
+  public function __construct($aRequest, $iEntries, $iLimit = 10) {
     $this->_aRequest =& $aRequest;
     $this->_iEntries =& $iEntries;
     $this->_iLimit =& $iLimit;
@@ -39,19 +39,19 @@ final class Page {
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
   }
 
-  public final function getOffset() {
+  public function getOffset() {
     return $this->_iOffset;
   }
 
-  public final function getLimit() {
+  public function getLimit() {
     return $this->_iLimit;
   }
 
-  public final function getCurrentPage() {
+  public function getCurrentPage() {
     return $this->_iCurrentPage;
   }
 
-  public final function showPages($sUrl) {
+  public function showPages($sUrl) {
     $oSmarty = new Smarty();
     $oSmarty->assign('page_current', $this->_iCurrentPage);
     $oSmarty->assign('page_last', $this->_iPages);
@@ -64,7 +64,7 @@ final class Page {
     return $oSmarty->fetch('pages/show.tpl');
   }
 
-  public final function showSurrounding($sUrl, $sRssAction = '') {
+  public function showSurrounding($sUrl, $sRssAction = '') {
     $iNext = '';
     $iPrevious = '';
 

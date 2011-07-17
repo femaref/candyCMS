@@ -49,7 +49,7 @@
   </div>
 </section>
 <div class="navigation">
-  {$_comment_pages_}
+  {$_pages_}
 </div>
 <script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">

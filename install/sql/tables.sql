@@ -65,10 +65,10 @@ CREATE TABLE `gallery_files` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `album_id` smallint(5) NOT NULL,
   `author_id` smallint(5) NOT NULL,
+  `file` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `extension` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'jpg',
   `date` int(11) NOT NULL,
   `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `extension` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'jpg',
-  `file` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

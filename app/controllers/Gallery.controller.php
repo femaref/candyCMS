@@ -48,6 +48,7 @@ class Gallery extends Main {
       $this->_setTitle(LANG_GLOBAL_GALLERY);
 
       $this->_oSmarty->assign('albums', $this->_oModel->getData());
+			$this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/gallery'));
 
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);

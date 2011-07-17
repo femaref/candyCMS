@@ -34,7 +34,7 @@ final class Comment extends Main {
       $this->_oSmarty->assign('comment_number', ($this->_oModel->oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
       # Do we need pages?
-      $this->_oSmarty->assign('_comment_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
+      $this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);

@@ -5,9 +5,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
-final class Helper {
+class Helper {
 
-  public static final function successMessage($sMSG, $sRedirectTo = '') {
+  public static function successMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'success';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = '';
@@ -17,7 +17,7 @@ final class Helper {
       Helper::redirectTo ($sRedirectTo);
   }
 
-  public static final function errorMessage($sMSG, $sRedirectTo = '') {
+  public static function errorMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = LANG_ERROR_GLOBAL;
@@ -27,19 +27,19 @@ final class Helper {
       Helper::redirectTo ($sRedirectTo);
   }
 
-  public static final function redirectTo($sURL) {
+  public static function redirectTo($sURL) {
     header('Location:' . WEBSITE_URL . $sURL);
     die();
   }
 
-  public static final function checkEmailAddress($sMail) {
+  public static function checkEmailAddress($sMail) {
     if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
       return true;
     else # TODO: Redunant
       return false;
   }
 
-  public final static function createRandomChar($iLength, $bIntegerOnly = false) {
+  public static function createRandomChar($iLength, $bIntegerOnly = false) {
     $sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
 
     if ($bIntegerOnly == true)
@@ -55,14 +55,14 @@ final class Helper {
     return $sString;
   }
 
-	public final static function createLinkTo($sUrl, $bExternal = false) {
+	public static function createLinkTo($sUrl, $bExternal = false) {
 		if($bExternal == false)
 			return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
 		else
 			return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
-  public final static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
+  public static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
     if (!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
       if (!is_int($sSize))
         $sSize = POPUP_DEFAULT_X;
@@ -88,7 +88,7 @@ final class Helper {
     }
   }
 
-  public final static function getFileSize($sPath) {
+  public static function getFileSize($sPath) {
     $iSize = filesize($sPath);
 
     if ($iSize > 1024 && $iSize < 1048576)
@@ -106,7 +106,7 @@ final class Helper {
     return $sReturn;
   }
 
-  public final function getTemplateDir($sTemplate) {
+  public function getTemplateDir($sTemplate) {
     try {
       if (file_exists('public/skins/' . PATH_TPL . '/views/' . $sTemplate . '.tpl'))
         return 'public/skins/' . PATH_TPL . '/views/';
@@ -128,14 +128,14 @@ final class Helper {
     }
   }
 
-  public final static function removeSlahes($sStr) {
+  public static function removeSlahes($sStr) {
     $sStr = str_replace('\&quot;', '"', $sStr);
     $sStr = str_replace('\"', '"', $sStr);
     $sStr = str_replace("\'", "'", $sStr);
     return $sStr;
   }
 
-  public final static function formatInput($sStr, $bDisableHTML = true) {
+  public static function formatInput($sStr, $bDisableHTML = true) {
     try {
       if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
         throw new Exception('Input seems not valid.');
@@ -153,7 +153,7 @@ final class Helper {
   }
 
   # Code for plugins
-  public static final function formatTimestamp($iTime, $bDateOnly = false) {
+  public static function formatTimestamp($iTime, $bDateOnly = false) {
 
     # Set active locale
     setlocale(LC_ALL, WEBSITE_LOCALE);
@@ -172,7 +172,7 @@ final class Helper {
     }
   }
 
-  public static final function formatOutput($sStr, $highlight = '') {
+  public static function formatOutput($sStr, $highlight = '') {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
