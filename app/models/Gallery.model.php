@@ -14,17 +14,17 @@ class Model_Gallery extends Model_Main {
 		$iResult = 1000;
 
 		if (!empty($this->_iId))
-			$sWhere = "WHERE a.id = '" . $this->_iId . "'";
+      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
-		else {
-			try {
-				$oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
-				$iResult = $oQuery->fetchColumn();
-			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
-		}
+    else {
+      try {
+        $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
+        $iResult = $oQuery->fetchColumn();
+      }
+      catch (AdvancedException $e) {
+        $this->_oDb->rollBack();
+      }
+    }
 
 		$this->oPage = new Page($this->_aRequest, (int) $iResult, LIMIT_ALBUMS);
 
@@ -49,7 +49,10 @@ class Model_Gallery extends Model_Main {
 																		GROUP BY
 																			a.id
 																		ORDER BY
-																			a.id DESC");
+																			a.id DESC
+                                    LIMIT
+                                      " . $this->oPage->getOffset() . ",
+                                      " . $this->oPage->getLimit());
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }

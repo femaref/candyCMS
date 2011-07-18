@@ -190,6 +190,10 @@ section#gallery article.gallery_albums {
   text-align: left;
 }
 
+section#gallery article.gallery_albums header p {
+  margin-top:0px;
+}
+
 section#gallery article.gallery_albums details img {
   border: 1px solid #ccc;
 }
