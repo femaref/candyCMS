@@ -24,7 +24,7 @@
                 <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
                      width='32' height='32' alt='{$f.type}' />
               {else}
-                <img src='%PATH_IMAGES%/spacer.png' class="filemanager-{$f.type}"
+                <img src='%PATH_IMAGES%/files/{$f.type}.png'
                      width='32' height='32' alt='{$f.type}' />
               {/if}
             </td>
