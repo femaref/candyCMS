@@ -19,7 +19,7 @@
   <p>
     <label for='password2'>{$lang_password_repeat} *</label>
     <input name='password2' type='password' required />
-    <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" />
+    <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
   </p>
   {if $USER_RIGHT < 4}
     <p {if isset($error_email)}class="error"{/if}>

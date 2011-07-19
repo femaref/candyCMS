@@ -2,7 +2,7 @@
   {if $USER_RIGHT >= 3}
     <p class="center">
       <a href='/media/create'>
-        <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' />
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' width="16" height="16" />
         {$lang_file_create}
       </a>
     </p>
@@ -51,7 +51,7 @@
             </td>
             <td style='width:5%'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
-                   title='{$lang_destroy}'
+                   title='{$lang_destroy}' width="16" height="16"
                    onclick="confirmDelete('/media/{$f.name}/destroy')" />
             </td>
           </tr>

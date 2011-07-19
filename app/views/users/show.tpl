@@ -3,7 +3,7 @@
     {$u.full_name}
     {if $USER_RIGHT == 4}
       <a href='/user/{$_request_id_}/update'>
-        <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' />
+        <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' width="16" height="16" />
       </a>
     {/if}
   </h1>

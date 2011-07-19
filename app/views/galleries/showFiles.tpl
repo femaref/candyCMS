@@ -1,7 +1,7 @@
 {if $USER_RIGHT >= 3}
   <p class="center">
     <a href='/gallery/{$_request_id_}/createfile'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
       {$lang_create_entry_headline}
     </a>
   </p>
@@ -10,11 +10,11 @@
   <h1>
     {$gallery_name} ({$file_no} {$lang_files})
     <a href='/rss/gallery/{$_request_id_}'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' />
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' width="16" height="16" />
     </a>
     {if $USER_RIGHT >= 3}
       <a href='/gallery/{$_request_id_}/update'>
-        <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}' width="16" height="16"
               title='{$lang_update}' />
       </a>
     {/if}
@@ -39,10 +39,10 @@
           {if $USER_RIGHT >= 3}
             <div>
               <a href="/gallery/{$f.id}/updatefile">
-                <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" />
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt="{$lang_update}" width="16" height="16" />
               </a>
               <a href="/gallery/{$f.id}/destroyfile">
-                <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" />
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy" alt="{$lang_destroy}" width="16" height="16" />
               </a>
             </div>
           {/if}

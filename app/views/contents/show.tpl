@@ -10,7 +10,7 @@
           {$c.title}
           {if $USER_RIGHT >= 3}
             <a href='/content/{$c.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}' width="16" height="16"
                    title='{$lang_update}' />
             </a>
           {/if}
