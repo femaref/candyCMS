@@ -14,14 +14,14 @@ class Session extends Main {
   }
 
   # @ Override
-  public final function create() {
+  public function create() {
 		if( isset($this->_aRequest['create_session']) )
 			return $this->_create();
 		else
 			return $this->showCreateSessionTemplate();
 	}
 
-	private final function _create() {
+	private function _create() {
 		if(	!isset($this->_aRequest['email']) || empty($this->_aRequest['email']) )
 			$this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 
@@ -41,7 +41,7 @@ class Session extends Main {
       return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
 	}
 
-  public final function showCreateSessionTemplate() {
+  public function showCreateSessionTemplate() {
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
@@ -54,7 +54,7 @@ class Session extends Main {
     return $this->_oSmarty->fetch('sessions/createSession.tpl');
   }
 
-  public final function createResendActions() {
+  public function createResendActions() {
     if (isset($this->_aRequest['email'])) {
       if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
         $this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
@@ -119,7 +119,7 @@ class Session extends Main {
       return $this->_showCreateResendActionsTemplate();
   }
 
-  private final function _showCreateResendActionsTemplate() {
+  private function _showCreateResendActionsTemplate() {
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
       $this->_setDescription(LANG_SESSION_PASSWORD_INFO);
@@ -150,13 +150,14 @@ class Session extends Main {
     return $this->_oSmarty->fetch('sessions/createResendActions.tpl');
   }
 
-  public final function destroy() {
-    if(USER_RIGHT == 2) {
+  public function destroy() {
+    if (USER_RIGHT == 2) {
       $oFacebook = new FacebookCMS(array(
-                  'appId'   => FACEBOOK_APP_ID,
-                  'secret'  => FACEBOOK_SECRET,
-                  'cookie'  => true,
+                  'appId' => FACEBOOK_APP_ID,
+                  'secret' => FACEBOOK_SECRET,
+                  'cookie' => true,
               ));
+      die($oFacebook->getLogoutUrl());
       Header('Location:' . $oFacebook->getLogoutUrl());
 
       # Message will not be printed

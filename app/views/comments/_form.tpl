@@ -1,7 +1,7 @@
 <a name='create'></a>
 <form method="post">
-  <h3>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
-  <p {if isset($error_name)}class="error"{/if}>
+  <h3>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
+  <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
     <label for="name">{$lang_name} *</label>
     {if $USER_NAME}
       {$USER_FULL_NAME}
@@ -27,12 +27,12 @@
       <input type="email" value="{$email}" name="email" title="{$lang_email_info}" />
     {/if}
   </p>
-  <p {if isset($error_content)}class="error"{/if}>
+  <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
     <label for='js-create_commment_text'>{$lang_content} *</label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
   </p>
   {if isset($_captcha_)}
-    <div {if isset($error_captcha)}class="error"{/if}>
+    <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
       <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
       {$_captcha_}
     </div>

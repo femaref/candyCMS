@@ -154,12 +154,6 @@ section#blog article.blogs footer {
   margin: 0px auto 50px auto;
 }
 
-section#blog article.blogs details summary {
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 110%;
-}
-
 section#blog article.blogs footer div.share,
 section#content article footer div.share {
   float: left;
@@ -194,7 +188,7 @@ section#gallery article.gallery_albums header p {
   margin-top:0px;
 }
 
-section#gallery article.gallery_albums details img {
+section#gallery article.gallery_albums summary img {
   border: 1px solid #ccc;
 }
 

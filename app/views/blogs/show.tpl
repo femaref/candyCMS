@@ -43,10 +43,10 @@
               <a href='/user/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
             </p>
           </header>
-          <details open='open'>
-            {if $b.teaser !== ''}
-              <summary>{$b.teaser}</summary>
-            {/if}
+          {if $b.teaser !== ''}
+            <summary>{$b.teaser}</summary>
+          {/if}
+          <details {if isset($_request_id_) && is_int($_request_id_)}open='open'{/if}>
             {$b.content}
           </details>
           <footer>

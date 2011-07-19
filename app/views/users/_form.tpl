@@ -1,7 +1,7 @@
 <form method='post' action='/user/{$uid}/update'>
   <h2><a href="#">1. {$lang_user_title}</a></h2>
   <div>
-    <p {if isset($error_name)}class="error"{/if}>
+    <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
       <label for='name'>{$lang_name} *</label>
       <input name='name' value='{$name}' type='name' required />
     </p>
@@ -9,7 +9,7 @@
       <label for='surname'>{$lang_surname}</label>
       <input name='surname' value='{$surname}' type='text' />
     </p>
-    <p {if isset($error_email)}class="error"{/if}>
+    <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
       <label for='email'>{$lang_email} *</label>
       <input name='email' value='{$email}' type='email' required />
     </p>
@@ -45,11 +45,11 @@
   {if $USER_ID === $uid}
     <h2><a href="#">2. {$lang_password_change}</a></h2>
       <div>
-      <p {if isset($error_password_old)}class="error"{/if}>
+      <p {if isset($error_password_old)}class="error" title="{$error_password_old}"{/if}>
         <label for='password_old'>{$lang_password_old}</label>
         <input name='password_old' type='password' />
       </p>
-      <p {if isset($error_password_new)}class="error"{/if}>
+      <p {if isset($error_password_new)}class="error" title="{$error_password_new}"{/if}>
         <label for='password_new'>{$lang_password_new}</label>
         <input name='password_new' type='password' />
       </p>

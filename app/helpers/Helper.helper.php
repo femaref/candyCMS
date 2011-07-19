@@ -35,8 +35,6 @@ class Helper {
   public static function checkEmailAddress($sMail) {
     if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
       return true;
-    else # TODO: Redunant
-      return false;
   }
 
   public static function createRandomChar($iLength, $bIntegerOnly = false) {

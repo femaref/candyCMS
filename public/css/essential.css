@@ -12,6 +12,7 @@ span.js-toggle-element {
 /* Success and error Messages */
 div.success,
 div.error,
+p.error,
 div.notice {
   margin: 0px 0px 10px 0px;
   padding: 10px;
@@ -20,7 +21,8 @@ div.notice {
 
 div.success p,
 div.notice p,
-div.error p {
+div.error p,
+p.error p {
   margin: 0px;
 }
 
@@ -39,13 +41,15 @@ div.notice {
   background: #FFF6BF;
 }
 
-div.error {
+div.error,
+p.error {
   background:#EED0D0 !important; /* Override .row1 and .row2 */
   color:#333;
   border:1px solid red;
 }
 
-div.error h4 {
+div.error h4,
+p.error h4 {
   font-size:125%;
   margin: 0px;
 }

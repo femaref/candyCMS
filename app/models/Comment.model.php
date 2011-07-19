@@ -7,7 +7,7 @@
 
 class Model_Comment extends Model_Main {
 
-  private final function _setData($iId, $iEntries, $iLimit) {
+  private function _setData($iId, $iEntries, $iLimit) {
     $this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
 
     try {
@@ -86,59 +86,61 @@ class Model_Comment extends Model_Main {
     }
 
     # We crawl the facebook avatars
-    # TODO: Put into seperate method
-    if (class_exists('FacebookCMS')) {
-      $oFacebook = new FacebookCMS(array(
-                  'appId' => FACEBOOK_APP_ID,
-                  'secret' => FACEBOOK_SECRET,
-              ));
-
-      # We go through our data and get all facebook posts
-      $sFacebookUids = '';
-      foreach ($aResult as $aRow) {
-
-        # Skip unnecessary data
-        if (empty($aRow['author_facebook_id']))
-          continue;
-
-        else
-          $sFacebookUids .= $aRow['author_facebook_id'] . ',';
-      }
-
-      # Create a new facebook array with avatar urls
-      $aFacebookAvatarCache = array();
-      $aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
-
-      foreach($aFacebookAvatars as $aFacebookAvatar) {
-        $iUid = $aFacebookAvatar['uid'];
-        $aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
-        $aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
-      }
-
-      # Finally, we need to rebuild avatar data in main data array
-      foreach ($aResult as $aRow) {
-
-        # Skip unnecessary data
-        if (empty($aRow['author_facebook_id']))
-          continue;
-
-        else {
-          $iId = $aRow['id'];
-          $iAuthorFacebookId = $aRow['author_facebook_id'];
-          $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
-          $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
-        }
-      }
-    }
+    if (class_exists('FacebookCMS'))
+      $this->_getFacebookAvatars($aResult);
 
     return $this->_aData;
   }
+  
+  private function _getFacebookAvatars($aResult) {
+    $oFacebook = new FacebookCMS(array(
+                'appId' => FACEBOOK_APP_ID,
+                'secret' => FACEBOOK_SECRET,
+            ));
 
-  public final function getData($iId, $iEntries, $iLimit) {
+    # We go through our data and get all facebook posts
+    $sFacebookUids = '';
+    foreach ($aResult as $aRow) {
+
+      # Skip unnecessary data
+      if (empty($aRow['author_facebook_id']))
+        continue;
+
+      else
+        $sFacebookUids .= $aRow['author_facebook_id'] . ',';
+    }
+
+    # Create a new facebook array with avatar urls
+    $aFacebookAvatarCache = array();
+    $aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
+
+    foreach ($aFacebookAvatars as $aFacebookAvatar) {
+      $iUid = $aFacebookAvatar['uid'];
+      $aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
+      $aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
+    }
+
+    # Finally, we need to rebuild avatar data in main data array
+    foreach ($aResult as $aRow) {
+
+      # Skip unnecessary data
+      if (empty($aRow['author_facebook_id']))
+        continue;
+
+      else {
+        $iId = $aRow['id'];
+        $iAuthorFacebookId = $aRow['author_facebook_id'];
+        $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
+        $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
+      }
+    }
+  }
+
+  public function getData($iId, $iEntries, $iLimit) {
     return $this->_setData($iId, $iEntries, $iLimit);
   }
 
-  public final function countData($iParentId) {
+  public function countData($iParentId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

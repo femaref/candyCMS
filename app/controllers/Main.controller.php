@@ -74,6 +74,7 @@ abstract class Main {
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '-min' : '');
+    $this->_oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
     $this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
     $this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_pubdate_', date('r'));

@@ -279,7 +279,7 @@ class User extends Main {
 			if (!isset($this->_aRequest['disclaimer']))
 				$this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
 		}
-
+    
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
@@ -331,7 +331,7 @@ class User extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
-
+    
 		# AJAX reload disclaimer
 		$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 

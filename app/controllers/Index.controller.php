@@ -192,8 +192,8 @@ class Index extends Main {
 
 		# Check for update
 		$sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-						str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
-						'';
+            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+            '';
 
 		$sLangUpdateAvaiable = str_replace(
 										'%l',
@@ -280,7 +280,7 @@ class Index extends Main {
 			$sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
 		}
 
-		# Build absolute Path because of Pretty URLs
+		# Build absolute Path because of pretty URLs
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
@@ -288,6 +288,7 @@ class Index extends Main {
 		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
 		if (!empty($this->_sSkin))
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/css', $sCachedHTML);
+  
 		elseif (PATH_CSS !== '')
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
 
@@ -297,6 +298,7 @@ class Index extends Main {
 		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
 		if (!empty($this->_sSkin))
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/images', $sCachedHTML);
+  
 		elseif (PATH_IMAGES !== '')
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
 
