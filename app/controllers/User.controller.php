@@ -13,7 +13,7 @@ require_once 'app/helpers/Upload.helper.php';
 
 class User extends Main {
 
-	public final function __init() {
+	public function __init() {
 		$this->_oModel = new Model_User($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
 

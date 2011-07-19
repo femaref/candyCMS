@@ -14,14 +14,14 @@ class Index extends Main {
   private $_sSkin;
   private $_sLanguage;
 
-  public final function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+  public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
     $this->_aCookie 	= & $aCookie;
   }
 
-  public final function loadConfig($sPath = '') {
+  public function loadConfig($sPath = '') {
 		try {
 			if (!file_exists($sPath . 'config/Config.inc.php'))
 				throw new AdvancedException('Missing config file.');
@@ -36,7 +36,7 @@ class Index extends Main {
 			require_once $sPath . 'config/Facebook.inc.php';
 	}
 
-  public final function setBasicConfiguration() {
+  public function setBasicConfiguration() {
 		try {
 			if (is_dir('install') && WEBSITE_DEV == false)
 				throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
@@ -46,7 +46,7 @@ class Index extends Main {
 		}
 	}
 
-  public final function setSkin() {
+  public function setSkin() {
 		# We got a skin request? Let's change it!
 		if (isset($this->_aRequest['skin'])) {
 			setcookie('default_skin', (string) $this->_aRequest['skin'], time() + 2592000, '/');
@@ -62,7 +62,7 @@ class Index extends Main {
 		}
   }
 
-  public final function setLanguage($sPath = '') {
+  public function setLanguage($sPath = '') {
 		# We got a language request? Let's change it!
 		if (isset($this->_aRequest['language'])) {
 			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
@@ -111,7 +111,7 @@ class Index extends Main {
 			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
 	}
 
-  public final function loadPlugins() {
+  public function loadPlugins() {
 		$sPlugins = ALLOW_PLUGINS;
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
 
@@ -122,7 +122,7 @@ class Index extends Main {
 	}
 
 	# Give the users the ability to login via their facebook information
-	public final function loadFacebookPlugin() {
+	public function loadFacebookPlugin() {
 		if (class_exists('FacebookCMS')) {
 			return new FacebookCMS(array(
 					'appId' => FACEBOOK_APP_ID,
@@ -132,12 +132,12 @@ class Index extends Main {
 		}
 	}
 
-  public final function getActiveUser($iSessionId = '') {
+  public function getActiveUser($iSessionId = '') {
 		$this->_aSession['userdata'] = Model_Session::getSessionData($iSessionId);
 		return $this->_aSession['userdata'];
 	}
 
-  private final function _getFlashMessage() {
+  private function _getFlashMessage() {
 		$aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
 						$this->_aSession['flash_message']['type'] :
 						'';
@@ -152,7 +152,7 @@ class Index extends Main {
 		return $aFlashMessage;
 	}
 
-  public final function loadCronjob() {
+  public function loadCronjob() {
 		if (class_exists('Cronjob')) {
 			if (Cronjob::getNextUpdate() === true) {
 				Cronjob::cleanup();
@@ -162,7 +162,7 @@ class Index extends Main {
 		}
 	}
 
-  public final function show() {
+  public function show() {
 		# Redirect to landing page if we got no section
 		if (!isset($this->_aRequest['section'])) {
 			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);

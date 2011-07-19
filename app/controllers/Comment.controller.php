@@ -9,7 +9,7 @@ require_once 'app/models/Comment.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
-final class Comment extends Main {
+class Comment extends Main {
   private $_aParentData;
 	private $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
 	private $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
@@ -21,7 +21,7 @@ final class Comment extends Main {
     $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
   }
 
-  public final function show() {
+  public function show() {
 		if ($this->_iId) {
       $this->_oSmarty->assign('comments', $this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
@@ -48,7 +48,7 @@ final class Comment extends Main {
 
   # @Override
 	# We must override the main method due to user right problems
-	public final function create($sInputName) {
+	public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
       if (USER_RIGHT == 0 && RECAPTCHA_ENABLED === true)
         return $this->_checkCaptcha();
@@ -62,7 +62,7 @@ final class Comment extends Main {
     }
   }
 
-  protected final function _create($bShowCaptcha = true) {
+  protected function _create($bShowCaptcha = true) {
     if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
       $this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
 
@@ -91,7 +91,7 @@ final class Comment extends Main {
     }
   }
 
-  protected final function _destroy() {
+  protected function _destroy() {
     $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
@@ -102,7 +102,7 @@ final class Comment extends Main {
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
   }
 
-  protected final function _showFormTemplate($bShowCaptcha) {
+  protected function _showFormTemplate($bShowCaptcha) {
     $sName = isset($this->_aRequest['name']) ?
             (string) $this->_aRequest['name'] :
             '';

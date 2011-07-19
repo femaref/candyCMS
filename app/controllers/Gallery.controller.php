@@ -15,7 +15,7 @@ class Gallery extends Main {
     $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
   }
 
-  public final function show() {
+  public function show() {
     # Language
     $this->_oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
@@ -60,7 +60,7 @@ class Gallery extends Main {
   }
 
   # Create gallery album
-  protected final function _create() {
+  protected function _create() {
     if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
       $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
@@ -83,7 +83,7 @@ class Gallery extends Main {
   }
 
   # Update gallery album
-  protected final function _update() {
+  protected function _update() {
     if(	!isset($this->_aRequest['title']) || empty($this->_aRequest['title']) )
       $this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
@@ -119,7 +119,7 @@ class Gallery extends Main {
   }
 
   # Show gallery album form template
-  protected final function _showFormTemplate($bUpdate = true) {
+  protected function _showFormTemplate($bUpdate = true) {
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_oSmarty->assign('title', $this->_aData['title']);
@@ -164,7 +164,7 @@ class Gallery extends Main {
   }
 
   # Create gallery file
-  public final function createFile() {
+  public function createFile() {
 		if (USER_RIGHT < 3)
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
@@ -184,7 +184,7 @@ class Gallery extends Main {
 		}
 	}
 
-  public final function updateFile() {
+  public function updateFile() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
@@ -202,7 +202,7 @@ class Gallery extends Main {
     }
   }
 
-  public final function destroyFile() {
+  public function destroyFile() {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
@@ -217,7 +217,7 @@ class Gallery extends Main {
     }
   }
 
-  protected final function _showFormFileTemplate($bUpdate = false) {
+  protected function _showFormFileTemplate($bUpdate = false) {
     if($bUpdate === true) {
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/updatefile');
       $this->_oSmarty->assign('_formdata_', 'update_file');

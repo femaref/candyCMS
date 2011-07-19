@@ -42,14 +42,14 @@ class Blog extends Main {
 	}
 
   # Quick hack for displaying title without html tags
-  private final function _removeHighlight($sTitle) {
+  private function _removeHighlight($sTitle) {
     $sTitle = Helper::removeSlahes($sTitle);
     $sTitle = str_replace('<mark>', '', $sTitle);
     $sTitle = str_replace('</mark>', '', $sTitle);
     return $sTitle;
   }
 
-  private final function _setBlogDescription() {
+  private function _setBlogDescription() {
     if (isset($this->_aRequest['action']) &&
             'search' == $this->_aRequest['action'])
       return Helper::removeSlahes($this->_aRequest['id']);
@@ -68,12 +68,12 @@ class Blog extends Main {
       return LANG_GLOBAL_BLOG;
   }
 
-  private final function _setBlogKeywords() {
+  private function _setBlogKeywords() {
     if (!empty($this->_iId) && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
       return $this->_aData[1]['keywords'];
   }
 
-	private final function _setBlogTitle($aData) {
+	private function _setBlogTitle($aData) {
     # Create blog
     if (isset($this->_aRequest['action']) &&
             'create' == $this->_aRequest['action'] &&
@@ -100,7 +100,7 @@ class Blog extends Main {
 		}
 	}
 
-	protected final function _showFormTemplate($bUpdate = true) {
+	protected function _showFormTemplate($bUpdate = true) {
 
 		# Show update template
 		if ($bUpdate == true) {
@@ -157,7 +157,7 @@ class Blog extends Main {
 		return $this->_oSmarty->fetch('blogs/_form.tpl');
 	}
 
-	protected final function _create() {
+	protected function _create() {
 		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
 			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
 
@@ -172,7 +172,7 @@ class Blog extends Main {
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
 	}
 
-	protected final function _update() {
+	protected function _update() {
 		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);

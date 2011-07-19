@@ -13,7 +13,7 @@ class Newsletter extends Main {
     $this->_oModel = new Model_Newsletter($this->_aRequest, $this->_aSession);
   }
 
-  public final function handleNewsletter() {
+  public function handleNewsletter() {
 		if (isset($this->_aRequest['email'])) {
 			if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
 				$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
