@@ -87,6 +87,29 @@ final class Bbcode {
             "<div class='image' style='font-style:italic'><img src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
             $sStr);
 
+		# [audio]file[/audio]
+		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr)) {
+			preg_match_all('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aOutput);
+
+			# Get file name without extension
+			# TODO: Put into method
+			$sFile = trim($aOutput[1][0]);
+			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
+			
+			$sFile = substr($sFile, 0, $iExtensionLength);
+
+			# HTML 5 Audio
+			$sAudio = '<audio controls="controls">';
+			$sAudio .= '<source src="' .$sFile. '.ogg" type="audio/ogg" />';
+			$sAudio .= '<source src="' .$sFile. '.mp3" type="audio/mp3" />';
+			$sAudio .= $sFile;
+			$sAudio .= '</audio>';
+
+			$sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis',
+											'<div class="audio">' . $sAudio . '</div>',
+											$sStr);
+		}
+    
     # [video]file[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
       preg_match_all('#\[video\](.*)\[\/video\]#Uis', $sStr, $aOutput);

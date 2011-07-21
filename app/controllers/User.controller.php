@@ -260,7 +260,7 @@ class User extends Main {
 		if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
 			$this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
 
-		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+		if (Helper::checkEmailAddress($this->_aRequest['email']) !== true)
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
 		if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))

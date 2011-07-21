@@ -25,7 +25,7 @@ class Upload {
     $this->_iId = $this->_replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
-    $this->_sFormAction   = 'Media/upload';
+    $this->_sFormAction   = 'media/upload';
     $this->_sUploadFolder = 'media';
 
     if (!empty($this->_sRename)) {

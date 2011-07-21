@@ -102,7 +102,7 @@ class Mail extends Main {
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
 		
-		if (Helper::checkEmailAddress($this->_aRequest['email']) == false)
+		if (Helper::checkEmailAddress($this->_aRequest['email']) !== true)
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
     if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))

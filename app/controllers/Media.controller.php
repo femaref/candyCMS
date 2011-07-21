@@ -16,7 +16,7 @@ class Media extends Main {
 
 		else {
 			if (isset($this->_aRequest['upload_file'])) {
-				if ($this->_proceedUpload() === true)
+				if ($this->_proceedUpload() == true)
 					return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
 				else
 					return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
