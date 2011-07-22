@@ -46,13 +46,6 @@ class Section extends Main {
       $this->_oObject = & $this->_getController();
 
     switch (strtolower((string) $this->_aRequest['section'])) {
-      
-      case '404':
-        parent::_setContent($this->show404());
-        parent::_setDescription(LANG_ERROR_GLOBAL_404_INFO);
-        parent::_setTitle(LANG_ERROR_GLOBAL_404_TITLE);
-
-        break;
 
       case 'blog':
 
@@ -110,6 +103,16 @@ class Section extends Main {
           parent::_setDescription($this->_oObject->getDescription());
           parent::_setKeywords($this->_oObject->getKeywords());
           parent::_setTitle($this->_oObject->getTitle());
+        }
+
+        break;
+      
+      case 'error':
+
+        if (isset($this->_aRequest['id']) && $this->_aRequest['id'] == '404') {
+          parent::_setContent($this->_oObject->show404());
+          parent::_setDescription(LANG_ERROR_GLOBAL_404_INFO);
+          parent::_setTitle(LANG_ERROR_GLOBAL_404_TITLE);
         }
 
         break;
