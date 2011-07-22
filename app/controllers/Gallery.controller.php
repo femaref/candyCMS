@@ -39,8 +39,8 @@ class Gallery extends Main {
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/showFiles');
-      return $this->_oSmarty->fetch('galleries/showFiles.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/files');
+      return $this->_oSmarty->fetch('galleries/files.tpl');
     }
     # Overview
     else {
@@ -54,8 +54,8 @@ class Gallery extends Main {
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/showAlbums');
-      return $this->_oSmarty->fetch('galleries/showAlbums.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/albums');
+      return $this->_oSmarty->fetch('galleries/albums.tpl');
     }
   }
 

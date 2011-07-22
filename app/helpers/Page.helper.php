@@ -33,7 +33,7 @@ class Page {
 
     if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
 			header('Status: 404 Not Found');
-      Helper::redirectTo('/public/404.html');
+      Helper::redirectTo('/error/404');
     }
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;

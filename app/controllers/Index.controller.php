@@ -222,6 +222,7 @@ class Index extends Main {
 						strtolower($this->_aRequest['section']) == 'blog' ||
 						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
+						strtolower($this->_aRequest['section']) == 'error' ||
 						strtolower($this->_aRequest['section']) == 'gallery' ||
 						strtolower($this->_aRequest['section']) == 'log' ||
 						strtolower($this->_aRequest['section']) == 'mail' ||
@@ -254,7 +255,7 @@ class Index extends Main {
 		# There's no request on a core module and Addons are disabled. */
 		else {
 			header('Status: 404 Not Found');
-      Helper::redirectTo('/public/404.html');
+      Helper::redirectTo('/error/404');
     }
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested

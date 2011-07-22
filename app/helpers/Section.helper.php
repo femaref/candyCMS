@@ -12,42 +12,48 @@ class Section extends Main {
   protected $_oObject;
 
   private function _getController() {
-    # Check, whether we need to load controllers or if we only want to print out html
-    if ((string) strtolower($this->_aRequest['section']) !== 'static') {
-      # Are addons for existing controllers avaiable? If yes, use them
-      if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
-        $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-        $oAddon->setModules();
+    # Are addons for existing controllers avaiable? If yes, use them
+    if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
+      $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oAddon->setModules();
 
 
-        $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
-        $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
-      }
-
-      # There are no addons, so we use the default controllers
-      elseif (file_exists('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
-        require_once('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php');
-        $this->_oObject = new $this->_aRequest['section']($this->_aRequest, $this->_aSession, $this->_aFile);
-      }
-
-      # Some files are missing. Quit work!
-      else
-        throw new Exception('Module not found:' . 'app/controllers/' .
-                (string) ucfirst($this->_aRequest['section']) . '.controller.php');
-
-      $this->_oObject->__init();
-      return $this->_oObject;
+      $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
+      $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
-  }
-  # Handle the pre-defined sections
 
+    # There are no addons, so we use the default controllers
+    elseif (file_exists('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
+      require_once('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+      $this->_oObject = new $this->_aRequest['section']($this->_aRequest, $this->_aSession, $this->_aFile);
+    }
+
+    # Some files are missing. Quit work!
+    else
+      throw new Exception('Module not found:' . 'app/controllers/' .
+              (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+
+    $this->_oObject->__init();
+    return $this->_oObject;
+  }
+
+  # Handle the pre-defined sections
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
-      $this->_aRequest['section'] = 'blog';
-
-    $this->_oObject = & $this->_getController();
+      $this->_aRequest['section'] = '404';
+    
+    if ((string) strtolower($this->_aRequest['section']) !== 'static')
+      $this->_oObject = & $this->_getController();
 
     switch (strtolower((string) $this->_aRequest['section'])) {
+      
+      case '404':
+        parent::_setContent($this->show404());
+        parent::_setDescription(LANG_ERROR_GLOBAL_404_INFO);
+        parent::_setTitle(LANG_ERROR_GLOBAL_404_TITLE);
+
+        break;
+
       case 'blog':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
@@ -228,7 +234,13 @@ class Section extends Main {
       case 'sitemap':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'xml')
+          parent::_setContent($this->_oObject->showXML());
+
+        else {
           parent::_setContent($this->_oObject->show());
+          parent::_setDescription(LANG_GLOBAL_SITEMAP);
+          parent::_setTitle(LANG_GLOBAL_SITEMAP);
+        }
 
         break;
 

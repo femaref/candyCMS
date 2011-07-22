@@ -47,7 +47,7 @@ class Search extends Main {
       # Language
       $this->_oSmarty->assign('lang_headline', $sHeadline);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/show');
       return $this->_oSmarty->fetch('searches/show.tpl');
     }
   }

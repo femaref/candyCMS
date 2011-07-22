@@ -152,6 +152,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_search', LANG_GLOBAL_SEARCH);
 		$this->_oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
 		$this->_oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
+		$this->_oSmarty->assign('lang_sitemap', LANG_GLOBAL_SITEMAP);
 		$this->_oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 		$this->_oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);
@@ -159,6 +160,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_tags_info', LANG_GLOBAL_TAGS_INFO);
 		$this->_oSmarty->assign('lang_teaser', LANG_GLOBAL_TEASER);
 		$this->_oSmarty->assign('lang_title', LANG_GLOBAL_TITLE);
+		$this->_oSmarty->assign('lang_user', LANG_GLOBAL_USER);
 		$this->_oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 		$this->_oSmarty->assign('lang_update_show', LANG_GLOBAL_UPDATE_SHOW);
 		$this->_oSmarty->assign('lang_uploaded_at', LANG_GLOBAL_UPLOADED_AT);
@@ -210,7 +212,7 @@ abstract class Main {
     if (!empty($this->_sTitle))
       return $this->_sTitle;
     else
-      return LANG_ERROR_GLOBAL_404;
+      return LANG_ERROR_GLOBAL_404_TITLE;
   }
 
   protected function _setContent($sContent) {
@@ -228,7 +230,7 @@ abstract class Main {
   public function show() {
     $this->show();
   }
-
+  
   public function create($sInputName) {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');

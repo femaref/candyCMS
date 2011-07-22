@@ -73,6 +73,7 @@ define( 'LANG_GLOBAL_RSS', 'RSS-Feed' );
 define( 'LANG_GLOBAL_SEARCH', 'Suche' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
 define( 'LANG_GLOBAL_SHARE', 'Teilen' );
+define( 'LANG_GLOBAL_SITEMAP', 'Sitemap' );
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
@@ -89,6 +90,7 @@ define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update (#%v) für diese Softw
 define( 'LANG_GLOBAL_UPDATE_ENTRY', 'Eintrag bearbeiten' );
 define( 'LANG_GLOBAL_UPDATE_SHOW', 'Update anzeigen?' );
 define( 'LANG_GLOBAL_UPLOADED_AT', 'Datum des Hochladens' );
+define( 'LANG_GLOBAL_USER', 'User' );
 define( 'LANG_GLOBAL_USERMANAGER', 'Userverwaltung' );
 define( 'LANG_GLOBAL_USERRIGHT', 'Userrecht' );
 define( 'LANG_GLOBAL_USERRIGHT_0', 'Gast' );
@@ -215,7 +217,8 @@ define( 'LANG_ERROR_FORM_MISSING_SUBJECT', 'Bitte gib einen Betreff ein!' );
 # ERROR MESSAGES
 define( 'LANG_ERROR_GALLERY_NO_FILES_UPLOADED', 'Es wurden noch keine Bilder hochgeladen!' );
 define( 'LANG_ERROR_GLOBAL', 'Es trat ein Fehler auf!' );
-define( 'LANG_ERROR_GLOBAL_404', 'Error 404' );
+define( 'LANG_ERROR_GLOBAL_404_INFO', 'Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.' );
+define( 'LANG_ERROR_GLOBAL_404_TITLE', 'Error 404' );
 define( 'LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST', 'Bitte logge dich zuerst ein!' );
 define( 'LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED', 'Die Datei konnte nicht gelöscht werden!' );
 define( 'LANG_ERROR_GLOBAL_MISSING_ENTRY', 'Eintrag nicht vorhanden!' );
@@ -236,6 +239,7 @@ define( 'LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER', 'Es wurden bisher keine Dateien ho
 define( 'LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE', 'Datei nicht verfügbar!' );
 define( 'LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED', 'Maximale Dateigröße von 400KB erreicht!' );
 define( 'LANG_ERROR_MEDIA_WRONG_FILETYPE', 'Es wurde ein falscher Dateityp hochgeladen, es sind nur *.jpg Dateien erlaubt!' );
+define( 'LANG_ERROR_PLUGIN_BBCODE_AUDIO', 'Ihr Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicken Sie auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.' );
 define( 'LANG_ERROR_REQUEST_MISSING_ACTION', 'Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!' );
 define( 'LANG_ERROR_SESSION_CREATE', 'E-Mail-Adresse und Passwort stimmen nicht überein. Falls du deine E-Mail-Adresse noch nicht bestätigt hast, mache das bitte vor dem Login.' );
 define( 'LANG_ERROR_SESSION_CREATE_TITLE', 'Kann dich nicht einloggen!' );

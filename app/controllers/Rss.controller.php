@@ -45,7 +45,7 @@ class Rss extends Main {
 
 		else {
       header('Status: 404 Not Found');
-      die(LANG_ERROR_GLOBAL_404);
+      die(LANG_ERROR_GLOBAL_404_TITLE);
 		}
 	}
 

@@ -96,7 +96,7 @@ class Model_Content extends Model_Main {
             'teaser'            => Helper::formatOutput($aRow['teaser']),
             'keywords'          => Helper::formatOutput($aRow['keywords']),
             'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
-            'date'              => Helper::formatTimestamp($aRow['date']),
+            'date'              => Helper::formatTimestamp($aRow['date'], true),
             'datetime'          => Helper::formatTimestamp($aRow['date']),
             'date_raw'          => $aRow['date'],
             'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),

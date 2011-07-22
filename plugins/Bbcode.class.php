@@ -89,26 +89,24 @@ final class Bbcode {
 
 		# [audio]file[/audio]
 		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr)) {
-			preg_match_all('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aOutput);
+      preg_match_all('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aOutput);
 
-			# Get file name without extension
-			# TODO: Put into method
-			$sFile = trim($aOutput[1][0]);
-			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
-			
-			$sFile = substr($sFile, 0, $iExtensionLength);
+      # Get file name without extension
+      # TODO: Put into method
+      $sFile = trim($aOutput[1][0]);
+      $iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
 
-			# HTML 5 Audio
-			$sAudio = '<audio controls="controls">';
-			$sAudio .= '<source src="' .$sFile. '.ogg" type="audio/ogg" />';
-			$sAudio .= '<source src="' .$sFile. '.mp3" type="audio/mp3" />';
-			$sAudio .= $sFile;
-			$sAudio .= '</audio>';
+      $sFile = substr($sFile, 0, $iExtensionLength);
 
-			$sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis',
-											'<div class="audio">' . $sAudio . '</div>',
-											$sStr);
-		}
+      # HTML 5 Audio
+      $sAudio = '<audio controls="controls">';
+      $sAudio .= '<source src="' . $sFile . '.ogg" type="audio/ogg" />';
+      $sAudio .= '<source src="' . $sFile . '.mp3" type="audio/mp3" />';
+      $sAudio .= '<div class="error">'  .  str_replace('%u', trim($aOutput[1][0]), LANG_ERROR_PLUGIN_BBCODE_AUDIO).  '</div>';
+      $sAudio .= '</audio>';
+
+      $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis', '<div class="audio">' . $sAudio . '</div>', $sStr);
+    }
     
     # [video]file[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {

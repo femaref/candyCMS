@@ -13,13 +13,31 @@ require_once 'app/models/User.model.php';
 class Sitemap extends Main {
 
   public function __init() {
-    Header('Content-Type: text/xml');
+    
   }
 
-  public function show() {
+  public function showXML() {
+    Header('Content-Type: text/xml');
     # start
     $sWebsiteLandingPage = WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE;
 
+    $this->_oSmarty->assign('_website_landing_page_', $sWebsiteLandingPage);
+    $this->_oSmarty->assign('_website_url_', WEBSITE_URL);
+
+    $this->_getSitemap();
+
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/xml');
+    return $this->_oSmarty->fetch('sitemaps/xml.tpl');
+  }
+
+  public function show() {
+    $this->_getSitemap();
+
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/show');
+    return $this->_oSmarty->fetch('sitemaps/show.tpl');
+  }
+
+  private function _getSitemap() {
     # blog
     $oBlog = new Model_Blog();
     $aBlog = $oBlog->getData('', false, 1000);
@@ -36,15 +54,9 @@ class Sitemap extends Main {
     $oUser = new Model_User();
     $aUser = $oUser->getData();
 
-    $this->_oSmarty->assign('_website_landing_page_', $sWebsiteLandingPage);
-    $this->_oSmarty->assign('_website_url_', WEBSITE_URL);
-
     $this->_oSmarty->assign('blog', $aBlog);
     $this->_oSmarty->assign('content', $aContent);
     $this->_oSmarty->assign('gallery', $aGallery);
     $this->_oSmarty->assign('user', $aUser);
-
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/xml');
-    return $this->_oSmarty->fetch('sitemaps/xml.tpl');
   }
 }
