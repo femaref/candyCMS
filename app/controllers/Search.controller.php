@@ -27,11 +27,11 @@ class Search extends Main {
       return $this->showFormTemplate();
 
     else {
+      $this->_oSmarty->assign('_search_', $this->getSearch());
+
       # Create page title and description
       $this->_setDescription($this->_sHeadline);
       $this->_setTitle($this->_sHeadline);
-
-      $this->_oSmarty->assign('_search_', $this->getSearch());
 
       # Language
       $this->_oSmarty->assign('lang_headline', $this->_sHeadline);
