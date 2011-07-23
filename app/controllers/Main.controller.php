@@ -37,9 +37,7 @@ abstract class Main {
 		$this->_setSmarty();
   }
 
-	public function __init() {
-		$this->_oModel = '';
-	}
+	public function __init() {}
 
 	public function __autoload($sClass) {
 		if(!class_exists((string)ucfirst($sClass)))

@@ -12,16 +12,12 @@ require_once 'app/models/User.model.php';
 
 class Sitemap extends Main {
 
-  public function __init() {
-    
-  }
+  public function __init() {}
 
   public function showXML() {
     Header('Content-Type: text/xml');
-    # start
-    $sWebsiteLandingPage = WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE;
 
-    $this->_oSmarty->assign('_website_landing_page_', $sWebsiteLandingPage);
+    $this->_oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
     $this->_oSmarty->assign('_website_url_', WEBSITE_URL);
 
     $this->_getSitemap();
@@ -38,21 +34,14 @@ class Sitemap extends Main {
   }
 
   private function _getSitemap() {
-    # blog
-    $oBlog = new Model_Blog();
-    $aBlog = $oBlog->getData('', false, 1000);
-
-    # content
+    $oBlog		= new Model_Blog();
+    $aBlog		= $oBlog->getData('', false, 1000);
     $oContent = new Model_Content();
     $aContent = $oContent->getData();
-
-    # gallery
     $oGallery = new Model_Gallery();
     $aGallery = $oGallery->getData();
-
-    # user
-    $oUser = new Model_User();
-    $aUser = $oUser->getData();
+    $oUser		= new Model_User();
+    $aUser		= $oUser->getData();
 
     $this->_oSmarty->assign('blog', $aBlog);
     $this->_oSmarty->assign('content', $aContent);

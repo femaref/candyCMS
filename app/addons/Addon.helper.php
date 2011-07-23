@@ -34,7 +34,7 @@ final class Addon extends Section {
 
         # There is no such requested addon
         header('Status: 404 Not Found');
-        Helper::redirectTo('/error/404');
+        Helper::redirectTo('/error/404/' . $this->_aRequest['section']);
 
         break;
 

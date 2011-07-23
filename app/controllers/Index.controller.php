@@ -255,7 +255,7 @@ class Index extends Main {
 		# There's no request on a core module and Addons are disabled. */
 		else {
 			header('Status: 404 Not Found');
-      Helper::redirectTo('/error/404');
+      Helper::redirectTo('/error/404/'	. $this->_aRequest['section']);
     }
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested

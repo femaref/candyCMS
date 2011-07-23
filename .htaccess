@@ -50,7 +50,7 @@ RewriteRule ^session/(resendpassword|resendverification)$ index.php?section=sess
 RewriteRule ^user/resendverification$ index.php?section=user&action=verification [L,NC]
 
 # Evil rule. Last one to avoid breaks.
-RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with description in url
+RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1&seo_title=$3 [L,QSA,NC] # Show entry with description in url
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
