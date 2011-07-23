@@ -51,13 +51,16 @@ class Search extends Main {
 
     # Build real table names
     foreach ($aTables as $sTable) {
-      if ($sTable == 'gallery_albums')
+      if ($sTable == 'gallery_albums') {
+        $this->_aData[$sTable]['section'] = 'gallery';
         $this->_aData[$sTable]['title'] = LANG_GLOBAL_GALLERY;
-
+      }
       else {
         # Get table name from language files
         $iTableLen = strlen($sTable) - 1;
-        $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper(substr($sTable, 0, $iTableLen)));
+        $sTableSingular = substr($sTable, 0, $iTableLen);
+        $this->_aData[$sTable]['section'] = $sTableSingular;
+        $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper($sTableSingular));
       }
     }
 
