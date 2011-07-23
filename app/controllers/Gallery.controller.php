@@ -23,7 +23,7 @@ class Gallery extends Main {
     if (!empty($this->_iId)) {
       # collect data array
       $sAlbumName = Model_Gallery::getAlbumName($this->_iId);
-      $sAlbumDescription = Model_Gallery::getAlbumDescription($this->_iId);
+      $sAlbumDescription = Model_Gallery::getAlbumDescription($this->_iId); # TODO: Rename description to content
 
       # Get data and count afterwards
       $this->_aData = $this->_oModel->getThumbs($this->_iId);
@@ -31,7 +31,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('files', $this->_aData);
       $this->_oSmarty->assign('file_no', count($this->_aData));
       $this->_oSmarty->assign('gallery_name', $sAlbumName);
-      $this->_oSmarty->assign('gallery_description', $sAlbumDescription);
+      $this->_oSmarty->assign('gallery_content', $sAlbumDescription);
 
       # Language
       $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
@@ -123,7 +123,7 @@ class Gallery extends Main {
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_oSmarty->assign('title', $this->_aData['title']);
-      $this->_oSmarty->assign('description', $this->_aData['description']);
+      $this->_oSmarty->assign('content', $this->_aData['content']);
 
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/update');
       $this->_oSmarty->assign('_formdata_', 'update_gallery');
@@ -139,15 +139,15 @@ class Gallery extends Main {
               $this->_aRequest['title'] :
               '';
 
-      $sDescription = isset($this->_aRequest['description']) ?
-              $this->_aRequest['description'] :
+      $sDescription = isset($this->_aRequest['content']) ?
+              $this->_aRequest['content'] :
               '';
 
       $this->_oSmarty->assign('_action_url_', '/gallery/create');
       $this->_oSmarty->assign('_formdata_', 'create_gallery');
-      $this->_oSmarty->assign('title', $sTitle);
-      $this->_oSmarty->assign('description', $sDescription);
       $this->_oSmarty->assign('_request_id_', '');
+      $this->_oSmarty->assign('title', $sTitle);
+      $this->_oSmarty->assign('content', $sDescription);
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
@@ -221,7 +221,7 @@ class Gallery extends Main {
     if($bUpdate === true) {
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/updatefile');
       $this->_oSmarty->assign('_formdata_', 'update_file');
-      $this->_oSmarty->assign('description', Model_Gallery::getFileDescription($this->_iId));
+      $this->_oSmarty->assign('content', Model_Gallery::getFileDescription($this->_iId)); # TODO: Rename description to content
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
@@ -235,7 +235,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/createfile');
       $this->_oSmarty->assign('_formdata_', 'create_file');
       $this->_oSmarty->assign('default', $sDefault);
-      $this->_oSmarty->assign('description', '');
+      $this->_oSmarty->assign('content', '');
 
       # Language
       $this->_oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);

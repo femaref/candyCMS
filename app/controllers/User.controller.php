@@ -107,7 +107,7 @@ class User extends Main {
       $this->_aSession['user_to_update_data']['name'] = & $this->_aRequest['name'];
       $this->_aSession['user_to_update_data']['surname'] = & $this->_aRequest['surname'];
       $this->_aSession['user_to_update_data']['email'] = & $this->_aRequest['email'];
-      $this->_aSession['user_to_update_data']['description'] = & $this->_aRequest['description'];
+      $this->_aSession['user_to_update_data']['content'] = & $this->_aRequest['content'];
       $this->_aSession['user_to_update_data']['receive_newsletter'] = & $this->_aRequest['receive_newsletter'];
       $this->_aSession['user_to_update_data']['use_gravatar'] = & $this->_aRequest['use_gravatar'];
       $this->_aSession['user_to_update_data']['user_right'] = & $this->_aRequest['user_right'];
@@ -127,7 +127,7 @@ class User extends Main {
     $this->_oSmarty->assign('name', $this->_aSession['user_to_update_data']['name']);
     $this->_oSmarty->assign('surname', $this->_aSession['user_to_update_data']['surname']);
     $this->_oSmarty->assign('email', $this->_aSession['user_to_update_data']['email']);
-    $this->_oSmarty->assign('description', $this->_aSession['user_to_update_data']['description']);
+    $this->_oSmarty->assign('content', $this->_aSession['user_to_update_data']['content']);
     $this->_oSmarty->assign('receive_newsletter', (int) $this->_aSession['user_to_update_data']['receive_newsletter']);
     $this->_oSmarty->assign('use_gravatar', (int) $this->_aSession['user_to_update_data']['use_gravatar']);
     $this->_oSmarty->assign('user_right', (int) $this->_aSession['user_to_update_data']['user_right']);
@@ -152,7 +152,7 @@ class User extends Main {
     $this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
     $this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
     $this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
-    $this->_oSmarty->assign('lang_user_description', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION);
+    $this->_oSmarty->assign('lang_user_description', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
     $this->_oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
     $this->_oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
     $this->_oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);
@@ -207,7 +207,7 @@ class User extends Main {
 			$this->_aData = $this->_oModel->getData($this->_iId);
 			$this->_oSmarty->assign('u', $this->_aData);
 
-			# Manage title and description
+			# Manage title and description (content)
 			$this->_setTitle($this->_aData['full_name']);
 			$this->_setDescription($this->_aData['full_name']);
 

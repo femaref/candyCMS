@@ -106,7 +106,7 @@ class Model_User extends Model_Main {
 																					last_login,
 																					email,
 																					date,
-																					description,
+																					content,
 																					user_right,
 																					receive_newsletter,
 																					use_gravatar
@@ -146,7 +146,7 @@ class Model_User extends Model_Main {
           'date_raw'      => $aData['date'],
           'date_rss'      => date('r', $aData['date']),
           'date_w3c'      => date(DATE_W3C),
-          'description'   => Helper::formatOutput($aData['description']),
+          'content'       => Helper::formatOutput($aData['content']),
           'email'         => Helper::formatOutput($aData['email']),
           'receive_newsletter' => $aData['receive_newsletter'],
           'user_right'    => $aData['user_right'],
@@ -241,7 +241,7 @@ class Model_User extends Model_Main {
 																				name = :name,
 																				surname = :surname,
 																				email = :email,
-																				description = :description,
+																				content = :content,
 																				receive_newsletter = :receive_newsletter,
 																				use_gravatar = :use_gravatar,
 																				password = :password,
@@ -252,7 +252,7 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter);
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);

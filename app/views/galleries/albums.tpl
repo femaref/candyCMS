@@ -31,7 +31,7 @@
             <a href='/gallery/{$a.id}'>
               {foreach $a.files as $f}
                 <img src='{$f.url_32}'
-                     alt='{$f.file}' title='{$f.description}'
+                     alt='{$f.file}' title='{$f.content}'
                      height='32' width='32' />
               {/foreach}
             </a>

@@ -14,8 +14,8 @@
     </p>
   {/if}
   <p>
-    <label for='description'>{$lang_description}</label>
-    <input type='text' name='description' value='{$description}' />
+    <label for='content'>{$lang_description}</label>
+    <input type='text' name='content' value='{$content}' />
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='{$_formdata_}' />

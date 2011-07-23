@@ -66,7 +66,7 @@ class Model_Gallery extends Model_Main {
       # Fix fetchAll with array 0
 			$this->_aData = array(
           'title'       => Helper::removeSlahes($aRow[0]['title']),
-					'description' => Helper::removeSlahes($aRow[0]['description'], true));
+					'content'     => Helper::removeSlahes($aRow[0]['content'], true));
 		}
 		else {
 			foreach ($aResult as $aRow) {
@@ -84,7 +84,7 @@ class Model_Gallery extends Model_Main {
             'id'          => $aRow['id'],
             'author_id'   => $aRow['author_id'],
             'title'       => Helper::formatOutput($aRow['title']),
-            'description' => Helper::formatOutput($aRow['description']),
+            'content'     => Helper::formatOutput($aRow['content']),
             'date'        => Helper::formatTimestamp($aRow['date'], true),
             'datetime'    => Helper::formatTimestamp($aRow['date']),
             'date_raw'    => $aRow['date'],
@@ -167,7 +167,7 @@ class Model_Gallery extends Model_Main {
           'id'            => $aRow['id'],
           'album_id'      => $aRow['album_id'],
           'file'          => $aRow['file'],
-          'description'   => Helper::formatOutput($aRow['description']),
+          'content'       => Helper::formatOutput($aRow['content']),
           'date'          => Helper::formatTimestamp($aRow['date'], true),
           'datetime'      => Helper::formatTimestamp($aRow['date']),
           'date_raw'      => $aRow['date'],
@@ -229,11 +229,12 @@ class Model_Gallery extends Model_Main {
       return $aResult['title'];
   }
 
+  # TODO: Rename function
   public final static function getAlbumDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
+      $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
@@ -245,14 +246,14 @@ class Model_Gallery extends Model_Main {
     }
 
     if($bReturn === true)
-      return $aResult['description'];
+      return $aResult['content'];
   }
 
   public final static function getFileDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT description FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
 
@@ -264,20 +265,20 @@ class Model_Gallery extends Model_Main {
     }
 
     if($bReturn === true)
-      return $aResult['description'];
+      return $aResult['content'];
   }
 
 	public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "gallery_albums (author_id, title, description, date)
+																				" . SQL_PREFIX . "gallery_albums (author_id, title, content, date)
 																			VALUES
-																				( :author_id, :title, :description, :date )");
+																				( :author_id, :title, :content, :date )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
@@ -320,12 +321,12 @@ class Model_Gallery extends Model_Main {
 																				" . SQL_PREFIX . "gallery_albums
 																			SET
 																				title = :title,
-																				description = :description
+																				content = :content
 																			WHERE
 																				id = :where");
 
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('where', $iId);
       return $oQuery->execute();
     }
@@ -397,23 +398,23 @@ class Model_Gallery extends Model_Main {
     $oUploadFile = new Upload($this->_aRequest, $aFile);
 
     if($oUploadFile->uploadGalleryFile() == true) {
-      $this->_aRequest['description'] = (isset($this->_aRequest['description']) && !empty($this->_aRequest['description'])) ?
-              $this->_aRequest['description'] :
+      $this->_aRequest['content'] = (isset($this->_aRequest['content']) && !empty($this->_aRequest['content'])) ?
+              $this->_aRequest['content'] :
               '';
 
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
 																					" . SQL_PREFIX . "gallery_files
-																						(album_id, author_id, file, extension, description, date)
+																						(album_id, author_id, file, extension, content, date)
 																				VALUES
-																					( :album_id, :author_id, :file, :extension, :description, :date )");
+																					( :album_id, :author_id, :file, :extension, :content, :date )");
 
         $iUserId = USER_ID;
         $oQuery->bindParam('album_id', $this->_aRequest['id']);
         $oQuery->bindParam('author_id', $iUserId);
         $oQuery->bindParam('file', $oUploadFile->getId());
         $oQuery->bindParam('extension', $oUploadFile->getExtension());
-        $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
         $oQuery->bindParam('date', time());
 
         $bResult = $oQuery->execute();
@@ -435,11 +436,11 @@ class Model_Gallery extends Model_Main {
       $oQuery = $this->_oDb->prepare("UPDATE
 																				" . SQL_PREFIX . "gallery_files
 																			SET
-																				description = :description
+																				content = :content
 																			WHERE
 																				id = :where");
 
-      $oQuery->bindParam('description', Helper::formatInput($this->_aRequest['description']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('where', $iId);
       return $oQuery->execute();
     }

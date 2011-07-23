@@ -5,7 +5,7 @@
     {if $email == ''}
       <input name='email' value='{$email}' type='email' required />
       {if isset($error_email)}
-        <div class="description">{$error_email}</div>
+        <span class="description">{$error_email}</span>
       {/if}
     {else}
       <input name='email' value='{$email}' type='email' required />

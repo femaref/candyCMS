@@ -9,7 +9,7 @@
   </p>
   <p>
     <label for='teaser'>
-      {$lang_description}
+      {$lang_teaser}
     </label>
     <input name='teaser' value='{$c.teaser}' type='text' placeholder='{$lang_create_teaser_info}'
            title='{$lang_create_teaser_info}' onkeyup="$('#js-chars').html(140 - $(this).val().length)" />

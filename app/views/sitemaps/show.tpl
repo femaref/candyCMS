@@ -24,12 +24,4 @@
       </li>
     {/foreach}
   </ul>
-  <h2>{$lang_user}</h2>
-  <ul>
-    {foreach $user as $u}
-      <li>
-        <a href="{$u.url}">{$u.full_name}</a>
-      </li>
-    {/foreach}
-  </ul>
 </section>

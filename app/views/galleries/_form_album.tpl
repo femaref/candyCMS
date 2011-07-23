@@ -2,11 +2,11 @@
   <h1>{$lang_headline}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for='title'>{$lang_title} *</label>
-    <input name='title' value='{$title}' type='text' id='title' autofocus required />
+    <input name='title' value='{$title}' type='text' autofocus required />
   </p>
   <p>
-    <label for='tags'>{$lang_description}</label>
-    <input name='description' value='{$description}' type='text' id='description' />
+    <label for='description'>{$lang_description}</label>
+    <input name='content' value='{$content}' type='text' />
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

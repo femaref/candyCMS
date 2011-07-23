@@ -26,11 +26,4 @@
       <changefreq>weekly</changefreq>
     </url>
   {/foreach}
-  {foreach $user as $u}
-    <url>
-      <loc>{$u.url}</loc>
-      <priority>0.1</priority>
-      <changefreq>monthly</changefreq>
-    </url>
-  {/foreach}
 </urlset>

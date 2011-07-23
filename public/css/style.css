@@ -38,13 +38,13 @@ img {
 
 /* headlines */
 h1, h2 {
-  font-size: 24px;
+  font-size: 20px;
   word-spacing: 0.1em;
   margin: 3px 0px;
 }
 
 h1 {
-  font-size:26px;
+  font-size:24px;
 }
 
 h1 img, h2 img {

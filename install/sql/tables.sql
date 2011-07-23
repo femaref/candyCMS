@@ -54,7 +54,7 @@ CREATE TABLE `gallery_albums` (
   `author_id` smallint(5) NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `date` int(11) NOT NULL,
-  `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -68,7 +68,7 @@ CREATE TABLE `gallery_files` (
   `file` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `extension` varchar(4) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'jpg',
   `date` int(11) NOT NULL,
-  `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -111,7 +111,7 @@ CREATE TABLE `users` (
   `surname` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `receive_newsletter` tinyint(1) NOT NULL DEFAULT '1',
   `use_gravatar` tinyint(1) DEFAULT '0',
   `session` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,

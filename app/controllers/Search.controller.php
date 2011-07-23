@@ -17,8 +17,8 @@ class Search extends Main {
   public function __init() {
     $this->_oModel = new Model_Search($this->_aRequest, $this->_aSession);
   }
-  # We can show search directly or per post
 
+  # We can show search directly or per post
   public function show() {
     if (!isset($this->_aRequest['id']) || empty($this->_aRequest['id']))
       $this->_aError['id'] = LANG_ERROR_FORM_MISSING_CONTENT;
@@ -41,9 +41,9 @@ class Search extends Main {
     }
   }
 
-  public function getSearch() {
-    $aTables = array('blogs', 'contents');
-    $this->_sSearch   = Helper::formatInput($this->_aRequest['id']);
+  public function getSearch($iId = '') {
+    $aTables = array('blogs', 'contents', 'gallery_albums');
+    $this->_sSearch = empty($iId) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($iId);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 
     # Fetch data
@@ -51,8 +51,14 @@ class Search extends Main {
 
     # Build real table names
     foreach ($aTables as $sTable) {
-      $iTableLen = strlen($sTable) - 1;
-      $this->_aData[$sTable]['title'] = substr(ucfirst($sTable), 0, $iTableLen);
+      if ($sTable == 'gallery_albums')
+        $this->_aData[$sTable]['title'] = LANG_GLOBAL_GALLERY;
+
+      else {
+        # Get table name from language files
+        $iTableLen = strlen($sTable) - 1;
+        $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper(substr($sTable, 0, $iTableLen)));
+      }
     }
 
     $this->_oSmarty->assign('search', $this->_sSearch);

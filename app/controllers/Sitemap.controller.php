@@ -40,12 +40,9 @@ class Sitemap extends Main {
     $aContent = $oContent->getData();
     $oGallery = new Model_Gallery();
     $aGallery = $oGallery->getData();
-    $oUser		= new Model_User();
-    $aUser		= $oUser->getData();
 
     $this->_oSmarty->assign('blog', $aBlog);
     $this->_oSmarty->assign('content', $aContent);
     $this->_oSmarty->assign('gallery', $aGallery);
-    $this->_oSmarty->assign('user', $aUser);
   }
 }

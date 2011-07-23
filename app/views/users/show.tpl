@@ -34,7 +34,7 @@
         {$lang_about_himself}
       </td>
       <td>
-        {$u.description}
+        {$u.content}
       </td>
     </tr>
     <tr>

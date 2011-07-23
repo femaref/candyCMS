@@ -19,8 +19,8 @@
       </a>
     {/if}
   </h1>
-  {if $gallery_description}
-    <h3>{$gallery_description}</h3>
+  {if $gallery_content}
+    <h3>{$gallery_content}</h3>
   {/if}
   {if !$files}
     <div class='error' id='js-error'>
@@ -30,10 +30,10 @@
     <ul class="js-caption">
       {foreach $files as $f}
         <li>
-          <a href='{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.description}'>
+          <a href='{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
             <img src='{$f.url_thumb}'
-                 alt='{$f.description}'
-                 title='{$f.description}'
+                 alt='{$f.content}'
+                 title='{$f.content}'
                  class="js-image" />
           </a>
           {if $USER_RIGHT >= 3}

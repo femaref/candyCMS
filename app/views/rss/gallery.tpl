@@ -4,7 +4,7 @@
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{$_title_}</title>
-    <description>{$_description_}</description>
+    <description>{$_content_}</description>
     <language>{$_language_}</language>
     <link>{$_link_}</link>
     <copyright>{$_copyright_}</copyright>
@@ -25,7 +25,7 @@
         ]]>
       </description>
       <media:title>{$d.file}</media:title>
-      <media:description><![CDATA[{$d.description}]]></media:description>
+      <media:description><![CDATA[{$d.content}]]></media:description>
       <media:thumbnail
         url="{$d.url_thumb}"
         width="{$d.thumb_width}"

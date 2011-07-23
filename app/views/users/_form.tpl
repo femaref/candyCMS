@@ -19,8 +19,8 @@
       <span class="description">{$lang_user_gravatar_info}</span>
     </p>
     <p>
-      <label for='description'>{$lang_user_description}</label>
-      <textarea name='description' rows='6' cols='30'>{$description}</textarea>
+      <label for='content'>{$lang_user_content}</label>
+      <textarea name='content' rows='6' cols='30'>{$content}</textarea>
     </p>
     <p>
       <label for='receive_newsletter'>{$lang_user_newsletter}</label>
