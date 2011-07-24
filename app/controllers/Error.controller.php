@@ -18,7 +18,7 @@ class Error extends Main {
 		if (isset($this->_aRequest['seo_title'])) {
       $oSearch = new Search($this->_aRequest, $this->_aSession);
       $oSearch->__init();
-      $this->_oSmarty->assign('_search_', $oSearch->getSearch($this->_aRequest['seo_title']));
+      $this->_oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));
     }
             
 		$this->_oSmarty->template_dir = Helper::getTemplateDir('errors/404');

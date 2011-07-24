@@ -7,13 +7,13 @@
 
 # The cronjob keeps your software backuped, fast and clean. Set up the execution
 # intervals in the "config/Config.inc.php" and lean back.
-
 # Fix for install script
-if(file_exists('app/controllers/Mail.controller.php'))
-  require_once 'app/controllers/Mail.controller.php';
+if (file_exists('app/controllers/Mail.controller.php'))
+	require_once 'app/controllers/Mail.controller.php';
 
 final class Cronjob {
-  public static final function cleanup() {
+
+	public static final function cleanup() {
 
 		$aFolders = array('media', 'bbcode');
 
@@ -25,12 +25,12 @@ final class Cronjob {
 				if (substr($sFile, 0, 1) == '.' || filemtime($sTempPath . '/' . $sFile) > strtotime("-10 days"))
 					continue;
 
-        unlink($sTempPath . '/' . $sFile);
+				unlink($sTempPath . '/' . $sFile);
 			}
 		}
-  }
+	}
 
-  public static final function optimize() {
+	public static final function optimize() {
 		try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -53,8 +53,8 @@ final class Cronjob {
 		}
 	}
 
-  public static final function backup($iUserId, $sPath = '') {
-    $sBackupName = date('Y-m-d_H-i');
+	public static final function backup($iUserId, $sPath = '') {
+		$sBackupName = date('Y-m-d_H-i');
 		$sBackupFolder = $sPath . 'backup';
 		$sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
 		$iBackupStartTime = time();
@@ -79,8 +79,8 @@ final class Cronjob {
 		$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
 		$sFileText .= "\r\n";
 
-    # Get all tables and name them
-    try {
+		# Get all tables and name them
+		try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
 									PDO::ATTR_PERSISTENT => true));
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -92,18 +92,18 @@ final class Cronjob {
 			$oDb->rollBack();
 		}
 
-    # Show all tables
-    foreach ($aResult as $aTable) {
+		# Show all tables
+		foreach ($aResult as $aTable) {
 			$sTable = $aTable[0];
 			$sFileText .= "# " . $sTable . "\r\n";
 		}
 
-    # Now backup them
-    foreach ($aResult as $aTable) {
-      $sTable = $aTable[0];
+		# Now backup them
+		foreach ($aResult as $aTable) {
+			$sTable = $aTable[0];
 
 			try {
-				$oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
+				$oQuery = $oDb->query("SHOW COLUMNS FROM " . SQL_PREFIX . $sTable);
 				$aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 				$iColumns = count($aColumns);
 			}
@@ -111,16 +111,16 @@ final class Cronjob {
 				$oDb->rollBack();
 			}
 
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "# Table: " . $sTable . ", Columns: " . $iColumns;
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "\r\n";
-      $sFileText .= "DROP TABLE IF EXISTS `"  .$sTable.  "`;";
-      $sFileText .= "\r\n";
-      $sFileText .= "CREATE TABLE `" . $sTable . "` (";
+			$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+			$sFileText .= "# Table: " .	SQL_PREFIX. $sTable . ", Columns: " . $iColumns;
+			$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+			$sFileText .= "\r\n";
+			$sFileText .= "DROP TABLE IF EXISTS `" .	SQL_PREFIX. $sTable . "`;";
+			$sFileText .= "\r\n";
+			$sFileText .= "CREATE TABLE `" .	SQL_PREFIX. $sTable . "` (";
 
-      foreach ($aColumns as $aColumn) {
-        $sFileText .= "\r\n`" . $aColumn['Field'] . "` " . $aColumn['Type'];
+			foreach ($aColumns as $aColumn) {
+				$sFileText .= "\r\n`" . $aColumn['Field'] . "` " . $aColumn['Type'];
 
 				if (!empty($aColumn['Default']))
 					$sFileText .= " NOT NULL default '" . $aColumn['Default'] . "'";
@@ -132,158 +132,154 @@ final class Cronjob {
 					$sFileText .= ' default NULL';
 
 				$sFileText .= ",";
-      }
+			}
 
-      $sFileText .= "\n";
+			$sFileText .= "\n";
 
-      # Show extras like auto_increment etc
-      try {
-        $oQuery = $oDb->query("SHOW KEYS FROM " . $sTable);
-        $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iKeys = count($aKeys);
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+			# Show extras like auto_increment etc
+			try {
+				$oQuery = $oDb->query("SHOW KEYS FROM " .	SQL_PREFIX. $sTable);
+				$aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$iKeys = count($aKeys);
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+			}
 
-      $iKey = 1;
-      foreach ($aKeys as $aKey) {
-        $sKey = & $aKey['Key_name'];
+			$iKey = 1;
+			foreach ($aKeys as $aKey) {
+				$sKey = & $aKey['Key_name'];
 
-        if (($sKey != 'PRIMARY') && ($sKey['Non_unique'] == 0))
-          $sKey = "UNIQUE|" . $sKey;
+				if (($sKey != 'PRIMARY') && ($sKey['Non_unique'] == 0))
+					$sKey = "UNIQUE|" . $sKey;
 
-        # Do we have keys?
-        if ($sKey == "PRIMARY")
-          $sFileText .= " PRIMARY KEY (`" . $aKey['Column_name'] . "`)";
+				# Do we have keys?
+				if ($sKey == "PRIMARY")
+					$sFileText .= " PRIMARY KEY (`" . $aKey['Column_name'] . "`)";
 
-        elseif (substr($sKey, 0, 6) == "UNIQUE")
-          $sFileText .= " UNIQUE " . substr($sKey, 7) . " (`" . $aKey['Column_name'] . "`)";
+				elseif (substr($sKey, 0, 6) == "UNIQUE")
+					$sFileText .= " UNIQUE " . substr($sKey, 7) . " (`" . $aKey['Column_name'] . "`)";
 
-        else
-          $sFileText .= " FULLTEXT KEY " . $sKey . " (`" . $aKey['Column_name'] . "`)";
+				else
+					$sFileText .= " FULLTEXT KEY " . $sKey . " (`" . $aKey['Column_name'] . "`)";
 
-        if ($iKeys !== $iKey)
-          $sFileText .= ",\n";
+				if ($iKeys !== $iKey)
+					$sFileText .= ",\n";
 
-        $iKey++;
-      }
+				$iKey++;
+			}
 
-      # Closing bracket
-      $sFileText .= "\n)";
+			# Closing bracket
+			$sFileText .= "\n)";
 
-      try {
-        $oQuery = $oDb->query(" SELECT
+			try {
+				$oQuery = $oDb->query(" SELECT
                                   id
                                 FROM
-                                  " . $sTable . "
+                                  " .	SQL_PREFIX. $sTable . "
                                 ORDER BY
                                   id DESC
                                 LIMIT
                                   1");
 
-        $aRow = $oQuery->fetch();
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+				$aRow = $oQuery->fetch();
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+			}
 
-      # We also use this as count for data entries
-      $iRows = (int) $aRow['id'];
-      $sFileText .= " AUTO_INCREMENT=";
-      $sFileText .= $iRows + 1;
-      $sFileText .= " DEFAULT CHARSET=utf8;";
-      $sFileText .= "\r\n";
+			# We also use this as count for data entries
+			$iRows = (int) $aRow['id'];
+			$sFileText .= " AUTO_INCREMENT=";
+			$sFileText .= $iRows + 1;
+			$sFileText .= " DEFAULT CHARSET=utf8;";
+			$sFileText .= "\r\n";
 
-      # Now fetch content
-      try {
-        $oQuery = $oDb->query("SELECT * FROM " . $sTable);
-        $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iRows = count($aRows);
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+			# Now fetch content
+			try {
+				$oQuery = $oDb->query("SELECT * FROM " .	SQL_PREFIX. $sTable);
+				$aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$iRows = count($aRows);
+			}
+			catch (AdvancedException $e) {
+				$oDb->rollBack();
+			}
 
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "# Data: " . $sTable . ", Rows: " . $iRows;
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "\r\n";
+			$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+			$sFileText .= "# Data: " .	SQL_PREFIX. $sTable . ", Rows: " . $iRows;
+			$sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
+			$sFileText .= "\r\n";
 
-      foreach ($aRows as $aRow) {
-        $sFileText .= "INSERT INTO `" . $sTable . "` VALUES (";
+			foreach ($aRows as $aRow) {
+				$sFileText .= "INSERT INTO `" . $sTable . "` VALUES (";
 
-        $iEntries = 1;
-        foreach ($aRow as $sEntry) {
-          $sFileText .= "'" . addslashes($sEntry) . "'";
+				$iEntries = 1;
+				foreach ($aRow as $sEntry) {
+					$sFileText .= "'" . addslashes($sEntry) . "'";
 
-          if ($iEntries !== $iColumns)
-            $sFileText .= ",";
+					if ($iEntries !== $iColumns)
+						$sFileText .= ",";
 
-          $iEntries++;
-        }
+					$iEntries++;
+				}
 
-        $sFileText .= ");\r\n";
-      }
-    }
+				$sFileText .= ");\r\n";
+			}
+		}
 
-    # Write into file
-    $oFile = @fopen($sBackupPath, 'a+');
-    @fwrite($oFile, $sFileText);
-    @fclose($oFile);
+		# Write into file
+		$oFile = @fopen($sBackupPath, 'a+');
+		@fwrite($oFile, $sFileText);
+		@fclose($oFile);
 
-    if (CRONJOB_GZIP_BACKUP == true) {
-      $oData = implode('', file($sBackupPath));
-      $oCompress = gzencode($oData, 9);
-      unlink($sBackupPath);
+		if (CRONJOB_GZIP_BACKUP == true) {
+			$oData = implode('', file($sBackupPath));
+			$oCompress = gzencode($oData, 9);
+			unlink($sBackupPath);
 
-      $sBackupPath = $sBackupPath . '.gz';
-      $oF = fopen($sBackupPath, 'w+');
-      fwrite($oF, $oCompress);
-      fclose($oF);
-    }
+			$sBackupPath = $sBackupPath . '.gz';
+			$oF = fopen($sBackupPath, 'w+');
+			fwrite($oF, $oCompress);
+			fclose($oF);
+		}
 
-    # Send the backup via mail
-    if(class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
-      Mail::send( WEBSITE_MAIL,
-                  str_replace ('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT),
-                  LANG_MAIL_CRONJOB_CREATE_BODY,
-                  WEBSITE_MAIL_NOREPLY,
-                  $sBackupPath);
+		# Send the backup via mail
+		if (class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
+			Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
 
-    # Write into backup log
-    try {
-      $oQuery = $oDb->prepare(" INSERT INTO
+		# Write into backup log
+		try {
+			$oQuery = $oDb->prepare(" INSERT INTO
                                   " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
                                 VALUES
                                   ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
 
-      $sSectionName = 'cronjob';
-      $sActionName = 'create';
-      $iActionId = 0;
-      $oQuery->bindParam('section_name', $sSectionName);
-      $oQuery->bindParam('action_name', $sActionName);
-      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
-      $oQuery->bindParam('time_start', $iBackupStartTime);
-      $oQuery->bindParam('time_end', time());
-      $oQuery->bindParam('user_id', $iUserId);
-      $bResult = $oQuery->execute();
+			$sSectionName = 'cronjob';
+			$sActionName = 'create';
+			$iActionId = 0;
+			$oQuery->bindParam('section_name', $sSectionName);
+			$oQuery->bindParam('action_name', $sActionName);
+			$oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
+			$oQuery->bindParam('time_start', $iBackupStartTime);
+			$oQuery->bindParam('time_end', time());
+			$oQuery->bindParam('user_id', $iUserId);
+			$bResult = $oQuery->execute();
 
-      $oDb = null;
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
-  }
+			$oDb = null;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+		}
+	}
 
-  public static function getNextUpdate($iInterval = '') {
-    $iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
+	public static function getNextUpdate($iInterval = '') {
+		$iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
 
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->query(" SELECT
+			$oQuery = $oDb->query(" SELECT
                                 time_end
                               FROM
                                 " . SQL_PREFIX . "logs
@@ -294,18 +290,18 @@ final class Cronjob {
                               LIMIT
                                 1");
 
-      $aResult = $oQuery->fetch();
-      $iTimeEnd = $aResult['time_end'];
+			$aResult = $oQuery->fetch();
+			$iTimeEnd = $aResult['time_end'];
 
-      $oDb = null;
-    }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
-    }
+			$oDb = null;
+		}
+		catch (AdvancedException $e) {
+			$oDb->rollBack();
+		}
 
-    if($iTimeEnd + $iInterval < time())
-      return true;
-    else
-      return false;
-  }
+		if ($iTimeEnd + $iInterval < time())
+			return true;
+		else
+			return false;
+	}
 }
