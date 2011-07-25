@@ -17,6 +17,7 @@ class Gallery extends Main {
 
   public function show() {
     # Language
+		$this->_oSmarty->assign('lang_create_file_headline', LANG_GALLERY_FILE_CREATE_TITLE);
     $this->_oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
     # Specific gallery
@@ -33,9 +34,6 @@ class Gallery extends Main {
       $this->_oSmarty->assign('gallery_name', $sAlbumName);
       $this->_oSmarty->assign('gallery_content', $sAlbumDescription);
 
-      # Language
-      $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
@@ -51,7 +49,7 @@ class Gallery extends Main {
 			$this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/gallery'));
 
       # Language
-      $this->_oSmarty->assign('lang_create_entry_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
+      $this->_oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/albums');

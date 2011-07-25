@@ -152,7 +152,7 @@ class User extends Main {
     $this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
     $this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
     $this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
-    $this->_oSmarty->assign('lang_user_description', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
+    $this->_oSmarty->assign('lang_user_content', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
     $this->_oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
     $this->_oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
     $this->_oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);

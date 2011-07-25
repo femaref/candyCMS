@@ -2,7 +2,7 @@
   <h1>{$lang_login}</h1>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
     <label for="email">{$lang_email} *</label>
-    <input name='email' type='text' autofocus required />
+    <input name='email' type='email' autofocus required />
   </p>
   <p {if isset($error_password)}class="error" title="{$error_password}"{/if}>
     <label for='password'>{$lang_password} *</label>
