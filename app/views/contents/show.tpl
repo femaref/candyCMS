@@ -60,13 +60,14 @@
       </footer>
     </article>
   </section>
-  <script src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='%PATH_PUBLIC%/js/core/mediaelement{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      VideoJS.setupAllWhenReady();
+      $('video,audio').mediaelementplayer({ features: ['playpause','progress','current','duration','volume','fullscreen'] });
       $(".js-fancybox").fancybox();
       $('.js-image').capty();
+    });
   </script>
 {/if}

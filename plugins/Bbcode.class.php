@@ -118,7 +118,7 @@ final class Bbcode {
       $sFile = substr($sFile, 0, $iExtensionLength);
 
       # HTML 5 Video
-      $sVideo = '<video class="video-js" width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" preload="none">';
+      $sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" preload="none">';
 			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
 			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
