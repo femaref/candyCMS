@@ -67,7 +67,7 @@
     </div>
     <footer id="footer">
       <section id="about">
-        <h3>About</h3>
+        <h3>{$lang_overview}</h3>
         <ul>
           <li>
             <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
@@ -75,10 +75,13 @@
           <li>
             <a href='/Disclaimer'>{$lang_disclaimer}</a>
           </li>
+          <li>
+            <a href='/Sitemap'>{$lang_sitemap}</a>
+          </li>
         </ul>
       </section>
       <section id="settings">
-        <h3>Settings</h3>
+        <h3>{$lang_settings}</h3>
         <ul>
           {if $USER_RIGHT >= 3}
             <li>

@@ -7,7 +7,7 @@
     {foreach $comments as $c}
       <article class='{if $author_id == $c.author_id}from_author{/if}'>
         <header>
-          <a href='#{$c.id}' name='{$c.id}' class="count">#{$c.loop+$comment_number}</a>
+          <a href='#{$c.id}' name='{$c.id}' class="count">{$c.loop+$comment_number}</a>
           <img class="avatar" src="{$c.avatar_64}" width="32" height="32" alt="" />
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
@@ -23,9 +23,9 @@
           <br />
           <time datetime="{$c.date_w3c}">{$c.datetime}</time>
         </header>
-        <div id="js-comment_{$c.id}">
+        <details id="js-comment_{$c.id}" open="open">
           {$c.content}
-        </div>
+        </details>
         <footer>
           {if $USER_RIGHT >= 3 && $c.author_email}
             <a href="mailto:{$c.author_email}">{$c.author_email}</a>

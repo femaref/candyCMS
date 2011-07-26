@@ -3,10 +3,23 @@ header, footer, section, aside, nav, article {
   display: block;
 }
 
+/* Individual font */
+@font-face {
+  font-family: 'DroidSans';
+  src: url('../fonts/droid_sans/DroidSans-webfont.eot');
+  src: url('../fonts/droid_sans/DroidSans-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/droid_sans/DroidSans-webfont.woff') format('woff'),
+    url('../fonts/droid_sans/DroidSans-webfont.ttf') format('truetype'),
+    url('../fonts/droid_sans/DroidSans-webfont.svg#DroidSansRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 html {
   text-align: center;
-  font: 13px "helvetica neue",helvetica,arial,sans-serif;
-  color: #000;
+  font: 13px/1.6em 'DroidSans',Arial,sans-serif;
+  color: #333;
   background: #272930;
 }
 
@@ -37,31 +50,33 @@ img {
 }
 
 /* headlines */
-h1, h2 {
+h1, h2, h3,
+h1 a:link, h2 a:link, h3 a:link,
+h1 a:visited, h2 a:visited, h3 a:visited {
+  font-size: 24px;
+  margin: 10px 0px 0px;
+  color: #000;
+}
+
+h2 {
   font-size: 20px;
-  word-spacing: 0.1em;
-  margin: 3px 0px;
-}
-
-h1 {
-  font-size:24px;
-}
-
-h1 img, h2 img {
-  vertical-align: baseline;
 }
 
 h3 {
-  margin-top: 0px;
-  font-size: 14px;
+  margin: 5px 0px 0px;
+  font-size: 16px;
+}
+
+h1 img, h2 img, h3 img {
+  vertical-align: baseline;
 }
 
 /* Main navigation */
 nav {
-  color: #999999;
-  text-align: justify;
-  padding: 20px 0px 10px;
-  border-bottom: 1px solid #CCCCCC;
+  color: #999;
+  margin-top: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #CCC;
   text-transform: uppercase;
 }
 
@@ -72,7 +87,7 @@ nav ul {
 
 nav ul li {
   display: inline;
-  margin: 0px 3px;
+  margin-right: 6px;
 }
 
 nav ul li.right {
@@ -82,8 +97,8 @@ nav ul li.right {
 /* Footer at end of page. Got an ID because of conflicts with other footers */
 footer#footer {
   display: table;
-  margin-top: 25px;
-  padding-top: 25px;
+  margin-top: 20px;
+  padding-top: 20px;
   border-top: 1px solid #CCCCCC;
   width: 100%;
 }
@@ -96,10 +111,7 @@ footer#footer section {
 footer#footer ul {
   list-style: none;
   padding: 0px;
-}
-
-form#create_mail {
-  width:600px;
+  font-size:90%;
 }
 
 /* Main content area */
@@ -111,7 +123,6 @@ div#content {
 /* pagination */
 div#content section.pages {
   text-align: center;
-  margin-top:10px;
 }
 
 div#content section.pages span {
@@ -129,14 +140,18 @@ div#content p a img,
 div#content section.pages a img,
 span.js-toggle-headline img {
   vertical-align: bottom;
+  margin-bottom: 3px;
 }
 
 /* blog and content pages */
 section#blog article.blogs,
 section#content article.contents,
-section#gallery article.gallery_albums {
+section#gallery article.gallery_albums,
+section#gallery article.search,
+form{
   clear: both;
-  text-align: justify;
+  margin:20px 0px 40px;
+  max-width:700px; /* Fix for popups */
 }
 
 section#blog article.blogs header,
@@ -150,20 +165,31 @@ section.gallery_albums p {
   margin: 0px;
 }
 
-section#blog article.blogs footer {
-  margin: 0px auto 50px auto;
+section#blog article.blogs summary,
+section#content article.contents summary {
+  font-weight: bold;
 }
 
 section#blog article.blogs footer div.share,
 section#content article footer div.share {
   float: left;
+  margin: 5px 0px 0px;
+}
+
+section#blog article.blogs footer div.tags a {
+  background: none repeat scroll 0 0 #E1E1E1;
+  border-radius: 10px;
+  color: #000;
+  margin: 0px 3px;
+  padding: 4px 15px;
+  font-size:90%;
 }
 
 section#blog article.blogs footer div.share img,
 section#content article footer div.share img, 
 section article.blogs footer div.comments img {
   vertical-align: bottom;
-  margin: 0px 1px;
+  margin: 3px 1px;
 }
 
 section#blog article.blogs footer div.comments {
@@ -193,8 +219,8 @@ section#gallery article.gallery_albums summary img {
 }
 
 /* Comments */
-section#comments header {
-  padding-top: 22px;
+section#comments h3 {
+  margin:10px 0px;
 }
 
 section#comments a {
@@ -204,10 +230,11 @@ section#comments a {
 
 section#comments article {
   display: table;
-  padding: 22px;
-  width: 90%;
-  margin:0px auto 30px;
+  padding: 25px;
+  width: 650px;
+  margin-bottom:30px;
   text-align:left;
+  font-size: 90%;
 }
 
 section#comments article.from_author {
@@ -222,11 +249,12 @@ section#comments article header {
   display: table-cell;
   width: 235px;
   padding: 0px 22px 0px 0px;
+  line-height:1.5em;
 }
 
 section#comments article header img {
   float:left;
-  margin-right: 10px;
+  margin: 3px 10px 0px 0px;
 }
 
 section#comments article header a.count {
@@ -234,18 +262,18 @@ section#comments article header a.count {
   color: #CCCCCC;
   width: 50px;
   float:left;
+  margin-top: 10px;
 }
 
 section#comments article header a:hover {
   text-decoration: none;
 }
 
-section#comments article p {
+section#comments article details {
   padding: 0;
 }
 
 section#comments article footer {
-  padding: 0;
   text-align: right;
 }
 
@@ -267,11 +295,24 @@ div.video, div.audio, div.vjs-flash-fallback {
 }
 
 /* form fixes */
+form {
+  width: 100%;
+}
+
 form h1, form h2, form h3 {
   font-size: 20px;
   padding-bottom: 5px;
   margin-bottom: 20px;
   border-bottom: 1px solid #CCCCCC;
+}
+
+form label {
+  color:#000;
+  font: bold 12px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+}
+
+form#create_mail {
+  width:600px;
 }
 
 form h4 {
@@ -287,6 +328,39 @@ form input[type="search"],
 form textarea {
   border: 1px solid #d7d7d7;
   padding: 2px;
+}
+
+form input[type="submit"],
+form input[type="button"],
+form input[type="reset"] {
+  background-color: #EEEEEE;
+  background-image: -moz-linear-gradient(center top , #EEEEEE, #CCCCCC);
+  border-color: #CCCCCC #CCCCCC #BBBBBB;
+  border-radius: 18px;
+  border-style: solid;
+  border-width: 1px;
+  color: #333;
+  font: bold 11px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+  padding: 8px 0;
+  text-align: center;
+  text-shadow: 0 1px 0 #EEEEEE;
+  text-transform: uppercase;
+  width: 150px;
+}
+
+form input[type="submit"]:hover,
+form input[type="button"]:hover,
+form input[type="reset"]:hover {
+  background-color: #DDDDDD;
+  background-image: -moz-linear-gradient(center top , #DDDDDD, #BBBBBB);
+  border-color: #BBBBBB #BBBBBB #999999;
+  cursor: pointer;
+  text-shadow: 0 1px 0 #DDDDDD;
+}
+
+/* Mostly delete button */
+form input[type="button"] {
+  color:red;
 }
 
 table {

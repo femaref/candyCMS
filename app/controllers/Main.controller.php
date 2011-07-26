@@ -138,6 +138,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_no_entries', LANG_ERROR_GLOBAL_NO_ENTRIES);
 		$this->_oSmarty->assign('lang_not_published', LANG_ERROR_GLOBAL_NOT_PUBLISHED);
 		$this->_oSmarty->assign('lang_optional', LANG_GLOBAL_OPTIONAL);
+		$this->_oSmarty->assign('lang_overview', LANG_GLOBAL_OVERVIEW);
 		$this->_oSmarty->assign('lang_password', LANG_GLOBAL_PASSWORD);
 		$this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
 		$this->_oSmarty->assign('lang_published', LANG_GLOBAL_PUBLISHED);

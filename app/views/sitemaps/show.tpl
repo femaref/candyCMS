@@ -1,6 +1,6 @@
 <section id="sitemap">
   <h1>{$lang_sitemap}</h1>
-  <h2>{$lang_blog}</h2>
+  <h3>{$lang_blog}</h3>
   <ul>
     {foreach $blog as $b}
       <li>

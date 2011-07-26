@@ -1,5 +1,5 @@
 {foreach $tables as $table}
-  <h2>{$table.title}</h2>
+  <h3>{$table.title}</h3>
   <ol>
     {foreach $table as $data}
       {if $data.id > 0}

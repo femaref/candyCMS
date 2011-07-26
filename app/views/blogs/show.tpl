@@ -54,7 +54,7 @@
               <div class="tags">
                 {$lang_tags}:
                 {foreach from=$b.tags item=t name=tags}
-                  <a title='{$lang_tags_info}: {$t}' href='/blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
+                  <a title='{$lang_tags_info}: {$t}' href='/blog/{$t}'>{$t}</a>
                 {/foreach}
               </div>
             {/if}

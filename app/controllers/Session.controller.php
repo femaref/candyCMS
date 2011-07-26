@@ -46,7 +46,9 @@ class Session extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
-    
+
+    $this->_oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
+
     $this->_oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
     $this->_oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
