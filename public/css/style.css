@@ -81,7 +81,7 @@ nav ul li {
 
 nav ul li.right {
   float:right;
-  margin:0px;
+  margin:0px 0px 0px 10px;
 }
 
 /* Footer at end of page. Got an ID because of conflicts with other footers */
