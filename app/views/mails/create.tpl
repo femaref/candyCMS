@@ -1,7 +1,7 @@
 <form method='post' action='/mail/{$_request_id_}' id="create_mail">
   <h1>{$lang_headline} {$contact.name} {$contact.surname}</h1>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-    <label for='email'>{$lang_email} *</label>
+    <label for='email'>{$lang_email} <span title="{$lang_required}">*</span></label>
     {if $email == ''}
       <input name='email' value='{$email}' type='email' required />
       {if isset($error_email)}
@@ -16,7 +16,7 @@
     <input name='subject' class='' value='{$subject}' type='text' />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='content'>{$lang_content} *</label>
+    <label for='content'>{$lang_content} <span title="{$lang_required}">*</span></label>
     <textarea name='content' cols="30" required>{$content}</textarea>
   </p>
   {if isset($_captcha_)}

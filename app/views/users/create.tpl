@@ -1,7 +1,7 @@
 <form method='post'>
   <h1>{$lang_registration}</h1>
   <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-    <label for='name'>{$lang_name} *</label>
+    <label for='name'>{$lang_name} <span title="{$lang_required}">*</span></label>
     <input name='name' value='{$name}' type='name' autofocus required />
   </p>
   <p>
@@ -9,15 +9,15 @@
     <input name='surname' value='{$surname}' type='text' />
   </p>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-    <label for='email'>{$lang_email} *</label>
+    <label for='email'>{$lang_email} <span title="{$lang_required}">*</span></label>
     <input name='email' value='{$email}' type='email' required />
   </p>
   <p {if isset($error_password)}class="error" title="{$error_password}"{/if}>
-    <label for='password'>{$lang_password} *</label>
+    <label for='password'>{$lang_password} <span title="{$lang_required}">*</span></label>
     <input name='password' type='password' required />
   </p>
   <p>
-    <label for='password2'>{$lang_password_repeat} *</label>
+    <label for='password2'>{$lang_password_repeat} <span title="{$lang_required}">*</span></label>
     <input name='password2' type='password' required />
     <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
   </p>
@@ -25,7 +25,7 @@
     <p {if isset($error_disclaimer)}class="error" title="{$error_disclaimer}"{/if}>
       <label>
         <a href='/help/Registration' id="js-fancybox">
-          {$lang_disclaimer_read} *
+          {$lang_disclaimer_read} <span title="{$lang_required}">*</span>
         </a>
       </label>
       <input name='disclaimer' value='' type='checkbox' required />
