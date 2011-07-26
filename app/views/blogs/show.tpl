@@ -46,9 +46,7 @@
           {if $b.teaser !== ''}
             <summary>{$b.teaser}</summary>
           {/if}
-          <details {if isset($_request_id_) && is_int($_request_id_)}open='open'{/if}>
-            {$b.content}
-          </details>
+          {$b.content}
           <footer>
             {if $b.tags[0] !== ''}
               <div class="tags">

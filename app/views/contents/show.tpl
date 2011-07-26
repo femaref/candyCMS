@@ -23,9 +23,7 @@
           <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
         </p>
       </header>
-      <details>
-        {$c.content}
-      </details>
+      {$c.content}
       <footer>
         <div class="share">
           {$lang_share}:
