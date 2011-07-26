@@ -753,7 +753,7 @@ div.vjs-big-play-button span {
 }
 
 .js-image {
-  background: transparent url('../../../images/loading.gif') no-repeat center;
+  background: transparent url('../images/loading.gif') no-repeat center;
 }
 
 div.capty-caption {

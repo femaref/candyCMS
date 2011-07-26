@@ -20,9 +20,14 @@
     {/if}
     <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      if (typeof jQuery == 'undefined')
+        document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
     <title>{$_title_}</title>
     <!--[if IE]>
       <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>

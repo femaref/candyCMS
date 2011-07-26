@@ -3,22 +3,9 @@ header, footer, section, aside, nav, article {
   display: block;
 }
 
-/* Individual font */
-@font-face {
-  font-family: 'DroidSans';
-  src: url('../fonts/droid_sans/DroidSans-webfont.eot');
-  src: url('../fonts/droid_sans/DroidSans-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/droid_sans/DroidSans-webfont.woff') format('woff'),
-    url('../fonts/droid_sans/DroidSans-webfont.ttf') format('truetype'),
-    url('../fonts/droid_sans/DroidSans-webfont.svg#DroidSansRegular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-
-}
-
 html {
   text-align: center;
-  font: 13px/1.6em 'DroidSans',Arial,sans-serif;
+  font: 13px/1.6em 'Droid Sans',Arial,sans-serif;
   color: #333;
   background: #272930;
 }
@@ -56,6 +43,7 @@ h1 a:visited, h2 a:visited, h3 a:visited {
   font-size: 24px;
   margin: 10px 0px 0px;
   color: #000;
+  font: 'Droid Sans Bold';
 }
 
 h2 {
@@ -148,9 +136,10 @@ section#blog article.blogs,
 section#content article.contents,
 section#gallery article.gallery_albums,
 section#gallery article.search,
-form{
+form,
+table {
   clear: both;
-  margin:20px 0px 40px;
+  margin:20px 0px;
   max-width:700px; /* Fix for popups */
 }
 
