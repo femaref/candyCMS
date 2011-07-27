@@ -23,7 +23,7 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       if (typeof jQuery == 'undefined')
         document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.5.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
@@ -128,7 +128,7 @@
     </footer>
     <script type='text/javascript'>{$_javascript_language_file_}</script>
     <script src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    {if $FACEBOOK_APP_ID}
+    {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
       <div id="fb-root"></div>
       <script type="text/javascript">
         var sFacebookAppId = '{$FACEBOOK_APP_ID}';

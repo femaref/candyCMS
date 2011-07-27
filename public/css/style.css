@@ -46,7 +46,8 @@ h1 a:visited, h2 a:visited, h3 a:visited {
   font: 'Droid Sans Bold';
 }
 
-h2 {
+/* user settings */
+h2, h2 a:link, h2:visited {
   font-size: 20px;
 }
 
@@ -59,7 +60,7 @@ h1 img, h2 img, h3 img {
   vertical-align: baseline;
 }
 
-/* Main navigation */
+/* main navigation */
 nav {
   color: #999;
   margin-top: 20px;
@@ -75,11 +76,12 @@ nav ul {
 
 nav ul li {
   display: inline;
-  margin-right: 6px;
+  margin-right: 10px;
 }
 
 nav ul li.right {
   float:right;
+  margin:0px 0px 0px 10px;
 }
 
 /* Footer at end of page. Got an ID because of conflicts with other footers */
@@ -207,6 +209,11 @@ section#gallery article.gallery_albums summary img {
   border: 1px solid #ccc;
 }
 
+/* Margin from headlines to images */
+section#gallery ul.js-caption {
+  margin-top: 15px;
+}
+
 /* Comments */
 section#comments h3 {
   margin:10px 0px;
@@ -223,7 +230,6 @@ section#comments article {
   width: 650px;
   margin-bottom:30px;
   text-align:left;
-  font-size: 90%;
 }
 
 section#comments article.from_author {
@@ -288,7 +294,8 @@ form {
   width: 100%;
 }
 
-form h1, form h2, form h3 {
+form h1, form h2, form h3,
+section#comments h3 {
   font-size: 20px;
   padding-bottom: 5px;
   margin-bottom: 20px;

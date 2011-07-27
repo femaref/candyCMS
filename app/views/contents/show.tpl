@@ -23,9 +23,7 @@
           <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
         </p>
       </header>
-      <details>
-        {$c.content}
-      </details>
+      {$c.content}
       <footer>
         <div class="share">
           {$lang_share}:
@@ -54,19 +52,22 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
         </div>
-        <div class="facebook_like">
-          <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false" send="true"></fb:like>
-        </div>
+        {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
+          <div class="facebook_like">
+            <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false" send="true"></fb:like>
+          </div>
+        {/if}
       </footer>
     </article>
   </section>
-  <script src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='%PATH_PUBLIC%/js/core/mediaelement{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      VideoJS.setupAllWhenReady();
+      $('video,audio').mediaelementplayer({ features: ['playpause','progress','current','duration','volume','fullscreen'] });
       $(".js-fancybox").fancybox();
       $('.js-image').capty();
+    });
   </script>
 {/if}

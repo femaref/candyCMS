@@ -1,7 +1,7 @@
 <form method='post' action='{$_action_url_}'>
   <h1>{$lang_headline}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for='title'>{$lang_title} *</label>
+    <label for='title'>{$lang_title} <span title="{$lang_required}">*</span></label>
     <input name='title' value='{$title}' type='text' autofocus required />
   </p>
   <p>

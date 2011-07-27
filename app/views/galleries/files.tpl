@@ -6,7 +6,7 @@
     </a>
   </p>
 {/if}
-<section>
+<section id="gallery">
   <h1>
     {$gallery_name} ({$file_no} {$lang_files})
     <a href='/rss/gallery/{$_request_id_}'>

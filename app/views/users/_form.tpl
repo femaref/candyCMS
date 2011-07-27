@@ -2,7 +2,7 @@
   <h2><a href="#">1. {$lang_user_title}</a></h2>
   <div>
     <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-      <label for='name'>{$lang_name} *</label>
+      <label for='name'>{$lang_name} <span title="{$lang_required}">*</span></label>
       <input name='name' value='{$name}' type='name' required />
     </p>
     <p>
@@ -10,7 +10,7 @@
       <input name='surname' value='{$surname}' type='text' />
     </p>
     <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-      <label for='email'>{$lang_email} *</label>
+      <label for='email'>{$lang_email} <span title="{$lang_required}">*</span></label>
       <input name='email' value='{$email}' type='email' required />
     </p>
     <p>

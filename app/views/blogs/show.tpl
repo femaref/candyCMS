@@ -46,9 +46,7 @@
           {if $b.teaser !== ''}
             <summary>{$b.teaser}</summary>
           {/if}
-          <details {if isset($_request_id_) && is_int($_request_id_)}open='open'{/if}>
-            {$b.content}
-          </details>
+          {$b.content}
           <footer>
             {if $b.tags[0] !== ''}
               <div class="tags">
@@ -91,9 +89,11 @@
                 {$b.comment_sum} {$lang_comments}
               </a>
             </div>
-            <div class="facebook_like">
-              <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
-            </div>
+            {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
+              <div class="facebook_like">
+                <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
+              </div>
+            {/if}
           </footer>
         </article>
       {/if}
@@ -101,13 +101,13 @@
   {/if}
 </section>
 {$_blog_footer_}
-<script src='%PATH_PUBLIC%/js/core/video{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script src='%PATH_PUBLIC%/js/core/mediaelement{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    VideoJS.setupAllWhenReady();
+    $('video,audio').mediaelementplayer({ features: ['playpause','progress','current','duration','volume','fullscreen'] });
     $(".js-fancybox").fancybox();
     $(".image img").lazyload({ effect : "fadeIn" });
     $('.js-image').capty();
