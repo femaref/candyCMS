@@ -89,9 +89,11 @@
                 {$b.comment_sum} {$lang_comments}
               </a>
             </div>
-            <div class="facebook_like">
-              <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
-            </div>
+            {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
+              <div class="facebook_like">
+                <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
+              </div>
+            {/if}
           </footer>
         </article>
       {/if}

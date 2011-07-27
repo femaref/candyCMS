@@ -128,7 +128,7 @@
     </footer>
     <script type='text/javascript'>{$_javascript_language_file_}</script>
     <script src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    {if $FACEBOOK_APP_ID}
+    {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
       <div id="fb-root"></div>
       <script type="text/javascript">
         var sFacebookAppId = '{$FACEBOOK_APP_ID}';
