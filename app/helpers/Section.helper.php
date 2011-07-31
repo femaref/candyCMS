@@ -14,6 +14,7 @@ class Section extends Main {
   private function _getController() {
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
+			require_once 'app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
@@ -39,7 +40,7 @@ class Section extends Main {
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
       $this->_aRequest['section'] = '404';
-    
+
     if ((string) strtolower($this->_aRequest['section']) !== 'static')
       $this->_oObject = & $this->_getController();
 
@@ -104,7 +105,7 @@ class Section extends Main {
         }
 
         break;
-      
+
       case 'error':
 
         if (isset($this->_aRequest['id']) && $this->_aRequest['id'] == '404') {
