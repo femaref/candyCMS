@@ -141,7 +141,7 @@ section#gallery article.search,
 form,
 table {
   clear: both;
-  margin:20px 0px;
+  padding:20px 0px;
   max-width:700px; /* Fix for popups */
 }
 
@@ -177,7 +177,7 @@ section#blog article.blogs footer div.tags a {
 }
 
 section#blog article.blogs footer div.share img,
-section#content article footer div.share img, 
+section#content article footer div.share img,
 section article.blogs footer div.comments img {
   vertical-align: bottom;
   margin: 3px 1px;
@@ -187,7 +187,7 @@ section#blog article.blogs footer div.comments {
   float: right;
 }
 
-section#blog article.blogs iframe, 
+section#blog article.blogs iframe,
 section#content article.contents iframe {
   display:block;
   margin-top: 10px;
@@ -303,6 +303,11 @@ section#comments h3 {
   border-bottom: 1px solid #CCCCCC;
 }
 
+form h3,
+section#comments h3 {
+  font-size:16px;
+}
+
 form label {
   color:#000;
   font: bold 12px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
@@ -322,7 +327,7 @@ form input[type="url"],
 form input[type="password"],
 form input[type="name"],
 form input[type="search"],
-form input[type="phone"],
+form input[type="tel"],
 form textarea {
   border: 1px solid #d7d7d7;
 }

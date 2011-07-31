@@ -10,7 +10,7 @@ if(!class_exists('Pages'))
 
 class Model_Blog extends Model_Main {
 
-	private function _setData($bEdit, $iLimit) {
+	private function _setData($bUpdate, $iLimit) {
 		$sWhere	= '';
 
 		if (empty($this->_iId)) {
@@ -37,7 +37,7 @@ class Model_Blog extends Model_Main {
       }
 
 			$this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
- 
+
 			try {
 				$oQuery = $this->_oDb->query("SELECT
 																				b.*,
@@ -157,7 +157,7 @@ class Model_Blog extends Model_Main {
       $aRow =& $aResult;
 
       # Edit only
-      if ($bEdit == true) {
+      if ($bUpdate == true) {
         $this->_aData = array(
             'id'        => $aRow['id'],
             'author_id'	=> $aRow['author_id'],
@@ -225,11 +225,11 @@ class Model_Blog extends Model_Main {
     }
 	}
 
-	public final function getData($iId = '', $bEdit = false, $iLimit = LIMIT_BLOG) {
+	public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit, $iLimit);
+    $this->_setData($bUpdate, $iLimit);
     return $this->_aData;
   }
 

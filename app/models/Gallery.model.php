@@ -9,9 +9,9 @@ class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 	private $_sFilePath;
 
-	private final function _setData($bEdit, $bAdvancedImageInformation) {
+	private final function _setData($bEdit, $bAdvancedImageInformation, $iLimit) {
     $sWhere = '';
-		$iResult = 1000;
+		$iResult = 1;
 
 		if (!empty($this->_iId))
       $sWhere = "WHERE a.id = '" . $this->_iId . "'";
@@ -26,7 +26,7 @@ class Model_Gallery extends Model_Main {
       }
     }
 
-		$this->oPage = new Page($this->_aRequest, (int) $iResult, LIMIT_ALBUMS);
+		$this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
 
 		try {
       $oQuery = $this->_oDb->query("SELECT
@@ -106,11 +106,11 @@ class Model_Gallery extends Model_Main {
 		}
 	}
 
-	public final function getData($iId = '', $bEdit = false, $bAdvancedImageInformation = false) {
+	public final function getData($iId = '', $bEdit = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit, $bAdvancedImageInformation);
+    $this->_setData($bEdit, $bAdvancedImageInformation, $iLimit);
     return $this->_aData;
   }
 

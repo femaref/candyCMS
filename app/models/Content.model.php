@@ -7,7 +7,7 @@
 
 class Model_Content extends Model_Main {
 
-  private final function _setData($bUpdateEntry = false) {
+  private final function _setData($bUpdate = false, $iLimit) {
     if (empty($this->_iId)) {
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -22,7 +22,8 @@ class Model_Content extends Model_Main {
 																			ON
 																				c.author_id=u.id
 																			ORDER BY
-																				c.title ASC");
+																				c.title ASC
+                                      LIMIT " . $iLimit);
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       } catch (AdvancedException $e) {
@@ -61,7 +62,7 @@ class Model_Content extends Model_Main {
 
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
-      if ($bUpdateEntry == true) {
+      if ($bUpdate == true) {
 
         $this->_aData = array(
             'id'        => $aRow['id'],
@@ -115,11 +116,11 @@ class Model_Content extends Model_Main {
     }
   }
 
-  public final function getData($iId = '', $bUpdateEntry = false) {
+  public final function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bUpdateEntry);
+    $this->_setData($bUpdate, $iLimit);
     return $this->_aData;
   }
 

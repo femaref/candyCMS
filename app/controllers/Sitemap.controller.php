@@ -37,9 +37,9 @@ class Sitemap extends Main {
     $oBlog		= new Model_Blog();
     $aBlog		= $oBlog->getData('', false, 1000);
     $oContent = new Model_Content();
-    $aContent = $oContent->getData();
+    $aContent = $oContent->getData('', false, 1000);
     $oGallery = new Model_Gallery();
-    $aGallery = $oGallery->getData();
+    $aGallery = $oGallery->getData('', false, false, 1000);
 
     $this->_oSmarty->assign('blog', $aBlog);
     $this->_oSmarty->assign('content', $aContent);
