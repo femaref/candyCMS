@@ -35,7 +35,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName)));
+      $this->_setTitle($this->_removeHighlight(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/files');
       return $this->_oSmarty->fetch('galleries/files.tpl');

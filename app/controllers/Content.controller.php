@@ -29,7 +29,7 @@ final class Content extends Main {
       $this->_oSmarty->assign('c', $this->_aData[$this->_iId]);
 
       # Quick hack for displaying title without html tags
-      $sTitle = $this->_removeHighlight(Helper::removeSlahes($this->_aData[$this->_iId]['title']));
+      $sTitle = $this->_removeHighlight($this->_aData[$this->_iId]['title']);
 
       $this->_setDescription($this->_aData[$this->_iId]['teaser']);
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
