@@ -15,8 +15,6 @@ class Section extends Main {
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oAddon->setModules();
-
 
       $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);

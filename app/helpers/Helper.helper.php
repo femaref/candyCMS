@@ -106,8 +106,8 @@ class Helper {
 
   public function getTemplateDir($sTemplate) {
     try {
-      if (file_exists('public/skins/' . PATH_TPL . '/views/' . $sTemplate . '.tpl'))
-        return 'public/skins/' . PATH_TPL . '/views/';
+      if (file_exists('public/skins/' . PATH_SKIN . '/views/' . $sTemplate . '.tpl'))
+        return 'public/skins/' . PATH_SKIN . '/views/';
 
       elseif (file_exists('public/skins/_addons/views/' . $sTemplate . '.tpl'))
         return 'public/skins/_addons/views/';

@@ -5,6 +5,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+require_once 'app/models/Search.controller.php';
+
 class Error extends Main {
 	# Empty, but required from section helper
 

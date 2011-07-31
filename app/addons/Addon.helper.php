@@ -10,23 +10,6 @@ if (!class_exists('Section'))
 
 final class Addon extends Section {
 
-  public final function __construct($aRequest, $aSession, $aFile = '') {
-    $this->_aRequest  = & $aRequest;
-    $this->_aSession  = & $aSession;
-    $this->_aFile     = & $aFile;
-  }
-
-  public final function setModules() {
-    $oDir = opendir('app/addons');
-
-    while ($aFile = readdir($oDir)) {
-      if ($aFile == '.' || $aFile == '..' || $aFile == '_dev' || $aFile == '.htaccess')
-        continue;
-
-      require_once ('app/addons/' . $aFile);
-    }
-  }
-
   public final function getSection() {
     switch (strtolower($this->_aRequest['section'])) {
       default:
@@ -41,6 +24,7 @@ final class Addon extends Section {
       # This is a sample addon to display your projects and can be removed
       case 'projects':
 
+        require_once 'app/addons/Projects.controller.php';
         $oProjects = new Addon_Projects($this->_aRequest, $this->_aSession, $this->_aFile);
 
         parent::_setContent($oProjects->show());

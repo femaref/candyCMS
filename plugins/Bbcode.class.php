@@ -118,7 +118,7 @@ final class Bbcode {
       $sFile = substr($sFile, 0, $iExtensionLength);
 
       # HTML 5 Video
-      $sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" preload="none">';
+      $sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls">';
 			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
 			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
@@ -140,7 +140,7 @@ final class Bbcode {
 			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
 			$sFile = substr($sFile, 0, $iExtensionLength);
 
-			$sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" poster="\1" preload="none">';
+			$sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" poster="\1">';
 			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
 			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
@@ -163,7 +163,7 @@ final class Bbcode {
       $iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
       $sFile = substr($sFile, 0, $iExtensionLength);
 
-      $sVideo = '<video width="\1" height="\2" controls="controls" poster="\3" preload="none">';
+      $sVideo = '<video width="\1" height="\2" controls="controls" poster="\3">';
 			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
 			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
 			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';

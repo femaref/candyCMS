@@ -10,7 +10,7 @@ if(!class_exists('Pages'))
 
 class Model_Blog extends Model_Main {
 
-	private function _setData($bEdit = false) {
+	private function _setData($bEdit, $iLimit) {
 		$sWhere	= '';
 
 		if (empty($this->_iId)) {
@@ -36,7 +36,7 @@ class Model_Blog extends Model_Main {
         $this->_oDb->rollBack();
       }
 
-			$this->oPage = new Page($this->_aRequest, (int)$iResult, LIMIT_BLOG);
+			$this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
  
 			try {
 				$oQuery = $this->_oDb->query("SELECT
@@ -225,11 +225,11 @@ class Model_Blog extends Model_Main {
     }
 	}
 
-	public final function getData($iId = '', $bEdit = false) {
+	public final function getData($iId = '', $bEdit = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit);
+    $this->_setData($bEdit, $iLimit);
     return $this->_aData;
   }
 

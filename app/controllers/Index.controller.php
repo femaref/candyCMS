@@ -241,10 +241,8 @@ class Index extends Main {
 
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
-		elseif (ALLOW_ADDONS === true && file_exists('app/addons/Addon.helper.php')) {
-			require_once 'app/addons/Addon.helper.php';
+		elseif (ALLOW_ADDONS === true) {
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oSection->setModules();
       $oSection->getSection();
     }
 
@@ -290,8 +288,8 @@ class Index extends Main {
 		if (!empty($this->_sSkin))
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/css', $sCachedHTML);
   
-		elseif (PATH_CSS !== '')
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/css', $sCachedHTML);
+		elseif (PATH_SKIN !== '')
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_SKIN . '/css', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedCss;
 
@@ -300,8 +298,8 @@ class Index extends Main {
 		if (!empty($this->_sSkin))
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/images', $sCachedHTML);
   
-		elseif (PATH_IMAGES !== '')
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_CSS . '/images', $sCachedHTML);
+		elseif (PATH_SKIN !== '')
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_SKIN . '/images', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedImages;
 

@@ -12,7 +12,7 @@ define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
 define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', '');
+define('SQL_PREFIX', 'test_');
 define('SQL_PORT', '3306');
 
 # ------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser, Facebook
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Cronjob');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
 
 # ------------------------------------------------------------------------------
 
@@ -188,14 +188,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_CSS', '');
-
-# DEFAULT: default
-define('PATH_IMAGES', '');
-
-# Define, where to search for additional templates
-# DEFAULT: '', FOLDER: 'public/skins/SKINNAME'
-define('PATH_TPL', '');
+define('PATH_SKIN', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
