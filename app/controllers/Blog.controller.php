@@ -41,14 +41,6 @@ class Blog extends Main {
 		return $this->_oSmarty->fetch('blogs/show.tpl');
 	}
 
-  # Quick hack for displaying title without html tags
-  private function _removeHighlight($sTitle) {
-    $sTitle = Helper::removeSlahes($sTitle);
-    $sTitle = str_replace('<mark>', '', $sTitle);
-    $sTitle = str_replace('</mark>', '', $sTitle);
-    return $sTitle;
-  }
-
   private function _setBlogDescription() {
     if (isset($this->_aRequest['action']) &&
             'search' == $this->_aRequest['action'])

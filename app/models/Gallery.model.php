@@ -9,7 +9,7 @@ class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 	private $_sFilePath;
 
-	private final function _setData($bEdit, $bAdvancedImageInformation, $iLimit) {
+	private final function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
     $sWhere = '';
 		$iResult = 1;
 
@@ -60,7 +60,7 @@ class Model_Gallery extends Model_Main {
       $this->_oDb->rollBack();
     }
 
-		if($bEdit == true) {
+		if($bUpdate == true) {
       $aRow = & $aResult;
 
       # Fix fetchAll with array 0
@@ -106,11 +106,11 @@ class Model_Gallery extends Model_Main {
 		}
 	}
 
-	public final function getData($iId = '', $bEdit = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
+	public final function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bEdit, $bAdvancedImageInformation, $iLimit);
+    $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
     return $this->_aData;
   }
 
@@ -225,8 +225,13 @@ class Model_Gallery extends Model_Main {
       $oDb->rollBack();
     }
 
-    if($bReturn === true)
-      return $aResult['title'];
+    # Do we need to highlight text?
+    $sHighlight = isset($_REQUEST['highlight']) && !empty($_REQUEST['highlight']) ?
+            $_REQUEST['highlight'] :
+            '';
+
+    if ($bReturn === true)
+      return Helper::formatOutput($aResult['title'], $sHighlight);
   }
 
   # TODO: Rename function
@@ -245,8 +250,13 @@ class Model_Gallery extends Model_Main {
       $oDb->rollBack();
     }
 
-    if($bReturn === true)
-      return $aResult['content'];
+    # Do we need to highlight text?
+    $sHighlight = isset($_REQUEST['highlight']) && !empty($_REQUEST['highlight']) ?
+            $_REQUEST['highlight'] :
+            '';
+
+    if ($bReturn === true)
+      return Helper::formatOutput($aResult['content'], $sHighlight);
   }
 
   public final static function getFileDescription($iId) {
@@ -258,14 +268,14 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			$oDb = null;
+      $oDb = null;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
-    if($bReturn === true)
-      return $aResult['content'];
+    if ($bReturn === true)
+      return Helper::formatOutput($aResult['content']);
   }
 
 	public function create() {

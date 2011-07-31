@@ -35,7 +35,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
-      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
+      $this->_setTitle($this->_removeHighlight(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName)));
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/files');
       return $this->_oSmarty->fetch('galleries/files.tpl');
@@ -168,7 +168,7 @@ class Gallery extends Main {
 
 		else {
 			if (isset($this->_aRequest['create_file'])) {
-        
+
 				if ($this->_createFile() === true) {
 					# Log uploaded image. Request ID = album id
 					Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);

@@ -182,11 +182,11 @@ abstract class Main {
     # If this is our landing page / start page, show default description
     if(WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1 ,strlen($_SERVER['REQUEST_URI'])))
       return LANG_WEBSITE_DESCRIPTION;
-    
+
     # We got a description, so show it
     elseif (!empty($this->_sDescription))
       return $this->_sDescription;
-    
+
     # We got no description. Fall back to default description
     else
       return LANG_WEBSITE_DESCRIPTION;
@@ -229,7 +229,15 @@ abstract class Main {
   public function show() {
     $this->show();
   }
-  
+
+  # Quick hack for displaying title without html tags
+  protected function _removeHighlight($sTitle) {
+    $sTitle = Helper::removeSlahes($sTitle);
+    $sTitle = str_replace('<mark>', '', $sTitle);
+    $sTitle = str_replace('</mark>', '', $sTitle);
+    return $sTitle;
+  }
+
   public function create($sInputName) {
     if( USER_RIGHT < 3 )
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');

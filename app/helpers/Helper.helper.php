@@ -170,7 +170,7 @@ class Helper {
     }
   }
 
-  public static function formatOutput($sStr, $highlight = '') {
+  public static function formatOutput($sStr, $sHighlight = '') {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
@@ -178,8 +178,8 @@ class Helper {
     $sStr = Helper::removeSlahes($sStr);
 
     # Highlight string
-    if (!empty($highlight))
-      $sStr = str_ireplace($highlight, '<mark>' . $highlight . '</mark>', $sStr);
+    if (!empty($sHighlight))
+      $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
     if (class_exists('Bbcode') == true) {
       $oBbcode = new Bbcode();
