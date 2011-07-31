@@ -215,8 +215,9 @@ section#gallery ul.js-caption {
 }
 
 /* Comments */
-section#comments h3 {
-  margin:10px 0px;
+section#comments {
+  clear:both;
+  padding:10px 0px;
 }
 
 section#comments a {
@@ -321,9 +322,9 @@ form input[type="url"],
 form input[type="password"],
 form input[type="name"],
 form input[type="search"],
+form input[type="phone"],
 form textarea {
   border: 1px solid #d7d7d7;
-  padding: 2px;
 }
 
 form input[type="submit"],

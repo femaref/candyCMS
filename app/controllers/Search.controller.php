@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'app/controllers/Search.model.php';
+require_once 'app/models/Search.model.php';
 
 class Search extends Main {
 

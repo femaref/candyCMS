@@ -16,7 +16,6 @@ p.error,
 div.notice {
   margin: 0px 0px 10px 0px;
   padding: 10px;
-  cursor:pointer;
 }
 
 div.success p,
@@ -46,6 +45,7 @@ p.error {
   background:#EED0D0 !important; /* Override .row1 and .row2 */
   color:#333;
   border:1px solid red;
+  margin: 5px 0px;
 }
 
 div.error h4,
@@ -107,7 +107,7 @@ form p img {
 
 form label {
   display: table-cell;
-  width: 174px;
+  width: 25%;
   padding-right: 20px;
   text-align: right;
   font-weight: bold;
@@ -124,10 +124,14 @@ form input[type="email"],
 form input[type="url"],
 form input[type="password"],
 form input[type="search"],
-form input[type="name"] {
+form input[type="name"],
+form input[type="phone"],
+form textarea
+{
   display: table-cell;
   width: 75%;
   height: 20px;
+  padding:2px;
 }
 
 form input[type="copy"] {}
@@ -138,7 +142,7 @@ form textarea {
 }
 
 form div#recaptcha_widget_div {
-  margin-left:191px;
+  margin-left:25%;
 }
 
 form input[type="reset"],
