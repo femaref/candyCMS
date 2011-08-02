@@ -62,14 +62,18 @@
       </footer>
     </article>
   </section>
-  <script src='%PATH_PUBLIC%/js/core/mediaelement{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('video,audio').mediaelementplayer({ features: ['playpause','progress','current','duration','volume','fullscreen'] });
       $(".js-fancybox").fancybox();
       $('.js-image').capty();
+
+      if($('.js-media')) {
+        $('.js-media').each(function(e) {
+          $(this).parent().load(this.href);
+        });
+      };
     });
   </script>
 {/if}

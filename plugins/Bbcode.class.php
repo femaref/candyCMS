@@ -88,107 +88,53 @@ final class Bbcode {
             $sStr);
 
 		# [audio]file[/audio]
-		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr)) {
-      preg_match_all('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aOutput);
-
-      # Get file name without extension
-      # TODO: Put into method
-      $sFile = trim($aOutput[1][0]);
-      $iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
-
-      $sFile = substr($sFile, 0, $iExtensionLength);
-
-      # HTML 5 Audio
-      $sAudio = '<audio controls="controls">';
-      $sAudio .= '<source src="' . $sFile . '.ogg" type="audio/ogg" />';
-      $sAudio .= '<source src="' . $sFile . '.mp3" type="audio/mp3" />';
-      $sAudio .= '<div class="error">'  .  str_replace('%u', trim($aOutput[1][0]), LANG_ERROR_PLUGIN_BBCODE_AUDIO).  '</div>';
-      $sAudio .= '</audio>';
-
-      $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis', '<div class="audio">' . $sAudio . '</div>', $sStr);
+		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aMatch)) {
+      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30';
+      $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
-    
+
     # [video]file[/video]
-    if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr)) {
-      preg_match_all('#\[video\](.*)\[\/video\]#Uis', $sStr, $aOutput);
-
-      # Get file name without extension
-      $sFile = trim($aOutput[1][0]);
-      $iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
-      $sFile = substr($sFile, 0, $iExtensionLength);
-
-      # HTML 5 Video
-      $sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls">';
-			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
-			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
-			$sVideo .= '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf">';
-			$sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf" />';
-			$sVideo .= '<param name="flashvars" value="file=' . $sFile . '.mp4&amp;controls=true" />';
-			$sVideo .= '</object>';
-			$sVideo .= '</video>';
-
-			$sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis', '<div class="video video-js-box">' . $sVideo . '</div>', $sStr);
-		}
+    if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
+      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
+    }
 
     # [video thumbnail]file[/video]
-    if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr)) {
-      preg_match_all('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aOutput);
-
-      # Get file name without extension
-      $sFile = trim($aOutput[2][0]);
-			$iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
-			$sFile = substr($sFile, 0, $iExtensionLength);
-
-			$sVideo = '<video width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" controls="controls" poster="\1">';
-			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
-			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
-			$sVideo .= '<object width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf">';
-			$sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf" />';
-			$sVideo .= '<param name="flashvars" value="file=' . $sFile . '.mp4&amp;poster=\1&amp;controls=true" />';
-			$sVideo .= '<img src="\1" width="' . MEDIA_DEFAULT_X . '" height="' . MEDIA_DEFAULT_Y . '" alt="" title="" />';
-			$sVideo .= '</object>';
-			$sVideo .= '</video>';
-
-			$sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis', '<div class="video video-js-box">' . $sVideo . '</div>', $sStr);
+    if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aMatch)) {
+      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y .'&p=' . $aMatch[1];
+      $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # [video width height thumbnail]file[/video]
-    if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr)) {
-      preg_match_all('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aOutput);
+    if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
+      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] .'&p=' . $aMatch[3];
+      $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
+    }
 
-      # Get file name without extension
-      $sFile = trim($aOutput[4][0]);
-      $iExtensionLength = strlen($sFile) - strlen(substr(strrchr($sFile, '.'), 0));
-      $sFile = substr($sFile, 0, $iExtensionLength);
+    # replace youtube directly
+    if(preg_match('%(?:youtube\.com/(?:user/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $sStr, $aMatch)) {
+      $sUrl = 'http://test.localhost/video/?url=http://youtube.com/embed/' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sStr = preg_replace('%(?:youtube\.com/(?:user/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
+    }
 
-      $sVideo = '<video width="\1" height="\2" controls="controls" poster="\3">';
-			$sVideo .= '<source src="' . $sFile . '.mp4" type="video/mp4" />';
-			$sVideo .= '<source src="' . $sFile . '.webm" type="video/webm" />';
-			$sVideo .= '<source src="' . $sFile . '.ogv" type="video/ogg" />';
-			$sVideo .= '<object width="\1" height="\2" type="application/x-shockwave-flash" data="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf">';
-			$sVideo .= '<param name="movie" value="%PATH_PUBLIC%/lib/mediaelement/flashmediaelement.swf" />';
-			$sVideo .= '<param name="flashvars" value="file=' . $sFile . '.mp4&amp;poster=\3" />';
-			$sVideo .= '<img src="\3" width="\1" height="\2" alt="" title="" />';
-			$sVideo .= '</object>';
-			$sVideo .= '</video>';
-
-			$sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', '<div class="video video-js-box">' . $sVideo . '</div>', $sStr);
+    # replace vimeo directly
+    if (preg_match('/^http:\/\/(www\.)?vimeo\.com\/(clip\:)?(\d+).*$/', $sStr, $aMatch)) {
+      'http://player.vimeo.com/video/' . $aMatch[3] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sStr = preg_replace('/^http:\/\/(www\.)?vimeo\.com\/(clip\:)?(\d+).*$/', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # Quote
     while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
     preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<blockquote>\\1</blockquote>", $sStr);
-      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", 
-              "<blockquote><h3>" . LANG_GLOBAL_QUOTE_BY . " \\1</h3>\\2</blockquote>", 
+      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU",
+              "<blockquote><h3>" . LANG_GLOBAL_QUOTE_BY . " \\1</h3>\\2</blockquote>",
               $sStr);
     }
 
     while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
       $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU",
-              "<span class='js-toggle-headline'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>", 
+              "<span class='js-toggle-headline'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>",
               $sStr);
     }
 
