@@ -87,25 +87,25 @@ final class Bbcode {
             "<div class='image' style='font-style:italic'><img src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
             $sStr);
 
-		# [audio]file[/audio]
+		# using [audio]file.ext[/audio]
 		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aMatch)) {
       $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30';
       $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
-    # [video]file[/video]
+    # using [video]file.ext[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
       $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
       $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
-    # [video thumbnail]file[/video]
+    # using [video thumbnail.ext]fileext.[/video]
     if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aMatch)) {
       $sUrl = 'http://test.localhost/video/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y .'&p=' . $aMatch[1];
       $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
-    # [video width height thumbnail]file[/video]
+    # using [video width height thumbnail.ext]file.ext[/video]
     if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
       $sUrl = 'http://test.localhost/video/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] .'&p=' . $aMatch[3];
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);

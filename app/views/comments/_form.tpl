@@ -2,26 +2,26 @@
 <form method="post">
   <h3>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
   <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-    <label for="name">{$lang_name} <span title="{$lang_required}">*</span></label>
+    <label for="input-name">{$lang_name} <span title="{$lang_required}">*</span></label>
     {if $USER_NAME}
       {$USER_FULL_NAME}
       {if $USER_FACEBOOK_ID}
-        <input type="hidden" value="{$USER_FULL_NAME}" name="name" />
+        <input type="hidden" value="{$USER_FULL_NAME}" name="name" id="input-name" />
         <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" />
       {/if}
     {else}
-      <input type="text" value="{$name}" name="name" required />
+      <input type="text" value="{$name}" name="name" id="input-name" required />
       {if isset($error_name)}
         <div class="description">{$error_name}</div>
       {/if}
     {/if}
   </p>
   <p>
-    <label for="email">{$lang_email}</label>
+    <label for="input-email">{$lang_email}</label>
     {if $USER_EMAIL}
       {$USER_EMAIL}
       {if $USER_FACEBOOK_ID}
-        <input type="hidden" value="{$USER_EMAIL}" name="email" />
+        <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
     {else}
       <input type="email" value="{$email}" name="email" title="{$lang_email_info}" />

@@ -2,34 +2,34 @@
   <h2><a href="#">1. {$lang_user_title}</a></h2>
   <div>
     <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-      <label for='name'>{$lang_name} <span title="{$lang_required}">*</span></label>
-      <input name='name' value='{$name}' type='name' required />
+      <label for='input-name'>{$lang_name} <span title="{$lang_required}">*</span></label>
+      <input name='name' value='{$name}' type='name' id="input-name" required />
     </p>
     <p>
-      <label for='surname'>{$lang_surname}</label>
-      <input name='surname' value='{$surname}' type='text' />
+      <label for='input-surname'>{$lang_surname}</label>
+      <input name='surname' value='{$surname}' type='text' id="input-surname" />
     </p>
     <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-      <label for='email'>{$lang_email} <span title="{$lang_required}">*</span></label>
-      <input name='email' value='{$email}' type='email' required />
+      <label for='input-email'>{$lang_email} <span title="{$lang_required}">*</span></label>
+      <input name='email' value='{$email}' type='email' id="input-email" required />
     </p>
     <p>
-      <label for='use_gravatar'>{$lang_user_gravatar}</label>
-      <input type='checkbox' name='use_gravatar' />
+      <label for='input-use_gravatar'>{$lang_user_gravatar}</label>
+      <input type='checkbox' name='use_gravatar' id="input-use_gravatar" />
       <span class="description">{$lang_user_gravatar_info}</span>
     </p>
     <p>
-      <label for='content'>{$lang_user_content}</label>
-      <textarea name='content' rows='6' cols='30'>{$content}</textarea>
+      <label for='input-content'>{$lang_user_content}</label>
+      <textarea name='content' rows='6' cols='30' id="input-content">{$content}</textarea>
     </p>
     <p>
-      <label for='receive_newsletter'>{$lang_user_newsletter}</label>
-      <input name='receive_newsletter' value='1' type='checkbox' {if $receive_newsletter == 1}checked='checked'{/if} />
+      <label for='input-receive_newsletter'>{$lang_user_newsletter}</label>
+      <input name='receive_newsletter' id="input-receive_newsletter" value='1' type='checkbox' {if $receive_newsletter == 1}checked='checked'{/if} />
     </p>
     {if $USER_RIGHT === 4 && $USER_ID !== $uid}
       <p>
-        <label for='user_right'>{$lang_user_right}</label>
-        <select name='user_right'>
+        <label for='input-user_right'>{$lang_user_right}</label>
+        <select name='user_right' id="input-user_right">
           <option value='1' {if $user_right == 1}selected{/if}>{$lang_user_right_1}</option>
           <option value='2' {if $user_right == 2}selected{/if}>{$lang_user_right_2}</option>
           <option value='3' {if $user_right == 3}selected{/if}>{$lang_user_right_3}</option>
@@ -46,16 +46,16 @@
     <h2><a href="#">2. {$lang_password_change}</a></h2>
       <div>
       <p {if isset($error_password_old)}class="error" title="{$error_password_old}"{/if}>
-        <label for='password_old'>{$lang_password_old}</label>
-        <input name='password_old' type='password' />
+        <label for='input-password_old'>{$lang_password_old}</label>
+        <input name='password_old' id="input-password_old" type='password' />
       </p>
       <p {if isset($error_password_new)}class="error" title="{$error_password_new}"{/if}>
-        <label for='password_new'>{$lang_password_new}</label>
-        <input name='password_new' type='password' />
+        <label for='input-password_new'>{$lang_password_new}</label>
+        <input name='password_new' id="input-password_new" type='password' />
       </p>
       <p>
-        <label for='password_new2'>{$lang_password_repeat}</label>
-        <input name='password_new2' type='password' />
+        <label for='input-password_new2'>{$lang_password_repeat}</label>
+        <input name='password_new2' id="input-password_new2" type='password' />
       </p>
       <p class="center">
         <input type='submit' value='{$lang_password_change}' />
@@ -67,13 +67,13 @@
   <h2><a href="#">3. {$lang_image_upload}</a></h2>
   <div>
     <p>
-      <label for='image'>{$lang_image_choose}</label>
-      <input type='file' name='image' accept="image/jpg,image/gif,image/png" />
+      <label for='input-image'>{$lang_image_choose}</label>
+      <input type='file' name='image' id="input-image" accept="image/jpg,image/gif,image/png" />
       <span class="description">{$lang_image_upload_info}</span>
     </p>
     <p>
-      <label for='terms'>{$lang_image_terms}</label>
-      <input type='checkbox' name='terms' value='1' />
+      <label for='input-terms'>{$lang_image_terms}</label>
+      <input type='checkbox' name='terms' id="input-terms" value='1' />
     </p>
     <p class="center">
       <input type='submit' value='{$lang_image_upload}' />
@@ -90,8 +90,8 @@
         {$lang_account_info}
       </div>
       <p>
-        <label for='password'>{$lang_password}</label>
-        <input name='password' type='password' />
+        <label for='input-password'>{$lang_password}</label>
+        <input name='password' type='password' id="input-password" />
       </p>
       <p class="center">
         <input type='submit' value='{$lang_account_title}' />
