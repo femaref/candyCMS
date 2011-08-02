@@ -1,12 +1,12 @@
 <form method='post' action='{$_action_url_}'>
   <h1>{$lang_headline}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for='title'>{$lang_title} <span title="{$lang_required}">*</span></label>
-    <input name='title' value='{$title}' type='text' autofocus required />
+    <label for='input-title'>{$lang_title} <span title="{$lang_required}">*</span></label>
+    <input name='title' value='{$title}' id="input-title" type='text' autofocus required />
   </p>
   <p>
-    <label for='description'>{$lang_description}</label>
-    <input name='content' value='{$content}' type='text' />
+    <label for='input-description'>{$lang_description}</label>
+    <input name='content' value='{$content}' id="input-description" type='text' />
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

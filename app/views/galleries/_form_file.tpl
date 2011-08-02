@@ -2,20 +2,20 @@
   <h1>{$lang_headline}</h1>
   {if $smarty.get.action == 'createfile'}
     <p>
-      <label for='file'>{$lang_file_choose}</label>
-      <input type='file' name='file[]' multiple />
+      <label for='input-file'>{$lang_file_choose}</label>
+      <input type='file' name='file[]' id="input-file" multiple />
     </p>
     <p>
-      <label for='cut'>{$lang_cut}</label>
-      <select name='cut'>
+      <label for='input-cut'>{$lang_cut}</label>
+      <select name='cut' id="input-cut">
         <option value='c' {if $default == 'c'}default='default'{/if}>{$lang_create_file_cut}</option>
         <option value='r' {if $default == 'r'}default='default'{/if}>{$lang_create_file_resize}</option>
       </select>
     </p>
   {/if}
   <p>
-    <label for='content'>{$lang_description}</label>
-    <input type='text' name='content' value='{$content}' />
+    <label for='input-content'>{$lang_description}</label>
+    <input type='text' name='content' id="input-content" value='{$content}' />
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='{$_formdata_}' />

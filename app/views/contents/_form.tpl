@@ -4,24 +4,24 @@
       <p>{$lang_last_update}: {$c.date}</p>
     {/if}
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for="title">{$lang_title} <span title="{$lang_required}">*</span></label>
-    <input type='text' name='title' title='{$lang_title}' value='{$c.title}' autofocus required />
+    <label for="input-title">{$lang_title} <span title="{$lang_required}">*</span></label>
+    <input type='text' name='title' title='{$lang_title}' value='{$c.title}' id="input-title" autofocus required />
   </p>
   <p>
-    <label for='teaser'>
+    <label for='input-teaser'>
       {$lang_teaser}
     </label>
     <input name='teaser' value='{$c.teaser}' type='text' placeholder='{$lang_create_teaser_info}'
-           title='{$lang_create_teaser_info}' onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
+           title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
     <span id="js-chars">140</span>
   </p>
   <p>
-    <label for='keywords'>{$lang_keywords}</label>
-    <input name='keywords' value='{$c.keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' />
+    <label for='input-keywords'>{$lang_keywords}</label>
+    <input name='keywords' value='{$c.keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' id="input-keywords" />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for="content">{$lang_content} *</label>
-    <textarea name='content' title='{$lang_content}' class="js-tinymce">{$c.content}</textarea>
+    <label for="input-content">{$lang_content} *</label>
+    <textarea name='content' title='{$lang_content}' class="js-tinymce" id="input-content">{$c.content}</textarea>
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />

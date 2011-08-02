@@ -1,37 +1,37 @@
 <form method='post' action='{$_action_url_}' enctype="multipart/form-data">
   <h1>{$lang_headline}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for='title'>{$lang_title} <span title="{$lang_required}">*</span></label>
-    <input name='title' value='{$title}' type='text' required />
+    <label for='input-title'>{$lang_title} <span title="{$lang_required}">*</span></label>
+    <input name='title' value='{$title}' type='text' id="input-title" required />
   </p>
   <p>
-    <label for='teaser'>
+    <label for='input-teaser'>
       {$lang_teaser}
     </label>
     <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
-           title='{$lang_create_teaser_info}' onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
+           title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
     <span id="js-chars">140</span>
   </p>
   <p>
-    <label for='tags'>{$lang_tags}</label>
-    <input name='tags' value='{$tags}' type='text' placeholder='{$lang_create_tag_info}' title='{$lang_create_tag_info}' />
+    <label for='input-tags'>{$lang_tags}</label>
+    <input name='tags' value='{$tags}' type='text' placeholder='{$lang_create_tag_info}' title='{$lang_create_tag_info}' id="input-tags" />
   </p>
   <p>
-    <label for='keywords'>{$lang_keywords}</label>
-    <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' />
+    <label for='input-keywords'>{$lang_keywords}</label>
+    <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' id="input-keywords" />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='content'>{$lang_content} *</label>
-    <textarea name='content' class="js-tinymce" rows='16' cols='50' >{$content}</textarea>
+    <label for='input-content'>{$lang_content} *</label>
+    <textarea name='content' class="js-tinymce" rows='16' cols='50' id="input-content">{$content}</textarea>
   </p>
   <p>
-    <label for='published'>{$lang_published}</label>
-    <input name='published' value='1' type='checkbox' {if $published == true}checked='checked'{/if} />
+    <label for='input-published'>{$lang_published}</label>
+    <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked='checked'{/if} />
   </p>
   {if $smarty.get.action === 'update'}
     <p>
-      <label for='show_update'>{$lang_update_show}</label>
-      <input type='checkbox' name='show_update' value='1' />
+      <label for='input-show_update'>{$lang_update_show}</label>
+      <input type='checkbox' name='show_update' value='1' id="input-show_update" />
     </p>
   {/if}
   <p class="center">

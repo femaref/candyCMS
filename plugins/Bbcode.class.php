@@ -84,36 +84,36 @@ final class Bbcode {
 
     # Image with description
     $sStr = preg_replace("/\[img\=(.+)\](.*)\[\/img]/isU",
-            "<div class='image' style='font-style:italic'><img src='\\2' alt='\\1' title='\\1' /><br />\\1</div>",
+            "<img src='\\2' alt='\\1' title='\\1' /><br />\\1",
             $sStr);
 
 		# [audio]file[/audio]
 		if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30';
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30';
       $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # [video]file[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
       $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # [video thumbnail]file[/video]
     if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y .'&p=' . $aMatch[1];
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y .'&p=' . $aMatch[1];
       $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # [video width height thumbnail]file[/video]
     if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://test.localhost/video/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] .'&p=' . $aMatch[3];
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] .'&p=' . $aMatch[3];
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
     # replace youtube directly
     if(preg_match('%(?:youtube\.com/(?:user/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $sStr, $aMatch)) {
-      $sUrl = 'http://test.localhost/video/?url=http://youtube.com/embed/' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sUrl = 'http://url2video.com/?url=http://youtube.com/embed/' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
       $sStr = preg_replace('%(?:youtube\.com/(?:user/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', '<a href="' . $sUrl . '" class="js-media">' . $sUrl . '</a>', $sStr);
     }
 
@@ -137,7 +137,6 @@ final class Bbcode {
               "<span class='js-toggle-headline'><img src='%PATH_IMAGES%/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>",
               $sStr);
     }
-
 
     # Fix quote bug and allow these tags only
     $sStr = str_replace("&lt;blockquote&gt;", "<blockquote>", $sStr);
