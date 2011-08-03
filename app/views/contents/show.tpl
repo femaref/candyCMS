@@ -71,7 +71,7 @@
 
       if($('.js-media')) {
         $('.js-media').each(function(e) {
-          $(this).parent().load(this.href);
+          $(this).load(this.title);
         });
       };
     });

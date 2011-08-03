@@ -1,13 +1,13 @@
 <form action='/media/create' method='post' enctype='multipart/form-data'>
   <h1>{$lang_headline}</h1>
   <p>
-    <label for='file'>{$lang_file_choose} *</label>
-    <input type='file' name='file' />
+    <label for='input-file'>{$lang_file_choose} *</label>
+    <input type='file' name='file' id="input-file" />
     <span class='description'>{$lang_file_create_info}</span>
   </p>
   <p>
-    <label for='rename'>{$lang_file_rename}</label>
-    <input type='text' name='rename' onkeyup="this.value = candy.system.stripNoAlphaChars(this.value)" />
+    <label for='input-rename'>{$lang_file_rename}</label>
+    <input type='text' name='rename' id="input-rename" onkeyup="this.value = candy.system.stripNoAlphaChars(this.value)" />
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='upload_file' />

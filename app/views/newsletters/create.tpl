@@ -1,12 +1,12 @@
 <form method='post' action='/newsletter/create'>
   <h1>{$lang_headline}</h1>
   <p {if isset($error_subject)}class="error" title="{$error_subject}"{/if}>
-    <label for='subject'>{$lang_subject} <span title="{$lang_required}">*</span></label>
-    <input name='subject' value='{$subject}' type='text' required autofocus />
+    <label for='input-subject'>{$lang_subject} <span title="{$lang_required}">*</span></label>
+    <input name='subject' value='{$subject}' type='text' id="input-subject" required autofocus />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='content'>{$lang_content} <span title="{$lang_required}">*</span></label>
-    <textarea name='content' rows='20' cols='50' class="js-tinymce" required>{$content}</textarea>
+    <label for='input-content'>{$lang_content} <span title="{$lang_required}">*</span></label>
+    <textarea name='content' rows='20' cols='50' class="js-tinymce" id="input-content" required>{$content}</textarea>
     <div class='description'>{$lang_content_info}</div>
   </p>
   <p class="center">

@@ -1,24 +1,24 @@
 <form method='post'>
   <h1>{$lang_registration}</h1>
   <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-    <label for='name'>{$lang_name} <span title="{$lang_required}">*</span></label>
-    <input name='name' value='{$name}' type='name' autofocus required />
+    <label for='input-name'>{$lang_name} <span title="{$lang_required}">*</span></label>
+    <input name='name' value='{$name}' type='name' id="input-name" autofocus required />
   </p>
   <p>
-    <label for='surname'>{$lang_surname}</label>
-    <input name='surname' value='{$surname}' type='text' />
+    <label for='input-surname'>{$lang_surname}</label>
+    <input name='surname' value='{$surname}' id="input-surname" type='text' />
   </p>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-    <label for='email'>{$lang_email} <span title="{$lang_required}">*</span></label>
-    <input name='email' value='{$email}' type='email' required />
+    <label for='input-email'>{$lang_email} <span title="{$lang_required}">*</span></label>
+    <input name='email' value='{$email}' type='email' id="input-email" required />
   </p>
   <p {if isset($error_password)}class="error" title="{$error_password}"{/if}>
-    <label for='password'>{$lang_password} <span title="{$lang_required}">*</span></label>
-    <input name='password' type='password' required />
+    <label for='input-password'>{$lang_password} <span title="{$lang_required}">*</span></label>
+    <input name='password' type='password' id="input-password" required />
   </p>
   <p>
-    <label for='password2'>{$lang_password_repeat} <span title="{$lang_required}">*</span></label>
-    <input name='password2' type='password' required />
+    <label for='input-password2'>{$lang_password_repeat} <span title="{$lang_required}">*</span></label>
+    <input name='password2' type='password' id="input-password2" required />
     <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
   </p>
   {if $USER_RIGHT < 4}
