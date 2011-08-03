@@ -113,11 +113,9 @@
         $(this).next().toggle();
       });
     };
+  });
 
-    if($('.js-media')) {
-      $('.js-media').each(function(e) {
-        $(this).load(this.title);
-      });
-    };
+  $('.js-media').each(function(e) {
+    $(this).load(this.title);
   });
 </script>

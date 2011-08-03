@@ -68,12 +68,10 @@
     $(document).ready(function(){
       $(".js-fancybox").fancybox();
       $('.js-image').capty();
+    });
 
-      if($('.js-media')) {
-        $('.js-media').each(function(e) {
-          $(this).load(this.title);
-        });
-      };
+    $('.js-media').each(function(e) {
+      $(this).load(this.title);
     });
   </script>
 {/if}
