@@ -71,7 +71,10 @@
     });
 
     $('.js-media').each(function(e) {
-      $(this).load(this.title);
+      var $this = $(this);
+      $.getJSON(this.title, function(data) {
+        $this.html(data['html']);
+      });
     });
   </script>
 {/if}

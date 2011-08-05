@@ -83,49 +83,49 @@ final class Bbcode {
 
     # using [audio]file.ext[/audio]
     if (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30';
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30&callback=?';
       $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis',
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $sUrl . '">' . $aMatch[1] . '</a></span>',
+              '<div class="js-media" title="' . $sUrl . '"><a href="' . $sUrl . '">' . $aMatch[1] . '</a></div>',
               $sStr);
     }
 
     # [video]file[/video]
     if (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis',
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[1] . '">' . $aMatch[1] . '</a></span>',
+              '<a href="' . $aMatch[1] . '" class="js-media" title="' . $sUrl . '">' . $aMatch[1] . '</a>',
               $sStr);
     }
 
     # [video thumbnail]file[/video]
     if (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&p=' . $aMatch[1];
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&p=' . $aMatch[1] . '&callback=?';
       $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis',
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[2] . '">' . $aMatch[2] . '</a></span>',
+              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[2] . '">' . $aMatch[2] . '</a></div>',
               $sStr);
     }
 
     # [video width height thumbnail]file[/video]
     if (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] . '&p=' . $aMatch[3];
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] . '&p=' . $aMatch[3] . '&callback=?';
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[4] . '" class="js-media">' . $aMatch[4] . '</a></span>',
+              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[4] . '" class="js-media">' . $aMatch[4] . '</a></div>',
               $sStr);
     }
 
     # replace youtube directly
     if (preg_match('/http:\/\/(www\.)?(youtube\.com\/watch\?v\=|embed|youtu\.be\/)(.*)/', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = str_replace($aMatch[0],
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></span>',
+              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
               $sStr);
     }
 
     # replace vimeo directly
     if (preg_match('/http:\/\/(www\.)?vimeo\.com\/(\d+).*/', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y;
+      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = str_replace($aMatch[0],
-              '<span class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></span>',
+              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
               $sStr);
     }
 

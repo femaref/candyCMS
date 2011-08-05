@@ -107,15 +107,12 @@
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
     $('.js-image').capty();
-
-    if($('.js-toggle-headline')) {
-      $('.js-toggle-headline').click(function(){
-        $(this).next().toggle();
-      });
-    };
   });
 
   $('.js-media').each(function(e) {
-    $(this).load(this.title);
+    var $this = $(this);
+    $.getJSON(this.title, function(data) {
+      $this.html(data['html']);
+    });
   });
 </script>
