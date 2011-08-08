@@ -12,7 +12,7 @@
           <textarea name='content' id='content'
                     rows='12' cols='50'>{$content}</textarea>
           {if $error_content}
-            <span class="description">{$error_content}</span>
+            <div class="description">{$error_content}</div>
           {/if}
         </div>
       </td>
@@ -25,7 +25,7 @@
         <div class="input">
           <input name='name' id='name' value='{$name}' type='text' />
           {if $error_name}
-            <span class="description">{$error_name}</span>
+            <div class="description">{$error_name}</div>
           {/if}
         </div>
       </td>
