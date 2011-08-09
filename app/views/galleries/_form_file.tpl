@@ -19,27 +19,10 @@
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='{$_formdata_}' />
-    <input type='submit' value='{$lang_headline}' disabled />
+    <input type='submit' value='{$lang_headline}' />
     {if $smarty.get.action == 'updatefile'}
       <input type='reset' value='{$lang_reset}' />
       <input type='button' value='{$lang_destroy}' onclick="confirmDelete('/gallery/{$_request_id_}/destroyfile')" />
     {/if}
   </p>
 </form>
-<script type="text/javascript">
-  {if $smarty.get.action == 'updatefile'}
-    $(document).ready(function(){
-      $("input[type='submit']").attr('disabled',false);
-    });
-  {else}
-    $("input[type='file']").change(function(){
-      if ($(this).val()) {
-        $("input[type='submit']").attr('disabled',false);
-      }
-    });
-
-    $("input[type='submit']").click(function() {
-      $(this).val(LANG_LOADING).attr('disabled',true);
-    });
-  {/if}
-</script>
