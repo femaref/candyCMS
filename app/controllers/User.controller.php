@@ -159,8 +159,8 @@ class User extends Main {
     $this->_oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
     $this->_oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('users/_form');
-    return $this->_oSmarty->fetch('users/_form.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
+    return $this->_oSmarty->fetch('_form.tpl');
   }
 
 	private function _createAvatar() {
@@ -199,8 +199,8 @@ class User extends Main {
 				$this->_oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
 				$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
 
-				$this->_oSmarty->template_dir = Helper::getTemplateDir('users/overview');
-				return $this->_oSmarty->fetch('users/overview.tpl');
+				$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
+				return $this->_oSmarty->fetch('overview.tpl');
 			}
 		}
 		else {
@@ -217,8 +217,8 @@ class User extends Main {
       $this->_oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
       $this->_oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('users/show');
-			return $this->_oSmarty->fetch('users/show.tpl');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
+			return $this->_oSmarty->fetch('show.tpl');
 		}
 	}
 
@@ -279,7 +279,7 @@ class User extends Main {
 			if (!isset($this->_aRequest['disclaimer']))
 				$this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
 		}
-    
+
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
@@ -331,12 +331,12 @@ class User extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
-    
+
 		# AJAX reload disclaimer
 		$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('users/create');
-		return $this->_oSmarty->fetch('users/create.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'create');
+		return $this->_oSmarty->fetch('create.tpl');
 	}
 
 	public function verifyEmail() {

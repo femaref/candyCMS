@@ -19,8 +19,8 @@ final class Content extends Main {
       $this->_oSmarty->assign('content', $this->_oModel->getData());
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/overview');
-      return $this->_oSmarty->fetch('contents/overview.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'overview');
+      return $this->_oSmarty->fetch('overview.tpl');
     }
     else {
       $this->_aData = $this->_oModel->getData($this->_iId);
@@ -35,8 +35,8 @@ final class Content extends Main {
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
       $this->_setTitle($sTitle);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/show');
-      return $this->_oSmarty->fetch('contents/show.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'show');
+      return $this->_oSmarty->fetch('show.tpl');
     }
   }
 
@@ -94,8 +94,8 @@ final class Content extends Main {
     $this->_oSmarty->assign('lang_create_keywords_info', LANG_CONTENT_INFO_KEYWORDS);
     $this->_oSmarty->assign('lang_create_teaser_info', LANG_CONTENT_INFO_TEASER);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('contents/_form');
-    return $this->_oSmarty->fetch('contents/_form.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('contents' ,'_form');
+    return $this->_oSmarty->fetch('_form.tpl');
   }
 
   protected final function _create() {

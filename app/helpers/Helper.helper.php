@@ -104,21 +104,44 @@ class Helper {
     return $sReturn;
   }
 
-  public function getTemplateDir($sTemplate) {
+  public function getTemplateDir($sDir, $sFile) {
     try {
-      if (file_exists('public/skins/' . PATH_SKIN . '/views/' . $sTemplate . '.tpl'))
-        return 'public/skins/' . PATH_SKIN . '/views/';
+      # Addons
+      if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
+        return 'addons/views/';
 
-      elseif (file_exists('public/skins/_addons/views/' . $sTemplate . '.tpl'))
-        return 'public/skins/_addons/views/';
+      # Template use
+      elseif (file_exists('public/templates/' . PATH_SKIN . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+        return 'public/templates/' . PATH_SKIN . '/views/' . $sDir;
 
+      # Standard views
       else {
 
-        if (!file_exists('app/views/' . $sTemplate . '.tpl'))
+        if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
           throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
 
         else
-          return 'app/views/';
+          return 'app/views/' . $sDir;
+      }
+    }
+    catch (Exception $e) {
+      $e->getMessage();
+    }
+  }
+
+  public function getPluginTemplateDir($sDir, $sFile) {
+    try {
+      # Template
+      if (file_exists('public/templates/' . PATH_SKIN . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+        return 'public/templates/' . PATH_SKIN . '/views/' . $sDir;
+
+      # Standard views
+      else {
+        if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
+          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+
+        else
+          return 'plugins/views/' . $sDir;
       }
     }
     catch (Exception $e) {
@@ -150,7 +173,6 @@ class Helper {
     return $sStr;
   }
 
-  # Code for plugins
   public static function formatTimestamp($iTime, $bDateOnly = false) {
 
     # Set active locale

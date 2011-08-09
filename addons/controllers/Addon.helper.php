@@ -11,9 +11,9 @@ if (!class_exists('Section'))
 final class Addon extends Section {
 
   public final function getSection() {
-    
-    require_once 'app/addons/' . ucfirst((string) $this->_aRequest['section']) . '.controller.php';
-    
+
+    require_once 'addons/controllers/' . ucfirst((string) $this->_aRequest['section']) . '.controller.php';
+
     switch (strtolower($this->_aRequest['section'])) {
       default:
       case '404':

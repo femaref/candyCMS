@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'app/addons/Addon.helper.php';
+require_once 'addons/controllers/Addon.helper.php';
 
 class Section extends Main {
 
@@ -13,8 +13,8 @@ class Section extends Main {
 
   private function _getController() {
     # Are addons for existing controllers avaiable? If yes, use them
-    if (file_exists('app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
-			require_once 'app/addons/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
+    if (file_exists('addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
+			require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
@@ -273,7 +273,7 @@ class Section extends Main {
                 (string) $this->_aRequest['template'] :
                 LANG_ERROR_GLOBAL_NO_TEMPLATE;
 
-        parent::_setContent($this->_oSmarty->fetch(PATH_TPL_STATIC . '/' . $sTpl . '.tpl'));
+        parent::_setContent($this->_oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
         parent::_setDescription(ucfirst($sTpl));
         parent::_setTitle(ucfirst($sTpl));
 

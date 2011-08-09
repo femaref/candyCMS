@@ -16,7 +16,8 @@ class Adsense {
     $oSmarty = new Smarty();
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = 'public/skins/_plugins/adsense';
+
+    $oSmarty->template_dir = Helper::getPluginTemplateDir('adsense', 'show');
     return $oSmarty->fetch('show.tpl');
   }
 }

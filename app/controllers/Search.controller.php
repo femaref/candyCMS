@@ -36,8 +36,8 @@ class Search extends Main {
       # Language
       $this->_oSmarty->assign('lang_headline', $this->_sHeadline);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/show');
-      return $this->_oSmarty->fetch('searches/show.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches' ,'show');
+      return $this->_oSmarty->fetch('show.tpl');
     }
   }
 
@@ -67,8 +67,8 @@ class Search extends Main {
     $this->_oSmarty->assign('search', $this->_sSearch);
     $this->_oSmarty->assign('tables', $this->_aData);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_show');
-    return $this->_oSmarty->fetch('searches/_show.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
+    return $this->_oSmarty->fetch('_show.tpl');
   }
 
   public function showFormTemplate() {
@@ -77,7 +77,7 @@ class Search extends Main {
 
     $this->_oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches/_form');
-    return $this->_oSmarty->fetch('searches/_form.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
+    return $this->_oSmarty->fetch('_form.tpl');
   }
 }

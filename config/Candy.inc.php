@@ -102,7 +102,7 @@ define('CRONJOB_SEND_PER_MAIL', false);
 
 # ------------------------------------------------------------------------------
 
-# If you want to override existing classes (placed in "app/addons/"), turn true
+# If you want to override existing classes (placed in "addons/controllers/"), turn true
 # DEFAULT: false
 define('ALLOW_ADDONS', false);
 
@@ -111,7 +111,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser, Facebook
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive,Adsense,Teaser');
 
 # ------------------------------------------------------------------------------
 
@@ -192,7 +192,7 @@ define('PATH_SKIN', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
-define('PATH_TPL_STATIC', 'public/skins/_static');
+define('PATH_STATIC_TEMPLATES', 'public/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload

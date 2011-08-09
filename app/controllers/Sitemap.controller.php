@@ -22,15 +22,15 @@ class Sitemap extends Main {
 
     $this->_getSitemap();
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/xml');
-    return $this->_oSmarty->fetch('sitemaps/xml.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
+    return $this->_oSmarty->fetch('xml.tpl');
   }
 
   public function show() {
     $this->_getSitemap();
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps/show');
-    return $this->_oSmarty->fetch('sitemaps/show.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
+    return $this->_oSmarty->fetch('show.tpl');
   }
 
   private function _getSitemap() {

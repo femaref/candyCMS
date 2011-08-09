@@ -114,6 +114,7 @@ final class Bbcode {
     }
 
     # replace youtube directly
+    # TODO: Fix </p> bug
     if (preg_match('/http:\/\/(www\.)?(youtube\.com\/watch\?v\=|embed|youtu\.be\/)(.*)/', $sStr, $aMatch)) {
       $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = str_replace($aMatch[0],

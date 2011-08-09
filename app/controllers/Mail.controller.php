@@ -74,8 +74,8 @@ class Mail extends Main {
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/create');
-    return $this->_oSmarty->fetch('mails/create.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
+    return $this->_oSmarty->fetch('create.tpl');
   }
 
   protected function _checkCaptcha() {
@@ -101,7 +101,7 @@ class Mail extends Main {
   protected function _standardMail($bShowCaptcha = true) {
     if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
        $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
-		
+
 		if (Helper::checkEmailAddress($this->_aRequest['email']) !== true)
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
@@ -118,7 +118,7 @@ class Mail extends Main {
 
 			# When mail is set, send to mail. Otherwise send to system mail
       $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
-			
+
 			# Reply to mail
 			$sReplyTo = Helper::formatInput($this->_aRequest['email']);
 
@@ -146,15 +146,15 @@ class Mail extends Main {
 				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
-  
+
   private function _showSuccessMessage() {
     $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
 
     $this->_oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
     $this->_oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
-    
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails/success');
-    return $this->_oSmarty->fetch('mails/success.tpl');
+
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
+    return $this->_oSmarty->fetch('success.tpl');
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {

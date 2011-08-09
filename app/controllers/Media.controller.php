@@ -33,8 +33,8 @@ class Media extends Main {
     $this->_oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
     $this->_oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('medias/create');
-    return $this->_oSmarty->fetch('medias/create.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('medias' ,'create');
+    return $this->_oSmarty->fetch('create.tpl');
   }
 
   private function _proceedUpload() {
@@ -92,8 +92,8 @@ class Media extends Main {
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
       $this->_oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
       $this->_oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('medias/show');
-      return $this->_oSmarty->fetch('medias/show.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
+      return $this->_oSmarty->fetch('show.tpl');
     }
   }
 

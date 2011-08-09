@@ -37,8 +37,8 @@ class Gallery extends Main {
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle($this->_removeHighlight(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/files');
-      return $this->_oSmarty->fetch('galleries/files.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
+      return $this->_oSmarty->fetch('files.tpl');
     }
     # Overview
     else {
@@ -52,8 +52,8 @@ class Gallery extends Main {
       $this->_oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/albums');
-      return $this->_oSmarty->fetch('galleries/albums.tpl');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
+      return $this->_oSmarty->fetch('albums.tpl');
     }
   }
 
@@ -157,8 +157,8 @@ class Gallery extends Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_album');
-    return $this->_oSmarty->fetch('galleries/_form_album.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_album');
+    return $this->_oSmarty->fetch('_form_album.tpl');
   }
 
   # Create gallery file
@@ -242,8 +242,8 @@ class Gallery extends Main {
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
     }
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries/_form_file');
-    return $this->_oSmarty->fetch('galleries/_form_file.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
+    return $this->_oSmarty->fetch('_form_file.tpl');
   }
 
   private function _createFile() {

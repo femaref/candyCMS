@@ -37,7 +37,6 @@ try {
 	else {
 		require_once 'app/models/Main.model.php';
 		require_once 'app/controllers/Main.controller.php';
-		#require_once 'app/controllers/Search.controller.php';
 		require_once 'app/controllers/Session.controller.php';
 		require_once 'app/controllers/Index.controller.php';
 		require_once 'app/controllers/Log.controller.php';

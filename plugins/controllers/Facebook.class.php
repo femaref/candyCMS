@@ -39,7 +39,7 @@ class FacebookCMS extends Facebook {
 
 		$oSmarty->cache_dir = CACHE_DIR;
 		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = 'public/skins/_plugins/facebook';
+		$oSmarty->template_dir = 'public/templates/_plugins/facebook';
 		return $oSmarty->fetch('button.tpl');
 	}
 

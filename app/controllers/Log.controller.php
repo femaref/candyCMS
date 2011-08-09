@@ -26,8 +26,8 @@ class Log extends Main {
 			$this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
 			$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('logs/overview');
-			return $this->_oSmarty->fetch('logs/overview.tpl');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('logs', 'overview');
+			return $this->_oSmarty->fetch('overview.tpl');
 		}
 	}
 

@@ -23,10 +23,10 @@ class Index extends Main {
 
   public function loadConfig($sPath = '') {
 		try {
-			if (!file_exists($sPath . 'config/Config.inc.php'))
+			if (!file_exists($sPath . 'config/Candy.inc.php'))
 				throw new AdvancedException('Missing config file.');
 			else
-				require_once $sPath . 'config/Config.inc.php';
+				require_once $sPath . 'config/Candy.inc.php';
 		}
 		catch (AdvancedException $e) {
 			die($e->getMessage());
@@ -111,13 +111,15 @@ class Index extends Main {
 			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
 	}
 
-  public function loadPlugins() {
-		$sPlugins = ALLOW_PLUGINS;
-		$aPlugins = preg_split("/[\s]*[,][\s]*/", $sPlugins);
+  public function loadPlugins($sPath = '') {
+		if (file_exists($sPath . 'config/Plugins.inc.php'))
+			require_once $sPath . 'config/Plugins.inc.php';
+
+		$aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
 
 		foreach ($aPlugins as $sPluginName) {
-			if (file_exists('plugins/' . (string) ucfirst($sPluginName) . '.class.php'))
-				require_once 'plugins/' . (string) ucfirst($sPluginName) . '.class.php';
+			if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.class.php'))
+				require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.class.php';
 		}
 	}
 
@@ -275,8 +277,8 @@ class Index extends Main {
 			$oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
-			$oSmarty->template_dir = Helper::getTemplateDir('layouts/application');
-			$sCachedHTML = $oSmarty->fetch('layouts/application.tpl');
+			$oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
+			$sCachedHTML = $oSmarty->fetch('application.tpl');
 		}
 
 		# Build absolute Path because of pretty URLs
@@ -286,20 +288,20 @@ class Index extends Main {
 		# Check for user custom css
 		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
 		if (!empty($this->_sSkin))
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/css', $sCachedHTML);
-  
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/css', $sCachedHTML);
+
 		elseif (PATH_SKIN !== '')
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/skins/' . PATH_SKIN . '/css', $sCachedHTML);
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_SKIN . '/css', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedCss;
 
 		# Check for user custom icons etc.
 		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
 		if (!empty($this->_sSkin))
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . $this->_sSkin . '/images', $sCachedHTML);
-  
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/images', $sCachedHTML);
+
 		elseif (PATH_SKIN !== '')
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/skins/' . PATH_SKIN . '/images', $sCachedHTML);
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_SKIN . '/images', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedImages;
 

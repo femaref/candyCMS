@@ -5,6 +5,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+require_once 'app/controllers/Mail.controller.php';
+
 # This is an example for extending a standard class.
 class Addon_Mail extends Mail {
 
@@ -45,11 +47,11 @@ class Addon_Mail extends Mail {
     }
 
     # Language
-    $this->_oSmarty->assign('lang_email', LANG_MAIL_GLOBAL_LABEL_OWN_EMAIL);
+    $this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $this->_oSmarty->template_dir = 'public/skins/_addons/mails';
+    $this->_oSmarty->template_dir = 'addons/views/mails';
     return $this->_oSmarty->fetch('create.tpl');
   }
 }

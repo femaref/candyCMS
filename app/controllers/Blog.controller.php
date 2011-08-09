@@ -20,7 +20,7 @@ class Blog extends Main {
     $this->_aData = $this->_oModel->getData($this->_iId);
 
     # Load comments
-    if( !empty($this->_iId) ) {
+    if (!empty($this->_iId)) {
       $oComments = new Comment($this->_aRequest, $this->_aSession);
       $oComments->__init($this->_aData);
 
@@ -30,16 +30,16 @@ class Blog extends Main {
     } else
       $this->_oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
 
-		# Create page title and description
+    # Create page title and description
     $this->_setDescription($this->_setBlogDescription());
     $this->_setKeywords($this->_setBlogKeywords());
-		$this->_setTitle($this->_setBlogTitle($this->_aData));
+    $this->_setTitle($this->_setBlogTitle($this->_aData));
 
-		$this->_oSmarty->assign('blog', $this->_aData);
+    $this->_oSmarty->assign('blog', $this->_aData);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs/show');
-		return $this->_oSmarty->fetch('blogs/show.tpl');
-	}
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', 'show');
+    return $this->_oSmarty->fetch('show.tpl');
+  }
 
   private function _setBlogDescription() {
     if (isset($this->_aRequest['action']) &&
@@ -145,8 +145,8 @@ class Blog extends Main {
 		$this->_oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
 		$this->_oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs/_form');
-		return $this->_oSmarty->fetch('blogs/_form.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
+		return $this->_oSmarty->fetch('_form.tpl');
 	}
 
 	protected function _create() {

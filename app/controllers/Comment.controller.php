@@ -39,10 +39,8 @@ class Comment extends Main {
       # Language
       $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('comments/show');
-
-      # Try to post comments directly
-      return $this->_oSmarty->fetch('comments/show.tpl') . $this->create('create_comment'); 
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
+      return $this->_oSmarty->fetch('show.tpl') . $this->create('create_comment');
 		}
 	}
 
@@ -136,8 +134,8 @@ class Comment extends Main {
     # Language
     $this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('comments/_form');
-    return $this->_oSmarty->fetch('comments/_form.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', '_form');
+    return $this->_oSmarty->fetch('_form.tpl');
   }
 
   private function _checkCaptcha() {

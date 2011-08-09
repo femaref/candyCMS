@@ -6,7 +6,7 @@
  */
 
 # The cronjob keeps your software backuped, fast and clean. Set up the execution
-# intervals in the "config/Config.inc.php" and lean back.
+# intervals in the "config/Candy.inc.php" and lean back.
 # Fix for install script
 if (file_exists('app/controllers/Mail.controller.php'))
   require_once 'app/controllers/Mail.controller.php';
@@ -101,7 +101,7 @@ final class Cronjob {
     # Now backup them
     foreach ($aResult as $aTable) {
       $sTable = SQL_PREFIX . $aTable[0];
-      
+
       try {
         $oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
         $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);

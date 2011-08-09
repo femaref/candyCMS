@@ -60,8 +60,8 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages/show');
-    return $oSmarty->fetch('pages/show.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'show');
+    return $oSmarty->fetch('show.tpl');
   }
 
   public function showSurrounding($sUrl, $sRssAction = '') {
@@ -89,7 +89,7 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages/surrounding');
-    return $oSmarty->fetch('pages/surrounding.tpl');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'surrounding');
+    return $oSmarty->fetch('surrounding.tpl');
   }
 }

@@ -54,8 +54,8 @@ class Rss extends Main {
 		$this->_oSmarty->assign('data', $this->_aData);
 		$this->_oSmarty->assign('_title_', $this->getTitle());
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('rss/default');
-		return $this->_oSmarty->fetch('rss/default.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'default');
+		return $this->_oSmarty->fetch('default.tpl');
 	}
 
 	private function _showGallery() {
@@ -72,7 +72,7 @@ class Rss extends Main {
 
 		$this->_oSmarty->assign('data', $aData);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('rss/gallery');
-		return $this->_oSmarty->fetch('rss/gallery.tpl');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'gallery');
+		return $this->_oSmarty->fetch('gallery.tpl');
 	}
 }
