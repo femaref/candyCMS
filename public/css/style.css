@@ -272,6 +272,10 @@ section#comments article footer {
   text-align: right;
 }
 
+section#user form {
+  padding:0px;
+}
+
 /* quotes */
 blockquote {
   padding:0px 15px;

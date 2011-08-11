@@ -281,6 +281,8 @@ class Index extends Main {
 			$sCachedHTML = $oSmarty->fetch('application.tpl');
 		}
 
+		$sCachedHTML = str_replace('%PATH_SKIN%', PATH_SKIN, $sCachedHTML);
+
 		# Build absolute Path because of pretty URLs
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
