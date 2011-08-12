@@ -118,8 +118,8 @@ class Index extends Main {
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
 
 		foreach ($aPlugins as $sPluginName) {
-			if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.class.php'))
-				require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.class.php';
+			if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+				require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
 		}
 	}
 
@@ -281,7 +281,7 @@ class Index extends Main {
 			$sCachedHTML = $oSmarty->fetch('application.tpl');
 		}
 
-		$sCachedHTML = str_replace('%PATH_SKIN%', PATH_SKIN, $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_TEMPLATE%', PATH_TEMPLATE, $sCachedHTML);
 
 		# Build absolute Path because of pretty URLs
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
@@ -292,8 +292,8 @@ class Index extends Main {
 		if (!empty($this->_sSkin))
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/css', $sCachedHTML);
 
-		elseif (PATH_SKIN !== '')
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_SKIN . '/css', $sCachedHTML);
+		elseif (PATH_TEMPLATE !== '')
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedCss;
 
@@ -302,8 +302,8 @@ class Index extends Main {
 		if (!empty($this->_sSkin))
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/images', $sCachedHTML);
 
-		elseif (PATH_SKIN !== '')
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_SKIN . '/images', $sCachedHTML);
+		elseif (PATH_TEMPLATE !== '')
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedImages;
 

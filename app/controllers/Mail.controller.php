@@ -15,9 +15,6 @@ class Mail extends Main {
   protected $_oRecaptchaResponse = '';
   protected $_sRecaptchaError = '';
 
-  # Empty, but required from section helper
-  public function __init() {}
-
   public function create() {
     if (isset($this->_aRequest['send_mail'])) {
       # Disable at AJAX due to a bug in reloading JS code

@@ -188,7 +188,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use skins, enter name of skin-folder here
 # They are placed at skins/<SkinName>/...
 # DEFAULT: ''
-define('PATH_SKIN', '');
+define('PATH_TEMPLATE', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'

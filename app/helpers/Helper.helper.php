@@ -108,11 +108,11 @@ class Helper {
     try {
       # Addons
       if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
-        return 'addons/views/';
+        return 'addons/views/' . $sDir;
 
       # Template use
-      elseif (file_exists('public/templates/' . PATH_SKIN . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-        return 'public/templates/' . PATH_SKIN . '/views/' . $sDir;
+      elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+        return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
 
       # Standard views
       else {
@@ -132,8 +132,8 @@ class Helper {
   public function getPluginTemplateDir($sDir, $sFile) {
     try {
       # Template
-      if (file_exists('public/templates/' . PATH_SKIN . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-        return 'public/templates/' . PATH_SKIN . '/views/' . $sDir;
+      if (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+        return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
 
       # Standard views
       else {
