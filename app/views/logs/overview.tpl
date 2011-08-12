@@ -35,13 +35,11 @@
   <script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#js-logs').infinitescroll({
+      $('table').infinitescroll({
         navSelector  : "section.pages",
         nextSelector : "section.pages a:first",
-        itemSelector : "#js-logs tr",
-        loadingImg   : "%PATH_IMAGES%/loading.gif",
-        loadingText  : '',
-        donetext     : ''
+        itemSelector : "table tr",
+        loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
       });
     });
   </script>

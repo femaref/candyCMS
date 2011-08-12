@@ -1,50 +1,209 @@
-/*!
-// Infinite Scroll jQuery plugin
-// copyright Paul Irish, licensed GPL & MIT
-// version 1.5.110408
+/*
+	--------------------------------
+	Infinite Scroll
+	--------------------------------
+	+ https://github.com/paulirish/infinitescroll
+	+ version 2.0b2.110713
+	+ Copyright 2011 Paul Irish & Luke Shumard
+	+ Licensed under the MIT license
 
-// home and docs: http://www.infinite-scroll.com
+	+ Documentation: http://infinite-scroll.com/
+
 */
 
-; (function ($) {
+(function (window, $, undefined) {
 
-    $.fn.infinitescroll = function (options, callback) {
+	$.infinitescroll = function infscr(options, callback, element) {
 
-        // console log wrapper.
-        function debug() {
-            if (opts.debug) { window.console && console.log.call(console, arguments) }
-        }
+		this.element = $(element);
+		this._create(options, callback);
 
-        // grab each selector option and see if any fail.
-        function areSelectorsValid(opts) {
-            for (var key in opts) {
-                if (key.indexOf && key.indexOf('Selector') > -1 && $(opts[key]).length === 0) {
-                    debug('Your ' + key + ' found no elements.');
-                    return false;
-                }
-                return true;
+	};
+
+	$.infinitescroll.defaults = {
+		loading: {
+			finished: undefined,
+			finishedMsg: "<em>Congratulations, you've reached the end of the internet.</em>",
+			img: "http://www.infinite-scroll.com/loading.gif",
+			msg: null,
+			msgText: "<em>Loading the next set of posts...</em>",
+			selector: null,
+			speed: 'fast',
+			start: undefined
+		},
+		state: {
+			isDuringAjax: false,
+			isInvalidPage: false,
+			isDestroyed: false,
+			isDone: false, // For when it goes all the way through the archive.
+			isPaused: false,
+			currPage: 1
+		},
+		callback: undefined,
+		debug: false,
+		behavior: undefined,
+		binder: $(window), // used to cache the selector
+		nextSelector: "div.navigation a:first",
+		navSelector: "div.navigation",
+		contentSelector: null, // rename to pageFragment
+		extraScrollPx: 150,
+		itemSelector: "div.post",
+		animate: false,
+		pathParse: undefined,
+		dataType: 'html',
+		appendCallback: true,
+		bufferPx: 40,
+		errorCallback: function () { },
+		infid: 0, //Instance ID
+		pixelsFromNavToBottom: undefined,
+		path: undefined
+	};
+
+
+    $.infinitescroll.prototype = {
+
+        /*
+        ----------------------------
+        Private methods
+        ----------------------------
+        */
+
+        // Bind or unbind from scroll
+        _binding: function infscr_binding(binding) {
+
+            var instance = this,
+				opts = instance.options;
+
+            // if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_binding_'+opts.behavior] !== undefined) {
+				this['_binding_'+opts.behavior].call(this);
+				return;
+			}
+
+			if (binding !== 'bind' && binding !== 'unbind') {
+                this._debug('Binding value  ' + binding + ' not valid')
+                return false;
             }
-        }
 
+            if (binding == 'unbind') {
+
+                (this.options.binder).unbind('smartscroll.infscr.' + instance.options.infid);
+
+            } else {
+
+                (this.options.binder)[binding]('smartscroll.infscr.' + instance.options.infid, function () {
+                    instance.scroll();
+                });
+
+            };
+
+            this._debug('Binding', binding);
+
+        },
+
+		// Fundamental aspects of the plugin are initialized
+		_create: function infscr_create(options, callback) {
+
+            // If selectors from options aren't valid, return false
+            if (!this._validate(options)) { return false; }
+            // Define options and shorthand
+            var opts = this.options = $.extend(true, {}, $.infinitescroll.defaults, options),
+				// get the relative URL - everything past the domain name.
+				relurl = /(.*?\/\/).*?(\/.*)/,
+				path = $(opts.nextSelector).attr('href');
+
+            // contentSelector is 'page fragment' option for .load() / .ajax() calls
+            opts.contentSelector = opts.contentSelector || this.element;
+
+            // loading.selector - if we want to place the load message in a specific selector, defaulted to the contentSelector
+            opts.loading.selector = opts.loading.selector || opts.contentSelector;
+
+            // if there's not path, return
+            if (!path) { this._debug('Navigation selector not found'); return; }
+
+            // Set the path to be a relative URL from root.
+            opts.path = this._determinepath(path);
+
+            // Define loading.msg
+            opts.loading.msg = $('<div id="infscr-loading"><img alt="Loading..." src="' + opts.loading.img + '" /><div>' + opts.loading.msgText + '</div></div>');
+
+            // Preload loading.img
+            (new Image()).src = opts.loading.img;
+
+            // distance from nav links to bottom
+            // computed as: height of the document + top offset of container - top offset of nav link
+            opts.pixelsFromNavToBottom = $(document).height() - $(opts.navSelector).offset().top;
+
+			// determine loading.start actions
+            opts.loading.start = opts.loading.start || function() {
+
+				$(opts.navSelector).hide();
+				opts.loading.msg
+					.appendTo(opts.loading.selector)
+					.show(opts.loading.speed, function () {
+	                	beginAjax(opts);
+	            });
+			};
+
+			// determine loading.finished actions
+			opts.loading.finished = opts.loading.finished || function() {
+				opts.loading.msg.fadeOut('normal');
+			};
+
+            // callback loading
+            opts.callback = function(instance,data) {
+				if (!!opts.behavior && instance['_callback_'+opts.behavior] !== undefined) {
+					instance['_callback_'+opts.behavior].call($(opts.contentSelector)[0], data);
+				}
+				if (callback) {
+					callback.call($(opts.contentSelector)[0], data);
+				}
+			};
+
+            this._setup();
+
+        },
+
+        // Console log wrapper
+        _debug: function infscr_debug() {
+
+			if (this.options.debug) {
+                return window.console && console.log.call(console, arguments);
+            }
+
+        },
 
         // find the number to increment in the path.
-        function determinePath(path) {
+        _determinepath: function infscr_determinepath(path) {
 
-            if (path.match(/^(.*?)\b2\b(.*?$)/)) {
+            var opts = this.options;
+
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_determinepath_'+opts.behavior] !== undefined) {
+				this['_determinepath_'+opts.behavior].call(this,path);
+				return;
+			}
+
+            if (!!opts.pathParse) {
+
+                this._debug('pathParse manual');
+                return opts.pathParse;
+
+            } else if (path.match(/^(.*?)\b2\b(.*?$)/)) {
                 path = path.match(/^(.*?)\b2\b(.*?$)/).slice(1);
 
                 // if there is any 2 in the url at all.
             } else if (path.match(/^(.*?)2(.*?$)/)) {
 
                 // page= is used in django:
-                //   http://www.infinite-scroll.com/changelog/comment-page-1/#comment-127
+                // http://www.infinite-scroll.com/changelog/comment-page-1/#comment-127
                 if (path.match(/^(.*?page=)2(\/.*|$)/)) {
                     path = path.match(/^(.*?page=)2(\/.*|$)/).slice(1);
                     return path;
                 }
 
-                debug('Trying backup next selector parse technique. Treacherous waters here, matey.');
                 path = path.match(/^(.*?)2(.*?$)/).slice(1);
+
             } else {
 
                 // page= is used in drupal too but second page is page=1 not page=2:
@@ -52,374 +211,492 @@
                 if (path.match(/^(.*?page=)1(\/.*|$)/)) {
                     path = path.match(/^(.*?page=)1(\/.*|$)/).slice(1);
                     return path;
-                }
-
-                if ($.isFunction(opts.pathParse)) {
-                    return [path];
                 } else {
-                    debug('Sorry, we couldn\'t parse your Next (Previous Posts) URL. Verify your the css selector points to the correct A tag. If you still get this error: yell, scream, and kindly ask for help at infinite-scroll.com.');
-                    props.isInvalidPage = true;  //prevent it from running on this page.
+                    this._debug('Sorry, we couldn\'t parse your Next (Previous Posts) URL. Verify your the css selector points to the correct A tag. If you still get this error: yell, scream, and kindly ask for help at infinite-scroll.com.');
+                    // Get rid of isInvalidPage to allow permalink to state
+                    opts.state.isInvalidPage = true;  //prevent it from running on this page.
                 }
             }
+            this._debug('determinePath', path);
             return path;
-        }
 
+        },
 
-        // determine filtering nav for multiple instances
-        function filterNav() {
-            opts.isFiltered = true;
-            return binder.trigger("error.infscr." + opts.infid, [302]);
-        }
+        // Custom error
+        _error: function infscr_error(xhr) {
 
+            var opts = this.options;
 
-        // Calculate internal height (used for local scroll)
-        function hiddenHeight(element) {
-            var height = 0;
-            $(element).children().each(function () {
-                height = height + $(this).outerHeight(false);
-            });
-            return height;
-        }
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_error_'+opts.behavior] !== undefined) {
+				this['_error_'+opts.behavior].call(this,xhr);
+				return;
+			}
 
-
-        //Generate InstanceID based on random data (to give consistent but different ID's)
-        function generateInstanceID(element) {
-            var number = $(element).length + $(element).html().length + $(element).attr("class").length
-			+ $(element).attr("id").length;
-            opts.infid = number;
-        }
-
-
-        function isNearBottom() {
-            // distance remaining in the scroll
-            // computed as: document height - distance already scroll - viewport height - buffer
-
-            if (opts.container.nodeName == "HTML") {
-                var pixelsFromWindowBottomToBottom = 0
-                + $(document).height()
-                // have to do this bs because safari doesnt report a scrollTop on the html element
-                - ($(opts.container).scrollTop() || $(opts.container.ownerDocument.body).scrollTop())
-                - $(window).height();
-            }
-            else {
-                var pixelsFromWindowBottomToBottom = 0
-                + hiddenHeight(opts.container) - $(opts.container).scrollTop() - $(opts.container).height();
-
+            if (xhr !== 'destroy' && xhr !== 'end') {
+                xhr = 'unknown';
             }
 
-            debug('math:', pixelsFromWindowBottomToBottom, opts.pixelsFromNavToBottom);
+            this._debug('Error', xhr);
+
+            if (xhr == 'end') {
+                this._showdonemsg();
+            }
+
+            opts.state.isDone = true;
+            opts.state.currPage = 1; // if you need to go back to this instance
+            opts.state.isPaused = false;
+            this._binding('unbind');
+
+        },
+
+        // Load Callback
+        _loadcallback: function infscr_loadcallback(box, data) {
+
+            var opts = this.options,
+	    		callback = this.options.callback, // GLOBAL OBJECT FOR CALLBACK
+	    		result = (opts.state.isDone) ? 'done' : (!opts.appendCallback) ? 'no-append' : 'append',
+	    		frag;
+
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_loadcallback_'+opts.behavior] !== undefined) {
+				this['_loadcallback_'+opts.behavior].call(this,box,data);
+				return;
+			}
+
+            switch (result) {
+
+                case 'done':
+
+                    this._showdonemsg();
+                    return false;
+
+                    break;
+
+                case 'no-append':
+
+                    if (opts.dataType == 'html') {
+                        data = '<div>' + data + '</div>';
+                        data = $(data).find(opts.itemSelector);
+                    };
+
+                    break;
+
+                case 'append':
+
+                    var children = box.children();
+
+                    // if it didn't return anything
+                    if (children.length == 0) {
+                        return this._error('end');
+                    }
+
+
+                    // use a documentFragment because it works when content is going into a table or UL
+                    frag = document.createDocumentFragment();
+                    while (box[0].firstChild) {
+                        frag.appendChild(box[0].firstChild);
+                    }
+
+                    this._debug('contentSelector', $(opts.contentSelector)[0])
+                    $(opts.contentSelector)[0].appendChild(frag);
+                    // previously, we would pass in the new DOM element as context for the callback
+                    // however we're now using a documentfragment, which doesnt havent parents or children,
+                    // so the context is the contentContainer guy, and we pass in an array
+                    //   of the elements collected as the first argument.
+
+                    data = children.get();
+
+
+                    break;
+
+            }
+
+            // loadingEnd function
+			opts.loading.finished.call($(opts.contentSelector)[0],opts)
+
+
+            // smooth scroll to ease in the new content
+            if (opts.animate) {
+                var scrollTo = $(window).scrollTop() + $('#infscr-loading').height() + opts.extraScrollPx + 'px';
+                $('html,body').animate({ scrollTop: scrollTo }, 800, function () { opts.state.isDuringAjax = false; });
+            }
+
+            if (!opts.animate) opts.state.isDuringAjax = false; // once the call is done, we can allow it again.
+
+            callback(this,data);
+
+        },
+
+        _nearbottom: function infscr_nearbottom() {
+
+            var opts = this.options,
+	        	pixelsFromWindowBottomToBottom = 0 + $(document).height() - (opts.binder.scrollTop()) - $(window).height();
+
+            // if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_nearbottom_'+opts.behavior] !== undefined) {
+				this['_nearbottom_'+opts.behavior].call(this);
+				return;
+			}
+
+			this._debug('math:', pixelsFromWindowBottomToBottom, opts.pixelsFromNavToBottom);
 
             // if distance remaining in the scroll (including buffer) is less than the orignal nav to bottom....
             return (pixelsFromWindowBottomToBottom - opts.bufferPx < opts.pixelsFromNavToBottom);
-        }
 
-        function showDoneMsg() {
-            props.loadingMsg
-            	.find('img')
-            	.hide()
-            	.parent()
-            	.find('div').html(opts.donetext).animate({ opacity: 1 }, 2000, function () {
-            		$(this).parent().fadeOut('normal');
-            	});
+        },
 
-            // user provided callback when done
-            opts.errorCallback();
-        }
+		// Pause / temporarily disable plugin from firing
+        _pausing: function infscr_pausing(pause) {
 
-        function infscrSetup() {
-            if (opts.isDuringAjax || opts.isInvalidPage || opts.isDone || opts.isFiltered || opts.isPaused) return;
+            var opts = this.options;
 
-            if (!isNearBottom(opts, props)) return;
-            $(document).trigger('retrieve.infscr.' + opts.infid);
+            // if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_pausing_'+opts.behavior] !== undefined) {
+				this['_pausing_'+opts.behavior].call(this,pause);
+				return;
+			}
 
-        }  // end of infscrSetup()
+			// If pause is not 'pause' or 'resume', toggle it's value
+            if (pause !== 'pause' && pause !== 'resume' && pause !== null) {
+                this._debug('Invalid argument. Toggling pause value instead');
+            };
 
+            pause = (pause && (pause == 'pause' || pause == 'resume')) ? pause : 'toggle';
 
-
-        function kickOffAjax() {
-
-            // we dont want to fire the ajax multiple times
-            opts.isDuringAjax = true;
-
-            // show the loading message quickly
-            // then hide the previous/next links after we're
-            // sure the loading message was visible
-            props.loadingMsg.appendTo(opts.loadMsgSelector).show(opts.loadingMsgRevealSpeed, function () {
-                $(opts.navSelector).hide();
-
-                // increment the URL bit. e.g. /page/3/
-                opts.currPage++;
-
-                debug('heading into ajax', path);
-
-                // if we're dealing with a table we can't use DIVs
-                box = $(opts.contentSelector).is('table') ? $('<tbody/>') : $('<div/>');
-                frag = document.createDocumentFragment();
-
-
-                if ($.isFunction(opts.pathParse)) {
-                    // if we got a custom path parsing function, pass in our path guess and page iteration
-                    desturl = opts.pathParse(path.join('2'), opts.currPage);
-                } else {
-                    desturl = path.join(opts.currPage);
-                }
-                box.load(desturl + ' ' + opts.itemSelector, null, loadCallback);
-
-            });
-
-        }
-
-        function loadCallback() {
-
-            // if we've hit the last page..
-            if (opts.isDone) {
-                showDoneMsg();
-                return false;
-
-            } else {
-
-                var children = box.children();
-
-                // if it didn't return anything
-                if (children.length == 0 || children.hasClass('error404')) {
-                    // trigger a 404 error so we can quit.
-                    return infscrError([404]);
-                }
-
-
-                // use a documentFragment because it works when content is going into a table or UL
-                while (box[0].firstChild) {
-                    frag.appendChild(box[0].firstChild);
-                }
-
-
-                $(opts.contentSelector)[0].appendChild(frag);
-
-
-                // fadeout currently makes the <em>'d text ugly in IE6
-                props.loadingMsg.fadeOut('normal');
-
-
-                // smooth scroll to ease in the new content
-                if (opts.animate) {
-                    var scrollTo = $(window).scrollTop() + $('#infscr-loading').height() + opts.extraScrollPx + 'px';
-                    $('html,body').animate({ scrollTop: scrollTo }, 800, function () { opts.isDuringAjax = false; });
-                }
-
-                // previously, we would pass in the new DOM element as context for the callback
-                // however we're now using a documentfragment, which doesnt havent parents or children,
-                // so the context is the contentContainer guy, and we pass in an array
-                //   of the elements collected as the first argument.
-                callback.call($(opts.contentSelector)[0], children.get());
-
-                if (!opts.animate) opts.isDuringAjax = false; // once the call is done, we can allow it again.
-            }
-        }
-
-        function initPause(pauseValue) {
-
-            // if pauseValue is not 'pause' or 'resume', toggle it's value
-            pauseValue = (pauseValue && (pauseValue == 'pause' || pauseValue == 'resume')) ? pauseValue : 'toggle';
-
-            switch (pauseValue) {
+            switch (pause) {
                 case 'pause':
-                    opts.isPaused = true;
-                break;
+                    opts.state.isPaused = true;
+                    break;
 
                 case 'resume':
-                    opts.isPaused = false;
-                break;
+                    opts.state.isPaused = false;
+                    break;
 
                 case 'toggle':
-                    opts.isPaused = !opts.isPaused;
-                break;
+                    opts.state.isPaused = !opts.state.isPaused;
+                    break;
             }
 
-            debug('Paused: ' + opts.isPaused);
+            this._debug('Paused', opts.state.isPaused);
             return false;
-        }
 
-        function infscrError(xhr) {
-            if (!opts.isDone && xhr == 404) {
-                // die if we're out of pages.
-                debug('Page not found. Self-destructing...');
-                showDoneMsg();
-                opts.isDone = true;
-                opts.currPage = 1; // if you need to go back to this instance
-                binder.unbind('smartscroll.infscr.' + opts.infid);
-                $(document).unbind('retrieve.infscr.' + opts.infid);
-            }
-            if (opts.isFiltered && xhr == 302) {
-                // die if filtered.
-                debug('Filtered. Going to next instance...');
-                opts.isDone = true;
-                opts.currPage = 1; // if you need to go back to this instance
-                opts.isPaused = false;
-                binder.unbind('smartscroll.infscr.' + opts.infid, infscrSetup)
-	    	  .unbind('pause.infscr.' + opts.infid)
-	    	  .unbind('filter.infscr.' + opts.infid)
-	    	  .unbind('error.infscr.' + opts.infid);
-                $(document).unbind('retrieve.infscr.' + opts.infid, kickOffAjax);
-            }
-        }
+        },
 
+		// Behavior is determined
+		// If the behavior option is undefined, it will set to default and bind to scroll
+		_setup: function infscr_setup() {
+
+			var opts = this.options;
+
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_setup_'+opts.behavior] !== undefined) {
+				this['_setup_'+opts.behavior].call(this);
+				return;
+			}
+
+			this._binding('bind');
+
+			return false;
+
+		},
+
+        // Show done message
+        _showdonemsg: function infscr_showdonemsg() {
+
+            var opts = this.options;
+
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['_showdonemsg_'+opts.behavior] !== undefined) {
+				this['_showdonemsg_'+opts.behavior].call(this);
+				return;
+			}
+
+            opts.loading.msg
+	    		.find('img')
+	    		.hide()
+	    		.parent()
+	    		.find('div').html(opts.loading.finishedMsg).animate({ opacity: 1 }, 2000, function () {
+	    		    $(this).parent().fadeOut('normal');
+	    		});
+
+            // user provided callback when done
+            opts.errorCallback.call($(opts.contentSelector)[0],'done');
+
+        },
+
+		// grab each selector option and see if any fail
+        _validate: function infscr_validate(opts) {
+
+            for (var key in opts) {
+                if (key.indexOf && key.indexOf('Selector') > -1 && $(opts[key]).length === 0) {
+                    this._debug('Your ' + key + ' found no elements.');
+                    return false;
+                }
+                return true;
+            }
+
+        },
 
         /*
-		* smartscroll: debounced scroll event for jQuery *
-		* https://github.com/lukeshumard/smartscroll
-		* Based on smartresize by @louis_remi: https://github.com/lrbabe/jquery.smartresize.js *
-		* Copyright 2011 Louis-Remi & Luke Shumard * Licensed under the MIT license. *
-		*/
+        ----------------------------
+        Public methods
+        ----------------------------
+        */
 
-		var event = $.event,
-			scrollTimeout;
+		// Bind to scroll
+		bind: function infscr_bind() {
+			this._binding('bind');
+		},
 
-		event.special.smartscroll = {
-			setup: function() {
-			  $(this).bind( "scroll", event.special.smartscroll.handler );
-			},
-			teardown: function() {
-			  $(this).unbind( "scroll", event.special.smartscroll.handler );
-			},
-			handler: function( event, execAsap ) {
-			  // Save the context
-			  var context = this,
-			      args = arguments;
+        // Destroy current instance of plugin
+        destroy: function infscr_destroy() {
 
-			  // set correct event type
-			  event.type = "smartscroll";
+            this.options.state.isDestroyed = true;
+            return this._error('destroy');
 
-			  if (scrollTimeout) { clearTimeout(scrollTimeout); }
-			  scrollTimeout = setTimeout(function() {
-			    jQuery.event.handle.apply( context, args );
-			  }, execAsap === "execAsap"? 0 : 100);
+        },
+
+		// Set pause value to false
+		pause: function infscr_pause() {
+			this._pausing('pause');
+		},
+
+		// Set pause value to false
+		resume: function infscr_resume() {
+			this._pausing('resume');
+		},
+
+        // Retrieve next set of content items
+        retrieve: function infscr_retrieve(pageNum) {
+
+            var instance = this,
+				opts = instance.options,
+				path = opts.path,
+				box, frag, desturl, method, condition,
+	    		pageNum = pageNum || null,
+				getPage = (!!pageNum) ? pageNum : opts.state.currPage;
+				beginAjax = function infscr_ajax(opts) {
+
+					// increment the URL bit. e.g. /page/3/
+	                opts.state.currPage++;
+
+	                instance._debug('heading into ajax', path);
+
+	                // if we're dealing with a table we can't use DIVs
+	                box = $(opts.contentSelector).is('table') ? $('<tbody/>') : $('<div/>');
+
+	                desturl = path.join(opts.state.currPage);
+
+	                method = (opts.dataType == 'html' || opts.dataType == 'json') ? opts.dataType : 'html+callback';
+	                if (opts.appendCallback && opts.dataType == 'html') method += '+callback'
+
+	                switch (method) {
+
+	                    case 'html+callback':
+
+	                        instance._debug('Using HTML via .load() method');
+	                        box.load(desturl + ' ' + opts.itemSelector, null, function infscr_ajax_callback(responseText) {
+	                            instance._loadcallback(box, responseText);
+	                        });
+
+	                        break;
+
+	                    case 'html':
+	                    case 'json':
+
+	                        instance._debug('Using ' + (method.toUpperCase()) + ' via $.ajax() method');
+	                        $.ajax({
+	                            // params
+	                            url: desturl,
+	                            dataType: opts.dataType,
+	                            complete: function infscr_ajax_callback(jqXHR, textStatus) {
+	                                condition = (typeof (jqXHR.isResolved) !== 'undefined') ? (jqXHR.isResolved()) : (textStatus === "success" || textStatus === "notmodified");
+	                                (condition) ? instance._loadcallback(box, jqXHR.responseText) : instance._error('end');
+	                            }
+	                        });
+
+	                        break;
+	                }
+				};
+
+			// if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['retrieve_'+opts.behavior] !== undefined) {
+				this['retrieve_'+opts.behavior].call(this,pageNum);
+				return;
 			}
-		};
-
-		$.fn.smartscroll = function( fn ) {
-			return fn ? this.bind( "smartscroll", fn ) : this.trigger( "smartscroll", ["execAsap"] );
-		};
 
 
+			// for manual triggers, if destroyed, get out of here
+			if (opts.state.isDestroyed) {
+                this._debug('Instance is destroyed');
+                return false;
+            };
 
-        // lets get started.
-        $.browser.ie6 = $.browser.msie && $.browser.version < 7;
+            // we dont want to fire the ajax multiple times
+            opts.state.isDuringAjax = true;
 
-        var opts = $.extend({}, $.infinitescroll.defaults, options),
-        props = $.infinitescroll, // shorthand
-        box, frag, desturl, thisPause, errorStatus;
-        callback = callback || function () { };
+            opts.loading.start.call($(opts.contentSelector)[0],opts);
+
+        },
+
+        // Check to see next page is needed
+        scroll: function infscr_scroll() {
+
+            var opts = this.options,
+				state = opts.state;
+
+            // if behavior is defined and this function is extended, call that instead of default
+			if (!!opts.behavior && this['scroll_'+opts.behavior] !== undefined) {
+				this['scroll_'+opts.behavior].call(this);
+				return;
+			}
+
+			if (state.isDuringAjax || state.isInvalidPage || state.isDone || state.isDestroyed || state.isPaused) return;
+
+            if (!this._nearbottom()) return;
+
+            this.retrieve();
+
+        },
+
+		// Toggle pause value
+		toggle: function infscr_toggle() {
+			this._pausing();
+		},
+
+		// Unbind from scroll
+		unbind: function infscr_unbind() {
+			this._binding('unbind');
+		},
+
+		// update options
+		update: function infscr_options(key) {
+			if ($.isPlainObject(key)) {
+				this.options = $.extend(true,this.options,key);
+			}
+		}
+
+    }
 
 
-        if (!areSelectorsValid(opts)) { return false; }
+    /*
+    ----------------------------
+    Infinite Scroll function
+    ----------------------------
+
+    Borrowed logic from the following...
+
+    jQuery UI
+    - https://github.com/jquery/jquery-ui/blob/master/ui/jquery.ui.widget.js
+
+    jCarousel
+    - https://github.com/jsor/jcarousel/blob/master/lib/jquery.jcarousel.js
+
+    Masonry
+    - https://github.com/desandro/masonry/blob/master/jquery.masonry.js
+
+    */
+
+    $.fn.infinitescroll = function infscr_init(options, callback) {
 
 
-        opts.container = opts.container || document.documentElement;
+        var thisCall = typeof options;
 
+        switch (thisCall) {
 
-        // contentSelector we'll use for our .load()
-        opts.contentSelector = opts.contentSelector || this;
+            // method
+            case 'string':
 
-        // Generate unique instance ID
-        if (opts.infid == 0)
-            generateInstanceID(opts.contentSelector);
+                var args = Array.prototype.slice.call(arguments, 1);
 
-        // loadMsgSelector - if we want to place the load message in a specific selector, defaulted to the contentSelector
-        opts.loadMsgSelector = opts.loadMsgSelector || opts.contentSelector;
+                this.each(function () {
 
+                    var instance = $.data(this, 'infinitescroll');
 
-        // get the relative URL - everything past the domain name.
-        var relurl = /(.*?\/\/).*?(\/.*)/,
-        	path = $(opts.nextSelector).attr('href');
+                    if (!instance) {
+                        // not setup yet
+                        // return $.error('Method ' + options + ' cannot be called until Infinite Scroll is setup');
+						return false;
+                    }
+                    if (!$.isFunction(instance[options]) || options.charAt(0) === "_") {
+                        // return $.error('No such method ' + options + ' for Infinite Scroll');
+						return false;
+                    }
 
+                    // no errors!
+                    instance[options].apply(instance, args);
 
-        if (!path) { debug('Navigation selector not found'); return; }
+                });
 
+                break;
 
-        // set the path to be a relative URL from root.
-        path = determinePath(path);
+            // creation
+            case 'object':
 
+                this.each(function () {
 
-        // define loading msg
-        props.loadingMsg = $('<div id="infscr-loading" style="text-align: center;"><img alt="Loading..." src="' +
+                    var instance = $.data(this, 'infinitescroll');
 
-                                  opts.loadingImg + '" /><div>' + opts.loadingText + '</div></div>');
-        // preload the image
-        (new Image()).src = opts.loadingImg;
+                    if (instance) {
 
+                        // update options of current instance
+                        instance.update(options);
 
-        //Check if its HTML (window scroll)
-        if (opts.container.nodeName == "HTML") {
-            debug("Window Scroll");
-            var innerContainerHeight = $(document).height();
-            var binder = $(window);
-        } else {
-            debug("Local Scroll");
-            var innerContainerHeight = hiddenHeight(opts.container);
-            var binder = $(opts.container);
+                    } else {
+
+                        // initialize new instance
+                        $.data(this, 'infinitescroll', new $.infinitescroll(options, callback, this));
+
+                    }
+
+                });
+
+                break;
+
         }
-
-
-        // distance from nav links to bottom
-        // computed as: height of the document + top offset of container - top offset of nav link
-        opts.pixelsFromNavToBottom = innerContainerHeight +
-                                     (opts.container == document.documentElement ? 0 : $(opts.container).offset().top) -
-                                     $(opts.navSelector).offset().top;
-
-
-        // set up our bindings
-        // bind scroll handler to element (if its a local scroll) or window
-        binder
-	        .bind('smartscroll.infscr.' + opts.infid, function () { infscrSetup(); }, 600, false)
-	        .bind('filter.infscr.' + opts.infid, filterNav)
-	        .bind('error.infscr.' + opts.infid, function (event, errorStatus) { infscrError(errorStatus); })
-	        .bind('pause.infscr.' + opts.infid, function (event, thisPause) { initPause(thisPause); })
-	        .trigger('smartscroll.infscr.' + opts.infid); // trigger the event, in case it's a short page
-
-        $(document).bind('retrieve.infscr.' + opts.infid, kickOffAjax);
 
         return this;
 
-    }  // end of $.fn.infinitescroll()
-
-
-
-    // options and read-only properties object
-
-    $.infinitescroll = {
-        defaults: {
-            debug: false,
-            preload: false,
-            nextSelector: "div.navigation a:first",
-            loadingImg: "http://www.infinite-scroll.com/loading.gif",
-            loadingText: "<em>Loading the next set of posts...</em>",
-            donetext: "<em>Congratulations, you've reached the end of the internet.</em>",
-            navSelector: "div.navigation",
-            contentSelector: null,           // not really a selector. :) it's whatever the method was called on..
-            loadMsgSelector: null,
-            loadingMsgRevealSpeed: 'fast', // controls how fast you want the loading message to come in, ex: 'fast', 'slow', 200 (milliseconds)
-            extraScrollPx: 150,
-            itemSelector: "div.post",
-            animate: false,
-            pathParse: undefined,
-            bufferPx: 40,
-            orientation: 'height',
-            errorCallback: function () { },
-            currPage: 1,
-            infid: 0, //Instance ID (Generated at setup)
-            isDuringAjax: false,
-            isInvalidPage: false,
-            isFiltered: false,
-            isDone: false,  // for when it goes all the way through the archive.
-            isPaused: false,
-            container: undefined, //If left undefined uses window scroll, set as container for local scroll
-            pixelsFromNavToBottom: undefined
-        },
-        loadingImg: undefined,
-        loadingMsg: undefined,
-        currDOMChunk: null  // defined in setup()'s load()
     };
 
 
 
-})(jQuery);
+    /*
+    * smartscroll: debounced scroll event for jQuery *
+    * https://github.com/lukeshumard/smartscroll
+    * Based on smartresize by @louis_remi: https://github.com/lrbabe/jquery.smartresize.js *
+    * Copyright 2011 Louis-Remi & Luke Shumard * Licensed under the MIT license. *
+    */
+
+    var event = $.event,
+		scrollTimeout;
+
+    event.special.smartscroll = {
+        setup: function () {
+            $(this).bind("scroll", event.special.smartscroll.handler);
+        },
+        teardown: function () {
+            $(this).unbind("scroll", event.special.smartscroll.handler);
+        },
+        handler: function (event, execAsap) {
+            // Save the context
+            var context = this,
+		      args = arguments;
+
+            // set correct event type
+            event.type = "smartscroll";
+
+            if (scrollTimeout) { clearTimeout(scrollTimeout); }
+            scrollTimeout = setTimeout(function () {
+                $.event.handle.apply(context, args);
+            }, execAsap === "execAsap" ? 0 : 100);
+        }
+    };
+
+    $.fn.smartscroll = function (fn) {
+        return fn ? this.bind("smartscroll", fn) : this.trigger("smartscroll", ["execAsap"]);
+    };
+
+
+})(window, jQuery);

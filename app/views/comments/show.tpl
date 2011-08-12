@@ -56,9 +56,7 @@
       navSelector  : "section.pages",
       nextSelector : "section.pages a:first",
       itemSelector : "#js-commments article",
-      loadingImg   : "%PATH_IMAGES%/loading.gif",
-      loadingText  : '',
-      donetext     : ''
+      loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
     });
   });
 </script>

@@ -13,7 +13,7 @@ try {
           !file_exists('../app/controllers/Main.controller.php') ||
           !file_exists('../app/controllers/Index.controller.php') ||
           !file_exists('../app/helpers/AdvancedException.helper.php') ||
-          !file_exists('../plugins/Cronjob.class.php') ||
+          !file_exists('../plugins/controllers/Cronjob.controller.php') ||
           !file_exists('../lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
@@ -22,7 +22,7 @@ try {
     require_once '../app/controllers/Main.controller.php';
     require_once '../app/controllers/Index.controller.php';
     require_once '../app/helpers/AdvancedException.helper.php';
-    require_once '../plugins/Cronjob.class.php';
+    require_once '../plugins/controllers/Cronjob.controller.php';
 
     # Smarty template parsing
     require_once '../lib/smarty/Smarty.class.php';

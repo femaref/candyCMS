@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once '../plugins/Cronjob.class.php';
+require_once '../plugins/controllers/Cronjob.controller.php';
 
 # Backup database
 if(class_exists('Cronjob'))

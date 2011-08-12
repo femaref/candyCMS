@@ -170,7 +170,7 @@ class Helper {
       die();
     }
 
-    return $sStr;
+    return trim($sStr);
   }
 
   public static function formatTimestamp($iTime, $bDateOnly = false) {
