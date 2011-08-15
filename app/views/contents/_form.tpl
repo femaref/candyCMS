@@ -12,8 +12,8 @@
       {$lang_teaser}
     </label>
     <input name='teaser' value='{$c.teaser}' type='text' placeholder='{$lang_create_teaser_info}'
-           title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(140 - $(this).val().length)" />
-    <span id="js-chars">140</span>
+           title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(160 - $(this).val().length)" />
+    <span id="js-chars">160</span>
   </p>
   <p>
     <label for='input-keywords'>{$lang_keywords}</label>
