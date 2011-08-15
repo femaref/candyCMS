@@ -11,7 +11,7 @@
     <a href="http://www.google.com/recaptcha">http://www.google.com/recaptcha</a>
   </p>
 </div>
-<h3>2.2. Set all variables in <em>config/Config.inc.php</em> correctly.</h3>
+<h3>2.2. Set all variables in <em>config/Candy.inc.php</em> correctly.</h3>
 <div class="hidden">
   <p>
     Read each description and modify the software for your needs.

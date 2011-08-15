@@ -4,7 +4,11 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
     <link href='%PATH_CSS%/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
     <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script language='javascript' src='%PATH_PUBLIC%/js/core/jquery.1.6-min.js' type='text/javascript'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript">
+      if (typeof jQuery == 'undefined')
+        document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
     <style stype="text/css">
       div.hidden{ display:none }
       h3:hover{ cursor:pointer }
