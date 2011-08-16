@@ -7,6 +7,7 @@
 
 class Model_Newsletter extends Model_Main {
 
+  # TODO: Why static
   public static function handleNewsletter($sEmail) {
     try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
@@ -43,7 +44,8 @@ class Model_Newsletter extends Model_Main {
 				$oDb = null;
 
         if ($bResult === true)
-          return 'DESTROY';# Needed for status message
+          # UGLY: Needed for status message
+          return 'DESTROY';
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
@@ -61,7 +63,8 @@ class Model_Newsletter extends Model_Main {
 				$oDb = null;
 
         if ($bResult == true)
-          return 'INSERT';# Needed for status message
+          # UGLY: Needed for status message
+          return 'INSERT';
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
@@ -69,6 +72,7 @@ class Model_Newsletter extends Model_Main {
     }
   }
 
+  # TODO: Why static?
   public static function getNewsletterRecipients($sMySqlTable = 'newsletter') {
     if ($sMySqlTable == 'newsletter') {
 			try {
@@ -79,7 +83,9 @@ class Model_Newsletter extends Model_Main {
 																FROM
 																	" . SQL_PREFIX . "newsletters");
 
-				return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $oDb = null;
+        return $aResult;
 			}
 			catch (AdvancedException $e) {
 				$oDb->rollBack();
@@ -96,12 +102,15 @@ class Model_Newsletter extends Model_Main {
 																WHERE
 																	receive_newsletter = '1'");
 
-        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $oDb = null;
+        return $aResult;
       }
       catch (AdvancedException $e) {
         $oDb->rollBack();
       }
     }
+    # TODO: Kick off return?
     else
       return false;
   }

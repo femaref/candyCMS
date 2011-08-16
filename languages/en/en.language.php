@@ -37,6 +37,8 @@ define( 'LANG_GLOBAL_DESCRIPTION', 'Description' );
 define( 'LANG_GLOBAL_DISCLAIMER', 'Disclaimer' );
 define( 'LANG_GLOBAL_DESTROY', 'Delete' );
 define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Delete Entry' );
+define( 'LANG_GLOBAL_DOWNLOAD', 'Download' );
+define( 'LANG_GLOBAL_DOWNLOADS', 'Downloads' );
 define( 'LANG_GLOBAL_EMAIL', 'Email' );
 define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'Verify Email' );
 define( 'LANG_GLOBAL_FILE', 'File' );

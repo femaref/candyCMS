@@ -44,10 +44,12 @@ class Model_Comment extends Model_Main {
       $oDb->rollBack();
     }
 
+    # Count the loops to display comment number
     $iLoop = 1;
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
 
+      # Should we use gravatar?
       if(isset($aRow['user_id']))
         $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
       else
@@ -91,7 +93,7 @@ class Model_Comment extends Model_Main {
 
     return $this->_aData;
   }
-  
+
   private function _getFacebookAvatars($aResult) {
     $oFacebook = new FacebookCMS(array(
                 'appId' => FACEBOOK_APP_ID,
@@ -142,25 +144,19 @@ class Model_Comment extends Model_Main {
 
   public function countData($iParentId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare(" SELECT
-                                  COUNT(*)
-                                FROM
-                                  " . SQL_PREFIX . "comments
-                                WHERE
-                                  parent_id = :parent_id");
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        COUNT(*)
+                                      FROM
+                                        " . SQL_PREFIX . "comments
+                                      WHERE
+                                        parent_id = :parent_id");
 
       $oQuery->bindParam('parent_id', $iParentId);
-
-      $iResult = $oQuery->fetchColumn();
+      return (int) $oQuery->fetchColumn();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
-
-    return (int) $iResult;
   }
 
   public function create() {
@@ -177,16 +173,28 @@ class Model_Comment extends Model_Main {
             '';
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+                                        " . SQL_PREFIX . "comments
+                                        ( author_id,
+                                          author_facebook_id,
+                                          author_name,
+                                          author_email,
+                                          author_ip,
+                                          content,
+                                          date,
+                                          parent_id)
+                                      VALUES
+                                        ( :author_id,
+                                          :author_facebook_id,
+                                          :author_name,
+                                          :author_email,
+                                          :author_ip,
+                                          :content,
+                                          :date,
+                                          :parent_id )");
 
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "comments (author_id, author_facebook_id, author_name, author_email, author_ip, content, date, parent_id)
-                                VALUES
-                                  ( :author_id, :author_facebook_id, :author_name, :author_email, :author_ip, :content, :date, :parent_id )");
-
-      $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
+      $iAuthorId = USER_ID;
+      $oQuery->bindParam('author_id', $iAuthorId);
       $oQuery->bindParam('author_facebook_id', $iFacebookId);
       $oQuery->bindParam('author_name', $sAuthorName);
       $oQuery->bindParam('author_email', $sAuthorEmail);
@@ -194,36 +202,28 @@ class Model_Comment extends Model_Main {
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
-      $bResult = $oQuery->execute();
 
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 
   public function destroy($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("	DELETE FROM
-                                  " . SQL_PREFIX . "comments
-                                WHERE
-                                  id = :id
-                                LIMIT
-                                  1");
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+                                        " . SQL_PREFIX . "comments
+                                      WHERE
+                                        id = :id
+                                      LIMIT
+                                        1");
 
       $oQuery->bindParam('id', $iId);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      $this->_oDb->rollBack();
     }
   }
 }

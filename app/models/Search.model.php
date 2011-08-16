@@ -39,13 +39,14 @@ class Model_Search extends Model_Main {
         $oDb->rollBack();
       }
     }
+
+    return $this->_aData;
   }
 
   public function getData($sSearch, $aTables = '') {
     if (empty($aTables))
       $aTables = array('blogs', 'contents');
 
-    $this->_setData($sSearch, $aTables);
-    return $this->_aData;
+    return $this->_setData($sSearch, $aTables);
   }
 }

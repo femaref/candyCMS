@@ -69,25 +69,37 @@ class Model_Log extends Model_Main {
 							'time_end'	        => Helper::formatTimestamp($aRow['time_end'])
 			);
 		}
+
+    return $this->_aData;
 	}
 
 	public function getData() {
-		$this->_setData();
-		return $this->_aData;
+		return $this->_setData();
 	}
 
 	public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
-
 		$iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
-		$iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
+		$iTimeEnd   = empty($iTimeEnd) ? time() : $iTimeEnd;
 
 		try {
 			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
 			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
+
+      $oQuery = $oDb->prepare(" INSERT INTO
+                                  " . SQL_PREFIX . "logs
+                                  ( section_name,
+                                    action_name,
+                                    action_id,
+                                    time_start,
+                                    time_end,
+                                    user_id)
                                 VALUES
-                                  ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
+                                  ( :section_name,
+                                    :action_name,
+                                    :action_id,
+                                    :time_start,
+                                    :time_end,
+                                    :user_id)");
 
 			$oQuery->bindParam('section_name', strtolower($sSectionName));
 			$oQuery->bindParam('action_name', strtolower($sActionName));
@@ -95,8 +107,10 @@ class Model_Log extends Model_Main {
 			$oQuery->bindParam('time_start', $iTimeStart);
 			$oQuery->bindParam('time_end', $iTimeEnd);
 			$oQuery->bindParam('user_id', $iUserId);
+
 			$bResult = $oQuery->execute();
 			$oDb = null;
+
 			return $bResult;
 		}
 		catch (AdvancedException $e) {
@@ -105,21 +119,20 @@ class Model_Log extends Model_Main {
 	}
 
 	public function destroy($iId) {
-		try {
-			$oQuery = $this->_oDb->prepare("DELETE FROM
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
 																				" . SQL_PREFIX . "logs
 																			WHERE
 																				id = :id
 																			LIMIT
 																				1");
 
-			$oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId);
 
-			$bResult = $oQuery->execute();
-			return $bResult;
-		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
-	}
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+  }
 }

@@ -13,21 +13,27 @@ class Model_Blog extends Model_Main {
 	private function _setData($bUpdate, $iLimit) {
 		$sWhere	= '';
 
+    # Show overview
 		if (empty($this->_iId)) {
+
+      # Show unpublished items only to moderators or administrators
 			if (USER_RIGHT < 3)
 				$sWhere = "WHERE published = '1'";
 
-			# Search Blog for Tags
+			# Search blog for tags
 			if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
               isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
+
         if (empty($sWhere))
           $sWhere = "WHERE tags LIKE '%" .
                   Helper::formatInput($this->_aRequest['id']) . "%'";
         else
+          # add to existing where-clause
           $sWhere .= "AND tags LIKE '%" .
                   Helper::formatInput($this->_aRequest['id']) . "%'";
       }
 
+      # Count entries for pagination
 			try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
@@ -156,7 +162,7 @@ class Model_Blog extends Model_Main {
 
       $aRow =& $aResult;
 
-      # Edit only
+      # we want to edit an entry
       if ($bUpdate == true) {
         $this->_aData = array(
             'id'        => $aRow['id'],
@@ -170,7 +176,6 @@ class Model_Blog extends Model_Main {
             'datetime'  => Helper::formatTimestamp($aRow['date']),
             'published' => $aRow['published']
         );
-        unset($sContent);
       }
       # Give back blog entry
       else {
@@ -223,14 +228,15 @@ class Model_Blog extends Model_Main {
           $this->_aData[1]['date_modified'] = '';
       }
     }
+
+    return $this->_aData;
 	}
 
 	public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bUpdate, $iLimit);
-    return $this->_aData;
+    return $this->_setData($bUpdate, $iLimit);
   }
 
 	public function create() {
@@ -241,9 +247,23 @@ class Model_Blog extends Model_Main {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
 																				" . SQL_PREFIX . "blogs
-																				(author_id, title, tags, teaser, keywords, content, date, published)
+																				( author_id,
+                                          title,
+                                          tags,
+                                          teaser,
+                                          keywords,
+                                          content,
+                                          date,
+                                          published)
 																			VALUES
-																				( :author_id, :title, :tags, :teaser, :keywords, :content, :date, :published )");
+																				( :author_id,
+                                          :title,
+                                          :tags,
+                                          :teaser,
+                                          :keywords,
+                                          :content,
+                                          :date,
+                                          :published )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -255,8 +275,7 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('published', $this->_aRequest['published']);
 
-			$bResult = $oQuery->execute();
-      return $bResult;
+			return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
@@ -277,19 +296,19 @@ class Model_Blog extends Model_Main {
             (int) $this->_aRequest['author_id'];
 
     try {
-      $oQuery = $this->_oDb->prepare("	UPDATE
-                                  " . SQL_PREFIX . "blogs
-                                SET
-                                  author_id = :author_id,
-                                  title = :title,
-                                  tags = :tags,
-                                  teaser = :teaser,
-																	keywords = :keywords,
-                                  content = :content,
-                                  date_modified = :date_modified,
-																	published = :published
-                                WHERE
-                                  id = :id");
+      $oQuery = $this->_oDb->prepare("UPDATE
+                                        " . SQL_PREFIX . "blogs
+                                      SET
+                                        author_id = :author_id,
+                                        title = :title,
+                                        tags = :tags,
+                                        teaser = :teaser,
+                                        keywords = :keywords,
+                                        content = :content,
+                                        date_modified = :date_modified,
+                                        published = :published
+                                      WHERE
+                                        id = :id");
 
       $oQuery->bindParam('author_id', $iUpdateAuthor);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
@@ -301,8 +320,7 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('published', $iPublished);
       $oQuery->bindParam('id', $iId);
 
-      $bResult = $oQuery->execute();
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();

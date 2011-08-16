@@ -12,7 +12,7 @@ require_once 'app/helpers/Image.helper.php';
 
 class Gallery extends Main {
   public function __init() {
-    $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
+    $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
   public function show() {
@@ -24,7 +24,7 @@ class Gallery extends Main {
     if (!empty($this->_iId)) {
       # collect data array
       $sAlbumName = Model_Gallery::getAlbumName($this->_iId);
-      $sAlbumDescription = Model_Gallery::getAlbumDescription($this->_iId); # TODO: Rename description to content
+      $sAlbumDescription = Model_Gallery::getAlbumContent($this->_iId);
 
       # Get data and count afterwards
       $this->_aData = $this->_oModel->getThumbs($this->_iId);
@@ -233,7 +233,7 @@ class Gallery extends Main {
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/createfile');
       $this->_oSmarty->assign('_formdata_', 'create_file');
       $this->_oSmarty->assign('default', $sDefault);
-      $this->_oSmarty->assign('content', '');
+      $this->_oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
 
       # Language
       $this->_oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
@@ -242,6 +242,11 @@ class Gallery extends Main {
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
     }
 
+		if (!empty($this->_aError)) {
+			foreach ($this->_aError as $sField => $sMessage)
+				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+		}
+
     $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
     return $this->_oSmarty->fetch('_form_file.tpl');
   }
@@ -249,20 +254,22 @@ class Gallery extends Main {
   private function _createFile() {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
 
-      $oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
-
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
 
-        $aFile['name']      = $this->_aFile['file']['name'][$iI];
-        $aFile['type']      = $this->_aFile['file']['type'][$iI];
-        $aFile['tmp_name']  = $this->_aFile['file']['tmp_name'][$iI];
-        $aFile['error']     = $this->_aFile['file']['error'][$iI];
-        $aFile['size']      = $this->_aFile['file']['size'][$iI];
+        $aFile['name'] = $this->_aFile['file']['name'][$iI];
+        $aFile['type'] = $this->_aFile['file']['type'][$iI];
+        $aFile['tmp_name'] = $this->_aFile['file']['tmp_name'][$iI];
+        $aFile['error'] = $this->_aFile['file']['error'][$iI];
+        $aFile['size'] = $this->_aFile['file']['size'][$iI];
 
-        $oModel->createFile($aFile);
+        $this->_oModel->createFile($aFile);
       }
 
       return true;
+    }
+    else {
+      $this->_aError['file'] = LANG_ERROR_FORM_MISSING_FILE;
+      return $this->_showFormFileTemplate();
     }
   }
 }

@@ -10,7 +10,6 @@ class Upload {
   private $_aFile;
   private $_iId;
   private $_sFileExtension = '';
-  private $_sFormAction;
   private $_sRename;
   private $_sUploadFolder;
   public $sFilePath;
@@ -21,20 +20,16 @@ class Upload {
     $this->_sRename   = & $sRename;
   }
 
-  public function uploadMediaFile() {
+  public function uploadFile($sFolder = 'media') {
     $this->_iId = $this->_replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
-    $this->_sFormAction   = 'media/upload';
-    $this->_sUploadFolder = 'media';
-
     if (!empty($this->_sRename)) {
       $this->_sRename = & $this->_replaceNonAlphachars($this->_sRename);
-      $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_sRename . '.' . $this->_sFileExtension;
+      $this->_iId = $this->_sRename . '.' . $this->_sFileExtension;
     }
-    else
-      $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $this->_iId;
 
+    $this->sFilePath = PATH_UPLOAD . '/' . $sFolder . '/' . $this->_iId;
     return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
   }
 
@@ -67,7 +62,6 @@ class Upload {
   public function uploadAvatarFile($bReturnPath = true) {
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['image']['name'], '.'), 1));
     $this->_iId = isset($this->_aRequest['id']) && USER_RIGHT == 4 ? (int)$this->_aRequest['id'] : USER_ID;
-    $this->_sFormAction = 'user/settings';
     $this->_sUploadFolder = 'user';
     $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId;
 
@@ -170,7 +164,8 @@ class Upload {
     return $this->_sFileExtension;
   }
 
+  # Return the current file
   public function getId() {
-    return $this->_iId . '.' . $this->_sFileExtension;
+    return $this->_iId;
   }
 }

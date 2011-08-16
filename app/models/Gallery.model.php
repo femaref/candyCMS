@@ -9,7 +9,7 @@ class Model_Gallery extends Model_Main {
 	private $_aThumbs;
 	private $_sFilePath;
 
-	private final function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
+	private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
     $sWhere = '';
 		$iResult = 1;
 
@@ -98,28 +98,31 @@ class Model_Gallery extends Model_Main {
             'url_clean'   => $sUrl
 				);
 
+        # Are there any thumbs? If yes, get them!
 				if ($aRow['files_sum'] > 0)
           $this->_aData[$iId]['files'] = $this->getThumbs($iId, $bAdvancedImageInformation);
         else
           $this->_aData[$iId]['files'] = '';
 			}
 		}
+
+    return $this->_aData;
 	}
 
-	public final function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
+	public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
-    return $this->_aData;
+    return $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
   }
 
-	public final function getId() {
+	public function getId() {
     return $this->_iId;
   }
 
-	private final function _setThumbs($iId, $bAdvancedImageInformation) {
-		# Clear existing array
+	private function _setThumbs($iId, $bAdvancedImageInformation) {
+
+		# Clear existing array (fix, when we got no images at a gallery
 		if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
 
@@ -193,24 +196,25 @@ class Model_Gallery extends Model_Main {
         $aThumbSize = getimagesize($sUrlThumb);
         $iImageSize = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
 
-        $this->_aThumbs[$iId]['popup_width'] = $aPopupSize[0];
+        $this->_aThumbs[$iId]['popup_width']  = $aPopupSize[0];
         $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
-        $this->_aThumbs[$iId]['popup_size'] = $iImageSize;
-        $this->_aThumbs[$iId]['popup_mime'] = $aPopupSize['mime'];
-        $this->_aThumbs[$iId]['thumb_width'] = $aThumbSize[0];
+        $this->_aThumbs[$iId]['popup_size']   = $iImageSize;
+        $this->_aThumbs[$iId]['popup_mime']   = $aPopupSize['mime'];
+        $this->_aThumbs[$iId]['thumb_width']  = $aThumbSize[0];
         $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
       }
 
       $iLoop++;
     }
+
+    return $this->_aThumbs;
 	}
 
-	public final function getThumbs($iId, $bAdvancedImageInformation = false) {
-    $this->_setThumbs($iId, $bAdvancedImageInformation);
-    return $this->_aThumbs;
+	public function getThumbs($iId, $bAdvancedImageInformation = false) {
+    return $this->_setThumbs($iId, $bAdvancedImageInformation);
   }
 
-  public final static function getAlbumName($iId) {
+  public static function getAlbumName($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -235,7 +239,7 @@ class Model_Gallery extends Model_Main {
   }
 
   # TODO: Rename function
-  public final static function getAlbumDescription($iId) {
+  public static function getAlbumContent($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -259,7 +263,7 @@ class Model_Gallery extends Model_Main {
       return Helper::formatOutput($aResult['content'], $sHighlight);
   }
 
-  public final static function getFileDescription($iId) {
+  public static function getFileDescription($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -281,9 +285,16 @@ class Model_Gallery extends Model_Main {
 	public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "gallery_albums (author_id, title, content, date)
+																				" . SQL_PREFIX . "gallery_albums
+                                        ( author_id,
+                                          title,
+                                          content,
+                                          date)
 																			VALUES
-																				( :author_id, :title, :content, :date )");
+																				( :author_id,
+                                          :title,
+                                          :content,
+                                          :date )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -333,11 +344,11 @@ class Model_Gallery extends Model_Main {
 																				title = :title,
 																				content = :content
 																			WHERE
-																				id = :where");
+																				id = :id");
 
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('where', $iId);
+      $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -345,7 +356,7 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public final function destroy($iId) {
+	public function destroy($iId) {
     $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
     try {
@@ -404,14 +415,10 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public final function createFile($aFile) {
+	public function createFile($aFile) {
     $oUploadFile = new Upload($this->_aRequest, $aFile);
 
     if($oUploadFile->uploadGalleryFile() == true) {
-      $this->_aRequest['content'] = (isset($this->_aRequest['content']) && !empty($this->_aRequest['content'])) ?
-              $this->_aRequest['content'] :
-              '';
-
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
 																					" . SQL_PREFIX . "gallery_files
@@ -427,31 +434,30 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
         $oQuery->bindParam('date', time());
 
-        $bResult = $oQuery->execute();
+        return $oQuery->execute();
       }
       catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
-
-			return $bResult;
     }
   }
 
-	public final function getFilePath() {
-		return $this->_sFilePath;
-	}
+	public function getFilePath() {
+    return $this->_sFilePath;
+  }
 
-	public final function updateFile($iId) {
+  public function updateFile($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
 																				" . SQL_PREFIX . "gallery_files
 																			SET
 																				content = :content
 																			WHERE
-																				id = :where");
+																				id = :id");
 
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('where', $iId);
+      $oQuery->bindParam('id', $iId);
+
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -459,7 +465,7 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public final function destroyFile($iId) {
+	public function destroyFile($iId) {
     try {
       $oQuery = $this->_oDb->prepare("SELECT file, album_id FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);

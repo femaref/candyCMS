@@ -109,6 +109,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_bb_help', LANG_GLOBAL_BBCODE_HELP);
 		$this->_oSmarty->assign('lang_blog', LANG_GLOBAL_BLOG);
 		$this->_oSmarty->assign('lang_by', LANG_GLOBAL_BY);
+		$this->_oSmarty->assign('lang_category', LANG_GLOBAL_CATEGORY);
 		$this->_oSmarty->assign('lang_content', LANG_GLOBAL_CONTENT);
 		$this->_oSmarty->assign('lang_contentmanager', LANG_GLOBAL_CONTENTMANAGER);
 		$this->_oSmarty->assign('lang_create_entry_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
@@ -123,6 +124,8 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_destroy_entry', LANG_GLOBAL_DESTROY_ENTRY);
 		$this->_oSmarty->assign('lang_disclaimer', LANG_GLOBAL_DISCLAIMER);
 		$this->_oSmarty->assign('lang_disclaimer_read', LANG_GLOBAL_TERMS_READ);
+		$this->_oSmarty->assign('lang_download', LANG_GLOBAL_DOWNLOAD);
+		$this->_oSmarty->assign('lang_downloads', LANG_GLOBAL_DOWNLOADS);
 		$this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
 		$this->_oSmarty->assign('lang_email_info', LANG_COMMENT_INFO_EMAIL);
 		$this->_oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
@@ -175,7 +178,7 @@ abstract class Main {
 		return $this->_oSmarty;
 	}
 
-  protected function _setDescription($sDescription) {
+  protected function _setDescription($sDescription = '') {
     $this->_sDescription =& $sDescription;
   }
 
@@ -193,7 +196,7 @@ abstract class Main {
       return LANG_WEBSITE_DESCRIPTION;
   }
 
-  protected function _setKeywords($sKeywords) {
+  protected function _setKeywords($sKeywords = '') {
     $this->_sKeywords = & $sKeywords;
   }
 
@@ -204,7 +207,7 @@ abstract class Main {
       return LANG_WEBSITE_KEYWORDS;
   }
 
-  protected function _setTitle($sTitle) {
+  protected function _setTitle($sTitle = '') {
     $this->_sTitle =& $sTitle;
   }
 

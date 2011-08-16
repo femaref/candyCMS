@@ -15,9 +15,9 @@ abstract class Model_Main {
   public $oPage;
 
   public function __construct($aRequest = '', $aSession = '', $aFile = '') {
-    $this->_aRequest = & $aRequest;
-    $this->_aSession = & $aSession;
-    $this->_aFile = & $aFile;
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile     = & $aFile;
 
     $this->_oDb = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
                 PDO::ATTR_PERSISTENT => true));

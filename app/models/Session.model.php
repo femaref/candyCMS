@@ -8,7 +8,7 @@
 class Model_Session extends Model_Main {
 
   # Get userdata; static function and direct return due to uncritical action
-  public static final function getSessionData($iSessionId = '') {
+  public static function getSessionData($iSessionId = '') {
     if (empty($iSessionId))
       $iSessionId = session_id();
 
@@ -63,7 +63,7 @@ class Model_Session extends Model_Main {
   }
 
   # Create session
-  public final function create() {
+  public function create() {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
 																				id, verification_code
@@ -99,7 +99,7 @@ class Model_Session extends Model_Main {
       return false;
   }
 
-  public final function createResendActions($sNewPasswordSecure = '') {
+  public function createResendActions($sNewPasswordSecure = '') {
     require_once 'app/controllers/Mail.controller.php';
     $bResult = false;
 
@@ -151,11 +151,11 @@ class Model_Session extends Model_Main {
     }
   }
 
-  public final function getData() {
+  public function getData() {
     return $this->_aData;
   }
 
-  public final function destroy() {
+  public function destroy() {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
 																				" . SQL_PREFIX . "users

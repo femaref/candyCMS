@@ -5,7 +5,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-require_once 'addons/controllers/Addon.helper.php';
+require_once 'addons/controllers/Addon.controller.php';
 
 class Section extends Main {
 
@@ -102,6 +102,31 @@ class Section extends Main {
           parent::_setDescription($this->_oObject->getDescription());
           parent::_setKeywords($this->_oObject->getKeywords());
           parent::_setTitle($this->_oObject->getTitle());
+        }
+
+        break;
+
+      case 'download':
+
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
+          parent::_setContent($this->_oObject->create('create_download'));
+          parent::_setDescription();
+          parent::_setTitle();
+        }
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
+          parent::_setContent($this->_oObject->update('update_download'));
+          parent::_setDescription();
+          parent::_setTitle();
+        }
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
+          parent::_setContent($this->_oObject->destroy());
+          parent::_setDescription(LANG_GLOBAL_DOWNLOAD);
+          parent::_setTitle(LANG_GLOBAL_DOWNLOAD);
+        }
+        else {
+          parent::_setContent($this->_oObject->show());
+          parent::_setDescription(LANG_GLOBAL_DOWNLOAD);
+          parent::_setTitle(LANG_GLOBAL_DOWNLOAD);
         }
 
         break;

@@ -124,7 +124,7 @@ class Model_User extends Model_Main {
       } catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
-      
+
       $aGravatar = array('use_gravatar' => $aData['use_gravatar'], 'email' => $aData['email']);
 
       # Set SEO friendly user names
@@ -158,6 +158,8 @@ class Model_User extends Model_Main {
           'url_clean'     => $sUrl
       );
     }
+
+    return $this->_aData;
   }
 
   public function getData($iId = '', $bForceNoId = false) {
@@ -167,8 +169,7 @@ class Model_User extends Model_Main {
     if($bForceNoId == true)
       $this->_iId = '';
 
-    $this->_setData();
-    return $this->_aData;
+    return $this->_setData();
   }
 
   public function create($iVerificationCode) {

@@ -224,6 +224,7 @@ class Index extends Main {
 						strtolower($this->_aRequest['section']) == 'blog' ||
 						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
+						strtolower($this->_aRequest['section']) == 'download' ||
 						strtolower($this->_aRequest['section']) == 'error' ||
 						strtolower($this->_aRequest['section']) == 'gallery' ||
 						strtolower($this->_aRequest['section']) == 'log' ||

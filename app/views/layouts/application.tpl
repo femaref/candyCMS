@@ -42,6 +42,7 @@
         {/if}
         <li><a href='/blog'>{$lang_blog}</a></li>
         <li><a href='/gallery'>{$lang_gallery}</a></li>
+        <li><a href='/download'>{$lang_download}</a></li>
         <li><a href='/search'>{$lang_search}</a></li>
         {if $USER_RIGHT == 0}
           <li class="right"><a href='/user/create'>{$lang_register}</a></li>

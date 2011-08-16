@@ -24,15 +24,15 @@ final class Addon extends Section {
 
         break;
 
-      # This is a sample addon to display your projects and can be removed
-      case 'projects':
+      # This is a sample addon to manage a downloads section
+      case 'sample':
 
-        $oProjects = new Addon_Projects($this->_aRequest, $this->_aSession, $this->_aFile);
+        $oSample = new Addon_Sample($this->_aRequest, $this->_aSession, $this->_aFile);
 
-        parent::_setContent($oProjects->show());
+        parent::_setContent($oSample->show());
         parent::_setDescription('My description');
         parent::_setKeywords('Keyword,Keyword,Keyword');
-        parent::_setTitle('My new title');
+        parent::_setTitle('Sample');
 
         break;
 

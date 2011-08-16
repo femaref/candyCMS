@@ -1,12 +1,12 @@
 <form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='js-upload'>
   <h1>{$lang_headline}</h1>
   {if $smarty.get.action == 'createfile'}
-    <p>
-      <label for='input-file'>{$lang_file_choose}</label>
-      <input type='file' name='file[]' id="input-file" multiple />
+    <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>
+      <label for='input-file'>{$lang_file_choose} *</label>
+      <input type='file' name='file[]' id="input-file" multiple required />
     </p>
     <p>
-      <label for='input-cut'>{$lang_cut}</label>
+      <label for='input-cut'>{$lang_cut} *</label>
       <select name='cut' id="input-cut">
         <option value='c' {if $default == 'c'}default='default'{/if}>{$lang_create_file_cut}</option>
         <option value='r' {if $default == 'r'}default='default'{/if}>{$lang_create_file_resize}</option>

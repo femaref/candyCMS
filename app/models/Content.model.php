@@ -7,7 +7,8 @@
 
 class Model_Content extends Model_Main {
 
-  private final function _setData($bUpdate = false, $iLimit) {
+  private final function _setData($bUpdate, $iLimit) {
+    # Get the overview
     if (empty($this->_iId)) {
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -29,6 +30,8 @@ class Model_Content extends Model_Main {
       } catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
+
+    # Get single entry
     } else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -43,13 +46,11 @@ class Model_Content extends Model_Main {
 																				ON
 																					c.author_id=u.id
 																				WHERE
-																					c.id = :where
-																				ORDER BY
-																					c.title ASC
+																					c.id = :id
 																				LIMIT
 																					1");
 
-        $oQuery->bindParam('where', $this->_iId);
+        $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
 
         # Fix for using it in the same template as overview
@@ -62,6 +63,8 @@ class Model_Content extends Model_Main {
 
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
+
+      # We want to edit an entry
       if ($bUpdate == true) {
 
         $this->_aData = array(
@@ -74,8 +77,8 @@ class Model_Content extends Model_Main {
             'date'      => Helper::formatTimestamp($aRow['date'], true),
             'datetime'  => Helper::formatTimestamp($aRow['date'])
         );
-        unset($sContent);
 
+      # Show standard view
       } else {
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -114,22 +117,34 @@ class Model_Content extends Model_Main {
         );
       }
     }
+
+    return $this->_aData;
   }
 
   public final function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    $this->_setData($bUpdate, $iLimit);
-    return $this->_aData;
+    return $this->_setData($bUpdate, $iLimit);
   }
 
   public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "contents(author_id, title, teaser, keywords, content, date)
+																				" . SQL_PREFIX . "contents
+                                        ( author_id,
+                                          title,
+                                          teaser,
+                                          keywords,
+                                          content,
+                                          date)
 																			VALUES
-																				( :author_id, :title, :teaser, :keywords, :content, :date )");
+																				( :author_id,
+                                          :title,
+                                          :teaser,
+                                          :keywords,
+                                          :content,
+                                          :date )");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -139,8 +154,7 @@ class Model_Content extends Model_Main {
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
 
-      $bResult = $oQuery->execute();
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
@@ -170,8 +184,7 @@ class Model_Content extends Model_Main {
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('where', $iId);
 
-      $bResult = $oQuery->execute();
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
@@ -189,8 +202,7 @@ class Model_Content extends Model_Main {
 
       $oQuery->bindParam('id', $iId);
 
-      $bResult = $oQuery->execute();
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
