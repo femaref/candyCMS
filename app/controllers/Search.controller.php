@@ -46,26 +46,8 @@ class Search extends Main {
     $this->_sSearch = empty($iId) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($iId);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 
-    # Fetch data
-    $this->_aData = $this->_oModel->getData($this->_sSearch, $aTables);
-
-    # Build real table names
-    foreach ($aTables as $sTable) {
-      if ($sTable == 'gallery_albums') {
-        $this->_aData[$sTable]['section'] = 'gallery';
-        $this->_aData[$sTable]['title'] = LANG_GLOBAL_GALLERY;
-      }
-      else {
-        # Get table name from language files
-        $iTableLen = strlen($sTable) - 1;
-        $sTableSingular = substr($sTable, 0, $iTableLen);
-        $this->_aData[$sTable]['section'] = $sTableSingular;
-        $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper($sTableSingular));
-      }
-    }
-
     $this->_oSmarty->assign('search', $this->_sSearch);
-    $this->_oSmarty->assign('tables', $this->_aData);
+    $this->_oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
     return $this->_oSmarty->fetch('_show.tpl');

@@ -11,19 +11,19 @@
   <table>
     {foreach $content as $c}
       <tr class='{cycle values="row1,row2"}'>
-        <td style='width:45%' class="left">
+        <td>
           <a href='/content/{$c.id}/{$c.encoded_title}'>
             {$c.title}
           </a>
         </td>
-        <td style='width:25%'>{$c.datetime}</td>
-        <td style='width:20%'>
+        <td>{$c.datetime}</td>
+        <td>
           <a href='/user/{$c.author_id}'>
             {$c.name} {$c.surname}
           </a>
         </td>
-        <td style='width:10%'>
-          {if $USER_RIGHT >= 3}
+        {if $USER_RIGHT >= 3}
+          <td>
             <a href='/content/{$c.id}/update'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
                 title='{$lang_update}' width="16" height="16" />
@@ -31,8 +31,8 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
               title='{$lang_destroy}' width="16" height="16"
               onclick="confirmDelete('/content/{$c.id}/destroy')" />
-          {/if}
-        </td>
+          </td>
+        {/if}
       </tr>
     {/foreach}
   </table>

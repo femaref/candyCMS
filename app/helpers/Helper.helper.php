@@ -87,7 +87,7 @@ class Helper {
   }
 
   public static function getFileSize($sPath) {
-    $iSize = filesize($sPath);
+    $iSize = @filesize($sPath);
 
     if ($iSize > 1024 && $iSize < 1048576)
       $sReturn = round(($iSize / 1024), 2) . ' KB';

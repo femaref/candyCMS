@@ -1,17 +1,17 @@
-{if $USER_RIGHT >= 3}
-  <p class="center">
-    <a href='/blog/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-      {$lang_create_entry_headline}
-    </a>
-  </p>
-{/if}
-{if !$blog}
-  <div class='error' id='js-error' title='{$lang_no_entries}'>
-    <p>{$lang_no_entries}</p>
-  </div>
-{else}
-  <section id="blog">
+<section id="blog">
+  {if $USER_RIGHT >= 3}
+    <p class="center">
+      <a href='/blog/create'>
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
+        {$lang_create_entry_headline}
+      </a>
+    </p>
+  {/if}
+  {if !$blog}
+    <div class='error' id='js-error' title='{$lang_no_entries}'>
+      <p>{$lang_no_entries}</p>
+    </div>
+  {else}
     {foreach $blog as $b}
       {if !$b.id}
         <div class='error' id='js-error' title='{$lang_missing_entry}'>
@@ -99,20 +99,20 @@
       {/if}
     {/foreach}
   {/if}
-</section>
-{$_blog_footer_}
-<script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".js-fancybox").fancybox();
-    $('.js-image').capty();
-  });
-
-  $('.js-media').each(function(e) {
-    var $this = $(this);
-    $.getJSON(this.title, function(data) {
-      $this.html(data['html']);
+  {$_blog_footer_}
+  <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".js-fancybox").fancybox();
+      $('.js-image').capty();
     });
-  });
-</script>
+
+    $('.js-media').each(function(e) {
+      var $this = $(this);
+      $.getJSON(this.title, function(data) {
+        $this.html(data['html']);
+      });
+    });
+  </script>
+</section>

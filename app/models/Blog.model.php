@@ -327,7 +327,7 @@ class Model_Blog extends Model_Main {
     }
 	}
 
-	public final function destroy($iId) {
+	public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
 																				" . SQL_PREFIX . "blogs

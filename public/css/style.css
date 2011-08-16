@@ -373,10 +373,6 @@ table {
   display: table;
 }
 
-table td {
-  padding: 2px 2px 2px 0px;
-}
-
-table tr td:first-child {
-  font-weight: bold;
+table td, table th {
+  padding: 2px;
 }

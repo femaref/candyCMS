@@ -1,9 +1,9 @@
-{if !$c}
-  <div class='error' id='js-error' title='{$lang_missing_entry}'>
-    <p>{$lang_missing_entry}</p>
-  </div>
-{else}
-  <section id="content">
+<section id="content">
+  {if !$c}
+    <div class='error' id='js-error' title='{$lang_missing_entry}'>
+      <p>{$lang_missing_entry}</p>
+    </div>
+  {else}
     <article class="contents">
       <header>
         <h1>
@@ -61,20 +61,20 @@
         {/if}
       </footer>
     </article>
-  </section>
-  <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $(".js-fancybox").fancybox();
-      $('.js-image').capty();
-    });
-
-    $('.js-media').each(function(e) {
-      var $this = $(this);
-      $.getJSON(this.title, function(data) {
-        $this.html(data['html']);
+    <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".js-fancybox").fancybox();
+        $('.js-image').capty();
       });
-    });
-  </script>
-{/if}
+
+      $('.js-media').each(function(e) {
+        var $this = $(this);
+        $.getJSON(this.title, function(data) {
+          $this.html(data['html']);
+        });
+      });
+    </script>
+  {/if}
+</section>

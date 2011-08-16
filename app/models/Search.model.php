@@ -25,6 +25,19 @@ class Model_Search extends Model_Main {
 
         $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
 
+        # Build table names and order them
+        if ($sTable == 'gallery_albums') {
+          $this->_aData[$sTable]['section'] = 'gallery';
+          $this->_aData[$sTable]['title'] = LANG_GLOBAL_GALLERY;
+        }
+        else {
+          # Get table name from language files
+          $iTableLen = strlen($sTable) - 1;
+          $sTableSingular = substr($sTable, 0, $iTableLen);
+          $this->_aData[$sTable]['section'] = $sTableSingular;
+          $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper($sTableSingular));
+        }
+
         foreach ($aResult as $aRow) {
           $iId = $aRow['id'];
           $this->_aData[$sTable][$iId] = array(
