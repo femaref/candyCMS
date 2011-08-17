@@ -23,6 +23,13 @@ class Download extends Main {
       # Update download count
       Model_Download::updateDownloadCount($this->_iId);
 
+      # Get mime type
+      if(function_exists('finfo_open')) {
+        $oInfo = finfo_open(FILEINFO_MIME_TYPE);
+        $sMimeType = finfo_file($oInfo, PATH_UPLOAD . '/download/' . $sFile);
+        header('Content-type: ' . $sMimeType);
+      }
+
       # Send file directly
       header('Content-Disposition: attachment; filename="' . $sFile . '"');
       readfile(PATH_UPLOAD . '/download/' . $sFile);

@@ -27,7 +27,7 @@
                    width='32' height='32' alt='{$f.extension}' />
             </td>
             <td>
-              <a href="{$f.url}">{$f.title}</a>
+              <a href="{$f.url}" target="_blank">{$f.title}</a>
               {if $f.content !== ''}
                 <br />
                 {$f.content}
@@ -51,7 +51,7 @@
                   title='{$lang_destroy}' width="16" height="16"
                   onclick="confirmDelete('/download/{$f.id}/destroy')" />
               {else}
-                <a href="/download/{$f.id}">
+                <a href="{$f.url}" target="_blank">
                   <img src='%PATH_IMAGES%/spacer.png' class="icon-download" alt='{$lang_download}'
                     title='{$lang_download}' width="32" height="32" />
                 </a>

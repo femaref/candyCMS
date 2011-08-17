@@ -37,8 +37,8 @@ define( 'LANG_GLOBAL_DESCRIPTION', 'Beschreibung' );
 define( 'LANG_GLOBAL_DISCLAIMER', 'Impressum' );
 define( 'LANG_GLOBAL_DESTROY', 'Löschen' );
 define( 'LANG_GLOBAL_DESTROY_ENTRY', 'Eintrag löschen' );
-define( 'LANG_GLOBAL_DOWNLOAD', 'Download' );
-define( 'LANG_GLOBAL_DOWNLOADS', 'Downloads' );
+define( 'LANG_GLOBAL_DOWNLOAD', 'Download' ); #TODO
+define( 'LANG_GLOBAL_DOWNLOADS', 'Downloads' ); #TODO
 define( 'LANG_GLOBAL_EMAIL', 'E-Mail-Adresse' );
 define( 'LANG_GLOBAL_EMAIL_VERIFICATION', 'E-Mail-Adresse bestätigen' );
 define( 'LANG_GLOBAL_FILE', 'Datei' );

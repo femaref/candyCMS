@@ -12,8 +12,6 @@ final class Addon extends Section {
 
   public final function getSection() {
 
-    require_once 'addons/controllers/' . ucfirst((string) $this->_aRequest['section']) . '.controller.php';
-
     switch (strtolower($this->_aRequest['section'])) {
       default:
       case '404':
@@ -27,6 +25,7 @@ final class Addon extends Section {
       # This is a sample addon to manage a downloads section
       case 'sample':
 
+        require_once 'addons/controllers/Sample.controller.php';
         $oSample = new Addon_Sample($this->_aRequest, $this->_aSession, $this->_aFile);
 
         parent::_setContent($oSample->show());

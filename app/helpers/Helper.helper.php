@@ -29,7 +29,7 @@ class Helper {
 
   public static function redirectTo($sURL) {
     header('Location:' . WEBSITE_URL . $sURL);
-    die();
+    exit();
   }
 
   public static function checkEmailAddress($sMail) {
@@ -166,8 +166,6 @@ class Helper {
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
-      $e->getMessage();
-      die();
     }
 
     return trim($sStr);

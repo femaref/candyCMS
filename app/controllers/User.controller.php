@@ -95,7 +95,7 @@ class User extends Main {
       # Avoid URL manipulation
       if($this->_iId !== USER_ID) {
         Helper::redirectTo('/User/update');
-        die();
+        exit();
       }
     }
 
