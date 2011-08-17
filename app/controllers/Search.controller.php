@@ -42,7 +42,7 @@ class Search extends Main {
   }
 
   public function getSearch($iId = '') {
-    $aTables = array('blogs', 'contents', 'gallery_albums');
+    $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
     $this->_sSearch = empty($iId) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($iId);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 

@@ -123,6 +123,9 @@ define( 'LANG_COMMENT_TITLE_DESTROY', 'Kommentar löschen' );
 define( 'LANG_CONTENT_INFO_KEYWORDS', 'Gib die wichtigsten Schlagworte dieser Seite an.' );
 define( 'LANG_CONTENT_INFO_TEASER', 'Schreib eine Zusammenfassung für die Suchmaschinen.' );
 define( 'LANG_CONTENT_TITLE_UPDATE', '%p bearbeiten' );
+define( 'LANG_DOWNLOAD_FILE_CREATE_TITLE', 'Datei auswählen' ); #TODO
+define( 'LANG_DOWNLOAD_TITLE_CREATE', 'Download erstellen' ); #TODO
+define( 'LANG_DOWNLOAD_TITLE_UPDATE', 'Download bearbeiten' ); #TODO
 define( 'LANG_GALLERY_ALBUM_CREATE_TITLE', 'Album hinzufügen' );
 define( 'LANG_GALLERY_ALBUM_UPDATE_TITLE', 'Editieren: %p' );
 define( 'LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE', 'Datei(en) auswählen' );

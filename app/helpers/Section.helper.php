@@ -110,13 +110,13 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_download'));
-          parent::_setDescription();
-          parent::_setTitle();
+          parent::_setDescription(LANG_DOWNLOAD_TITLE_CREATE);
+          parent::_setTitle(LANG_DOWNLOAD_TITLE_CREATE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_download'));
-          parent::_setDescription();
-          parent::_setTitle();
+          parent::_setDescription(LANG_DOWNLOAD_TITLE_UPDATE);
+          parent::_setTitle(LANG_DOWNLOAD_TITLE_UPDATE);
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());

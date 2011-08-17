@@ -223,4 +223,18 @@ class Helper {
       $oDb->rollBack();
     }
   }
+
+  public static function replaceNonAlphachars($sStr) {
+    $sStr = str_replace('"', '', $sStr);
+    $sStr = str_replace('Ä', 'Ae', $sStr);
+    $sStr = str_replace('ä', 'ae', $sStr);
+    $sStr = str_replace('Ü', 'Ue', $sStr);
+    $sStr = str_replace('ü', 'ue', $sStr);
+    $sStr = str_replace('Ö', 'Oe', $sStr);
+    $sStr = str_replace('ö', 'oe', $sStr);
+    $sStr = str_replace('ß', 'ss', $sStr);
+    $sStr = str_replace(' ', '_', $sStr);
+    $sStr = strtolower($sStr);
+    return $sStr;
+  }
 }

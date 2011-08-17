@@ -45,7 +45,9 @@ final class Content extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_oSmarty->assign('_action_url_', '/content/update');
       $this->_oSmarty->assign('_formdata_', 'update_content');
-      $this->_oSmarty->assign('c', $this->_aData);
+
+      foreach($this->_aData as $sColumn => $sData)
+        $this->_oSmarty->assign($sColumn, $sData);
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);

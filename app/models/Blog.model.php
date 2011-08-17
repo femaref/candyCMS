@@ -160,7 +160,7 @@ class Model_Blog extends Model_Main {
         $this->_oDb->rollBack();
       }
 
-      $aRow =& $aResult;
+      $aRow = & $aResult;
 
       # we want to edit an entry
       if ($bUpdate == true) {
@@ -173,7 +173,6 @@ class Model_Blog extends Model_Main {
             'keywords'  => Helper::removeSlahes($aRow['keywords']),
             'content'   => Helper::removeSlahes($aRow['content']),
             'date'      => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'  => Helper::formatTimestamp($aRow['date']),
             'published' => $aRow['published']
         );
       }

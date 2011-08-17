@@ -123,15 +123,10 @@ class User extends Main {
         'email' => $this->_aSession['user_to_update_data']['email']
     );
 
-    $this->_oSmarty->assign('uid', $iId);
-    $this->_oSmarty->assign('name', $this->_aSession['user_to_update_data']['name']);
-    $this->_oSmarty->assign('surname', $this->_aSession['user_to_update_data']['surname']);
-    $this->_oSmarty->assign('email', $this->_aSession['user_to_update_data']['email']);
-    $this->_oSmarty->assign('content', $this->_aSession['user_to_update_data']['content']);
-    $this->_oSmarty->assign('receive_newsletter', (int) $this->_aSession['user_to_update_data']['receive_newsletter']);
-    $this->_oSmarty->assign('use_gravatar', (int) $this->_aSession['user_to_update_data']['use_gravatar']);
-    $this->_oSmarty->assign('user_right', (int) $this->_aSession['user_to_update_data']['user_right']);
+    foreach($this->_aSession['user_to_update_data'] as $sColumn => $sData)
+      $this->_oSmarty->assign($sColumn, $sData);
 
+    $this->_oSmarty->assign('uid', $iId);
     $this->_oSmarty->assign('avatar_100', Helper::getAvatar('user', 100, $this->_iId, $aGravatar));
     $this->_oSmarty->assign('avatar_popup', Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar));
 

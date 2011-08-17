@@ -97,15 +97,12 @@ class Blog extends Main {
 		# Show update template
 		if ($bUpdate == true) {
 			$this->_aData = $this->_oModel->getData($this->_iId, true);
+
 			$this->_oSmarty->assign('_action_url_', '/blog/update');
 			$this->_oSmarty->assign('_formdata_', 'update_blog');
-			$this->_oSmarty->assign('author_id', $this->_aData['author_id']);
-			$this->_oSmarty->assign('content', $this->_aData['content']);
-			$this->_oSmarty->assign('keywords', $this->_aData['keywords']);
-			$this->_oSmarty->assign('published', $this->_aData['published']);
-			$this->_oSmarty->assign('tags', $this->_aData['tags']);
-			$this->_oSmarty->assign('teaser', $this->_aData['teaser']);
-			$this->_oSmarty->assign('title', $this->_aData['title']);
+
+      foreach($this->_aData as $sColumn => $sData)
+        $this->_oSmarty->assign($sColumn, $sData);
 
 			# Build up title
 			$this->_setTitle(Helper::removeSlahes($this->_aData['title']));
@@ -125,6 +122,7 @@ class Blog extends Main {
 			$this->_oSmarty->assign('_action_url_', '/blog/create');
 			$this->_oSmarty->assign('_formdata_', 'create_blog');
 			$this->_oSmarty->assign('_request_id_', '');
+
 			$this->_oSmarty->assign('content', $sContent);
 			$this->_oSmarty->assign('keywords', $iKeywords);
 			$this->_oSmarty->assign('published', $iPublished);

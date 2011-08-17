@@ -373,6 +373,16 @@ table {
   display: table;
 }
 
+table img {
+  vertical-align: middle;
+}
+
 table td, table th {
   padding: 2px;
+}
+
+table th {
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
 }

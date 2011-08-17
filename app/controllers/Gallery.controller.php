@@ -120,8 +120,9 @@ class Gallery extends Main {
   protected function _showFormTemplate($bUpdate = true) {
     if($bUpdate == true) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_oSmarty->assign('title', $this->_aData['title']);
-      $this->_oSmarty->assign('content', $this->_aData['content']);
+
+      foreach($this->_aData as $sColumn => $sData)
+        $this->_oSmarty->assign($sColumn, $sData);
 
       $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/update');
       $this->_oSmarty->assign('_formdata_', 'update_gallery');
