@@ -3,6 +3,7 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @since 2.0
  */
 
 require_once 'app/models/Download.model.php';

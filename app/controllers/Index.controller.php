@@ -1,29 +1,78 @@
 <?php
 
-/*
+/**
+ * This class handles all incoming request and routes them.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @since 1.0
  */
 
 class Index extends Main {
 
+  /**
+  * @var    array
+  * @access protected
+  */
   protected $_aRequest;
+
+  /**
+  * @var    array
+  * @access protected
+  */
   protected $_aSession;
+
+  /**
+  * @var    array
+  * @access protected
+  */
   protected $_aFile;
+
+  /**
+  * @var    array
+  * @access protected
+  */
   protected $_aCookie;
 
+  /**
+  * name of the selected template (via request)
+  *
+  * @var    string
+  * @access private
+  */
   private $_sTemplate;
+
+  /**
+  * name of the selected language (via request)
+  *
+  * @var    string
+  * @access private
+  */
   private $_sLanguage;
 
+  /**
+  * @access public
+  * @param array $aRequest alias for the combination of $_GET and $_POST
+  * @param array $aSession alias for $_SESSION
+  * @param array $aFile alias for $_FILE
+  * @param array $aCookie alias for $_COOKIE
+  *
+  */
   public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
-    # Set up our software
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
     $this->_aCookie 	= & $aCookie;
-
   }
 
+  /**
+  * Load the Candy.inc.php and Facebook.inc.php files with our all our configuration constants.
+  *
+  * @access public
+  * @param string $sPath Path prefix. Needed when not in root path
+  * @see install/index.php
+  *
+  */
   public function loadConfig($sPath = '') {
     # Essential config file
 		try {
@@ -41,7 +90,14 @@ class Index extends Main {
 			require_once $sPath . 'config/Facebook.inc.php';
 	}
 
-
+  /**
+  * Load all defined plugins.
+  *
+  * @access public
+  * @param string $sPath Path prefix. Needed when not in root path
+  * @see config/Candy.inc.php
+  *
+  */
   public function loadPlugins($sPath = '') {
 		try {
       if (!file_exists($sPath . 'config/Plugins.inc.php'))
@@ -61,7 +117,15 @@ class Index extends Main {
 		}
 	}
 
-	# Give the users the ability to login via their facebook information
+  /**
+  * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  * @see plugins/controllers/Facebook.controller.php
+  * @return obj FacebookCMS
+  *
+  */
 	public function loadFacebookExtension() {
 		if (class_exists('FacebookCMS')) {
 			return new FacebookCMS(array(
@@ -72,7 +136,14 @@ class Index extends Main {
 		}
 	}
 
-  public function setSkin() {
+  /**
+  * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  *
+  */
+  public function setTemplate() {
 		# We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
       setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
@@ -87,6 +158,13 @@ class Index extends Main {
     }
   }
 
+  /**
+  * Sets the language. This can be done via a language request and be temporarily saved in a cookie.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  *
+  */
   public function setLanguage($sPath = '') {
 		# We got a language request? Let's change it!
 		if (isset($this->_aRequest['language'])) {
@@ -140,6 +218,13 @@ class Index extends Main {
     }
 	}
 
+  /**
+  * Get the cronjob working. Check for last execution and plan next cleanup, optimization and backup.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  *
+  */
   public function loadCronjob() {
     if (class_exists('Cronjob')) {
       if (Cronjob::getNextUpdate() === true) {
@@ -150,6 +235,14 @@ class Index extends Main {
     }
   }
 
+  /**
+  * Store and show flash status messages in the application
+  *
+  * @access protected
+  * @see config/Candy.inc.php
+  * @return array $aFlashMessage The message, its type and the headline of the message.
+  *
+  */
   protected function _getFlashMessage() {
     $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
             $this->_aSession['flash_message']['type'] :
@@ -165,6 +258,13 @@ class Index extends Main {
     return $aFlashMessage;
   }
 
+  /**
+  * Show the application.tpl with all header and footer data such as meta tags etc.
+  *
+  * @access public
+  * @return string $sCachedHTML The whole HTML code of our application.
+  *
+  */
   public function show() {
 		# Redirect to landing page if we got no section
 		if (!isset($this->_aRequest['section'])) {

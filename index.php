@@ -3,16 +3,9 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @version 2.0
+ * @since 1.0
  */
-
-# List of user rights
-#--------------------------------------------------
-# 0 = Guests / Unregistered Users
-# 1 = Members
-# 2 = Facebook users
-# 3 = Moderators
-# 4 = Administrators
-#--------------------------------------------------
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -57,7 +50,7 @@ $oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->loadConfig();
 $oIndex->loadPlugins();
-$oIndex->setSkin();
+$oIndex->setTemplate();
 $oIndex->setLanguage();
 $oIndex->loadCronjob();
 
@@ -76,6 +69,16 @@ if (USER_ID == 0) {
   if ($oFacebook == true)
     $aFacebookData = $oFacebook->getUserData();
 }
+
+
+# List of user rights
+#--------------------------------------------------
+# 0 = Guests / Unregistered Users
+# 1 = Members
+# 2 = Facebook users
+# 3 = Moderators
+# 4 = Administrators
+#--------------------------------------------------
 
 define('USER_RIGHT', isset($aFacebookData[0]['uid']) ?
                 2 :
