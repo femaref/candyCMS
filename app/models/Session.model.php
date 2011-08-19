@@ -8,16 +8,14 @@
 class Model_Session extends Model_Main {
 
   # Get userdata; static function and direct return due to uncritical action
-  public static function getSessionData($iSessionId = '') {
-    if (empty($iSessionId))
-      $iSessionId = session_id();
+  public static function getSessionData() {
 
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "users WHERE session = :session_id AND ip = :ip LIMIT 1");
 
-      $oQuery->bindParam('session_id', $iSessionId);
+      $oQuery->bindParam('session_id', session_id());
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
       $bReturn = $oQuery->execute();
 

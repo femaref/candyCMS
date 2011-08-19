@@ -7,17 +7,10 @@
 
 class AdvancedException extends ErrorException {
 
-  public function __contruct($sMessage, $iCode) {
-    $sMessage = !empty($sMessage) ? $sMessage : $this->getMessage();
-    $iCode = !empty($iCode) ? $iCode : $this->getCode();
-
-		$this->sendAdminMail($sMessage);
-  }
-
-  public function sendAdminMail($sMessage, $sSubject = 'Exception') {
+  public function sendAdminMail() {
     if (!class_exists('Mail'))
       require_once 'app/controllers/Mail.controller.php';
 
-    Mail::send(WEBSITE_MAIL, $sSubject, $sMessage, false);
+    return Mail::send(WEBSITE_MAIL, 'Exception', $this->getMessage(), false);
   }
 }

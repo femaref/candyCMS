@@ -11,109 +11,47 @@ class Index extends Main {
   protected $_aSession;
   protected $_aFile;
   protected $_aCookie;
-  private $_sSkin;
+
+  private $_sTemplate;
   private $_sLanguage;
 
   public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+    # Set up our software
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
     $this->_aCookie 	= & $aCookie;
+
   }
 
   public function loadConfig($sPath = '') {
+    # Essential config file
 		try {
-			if (!file_exists($sPath . 'config/Candy.inc.php'))
-				throw new AdvancedException('Missing config file.');
-			else
-				require_once $sPath . 'config/Candy.inc.php';
-		}
-		catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
+      if (!file_exists($sPath . 'config/Candy.inc.php'))
+        throw new AdvancedException('Missing Candy.inc.php file.');
+      else
+        require_once $sPath . 'config/Candy.inc.php';
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
 
+    # Optional facebook config. Used for apps and share buttons
 		if (file_exists($sPath . 'config/Facebook.inc.php'))
 			require_once $sPath . 'config/Facebook.inc.php';
 	}
 
-  public function setBasicConfiguration() {
-		try {
-			if (is_dir('install') && WEBSITE_DEV == false)
-				throw new AdvancedException('Please install software via <strong>install/</strong> and delete the folder afterwards!');
-		}
-		catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
-	}
-
-  public function setSkin() {
-		# We got a skin request? Let's change it!
-		if (isset($this->_aRequest['skin'])) {
-			setcookie('default_skin', (string) $this->_aRequest['skin'], time() + 2592000, '/');
-			$this->_sSkin = (string) $this->_aRequest['skin'];
-
-    # There is no request, but there might be a cookie
-		}
-		else {
-			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-			$this->_sSkin = isset($aRequest['default_skin']) ?
-							(string) $aRequest['default_skin'] :
-							'';
-		}
-  }
-
-  public function setLanguage($sPath = '') {
-		# We got a language request? Let's change it!
-		if (isset($this->_aRequest['language'])) {
-			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-			$this->_sLanguage = (string) $this->_aRequest['language'];
-
-    # There is no request, but there might be a cookie
-		}
-		else {
-			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-			$this->_sLanguage = isset($aRequest['default_language']) ?
-							(string) $aRequest['default_language'] :
-							substr(DEFAULT_LANGUAGE, 0, 2);
-		}
-
-		# Set iso language codes
-		switch ($this->_sLanguage) {
-			default:
-			case 'de':
-				$sLocale = 'de_DE';
-				break;
-
-			case 'en':
-				$sLocale = 'en_US';
-				break;
-
-			case 'es':
-				$sLocale = 'es_ES';
-				break;
-
-			case 'fr':
-				$sLocale = 'fr_FR';
-				break;
-
-			case 'pt':
-				$sLocale = 'pt_PT';
-				break;
-		}
-
-		define('WEBSITE_LANGUAGE', $this->_sLanguage);
-		define('WEBSITE_LOCALE', $sLocale);
-
-		if (file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
-			require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
-
-		else
-			die(LANG_ERROR_GLOBAL_NO_LANGUAGE);
-	}
 
   public function loadPlugins($sPath = '') {
-		if (file_exists($sPath . 'config/Plugins.inc.php'))
-			require_once $sPath . 'config/Plugins.inc.php';
+		try {
+      if (!file_exists($sPath . 'config/Plugins.inc.php'))
+        throw new AdvancedException('Missing plugin config file.');
+      else
+        require_once $sPath . 'config/Plugins.inc.php';
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
 
 		$aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
 
@@ -124,7 +62,7 @@ class Index extends Main {
 	}
 
 	# Give the users the ability to login via their facebook information
-	public function loadFacebookPlugin() {
+	public function loadFacebookExtension() {
 		if (class_exists('FacebookCMS')) {
 			return new FacebookCMS(array(
 					'appId' => FACEBOOK_APP_ID,
@@ -134,73 +72,131 @@ class Index extends Main {
 		}
 	}
 
-  public function getActiveUser($iSessionId = '') {
-		$this->_aSession['userdata'] = Model_Session::getSessionData($iSessionId);
-		return $this->_aSession['userdata'];
-	}
+  public function setSkin() {
+		# We got a template request? Let's change it!
+    if (isset($this->_aRequest['template'])) {
+      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
+      $this->_sTemplate = (string) $this->_aRequest['template'];
+    }
+    # There is no request, but there might be a cookie instead
+    else {
+      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $this->_sTemplate = isset($aRequest['default_template']) ?
+              (string) $aRequest['default_template'] :
+              '';
+    }
+  }
 
-  private function _getFlashMessage() {
-		$aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
-						$this->_aSession['flash_message']['type'] :
-						'';
-		$aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
-						$this->_aSession['flash_message']['message'] :
-						'';
-		$aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
-						$this->_aSession['flash_message']['headline'] :
-						'';
+  public function setLanguage($sPath = '') {
+		# We got a language request? Let's change it!
+		if (isset($this->_aRequest['language'])) {
+			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+			$this->_sLanguage = (string) $this->_aRequest['language'];
+		}
+    # There is no request, but there might be a cookie instead
+		else {
+			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+			$this->_sLanguage = isset($aRequest['default_language']) ?
+							(string) $aRequest['default_language'] :
+							substr(DEFAULT_LANGUAGE, 0, 2);
+		}
 
-		unset($_SESSION['flash_message']);
-		return $aFlashMessage;
+		# Set iso language codes
+    switch ($this->_sLanguage) {
+      default:
+      case 'de':
+        $sLocale = 'de_DE';
+        break;
+
+      case 'en':
+        $sLocale = 'en_US';
+        break;
+
+      case 'es':
+        $sLocale = 'es_ES';
+        break;
+
+      case 'fr':
+        $sLocale = 'fr_FR';
+        break;
+
+      case 'pt':
+        $sLocale = 'pt_PT';
+        break;
+    }
+
+		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
+		define('WEBSITE_LOCALE',    $sLocale);
+
+    # Include language if possible
+		try {
+      if (!file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
+        throw new AdvancedException('Missing language file.');
+      else
+        require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
 	}
 
   public function loadCronjob() {
-		if (class_exists('Cronjob')) {
-			if (Cronjob::getNextUpdate() === true) {
-				Cronjob::cleanup();
-				Cronjob::optimize();
-				Cronjob::backup(USER_ID);
-			}
-		}
-	}
+    if (class_exists('Cronjob')) {
+      if (Cronjob::getNextUpdate() === true) {
+        Cronjob::cleanup();
+        Cronjob::optimize();
+        Cronjob::backup(USER_ID);
+      }
+    }
+  }
+
+  protected function _getFlashMessage() {
+    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+            $this->_aSession['flash_message']['type'] :
+            '';
+    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
+            $this->_aSession['flash_message']['message'] :
+            '';
+    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
+            $this->_aSession['flash_message']['headline'] :
+            '';
+
+    unset($_SESSION['flash_message']);
+    return $aFlashMessage;
+  }
 
   public function show() {
 		# Redirect to landing page if we got no section
 		if (!isset($this->_aRequest['section'])) {
 			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-			die();
+			exit();
 		}
 
 		# Load JS language
-		$sLangVars = '';
-		$oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
+    $sLangVars = '';
+    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
 
-		while (!feof($oFile)) {
-			$sLangVars .= fgets($oFile);
-		}
-
-		# Check for new version of script
-		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-			$oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
-			$sVersionContent = @stream_get_contents($oFile);
-			@fclose($oFile);
-
-			$sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
-		}
+    while (!feof($oFile)) {
+      $sLangVars .= fgets($oFile);
+    }
 
 		# Header.tpl
 		$oSmarty = $this->_setSmarty();
 		$oSmarty->assign('user', USER_NAME);
 
-		# Check for update
-		$sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+		# Check for new version of script
+		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
+      $sVersionContent = @stream_get_contents($oFile);
+      @fclose($oFile);
+
+      $sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
+    }
+
+    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
             str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
             '';
-
-		$sLangUpdateAvaiable = str_replace(
-										'%l',
-										Helper::createLinkTo('http://candycms.com', true),
-										$sLangUpdateAvaiable);
+    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
 
 		# System variables
 		$oSmarty->assign('_javascript_language_file_', $sLangVars);
@@ -209,12 +205,12 @@ class Index extends Main {
 		# Get possible flash messages
 		$aFlashMessages = $this->_getFlashMessage();
 
-		# Replace Flash Message with Content
+		# Replace flash message with content
 		$oSmarty->assign('_flash_type_', $aFlashMessages['type']);
 		$oSmarty->assign('_flash_message_', $aFlashMessages['message']);
 		$oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
-		# Language
+		# Global language
 		$oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
 		$oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
 
@@ -282,16 +278,15 @@ class Index extends Main {
 			$sCachedHTML = $oSmarty->fetch('application.tpl');
 		}
 
-		$sCachedHTML = str_replace('%PATH_TEMPLATE%', PATH_TEMPLATE, $sCachedHTML);
-
 		# Build absolute Path because of pretty URLs
+		$sCachedHTML = str_replace('%PATH_TEMPLATE%', PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
 		# Check for user custom css
 		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-		if (!empty($this->_sSkin))
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/css', $sCachedHTML);
+		if (!empty($this->_sTemplate))
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
 
 		elseif (PATH_TEMPLATE !== '')
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
@@ -300,8 +295,8 @@ class Index extends Main {
 
 		# Check for user custom icons etc.
 		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-		if (!empty($this->_sSkin))
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sSkin . '/images', $sCachedHTML);
+		if (!empty($this->_sTemplate))
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
 
 		elseif (PATH_TEMPLATE !== '')
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);

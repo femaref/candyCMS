@@ -52,58 +52,58 @@ catch (AdvancedException $e) {
 
 @session_start();
 
-# We avoid the $_REQUEST due to problems with $_COOKIE
-$aRequest = array_merge($_POST, $_GET);
-$aFiles = isset($_FILES) ? $_FILES : array();
-$oIndex = new Index($aRequest, $_SESSION, $aFiles, $_COOKIE);
+# Initialize software
+$oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
+
 $oIndex->loadConfig();
-$oIndex->setBasicConfiguration();
+$oIndex->loadPlugins();
 $oIndex->setSkin();
 $oIndex->setLanguage();
-$oIndex->loadPlugins();
+$oIndex->loadCronjob();
 
-$aUser = & $oIndex->getActiveUser();
+if (is_dir('install') && WEBSITE_DEV == false)
+  die('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
-# Check whether we use facebook or CMS data
+# Set active user
+$aUser = Model_Session::getSessionData();
+
 define('USER_ID', (int) $aUser['id']);
 define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');
 
-# If we use the facebook plugin and are not logged in, fetch user data
-if(USER_ID == 0) {
-  $oFacebook = $oIndex->loadFacebookPlugin();
+# Try to get facebook data
+if (USER_ID == 0) {
+  $oFacebook = $oIndex->loadFacebookExtension();
   if ($oFacebook == true)
     $aFacebookData = $oFacebook->getUserData();
 }
 
 define('USER_RIGHT', isset($aFacebookData[0]['uid']) ?
-								2 :
-								(int) $aUser['user_right']);
+                2 :
+                (int) $aUser['user_right']);
 
 define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ?
-								$aFacebookData[0]['uid'] :
-								'');
+                $aFacebookData[0]['uid'] :
+                '');
 
 define('USER_EMAIL', isset($aFacebookData[0]['email']) ?
-								$aFacebookData[0]['email'] :
-								$aUser['email']);
+                $aFacebookData[0]['email'] :
+                $aUser['email']);
 
 define('USER_NAME', isset($aFacebookData[0]['first_name']) ?
-								$aFacebookData[0]['first_name'] :
-								$aUser['name']);
+                $aFacebookData[0]['first_name'] :
+                $aUser['name']);
 
 define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ?
-								$aFacebookData[0]['last_name'] :
-								$aUser['surname']);
+                $aFacebookData[0]['last_name'] :
+                $aUser['surname']);
 
 define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
-
-# Load cronjob if plugin if enabled
-$oIndex->loadCronjob();
 
 # If this is an ajax request, no layout is loaded
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define('AJAX_REQUEST', (int) $iAjax);
 
+# Define current url
 define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 echo $oIndex->show();
