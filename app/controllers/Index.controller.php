@@ -62,7 +62,7 @@ class Index extends Main {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
-    $this->_aCookie 	= & $aCookie;
+    $this->_aCookie   = & $aCookie;
   }
 
   /**
@@ -75,7 +75,7 @@ class Index extends Main {
   */
   public function loadConfig($sPath = '') {
     # Essential config file
-		try {
+    try {
       if (!file_exists($sPath . 'config/Candy.inc.php'))
         throw new AdvancedException('Missing Candy.inc.php file.');
       else
@@ -86,8 +86,8 @@ class Index extends Main {
     }
 
     # Optional facebook config. Used for apps and share buttons
-		if (file_exists($sPath . 'config/Facebook.inc.php'))
-			require_once $sPath . 'config/Facebook.inc.php';
+    if (file_exists($sPath . 'config/Facebook.inc.php'))
+      require_once $sPath . 'config/Facebook.inc.php';
 	}
 
   /**
@@ -124,6 +124,7 @@ class Index extends Main {
   * @see config/Candy.inc.php
   * @see plugins/controllers/Facebook.controller.php
   * @return obj FacebookCMS
+  * @todo better return
   *
   */
 	public function loadFacebookExtension() {
@@ -236,7 +237,7 @@ class Index extends Main {
   }
 
   /**
-  * Store and show flash status messages in the application
+  * Store and show flash status messages in the application.
   *
   * @access protected
   * @see config/Candy.inc.php
