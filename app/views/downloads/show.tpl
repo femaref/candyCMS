@@ -7,12 +7,12 @@
       </a>
     </p>
   {/if}
+  <h1>{$lang_headline}</h1>
   {if !$download}
     <div class='error' id='js-error' title='{$lang_no_entries}'>
       <p>{$lang_no_entries}</p>
     </div>
   {else}
-    <h1>{$lang_headline}</h1>
     <table>
       {foreach $download as $d}
         <tr>

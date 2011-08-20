@@ -155,7 +155,7 @@ class Model_Download extends Model_Main {
         $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
         $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
         $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']));
-        $oQuery->bindParam('file', $oUploadFile->getId());
+        $oQuery->bindParam('file', $oUploadFile->getId(false));
         $oQuery->bindParam('extension', $oUploadFile->getExtension());
         $oQuery->bindParam('date', time());
 
