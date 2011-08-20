@@ -1,4 +1,4 @@
-<section>
+<section id="content">
   {if $USER_RIGHT >= 3}
     <p class="center">
       <a href='/content/create'>
