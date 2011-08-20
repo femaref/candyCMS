@@ -380,8 +380,8 @@ class Index extends Main {
 		}
 
 		# Build absolute Path because of pretty URLs
-		$sCachedHTML = str_replace('%PATH_TEMPLATE%', PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
 		# Check for user custom css
