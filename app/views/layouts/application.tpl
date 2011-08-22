@@ -31,7 +31,7 @@
     <title>{$_title_}</title>
     <!--[if IE]>
       <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-      <script src='%PATH_PUBLIC%/js/core/ie.html5-min.js' type='text/javascript'></script>
+      <script src='%PATH_PUBLIC%/js/core/ie.html5{$_compress_files_suffix_}.js' type='text/javascript'></script>
     <![endif]-->
   </head>
   <body>
