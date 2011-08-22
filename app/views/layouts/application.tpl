@@ -34,7 +34,10 @@
       <script src='%PATH_PUBLIC%/js/core/ie.html5-min.js' type='text/javascript'></script>
     <![endif]-->
   </head>
-  <body>
+  <!--[if lt IE 7]><body class="ie6"><![endif]-->
+  <!--[if IE 7]><body class="ie7><![endif]-->
+  <!--[if IE 8]><body class="ie8><![endif]-->
+  <!--[if gt IE 8]><!--> <body><!--<![endif]-->
     <nav>
       <ul>
         {if $USER_RIGHT > 0}

@@ -1,4 +1,4 @@
-<section>
+<section id="archive">
   <ul>
     {foreach from=$data item=d key=month}
       <li>
