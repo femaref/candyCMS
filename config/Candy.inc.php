@@ -104,7 +104,7 @@ define('CRONJOB_SEND_PER_MAIL', false);
 
 # If you want to override existing classes (placed in "addons/controllers/"), turn true
 # DEFAULT: false
-define('ALLOW_ADDONS', true);
+define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 
@@ -185,8 +185,8 @@ define('POPUP_DEFAULT_Y', '640');
 
 # ------------------------------------------------------------------------------
 
-# If you want to use skins, enter name of skin-folder here
-# They are placed at skins/<SkinName>/...
+# If you want to use templates, enter name of template-folder here
+# They are placed at templates/<SkinName>/...
 # DEFAULT: ''
 define('PATH_TEMPLATE', 'marcoraddatz');
 

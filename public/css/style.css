@@ -137,11 +137,16 @@ section#blog article.blogs,
 section#content article.contents,
 section#gallery article.gallery_albums,
 section#gallery article.search,
+section#download table,
+section#user table,
+section#logs table,
+section#content table,
 form,
 table {
   clear: both;
   padding:20px 0px;
   max-width:700px; /* Fix for popups */
+  overflow:auto;
 }
 
 section#blog article.blogs header,

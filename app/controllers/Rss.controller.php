@@ -14,9 +14,9 @@ class Rss extends Main {
 	public function __init() {
     Header('Content-Type: application/rss+xml');
 
-		$this->_sSection = isset($this->_aRequest['template']) ?
-						(string) strtolower($this->_aRequest['template']) :
-						'Blog';
+		$this->_sSection = isset($this->_aRequest['subsection']) ?
+						(string) strtolower($this->_aRequest['subsection']) :
+						'blog';
 
     # We might need to add a file extension to the rss feed
     if (substr($this->_sSection, 0, 4) == 'blog')
