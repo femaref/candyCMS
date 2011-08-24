@@ -373,6 +373,8 @@ class Index extends Main {
 			$oSmarty->assign('meta_og_title', $oSection->getTitle());
 			$oSmarty->assign('meta_og_url', CURRENT_URL);
 
+      # We must recreate the request id because it's yet only set in the Main.controller.php
+      $oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
 			$oSmarty->assign('_content_', $oSection->getContent());
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
