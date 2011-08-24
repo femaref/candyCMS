@@ -1,28 +1,130 @@
 <?php
 
-/*
+/**
+ * This class is a parent class for most other controllers and provides most language variables.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @since 1.0
  */
 
 abstract class Main {
+
+  /**
+  * Alias for $_REQUEST
+  *
+  * @var    array
+  * @access protected
+  */
   protected $_aRequest;
+
+  /**
+  * Alias for $_SESSION
+  *
+  * @var    array
+  * @access protected
+  */
   protected $_aSession;
+
+  /**
+  * Alias for $_FILE
+  *
+  * @var    array
+  * @access protected
+  */
   protected $_aFile;
+
+  /**
+  * Alias for $_COOKIE
+  *
+  * @var    array
+  * @access protected
+  */
   protected $_aCookie;
+
+  /**
+  * ID to process.
+  *
+  * @var    int
+  * @access protected
+  */
   protected $_iId;
+
+  /**
+  * Fetches all error messages in an array.
+  *
+  * @var    array
+  * @access protected
+  */
   protected $_aError;
+
+  /**
+  * The controller claimed model.
+  *
+  * @var    obj
+  * @access protected
+  */
   protected $_oModel;
+
+  /**
+  * Returned data from models.
+  *
+  * @var    array
+  * @access private
+  */
   private $_aData = array();
+
+  /**
+  * Final HTML-Output.
+  *
+  * @var    string
+  * @access private
+  */
   private $_sContent;
+
+  /**
+  * Meta description.
+  *
+  * @var    string
+  * @access private
+  */
   private $_sDescription;
+
+  /**
+  * Meta keywords.
+  *
+  * @var    string
+  * @access private
+  */
   private $_sKeywords;
+
+
+  /**
+  * Page title.
+  *
+  * @var    string
+  * @access private
+  */
   private $_sTitle;
 
-	# Plugins
-	protected $_oAdsense;
+  /**
+  * Smarty object.
+  *
+  * @var    obj
+  * @access protected
+  */
 	protected $_oSmarty;
 
+  /**
+  * Initialize the software by adding input params, set default id and start template engine.
+  *
+  * @access public
+  * @param array $aRequest alias for the combination of $_GET and $_POST
+  * @param array $aSession alias for $_SESSION
+  * @param array $aFile alias for $_FILE
+  * @param array $aCookie alias for $_COOKIE
+  *
+  */
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
     $this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
@@ -37,13 +139,35 @@ abstract class Main {
 		$this->_setSmarty();
   }
 
+  /**
+  * Method to include the model files.
+  *
+  * @access public
+  *
+  */
 	public function __init() {}
 
+  /**
+  * Autoload classes if they weren't included yet.
+  *
+  * @access public
+  * @param string $sClass Name of class
+  *
+  * @todo remove
+  *
+  */
 	public function __autoload($sClass) {
 		if(!class_exists((string)ucfirst($sClass)))
 			require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
   }
 
+  /**
+  * Set up smarty
+  *
+  * @access proteced
+  * @return obj $this->_oSmarty
+  *
+  */
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->_oSmarty = new Smarty();
@@ -80,26 +204,26 @@ abstract class Main {
 
 		# Include Google Adsense
 		if (class_exists('Adsense')) {
-			$this->_oAdsense = new Adsense();
-			$this->_oSmarty->assign('_plugin_adsense_', $this->_oAdsense->show());
+			$oAdsense = new Adsense();
+			$this->_oSmarty->assign('_plugin_adsense_', $oAdsense->show());
 		}
 
 		# Include news archive
 		if (class_exists('Archive')) {
-			$this->_oArchive = new Archive($this->_aRequest, $this->_aSession);
-			$this->_oSmarty->assign('_plugin_archive_', $this->_oArchive->show());
+			$oArchive = new Archive($this->_aRequest, $this->_aSession);
+			$this->_oSmarty->assign('_plugin_archive_', $oArchive->show());
 		}
 
 		# Include latest headlines
 		if (class_exists('Headlines')) {
-			$this->_oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
-			$this->_oSmarty->assign('_plugin_headlines_', $this->_oHeadlines->show());
+			$oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
+			$this->_oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
 		}
 
 		# Include latest teaser
 		if (class_exists('Teaser')) {
-			$this->_oTeaser = new Teaser($this->_aRequest, $this->_aSession);
-			$this->_oSmarty->assign('_plugin_teaser_', $this->_oTeaser->show());
+			$oTeaser = new Teaser($this->_aRequest, $this->_aSession);
+			$this->_oSmarty->assign('_plugin_teaser_', $oTeaser->show());
 		}
 
 		# Initialize language

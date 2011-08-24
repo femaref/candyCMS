@@ -51,6 +51,9 @@ class Index extends Main {
   private $_sLanguage;
 
   /**
+  * Overrides parent method because we didn't load the config files yet.
+  *
+  * @see Main.controller.php
   * @access public
   * @param array $aRequest alias for the combination of $_GET and $_POST
   * @param array $aSession alias for $_SESSION
@@ -371,8 +374,6 @@ class Index extends Main {
 			$oSmarty->assign('meta_og_url', CURRENT_URL);
 
 			$oSmarty->assign('_content_', $oSection->getContent());
-      # We must recreate the request id because it's yet only set in the Main.controller.php
-			$oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
 			$oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');

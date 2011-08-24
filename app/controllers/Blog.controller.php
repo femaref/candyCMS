@@ -10,8 +10,14 @@ require_once 'app/helpers/Page.helper.php';
 require_once 'app/controllers/Comment.controller.php';
 
 class Blog extends Main {
+
+  /**
+  * @var    obj
+  * @access public
+  */
 	public $oPage;
 
+  
 	public function __init() {
 		$this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
 	}
