@@ -11,7 +11,7 @@
           <img class="avatar" src="{$c.avatar_64}" width="32" height="32" alt="" />
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
-          {elseif $c.author_facebook_id > 0}
+          {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
             <a href='{$c.author_website}'>
               {$c.author_name}
             </a>
