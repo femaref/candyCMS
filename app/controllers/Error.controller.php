@@ -5,13 +5,13 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
  * @since 2.0
  */
 
 require_once 'app/controllers/Search.controller.php';
 
 class Error extends Main {
-
 
 	/**
 	 * Show a 404 error when a page is not avaiable or found.

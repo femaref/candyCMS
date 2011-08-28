@@ -1,4 +1,4 @@
-<form action='/media/create' method='post' enctype='multipart/form-data'>
+<form action='/media/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
   <h1>{$lang_headline}</h1>
   <p>
     <label for='input-file'>{$lang_file_choose} *</label>
@@ -10,7 +10,7 @@
     <input type='text' name='rename' id="input-rename" onkeyup="this.value = candy.system.stripNoAlphaChars(this.value)" />
   </p>
   <p class="center">
-    <input type='hidden' value='formdata' name='upload_file' />
+    <input type='hidden' value='formdata' name='{$smarty.get.action}_file' />
     <input type='submit' value='{$lang_headline}' disabled />
   </p>
 </form>

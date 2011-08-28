@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Upload and show media files.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
 */
 
 require_once 'app/helpers/Image.helper.php';
@@ -15,11 +19,11 @@ class Media extends Main {
 			Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
-			if (isset($this->_aRequest['upload_file'])) {
+			if (isset($this->_aRequest['create_file'])) {
 				if ($this->_proceedUpload() == true)
-					Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
+					return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
 				else
-					Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
+					return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
 			}
 			else
 				return $this->_showUploadFileTemplate();

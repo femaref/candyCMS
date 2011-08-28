@@ -12,25 +12,25 @@
 class Index extends Main {
 
   /**
-  * @var    array
+  * @var array
   * @access protected
   */
   protected $_aRequest;
 
   /**
-  * @var    array
+  * @var array
   * @access protected
   */
   protected $_aSession;
 
   /**
-  * @var    array
+  * @var array
   * @access protected
   */
   protected $_aFile;
 
   /**
-  * @var    array
+  * @var array
   * @access protected
   */
   protected $_aCookie;
@@ -38,7 +38,7 @@ class Index extends Main {
   /**
   * name of the selected template (via request)
   *
-  * @var    string
+  * @var string
   * @access private
   */
   private $_sTemplate;
@@ -46,7 +46,7 @@ class Index extends Main {
   /**
   * name of the selected language (via request)
   *
-  * @var    string
+  * @var string
   * @access private
   */
   private $_sLanguage;
@@ -127,7 +127,7 @@ class Index extends Main {
   * @access public
   * @see config/Candy.inc.php
   * @see plugins/controllers/Facebook.controller.php
-  * @return obj FacebookCMS
+  * @return object FacebookCMS
   * @todo better return
   *
   */

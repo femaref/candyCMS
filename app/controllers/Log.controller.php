@@ -55,14 +55,14 @@ class Log extends Main {
 	 * Show content entry or content overview (depends on a given ID or not).
 	 *
 	 * @access public
+	 * @static
 	 * @param string $sSectionName name of section
 	 * @param string $sActionName name of action (CRUD)
-	 * @param int $iActionId ID of the row that is affected
-	 * @param int $iUserId ID of the acting user
-	 * @param int $iTimeStart starting timestamp of the entry
-	 * @param int $iTimeEnd ending timestamp of the entry
+	 * @param integer $iActionId ID of the row that is affected
+	 * @param integer $iUserId ID of the acting user
+	 * @param integer $iTimeStart starting timestamp of the entry
+	 * @param integer $iTimeEnd ending timestamp of the entry
 	 * @return string HTML content
-	 * @todo integer or int?
 	 *
 	 */
 	public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
@@ -71,10 +71,10 @@ class Log extends Main {
 
 	/**
 	 * Delete entry if we have enough rights.
+	 * We must override the main method due to a diffent required user right.
 	 *
 	 * @access public
-	 * @return ?
-	 * @todo what return?
+	 * @return boolean status of model action.
 	 * @override app/controllers/Main.controller.php
 	 *
 	 */
@@ -86,8 +86,7 @@ class Log extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action.
 	 *
 	 */
 	protected function _destroy() {

@@ -33,14 +33,14 @@
   </p>
   {if isset($_captcha_)}
     <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
-      <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
+      <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
       {$_captcha_}
     </div>
   {/if}
   <p class="center">
     <input type='submit' value='{$lang_submit}' />
-    <input type='reset' value='{$lang_reset}' />
     <input type='hidden' value='formdata' name='create_comment' />
     <input type='hidden' value='{$_parent_id_}' name='parent_id' />
+    <input type='reset' value='{$lang_reset}' />
   </p>
 </form>

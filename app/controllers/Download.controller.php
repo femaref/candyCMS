@@ -6,6 +6,7 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
  * @since 2.0
  */
 
@@ -75,7 +76,6 @@ class Download extends Main {
 	 *
 	 */
   protected function _showFormTemplate() {
-
 		# Update
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
@@ -116,17 +116,12 @@ class Download extends Main {
 	 * If data is given, activate the model, insert them into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   protected function _create() {
-
-		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
-
-		if (!isset($this->_aFile['file']) || empty($this->_aFile['file']['name']))
-			$this->_aError['file'] = LANG_ERROR_FORM_MISSING_FILE;
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('file', LANG_ERROR_FORM_MISSING_FILE);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -145,12 +140,17 @@ class Download extends Main {
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action
 	 *
 	 */
   protected function _update() {
-		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('file', LANG_ERROR_FORM_MISSING_FILE);
+
+		if (isset($this->_aError))
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/download');
 		}
@@ -164,8 +164,7 @@ class Download extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action
 	 *
 	 */
   protected function _destroy() {

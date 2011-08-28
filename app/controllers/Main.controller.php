@@ -14,7 +14,7 @@ abstract class Main {
 	/**
 	 * Alias for $_REQUEST
 	 *
-	 * @var    array
+	 * @var array
 	 * @access protected
 	 */
 	protected $_aRequest;
@@ -22,7 +22,7 @@ abstract class Main {
 	/**
 	 * Alias for $_SESSION
 	 *
-	 * @var    array
+	 * @var array
 	 * @access protected
 	 */
 	protected $_aSession;
@@ -30,7 +30,7 @@ abstract class Main {
 	/**
 	 * Alias for $_FILE
 	 *
-	 * @var    array
+	 * @var array
 	 * @access protected
 	 */
 	protected $_aFile;
@@ -38,7 +38,7 @@ abstract class Main {
 	/**
 	 * Alias for $_COOKIE
 	 *
-	 * @var    array
+	 * @var array
 	 * @access protected
 	 */
 	protected $_aCookie;
@@ -46,7 +46,7 @@ abstract class Main {
 	/**
 	 * ID to process.
 	 *
-	 * @var    int
+	 * @var integer
 	 * @access protected
 	 */
 	protected $_iId;
@@ -54,7 +54,7 @@ abstract class Main {
 	/**
 	 * Fetches all error messages in an array.
 	 *
-	 * @var    array
+	 * @var array
 	 * @access protected
 	 */
 	protected $_aError;
@@ -62,7 +62,7 @@ abstract class Main {
 	/**
 	 * The controller claimed model.
 	 *
-	 * @var    obj
+	 * @var object
 	 * @access protected
 	 */
 	protected $_oModel;
@@ -70,7 +70,7 @@ abstract class Main {
 	/**
 	 * Returned data from models.
 	 *
-	 * @var    array
+	 * @var array
 	 * @access private
 	 */
 	private $_aData = array();
@@ -78,7 +78,7 @@ abstract class Main {
 	/**
 	 * Final HTML-Output.
 	 *
-	 * @var    string
+	 * @var string
 	 * @access private
 	 */
 	private $_sContent;
@@ -86,7 +86,7 @@ abstract class Main {
 	/**
 	 * Meta description.
 	 *
-	 * @var    string
+	 * @var string
 	 * @access private
 	 */
 	private $_sDescription;
@@ -94,7 +94,7 @@ abstract class Main {
 	/**
 	 * Meta keywords.
 	 *
-	 * @var    string
+	 * @var string
 	 * @access private
 	 */
 	private $_sKeywords;
@@ -102,7 +102,7 @@ abstract class Main {
 	/**
 	 * Page title.
 	 *
-	 * @var    string
+	 * @var string
 	 * @access private
 	 */
 	private $_sTitle;
@@ -110,7 +110,7 @@ abstract class Main {
 	/**
 	 * Smarty object.
 	 *
-	 * @var    obj
+	 * @var object
 	 * @access protected
 	 */
 	protected $_oSmarty;
@@ -396,6 +396,20 @@ abstract class Main {
 		$sTitle = str_replace('<mark>', '', $sTitle);
 		$sTitle = str_replace('</mark>', '', $sTitle);
 		return $sTitle;
+	}
+
+
+	/**
+	 * Set error messages.
+	 *
+	 * @access protected
+	 * @param string $sField field to be checked
+	 * @param string $sMessage error to be displayed
+	 *
+	 */
+	protected function _setError($sField, $sMessage) {
+		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
+			$this->_aError[$sField] = $sMessage;
 	}
 
 	/**

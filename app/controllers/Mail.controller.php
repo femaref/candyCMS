@@ -16,7 +16,7 @@ class Mail extends Main {
 	/**
 	 * ReCaptcha public key.
 	 *
-	 * @var    array
+	 * @var string
 	 * @access protected
 	 * @see config/Candy.inc.php
 	 */
@@ -25,7 +25,7 @@ class Mail extends Main {
 	/**
 	 * ReCaptcha private key.
 	 *
-	 * @var    array
+	 * @var string
 	 * @access protected
 	 * @see config/Candy.inc.php
 	 */
@@ -34,7 +34,7 @@ class Mail extends Main {
 	/**
 	 * ReCaptcha object.
 	 *
-	 * @var    obj
+	 * @var object
 	 * @access protected
 	 */
 	protected $_oRecaptchaResponse = '';
@@ -42,7 +42,7 @@ class Mail extends Main {
 	/**
 	 * Provided ReCaptcha error message.
 	 *
-	 * @var    array
+	 * @var string
 	 * @access protected
 	 */
 	protected $_sRecaptchaError = '';
@@ -52,27 +52,36 @@ class Mail extends Main {
 	 * Create a mail.
 	 *
 	 * Create entry or show form template if we have enough rights. Due to spam bots we provide
-	 * 
+	 * a captcha and need to override the original method.
+	 * We must override the main method due to a diffent required user right and a captcha.
 	 *
 	 * @access public
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @return string HTML content
+	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function create() {
-    if (isset($this->_aRequest['send_mail'])) {
-      # Disable at AJAX due to a bug in reloading JS code
-      if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
-        return $this->_checkCaptcha();
-      else
-        return $this->_standardMail(false);
-    }
-    else {
-      $bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
-      return $this->_showCreateMailTemplate($bShowCaptcha);
-    }
-  }
+		if (isset($this->_aRequest['create_mail'])) {
+			# Disable at AJAX due to a bug in reloading JS code
+			if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
+				return $this->_checkCaptcha();
+			else
+				return $this->_standardMail(false);
+		}
+		else
+			return $this->_showCreateMailTemplate(( USER_RIGHT == 0 ) ? true : false);
+	}
 
+	/**
+	 * Create a mail template.
+	 *
+	 * Show the create mail form and check data for correct information.
+	 *
+	 * @access protected
+	 * @param boolean $bShowCaptcha show captcha or not.
+	 * @return string HTML content
+	 *
+	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
@@ -93,18 +102,17 @@ class Mail extends Main {
             '';
 
     $this->_oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
-    $this->_oSmarty->assign('content', $sContent);
-    $this->_oSmarty->assign('email', $sEmail);
-    $this->_oSmarty->assign('subject', $sSubject);
+		$this->_oSmarty->assign('content', $sContent);
+		$this->_oSmarty->assign('email', $sEmail);
+		$this->_oSmarty->assign('subject', $sSubject);
 
-    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
-      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey,
-                      $this->_sRecaptchaError));
+		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
+			$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
-    }
+		if (!empty($this->_aError)) {
+			foreach ($this->_aError as $sField => $sMessage)
+				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+		}
 
     # Create page title and description
     $this->_setDescription(LANG_GLOBAL_CONTACT);
@@ -119,6 +127,13 @@ class Mail extends Main {
     return $this->_oSmarty->fetch('create.tpl');
   }
 
+	/**
+	 * Check if the entered captcha is correct.
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
   protected function _checkCaptcha() {
     if( isset($this->_aRequest['recaptcha_response_field']) ) {
       $this->_oRecaptchaResponse = recaptcha_check_answer (
@@ -136,21 +151,28 @@ class Mail extends Main {
       }
     }
     else
-      Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
+      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
   }
 
+	/**
+	 * Check if required data is given or throw an error instead.
+	 * If data is correct, send mail.
+	 *
+	 * @access protected
+	 * @param boolean $bShowCaptcha Show the captcha?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @todo rename method to create?
+	 *
+	 */
   protected function _standardMail($bShowCaptcha = true) {
-    if (!isset($this->_aRequest['email']) || empty($this->_aRequest['email']))
-       $this->_aError['email'] = LANG_ERROR_FORM_MISSING_EMAIL;
+		$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
+		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
 
 		if (Helper::checkEmailAddress($this->_aRequest['email']) !== true)
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 
-    if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-       $this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
-
-    if (isset($this->_aError))
-      return $this->_showCreateMailTemplate($bShowCaptcha);
+		if (isset($this->_aError))
+			return $this->_showCreateMailTemplate($bShowCaptcha);
 
     else {
       # Select user name and surname

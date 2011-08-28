@@ -1,10 +1,11 @@
 <?php
 
 /**
- *
+ * CRUD actions for gallery overview and gallery albums.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
  * @since 1.0
  */
 
@@ -25,7 +26,6 @@ class Gallery extends Main {
   public function __init() {
     $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
   }
-
 
 	/**
 	 * Show gallery album or album overview (depends on a given ID or not).
@@ -121,26 +121,22 @@ class Gallery extends Main {
 	 * If data is given, activate the model, insert them into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   protected function _create() {
-		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
 
-		else {
-			if ($this->_oModel->create() === true) {
-				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
-				return Helper::successMessage(LANG_SUCCESS_CREATE, '/gallery');
-			}
-
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
+		elseif ($this->_oModel->create() === true) {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
+			return Helper::successMessage(LANG_SUCCESS_CREATE, '/gallery');
 		}
+
+		else
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
 	}
 
 	/**
@@ -149,28 +145,24 @@ class Gallery extends Main {
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   protected function _update() {
-		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
+		$sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
+
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
 
-		else {
-			$sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
-
-			if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-				return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
-			}
-
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
 		}
+
+		else
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
 
 	/**
@@ -179,8 +171,7 @@ class Gallery extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action
 	 *
 	 */
   protected function _destroy() {
@@ -190,54 +181,51 @@ class Gallery extends Main {
     }
 
     else {
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
       unset($this->_iId);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
     }
   }
 
 	/**
-	 * Build form template to create or update a content entry.
-	 * INFO: $this->_setTitle comes from section helper.
+	 * Build form template to upload or update a file.
+	 * NOTE: We need to get the request action because we already have an gallery album ID.
 	 *
 	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
   protected function _showFormFileTemplate() {
-    if($bUpdate === true) {
-      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId. '/updatefile');
-      $this->_oSmarty->assign('_formdata_', 'update_file');
-      $this->_oSmarty->assign('content', Model_Gallery::getFileContent($this->_iId));
+		# Update
+		if ($this->_aRequest['action'] == 'updatefile') {
+			$this->_oSmarty->assign('content', Model_Gallery::getFileContent($this->_iId));
 
-      # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
-    }
-    else {
-      # See helper/Image.helper.php for details!
-      $sDefault = isset($this->_aRequest['cut']) ?
-              Helper::formatInput($this->_aRequest['cut']) :
-              'c'; # r = resize, c = cut
+			# Language
+			$this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
+		}
+		# Create
+		else {
+			# See helper/Image.helper.php for details!
+			# r = resize, c = cut
+			$sDefault = isset($this->_aRequest['cut']) ? Helper::formatInput($this->_aRequest['cut']) : 'c';
 
-      $this->_oSmarty->assign('_action_url_', '/gallery/'	.$this->_iId.	'/createfile');
-      $this->_oSmarty->assign('_formdata_', 'create_file');
-      $this->_oSmarty->assign('default', $sDefault);
-      $this->_oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
+			$this->_oSmarty->assign('default', $sDefault);
+			$this->_oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
 
-      # Language
-      $this->_oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
-      $this->_oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
-      $this->_oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
-      $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-    }
+			# Language
+			$this->_oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
+			$this->_oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
+			$this->_oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
+			$this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
+		}
 
 		if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
 				$this->_oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
-    return $this->_oSmarty->fetch('_form_file.tpl');
-  }
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
+		return $this->_oSmarty->fetch('_form_file.tpl');
+	}
 
 	/**
 	 * Create a gallery entry.
@@ -246,8 +234,7 @@ class Gallery extends Main {
 	 * If data is given, activate the model, insert them into the database and redirect afterwards.
 	 *
 	 * @access public
-	 * @return
-	 * @todo WHAT RETURN? - Why public
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   public function createFile() {
@@ -255,7 +242,7 @@ class Gallery extends Main {
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
 		else {
-			if (isset($this->_aRequest['create_file'])) {
+			if (isset($this->_aRequest['createfile_gallery'])) {
 				if ($this->_createFile() === true) {
 					# Log uploaded image. Request ID = album id
 					Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
@@ -270,13 +257,40 @@ class Gallery extends Main {
 	}
 
 	/**
+	 * Upload each selected file.
+	 *
+	 * @access private
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+  private function _createFile() {
+    if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
+
+      for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
+        $aFile['name'] = $this->_aFile['file']['name'][$iI];
+        $aFile['type'] = $this->_aFile['file']['type'][$iI];
+        $aFile['tmp_name'] = $this->_aFile['file']['tmp_name'][$iI];
+        $aFile['error'] = $this->_aFile['file']['error'][$iI];
+        $aFile['size'] = $this->_aFile['file']['size'][$iI];
+
+        $this->_oModel->createFile($aFile);
+      }
+
+      return true;
+    }
+    else {
+      $this->_aError['file'] = LANG_ERROR_FORM_MISSING_FILE;
+      return $this->_showFormFileTemplate();
+    }
+  }
+
+	/**
 	 * Update a gallery entry.
 	 *
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access public
-	 * @return boolean
-	 * @todo what return?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   public function updateFile() {
@@ -284,7 +298,7 @@ class Gallery extends Main {
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
     else {
-      if( isset($this->_aRequest['update_file']) ) {
+      if( isset($this->_aRequest['updatefile_gallery']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
@@ -301,8 +315,7 @@ class Gallery extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access public
-	 * @return boolean
-	 * @todo what return?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   public function destroyFile() {
@@ -317,36 +330,6 @@ class Gallery extends Main {
       }
 			else
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/gallery');
-    }
-  }
-
-	/**
-	 * Upload each selected file.
-	 *
-	 * @access private
-	 * @return WHAT?
-	 * @todo What return?
-	 *
-	 */
-  private function _createFile() {
-    if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
-
-      for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
-
-        $aFile['name'] = $this->_aFile['file']['name'][$iI];
-        $aFile['type'] = $this->_aFile['file']['type'][$iI];
-        $aFile['tmp_name'] = $this->_aFile['file']['tmp_name'][$iI];
-        $aFile['error'] = $this->_aFile['file']['error'][$iI];
-        $aFile['size'] = $this->_aFile['file']['size'][$iI];
-
-        $this->_oModel->createFile($aFile);
-      }
-
-      return true;
-    }
-    else {
-      $this->_aError['file'] = LANG_ERROR_FORM_MISSING_FILE;
-      return $this->_showFormFileTemplate();
     }
   }
 }

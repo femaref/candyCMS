@@ -17,7 +17,7 @@ require_once 'app/controllers/Comment.controller.php';
 class Blog extends Main {
 
 	/**
-	 * @var    obj
+	 * @var object
 	 * @access public
 	 */
 	public $oPage;
@@ -190,13 +190,11 @@ class Blog extends Main {
 	 * If data is given, activate the model, insert them into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
 	protected function _create() {
-		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -215,12 +213,16 @@ class Blog extends Main {
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
 	protected function _update() {
-		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+
+		if (isset($this->_aError))
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
 		}
@@ -234,8 +236,7 @@ class Blog extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action
 	 *
 	 */
 	protected function _destroy() {

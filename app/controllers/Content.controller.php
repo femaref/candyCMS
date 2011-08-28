@@ -105,44 +105,44 @@ class Content extends Main {
 	 * If data is given, activate the model, insert them into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
 	protected function _create() {
-		if (!isset($this->_aRequest['title']) || empty($this->_aRequest['title']))
-			$this->_aError['title'] = LANG_ERROR_FORM_MISSING_TITLE;
-
-		if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
 
-		else {
-			if ($this->_oModel->create() === true) {
-				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
-				return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
-			}
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
+		elseif ($this->_oModel->create() === true) {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
+			return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
 		}
+		else
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
 	}
 
 	/**
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
   protected function _update() {
 		$sRedirect = '/content/' . (int) $this->_aRequest['id'];
-		if ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+
+		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+
+		if (isset($this->_aError))
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
-    }
+		}
 		else
 			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
 	}
@@ -151,8 +151,7 @@ class Content extends Main {
 	 * Activate model, delete data from database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return boolean
-	 * @todo what return?
+	 * @return boolean status of model action
 	 *
 	 */
 	protected function _destroy() {

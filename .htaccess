@@ -35,7 +35,7 @@ RewriteRule ^([A-Za-z]+)/([0-9]+)/ajax$ index.php?section=$1&id=$2&page=1&ajax=1
 RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with id
 RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC] # Show pagination on sub id #TODO
 RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC] # Show entry with highlighted background
-RewriteRule ^([A-Za-z]+)/(create|update|destroy|show)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
+RewriteRule ^([A-Za-z]+)/(create|update|destroy|show|createfile|updatefile|destroyfile)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
 RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA,NC] # Non AJAX pagination
 RewriteRule ^([A-Za-z]+)/(.*)/(update|destroy|upload|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA,NC] # Show update / destroy actions
 

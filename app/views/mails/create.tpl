@@ -21,12 +21,12 @@
   </p>
   {if isset($_captcha_)}
     <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
-      <script type="text/javascript">var RecaptchaOptions = { lang:'de',theme:'white' };</script>
+      <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
       {$_captcha_}
     </div>
   {/if}
   <p class="center">
     <input type='submit' value='{$lang_submit}' />
-    <input type='hidden' value='formdata' name='send_mail' />
+    <input type='hidden' value='formdata' name='create_mail' />
   </p>
 </form>

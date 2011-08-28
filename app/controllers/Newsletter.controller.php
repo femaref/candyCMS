@@ -1,9 +1,11 @@
 <?php
 
-/*
+/**
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ * @license MIT
+ * @since 1.0
+ */
 
 require_once 'app/models/Newsletter.model.php';
 require_once 'app/controllers/Mail.controller.php';
