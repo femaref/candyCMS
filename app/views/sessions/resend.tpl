@@ -1,4 +1,4 @@
-<form method='post' action='{$_action_url_}'>
+<form method='post' action='/session/{$smarty.get.action}'>
   <h1>{$lang_headline}</h1>
   <h4>{$lang_description}</h4>
   <p>

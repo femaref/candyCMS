@@ -168,9 +168,6 @@ class Mail extends Main {
 		$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
 		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
 
-		if (Helper::checkEmailAddress($this->_aRequest['email']) !== true)
-			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
-
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);
 
@@ -196,10 +193,7 @@ class Mail extends Main {
       $sMessage = Helper::formatInput($this->_aRequest['content']);
 
       # Mail to, Subject, Message, Reply to
-      $bStatus = Mail::send(	$sMailTo,
-              $sSubject,
-              $sMessage,
-              $sReplyTo);
+      $bStatus = Mail::send($sMailTo, $sSubject, $sMessage, $sReplyTo);
 
       if ($bStatus == true) {
         Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);

@@ -141,7 +141,7 @@ class Comment extends Main {
 	 *
 	 * @access public
 	 * @return string HTML content
-	 * @overview app/controllers/Main.controller.php
+	 * @override app/controllers/Main.controller.php
 	 *
 	 */
 	public function create($sInputName) {
@@ -169,16 +169,11 @@ class Comment extends Main {
 	 *
 	 */
   protected function _create($bShowCaptcha = true) {
-    if (!isset($this->_aRequest['parent_id']) || empty($this->_aRequest['parent_id']))
-			$this->_aError['parent_id'] = LANG_ERROR_GLOBAL_WRONG_ID;
+		$this->_setError('parent_id', LANG_ERROR_GLOBAL_WRONG_ID);
+		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
 
-		if (!isset($this->_aRequest['content']) || empty($this->_aRequest['content']))
-			$this->_aError['content'] = LANG_ERROR_FORM_MISSING_CONTENT;
-
-		if (USER_ID < 1) {
-			if (!isset($this->_aRequest['name']) || empty($this->_aRequest['name']))
-				$this->_aError['name'] = LANG_ERROR_FORM_MISSING_NAME;
-		}
+		if (USER_ID < 1)
+			$this->_setError('name', LANG_ERROR_FORM_MISSING_NAME);
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate($bShowCaptcha);

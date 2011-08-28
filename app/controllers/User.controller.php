@@ -1,8 +1,10 @@
 <?php
 
-/*
+/**
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 require_once 'app/controllers/Session.controller.php';
@@ -13,6 +15,13 @@ require_once 'app/helpers/Upload.helper.php';
 
 class User extends Main {
 
+	/**
+	 * Include the user model.
+	 *
+	 * @access public
+	 * @override app/controllers/Main.controller.php
+	 *
+	 */
 	public function __init() {
 		$this->_oModel = new Model_User($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
@@ -23,7 +32,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
@@ -31,7 +40,7 @@ class User extends Main {
 
       elseif (isset($this->_aRequest['update_user'])) {
         if ($this->_update((int) $this->_iId) === true)
-          Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
       }

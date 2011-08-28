@@ -405,11 +405,15 @@ abstract class Main {
 	 * @access protected
 	 * @param string $sField field to be checked
 	 * @param string $sMessage error to be displayed
+	 * @todo better handling of request
 	 *
 	 */
 	protected function _setError($sField, $sMessage) {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
 			$this->_aError[$sField] = $sMessage;
+
+		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 	}
 
 	/**

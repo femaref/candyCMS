@@ -1,4 +1,4 @@
-<form method='post' action='/newsletter'>
+<form method='post'>
   <h1>{$lang_headline}</h1>
   <h4>
     {$lang_description}
