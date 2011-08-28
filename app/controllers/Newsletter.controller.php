@@ -28,7 +28,7 @@ class Newsletter extends Main {
 				$sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
 				if ($sQuery == 'DESTROY')
-					return Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
+					Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
 
 				elseif ($sQuery == 'INSERT') {
 					Mail::send(Helper::formatInput($this->_aRequest['email']),
@@ -36,10 +36,10 @@ class Newsletter extends Main {
 													LANG_MAIL_NEWSLETTER_CREATE_BODY,
 													WEBSITE_MAIL_NOREPLY);
 
-					return Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
+					Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
 				}
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/newsletter');
+					Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/newsletter');
 			}
 		}
 		else
@@ -66,7 +66,7 @@ class Newsletter extends Main {
   # @Override
   public function create() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       if (isset($this->_aRequest['send_newsletter']))
@@ -147,10 +147,10 @@ class Newsletter extends Main {
 
       if(isset($bStatusNewsletter) || isset($bStatusUser)) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action']);
-        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
+        Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+        Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 }

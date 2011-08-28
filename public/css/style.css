@@ -279,6 +279,11 @@ section#comments article footer {
 
 section#user form {
   padding:0px;
+  margin:0px;
+}
+
+section#user form h2 {
+  margin-bottom:0px;
 }
 
 /* quotes */

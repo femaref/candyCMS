@@ -1,4 +1,4 @@
-<form method='post' action='{$_action_url_}'>
+<form method='post' action='/content/{$smarty.get.action}'>
   <h1>{$lang_headline}</h1>
   {if $smarty.get.action == 'update'}
     <p>{$lang_last_update}: {$date}</p>
@@ -12,6 +12,7 @@
       {$lang_teaser}
     </label>
     <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
+           {* @todo put onkeyup into jQuery function *}
            title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(160 - $(this).val().length)" />
     <span id="js-chars">160</span>
   </p>
@@ -25,9 +26,9 @@
   </p>
   <p class="center">
     <input type='submit' value='{$lang_submit}' />
-    <input type='hidden' value='{$_request_id_}' name='id' />
-    <input type='hidden' value='formdata' name='{$_formdata_}' />
+    <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
     {if $smarty.get.action == 'update'}
+      <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='reset' value='{$lang_reset}' />
       <input type='button' value='{$lang_destroy_entry}'
              onclick="confirmDelete('/content/{$_request_id_}/destroy')" />

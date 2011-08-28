@@ -1,4 +1,4 @@
-<form method='post' action='{$_action_url_}' enctype="multipart/form-data">
+<form method='post' action='/blog/{$smarty.get.action}' enctype="multipart/form-data">
   <h1>{$lang_headline}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for='input-title'>{$lang_title} <span title="{$lang_required}">*</span></label>
@@ -26,7 +26,7 @@
   </p>
   <p>
     <label for='input-published'>{$lang_published}</label>
-    <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked='checked'{/if} />
+    <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked{/if} />
   </p>
   {if $smarty.get.action === 'update'}
     <p>
@@ -35,13 +35,13 @@
     </p>
   {/if}
   <p class="center">
-    <input type='hidden' value='{$_request_id_}' name='id' />
     <input type='hidden' value='{$author_id}' name='author_id' />
-    <input type='hidden' value='formdata' name='{$_formdata_}' />
+    <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
     <input type='submit' value='{$lang_submit}' />
     {if $smarty.get.action == 'update'}
-      <input type='reset' value='{$lang_reset}' />
       <input type='button' value='{$lang_destroy_entry}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
+      <input type='hidden' value='{$_request_id_}' name='id' />
+      <input type='reset' value='{$lang_reset}' />
     {/if}
   </p>
 </form>

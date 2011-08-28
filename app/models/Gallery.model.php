@@ -238,7 +238,6 @@ class Model_Gallery extends Model_Main {
       return Helper::formatOutput($aResult['title'], $sHighlight);
   }
 
-  # TODO: Rename function
   public static function getAlbumContent($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -263,7 +262,7 @@ class Model_Gallery extends Model_Main {
       return Helper::formatOutput($aResult['content'], $sHighlight);
   }
 
-  public static function getFileDescription($iId) {
+  public static function getFileContent($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

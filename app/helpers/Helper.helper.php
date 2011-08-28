@@ -15,6 +15,8 @@ class Helper {
 
     if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);
+
+		return true;
   }
 
   public static function errorMessage($sMSG, $sRedirectTo = '') {
@@ -25,6 +27,8 @@ class Helper {
 
     if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);
+
+		return false;
   }
 
   public static function redirectTo($sURL) {

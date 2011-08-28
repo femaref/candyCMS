@@ -35,10 +35,10 @@ class Session extends Main {
       return $this->showCreateSessionTemplate();
 
 		elseif( $this->_oModel->create() === true )
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
+			Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
-      return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
+      Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
 	}
 
   public function showCreateSessionTemplate() {
@@ -84,12 +84,12 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create');
+              Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create');
             else
-              return Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+              Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
           }
           else
-            return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+            Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
         }
         elseif ($this->_aRequest['action'] == 'resendverification') {
           if($this->_oModel->createResendActions() === true) {
@@ -106,15 +106,15 @@ class Session extends Main {
                             WEBSITE_MAIL_NOREPLY);
 
             if ($bStatus == true)
-              return Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create');
+              Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create');
             else
               return $this->showCreateSessionTemplate();
           }
           else
-            return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+            Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
         }
         else
-          return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
+          Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
       }
     }
     else
@@ -163,13 +163,13 @@ class Session extends Main {
       Header('Location:' . $oFacebook->getLogoutUrl());
 
       # Message will not be printed
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
+      Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
     }
     elseif ($this->_oModel->destroy() === true) {
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
+      Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
       unset($_SESSION);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+      Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
   }
 }

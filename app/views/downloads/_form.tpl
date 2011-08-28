@@ -1,4 +1,4 @@
-<form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='js-upload'>
+<form action='/download/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
   <h1>{$lang_headline}</h1>
   {if $smarty.get.action == 'create'}
     <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>
@@ -25,11 +25,12 @@
     </p>
   {/if}
   <p class="center">
-    <input type='hidden' value='formdata' name='{$_formdata_}' />
+    <input type='hidden' value='formdata' name='{$smarty.get.action}_download' />
     <input type='submit' value='{$lang_headline}' />
     {if $smarty.get.action == 'update'}
-      <input type='reset' value='{$lang_reset}' />
       <input type='button' value='{$lang_destroy}' onclick="confirmDelete('/download/{$_request_id_}/destroy')" />
+      <input type='hidden' value='{$_request_id_}' name='id' />
+      <input type='reset' value='{$lang_reset}' />
     {/if}
   </p>
 </form>

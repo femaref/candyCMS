@@ -5,169 +5,155 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
  * @since 1.0
+ *
  */
-
 abstract class Main {
 
-  /**
-  * Alias for $_REQUEST
-  *
-  * @var    array
-  * @access protected
-  */
-  protected $_aRequest;
+	/**
+	 * Alias for $_REQUEST
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_aRequest;
 
-  /**
-  * Alias for $_SESSION
-  *
-  * @var    array
-  * @access protected
-  */
-  protected $_aSession;
+	/**
+	 * Alias for $_SESSION
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_aSession;
 
-  /**
-  * Alias for $_FILE
-  *
-  * @var    array
-  * @access protected
-  */
-  protected $_aFile;
+	/**
+	 * Alias for $_FILE
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_aFile;
 
-  /**
-  * Alias for $_COOKIE
-  *
-  * @var    array
-  * @access protected
-  */
-  protected $_aCookie;
+	/**
+	 * Alias for $_COOKIE
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_aCookie;
 
-  /**
-  * ID to process.
-  *
-  * @var    int
-  * @access protected
-  */
-  protected $_iId;
+	/**
+	 * ID to process.
+	 *
+	 * @var    int
+	 * @access protected
+	 */
+	protected $_iId;
 
-  /**
-  * Fetches all error messages in an array.
-  *
-  * @var    array
-  * @access protected
-  */
-  protected $_aError;
+	/**
+	 * Fetches all error messages in an array.
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_aError;
 
-  /**
-  * The controller claimed model.
-  *
-  * @var    obj
-  * @access protected
-  */
-  protected $_oModel;
+	/**
+	 * The controller claimed model.
+	 *
+	 * @var    obj
+	 * @access protected
+	 */
+	protected $_oModel;
 
-  /**
-  * Returned data from models.
-  *
-  * @var    array
-  * @access private
-  */
-  private $_aData = array();
+	/**
+	 * Returned data from models.
+	 *
+	 * @var    array
+	 * @access private
+	 */
+	private $_aData = array();
 
-  /**
-  * Final HTML-Output.
-  *
-  * @var    string
-  * @access private
-  */
-  private $_sContent;
+	/**
+	 * Final HTML-Output.
+	 *
+	 * @var    string
+	 * @access private
+	 */
+	private $_sContent;
 
-  /**
-  * Meta description.
-  *
-  * @var    string
-  * @access private
-  */
-  private $_sDescription;
+	/**
+	 * Meta description.
+	 *
+	 * @var    string
+	 * @access private
+	 */
+	private $_sDescription;
 
-  /**
-  * Meta keywords.
-  *
-  * @var    string
-  * @access private
-  */
-  private $_sKeywords;
+	/**
+	 * Meta keywords.
+	 *
+	 * @var    string
+	 * @access private
+	 */
+	private $_sKeywords;
 
+	/**
+	 * Page title.
+	 *
+	 * @var    string
+	 * @access private
+	 */
+	private $_sTitle;
 
-  /**
-  * Page title.
-  *
-  * @var    string
-  * @access private
-  */
-  private $_sTitle;
-
-  /**
-  * Smarty object.
-  *
-  * @var    obj
-  * @access protected
-  */
+	/**
+	 * Smarty object.
+	 *
+	 * @var    obj
+	 * @access protected
+	 */
 	protected $_oSmarty;
 
-  /**
-  * Initialize the software by adding input params, set default id and start template engine.
-  *
-  * @access public
-  * @param array $aRequest alias for the combination of $_GET and $_POST
-  * @param array $aSession alias for $_SESSION
-  * @param array $aFile alias for $_FILE
-  * @param array $aCookie alias for $_COOKIE
-  *
-  */
+	/**
+	 * Initialize the software by adding input params, set default id and start template engine.
+	 *
+	 * @access public
+	 * @param array $aRequest alias for the combination of $_GET and $_POST
+	 * @param array $aSession alias for $_SESSION
+	 * @param array $aFile alias for $_FILE
+	 * @param array $aCookie alias for $_COOKIE
+	 *
+	 */
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
-    $this->_aRequest	= & $aRequest;
+		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
 
-    $this->_iId = isset($this->_aRequest['id']) ?
-                  (int)$this->_aRequest['id'] :
-                  '';
+		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
 		# Define all output
 		$this->_setSmarty();
-  }
+	}
 
-  /**
-  * Method to include the model files.
-  *
-  * @access public
-  *
-  */
-	public function __init() {}
+	/**
+	 * Method to include the model files.
+	 *
+	 * @access public
+	 *
+	 */
+	public function __init() {
 
-  /**
-  * Autoload classes if they weren't included yet.
-  *
-  * @access public
-  * @param string $sClass Name of class
-  *
-  * @todo remove
-  *
-  */
-	public function __autoload($sClass) {
-		if(!class_exists((string)ucfirst($sClass)))
-			require_once('app/controllers/'	.(string)ucfirst($sClass).	'.controller.php');
-  }
+	}
 
-  /**
-  * Set up smarty
-  *
-  * @access proteced
-  * @return obj $this->_oSmarty
-  *
-  */
+	/**
+	 * Set up smarty.
+	 *
+	 * @access proteced
+	 * @return obj $this->_oSmarty
+	 *
+	 */
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->_oSmarty = new Smarty();
@@ -188,17 +174,17 @@ abstract class Main {
 		$this->_oSmarty->assign('USER_NAME', USER_NAME);
 		$this->_oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->_oSmarty->assign('USER_SURNAME', USER_SURNAME);
-    $this->_oSmarty->assign('VERSION', VERSION);
-    $this->_oSmarty->assign('WEBSITE_DESCRIPTION', LANG_WEBSITE_DESCRIPTION);
-    $this->_oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
-    $this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
-    $this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
+		$this->_oSmarty->assign('VERSION', VERSION);
+		$this->_oSmarty->assign('WEBSITE_DESCRIPTION', LANG_WEBSITE_DESCRIPTION);
+		$this->_oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
+		$this->_oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
+		$this->_oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
-    $this->_oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
-    $this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
-    $this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
+		$this->_oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
+		$this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
+		$this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_pubdate_', date('r'));
 		$this->_oSmarty->assign('_request_id_', $this->_iId);
 
@@ -291,107 +277,179 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_update', LANG_GLOBAL_UPDATE);
 		$this->_oSmarty->assign('lang_update_show', LANG_GLOBAL_UPDATE_SHOW);
 		$this->_oSmarty->assign('lang_uploaded_at', LANG_GLOBAL_UPLOADED_AT);
-    $this->_oSmarty->assign('lang_user_right', LANG_GLOBAL_USERRIGHT);
-    $this->_oSmarty->assign('lang_user_right_1', LANG_GLOBAL_USERRIGHT_1);
-    $this->_oSmarty->assign('lang_user_right_2', LANG_GLOBAL_USERRIGHT_2);
-    $this->_oSmarty->assign('lang_user_right_3', LANG_GLOBAL_USERRIGHT_3);
-    $this->_oSmarty->assign('lang_user_right_4', LANG_GLOBAL_USERRIGHT_4);
-    $this->_oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
-    $this->_oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
+		$this->_oSmarty->assign('lang_user_right', LANG_GLOBAL_USERRIGHT);
+		$this->_oSmarty->assign('lang_user_right_1', LANG_GLOBAL_USERRIGHT_1);
+		$this->_oSmarty->assign('lang_user_right_2', LANG_GLOBAL_USERRIGHT_2);
+		$this->_oSmarty->assign('lang_user_right_3', LANG_GLOBAL_USERRIGHT_3);
+		$this->_oSmarty->assign('lang_user_right_4', LANG_GLOBAL_USERRIGHT_4);
+		$this->_oSmarty->assign('lang_usermanager', LANG_GLOBAL_USERMANAGER);
+		$this->_oSmarty->assign('lang_welcome', LANG_GLOBAL_WELCOME);
 
 		return $this->_oSmarty;
 	}
 
-  protected function _setDescription($sDescription = '') {
-    $this->_sDescription =& $sDescription;
-  }
+	/**
+	 * Set meta description.
+	 *
+	 * @access protected
+	 * @param string $sDescription description to be set.
+	 *
+	 */
+	protected function _setDescription($sDescription = '') {
+		$this->_sDescription = & $sDescription;
+	}
 
-  public function getDescription() {
-    # If this is our landing page / start page, show default description
-    if(WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1 ,strlen($_SERVER['REQUEST_URI'])))
-      return LANG_WEBSITE_DESCRIPTION;
+	/**
+	 * Give back the meta description.
+	 *
+	 * @access public
+	 * @return string meta description
+	 *
+	 */
+	public function getDescription() {
+		# Show default description if this is our landing page or we got no descrption.
+		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || empty($this->_sDescription))
+			return LANG_WEBSITE_DESCRIPTION;
 
-    # We got a description, so show it
-    elseif (!empty($this->_sDescription))
-      return $this->_sDescription;
+		# We got no description. Fall back to default description.
+		else
+			return LANG_WEBSITE_DESCRIPTION;
+	}
 
-    # We got no description. Fall back to default description
-    else
-      return LANG_WEBSITE_DESCRIPTION;
-  }
+	/**
+	 * Set meta keywords.
+	 *
+	 * @access protected
+	 * @param string $sKeywords keywords to be set.
+	 *
+	 */
+	protected function _setKeywords($sKeywords = '') {
+		$this->_sKeywords = & $sKeywords;
+	}
 
-  protected function _setKeywords($sKeywords = '') {
-    $this->_sKeywords = & $sKeywords;
-  }
+	/**
+	 * Give back the meta keywords.
+	 *
+	 * @access public
+	 * @return string meta keywords
+	 *
+	 */
+	public function getKeywords() {
+		return !empty($this->_sKeywords) ? $this->_sKeywords : LANG_WEBSITE_KEYWORDS;
+	}
 
-  public function getKeywords() {
-    if (!empty($this->_sKeywords))
-      return $this->_sKeywords;
-    else
-      return LANG_WEBSITE_KEYWORDS;
-  }
+	/**
+	 * Set meta keywords.
+	 *
+	 * @access protected
+	 * @param string $sTitle title to be set.
+	 *
+	 */
+	protected function _setTitle($sTitle = '') {
+		$this->_sTitle = & $sTitle;
+	}
 
-  protected function _setTitle($sTitle = '') {
-    $this->_sTitle =& $sTitle;
-  }
+	/**
+	 * Give back the page title.
+	 *
+	 * @access public
+	 * @return string page title
+	 *
+	 */
+	public function getTitle() {
+		return !empty($this->_sTitle) ? $this->_sTitle : LANG_ERROR_GLOBAL_404_TITLE;
+	}
 
-  public function getTitle() {
-    if (!empty($this->_sTitle))
-      return $this->_sTitle;
-    else
-      return LANG_ERROR_GLOBAL_404_TITLE;
-  }
+	/**
+	 * Set the page content.
+	 *
+	 * @access protected
+	 * @param string $sContent html content
+	 * @see app/helpers/Section.helper.php
+	 *
+	 */
+	protected function _setContent($sContent) {
+		$this->_sContent = & $sContent;
+	}
 
-  protected function _setContent($sContent) {
-    $this->_sContent =& $sContent;
-  }
+	/**
+	 *
+	 * Give back the page content (HTML).
+	 *
+	 * @access public
+	 * @return string $this->_sContent
+	 */
+	public function getContent() {
+		return $this->_sContent;
+	}
 
-  public function getContent() {
-    return $this->_sContent;
-  }
+	/**
+	 * Quick hack for displaying title without html tags.
+	 *
+	 * @access protected
+	 * @param string $sTitle title to modifiy
+	 * @return string modified title
+	 *
+	 */
+	protected function _removeHighlight($sTitle) {
+		$sTitle = Helper::removeSlahes($sTitle);
+		$sTitle = str_replace('<mark>', '', $sTitle);
+		$sTitle = str_replace('</mark>', '', $sTitle);
+		return $sTitle;
+	}
 
-  public function search() {
-    return $this->show();
-  }
+	/**
+	 * Create an action.
+	 *
+	 * Create entry or show form template if we have enough rights.
+	 *
+	 * @access public
+	 * @return
+	 * @todo WHAT RETURN?
+	 *
+	 */
+	public function create($sInputName) {
+		if (USER_RIGHT < 3)
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
-  public function show() {
-    $this->show();
-  }
+		else {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
+		}
+	}
 
-  # Quick hack for displaying title without html tags
-  protected function _removeHighlight($sTitle) {
-    $sTitle = Helper::removeSlahes($sTitle);
-    $sTitle = str_replace('<mark>', '', $sTitle);
-    $sTitle = str_replace('</mark>', '', $sTitle);
-    return $sTitle;
-  }
+	/**
+	 * Update an action.
+	 *
+	 * Update entry or show form template if we have enough rights.
+	 *
+	 * @access public
+	 * @return
+	 * @todo WHAT RETURN?
+	 *
+	 */
+	public function update($sInputName) {
+		if (USER_RIGHT < 3)
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
-  public function create($sInputName) {
-    if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
-    else {
-      if( isset($this->_aRequest[$sInputName]) )
-        return $this->_create();
-      else
-        return $this->_showFormTemplate(false);
-    }
-  }
+		else {
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
+		}
+	}
 
-  public function update($sInputName) {
-    if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
-    else {
-      if( isset($this->_aRequest[$sInputName]) )
-        return $this->_update();
-      else
-        return $this->_showFormTemplate(true);
-    }
-  }
-
-  public function destroy() {
-    if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
-    else
-      return $this->_destroy();
-  }
+	/**
+	 * Delete an action.
+	 *
+	 * Delete entry if we have enough rights.
+	 *
+	 * @access public
+	 * @return
+	 * @todo WHAT RETURN?
+	 *
+	 */
+	public function destroy() {
+		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+		return (USER_RIGHT < 3) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+	}
 }

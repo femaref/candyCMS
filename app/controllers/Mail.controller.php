@@ -1,20 +1,64 @@
 <?php
 
-/*
+/**
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ * @license MIT
+ * @since 2.0
+ */
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/controllers/User.controller.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
 class Mail extends Main {
-  protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
-  protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
-  protected $_oRecaptchaResponse = '';
-  protected $_sRecaptchaError = '';
 
+	/**
+	 * ReCaptcha public key.
+	 *
+	 * @var    array
+	 * @access protected
+	 * @see config/Candy.inc.php
+	 */
+	protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
+
+	/**
+	 * ReCaptcha private key.
+	 *
+	 * @var    array
+	 * @access protected
+	 * @see config/Candy.inc.php
+	 */
+	protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
+
+	/**
+	 * ReCaptcha object.
+	 *
+	 * @var    obj
+	 * @access protected
+	 */
+	protected $_oRecaptchaResponse = '';
+
+	/**
+	 * Provided ReCaptcha error message.
+	 *
+	 * @var    array
+	 * @access protected
+	 */
+	protected $_sRecaptchaError = '';
+
+
+	/**
+	 * Create a mail.
+	 *
+	 * Create entry or show form template if we have enough rights. Due to spam bots we provide
+	 * 
+	 *
+	 * @access public
+	 * @return
+	 * @todo WHAT RETURN?
+	 *
+	 */
   public function create() {
     if (isset($this->_aRequest['send_mail'])) {
       # Disable at AJAX due to a bug in reloading JS code
@@ -92,7 +136,7 @@ class Mail extends Main {
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
+      Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
   }
 
   protected function _standardMail($bShowCaptcha = true) {
@@ -140,7 +184,7 @@ class Mail extends Main {
 				return $this->_showSuccessMessage();
       }
 			else
-				return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+				Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 

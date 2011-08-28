@@ -188,7 +188,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use templates, enter name of template-folder here
 # They are placed at templates/<SkinName>/...
 # DEFAULT: ''
-define('PATH_TEMPLATE', 'marcoraddatz');
+define('PATH_TEMPLATE', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'

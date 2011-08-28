@@ -1,4 +1,4 @@
-<form action='{$_action_url_}' method='post' enctype='multipart/form-data' id='js-upload'>
+<form action='{$_action_url_}' method='post' enctype='multipart/form-data'>
   <h1>{$lang_headline}</h1>
   {if $smarty.get.action == 'createfile'}
     <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>

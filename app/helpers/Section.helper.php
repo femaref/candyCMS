@@ -189,7 +189,7 @@ class Section extends Main {
           parent::_setTitle(LANG_GLOBAL_LOGS);
         }
         else {
-          parent::_setContent($this->_oObject->overview());
+          parent::_setContent($this->_oObject->show());
           parent::_setDescription(LANG_GLOBAL_LOGS);
           parent::_setTitle(LANG_GLOBAL_LOGS);
         }

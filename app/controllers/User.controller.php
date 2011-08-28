@@ -23,7 +23,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
+      Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
@@ -31,7 +31,7 @@ class User extends Main {
 
       elseif (isset($this->_aRequest['update_user'])) {
         if ($this->_update((int) $this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+          Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
         else
           return $this->_showFormTemplate($this->_aError);
       }
@@ -162,15 +162,15 @@ class User extends Main {
     $iTerms = isset($this->_aRequest['terms']) ? 1 : 0;
 
     if ($iTerms == false)
-      return Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD, '/user/' . $this->_iId);
+      Helper::errorMessage(LANG_ERROR_USER_UPDATE_AGREE_UPLOAD, '/user/' . $this->_iId);
 
     else {
       $oUpload = new Upload($this->_aRequest, $this->_aFile);
       if ($oUpload->uploadAvatarFile(false) === true)
-        return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+        Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
 
       else
-        return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
+        Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
     }
   }
 
@@ -184,7 +184,7 @@ class User extends Main {
 			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
 
 			if (USER_RIGHT < 3)
-				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+				Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 			else {
 				$this->_aData = $this->_oModel->getData();
@@ -223,23 +223,23 @@ class User extends Main {
     if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
       if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
         if ($this->_oModel->destroy($this->_iId) === true)
-          return Helper::successMessage(LANG_SUCCESS_DESTROY, '/start');
+          Helper::successMessage(LANG_SUCCESS_DESTROY, '/start');
         else
-          return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
+          Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
       } else
-        return Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
+        Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
 
       # We are admin and can delete users
     } elseif (USER_RIGHT == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
+        Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
+        Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/start');
+      Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/start');
   }
 
   # @ Override due registration (avoid user right level 3)
@@ -296,14 +296,14 @@ class User extends Main {
 
         if($bStatus == true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
-					return Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/session/create');
+					Helper::successMessage(LANG_USER_CREATE_SUCCESSFUL, '/session/create');
         }
 
 				else
-					return Helper::errorMessage (LANG_ERROR_MAIL_ERROR, '/');
+					Helper::errorMessage (LANG_ERROR_MAIL_ERROR, '/');
 			}
 			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+				Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
 		}
 	}
 
@@ -336,12 +336,12 @@ class User extends Main {
 
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
+			Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
+			Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
+			Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
 	}
 }
