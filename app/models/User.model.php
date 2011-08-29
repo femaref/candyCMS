@@ -101,15 +101,7 @@ class Model_User extends Model_Main {
     } else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
-																					name,
-																					surname,
-																					last_login,
-																					email,
-																					date,
-																					content,
-																					user_right,
-																					receive_newsletter,
-																					use_gravatar
+																					*
 																				FROM
 																					" . SQL_PREFIX . "users
 																				WHERE
@@ -136,6 +128,7 @@ class Model_User extends Model_Main {
       $sUrl = WEBSITE_URL . '/user/' . $this->_iId;
 
       $this->_aData = array(
+					'id'						=> $aData['id'],
           'name'          => $sName,
           'surname'       => $sSurname,
           'full_name'     => $sFullName,
@@ -216,24 +209,18 @@ class Model_User extends Model_Main {
     if (($iId !== USER_ID) && USER_RIGHT === 4)
       $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
               (int) $this->_aRequest['user_right'] :
-              0;
+              1;
     else
       $iUserRight = USER_RIGHT;
 
     # Get my active password
-    $sPassword = $this->_aSession['userdata']['password'];
+    $sPassword = $this->_getPassword($iId);
 
-    # Make sure the password is set and override session due to saving problems
+    # Change passwords
     if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
 						isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
-						USER_ID === $iId) {
-			$this->_aSession['userdata']['password'] = md5(RANDOM_HASH . $this->_aRequest['password_new']);
-			$sPassword = $this->_aSession['userdata']['password'];
-		}
-
-		# I'm admin and want to change user rights
-		elseif (($iId !== USER_ID) && USER_RIGHT === 4)
-			$sPassword = $this->_getPassword($iId);
+						USER_ID === $iId)
+			$sPassword = md5(RANDOM_HASH . $this->_aRequest['password_new']);
 
     try {
       $oQuery = $this->_oDb->prepare("UPDATE

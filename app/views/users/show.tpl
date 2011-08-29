@@ -1,7 +1,7 @@
 <section id="user">
   <h1>
     {$u.full_name}
-    {if $USER_RIGHT == 4}
+    {if $USER_RIGHT == 4 || $u.id == $USER_ID}
       <a href='/user/{$_request_id_}/update'>
         <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang_update}' width="16" height="16" />
       </a>

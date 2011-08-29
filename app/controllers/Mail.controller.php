@@ -165,8 +165,8 @@ class Mail extends Main {
 	 *
 	 */
   protected function _standardMail($bShowCaptcha = true) {
-		$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
-		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('email');
+		$this->_setError('content');
 
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);

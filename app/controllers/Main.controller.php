@@ -313,7 +313,7 @@ abstract class Main {
 
 		# We got no description. Fall back to default description.
 		else
-			return LANG_WEBSITE_DESCRIPTION;
+			return $this->_sDescription;
 	}
 
 	/**
@@ -398,19 +398,17 @@ abstract class Main {
 		return $sTitle;
 	}
 
-
 	/**
 	 * Set error messages.
 	 *
 	 * @access protected
 	 * @param string $sField field to be checked
 	 * @param string $sMessage error to be displayed
-	 * @todo better handling of request
 	 *
 	 */
-	protected function _setError($sField, $sMessage) {
+	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError[$sField] = $sMessage;
+			$this->_aError[$sField] = empty($sMessage) ? constant('LANG_ERROR_FORM_MISSING_' . strtoupper($sField)) : $sMessage;
 
 		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
@@ -422,12 +420,13 @@ abstract class Main {
 	 * Create entry or show form template if we have enough rights.
 	 *
 	 * @access public
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @param string $sInputName sent input name to verify action
+	 * @param integer $iUserRight required user right
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function create($sInputName) {
-		if (USER_RIGHT < 3)
+	public function create($sInputName, $iUserRight = 3) {
+		if (USER_RIGHT < $iUserRight)
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
@@ -442,12 +441,13 @@ abstract class Main {
 	 * Update entry or show form template if we have enough rights.
 	 *
 	 * @access public
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @param string $sInputName sent input name to verify action
+	 * @param integer $iUserRight required user right
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function update($sInputName) {
-		if (USER_RIGHT < 3)
+	public function update($sInputName, $iUserRight = 3) {
+		if (USER_RIGHT < $iUserRight)
 			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
@@ -462,12 +462,12 @@ abstract class Main {
 	 * Delete entry if we have enough rights.
 	 *
 	 * @access public
-	 * @return
-	 * @todo WHAT RETURN?
+	 * @param integer $iUserRight required user right
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function destroy() {
+	public function destroy($iUserRight = 3) {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-		return (USER_RIGHT < 3) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
 	}
 }

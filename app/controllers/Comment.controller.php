@@ -170,10 +170,10 @@ class Comment extends Main {
 	 */
   protected function _create($bShowCaptcha = true) {
 		$this->_setError('parent_id', LANG_ERROR_GLOBAL_WRONG_ID);
-		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('content');
 
 		if (USER_ID < 1)
-			$this->_setError('name', LANG_ERROR_FORM_MISSING_NAME);
+			$this->_setError('name');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate($bShowCaptcha);

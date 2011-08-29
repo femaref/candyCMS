@@ -125,7 +125,7 @@ class Gallery extends Main {
 	 *
 	 */
   protected function _create() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('title');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -151,7 +151,7 @@ class Gallery extends Main {
   protected function _update() {
 		$sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
 
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('title');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();

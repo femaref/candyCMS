@@ -120,8 +120,8 @@ class Download extends Main {
 	 *
 	 */
   protected function _create() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
-		$this->_setError('file', LANG_ERROR_FORM_MISSING_FILE);
+		$this->_setError('title');
+		$this->_setError('file');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -144,8 +144,8 @@ class Download extends Main {
 	 *
 	 */
   protected function _update() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
-		$this->_setError('file', LANG_ERROR_FORM_MISSING_FILE);
+		$this->_setError('title');
+		$this->_setError('file');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();

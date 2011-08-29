@@ -16,7 +16,8 @@
       </p>
       <p>
         <label for='input-use_gravatar'>{$lang_user_gravatar}</label>
-        <input type='checkbox' name='use_gravatar' id="input-use_gravatar" />
+        <input type='checkbox' name='use_gravatar' id="input-use_gravatar"
+               {if $use_gravatar == 1}checked{/if} />
         <span class="description">{$lang_user_gravatar_info}</span>
       </p>
       <p>
@@ -25,7 +26,8 @@
       </p>
       <p>
         <label for='input-receive_newsletter'>{$lang_user_newsletter}</label>
-        <input name='receive_newsletter' id="input-receive_newsletter" value='1' type='checkbox' {if $receive_newsletter == 1}checked='checked'{/if} />
+        <input name='receive_newsletter' id="input-receive_newsletter" value='1' type='checkbox'
+               {if $receive_newsletter == 1}checked{/if} />
       </p>
       {if $USER_RIGHT === 4 && $USER_ID !== $uid}
         <p>
@@ -67,12 +69,12 @@
   <form enctype='multipart/form-data' method='post' action='/user/{$uid}/update'>
     <h2><a href="#">{$lang_image_upload}</a></h2>
     <div>
-      <p>
+      <p {if isset($error_image)}class="error" title="{$error_image}"{/if}>
         <label for='input-image'>{$lang_image_choose}</label>
         <input type='file' name='image' id="input-image" accept="image/jpg,image/gif,image/png" />
         <span class="description">{$lang_image_upload_info}</span>
       </p>
-      <p>
+      <p {if isset($error_terms)}class="error" title="{$error_terms}"{/if}>
         <label for='input-terms'>{$lang_image_terms}</label>
         <input type='checkbox' name='terms' id="input-terms" value='1' />
       </p>

@@ -213,7 +213,7 @@ define( 'LANG_ERROR_FORM_TITLE', 'Bitte fülle die markierten Felder aus:' );
 define( 'LANG_ERROR_FORM_MISSING_CATEGORY', 'Bitte wähle eine Kategorie!' );
 define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Bitte fülle den Inhalt aus!' );
 define( 'LANG_ERROR_FORM_MISSING_EMAIL', 'Bitte gib deine E-Mail-Adresse an!' );
-define( 'LANG_ERROR_FORM_MISSING_FILE', 'Bitte gib eine Datei zum Upload an!' ); #TODO
+define( 'LANG_ERROR_FORM_MISSING_FILE', 'Bitte gib eine Datei zum Upload an!' );
 define( 'LANG_ERROR_FORM_MISSING_NAME', 'Bitte gib deinen Namen an!' );
 define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Bitte gib einen Titel an!' );
 define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Bitte gib ein Passwort an!' );

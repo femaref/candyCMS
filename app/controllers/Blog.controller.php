@@ -194,7 +194,7 @@ class Blog extends Main {
 	 *
 	 */
 	protected function _create() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('title');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -217,7 +217,7 @@ class Blog extends Main {
 	 *
 	 */
 	protected function _update() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
+		$this->_setError('title');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();

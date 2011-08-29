@@ -46,8 +46,8 @@ class Session extends Main {
 	 *
 	 */
 	private function _create() {
-		$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
-		$this->_setError('password', LANG_ERROR_FORM_MISSING_PASSWORD);
+		$this->_setError('email');
+		$this->_setError('password');
 
 		if (isset($this->_aError))
 			return $this->showCreateSessionTemplate();
@@ -89,10 +89,18 @@ class Session extends Main {
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 * @todo this must be rewritten
 	 * @todo replace error message with wrong password information
+	 * @todo error message when email is wrong
 	 *
 	 */
   public function createResendActions() {
-		$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
+		# If there is no email request then show form template
+		if (!isset($this->_aRequest['email']))
+			return $this->_showCreateResendActionsTemplate();
+
+		# Check format of email
+		elseif(isset($this->_aRequest['email'])) {
+			$this->_setError('email');
+		}
 
 		if (isset($this->_aError))
 			return $this->_showCreateResendActionsTemplate();
@@ -174,9 +182,9 @@ class Session extends Main {
     }
 
     if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
-    }
+			foreach ($this->_aError as $sField => $sMessage)
+				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+		}
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
     return $this->_oSmarty->fetch('resend.tpl');

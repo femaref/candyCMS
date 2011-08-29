@@ -109,8 +109,8 @@ class Content extends Main {
 	 *
 	 */
 	protected function _create() {
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
-		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('title');
+		$this->_setError('content');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -133,8 +133,8 @@ class Content extends Main {
   protected function _update() {
 		$sRedirect = '/content/' . (int) $this->_aRequest['id'];
 
-		$this->_setError('title', LANG_ERROR_FORM_MISSING_TITLE);
-		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('title');
+		$this->_setError('content');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();

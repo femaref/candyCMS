@@ -37,7 +37,7 @@ class Newsletter extends Main {
 
 		# Check format of email
 		elseif(isset($this->_aRequest['email'])) {
-			$this->_setError('email', LANG_ERROR_FORM_MISSING_EMAIL);
+			$this->_setError('email');
 		}
 
 		if (isset($this->_aError))
@@ -136,8 +136,8 @@ class Newsletter extends Main {
 	 *
 	 */
   private function _newsletterMail() {
-		$this->_setError('subject', LANG_ERROR_FORM_MISSING_SUBJECT);
-		$this->_setError('content', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('subject');
+		$this->_setError('content');
 
     if (isset($this->_aError))
       return $this->_showCreateNewsletterTemplate();

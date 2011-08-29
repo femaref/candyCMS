@@ -11,27 +11,20 @@ if(!class_exists('Pages'))
 class Model_Blog extends Model_Main {
 
 	private function _setData($bUpdate, $iLimit) {
-		$sWhere	= '';
+
+		# Show unpublished items to moderators or administrators only
+		$sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
     # Show overview
 		if (empty($this->_iId)) {
 
-      # Show unpublished items only to moderators or administrators
-			if (USER_RIGHT < 3)
-				$sWhere = "WHERE published = '1'";
-
 			# Search blog for tags
 			if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
-              isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
+							isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
 
-        if (empty($sWhere))
-          $sWhere = "WHERE tags LIKE '%" .
-                  Helper::formatInput($this->_aRequest['id']) . "%'";
-        else
-          # add to existing where-clause
-          $sWhere .= "AND tags LIKE '%" .
-                  Helper::formatInput($this->_aRequest['id']) . "%'";
-      }
+				$sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
+				$sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['id']) . "%'";
+			}
 
       # Count entries for pagination
 			try {
@@ -80,63 +73,26 @@ class Model_Blog extends Model_Main {
 
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
-				$aTags = explode(', ', $aRow['tags']);
-				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/blog/' . $iId;
 
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        $this->_aData[$iId] = array(
-                'id'                => $aRow['id'],
-                'uid'               => $aRow['uid'],
-                'author_id'         => $aRow['author_id'],
-                'tags'              => $aTags,
-                'tags_raw'          => $aRow['tags'],
-                'title'             => Helper::formatOutput($aRow['title']),
-                'teaser'            => Helper::formatOutput($aRow['teaser']),
-                'keywords'          => Helper::formatOutput($aRow['keywords']),
-                'content'           => Helper::formatOutput($aRow['content']),
-                'date'              => Helper::formatTimestamp($aRow['date'], true),
-                'datetime'          => Helper::formatTimestamp($aRow['date']),
-                'date_raw'          => $aRow['date'],
-                'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),
-                'date_w3c'          => date('Y-m-d\TH:i:sP', $aRow['date']),
-                'encoded_full_name' => urlencode($sFullName),
-                'encoded_title'     => $sEncodedTitle, # encoded for social networks
-                'encoded_url'       => urlencode($sUrl),
-                'avatar_64'         => Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar),
-                'full_name'         => $sFullName,
-                'name'              => $sName,
-                'surname'           => $sSurname,
-                'comment_sum'       => $aRow['comment_sum'],
-                'published'         => $aRow['published'],
-                'url'               => $sUrl . '/' . $sEncodedTitle,
-                'url_clean'         => $sUrl
-				);
-
-				if (!empty($aRow['date_modified']))
-					$this->_aData[$iId]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
-
-				else
-					$this->_aData[$iId]['date_modified'] = '';
+				$this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
+				$this->_aData[$iId]['tags'] = explode(', ', $aRow['tags']);
+				$this->_aData[$iId]['tags_raw'] = $aRow['tags'];
+				$this->_aData[$iId]['date_modified'] = !empty($aRow['date_modified']) ?
+								Helper::formatTimestamp($aRow['date_modified']) :
+								'';
 			}
 		}
-		# There's an ID so choose between editing or displaying entry
+		# Show ID
 		else {
-			if (USER_RIGHT < 3)
-				$sWhere = "AND b.published = '1'";
-
       try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
                                         u.id AS uid,
                                         u.name,
                                         u.surname,
-                                        COUNT(c.id) AS commentSum
+																				u.email,
+																				u.use_gravatar,
+                                        COUNT(c.id) AS comment_sum
                                       FROM
                                         " . SQL_PREFIX . "blogs b
                                       LEFT JOIN
@@ -154,78 +110,25 @@ class Model_Blog extends Model_Main {
                                         b.title
                                       LIMIT 1");
 
-        $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
-      $aRow = & $aResult;
+      # Edit entry
+			if ($bUpdate == true)
+				$this->_aData = $this->_formatForUpdate($aRow);
 
-      # we want to edit an entry
-      if ($bUpdate == true) {
-        $this->_aData = array(
-            'id'        => $aRow['id'],
-            'author_id'	=> $aRow['author_id'],
-            'tags'      => Helper::removeSlahes($aRow['tags']),
-            'title'     => Helper::removeSlahes($aRow['title']),
-            'teaser'    => Helper::removeSlahes($aRow['teaser']),
-            'keywords'  => Helper::removeSlahes($aRow['keywords']),
-            'content'   => Helper::removeSlahes($aRow['content']),
-            'date'      => Helper::formatTimestamp($aRow['date'], true),
-            'published' => $aRow['published']
-        );
-      }
-      # Give back blog entry
-      else {
-        $aTags = explode(', ', $aRow['tags']);
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/blog/' . $aRow['id'];
-
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        # Do we need to highlight text?
-        $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
-                $this->_aRequest['highlight'] :
-                '';
-
-        $this->_aData[1] = array(
-            'id'                => $aRow['id'],
-            'uid'               => $aRow['uid'],
-            'author_id'         => $aRow['author_id'],
-            'tags'              => $aTags,
-            'tags_raw'          => $aRow['tags'],
-            'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
-            'teaser'            => Helper::formatOutput($aRow['teaser'], $sHighlight),
-            'keywords'          => Helper::formatOutput($aRow['keywords']),
-            'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
-            'date'              => Helper::formatTimestamp($aRow['date']),
-            'datetime'          => Helper::formatTimestamp($aRow['date']),
-            'date_raw'          => $aRow['date'],
-            'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),
-            'date_w3c'          => date('Y-m-d\TH:i:sP', $aRow['date']),
-            'name'              => $sName,
-            'surname'           => $sSurname,
-            'full_name'         => $sFullName,
-            'encoded_full_name' => urlencode($sFullName),
-            'encoded_title'     => $sEncodedTitle,
-            'encoded_url'       => urlencode($sUrl),
-            'avatar'            => '',
-            'comment_sum'       => $aRow['commentSum'],
-            'published'         => $aRow['published'],
-            'url'               => $sUrl . '#' . $sEncodedTitle,
-            'url_clean'         => $sUrl
-        );
-
-        if (!empty($aRow['date_modified']))
-          $this->_aData[1]['date_modified'] = Helper::formatTimestamp($aRow['date_modified']);
-
-        else
-          $this->_aData[1]['date_modified'] = '';
-      }
+			# Blog entry
+			else {
+				$this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
+				$this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
+				$this->_aData[1]['tags_raw'] = $aRow['tags'];
+				$this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?
+								Helper::formatTimestamp($aRow['date_modified']) :
+								'';
+			}
     }
 
     return $this->_aData;

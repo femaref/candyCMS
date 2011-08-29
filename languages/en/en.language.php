@@ -210,6 +210,7 @@ define( 'LANG_ERROR_FORM_TITLE', 'Please fill out the following information:' );
 define( 'LANG_ERROR_FORM_MISSING_CATEGORY', 'Please select a category.' );
 define( 'LANG_ERROR_FORM_MISSING_CONTENT', 'Please enter content.' );
 define( 'LANG_ERROR_FORM_MISSING_EMAIL', 'Please enter your Email.' );
+define( 'LANG_ERROR_FORM_MISSING_FILE', 'Please select file.' );
 define( 'LANG_ERROR_FORM_MISSING_NAME', 'Please enter your name.' );
 define( 'LANG_ERROR_FORM_MISSING_TITLE', 'Please enter a title.' );
 define( 'LANG_ERROR_FORM_MISSING_PASSWORD', 'Please enter a password.' );

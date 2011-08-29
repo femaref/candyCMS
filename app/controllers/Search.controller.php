@@ -11,9 +11,20 @@ require_once 'app/models/Search.model.php';
 
 class Search extends Main {
 
-  protected $_aRequest;
-  protected $_aSession;
+	/**
+	 * Search headline.
+	 *
+	 * @var string
+	 * @access protected
+	 */
   protected $_sHeadline;
+
+	/**
+	 * Search string.
+	 *
+	 * @var string
+	 * @access protected
+	 */
   protected $_sSearch;
 
 	/**
