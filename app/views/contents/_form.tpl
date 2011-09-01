@@ -1,8 +1,5 @@
 <form method='post' action='/content/{$smarty.get.action}'>
   <h1>{$lang_headline}</h1>
-  {if $smarty.get.action == 'update'}
-    <p>{$lang_last_update}: {$date}</p>
-  {/if}
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for="input-title">{$lang_title} <span title="{$lang_required}">*</span></label>
     <input type='text' name='title' title='{$lang_title}' value='{$title}' id="input-title" autofocus required />

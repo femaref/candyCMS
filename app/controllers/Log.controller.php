@@ -54,19 +54,19 @@ class Log extends Main {
 	/**
 	 * Show content entry or content overview (depends on a given ID or not).
 	 *
-	 * @access public
 	 * @static
+	 * @access public
 	 * @param string $sSectionName name of section
 	 * @param string $sActionName name of action (CRUD)
 	 * @param integer $iActionId ID of the row that is affected
 	 * @param integer $iUserId ID of the acting user
 	 * @param integer $iTimeStart starting timestamp of the entry
 	 * @param integer $iTimeEnd ending timestamp of the entry
-	 * @return string HTML content
+	 * @return boolean status of query
 	 *
 	 */
 	public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
-		Model_Log::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+		return Model_Log::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
 	}
 
 	/**

@@ -86,6 +86,7 @@ class Blog extends Main {
 
 			else
 				return $this->_setBlogTitle();
+
 		} else
 			return LANG_GLOBAL_BLOG;
 	}
@@ -128,11 +129,7 @@ class Blog extends Main {
 		# show overview with pages
 		else {
 			$iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
-
-			if ($iPage > 1)
-				return LANG_GLOBAL_BLOG . ' - ' . LANG_GLOBAL_PAGE . ' ' . $iPage;
-			else
-				return LANG_GLOBAL_BLOG;
+			return $iPage > 1 ? LANG_GLOBAL_BLOG . ' - ' . LANG_GLOBAL_PAGE . ' ' . $iPage : LANG_GLOBAL_BLOG;
 		}
 	}
 

@@ -1,17 +1,31 @@
 <?php
 
-/*
+/**
+ * Handle all content SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 class Model_Content extends Model_Main {
 
+	/**
+	 * Set content entry or content overview data.
+	 *
+	 * @access private
+	 * @param boolean $bUpdate prepare data for update
+	 * @param integer $iLimit content post limit
+	 * @return array data
+	 *
+	 */
   private final function _setData($bUpdate, $iLimit) {
-    # Get the overview
+
+    # Show overview
     if (empty($this->_iId)) {
       try {
-        $oQuery = $this->_oDb->query("SELECT
+				$oQuery = $this->_oDb->query("SELECT
 																				c.*,
 																				u.id AS uid,
 																				u.name,
@@ -26,15 +40,17 @@ class Model_Content extends Model_Main {
 																				c.title ASC
                                       LIMIT " . $iLimit);
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-      } catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+			}
+			catch (AdvancedException $e) {
+				$this->_oDb->rollBack();
+			}
 
-    # Get single entry
-    } else {
+    # Show ID
+		}
+		else {
       try {
-        $oQuery = $this->_oDb->prepare("SELECT
+				$oQuery = $this->_oDb->prepare("SELECT
 																					c.*,
 																					u.id AS uid,
 																					u.name,
@@ -50,87 +66,58 @@ class Model_Content extends Model_Main {
 																				LIMIT
 																					1");
 
-        $oQuery->bindParam('id', $this->_iId);
-        $oQuery->execute();
+				$oQuery->bindParam('id', $this->_iId);
+				$oQuery->execute();
 
-        # Fix for using it in the same template as overview
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-
-      } catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+				# Fix for using it in the same template as overview
+				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+			}
+			catch (AdvancedException $e) {
+				$this->_oDb->rollBack();
+			}
     }
 
     foreach ($aResult as $aRow) {
-      $iId = $aRow['id'];
+			if ($bUpdate == true)
+				$this->_aData = $this->_formatForUpdate($aRow);
 
-      # We want to edit an entry
-      if ($bUpdate == true) {
-
-        $this->_aData = array(
-            'id'        => $aRow['id'],
-            'author_id' => $aRow['author_id'],
-            'content'   => Helper::removeSlahes($aRow['content']),
-            'keywords'  => Helper::removeSlahes($aRow['keywords']),
-            'teaser'    => Helper::removeSlahes($aRow['teaser']),
-            'title'     => Helper::removeSlahes($aRow['title']),
-            'date'      => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'  => Helper::formatTimestamp($aRow['date'])
-        );
-
-      # Show standard view
-      } else {
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/content/' . $aRow['id'];
-
-        # Do we need to highlight text?
-        $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
-                $this->_aRequest['highlight'] :
-                '';
-
-        $this->_aData[$iId] = array(
-            'id'                => $aRow['id'],
-            'author_id'         => $aRow['author_id'],
-            'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
-            'teaser'            => Helper::formatOutput($aRow['teaser']),
-            'keywords'          => Helper::formatOutput($aRow['keywords']),
-            'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
-            'date'              => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'          => Helper::formatTimestamp($aRow['date']),
-            'date_raw'          => $aRow['date'],
-            'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),
-            'date_w3c'          => date('Y-m-d\TH:i:sP', $aRow['date']),
-            'uid'               => $aRow['uid'],
-            'name'              => $sName,
-            'surname'           => $sSurname,
-            'full_name'         => $sFullName,
-            'encoded_full_name' => urlencode($sFullName),
-            'encoded_title'     => Helper::formatOutput(urlencode($aRow['title'])),
-            'encoded_url'       => urlencode($sUrl),
-            'url'               => $sUrl . '/' . $sEncodedTitle,
-            'url_clean'         => $sUrl
-        );
-      }
-    }
+			else {
+				$iId = $aRow['id'];
+				$this->_aData[$iId] = $this->_formatForOutput($aRow, 'content');
+			}
+		}
 
     return $this->_aData;
   }
 
+	/**
+	 * Get content entry or content overview data. Depends on avaiable ID.
+	 *
+	 * @access public
+	 * @param integer $iId ID to load data from. If empty, show overview.
+	 * @param boolean $bUpdate prepare data for update
+	 * @param integer $iLimit blog post limit
+	 * @return array data from _setData
+	 *
+	 */
   public final function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-    if (!empty($iId))
-      $this->_iId = (int) $iId;
+		if (!empty($iId))
+			$this->_iId = (int) $iId;
 
-    return $this->_setData($bUpdate, $iLimit);
-  }
+		return $this->_setData($bUpdate, $iLimit);
+	}
 
+	/**
+	 * Create a content entry.
+	 *
+	 * @access public
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
   public function create() {
-    try {
-      $oQuery = $this->_oDb->prepare("INSERT INTO
+		try {
+			$oQuery = $this->_oDb->prepare("INSERT INTO
 																				" . SQL_PREFIX . "contents
                                         ( author_id,
                                           title,
@@ -146,24 +133,33 @@ class Model_Content extends Model_Main {
                                           :content,
                                           :date )");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-      $oQuery->bindParam('date', time());
+			$iUserId = USER_ID;
+			$oQuery->bindParam('author_id', $iUserId);
+			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+			$oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+			$oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
+			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+			$oQuery->bindParam('date', time());
 
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
-  }
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
 
+	/**
+	 * Update a content entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to update
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
   public function update($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("UPDATE
+		try {
+			$oQuery = $this->_oDb->prepare("UPDATE
 																				" . SQL_PREFIX . "contents
 																			SET
 																				title = :title,
@@ -175,37 +171,46 @@ class Model_Content extends Model_Main {
 																			WHERE
 																				id = :where");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('user_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('where', $iId);
+			$iUserId = USER_ID;
+			$oQuery->bindParam('user_id', $iUserId);
+			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+			$oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+			$oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
+			$oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
+			$oQuery->bindParam('date', time());
+			$oQuery->bindParam('where', $iId);
 
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
-  }
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
 
-  public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
+	/**
+	 * Delete a content entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to delete
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
+	public function destroy($iId) {
+		try {
+			$oQuery = $this->_oDb->prepare("DELETE FROM
 																				" . SQL_PREFIX . "contents
 																			WHERE
 																				id = :id
 																			LIMIT
 																				1");
 
-      $oQuery->bindParam('id', $iId);
+			$oQuery->bindParam('id', $iId);
 
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
-  }
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
 }

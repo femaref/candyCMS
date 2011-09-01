@@ -56,8 +56,10 @@ class Sitemap extends Main {
 	private function _getSitemap() {
 		$oBlog = new Model_Blog();
 		$aBlog = $oBlog->getData('', false, 1000);
+
 		$oContent = new Model_Content();
 		$aContent = $oContent->getData('', false, 1000);
+
 		$oGallery = new Model_Gallery();
 		$aGallery = $oGallery->getData('', false, false, 1000);
 

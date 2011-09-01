@@ -1,8 +1,10 @@
 <?php
 
-/*
+/**
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.5
  */
 
 abstract class Model_Main {
@@ -72,8 +74,15 @@ abstract class Model_Main {
 			$aData['date_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
 		}
 
-		if (isset($aRow['author_id'])) {
-			$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+		if(isset($aRow['author_id'])) {
+			if ($aRow['author_id'] > 1)
+				$aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
+
+			elseif ($aRow['author_id'] == 0)
+				$aGravatar = array('use_gravatar' => true, 'email' => $aRow['author_email']);
+
+			else
+				$aGravatar = array('use_gravatar' => false);
 
 			$aData['avatar_64'] = Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar);
 			$aData['avatar_100'] = Helper::getAvatar('user', 100, $aRow['author_id'], $aGravatar);
@@ -85,7 +94,7 @@ abstract class Model_Main {
 
 		# Encoded data for SEO
 		$aData['encoded_full_name'] = urlencode($aData['full_name']);
-		$aData['encoded_title'] = urlencode($aRow['title']);
+		$aData['encoded_title'] = isset($aRow['title']) ? urlencode($aRow['title']) : '';
 
 		# URL to entry
 		$aData['url_clean'] = WEBSITE_URL . '/' . $sSection . '/' . $aRow['id'];

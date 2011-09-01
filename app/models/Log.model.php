@@ -1,13 +1,25 @@
 <?php
 
-/*
+/**
+ * Handle all log SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
  */
 
 class Model_Log extends Model_Main {
 
-	private function _setData() {
+	/**
+	 * Set log overview data.
+	 *
+	 * @access private
+	 * @param integer $iLimit blog post limit
+	 * @return array data
+	 *
+	 */
+	private function _setData($iLimit) {
     # Count entries
     try {
       $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
@@ -17,7 +29,7 @@ class Model_Log extends Model_Main {
       $this->_oDb->rollBack();
     }
 
-    $this->oPage = new Page($this->_aRequest, $iResult, 50);
+    $this->oPage = new Page($this->_aRequest, $iResult, $iLimit);
 
 		try {
 			$oQuery = $this->_oDb->prepare("SELECT
@@ -34,8 +46,8 @@ class Model_Log extends Model_Main {
                                       ORDER BY
                                         l.time_end DESC
                                       LIMIT
-                                          :offset,
-                                          :limit");
+                                        :offset,
+                                        :limit");
 
       $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
       $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
@@ -50,33 +62,40 @@ class Model_Log extends Model_Main {
 		foreach ($aResult as $aRow) {
 			$iId = $aRow['id'];
 
-			# Set SEO friendly user names
-			$sName      = Helper::formatOutput($aRow['name']);
-			$sSurname   = Helper::formatOutput($aRow['surname']);
-			$sFullName  = $sName . ' ' . $sSurname;
-
-			$this->_aData[$iId] = array(
-							'id'                => $aRow['id'],
-							'uid'               => $aRow['uid'],
-							'section_name'      => $aRow['section_name'],
-							'action_name'       => $aRow['action_name'],
-							'action_id'					=> $aRow['action_id'],
-							'user_id'						=> $aRow['user_id'],
-							'full_name'         => $sFullName,
-							'name'              => $sName,
-							'surname'           => $sSurname,
-							'time_start'        => Helper::formatTimestamp($aRow['time_start']),
-							'time_end'	        => Helper::formatTimestamp($aRow['time_end'])
-			);
+			$this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
+			$this->_aData[$iId]['time_start'] = Helper::formatTimestamp($aRow['time_start']);
+			$this->_aData[$iId]['time_end '] = Helper::formatTimestamp($aRow['time_end']);
 		}
 
     return $this->_aData;
 	}
 
-	public function getData() {
-		return $this->_setData();
+	/**
+	 * Get log overview data.
+	 *
+	 * @access public
+	 * @param integer $iLimit blog post limit
+	 * @return array data from _setData
+	 *
+	 */
+	public function getData($iLimit = 50) {
+		return $this->_setData($iLimit);
 	}
 
+	/**
+	 * Get log overview data.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sSectionName name of section
+	 * @param string $sActionName name of action (CRUD)
+	 * @param integer $iActionId ID of the row that is affected
+	 * @param integer $iUserId ID of the acting user
+	 * @param integer $iTimeStart starting timestamp of the entry
+	 * @param integer $iTimeEnd ending timestamp of the entry
+	 * @return boolean status of query
+	 *
+	 */
 	public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
 		$iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
 		$iTimeEnd   = empty($iTimeEnd) ? time() : $iTimeEnd;
@@ -118,6 +137,15 @@ class Model_Log extends Model_Main {
 		}
 	}
 
+	/**
+	 * Delete a log entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to delete
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
 	public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
@@ -128,7 +156,6 @@ class Model_Log extends Model_Main {
 																				1");
 
       $oQuery->bindParam('id', $iId);
-
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {

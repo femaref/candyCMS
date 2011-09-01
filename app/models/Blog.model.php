@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Handle all blog SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 if(!class_exists('Pages'))
@@ -10,13 +14,22 @@ if(!class_exists('Pages'))
 
 class Model_Blog extends Model_Main {
 
+	/**
+	 * Set blog entry or blog overview data.
+	 *
+	 * @access private
+	 * @param boolean $bUpdate prepare data for update
+	 * @param integer $iLimit blog post limit
+	 * @return array data
+	 *
+	 */
 	private function _setData($bUpdate, $iLimit) {
-
-		# Show unpublished items to moderators or administrators only
-		$sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
     # Show overview
 		if (empty($this->_iId)) {
+
+			# Show unpublished items to moderators or administrators only
+			$sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
 			# Search blog for tags
 			if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
@@ -56,7 +69,7 @@ class Model_Blog extends Model_Main {
 																				" . SQL_PREFIX . "comments c
 																			ON
 																				c.parent_id=b.id
-																			" . $sWhere . "
+																				" . $sWhere . "
 																			GROUP BY
 																				b.id
 																			ORDER BY
@@ -84,6 +97,10 @@ class Model_Blog extends Model_Main {
 		}
 		# Show ID
 		else {
+
+			# Show unpublished items to moderators or administrators only
+			$sWhere = USER_RIGHT < 3 ? "AND published = '1'" : '';
+
       try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
@@ -106,8 +123,6 @@ class Model_Blog extends Model_Main {
                                       WHERE
                                         b.id = '" . Helper::formatInput($this->_iId) . "'
                                       " . $sWhere . "
-                                      GROUP BY
-                                        b.title
                                       LIMIT 1");
 
         $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -134,6 +149,16 @@ class Model_Blog extends Model_Main {
     return $this->_aData;
 	}
 
+	/**
+	 * Get blog entry or blog overview data. Depends on avaiable ID.
+	 *
+	 * @access public
+	 * @param integer $iId ID to load data from. If empty, show overview.
+	 * @param boolean $bUpdate prepare data for update
+	 * @param integer $iLimit blog post limit
+	 * @return array data from _setData
+	 *
+	 */
 	public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
@@ -141,6 +166,14 @@ class Model_Blog extends Model_Main {
     return $this->_setData($bUpdate, $iLimit);
   }
 
+	/**
+	 * Create a blog entry.
+	 *
+	 * @access public
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
 	public function create() {
     $this->_aRequest['published'] = isset($this->_aRequest['published']) ?
             (int) $this->_aRequest['published'] :
@@ -184,6 +217,15 @@ class Model_Blog extends Model_Main {
     }
 	}
 
+	/**
+	 * Update a blog entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to update
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
 	public function update($iId) {
 		$iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
             time() :
@@ -229,6 +271,15 @@ class Model_Blog extends Model_Main {
     }
 	}
 
+	/**
+	 * Delete a blog entry and also delete its comments.
+	 *
+	 * @access public
+	 * @param integer $iId ID to delete
+	 * @return boolean status of query
+	 * @override app/models/Main.model.php
+	 *
+	 */
 	public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
@@ -249,19 +300,16 @@ class Model_Blog extends Model_Main {
       $oQuery = $this->_oDb->prepare("DELETE FROM
 																				" . SQL_PREFIX . "comments
 																			WHERE
-																				parent_id = :parent_id
-																			AND
-																				parent_category = :parent_category");
+																				parent_id = :parent_id");
 
-      $sParentCategory = 'b';
-      $oQuery->bindParam('parent_category', $sParentCategory);
       $oQuery->bindParam('parent_id', $iId);
 
       $bResult = $oQuery->execute();
-      return $bResult;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
+
+		return $bResult;
   }
 }
