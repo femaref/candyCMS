@@ -206,7 +206,6 @@ class Model_Content extends Model_Main {
 																				1");
 
 			$oQuery->bindParam('id', $iId);
-
 			return $oQuery->execute();
 		}
 		catch (AdvancedException $e) {

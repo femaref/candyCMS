@@ -228,7 +228,7 @@ class User extends Main {
 		}
 		else {
 			$this->_oSmarty->assign('u', $this->_aData);
-
+die(print_r($this->_aData));
 			# Manage title and description (content)
 			$this->_setTitle($this->_aData['full_name']);
 			$this->_setDescription($this->_aData['full_name']);

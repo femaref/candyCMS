@@ -303,7 +303,6 @@ class Model_Blog extends Model_Main {
 																				parent_id = :parent_id");
 
       $oQuery->bindParam('parent_id', $iId);
-
       $bResult = $oQuery->execute();
     }
     catch (AdvancedException $e) {
