@@ -37,7 +37,7 @@ class Model_Session extends Model_Main {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->prepare("	UPDATE
+      $oQuery = $oDb->prepare("  UPDATE
                                   " . SQL_PREFIX . "users
                                 SET
                                   session = :session,
@@ -64,15 +64,15 @@ class Model_Session extends Model_Main {
   public function create() {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
-																				id, verification_code
-																			FROM
-																				" . SQL_PREFIX . "users
-																			WHERE
-																				email = :email
-																			AND
-																				password = :password
-																			LIMIT
-																				1");
+                                        id, verification_code
+                                      FROM
+                                        " . SQL_PREFIX . "users
+                                      WHERE
+                                        email = :email
+                                      AND
+                                        password = :password
+                                      LIMIT
+                                        1");
 
       $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
@@ -141,7 +141,7 @@ class Model_Session extends Model_Main {
         if (empty($this->_aData['verification_code']) || $bResult == false)
           return false;
         else
-					return $bResult;
+          return $bResult;
       }
       catch (AdvancedException $e) {
         $this->_oDb->rollBack();
@@ -156,11 +156,11 @@ class Model_Session extends Model_Main {
   public function destroy() {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
-																				" . SQL_PREFIX . "users
-																			SET
-																				session = :session_null
-																			WHERE
-																				session = :session_id");
+                                        " . SQL_PREFIX . "users
+                                      SET
+                                        session = :session_null
+                                      WHERE
+                                        session = :session_id");
 
       $sNull = 'NULL';
       $iSessionId = session_id();

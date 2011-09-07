@@ -6,14 +6,14 @@
  */
 
 class Model_Gallery extends Model_Main {
-	private $_aThumbs;
-	private $_sFilePath;
+  private $_aThumbs;
+  private $_sFilePath;
 
-	private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
+  private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
     $sWhere = '';
-		$iResult = 1;
+    $iResult = 1;
 
-		if (!empty($this->_iId))
+    if (!empty($this->_iId))
       $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
     else {
@@ -26,30 +26,30 @@ class Model_Gallery extends Model_Main {
       }
     }
 
-		$this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
+    $this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
 
-		try {
+    try {
       $oQuery = $this->_oDb->query("SELECT
-																			a.*,
-																			u.id AS uid,
-																			u.name,
-																			u.surname,
-																			COUNT(f.id) AS files_sum
-																		FROM
-																			" . SQL_PREFIX . "gallery_albums a
-																		LEFT JOIN
-																			" . SQL_PREFIX . "users u
-																		ON
-																			a.author_id=u.id
-																		LEFT JOIN
-																			" . SQL_PREFIX . "gallery_files f
-																		ON
-																			f.album_id=a.id
-																		"	.$sWhere.	"
-																		GROUP BY
-																			a.id
-																		ORDER BY
-																			a.id DESC
+                                      a.*,
+                                      u.id AS uid,
+                                      u.name,
+                                      u.surname,
+                                      COUNT(f.id) AS files_sum
+                                    FROM
+                                      " . SQL_PREFIX . "gallery_albums a
+                                    LEFT JOIN
+                                      " . SQL_PREFIX . "users u
+                                    ON
+                                      a.author_id=u.id
+                                    LEFT JOIN
+                                      " . SQL_PREFIX . "gallery_files f
+                                    ON
+                                      f.album_id=a.id
+                                    "  .$sWhere.  "
+                                    GROUP BY
+                                      a.id
+                                    ORDER BY
+                                      a.id DESC
                                     LIMIT
                                       " . $this->oPage->getOffset() . ",
                                       " . $this->oPage->getLimit());
@@ -60,17 +60,17 @@ class Model_Gallery extends Model_Main {
       $this->_oDb->rollBack();
     }
 
-		if($bUpdate == true) {
+    if($bUpdate == true) {
       $aRow = & $aResult;
 
       # Fix fetchAll with array 0
-			$this->_aData = array(
+      $this->_aData = array(
           'title'       => Helper::removeSlahes($aRow[0]['title']),
-					'content'     => Helper::removeSlahes($aRow[0]['content'], true));
-		}
-		else {
-			foreach ($aResult as $aRow) {
-				$iId = $aRow['id'];
+          'content'     => Helper::removeSlahes($aRow[0]['content'], true));
+    }
+    else {
+      foreach ($aResult as $aRow) {
+        $iId = $aRow['id'];
 
         # Set SEO friendly user names
         $sName      = Helper::formatOutput($aRow['name']);
@@ -80,7 +80,7 @@ class Model_Gallery extends Model_Main {
         $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
         $sUrl = WEBSITE_URL . '/gallery/' . $iId;
 
-				$this->_aData[$iId] = array(
+        $this->_aData[$iId] = array(
             'id'          => $aRow['id'],
             'author_id'   => $aRow['author_id'],
             'title'       => Helper::formatOutput($aRow['title']),
@@ -96,34 +96,34 @@ class Model_Gallery extends Model_Main {
             'files_sum'   => $aRow['files_sum'],
             'url'         => $sUrl . '/' . $sEncodedTitle,
             'url_clean'   => $sUrl
-				);
+        );
 
         # Are there any thumbs? If yes, get them!
-				if ($aRow['files_sum'] > 0)
+        if ($aRow['files_sum'] > 0)
           $this->_aData[$iId]['files'] = $this->getThumbs($iId, $bAdvancedImageInformation);
         else
           $this->_aData[$iId]['files'] = '';
-			}
-		}
+      }
+    }
 
     return $this->_aData;
-	}
+  }
 
-	public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
+  public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
     return $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
   }
 
-	public function getId() {
+  public function getId() {
     return $this->_iId;
   }
 
-	private function _setThumbs($iId, $bAdvancedImageInformation) {
+  private function _setThumbs($iId, $bAdvancedImageInformation) {
 
-		# Clear existing array (fix, when we got no images at a gallery
-		if (!empty($this->_aThumbs))
+    # Clear existing array (fix, when we got no images at a gallery
+    if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
 
     try {
@@ -208,9 +208,9 @@ class Model_Gallery extends Model_Main {
     }
 
     return $this->_aThumbs;
-	}
+  }
 
-	public function getThumbs($iId, $bAdvancedImageInformation = false) {
+  public function getThumbs($iId, $bAdvancedImageInformation = false) {
     return $this->_setThumbs($iId, $bAdvancedImageInformation);
   }
 
@@ -223,7 +223,7 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			$oDb = null;
+      $oDb = null;
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
@@ -247,7 +247,7 @@ class Model_Gallery extends Model_Main {
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			$oDb = null;
+      $oDb = null;
     }
     catch (AdvancedException $e) {
       $oDb->rollBack();
@@ -281,16 +281,16 @@ class Model_Gallery extends Model_Main {
       return Helper::formatOutput($aResult['content']);
   }
 
-	public function create() {
+  public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "gallery_albums
+                                        " . SQL_PREFIX . "gallery_albums
                                         ( author_id,
                                           title,
                                           content,
                                           date)
-																			VALUES
-																				( :author_id,
+                                      VALUES
+                                        ( :author_id,
                                           :title,
                                           :content,
                                           :date )");
@@ -332,18 +332,18 @@ class Model_Gallery extends Model_Main {
         mkdir($sPathThumbO, 0755);
     }
 
-		return $bResult;
-	}
+    return $bResult;
+  }
 
-	public function update($iId) {
+  public function update($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
-																				" . SQL_PREFIX . "gallery_albums
-																			SET
-																				title = :title,
-																				content = :content
-																			WHERE
-																				id = :id");
+                                        " . SQL_PREFIX . "gallery_albums
+                                      SET
+                                        title = :title,
+                                        content = :content
+                                      WHERE
+                                        id = :id");
 
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
@@ -355,7 +355,7 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public function destroy($iId) {
+  public function destroy($iId) {
     $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
     try {
@@ -386,9 +386,9 @@ class Model_Gallery extends Model_Main {
 
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
-																					" . SQL_PREFIX . "gallery_files
-																				WHERE
-																					album_id = :album_id");
+                                          " . SQL_PREFIX . "gallery_files
+                                        WHERE
+                                          album_id = :album_id");
 
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();
@@ -399,11 +399,11 @@ class Model_Gallery extends Model_Main {
 
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
-																					" . SQL_PREFIX . "gallery_albums
-																				WHERE
-																					id = :album_id
-																				LIMIT
-																					1");
+                                          " . SQL_PREFIX . "gallery_albums
+                                        WHERE
+                                          id = :album_id
+                                        LIMIT
+                                          1");
 
         $oQuery->bindParam('album_id', $iId);
         return $oQuery->execute();
@@ -414,16 +414,16 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public function createFile($aFile) {
+  public function createFile($aFile) {
     $oUploadFile = new Upload($this->_aRequest, $aFile);
 
     if($oUploadFile->uploadGalleryFile() == true) {
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
-																					" . SQL_PREFIX . "gallery_files
-																						(album_id, author_id, file, extension, content, date)
-																				VALUES
-																					( :album_id, :author_id, :file, :extension, :content, :date )");
+                                          " . SQL_PREFIX . "gallery_files
+                                            (album_id, author_id, file, extension, content, date)
+                                        VALUES
+                                          ( :album_id, :author_id, :file, :extension, :content, :date )");
 
         $iUserId = USER_ID;
         $oQuery->bindParam('album_id', $this->_aRequest['id']);
@@ -441,18 +441,18 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public function getFilePath() {
+  public function getFilePath() {
     return $this->_sFilePath;
   }
 
   public function updateFile($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
-																				" . SQL_PREFIX . "gallery_files
-																			SET
-																				content = :content
-																			WHERE
-																				id = :id");
+                                        " . SQL_PREFIX . "gallery_files
+                                      SET
+                                        content = :content
+                                      WHERE
+                                        id = :id");
 
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('id', $iId);
@@ -464,7 +464,7 @@ class Model_Gallery extends Model_Main {
     }
   }
 
-	public function destroyFile($iId) {
+  public function destroyFile($iId) {
     try {
       $oQuery = $this->_oDb->prepare("SELECT file, album_id FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
@@ -487,11 +487,11 @@ class Model_Gallery extends Model_Main {
 
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
-																					" . SQL_PREFIX . "gallery_files
-																				WHERE
-																					id = :id
-																				LIMIT
-																					1");
+                                          " . SQL_PREFIX . "gallery_files
+                                        WHERE
+                                          id = :id
+                                        LIMIT
+                                          1");
 
         $oQuery->bindParam('id', $iId);
         return $oQuery->execute();
@@ -500,5 +500,5 @@ class Model_Gallery extends Model_Main {
         $this->_oDb->rollBack();
       }
     }
-	}
+  }
 }

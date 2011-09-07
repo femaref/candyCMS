@@ -9,7 +9,7 @@ require_once 'app/helpers/Upload.helper.php';
 
 class Model_Download extends Model_Main {
 
-	private function _setData($bUpdate) {
+  private function _setData($bUpdate) {
 
     if (empty($this->_iId)) {
       try {
@@ -117,7 +117,7 @@ class Model_Download extends Model_Main {
     return $this->_aData;
   }
 
-	public function getData($iId = '', $bUpdate = false) {
+  public function getData($iId = '', $bUpdate = false) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
@@ -125,7 +125,7 @@ class Model_Download extends Model_Main {
     return $this->_aData;
   }
 
-	public function create() {
+  public function create() {
     # Set up upload helper and rename file to title
     $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
 
@@ -133,7 +133,7 @@ class Model_Download extends Model_Main {
     if($oUploadFile->uploadFile('download') == true) {
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
-																					" . SQL_PREFIX . "downloads
+                                          " . SQL_PREFIX . "downloads
                                           ( author_id,
                                             title,
                                             content,
@@ -141,8 +141,8 @@ class Model_Download extends Model_Main {
                                             file,
                                             extension,
                                             date)
-																				VALUES
-																					( :author_id,
+                                        VALUES
+                                          ( :author_id,
                                             :title,
                                             :content,
                                             :category,
@@ -170,15 +170,15 @@ class Model_Download extends Model_Main {
   public function update($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
-																				" . SQL_PREFIX . "downloads
-																			SET
-																				author_id = :author_id,
-																				title = :title,
-																				category = :category,
-																				content = :content,
-																				downloads = :downloads
-																			WHERE
-																				id = :id");
+                                        " . SQL_PREFIX . "downloads
+                                      SET
+                                        author_id = :author_id,
+                                        title = :title,
+                                        category = :category,
+                                        content = :content,
+                                        downloads = :downloads
+                                      WHERE
+                                        id = :id");
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
@@ -195,14 +195,14 @@ class Model_Download extends Model_Main {
     }
   }
 
-	public function destroy($iId) {
+  public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
-																				" . SQL_PREFIX . "downloads
-																			WHERE
-																				id = :id
-																			LIMIT
-																				1");
+                                        " . SQL_PREFIX . "downloads
+                                      WHERE
+                                        id = :id
+                                      LIMIT
+                                        1");
 
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
@@ -225,7 +225,7 @@ class Model_Download extends Model_Main {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $oQuery = $oDb->prepare("	UPDATE
+      $oQuery = $oDb->prepare("  UPDATE
                                   " . SQL_PREFIX . "downloads
                                 SET
                                   downloads = downloads + 1

@@ -42,7 +42,7 @@ final class Cronjob {
                                 " . SQL_PREFIX . "gallery_albums,
                                 " . SQL_PREFIX . "gallery_files,
                                 " . SQL_PREFIX . "migrations,
-																" . SQL_PREFIX . "logs,
+                                " . SQL_PREFIX . "logs,
                                 " . SQL_PREFIX . "newsletters,
                                 " . SQL_PREFIX . "users");
 

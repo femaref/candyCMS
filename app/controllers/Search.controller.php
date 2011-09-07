@@ -11,71 +11,71 @@ require_once 'app/models/Search.model.php';
 
 class Search extends Main {
 
-	/**
-	 * Search headline.
-	 *
-	 * @var string
-	 * @access protected
-	 */
+  /**
+   * Search headline.
+   *
+   * @var string
+   * @access protected
+   */
   protected $_sHeadline;
 
-	/**
-	 * Search string.
-	 *
-	 * @var string
-	 * @access protected
-	 */
+  /**
+   * Search string.
+   *
+   * @var string
+   * @access protected
+   */
   protected $_sSearch;
 
-	/**
-	 * Include the search model.
-	 *
-	 * @access public
-	 * @override app/controllers/Main.controller.php
-	 *
-	 */
+  /**
+   * Include the search model.
+   *
+   * @access public
+   * @override app/controllers/Main.controller.php
+   *
+   */
   public function __init() {
     $this->_oModel = new Model_Search($this->_aRequest, $this->_aSession);
   }
 
-	/**
-	 * Show search results.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Show search results.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function show() {
-		$this->_setError('id', LANG_ERROR_FORM_MISSING_CONTENT);
+    $this->_setError('id', LANG_ERROR_FORM_MISSING_CONTENT);
 
-		if (isset($this->_aError))
-			return $this->showFormTemplate();
+    if (isset($this->_aError))
+      return $this->showFormTemplate();
 
-		else {
-			$this->_oSmarty->assign('_search_', $this->getSearch());
+    else {
+      $this->_oSmarty->assign('_search_', $this->getSearch());
 
-			# Create page title and description
-			$this->_setDescription($this->_sHeadline);
-			$this->_setTitle($this->_sHeadline);
+      # Create page title and description
+      $this->_setDescription($this->_sHeadline);
+      $this->_setTitle($this->_sHeadline);
 
-			# Language
-			$this->_oSmarty->assign('lang_headline', $this->_sHeadline);
+      # Language
+      $this->_oSmarty->assign('lang_headline', $this->_sHeadline);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
-			return $this->_oSmarty->fetch('show.tpl');
-		}
-	}
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
+      return $this->_oSmarty->fetch('show.tpl');
+    }
+  }
 
-	/**
-	 * Get search results.
-	 * This method is also used by the Error controller to display alternative entries.
-	 *
-	 * @access public
-	 * @param string $sTitle Optional string we search for instead of title and content. ($_REQUEST['seo_title])
-	 * @return string HTML content
-	 * @see app/controllers/Error.controller.php
-	 *
-	 */
+  /**
+   * Get search results.
+   * This method is also used by the Error controller to display alternative entries.
+   *
+   * @access public
+   * @param string $sTitle Optional string we search for instead of title and content. ($_REQUEST['seo_title])
+   * @return string HTML content
+   * @see app/controllers/Error.controller.php
+   *
+   */
   public function getSearch($sTitle = '') {
     $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
     $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
@@ -88,13 +88,13 @@ class Search extends Main {
     return $this->_oSmarty->fetch('_show.tpl');
   }
 
-	/**
-	 * Provide form template
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Provide form template
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function showFormTemplate() {
     $this->_setDescription(LANG_GLOBAL_SEARCH);
     $this->_setTitle(LANG_GLOBAL_SEARCH);

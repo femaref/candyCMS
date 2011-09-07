@@ -14,7 +14,7 @@ class Section extends Main {
   private function _getController() {
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists('addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
-			require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
+      require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);

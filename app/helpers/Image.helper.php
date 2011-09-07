@@ -103,15 +103,15 @@ class Image {
     imagecopyresampled($oNewImg, $oOldImg, $iDstX, $iDstY, $iSrcX, $iSrcY, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-			ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
+      ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
 
-		elseif ($this->_sImgType == 'png') {
-			imagealphablending($oNewImg, false);
-			imagesavealpha($oNewImg, true);
-			ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
-		}
-		elseif ($this->_sImgType == 'gif')
-			ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
+    elseif ($this->_sImgType == 'png') {
+      imagealphablending($oNewImg, false);
+      imagesavealpha($oNewImg, true);
+      ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
+    }
+    elseif ($this->_sImgType == 'gif')
+      ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
 
     imagedestroy($oNewImg);
   }
