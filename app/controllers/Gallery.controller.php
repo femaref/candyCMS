@@ -149,9 +149,9 @@ class Gallery extends Main {
    *
    */
   protected function _update() {
-    $sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
-
     $this->_setError('title');
+
+    $sRedirect = '/gallery/' . (int) $this->_aRequest['id'];
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();

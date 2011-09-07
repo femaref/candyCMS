@@ -109,11 +109,12 @@ class Media extends Main {
         }
         else
           $aImgDim = '';
-        $aFiles[] = array('name' => $sFile,
-            'cdate' => Helper::formatTimestamp(filectime($sPath)),
-            'size' => Helper::getFileSize($sPath),
-            'type' => $sFileType,
-            'dim' => $aImgDim
+          $aFiles[] = array(
+              'name'  => $sFile,
+              'cdate' => Helper::formatTimestamp(filectime($sPath)),
+              'size'  => Helper::getFileSize($sPath),
+              'type'  => $sFileType,
+              'dim'   => $aImgDim
         );
       }
 

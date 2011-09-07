@@ -31,19 +31,19 @@ class FacebookCMS extends Facebook {
     return $result;
   }
 
-	public function getConnectButton() {
-		$oSmarty = new Smarty();
+  public function getConnectButton() {
+    $oSmarty = new Smarty();
 
-		$oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
-		$oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
+    $oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
+    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
 
-		$oSmarty->cache_dir = CACHE_DIR;
-		$oSmarty->compile_dir = COMPILE_DIR;
-		$oSmarty->template_dir = 'public/templates/_plugins/facebook';
-		return $oSmarty->fetch('button.tpl');
-	}
+    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->compile_dir = COMPILE_DIR;
+    $oSmarty->template_dir = 'public/templates/_plugins/facebook';
+    return $oSmarty->fetch('button.tpl');
+  }
 
-	public function getUserData($sKey = '') {
+  public function getUserData($sKey = '') {
     if ($this->getAccessToken()) {
       try {
         $iUid = $this->getUser();
@@ -62,22 +62,22 @@ class FacebookCMS extends Facebook {
     }
   }
 
-	public function getUserAvatar($sUids) {
-		try {
-			$aApiCall = array(
-					'method' => 'users.getinfo',
-					'uids' => $sUids,
-					'fields' => 'pic_square_with_logo, profile_url'
-			);
+  public function getUserAvatar($sUids) {
+    try {
+      $aApiCall = array(
+          'method' => 'users.getinfo',
+          'uids' => $sUids,
+          'fields' => 'pic_square_with_logo, profile_url'
+      );
 
-			return $this->api($aApiCall);
-		}
-		catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
-	}
+      return $this->api($aApiCall);
+    }
+    catch (AdvancedException $e) {
+      die($e->getMessage());
+    }
+  }
 
-	public function getUserLocale() {
-		return $this->getUserData('locale');
-	}
+  public function getUserLocale() {
+    return $this->getUserData('locale');
+  }
 }

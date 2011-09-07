@@ -106,14 +106,15 @@ class Comment extends Main {
    * Build form template to create a comment.
    *
    * @access protected
+   * @param boolean $bShowCaptcha force captcha or not
    * @return string HTML content
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
     $iParentId  = isset($this->_aRequest['parent_id']) ? (int) $this->_aRequest['parent_id'] : (int) $this->_iId;
     $sName      = isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '';
-    $sEmail      = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
-    $sContent    = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
+    $sEmail     = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
+    $sContent   = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
 
     $this->_oSmarty->assign('_parent_id_', $iParentId);
     $this->_oSmarty->assign('content', $sContent);
@@ -140,6 +141,7 @@ class Comment extends Main {
    * We must override the main method due to a diffent required user right.
    *
    * @access public
+   * @param string $sInputName sent input name to verify action
    * @return string HTML content
    * @override app/controllers/Main.controller.php
    *
@@ -165,6 +167,7 @@ class Comment extends Main {
    * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
+   * @param
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */

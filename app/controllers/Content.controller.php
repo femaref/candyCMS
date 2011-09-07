@@ -131,10 +131,10 @@ class Content extends Main {
    *
    */
   protected function _update() {
-    $sRedirect = '/content/' . (int) $this->_aRequest['id'];
-
     $this->_setError('title');
     $this->_setError('content');
+
+    $sRedirect = '/content/' . (int) $this->_aRequest['id'];
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();

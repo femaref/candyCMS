@@ -47,7 +47,6 @@ class Mail extends Main {
    */
   protected $_sRecaptchaError = '';
 
-
   /**
    * Create a mail.
    *
@@ -62,11 +61,11 @@ class Mail extends Main {
    */
   public function create() {
     if (isset($this->_aRequest['create_mail'])) {
-      # Disable at AJAX due to a bug in reloading JS code
+      # Disable at AJAX due to problems with reloading JS code
       if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
         return $this->_checkCaptcha();
       else
-        return $this->_standardMail(false);
+        return $this->_create(false);
     }
     else
       return $this->_showCreateMailTemplate(( USER_RIGHT == 0 ) ? true : false);
@@ -143,7 +142,7 @@ class Mail extends Main {
               $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_oRecaptchaResponse->is_valid)
-        return $this->_standardMail(true);
+        return $this->_create(true);
 
       else {
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
@@ -161,10 +160,9 @@ class Mail extends Main {
    * @access protected
    * @param boolean $bShowCaptcha Show the captcha?
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo rename method to create?
    *
    */
-  protected function _standardMail($bShowCaptcha = true) {
+  protected function _create($bShowCaptcha = true) {
     $this->_setError('email');
     $this->_setError('content');
 
@@ -204,6 +202,13 @@ class Mail extends Main {
     }
   }
 
+  /**
+   * Show an extra page after mail is sent. This can be used for tracking.
+   *
+   * @access private
+   * @return string HTML content
+   *
+   */
   private function _showSuccessMessage() {
     $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
 
@@ -214,6 +219,18 @@ class Mail extends Main {
     return $this->_oSmarty->fetch('success.tpl');
   }
 
+  /**
+   * Send a mail.
+   *
+   * @access public
+   * @param string $sTo address to send mail to
+   * @param string $sSubject mail subject
+   * @param string $sMessage mail body
+   * @param string $sReplyTo email address to reply to
+   * @param string $sAttachment file name to attach on email
+   * @return boolean status of sent mail
+   *
+   */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
@@ -235,12 +252,12 @@ class Mail extends Main {
 
     try {
       if (SMTP_ON == true) {
+         # Enables SMTP debug information (for testing purposes)
         if (WEBSITE_DEV == true) {
           $oMail->SMTPDebug = 1;
           $oMail->SMTPAuth = false;
         }
         else {
-          # enables SMTP debug information (for testing)
           $oMail->SMTPDebug = 0;
           $oMail->SMTPAuth = true;
         }
@@ -264,7 +281,7 @@ class Mail extends Main {
       return $oMail->Send();
     }
     catch (phpmailerException $e) {
-      return $e->errorMessage();
+      die($e->errorMessage());
     }
   }
 }

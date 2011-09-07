@@ -73,9 +73,8 @@ class Blog extends Main {
    *
    */
   private function _setBlogDescription() {
-    if (isset($this->_aRequest['action']) &&
-            'search' == $this->_aRequest['action'])
-      return Helper::removeSlahes($this->_aRequest['id']);
+    if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
+      return Helper::removeSlahes($this->_aRequest['id']); # Term that is being searched
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
@@ -118,8 +117,7 @@ class Blog extends Main {
       return Helper::removeSlahes($this->_aRequest['title']);
 
     # Show overview by blog tag
-    elseif (isset($this->_aRequest['action']) &&
-            'search' == $this->_aRequest['action'])
+    elseif (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
       return Helper::removeSlahes($this->_aRequest['id']);
 
     # default blog entry
@@ -144,8 +142,6 @@ class Blog extends Main {
     # Update
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-
-      # Build up title
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
@@ -154,10 +150,10 @@ class Blog extends Main {
     # Create
     else {
       $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $this->_aData['keywords']    = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $this->_aData['keywords']   = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
       $this->_aData['published']  = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
-      $this->_aData['tags']        = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
-      $this->_aData['teaser']      = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $this->_aData['tags']       = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+      $this->_aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);

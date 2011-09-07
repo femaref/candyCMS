@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class is a parent class for most other controllers and provides most language variables.
+ * Parent class for most other controllers and provides most language variables.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>

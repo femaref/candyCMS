@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Parent class for most other models. Handles also DB insertations.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
@@ -9,11 +11,52 @@
 
 abstract class Model_Main {
 
+  /**
+   * Alias for $_REQUEST
+   *
+   * @var array
+   * @access protected
+   */
   protected $_aRequest;
+
+  /**
+   * Alias for $_SESSION
+   *
+   * @var array
+   * @access protected
+   */
   protected $_aSession;
-  protected $_aData;
+
+  /**
+   * Returned data from models.
+   *
+   * @var array
+   * @access private
+   */
+  private $_aData = array();
+
+  /**
+   * ID to process.
+   *
+   * @var integer
+   * @access protected
+   */
   protected $_iId;
+
+  /**
+   * PDO object.
+   *
+   * @var object
+   * @access protected
+   */
   protected $_oDb;
+
+  /**
+   * Page object.
+   *
+   * @var object
+   * @access public
+   */
   public $oPage;
 
   public function __construct($aRequest = '', $aSession = '', $aFile = '') {
@@ -58,6 +101,7 @@ abstract class Model_Main {
    *
    * @access protected
    * @param array $aRow array with data to format
+   * @param string $sSection name of the section we are working in
    * @return array $aData rebuild data
    *
    */
@@ -89,10 +133,10 @@ abstract class Model_Main {
       $aData['avatar_popup'] = Helper::getAvatar('user', 'popup', $aRow['author_id'], $aGravatar);
     }
 
-    # Build user name
+    # Build full user name
     $aData['full_name'] = trim($aData['name'] . ' ' . $aData['surname']);
 
-    # Encoded data for SEO
+    # Encode data for SEO
     $aData['encoded_full_name'] = urlencode($aData['full_name']);
     $aData['encoded_title'] = isset($aRow['title']) ? urlencode($aRow['title']) : '';
 

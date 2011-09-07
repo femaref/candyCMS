@@ -114,7 +114,6 @@ class Index extends Main {
     }
 
     $aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
-
     foreach ($aPlugins as $sPluginName) {
       if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
         require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';

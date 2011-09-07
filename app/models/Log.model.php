@@ -20,7 +20,6 @@ class Model_Log extends Model_Main {
    *
    */
   private function _setData($iLimit) {
-    # Count entries
     try {
       $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
       $iResult = $oQuery->fetchColumn();
@@ -64,7 +63,7 @@ class Model_Log extends Model_Main {
 
       $this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
       $this->_aData[$iId]['time_start'] = Helper::formatTimestamp($aRow['time_start']);
-      $this->_aData[$iId]['time_end '] = Helper::formatTimestamp($aRow['time_end']);
+      $this->_aData[$iId]['time_end ']  = Helper::formatTimestamp($aRow['time_end']);
     }
 
     return $this->_aData;
