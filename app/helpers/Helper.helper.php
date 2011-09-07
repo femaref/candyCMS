@@ -16,19 +16,19 @@ class Helper {
     if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);
 
-		return true;
+    return true;
   }
 
   public static function errorMessage($sMSG, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = LANG_ERROR_GLOBAL;
-    $_SESSION['flash_message']['show']		= '0';
+    $_SESSION['flash_message']['show']    = '0';
 
     if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);
 
-		return false;
+    return false;
   }
 
   public static function redirectTo($sURL) {
@@ -57,11 +57,11 @@ class Helper {
     return $sString;
   }
 
-	public static function createLinkTo($sUrl, $bExternal = false) {
-		if($bExternal == false)
-			return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
-		else
-			return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
+  public static function createLinkTo($sUrl, $bExternal = false) {
+    if($bExternal == false)
+      return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
+    else
+      return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
   public static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
@@ -76,7 +76,7 @@ class Helper {
     else {
       $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
 
-			if (is_file($sFilePath . '.jpg'))
+      if (is_file($sFilePath . '.jpg'))
         return WEBSITE_URL . '/' . $sFilePath . '.jpg';
 
       elseif (is_file($sFilePath . '.png'))

@@ -14,33 +14,33 @@ if(!class_exists('Pages'))
 
 class Model_Blog extends Model_Main {
 
-	/**
-	 * Set blog entry or blog overview data.
-	 *
-	 * @access private
-	 * @param boolean $bUpdate prepare data for update
-	 * @param integer $iLimit blog post limit
-	 * @return array data
-	 *
-	 */
-	private function _setData($bUpdate, $iLimit) {
+  /**
+   * Set blog entry or blog overview data.
+   *
+   * @access private
+   * @param boolean $bUpdate prepare data for update
+   * @param integer $iLimit blog post limit
+   * @return array data
+   *
+   */
+  private function _setData($bUpdate, $iLimit) {
 
     # Show overview
-		if (empty($this->_iId)) {
+    if (empty($this->_iId)) {
 
-			# Show unpublished items to moderators or administrators only
-			$sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
+      # Show unpublished items to moderators or administrators only
+      $sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
-			# Search blog for tags
-			if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
-							isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
+      # Search blog for tags
+      if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
+              isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
 
-				$sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
-				$sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['id']) . "%'";
-			}
+        $sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
+        $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['id']) . "%'";
+      }
 
       # Count entries for pagination
-			try {
+      try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
@@ -48,58 +48,7 @@ class Model_Blog extends Model_Main {
         $this->_oDb->rollBack();
       }
 
-			$this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
-
-			try {
-				$oQuery = $this->_oDb->query("SELECT
-																				b.*,
-																				u.id AS uid,
-																				u.name,
-																				u.surname,
-																				u.email,
-																				u.use_gravatar,
-																				COUNT(c.id) AS comment_sum
-																			FROM
-																				" . SQL_PREFIX . "blogs b
-																			LEFT JOIN
-																				" . SQL_PREFIX . "users u
-																			ON
-																				b.author_id=u.id
-																			LEFT JOIN
-																				" . SQL_PREFIX . "comments c
-																			ON
-																				c.parent_id=b.id
-																				" . $sWhere . "
-																			GROUP BY
-																				b.id
-																			ORDER BY
-																				b.date DESC
-																			LIMIT
-																				" . $this->oPage->getOffset() . ",
-																				" . $this->oPage->getLimit());
-
-				$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
-			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
-
-			foreach ($aResult as $aRow) {
-				$iId = $aRow['id'];
-
-				$this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
-				$this->_aData[$iId]['tags'] = explode(', ', $aRow['tags']);
-				$this->_aData[$iId]['tags_raw'] = $aRow['tags'];
-				$this->_aData[$iId]['date_modified'] = !empty($aRow['date_modified']) ?
-								Helper::formatTimestamp($aRow['date_modified']) :
-								'';
-			}
-		}
-		# Show ID
-		else {
-
-			# Show unpublished items to moderators or administrators only
-			$sWhere = USER_RIGHT < 3 ? "AND published = '1'" : '';
+      $this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
 
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -107,8 +56,59 @@ class Model_Blog extends Model_Main {
                                         u.id AS uid,
                                         u.name,
                                         u.surname,
-																				u.email,
-																				u.use_gravatar,
+                                        u.email,
+                                        u.use_gravatar,
+                                        COUNT(c.id) AS comment_sum
+                                      FROM
+                                        " . SQL_PREFIX . "blogs b
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "users u
+                                      ON
+                                        b.author_id=u.id
+                                      LEFT JOIN
+                                        " . SQL_PREFIX . "comments c
+                                      ON
+                                        c.parent_id=b.id
+                                        " . $sWhere . "
+                                      GROUP BY
+                                        b.id
+                                      ORDER BY
+                                        b.date DESC
+                                      LIMIT
+                                        " . $this->oPage->getOffset() . ",
+                                        " . $this->oPage->getLimit());
+
+        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      }
+      catch (AdvancedException $e) {
+        $this->_oDb->rollBack();
+      }
+
+      foreach ($aResult as $aRow) {
+        $iId = $aRow['id'];
+
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[$iId]['tags'] = explode(', ', $aRow['tags']);
+        $this->_aData[$iId]['tags_raw'] = $aRow['tags'];
+        $this->_aData[$iId]['date_modified'] = !empty($aRow['date_modified']) ?
+                Helper::formatTimestamp($aRow['date_modified']) :
+                '';
+      }
+    }
+    # Show ID
+    else {
+
+      # Show unpublished items to moderators or administrators only
+      $sWhere = USER_RIGHT < 3 ? "AND published = '1'" : '';
+
+      try {
+        $oQuery = $this->_oDb->query("SELECT
+                                        b.*,
+                                        u.id AS uid,
+                                        u.name,
+                                        u.surname,
+                                        u.email,
+                                        u.use_gravatar,
                                         COUNT(c.id) AS comment_sum
                                       FROM
                                         " . SQL_PREFIX . "blogs b
@@ -132,57 +132,57 @@ class Model_Blog extends Model_Main {
       }
 
       # Edit entry
-			if ($bUpdate == true)
-				$this->_aData = $this->_formatForUpdate($aRow);
+      if ($bUpdate == true)
+        $this->_aData = $this->_formatForUpdate($aRow);
 
-			# Blog entry
-			else {
-				$this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
-				$this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
-				$this->_aData[1]['tags_raw'] = $aRow['tags'];
-				$this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?
-								Helper::formatTimestamp($aRow['date_modified']) :
-								'';
-			}
+      # Blog entry
+      else {
+        $this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
+        $this->_aData[1]['tags_raw'] = $aRow['tags'];
+        $this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?
+                Helper::formatTimestamp($aRow['date_modified']) :
+                '';
+      }
     }
 
     return $this->_aData;
-	}
+  }
 
-	/**
-	 * Get blog entry or blog overview data. Depends on avaiable ID.
-	 *
-	 * @access public
-	 * @param integer $iId ID to load data from. If empty, show overview.
-	 * @param boolean $bUpdate prepare data for update
-	 * @param integer $iLimit blog post limit
-	 * @return array data from _setData
-	 *
-	 */
-	public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
+  /**
+   * Get blog entry or blog overview data. Depends on avaiable ID.
+   *
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
+   * @param boolean $bUpdate prepare data for update
+   * @param integer $iLimit blog post limit
+   * @return array data from _setData
+   *
+   */
+  public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
     return $this->_setData($bUpdate, $iLimit);
   }
 
-	/**
-	 * Create a blog entry.
-	 *
-	 * @access public
-	 * @return boolean status of query
-	 * @override app/models/Main.model.php
-	 *
-	 */
-	public function create() {
+  /**
+   * Create a blog entry.
+   *
+   * @access public
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
+  public function create() {
     $this->_aRequest['published'] = isset($this->_aRequest['published']) ?
             (int) $this->_aRequest['published'] :
             0;
 
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "blogs
-																				( author_id,
+                                        " . SQL_PREFIX . "blogs
+                                        ( author_id,
                                           title,
                                           tags,
                                           teaser,
@@ -190,8 +190,8 @@ class Model_Blog extends Model_Main {
                                           content,
                                           date,
                                           published)
-																			VALUES
-																				( :author_id,
+                                      VALUES
+                                        ( :author_id,
                                           :title,
                                           :tags,
                                           :teaser,
@@ -210,24 +210,24 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('published', $this->_aRequest['published']);
 
-			return $oQuery->execute();
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
-	}
+  }
 
-	/**
-	 * Update a blog entry.
-	 *
-	 * @access public
-	 * @param integer $iId ID to update
-	 * @return boolean status of query
-	 * @override app/models/Main.model.php
-	 *
-	 */
-	public function update($iId) {
-		$iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
+  /**
+   * Update a blog entry.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
+  public function update($iId) {
+    $iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
             time() :
             '';
 
@@ -269,25 +269,25 @@ class Model_Blog extends Model_Main {
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
-	}
+  }
 
-	/**
-	 * Delete a blog entry and also delete its comments.
-	 *
-	 * @access public
-	 * @param integer $iId ID to delete
-	 * @return boolean status of query
-	 * @override app/models/Main.model.php
-	 *
-	 */
-	public function destroy($iId) {
+  /**
+   * Delete a blog entry and also delete its comments.
+   *
+   * @access public
+   * @param integer $iId ID to delete
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
+  public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
-																				" . SQL_PREFIX . "blogs
-																			WHERE
-																				id = :id
-																			LIMIT
-																				1");
+                                        " . SQL_PREFIX . "blogs
+                                      WHERE
+                                        id = :id
+                                      LIMIT
+                                        1");
 
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
@@ -298,9 +298,9 @@ class Model_Blog extends Model_Main {
 
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
-																				" . SQL_PREFIX . "comments
-																			WHERE
-																				parent_id = :parent_id");
+                                        " . SQL_PREFIX . "comments
+                                      WHERE
+                                        parent_id = :parent_id");
 
       $oQuery->bindParam('parent_id', $iId);
 
@@ -310,6 +310,6 @@ class Model_Blog extends Model_Main {
       $this->_oDb->rollBack();
     }
 
-		return $bResult;
+    return $bResult;
   }
 }

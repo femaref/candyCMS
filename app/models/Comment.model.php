@@ -11,21 +11,21 @@
 
 class Model_Comment extends Model_Main {
 
-	/**
-	 * Set comment data.
-	 *
-	 * @access private
-	 * @param integer $iId ID of blog post
-	 * @param integer $iEntries number of comments for this blog post
-	 * @param integer $iLimit comment limit
-	 * @return array data
-	 *
-	 */
+  /**
+   * Set comment data.
+   *
+   * @access private
+   * @param integer $iId ID of blog post
+   * @param integer $iEntries number of comments for this blog post
+   * @param integer $iLimit comment limit
+   * @return array data
+   *
+   */
   private function _setData($iId, $iEntries, $iLimit) {
-		$this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
+    $this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
 
-		try {
-			$oQuery = $this->_oDb->prepare("SELECT
+    try {
+      $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
                                         u.name,
                                         u.surname,
@@ -47,47 +47,47 @@ class Model_Comment extends Model_Main {
                                         :offset,
                                         :limit");
 
-			$oQuery->bindParam('parent_id', $iId);
-			$oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
-			$oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
-			$oQuery->execute();
+      $oQuery->bindParam('parent_id', $iId);
+      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->execute();
 
-			$aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-		}
+      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+    }
+    catch (AdvancedException $e) {
+      $oDb->rollBack();
+    }
 
-		# Count the loops to display comment number
-		$iLoop = 1;
-		foreach ($aResult as $aRow) {
-			$iId = $aRow['id'];
+    # Count the loops to display comment number
+    $iLoop = 1;
+    foreach ($aResult as $aRow) {
+      $iId = $aRow['id'];
 
-			$this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
-			$this->_aData[$iId]['loop'] = $iLoop;
+      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
+      $this->_aData[$iId]['loop'] = $iLoop;
 
-			$iLoop++;
-		}
+      $iLoop++;
+    }
 
-		# We crawl the facebook avatars
-		if (class_exists('FacebookCMS'))
-			$this->_getFacebookAvatars($aResult);
+    # We crawl the facebook avatars
+    if (class_exists('FacebookCMS'))
+      $this->_getFacebookAvatars($aResult);
 
-		return $this->_aData;
-	}
+    return $this->_aData;
+  }
 
-	/**
-	 * Get user profile images from Facebook if enabled.
-	 *
-	 * @access private
-	 * @param array $aResult comment data to search image from
-	 *
-	 */
+  /**
+   * Get user profile images from Facebook if enabled.
+   *
+   * @access private
+   * @param array $aResult comment data to search image from
+   *
+   */
   private function _getFacebookAvatars($aResult) {
     $oFacebook = new FacebookCMS(array(
-								'appId' => FACEBOOK_APP_ID,
-								'secret' => FACEBOOK_SECRET,
-						));
+                'appId' => FACEBOOK_APP_ID,
+                'secret' => FACEBOOK_SECRET,
+            ));
 
     # We go through our data and get all facebook posts
     $sFacebookUids = '';
@@ -127,32 +127,32 @@ class Model_Comment extends Model_Main {
     }
   }
 
-	/**
-	 * Get comment data.
-	 *
-	 * @access public
-	 * @param integer $iId blog ID to load data from
-	 * @param integer $iEntries number of comments for this blog ID
-	 * @param integer $iLimit comment limit
-	 * @return array data from _setData
-	 *
-	 */
+  /**
+   * Get comment data.
+   *
+   * @access public
+   * @param integer $iId blog ID to load data from
+   * @param integer $iEntries number of comments for this blog ID
+   * @param integer $iLimit comment limit
+   * @return array data from _setData
+   *
+   */
   public function getData($iId, $iEntries, $iLimit) {
-		return $this->_setData($iId, $iEntries, $iLimit);
-	}
+    return $this->_setData($iId, $iEntries, $iLimit);
+  }
 
-	/**
-	 * Create a comment.
-	 *
-	 * @access public
-	 * @return boolean status of query
-	 * @override app/models/Main.model.php
-	 *
-	 */
+  /**
+   * Create a comment.
+   *
+   * @access public
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
   public function create() {
-    $sAuthorName	= isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
+    $sAuthorName  = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
     $sAuthorEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) : USER_EMAIL;
-    $iFacebookId	= isset($this->_aRequest['facebook_id']) ? Helper::formatInput($this->_aRequest['facebook_id']) : '';
+    $iFacebookId  = isset($this->_aRequest['facebook_id']) ? Helper::formatInput($this->_aRequest['facebook_id']) : '';
 
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
@@ -176,46 +176,46 @@ class Model_Comment extends Model_Main {
                                           :parent_id )");
 
       $iAuthorId = USER_ID;
-			$oQuery->bindParam('author_id', $iAuthorId);
-			$oQuery->bindParam('author_facebook_id', $iFacebookId);
-			$oQuery->bindParam('author_name', $sAuthorName);
-			$oQuery->bindParam('author_email', $sAuthorEmail);
-			$oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
-			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-			$oQuery->bindParam('date', time());
-			$oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
+      $oQuery->bindParam('author_id', $iAuthorId);
+      $oQuery->bindParam('author_facebook_id', $iFacebookId);
+      $oQuery->bindParam('author_name', $sAuthorName);
+      $oQuery->bindParam('author_email', $sAuthorEmail);
+      $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('date', time());
+      $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
 
-			return $oQuery->execute();
-		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
   }
 
 
-	/**
-	 * Delete a comment.
-	 *
-	 * @access public
-	 * @param integer $iId ID to delete
-	 * @return boolean status of query
-	 * @override app/models/Main.model.php
-	 *
-	 */
+  /**
+   * Delete a comment.
+   *
+   * @access public
+   * @param integer $iId ID to delete
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
   public function destroy($iId) {
-		try {
-			$oQuery = $this->_oDb->prepare("DELETE FROM
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
                                         " . SQL_PREFIX . "comments
                                       WHERE
                                         id = :id
                                       LIMIT
                                         1");
 
-			$oQuery->bindParam('id', $iId);
-			return $oQuery->execute();
-		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
-	}
+      $oQuery->bindParam('id', $iId);
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+  }
 }

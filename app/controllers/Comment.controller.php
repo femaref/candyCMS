@@ -16,72 +16,72 @@ require_once 'lib/recaptcha/recaptchalib.php';
 
 class Comment extends Main {
 
-	/**
-	 * The provided blog data.
-	 *
-	 * @var array
-	 * @access private
-	 */
+  /**
+   * The provided blog data.
+   *
+   * @var array
+   * @access private
+   */
   private $_aParentData;
 
-	/**
-	 * ReCaptcha public key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Candy.inc.php
-	 */
-	protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
+  /**
+   * ReCaptcha public key.
+   *
+   * @var string
+   * @access protected
+   * @see config/Candy.inc.php
+   */
+  protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
 
-	/**
-	 * ReCaptcha private key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Candy.inc.php
-	 */
-	protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
+  /**
+   * ReCaptcha private key.
+   *
+   * @var string
+   * @access protected
+   * @see config/Candy.inc.php
+   */
+  protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
 
-	/**
-	 * ReCaptcha object.
-	 *
-	 * @var object
-	 * @access protected
-	 */
-	protected $_oRecaptchaResponse = '';
+  /**
+   * ReCaptcha object.
+   *
+   * @var object
+   * @access protected
+   */
+  protected $_oRecaptchaResponse = '';
 
-	/**
-	 * Provided ReCaptcha error message.
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected $_sRecaptchaError = '';
+  /**
+   * Provided ReCaptcha error message.
+   *
+   * @var string
+   * @access protected
+   */
+  protected $_sRecaptchaError = '';
 
-	/**
-	 * Include the content model.
-	 *
-	 * @access public
-	 * @param array $aParentData optionally provided blog data
-	 * @override app/controllers/Main.controller.php
-	 *
-	 */
+  /**
+   * Include the content model.
+   *
+   * @access public
+   * @param array $aParentData optionally provided blog data
+   * @override app/controllers/Main.controller.php
+   *
+   */
   public function __init($aParentData = '') {
     $this->_aParentData =& $aParentData;
     $this->_oModel = new Model_Comment($this->_aRequest, $this->_aSession);
   }
 
-	/**
-	 * Show comment entries.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Show comment entries.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function show() {
-		if ($this->_iId) {
+    if ($this->_iId) {
       $this->_oSmarty->assign('comments',
-							$this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
+              $this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
       # Set author of blog entry
       $this->_oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
@@ -99,21 +99,21 @@ class Comment extends Main {
 
       $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
       return $this->_oSmarty->fetch('show.tpl') . $this->create('create_comment');
-		}
-	}
+    }
+  }
 
-	/**
-	 * Build form template to create a comment.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Build form template to create a comment.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
   protected function _showFormTemplate($bShowCaptcha) {
-    $iParentId	= isset($this->_aRequest['parent_id']) ? (int) $this->_aRequest['parent_id'] : (int) $this->_iId;
-    $sName			= isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '';
-    $sEmail			= isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
-    $sContent		= isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
+    $iParentId  = isset($this->_aRequest['parent_id']) ? (int) $this->_aRequest['parent_id'] : (int) $this->_iId;
+    $sName      = isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '';
+    $sEmail      = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
+    $sContent    = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
 
     $this->_oSmarty->assign('_parent_id_', $iParentId);
     $this->_oSmarty->assign('content', $sContent);
@@ -121,12 +121,12 @@ class Comment extends Main {
     $this->_oSmarty->assign('name', $sName);
 
     if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
-			$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-		if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError)) {
+      foreach ($this->_aError as $sField => $sMessage)
+        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+    }
 
     # Language
     $this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
@@ -135,16 +135,16 @@ class Comment extends Main {
     return $this->_oSmarty->fetch('_form.tpl');
   }
 
-	/**
-	 * Create entry, check for captcha or show form template if we have enough rights.
-	 * We must override the main method due to a diffent required user right.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 * @override app/controllers/Main.controller.php
-	 *
-	 */
-	public function create($sInputName) {
+  /**
+   * Create entry, check for captcha or show form template if we have enough rights.
+   * We must override the main method due to a diffent required user right.
+   *
+   * @access public
+   * @return string HTML content
+   * @override app/controllers/Main.controller.php
+   *
+   */
+  public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
       if (USER_RIGHT == 0 && RECAPTCHA_ENABLED === true)
         return $this->_checkCaptcha();
@@ -158,49 +158,49 @@ class Comment extends Main {
     }
   }
 
-	/**
-	 * Create a blog entry.
-	 *
-	 * Check if required data is given or throw an error instead.
-	 * If data is given, activate the model, insert them into the database and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
+  /**
+   * Create a blog entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, activate the model, insert them into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
   protected function _create($bShowCaptcha = true) {
-		$this->_setError('parent_id', LANG_ERROR_GLOBAL_WRONG_ID);
-		$this->_setError('content');
+    $this->_setError('parent_id', LANG_ERROR_GLOBAL_WRONG_ID);
+    $this->_setError('content');
 
-		if (USER_ID < 1)
-			$this->_setError('name');
+    if (USER_ID < 1)
+      $this->_setError('name');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate($bShowCaptcha);
+    if (isset($this->_aError))
+      return $this->_showFormTemplate($bShowCaptcha);
 
-		else {
-			$iLastComment = Helper::getLastEntry('comments') + 1;
-			$sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
+    else {
+      $iLastComment = Helper::getLastEntry('comments') + 1;
+      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
-			if ($this->_oModel->create() === true) {
-				Log::insert('comment', 'create', $iLastComment);
-				return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
-			}
+      if ($this->_oModel->create() === true) {
+        Log::insert('comment', 'create', $iLastComment);
+        return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+      }
 
-			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
-		}
-	}
+      else
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+    }
+  }
 
-	/**
-	 * Delete a a comment.
-	 *
-	 * Activate model, delete data from database and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
+  /**
+   * Delete a a comment.
+   *
+   * Activate model, delete data from database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
   protected function _destroy() {
     $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
@@ -212,31 +212,31 @@ class Comment extends Main {
       return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
   }
 
-	/**
-	 * Check if the entered captcha is correct.
-	 *
-	 * @access protected
-	 * @return boolean|string status of create action (boolean),
-	 * status of error message (boolean) or HTML content of form template (string).
-	 *
-	 */
+  /**
+   * Check if the entered captcha is correct.
+   *
+   * @access protected
+   * @return boolean|string status of create action (boolean),
+   * status of error message (boolean) or HTML content of form template (string).
+   *
+   */
   private function _checkCaptcha() {
     if (isset($this->_aRequest['recaptcha_response_field'])) {
-			$this->_oRecaptchaResponse = recaptcha_check_answer(
-											$this->_sRecaptchaPrivateKey,
-											$_SERVER['REMOTE_ADDR'],
-											$this->_aRequest['recaptcha_challenge_field'],
-											$this->_aRequest['recaptcha_response_field']);
+      $this->_oRecaptchaResponse = recaptcha_check_answer(
+                      $this->_sRecaptchaPrivateKey,
+                      $_SERVER['REMOTE_ADDR'],
+                      $this->_aRequest['recaptcha_challenge_field'],
+                      $this->_aRequest['recaptcha_response_field']);
 
-			if ($this->_oRecaptchaResponse->is_valid)
-				return $this->_create(true);
+      if ($this->_oRecaptchaResponse->is_valid)
+        return $this->_create(true);
 
-			else {
-				$this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
-				return $this->_showFormTemplate(true);
-			}
-		}
-		else
-			return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
-	}
+      else {
+        $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
+        return $this->_showFormTemplate(true);
+      }
+    }
+    else
+      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
+  }
 }

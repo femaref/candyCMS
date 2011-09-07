@@ -152,9 +152,9 @@ class Upload {
 
   # Return the current file
   public function getId($bWithExtension = true) {
-		if ($bWithExtension == true)
-			return $this->_iId . '.' . $this->_sFileExtension;
-		else
-			return $this->_iId;
-	}
+    if ($bWithExtension == true)
+      return $this->_iId . '.' . $this->_sFileExtension;
+    else
+      return $this->_iId;
+  }
 }

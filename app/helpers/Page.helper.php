@@ -32,7 +32,7 @@ class Page {
       $this->_iCurrentPage = $this->_iPages;
 
     if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
-			header('Status: 404 Not Found');
+      header('Status: 404 Not Found');
       Helper::redirectTo('/error/404');
     }
 
