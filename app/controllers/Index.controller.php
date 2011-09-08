@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class handles all incoming request and routes them.
+ * Manage configs and route incoming request.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
@@ -92,7 +92,7 @@ class Index extends Main {
     # Optional facebook config. Used for apps and share buttons
     if (file_exists($sPath . 'config/Facebook.inc.php'))
       require_once $sPath . 'config/Facebook.inc.php';
-  }
+	}
 
   /**
   * Load all defined plugins.
@@ -103,7 +103,7 @@ class Index extends Main {
   *
   */
   public function loadPlugins($sPath = '') {
-    try {
+		try {
       if (!file_exists($sPath . 'config/Plugins.inc.php'))
         throw new AdvancedException('Missing plugin config file.');
       else
@@ -113,12 +113,13 @@ class Index extends Main {
       die($e->getMessage());
     }
 
-    $aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
-    foreach ($aPlugins as $sPluginName) {
-      if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
-        require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
-    }
-  }
+		$aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
+
+		foreach ($aPlugins as $sPluginName) {
+			if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+				require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+		}
+	}
 
   /**
   * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
@@ -130,15 +131,15 @@ class Index extends Main {
   * @todo better return
   *
   */
-  public function loadFacebookExtension() {
-    if (class_exists('FacebookCMS')) {
-      return new FacebookCMS(array(
-          'appId' => FACEBOOK_APP_ID,
-          'secret' => FACEBOOK_SECRET,
-          'cookie' => true,
-      ));
-    }
-  }
+	public function loadFacebookExtension() {
+		if (class_exists('FacebookCMS')) {
+			return new FacebookCMS(array(
+					'appId' => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+					'cookie' => true,
+			));
+		}
+	}
 
   /**
   * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
@@ -148,7 +149,7 @@ class Index extends Main {
   *
   */
   public function setTemplate() {
-    # We got a template request? Let's change it!
+		# We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
       setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
       $this->_sTemplate = (string) $this->_aRequest['template'];
@@ -170,20 +171,20 @@ class Index extends Main {
   *
   */
   public function setLanguage($sPath = '') {
-    # We got a language request? Let's change it!
-    if (isset($this->_aRequest['language'])) {
-      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      $this->_sLanguage = (string) $this->_aRequest['language'];
-    }
+		# We got a language request? Let's change it!
+		if (isset($this->_aRequest['language'])) {
+			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+			$this->_sLanguage = (string) $this->_aRequest['language'];
+		}
     # There is no request, but there might be a cookie instead
-    else {
-      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $this->_sLanguage = isset($aRequest['default_language']) ?
-              (string) $aRequest['default_language'] :
-              substr(DEFAULT_LANGUAGE, 0, 2);
-    }
+		else {
+			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+			$this->_sLanguage = isset($aRequest['default_language']) ?
+							(string) $aRequest['default_language'] :
+							substr(DEFAULT_LANGUAGE, 0, 2);
+		}
 
-    # Set iso language codes
+		# Set iso language codes
     switch ($this->_sLanguage) {
       default:
       case 'de':
@@ -207,11 +208,11 @@ class Index extends Main {
         break;
     }
 
-    define('WEBSITE_LANGUAGE',  $this->_sLanguage);
-    define('WEBSITE_LOCALE',    $sLocale);
+		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
+		define('WEBSITE_LOCALE',    $sLocale);
 
     # Include language if possible
-    try {
+		try {
       if (!file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
         throw new AdvancedException('Missing language file.');
       else
@@ -220,7 +221,7 @@ class Index extends Main {
     catch (AdvancedException $e) {
       die($e->getMessage());
     }
-  }
+	}
 
   /**
   * Get the cronjob working. Check for last execution and plan next cleanup, optimization and backup.
@@ -270,13 +271,13 @@ class Index extends Main {
   *
   */
   public function show() {
-    # Redirect to landing page if we got no section
-    if (!isset($this->_aRequest['section'])) {
-      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-      exit();
-    }
+		# Redirect to landing page if we got no section
+		if (!isset($this->_aRequest['section'])) {
+			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+			exit();
+		}
 
-    # Load JS language
+		# Load JS language
     $sLangVars = '';
     $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
 
@@ -284,12 +285,12 @@ class Index extends Main {
       $sLangVars .= fgets($oFile);
     }
 
-    # Header.tpl
-    $oSmarty = $this->_setSmarty();
-    $oSmarty->assign('user', USER_NAME);
+		# Header.tpl
+		$oSmarty = $this->_setSmarty();
+		$oSmarty->assign('user', USER_NAME);
 
-    # Check for new version of script
-    if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+		# Check for new version of script
+		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
@@ -302,49 +303,49 @@ class Index extends Main {
             '';
     $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
 
-    # System variables
-    $oSmarty->assign('_javascript_language_file_', $sLangVars);
-    $oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
+		# System variables
+		$oSmarty->assign('_javascript_language_file_', $sLangVars);
+		$oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
 
-    # Get possible flash messages
-    $aFlashMessages = $this->_getFlashMessage();
+		# Get possible flash messages
+		$aFlashMessages = $this->_getFlashMessage();
 
-    # Replace flash message with content
-    $oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-    $oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-    $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+		# Replace flash message with content
+		$oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+		$oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+		$oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
-    # Global language
-    $oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
-    $oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
+		# Global language
+		$oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
+		$oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
 
-    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
-    if (!isset($this->_aRequest['section']) ||
-            empty($this->_aRequest['section']) ||
-            strtolower($this->_aRequest['section']) == 'blog' ||
-            strtolower($this->_aRequest['section']) == 'comment' ||
-            strtolower($this->_aRequest['section']) == 'content' ||
-            strtolower($this->_aRequest['section']) == 'download' ||
-            strtolower($this->_aRequest['section']) == 'error' ||
-            strtolower($this->_aRequest['section']) == 'gallery' ||
-            strtolower($this->_aRequest['section']) == 'log' ||
-            strtolower($this->_aRequest['section']) == 'mail' ||
-            strtolower($this->_aRequest['section']) == 'media' ||
-            strtolower($this->_aRequest['section']) == 'newsletter' ||
+		# Define out core modules. All of them are separately handled in app/helper/Section.helper.php
+		if (!isset($this->_aRequest['section']) ||
+						empty($this->_aRequest['section']) ||
+						strtolower($this->_aRequest['section']) == 'blog' ||
+						strtolower($this->_aRequest['section']) == 'comment' ||
+						strtolower($this->_aRequest['section']) == 'content' ||
+						strtolower($this->_aRequest['section']) == 'download' ||
+						strtolower($this->_aRequest['section']) == 'error' ||
+						strtolower($this->_aRequest['section']) == 'gallery' ||
+						strtolower($this->_aRequest['section']) == 'log' ||
+						strtolower($this->_aRequest['section']) == 'mail' ||
+						strtolower($this->_aRequest['section']) == 'media' ||
+						strtolower($this->_aRequest['section']) == 'newsletter' ||
             strtolower($this->_aRequest['section']) == 'rss' ||
             strtolower($this->_aRequest['section']) == 'search' ||
-            strtolower($this->_aRequest['section']) == 'session' ||
+						strtolower($this->_aRequest['section']) == 'session' ||
             strtolower($this->_aRequest['section']) == 'sitemap' ||
             strtolower($this->_aRequest['section']) == 'static' ||
-            strtolower($this->_aRequest['section']) == 'user') {
+						strtolower($this->_aRequest['section']) == 'user') {
 
-      $oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oSection->getSection();
-    }
+			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oSection->getSection();
+		}
 
-    # We do not have a standard action, so fetch it from the addon folder.
-    # If addon exists, proceed with override.
-    elseif (ALLOW_ADDONS === true) {
+		# We do not have a standard action, so fetch it from the addon folder.
+		# If addon exists, proceed with override.
+		elseif (ALLOW_ADDONS === true) {
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }
@@ -353,68 +354,68 @@ class Index extends Main {
     elseif (strtolower($this->_aRequest['section']) == 'start')
       Helper::redirectTo('/');
 
-    # There's no request on a core module and Addons are disabled. */
-    else {
-      header('Status: 404 Not Found');
+		# There's no request on a core module and Addons are disabled. */
+		else {
+			header('Status: 404 Not Found');
       Helper::redirectTo('/error/404');
     }
 
-    # Avoid Header and Footer HTML if RSS or AJAX are requested
-    if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
-            (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
-      $sCachedHTML = $oSection->getContent();
+		# Avoid Header and Footer HTML if RSS or AJAX are requested
+		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
+						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
+			$sCachedHTML = $oSection->getContent();
 
-    else {
-      $oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-      $oSmarty->assign('meta_description', $oSection->getDescription());
-      $oSmarty->assign('meta_keywords', $oSection->getKeywords());
-      $oSmarty->assign('meta_og_description', $oSection->getDescription());
-      $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
-      $oSmarty->assign('meta_og_title', $oSection->getTitle());
-      $oSmarty->assign('meta_og_url', CURRENT_URL);
+		else {
+			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oSmarty->assign('meta_description', $oSection->getDescription());
+			$oSmarty->assign('meta_keywords', $oSection->getKeywords());
+			$oSmarty->assign('meta_og_description', $oSection->getDescription());
+			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+			$oSmarty->assign('meta_og_title', $oSection->getTitle());
+			$oSmarty->assign('meta_og_url', CURRENT_URL);
 
       # We must recreate the request id because it's yet only set in the Main.controller.php
       $oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
-      $oSmarty->assign('_content_', $oSection->getContent());
-      $oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
+			$oSmarty->assign('_content_', $oSection->getContent());
+			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
-      $oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
-      $sCachedHTML = $oSmarty->fetch('application.tpl');
-    }
+			$oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
+			$sCachedHTML = $oSmarty->fetch('application.tpl');
+		}
 
-    # Build absolute Path because of pretty URLs
-    $sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
+		# Build absolute Path because of pretty URLs
+		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE, $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
-    # Check for user custom css
-    $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
-    if (!empty($this->_sTemplate))
-      $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
+		# Check for user custom css
+		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
+		if (!empty($this->_sTemplate))
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
 
-    elseif (PATH_TEMPLATE !== '')
-      $sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
+		elseif (PATH_TEMPLATE !== '')
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
 
-    $sCachedHTML = & $sCachedCss;
+		$sCachedHTML = & $sCachedCss;
 
-    # Check for user custom icons etc.
-    $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
-    if (!empty($this->_sTemplate))
-      $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
+		# Check for user custom icons etc.
+		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
+		if (!empty($this->_sTemplate))
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
 
-    elseif (PATH_TEMPLATE !== '')
-      $sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
+		elseif (PATH_TEMPLATE !== '')
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
 
-    $sCachedHTML = & $sCachedImages;
+		$sCachedHTML = & $sCachedImages;
 
-    # Cut spaces to minimize filesize
-    $sCachedHTML = str_replace('  ', '', $sCachedHTML); # Normal tab
-    $sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
+		# Cut spaces to minimize filesize
+		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
+		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
 
-    # Compress Data
-    if (extension_loaded('zlib'))
-      @ob_start('ob_gzhandler');
+		# Compress Data
+		if (extension_loaded('zlib'))
+			@ob_start('ob_gzhandler');
 
-    return $sCachedHTML;
-  }
+		return $sCachedHTML;
+	}
 }

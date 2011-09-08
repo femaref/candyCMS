@@ -1,20 +1,42 @@
 <?php
 
-/*
+/**
+ * Website entry.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @version 2.0
  * @since 1.0
  */
 
+/**
+ * Set how to handle PHP error messages.
+ */
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+/**
+ * Override separator due to W3C compatibility.
+ */
 ini_set('arg_separator.output', '&amp;');
+
+/**
+ * Compress output.
+ */
 ini_set('zlib.output_compression_level', 9);
+
+/**
+ * Set standard timezone for PHP5.
+ */
 date_default_timezone_set('Europe/Berlin');
 
+/**
+ * Current version we are working with.
+ */
 define('VERSION', '20110714');
 
+/*
+ * Load main classes.
+ */
 try {
   if (!file_exists('app/models/Main.model.php') ||
       !file_exists('app/controllers/Main.controller.php') ||
@@ -43,6 +65,9 @@ catch (AdvancedException $e) {
   die($e->getMessage());
 }
 
+/*
+ * Start user session.
+ */
 @session_start();
 
 # Initialize software
@@ -54,8 +79,17 @@ $oIndex->setTemplate();
 $oIndex->setLanguage();
 $oIndex->loadCronjob();
 
+/**
+ * If we are on a productive enviroment, make sure that we can't override the system.
+ */
 if (is_dir('install') && WEBSITE_DEV == false)
-  die('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+  exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+
+/**
+ * Display error messages when in development mode.
+ */
+if(WEBSITE_DEV == true)
+  ini_set('display_errors', 1);
 
 # Set active user
 $aUser = Model_Session::getSessionData();
@@ -70,16 +104,16 @@ if (USER_ID == 0) {
     $aFacebookData = $oFacebook->getUserData();
 }
 
-
-# List of user rights
-#--------------------------------------------------
-# 0 = Guests / Unregistered Users
-# 1 = Members
-# 2 = Facebook users
-# 3 = Moderators
-# 4 = Administrators
-#--------------------------------------------------
-
+/**
+ * Define user constants for global use.
+ *
+ * List of user rights:
+ * 0 = Guests / unregistered users
+ * 1 = Members
+ * 2 = Facebook users
+ * 3 = Moderators
+ * 4 = Administrators
+ */
 define('USER_RIGHT', isset($aFacebookData[0]['uid']) ?
                 2 :
                 (int) $aUser['user_right']);

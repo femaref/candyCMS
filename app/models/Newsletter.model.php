@@ -7,111 +7,90 @@
 
 class Model_Newsletter extends Model_Main {
 
-  # TODO: Why static
-  public static function handleNewsletter($sEmail) {
+  public function handleNewsletter($sEmail) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                PDO::ATTR_PERSISTENT => true));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("  SELECT
-                                  email
-                                FROM
-                                  " . SQL_PREFIX . "newsletters
-                                WHERE
-                                  email = :email
-                                LIMIT
-                                  1");
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        email
+                                      FROM
+                                        " . SQL_PREFIX . "newsletters
+                                      WHERE
+                                        email = :email
+                                      LIMIT
+                                        1");
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
-
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
-    if (isset($aResult) && !empty($aResult['email'])) {
-      try {
-        $oQuery = $oDb->prepare("  DELETE FROM
-                                    " . SQL_PREFIX . "newsletters
-                                  WHERE
-                                    email = :email");
+    if (isset($aResult) && !empty($aResult['email']))
+      return ($this->_destroyFromNewsletter($sEmail) == true) ? 'DESTROY' : false;
 
-        $oQuery->bindParam('email', $sEmail);
-        $bResult = $oQuery->execute();
-        $oDb = null;
+    else
+      return ($this->_createIntoNewsletter($sEmail) == true) ? 'INSERT' : false;
+  }
 
-        if ($bResult === true)
-          # UGLY: Needed for status message
-          return 'DESTROY';
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+  private function _createIntoNewsletter($sEmail) {
+    try {
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+                                        " . SQL_PREFIX . "newsletters (email)
+                                      VALUES
+                                        ( :email )");
+
+      $oQuery->bindParam('email', $sEmail);
+      return $oQuery->execute();
     }
-    else {
-      try {
-        $oQuery = $oDb->prepare("  INSERT INTO
-                                    " . SQL_PREFIX . "newsletters (email)
-                                  VALUES
-                                    ( :email )");
-
-        $oQuery->bindParam('email', $sEmail);
-        $bResult = $oQuery->execute();
-        $oDb = null;
-
-        if ($bResult == true)
-          # UGLY: Needed for status message
-          return 'INSERT';
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
     }
   }
 
-  # TODO: Why static?
-  public static function getNewsletterRecipients($sMySqlTable = 'newsletter') {
+  private function _destroyFromNewsletter($sEmail) {
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+                                        " . SQL_PREFIX . "newsletters
+                                      WHERE
+                                        email = :email");
+
+      $oQuery->bindParam('email', $sEmail);
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+  }
+
+  public function getNewsletterRecipients($sMySqlTable = 'newsletter') {
     if ($sMySqlTable == 'newsletter') {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $oQuery = $oDb->query("  SELECT
-                                  email
-                                FROM
-                                  " . SQL_PREFIX . "newsletters");
+        $oQuery = $this->_oDb->query("SELECT
+                                        email
+                                      FROM
+                                        " . SQL_PREFIX . "newsletters");
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $oDb = null;
-        return $aResult;
+        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
     }
     elseif ($sMySqlTable == 'user') {
       try {
-        $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-        $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $oQuery = $oDb->query("  SELECT
-                                  name, email
-                                FROM
-                                  " . SQL_PREFIX . "users
-                                WHERE
-                                  receive_newsletter = '1'");
+        $oQuery = $this->_oDb->query("SELECT
+                                        name, email
+                                      FROM
+                                        " . SQL_PREFIX . "users
+                                      WHERE
+                                        receive_newsletter = '1'");
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $oDb = null;
-        return $aResult;
+        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        $this->_oDb->rollBack();
       }
     }
-    # TODO: Kick off return?
-    else
-      return false;
   }
 }

@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Handle all mail stuff.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
@@ -13,74 +15,75 @@ require_once 'lib/recaptcha/recaptchalib.php';
 
 class Mail extends Main {
 
-  /**
-   * ReCaptcha public key.
-   *
-   * @var string
-   * @access protected
-   * @see config/Candy.inc.php
-   */
-  protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
+	/**
+	 * ReCaptcha public key.
+	 *
+	 * @var string
+	 * @access protected
+	 * @see config/Candy.inc.php
+	 */
+	protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
 
-  /**
-   * ReCaptcha private key.
-   *
-   * @var string
-   * @access protected
-   * @see config/Candy.inc.php
-   */
-  protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
+	/**
+	 * ReCaptcha private key.
+	 *
+	 * @var string
+	 * @access protected
+	 * @see config/Candy.inc.php
+	 */
+	protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
 
-  /**
-   * ReCaptcha object.
-   *
-   * @var object
-   * @access protected
-   */
-  protected $_oRecaptchaResponse = '';
+	/**
+	 * ReCaptcha object.
+	 *
+	 * @var object
+	 * @access protected
+	 */
+	protected $_oRecaptchaResponse = '';
 
-  /**
-   * Provided ReCaptcha error message.
-   *
-   * @var string
-   * @access protected
-   */
-  protected $_sRecaptchaError = '';
+	/**
+	 * Provided ReCaptcha error message.
+	 *
+	 * @var string
+	 * @access protected
+	 */
+	protected $_sRecaptchaError = '';
 
-  /**
-   * Create a mail.
-   *
-   * Create entry or show form template if we have enough rights. Due to spam bots we provide
-   * a captcha and need to override the original method.
-   * We must override the main method due to a diffent required user right and a captcha.
-   *
-   * @access public
-   * @return string HTML content
-   * @override app/controllers/Main.controller.php
-   *
-   */
+
+	/**
+	 * Create a mail.
+	 *
+	 * Create entry or show form template if we have enough rights. Due to spam bots we provide
+	 * a captcha and need to override the original method.
+	 * We must override the main method due to a diffent required user right and a captcha.
+	 *
+	 * @access public
+	 * @return string HTML content
+	 * @override app/controllers/Main.controller.php
+	 *
+	 */
   public function create() {
-    if (isset($this->_aRequest['create_mail'])) {
-      # Disable at AJAX due to problems with reloading JS code
-      if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
-        return $this->_checkCaptcha();
-      else
-        return $this->_create(false);
-    }
-    else
-      return $this->_showCreateMailTemplate(( USER_RIGHT == 0 ) ? true : false);
-  }
+		if (isset($this->_aRequest['create_mail'])) {
+			# Disable at AJAX due to a bug in reloading JS code
+			if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
+				return $this->_checkCaptcha();
+			else
+				return $this->_standardMail(false);
+		}
+		else
+			return $this->_showCreateMailTemplate(( USER_RIGHT == 0 ) ? true : false);
+	}
 
-  /**
-   * Create a mail template.
-   *
-   * Show the create mail form and check data for correct information.
-   *
-   * @access protected
-   * @param boolean $bShowCaptcha show captcha or not.
-   * @return string HTML content
-   *
-   */
+	/**
+	 * Create a mail template.
+	 *
+	 * Show the create mail form and check data for correct information.
+	 *
+	 * @access protected
+	 * @param boolean $bShowCaptcha show captcha or not.
+	 * @return string HTML content
+	 *
+	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
@@ -101,17 +104,17 @@ class Mail extends Main {
             '';
 
     $this->_oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
-    $this->_oSmarty->assign('content', $sContent);
-    $this->_oSmarty->assign('email', $sEmail);
-    $this->_oSmarty->assign('subject', $sSubject);
+		$this->_oSmarty->assign('content', $sContent);
+		$this->_oSmarty->assign('email', $sEmail);
+		$this->_oSmarty->assign('subject', $sSubject);
 
-    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
-      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
+			$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
-    }
+		if (!empty($this->_aError)) {
+			foreach ($this->_aError as $sField => $sMessage)
+				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+		}
 
     # Create page title and description
     $this->_setDescription(LANG_GLOBAL_CONTACT);
@@ -120,19 +123,19 @@ class Mail extends Main {
     # Language
     $this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
-    $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
+		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
     $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
     return $this->_oSmarty->fetch('create.tpl');
   }
 
-  /**
-   * Check if the entered captcha is correct.
-   *
-   * @access protected
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   *
-   */
+	/**
+	 * Check if the entered captcha is correct.
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
   protected function _checkCaptcha() {
     if( isset($this->_aRequest['recaptcha_response_field']) ) {
       $this->_oRecaptchaResponse = recaptcha_check_answer (
@@ -142,7 +145,7 @@ class Mail extends Main {
               $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_oRecaptchaResponse->is_valid)
-        return $this->_create(true);
+        return $this->_standardMail(true);
 
       else {
         $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
@@ -153,32 +156,33 @@ class Mail extends Main {
       return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
   }
 
-  /**
-   * Check if required data is given or throw an error instead.
-   * If data is correct, send mail.
-   *
-   * @access protected
-   * @param boolean $bShowCaptcha Show the captcha?
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   *
-   */
-  protected function _create($bShowCaptcha = true) {
-    $this->_setError('email');
-    $this->_setError('content');
+	/**
+	 * Check if required data is given or throw an error instead.
+	 * If data is correct, send mail.
+	 *
+	 * @access protected
+	 * @param boolean $bShowCaptcha Show the captcha?
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @todo rename method to create?
+	 *
+	 */
+  protected function _standardMail($bShowCaptcha = true) {
+		$this->_setError('email');
+		$this->_setError('content');
 
-    if (isset($this->_aError))
-      return $this->_showCreateMailTemplate($bShowCaptcha);
+		if (isset($this->_aError))
+			return $this->_showCreateMailTemplate($bShowCaptcha);
 
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
       $aRow = Model_User::getUserNamesAndEmail($this->_iId);
 
-      # When mail is set, send to mail. Otherwise send to system mail
-      $sMailTo  = isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
+			# When mail is set, send to mail. Otherwise send to system mail
+      $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
 
-      # Reply to mail
-      $sReplyTo = Helper::formatInput($this->_aRequest['email']);
+			# Reply to mail
+			$sReplyTo = Helper::formatInput($this->_aRequest['email']);
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
@@ -195,20 +199,13 @@ class Mail extends Main {
 
       if ($bStatus == true) {
         Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
-        return $this->_showSuccessMessage();
+				return $this->_showSuccessMessage();
       }
-      else
-        Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+			else
+				Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 
-  /**
-   * Show an extra page after mail is sent. This can be used for tracking.
-   *
-   * @access private
-   * @return string HTML content
-   *
-   */
   private function _showSuccessMessage() {
     $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
 
@@ -219,29 +216,17 @@ class Mail extends Main {
     return $this->_oSmarty->fetch('success.tpl');
   }
 
-  /**
-   * Send a mail.
-   *
-   * @access public
-   * @param string $sTo address to send mail to
-   * @param string $sSubject mail subject
-   * @param string $sMessage mail body
-   * @param string $sReplyTo email address to reply to
-   * @param string $sAttachment file name to attach on email
-   * @return boolean status of sent mail
-   *
-   */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
-    # Parse message and replace with (footer) variables
-    $sMessage = str_replace('%NOREPLY', LANG_MAIL_GLOBAL_NO_REPLY, $sMessage);
-    $sMessage = str_replace('%SIGNATURE', LANG_MAIL_GLOBAL_SIGNATURE, $sMessage);
-    $sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
-    $sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
+		# Parse message and replace with (footer) variables
+		$sMessage = str_replace('%NOREPLY', LANG_MAIL_GLOBAL_NO_REPLY, $sMessage);
+		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_GLOBAL_SIGNATURE, $sMessage);
+		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
+		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 
-    $sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
-    $sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
+		$sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
+		$sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
 
     $oMail = new PHPMailer(true);
 
@@ -252,12 +237,12 @@ class Mail extends Main {
 
     try {
       if (SMTP_ON == true) {
-         # Enables SMTP debug information (for testing purposes)
         if (WEBSITE_DEV == true) {
           $oMail->SMTPDebug = 1;
           $oMail->SMTPAuth = false;
         }
         else {
+          # enables SMTP debug information (for testing)
           $oMail->SMTPDebug = 0;
           $oMail->SMTPAuth = true;
         }
@@ -281,7 +266,7 @@ class Mail extends Main {
       return $oMail->Send();
     }
     catch (phpmailerException $e) {
-      die($e->errorMessage());
+      return $e->errorMessage();
     }
   }
 }

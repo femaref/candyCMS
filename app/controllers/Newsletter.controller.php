@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Send newsletter to receipients or users.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
@@ -45,7 +47,7 @@ class Newsletter extends Main {
 
     else {
       # Query the model and get back the status code of the action
-      $sQuery = Model_Newsletter::handleNewsletter(Helper::formatInput($this->_aRequest['email']));
+      $sQuery = $this->_oModel->handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
       if ($sQuery == 'DESTROY')
         return Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
@@ -139,12 +141,14 @@ class Newsletter extends Main {
     $this->_setError('subject');
     $this->_setError('content');
 
+    $aResult = array();
+
     if (isset($this->_aError))
       return $this->_showCreateNewsletterTemplate();
 
     else {
       # Deliver newsletter to users
-      $aResult = Model_Newsletter::getNewsletterRecipients('user');
+      $aResult = $this->_oModel->getNewsletterRecipients('user');
 
       foreach ($aResult as $aRow) {
         $sReceiversName = $aRow['name'];
@@ -159,7 +163,7 @@ class Newsletter extends Main {
       }
 
       # Deliver Newsletter to newsletter-subscripers
-      $aResult = Model_Newsletter::getNewsletterRecipients('newsletter');
+      $aResult = $this->_oModel->getNewsletterRecipients('newsletter');
 
       foreach ($aResult as $aRow) {
         $sReceiversName = LANG_NEWSLETTER_SHOW_DEFAULT_NAME;
