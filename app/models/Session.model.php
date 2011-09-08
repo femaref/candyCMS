@@ -5,14 +5,16 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Model_Session extends Model_Main {
+namespace CandyCMS\Model;
+
+class Session extends \CandyCMS\Model\Main {
 
   # Get userdata; static function and direct return due to uncritical action
   public static function getSessionData() {
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "users WHERE session = :session_id AND ip = :ip LIMIT 1");
 
       $oQuery->bindParam('session_id', session_id());
@@ -22,20 +24,20 @@ class Model_Session extends Model_Main {
       if ($bReturn === false)
         $this->destroy();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
 
       return $aResult;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
 
   public static function setActiveSession($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("  UPDATE
                                   " . SQL_PREFIX . "users
@@ -55,7 +57,7 @@ class Model_Session extends Model_Main {
       $oDb = null;
       return $bResult;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -74,14 +76,14 @@ class Model_Session extends Model_Main {
                                       LIMIT
                                         1");
 
-      $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
+      $sPassword = md5(RANDOM_HASH . \CandyCMS\Helper\Helper::formatInput($this->_aRequest['password']));
+      $oQuery->bindParam('email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('password', $sPassword);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -91,7 +93,7 @@ class Model_Session extends Model_Main {
 
     # User did verify his and has id, so log in!
     elseif (isset($aResult['id']) && !empty($aResult['id']))
-      return Model_Session::setActiveSession($aResult['id']);
+      return \CandyCMS\Model\Session::setActiveSession($aResult['id']);
 
     else
       return false;
@@ -104,12 +106,12 @@ class Model_Session extends Model_Main {
     if ($this->_aRequest['action'] == 'resendpassword') {
       try {
         $oQuery = $this->_oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $oQuery->bindParam(':email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
-        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $this->_aData = $oQuery->fetch(\PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -121,11 +123,11 @@ class Model_Session extends Model_Main {
         try {
           $oQuery = $this->_oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
           $oQuery->bindParam(':password', $sNewPasswordSecure);
-          $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+          $oQuery->bindParam(':email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
 
           return $oQuery->execute();
         }
-        catch (AdvancedException $e) {
+        catch (\CandyCMS\Helper\AdvancedException $e) {
           $this->_oDb->rollBack();
         }
       }
@@ -133,17 +135,17 @@ class Model_Session extends Model_Main {
     elseif ($this->_aRequest['action'] == 'resendverification') {
       try {
         $oQuery = $this->_oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $oQuery->bindParam(':email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
         $bResult = $oQuery->execute();
 
-        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $this->_aData = $oQuery->fetch(\PDO::FETCH_ASSOC);
 
         if (empty($this->_aData['verification_code']) || $bResult == false)
           return false;
         else
           return $bResult;
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -164,11 +166,11 @@ class Model_Session extends Model_Main {
 
       $sNull = 'NULL';
       $iSessionId = session_id();
-      $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
+      $oQuery->bindParam('session_null', $sNull, \PDO::PARAM_NULL);
       $oQuery->bindParam('session_id', $iSessionId);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }

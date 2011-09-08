@@ -5,25 +5,27 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Model_Search extends Model_Main {
+namespace CandyCMS\Model;
+
+class Search extends \CandyCMS\Model\Main {
 
   private function _setData($sSearch, $aTables) {
 
     foreach ($aTables as $sTable) {
       try {
-        $this->oQuery = $this->_oDb->query(" SELECT
-                                  id, title, date
-                                FROM
-                                  " . SQL_PREFIX . $sTable."
-                                WHERE
-                                  title LIKE '%"  .$sSearch.  "%'
-                                OR
-                                  content LIKE '%"  .$sSearch.  "%'
-                                ORDER BY
-                                  date
-                                DESC");
+        $this->oQuery = $this->_oDb->query("SELECT
+                                              id, title, date
+                                            FROM
+                                              " . SQL_PREFIX . $sTable."
+                                            WHERE
+                                              title LIKE '%"  .$sSearch.  "%'
+                                            OR
+                                              content LIKE '%"  .$sSearch.  "%'
+                                            ORDER BY
+                                              date
+                                            DESC");
 
-        $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $this->oQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         # Build table names and order them
         if ($sTable == 'gallery_albums') {
@@ -42,13 +44,13 @@ class Model_Search extends Model_Main {
           $iId = $aRow['id'];
           $this->_aData[$sTable][$iId] = array(
               'id'      => $aRow['id'],
-              'title'   => Helper::formatOutput($aRow['title']),
-              'date'    => Helper::formatTimestamp($aRow['date'], true),
-              'datetime'=> Helper::formatTimestamp($aRow['date'])
+              'title'   => \CandyCMS\Helper\Helper::formatOutput($aRow['title']),
+              'date'    => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
+              'datetime'=> \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'])
           );
         }
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $oDb->rollBack();
       }
     }

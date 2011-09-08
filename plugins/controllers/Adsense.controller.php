@@ -10,14 +10,16 @@
 # You can include your plugin via "{$_plugin_adsense_}".
 # This does only work at the main template ("app/views/layouts/application.tpl").
 
+namespace CandyCMS\Plugin;
+
 class Adsense {
 
   public function show() {
-    $oSmarty = new Smarty();
+    $oSmarty = new \Smarty();
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
 
-    $oSmarty->template_dir = Helper::getPluginTemplateDir('adsense', 'show');
+    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getPluginTemplateDir('adsense', 'show');
     return $oSmarty->fetch('show.tpl');
   }
 }

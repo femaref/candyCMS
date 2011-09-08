@@ -5,7 +5,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Model_Gallery extends Model_Main {
+namespace CandyCMS\Model;
+
+class Gallery extends \CandyCMS\Model\Main {
   private $_aThumbs;
   private $_sFilePath;
 
@@ -21,12 +23,12 @@ class Model_Gallery extends Model_Main {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
 
-    $this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
+    $this->oPage = new \CandyCMS\Helper\Page($this->_aRequest, (int) $iResult, $iLimit);
 
     try {
       $oQuery = $this->_oDb->query("SELECT
@@ -54,9 +56,9 @@ class Model_Gallery extends Model_Main {
                                       " . $this->oPage->getOffset() . ",
                                       " . $this->oPage->getLimit());
 
-      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -65,28 +67,28 @@ class Model_Gallery extends Model_Main {
 
       # Fix fetchAll with array 0
       $this->_aData = array(
-          'title'       => Helper::removeSlahes($aRow[0]['title']),
-          'content'     => Helper::removeSlahes($aRow[0]['content'], true));
+          'title'       => \CandyCMS\Helper\Helper::removeSlahes($aRow[0]['title']),
+          'content'     => \CandyCMS\Helper\Helper::removeSlahes($aRow[0]['content'], true));
     }
     else {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
         # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
+        $sName      = \CandyCMS\Helper\Helper::formatOutput($aRow['name']);
+        $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
+        $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($aRow['title']));
         $sUrl = WEBSITE_URL . '/gallery/' . $iId;
 
         $this->_aData[$iId] = array(
             'id'          => $aRow['id'],
             'author_id'   => $aRow['author_id'],
-            'title'       => Helper::formatOutput($aRow['title']),
-            'content'     => Helper::formatOutput($aRow['content']),
-            'date'        => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'    => Helper::formatTimestamp($aRow['date']),
+            'title'       => \CandyCMS\Helper\Helper::formatOutput($aRow['title']),
+            'content'     => \CandyCMS\Helper\Helper::formatOutput($aRow['content']),
+            'date'        => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
+            'datetime'    => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']),
             'date_raw'    => $aRow['date'],
             'date_rss'    => date('D, d M Y H:i:s O', $aRow['date']),
             'date_w3c'    => date('Y-m-d\TH:i:sP', $aRow['date']),
@@ -145,9 +147,9 @@ class Model_Gallery extends Model_Main {
       $oQuery->bindParam('album_id', $iId);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -156,8 +158,8 @@ class Model_Gallery extends Model_Main {
       $iId = $aRow['id'];
 
       # Set SEO friendly user names
-      $sName      = Helper::formatOutput($aRow['name']);
-      $sSurname   = Helper::formatOutput($aRow['surname']);
+      $sName      = \CandyCMS\Helper\Helper::formatOutput($aRow['name']);
+      $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aRow['surname']);
       $sFullName  = $sName . ' ' . $sSurname;
 
       $sUrlAlbum     = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
@@ -170,9 +172,9 @@ class Model_Gallery extends Model_Main {
           'id'            => $aRow['id'],
           'album_id'      => $aRow['album_id'],
           'file'          => $aRow['file'],
-          'content'       => Helper::formatOutput($aRow['content']),
-          'date'          => Helper::formatTimestamp($aRow['date'], true),
-          'datetime'      => Helper::formatTimestamp($aRow['date']),
+          'content'       => \CandyCMS\Helper\Helper::formatOutput($aRow['content']),
+          'date'          => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
+          'datetime'      => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']),
           'date_raw'      => $aRow['date'],
           'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
           'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
@@ -216,16 +218,16 @@ class Model_Gallery extends Model_Main {
 
   public static function getAlbumName($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -235,21 +237,21 @@ class Model_Gallery extends Model_Main {
             '';
 
     if ($bReturn === true)
-      return Helper::formatOutput($aResult['title'], $sHighlight);
+      return \CandyCMS\Helper\Helper::formatOutput($aResult['title'], $sHighlight);
   }
 
   public static function getAlbumContent($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -259,26 +261,26 @@ class Model_Gallery extends Model_Main {
             '';
 
     if ($bReturn === true)
-      return Helper::formatOutput($aResult['content'], $sHighlight);
+      return \CandyCMS\Helper\Helper::formatOutput($aResult['content'], $sHighlight);
   }
 
   public static function getFileContent($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
     if ($bReturn === true)
-      return Helper::formatOutput($aResult['content']);
+      return \CandyCMS\Helper\Helper::formatOutput($aResult['content']);
   }
 
   public function create() {
@@ -297,14 +299,14 @@ class Model_Gallery extends Model_Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
       $this->_iId = $this->_oDb->lastInsertId();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -345,12 +347,12 @@ class Model_Gallery extends Model_Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -363,9 +365,9 @@ class Model_Gallery extends Model_Main {
 
       $oQuery->bindParam('album_id', $iId);
       $bReturn = $oQuery->execute();
-      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -393,7 +395,7 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -408,14 +410,14 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('album_id', $iId);
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
   }
 
   public function createFile($aFile) {
-    $oUploadFile = new Upload($this->_aRequest, $aFile);
+    $oUploadFile = new \CandyCMS\Helper\Upload($this->_aRequest, $aFile);
 
     if($oUploadFile->uploadGalleryFile() == true) {
       try {
@@ -430,12 +432,12 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('author_id', $iUserId);
         $oQuery->bindParam('file', $oUploadFile->getId());
         $oQuery->bindParam('extension', $oUploadFile->getExtension());
-        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+        $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
         $oQuery->bindParam('date', time());
 
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -454,12 +456,12 @@ class Model_Gallery extends Model_Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('id', $iId);
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -470,9 +472,9 @@ class Model_Gallery extends Model_Main {
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
 
-      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -496,7 +498,7 @@ class Model_Gallery extends Model_Main {
         $oQuery->bindParam('id', $iId);
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }

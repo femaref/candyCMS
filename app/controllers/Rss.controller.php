@@ -9,6 +9,8 @@
  * @since 1.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Gallery.model.php';
 require_once 'app/helpers/Page.helper.php';
@@ -40,7 +42,7 @@ class Rss extends Main {
   public function show() {
     # Blog
     if ($this->_sSection == 'blog') {
-      $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+      $this->_oModel = new \CandyCMS\Model\Blog($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData();
       $this->_setTitle(LANG_GLOBAL_BLOG . ' - ' . WEBSITE_NAME);
 
@@ -48,16 +50,16 @@ class Rss extends Main {
     }
     # Gallery
     elseif ($this->_sSection == 'gallery' && $this->_iId > 0) {
-      $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
+      $this->_oModel = new \CandyCMS\Model\Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
 
-      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' .
+      $this->_setTitle(\CandyCMS\Helper\Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' .
                       $this->_aData[$this->_iId]['title']));
 
       return $this->_showGallery();
     }
     else
-      return Helper::redirectTo('/error/404');
+      return \CandyCMS\Helper\Helper::redirectTo('/error/404');
   }
 
   /**
@@ -72,7 +74,7 @@ class Rss extends Main {
     $this->_oSmarty->assign('_section_', $this->_sSection);
     $this->_oSmarty->assign('_title_', $this->getTitle());
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'default');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('rss', 'default');
     return $this->_oSmarty->fetch('default.tpl');
   }
 
@@ -97,7 +99,7 @@ class Rss extends Main {
 
     $this->_oSmarty->assign('data', $aData);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'gallery');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('rss', 'gallery');
     return $this->_oSmarty->fetch('gallery.tpl');
   }
 }

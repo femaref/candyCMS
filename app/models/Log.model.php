@@ -9,7 +9,9 @@
  * @since 2.0
  */
 
-class Model_Log extends Model_Main {
+namespace CandyCMS\Model;
+
+class Log extends \CandyCMS\Model\Main {
 
   /**
    * Set log overview data.
@@ -24,11 +26,11 @@ class Model_Log extends Model_Main {
       $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
       $iResult = $oQuery->fetchColumn();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
-    $this->oPage = new Page($this->_aRequest, $iResult, $iLimit);
+    $this->oPage = new \CandyCMS\Helper\Page($this->_aRequest, $iResult, $iLimit);
 
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -48,13 +50,13 @@ class Model_Log extends Model_Main {
                                         :offset,
                                         :limit");
 
-      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
-      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->bindParam('limit', $this->oPage->getLimit(), \PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPage->getOffset(), \PDO::PARAM_INT);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -62,8 +64,8 @@ class Model_Log extends Model_Main {
       $iId = $aRow['id'];
 
       $this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
-      $this->_aData[$iId]['time_start'] = Helper::formatTimestamp($aRow['time_start']);
-      $this->_aData[$iId]['time_end ']  = Helper::formatTimestamp($aRow['time_end']);
+      $this->_aData[$iId]['time_start'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['time_start']);
+      $this->_aData[$iId]['time_end ']  = \CandyCMS\Helper\Helper::formatTimestamp($aRow['time_end']);
     }
 
     return $this->_aData;
@@ -100,8 +102,8 @@ class Model_Log extends Model_Main {
     $iTimeEnd   = empty($iTimeEnd) ? time() : $iTimeEnd;
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare(" INSERT INTO
                                   " . SQL_PREFIX . "logs
@@ -131,7 +133,7 @@ class Model_Log extends Model_Main {
 
       return $bResult;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -157,7 +159,7 @@ class Model_Log extends Model_Main {
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }

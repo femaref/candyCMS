@@ -9,6 +9,8 @@
  * @since 2.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Log.model.php';
 require_once 'app/helpers/Page.helper.php';
 
@@ -22,7 +24,7 @@ class Log extends Main {
    *
    */
   public function __init() {
-    $this->_oModel = new Model_Log($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Log($this->_aRequest, $this->_aSession);
   }
 
   /**
@@ -34,7 +36,7 @@ class Log extends Main {
    */
   public function show() {
     if (USER_RIGHT < 4)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       $this->_oSmarty->assign('logs', $this->_oModel->getData());
@@ -46,7 +48,7 @@ class Log extends Main {
       $this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('logs', 'show');
+      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('logs', 'show');
       return $this->_oSmarty->fetch('show.tpl');
     }
   }
@@ -66,7 +68,7 @@ class Log extends Main {
    *
    */
   public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
-    return Model_Log::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+    return \CandyCMS\Model\Log::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
 
   /**
@@ -79,7 +81,7 @@ class Log extends Main {
    *
    */
   public function destroy() {
-    return (USER_RIGHT < 4) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+    return (USER_RIGHT < 4) ? \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
   }
 
   /**
@@ -91,12 +93,12 @@ class Log extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/log');
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/log');
     }
     else {
       unset($this->_iId);
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/log');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/log');
     }
   }
 }

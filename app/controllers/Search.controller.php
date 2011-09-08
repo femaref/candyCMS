@@ -9,6 +9,8 @@
  * @since 1.5
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Search.model.php';
 
 class Search extends Main {
@@ -37,7 +39,7 @@ class Search extends Main {
 	 *
 	 */
   public function __init() {
-    $this->_oModel = new Model_Search($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Search($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -63,7 +65,7 @@ class Search extends Main {
 			# Language
 			$this->_oSmarty->assign('lang_headline', $this->_sHeadline);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
+			$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', 'show');
 			return $this->_oSmarty->fetch('show.tpl');
 		}
 	}
@@ -80,13 +82,13 @@ class Search extends Main {
 	 */
   public function getSearch($sTitle = '') {
     $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
-    $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
+    $this->_sSearch = empty($sTitle) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['id']) : \CandyCMS\Helper\Helper::formatInput($sTitle);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 
     $this->_oSmarty->assign('search', $this->_sSearch);
     $this->_oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', '_show');
     return $this->_oSmarty->fetch('_show.tpl');
   }
 
@@ -103,7 +105,7 @@ class Search extends Main {
 
     $this->_oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', '_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 }

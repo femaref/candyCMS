@@ -9,6 +9,8 @@
  * @since 1.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Session.model.php';
 
 class Session extends Main {
@@ -21,7 +23,7 @@ class Session extends Main {
 	 *
 	 */
   public function __init() {
-    $this->_oModel = new Model_Session($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Session($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -55,10 +57,10 @@ class Session extends Main {
 			return $this->showCreateSessionTemplate();
 
 		elseif ($this->_oModel->create() === true)
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
+			return \CandyCMS\Helper\Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
+			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
 	}
 
 	/**
@@ -80,7 +82,7 @@ class Session extends Main {
 		$this->_oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
 		$this->_oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sessions', 'create');
+		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sessions', 'create');
 		return $this->_oSmarty->fetch('create.tpl');
 	}
 
@@ -109,7 +111,7 @@ class Session extends Main {
 
 		else {
 			if ($this->_aRequest['action'] == 'resendpassword') {
-				$sNewPasswordClean	= Helper::createRandomChar(10);
+				$sNewPasswordClean	= \CandyCMS\Helper\Helper::createRandomChar(10);
 				$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
 				if ($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
@@ -118,41 +120,41 @@ class Session extends Main {
 					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_PASSWORD_BODY);
 					$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+					$bStatus = Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
 																LANG_MAIL_SESSION_PASSWORD_SUBJECT,
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
 					return ($bStatus === true) ?
-									Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create') :
-									Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+									\CandyCMS\Helper\Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create') :
+									\CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
 				}
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
+					return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
 			}
 			elseif ($this->_aRequest['action'] == 'resendverification') {
 				if ($this->_oModel->createResendActions() === true) {
 					$aData = $this->_oModel->getData();
 
-					$sVerificationUrl = Helper::createLinkTo('/user/' . $aData['verification_code'] . '/verification');
+					$sVerificationUrl = \CandyCMS\Helper\Helper::createLinkTo('/user/' . $aData['verification_code'] . '/verification');
 
 					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
 					$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
-					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+					$bStatus = Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
 																LANG_MAIL_SESSION_VERIFICATION_SUBJECT,
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
 					return ($bStatus === true) ?
-									Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create') :
+									\CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create') :
 									$this->showCreateSessionTemplate();
 				}
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
+					return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
 			}
 			else
-				return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
+				return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
 		}
 	}
 
@@ -188,7 +190,7 @@ class Session extends Main {
 				$this->_oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sessions', 'resend');
     return $this->_oSmarty->fetch('resend.tpl');
   }
 
@@ -202,7 +204,7 @@ class Session extends Main {
 	 */
   public function destroy() {
     if (USER_RIGHT == 2) {
-      $oFacebook = new FacebookCMS(array(
+      $oFacebook = new \CandyCMS\Plugin\FacebookCMS(array(
                   'appId' => FACEBOOK_APP_ID,
                   'secret' => FACEBOOK_SECRET,
                   'cookie' => true,
@@ -210,13 +212,13 @@ class Session extends Main {
 
 			# Redirect user to start page. Success message is not be displayed.
       Header('Location:' . $oFacebook->getLogoutUrl());
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
     }
     elseif ($this->_oModel->destroy() === true) {
       unset($_SESSION);
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
   }
 }

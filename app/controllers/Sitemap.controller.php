@@ -9,6 +9,8 @@
  * @since 2.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
 require_once 'app/models/Gallery.model.php';
@@ -31,7 +33,7 @@ class Sitemap extends Main {
 
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
+		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sitemaps', 'xml');
 		return $this->_oSmarty->fetch('xml.tpl');
 	}
 
@@ -45,7 +47,7 @@ class Sitemap extends Main {
 	public function show() {
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
+		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sitemaps', 'show');
 		return $this->_oSmarty->fetch('show.tpl');
 	}
 
@@ -56,13 +58,13 @@ class Sitemap extends Main {
 	 *
 	 */
 	private function _getSitemap() {
-		$oBlog = new Model_Blog();
+		$oBlog = new \CandyCMS\Model\Blog();
 		$aBlog = $oBlog->getData('', false, 1000);
 
-		$oContent = new Model_Content();
+		$oContent = new \CandyCMS\Model\Content();
 		$aContent = $oContent->getData('', false, 1000);
 
-		$oGallery = new Model_Gallery();
+		$oGallery = new \CandyCMS\Model\Gallery();
 		$aGallery = $oGallery->getData('', false, false, 1000);
 
 		$this->_oSmarty->assign('blog', $aBlog);

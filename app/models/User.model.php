@@ -5,44 +5,46 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Model_User extends Model_Main {
+namespace CandyCMS\Model;
+
+class User extends \CandyCMS\Model\Main {
 
   # Get user name and surname
   public static final function getUserNamesAndEmail($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT name, surname, email FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
 
       $oQuery->bindParam('id', $iId);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
 
       return $aResult;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
 
   public static function getExistingUser($sEmail) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT email FROM " . SQL_PREFIX . "users WHERE email = :email LIMIT 1");
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       $oDb = null;
 
       if (isset($aResult['email']) && !empty($aResult['email']))
         return true;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -63,18 +65,18 @@ class Model_User extends Model_Main {
                                       ORDER BY
                                         id ASC");
 
-        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach ($aResult as $aRow) {
           $iId = $aRow['id'];
           $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
           # Set SEO friendly user names
-          $sName      = Helper::formatOutput($aRow['name']);
-          $sSurname   = Helper::formatOutput($aRow['surname']);
+          $sName      = \CandyCMS\Helper\Helper::formatOutput($aRow['name']);
+          $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aRow['surname']);
           $sFullName  = $sName . ' ' . $sSurname;
 
-          $sEncodedTitle = Helper::formatOutput(urlencode($sFullName));
+          $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($sFullName));
           $sUrl = WEBSITE_URL . '/user/' . $aRow['id'];
 
           $this->_aData[$iId] = array(
@@ -82,20 +84,20 @@ class Model_User extends Model_Main {
               'surname'       => $sSurname,
               'full_name'     => $sFullName,
               'encoded_full_name' => urlencode($sFullName),
-              'last_login'    => Helper::formatTimestamp($aRow['last_login']),
-              'date'          => Helper::formatTimestamp($aRow['date'], true),
-              'datetime'      => Helper::formatTimestamp($aRow['date']),
+              'last_login'    => \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login']),
+              'date'          => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
+              'datetime'      => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']),
               'date_raw'      => $aRow['date'],
               'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
               'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
               'id'            => $aRow['id'],
               'use_gravatar'  => $aRow['use_gravatar'],
-              'avatar_64'     => Helper::getAvatar('user', 64, $aRow['id'], $aGravatar),
+              'avatar_64'     => \CandyCMS\Helper\Helper::getAvatar('user', 64, $aRow['id'], $aGravatar),
               'url'           => $sUrl . '/' . $sEncodedTitle,
               'url_clean'     => $sUrl
           );
         }
-      } catch (AdvancedException $e) {
+      } catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     } else {
@@ -111,20 +113,20 @@ class Model_User extends Model_Main {
         $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
 
-        $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aData = $oQuery->fetch(\PDO::FETCH_ASSOC);
 
-      } catch (AdvancedException $e) {
+      } catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
       $aGravatar = array('use_gravatar' => $aData['use_gravatar'], 'email' => $aData['email']);
 
       # Set SEO friendly user names
-      $sName      = Helper::formatOutput($aData['name']);
-      $sSurname   = Helper::formatOutput($aData['surname']);
+      $sName      = \CandyCMS\Helper\Helper::formatOutput($aData['name']);
+      $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aData['surname']);
       $sFullName  = $sName . ' ' . $sSurname;
 
-      $sEncodedTitle = Helper::formatOutput(urlencode($sFullName));
+      $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($sFullName));
       $sUrl = WEBSITE_URL . '/user/' . $this->_iId;
 
       $this->_aData = array(
@@ -133,20 +135,20 @@ class Model_User extends Model_Main {
           'surname'       => $sSurname,
           'full_name'     => $sFullName,
           'encoded_full_name' => urlencode($sFullName),
-          'last_login'    => Helper::formatTimestamp($aData['last_login']),
-          'date'          => Helper::formatTimestamp($aData['date'], true),
-          'datetime'      => Helper::formatTimestamp($aData['date']),
+          'last_login'    => \CandyCMS\Helper\Helper::formatTimestamp($aData['last_login']),
+          'date'          => \CandyCMS\Helper\Helper::formatTimestamp($aData['date'], true),
+          'datetime'      => \CandyCMS\Helper\Helper::formatTimestamp($aData['date']),
           'date_raw'      => $aData['date'],
           'date_rss'      => date('r', $aData['date']),
           'date_w3c'      => date(DATE_W3C),
-          'content'       => Helper::formatOutput($aData['content']),
-          'email'         => Helper::formatOutput($aData['email']),
+          'content'       => \CandyCMS\Helper\Helper::formatOutput($aData['content']),
+          'email'         => \CandyCMS\Helper\Helper::formatOutput($aData['email']),
           'receive_newsletter' => $aData['receive_newsletter'],
           'user_right'    => $aData['user_right'],
           'use_gravatar'  => $aData['use_gravatar'],
-          'avatar_64'     => Helper::getAvatar('user', 64, $this->_iId, $aGravatar),
-          'avatar_100'    => Helper::getAvatar('user', 100, $this->_iId, $aGravatar),
-          'avatar_popup'  => Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar),
+          'avatar_64'     => \CandyCMS\Helper\Helper::getAvatar('user', 64, $this->_iId, $aGravatar),
+          'avatar_100'    => \CandyCMS\Helper\Helper::getAvatar('user', 100, $this->_iId, $aGravatar),
+          'avatar_popup'  => \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar),
           'url'           => $sUrl . '/' . $sEncodedTitle,
           'url_clean'     => $sUrl
       );
@@ -173,16 +175,16 @@ class Model_User extends Model_Main {
                                       VALUES
                                         ( :name, :surname, :password, :email, :date, :verification_code )");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('name', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
+      $oQuery->bindParam('email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('verification_code', $iVerificationCode);
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -193,10 +195,10 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('id', $iId);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
       return $aResult['password'];
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -237,10 +239,10 @@ class Model_User extends Model_Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('name', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter);
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);
@@ -249,7 +251,7 @@ class Model_User extends Model_Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -274,7 +276,7 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -292,9 +294,9 @@ class Model_User extends Model_Main {
       $oQuery->bindParam('verification_code', $iVerificationCode);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -308,10 +310,10 @@ class Model_User extends Model_Main {
                                           id = :id");
 
         $oQuery->bindParam('id', $aResult['id']);
-        Model_Session::setActiveSession($aResult['id']);
+        \CandyCMS\Model\Session::setActiveSession($aResult['id']);
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }

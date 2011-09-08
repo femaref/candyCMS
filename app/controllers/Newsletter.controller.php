@@ -9,6 +9,8 @@
  * @since 1.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Newsletter.model.php';
 require_once 'app/controllers/Mail.controller.php';
 
@@ -22,7 +24,7 @@ class Newsletter extends Main {
    *
    */
   public function __init() {
-    $this->_oModel = new Model_Newsletter($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Newsletter($this->_aRequest, $this->_aSession);
   }
 
   /**
@@ -47,17 +49,17 @@ class Newsletter extends Main {
 
     else {
       # Query the model and get back the status code of the action
-      $sQuery = $this->_oModel->handleNewsletter(Helper::formatInput($this->_aRequest['email']));
+      $sQuery = $this->_oModel->handleNewsletter(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
 
       if ($sQuery == 'DESTROY')
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
+        return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
 
       elseif ($sQuery == 'INSERT') {
-        Mail::send(Helper::formatInput($this->_aRequest['email']), LANG_MAIL_NEWSLETTER_CREATE_SUBJECT, LANG_MAIL_NEWSLETTER_CREATE_BODY, WEBSITE_MAIL_NOREPLY);
-        return Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
+        Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']), LANG_MAIL_NEWSLETTER_CREATE_SUBJECT, LANG_MAIL_NEWSLETTER_CREATE_BODY, WEBSITE_MAIL_NOREPLY);
+        return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/newsletter');
+        return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/newsletter');
     }
   }
 
@@ -81,7 +83,7 @@ class Newsletter extends Main {
     $this->_setDescription(LANG_NEWSLETTER_HANDLE_INFO);
     $this->_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'newsletter');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('newsletters', 'newsletter');
     return $this->_oSmarty->fetch('newsletter.tpl');
   }
 
@@ -95,7 +97,7 @@ class Newsletter extends Main {
    */
   public function create() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else
       return isset($this->_aRequest['send_newsletter']) ? $this->_newsletterMail() : $this->_showCreateNewsletterTemplate();
@@ -125,7 +127,7 @@ class Newsletter extends Main {
     $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
     $this->_oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'create');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('newsletters', 'create');
     return $this->_oSmarty->fetch('create.tpl');
   }
 
@@ -154,8 +156,8 @@ class Newsletter extends Main {
         $sReceiversName = $aRow['name'];
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject = Helper::formatInput($this->_aRequest['subject']);
-        $sMailContent = Helper::formatInput
+        $sMailSubject = \CandyCMS\Helper\Helper::formatInput($this->_aRequest['subject']);
+        $sMailContent = \CandyCMS\Helper\Helper::formatInput
                         (str_replace('%u', $sReceiversName, $this->_aRequest['content']), false
         );
 
@@ -169,8 +171,8 @@ class Newsletter extends Main {
         $sReceiversName = LANG_NEWSLETTER_SHOW_DEFAULT_NAME;
         $sReceiversMail = $aRow['email'];
 
-        $sMailSubject = Helper::formatInput($this->_aRequest['subject']);
-        $sMailContent = Helper::formatInput
+        $sMailSubject = \CandyCMS\Helper\Helper::formatInput($this->_aRequest['subject']);
+        $sMailContent = \CandyCMS\Helper\Helper::formatInput
                         (str_replace('%u', $sReceiversName, $this->_aRequest['content']), false
         );
 
@@ -178,11 +180,11 @@ class Newsletter extends Main {
       }
 
       if(isset($bStatusNewsletter) || isset($bStatusUser)) {
-        Log::insert($this->_aRequest['section'], $this->_aRequest['action']);
-        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
+        \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action']);
+        return \CandyCMS\Helper\Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+        return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 }

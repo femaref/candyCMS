@@ -5,6 +5,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+namespace CandyCMS\Helper;
+
 class Page {
 
   private $_aRequest;
@@ -33,7 +35,7 @@ class Page {
 
     if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
       header('Status: 404 Not Found');
-      Helper::redirectTo('/error/404');
+      return \CandyCMS\Helper\Helper::redirectTo('/error/404');
     }
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
@@ -52,7 +54,7 @@ class Page {
   }
 
   public function showPages($sUrl) {
-    $oSmarty = new Smarty();
+    $oSmarty = new \Smarty();
     $oSmarty->assign('page_current', $this->_iCurrentPage);
     $oSmarty->assign('page_last', $this->_iPages);
     $oSmarty->assign('_action_url_', $sUrl);
@@ -60,7 +62,7 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'show');
+    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('pages' ,'show');
     return $oSmarty->fetch('show.tpl');
   }
 
@@ -74,7 +76,7 @@ class Page {
     if ($this->_iCurrentPage > 1)
       $iPrevious = $this->_iCurrentPage - 1;
 
-    $oSmarty = new Smarty();
+    $oSmarty = new \Smarty();
     $oSmarty->assign('_action_url_', $sUrl);
     $oSmarty->assign('_page_entries_', $this->_iEntries);
     $oSmarty->assign('_page_limit_', $this->_iLimit);
@@ -89,7 +91,7 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'surrounding');
+    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('pages' ,'surrounding');
     return $oSmarty->fetch('surrounding.tpl');
   }
 }

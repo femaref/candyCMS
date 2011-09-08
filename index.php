@@ -34,6 +34,11 @@ date_default_timezone_set('Europe/Berlin');
  */
 define('VERSION', '20110714');
 
+/**
+ * Display error messages when in development mode.
+ */
+ini_set('display_errors', 1);
+
 /*
  * Load main classes.
  */
@@ -61,7 +66,7 @@ try {
     require_once 'lib/smarty/Smarty.class.php';
   }
 }
-catch (AdvancedException $e) {
+catch (\CandyCMS\Helper\AdvancedException $e) {
   die($e->getMessage());
 }
 
@@ -71,7 +76,7 @@ catch (AdvancedException $e) {
 @session_start();
 
 # Initialize software
-$oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new \CandyCMS\Controller\Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->loadConfig();
 $oIndex->loadPlugins();
@@ -85,14 +90,8 @@ $oIndex->loadCronjob();
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
-/**
- * Display error messages when in development mode.
- */
-if(WEBSITE_DEV == true)
-  ini_set('display_errors', 1);
-
 # Set active user
-$aUser = Model_Session::getSessionData();
+$aUser = \CandyCMS\Model\Session::getSessionData();
 
 define('USER_ID', (int) $aUser['id']);
 define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');

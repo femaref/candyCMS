@@ -113,7 +113,7 @@ switch ($_REQUEST['step']) {
 
         $oQuery = $oDb->query($sData);
       }
-      catch (AdvancedException $e) {
+      catch (\AdvancedException $e) {
         $oDb->rollBack();
       }
     }
@@ -141,7 +141,7 @@ switch ($_REQUEST['step']) {
 
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -156,7 +156,7 @@ switch ($_REQUEST['step']) {
           $oQuery = $oDb->query($sData);
           $oDb = null;
         }
-        catch (AdvancedException $e) {
+        catch (\AdvancedException $e) {
           $oDb->rollBack();
         }
       }

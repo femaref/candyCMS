@@ -31,7 +31,7 @@ while ($sFile = readdir($oDir)) {
 
     $oDb = null;
   }
-  catch (AdvancedException $e) {
+  catch (\AdvancedException $e) {
     $oDb->rollBack();
     $e->getMessage();
   }

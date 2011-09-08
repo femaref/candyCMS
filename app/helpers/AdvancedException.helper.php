@@ -5,12 +5,14 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class AdvancedException extends ErrorException {
+namespace CandyCMS\Helper;
+
+class AdvancedException extends \ErrorException {
 
   public function sendAdminMail() {
     if (!class_exists('Mail'))
       require_once 'app/controllers/Mail.controller.php';
 
-    return Mail::send(WEBSITE_MAIL, 'Exception', $this->getMessage(), false);
+    return \CandyCMS\Controller\Mail::send(WEBSITE_MAIL, 'Exception', $this->getMessage(), false);
   }
 }

@@ -88,7 +88,7 @@ switch ($_REQUEST['action']) {
 
         $oDb = null;
 
-      } catch (AdvancedException $e) {
+      } catch (\AdvancedException $e) {
         $oDb->rollBack();
         $e->getMessage();
       }
@@ -109,7 +109,7 @@ switch ($_REQUEST['action']) {
           $bResult = $oQuery->execute();
           $oDb = null;
         }
-        catch (AdvancedException $e) {
+        catch (\AdvancedException $e) {
           $oDb->rollBack();
         }
       }

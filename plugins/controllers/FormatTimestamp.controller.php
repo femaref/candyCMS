@@ -8,6 +8,8 @@
 # This plugin rewrites the standard date into a nicer "today" / "yesterday"
 # format.
 
+namespace CandyCMS\Plugin;
+
 class FormatTimestamp {
   private final function _setDate($iTime, $bDateOnly) {
     if(date('Ymd', $iTime) == date('Ymd', time())) {

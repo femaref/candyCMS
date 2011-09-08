@@ -9,10 +9,12 @@
  * @since 1.0
  */
 
+namespace CandyCMS\Model;
+
 if(!class_exists('Pages'))
   require_once 'app/helpers/Page.helper.php';
 
-class Model_Blog extends Model_Main {
+class Blog extends \CandyCMS\Model\Main {
 
   /**
    * Set blog entry or blog overview data.
@@ -36,7 +38,7 @@ class Model_Blog extends Model_Main {
               isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
 
         $sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
-        $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['id']) . "%'";
+        $sWhere .= "tags LIKE '%" . \CandyCMS\Helper\Helper::formatInput($this->_aRequest['id']) . "%'";
       }
 
       # Count entries for pagination
@@ -44,11 +46,11 @@ class Model_Blog extends Model_Main {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
-      $this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
+      $this->oPage = new \CandyCMS\Helper\Page($this->_aRequest, (int)$iResult, $iLimit);
 
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -78,9 +80,9 @@ class Model_Blog extends Model_Main {
                                         " . $this->oPage->getOffset() . ",
                                         " . $this->oPage->getLimit());
 
-        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = & $oQuery->fetchAll(\PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -91,7 +93,7 @@ class Model_Blog extends Model_Main {
         $this->_aData[$iId]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[$iId]['tags_raw'] = $aRow['tags'];
         $this->_aData[$iId]['date_modified'] = !empty($aRow['date_modified']) ?
-                Helper::formatTimestamp($aRow['date_modified']) :
+                \CandyCMS\Helper\Helper::formatTimestamp($aRow['date_modified']) :
                 '';
       }
     }
@@ -121,13 +123,13 @@ class Model_Blog extends Model_Main {
                                       ON
                                         c.parent_id=b.id
                                       WHERE
-                                        b.id = '" . Helper::formatInput($this->_iId) . "'
+                                        b.id = '" . \CandyCMS\Helper\Helper::formatInput($this->_iId) . "'
                                       " . $sWhere . "
                                       LIMIT 1");
 
-        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aRow = & $oQuery->fetch(\PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -141,7 +143,7 @@ class Model_Blog extends Model_Main {
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];
         $this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?
-                Helper::formatTimestamp($aRow['date_modified']) :
+                \CandyCMS\Helper\Helper::formatTimestamp($aRow['date_modified']) :
                 '';
       }
     }
@@ -202,17 +204,17 @@ class Model_Blog extends Model_Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('tags', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['tags']));
+      $oQuery->bindParam('teaser', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['teaser'], false));
+      $oQuery->bindParam('keywords', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['keywords']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('published', $this->_aRequest['published']);
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -255,18 +257,18 @@ class Model_Blog extends Model_Main {
                                         id = :id");
 
       $oQuery->bindParam('author_id', $iUpdateAuthor);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('tags', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['tags']));
+      $oQuery->bindParam('teaser', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['teaser'], false));
+      $oQuery->bindParam('keywords', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['keywords']));
+      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date_modified', $iDateModified);
       $oQuery->bindParam('published', $iPublished);
       $oQuery->bindParam('id', $iId);
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -292,7 +294,7 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('id', $iId);
       $bResult = $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -305,7 +307,7 @@ class Model_Blog extends Model_Main {
       $oQuery->bindParam('parent_id', $iId);
       $bResult = $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 

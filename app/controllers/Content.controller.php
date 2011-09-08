@@ -9,6 +9,8 @@
  * @since 1.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Content.model.php';
 
 class Content extends Main {
@@ -21,7 +23,7 @@ class Content extends Main {
    *
    */
   public function __init() {
-    $this->_oModel = new Model_Content($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Content($this->_aRequest, $this->_aSession);
   }
 
   /**
@@ -39,7 +41,7 @@ class Content extends Main {
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
       $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'overview');
+      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('contents', 'overview');
       return $this->_oSmarty->fetch('overview.tpl');
     }
     else {
@@ -47,7 +49,7 @@ class Content extends Main {
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
       $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'show');
+      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('contents', 'show');
       return $this->_oSmarty->fetch('show.tpl');
     }
   }
@@ -69,7 +71,7 @@ class Content extends Main {
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle(\CandyCMS\Helper\Helper::removeSlahes($this->_aData['title']));
     }
     # Create
     else {
@@ -94,7 +96,7 @@ class Content extends Main {
     $this->_oSmarty->assign('lang_create_keywords_info', LANG_CONTENT_INFO_KEYWORDS);
     $this->_oSmarty->assign('lang_create_teaser_info', LANG_CONTENT_INFO_TEASER);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('contents' ,'_form');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('contents' ,'_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 
@@ -116,11 +118,11 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('contents'));
-      return Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('contents'));
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/content');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
   }
 
   /**
@@ -140,11 +142,11 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
   }
 
   /**
@@ -156,10 +158,10 @@ class Content extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/content');
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id']);
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/content');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/content');
   }
 }

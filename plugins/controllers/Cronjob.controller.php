@@ -8,6 +8,9 @@
 # The cronjob keeps your software backuped, fast and clean. Set up the execution
 # intervals in the "config/Candy.inc.php" and lean back.
 # Fix for install script
+
+namespace CandyCMS\Plugin;
+
 if (file_exists('app/controllers/Mail.controller.php'))
   require_once 'app/controllers/Mail.controller.php';
 
@@ -32,8 +35,8 @@ final class Cronjob {
 
   public static final function optimize() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->query(" OPTIMIZE TABLE
                                 " . SQL_PREFIX . "blogs,
@@ -48,7 +51,7 @@ final class Cronjob {
 
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -81,14 +84,14 @@ final class Cronjob {
 
     # Get all tables and name them
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                  \PDO::ATTR_PERSISTENT => true));
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
       $aResult = $oQuery->fetchAll();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -104,10 +107,10 @@ final class Cronjob {
 
       try {
         $oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
-        $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aColumns = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
         $iColumns = count($aColumns);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $oDb->rollBack();
       }
 
@@ -139,10 +142,10 @@ final class Cronjob {
       # Show extras like auto_increment etc
       try {
         $oQuery = $oDb->query("SHOW KEYS FROM " . $sTable);
-        $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aKeys = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
         $iKeys = count($aKeys);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $oDb->rollBack();
       }
 
@@ -184,7 +187,7 @@ final class Cronjob {
 
         $aRow = $oQuery->fetch();
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $oDb->rollBack();
       }
 
@@ -198,10 +201,10 @@ final class Cronjob {
       # Now fetch content
       try {
         $oQuery = $oDb->query("SELECT * FROM " . $sTable);
-        $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aRows = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
         $iRows = count($aRows);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $oDb->rollBack();
       }
 
@@ -245,7 +248,7 @@ final class Cronjob {
 
     # Send the backup via mail
     if (class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
-      Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
+      \CandyCMS\Controller\Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
 
     # Write into backup log
     try {
@@ -259,7 +262,7 @@ final class Cronjob {
       $iActionId = 0;
       $oQuery->bindParam('section_name', $sSectionName);
       $oQuery->bindParam('action_name', $sActionName);
-      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
+      $oQuery->bindParam('action_id', $iActionId, \PDO::PARAM_INT);
       $oQuery->bindParam('time_start', $iBackupStartTime);
       $oQuery->bindParam('time_end', time());
       $oQuery->bindParam('user_id', $iUserId);
@@ -267,7 +270,7 @@ final class Cronjob {
 
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -276,8 +279,8 @@ final class Cronjob {
     $iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->query(" SELECT
                                 time_end
@@ -295,7 +298,7 @@ final class Cronjob {
 
       $oDb = null;
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $oDb->rollBack();
     }
 

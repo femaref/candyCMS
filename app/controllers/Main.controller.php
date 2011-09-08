@@ -9,6 +9,9 @@
  * @since 1.0
  *
  */
+
+namespace CandyCMS\Controller;
+
 abstract class Main {
 
 	/**
@@ -71,9 +74,9 @@ abstract class Main {
 	 * Returned data from models.
 	 *
 	 * @var array
-	 * @access private
+	 * @access protected
 	 */
-	private $_aData = array();
+	protected $_aData = array();
 
 	/**
 	 * Final HTML-Output.
@@ -156,7 +159,7 @@ abstract class Main {
 	 */
 	protected function _setSmarty() {
 		# Initialize smarty
-		$this->_oSmarty = new Smarty();
+		$this->_oSmarty = new \Smarty();
 		$this->_oSmarty->cache_dir = CACHE_DIR;
 		$this->_oSmarty->compile_dir = COMPILE_DIR;
 
@@ -190,25 +193,25 @@ abstract class Main {
 
 		# Include Google Adsense
 		if (class_exists('Adsense')) {
-			$oAdsense = new Adsense();
+			$oAdsense = new \CandyCMS\Plugin\Adsense();
 			$this->_oSmarty->assign('_plugin_adsense_', $oAdsense->show());
 		}
 
 		# Include news archive
 		if (class_exists('Archive')) {
-			$oArchive = new Archive($this->_aRequest, $this->_aSession);
+			$oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_archive_', $oArchive->show());
 		}
 
 		# Include latest headlines
 		if (class_exists('Headlines')) {
-			$oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
+			$oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
 		}
 
 		# Include latest teaser
 		if (class_exists('Teaser')) {
-			$oTeaser = new Teaser($this->_aRequest, $this->_aSession);
+			$oTeaser = new \CandyCMS\Plugin\Teaser($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_teaser_', $oTeaser->show());
 		}
 
@@ -392,7 +395,7 @@ abstract class Main {
 	 *
 	 */
 	protected function _removeHighlight($sTitle) {
-		$sTitle = Helper::removeSlahes($sTitle);
+		$sTitle = \CandyCMS\Helper\Helper::removeSlahes($sTitle);
 		$sTitle = str_replace('<mark>', '', $sTitle);
 		$sTitle = str_replace('</mark>', '', $sTitle);
 		return $sTitle;
@@ -410,7 +413,7 @@ abstract class Main {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
 			$this->_aError[$sField] = empty($sMessage) ? constant('LANG_ERROR_FORM_MISSING_' . strtoupper($sField)) : $sMessage;
 
-		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+		if (isset($this->_aRequest['email']) && ( \CandyCMS\Helper\Helper::checkEmailAddress($this->_aRequest['email']) == false ))
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 	}
 
@@ -427,10 +430,10 @@ abstract class Main {
 	 */
 	public function create($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
 			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
 		}
 	}
@@ -448,10 +451,10 @@ abstract class Main {
 	 */
 	public function update($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
 			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
 		}
 	}
@@ -467,7 +470,7 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRight = 3) {
-		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+		\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+		return (USER_RIGHT < $iUserRight) ? \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
 	}
 }

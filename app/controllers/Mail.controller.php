@@ -9,6 +9,8 @@
  * @since 2.0
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Blog.model.php';
 require_once 'app/controllers/User.controller.php';
 require_once 'lib/recaptcha/recaptchalib.php';
@@ -103,7 +105,7 @@ class Mail extends Main {
             (string)$this->_aRequest['content']:
             '';
 
-    $this->_oSmarty->assign('contact', Model_User::getUserNamesAndEmail($this->_iId));
+    $this->_oSmarty->assign('contact', \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId));
 		$this->_oSmarty->assign('content', $sContent);
 		$this->_oSmarty->assign('email', $sEmail);
 		$this->_oSmarty->assign('subject', $sSubject);
@@ -125,7 +127,7 @@ class Mail extends Main {
     $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('mails', 'create');
     return $this->_oSmarty->fetch('create.tpl');
   }
 
@@ -153,7 +155,7 @@ class Mail extends Main {
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
   }
 
 	/**
@@ -176,33 +178,33 @@ class Mail extends Main {
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
-      $aRow = Model_User::getUserNamesAndEmail($this->_iId);
+      $aRow = \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId);
 
 			# When mail is set, send to mail. Otherwise send to system mail
       $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
 
 			# Reply to mail
-			$sReplyTo = Helper::formatInput($this->_aRequest['email']);
+			$sReplyTo = \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']);
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
               LANG_GLOBAL_SYSTEMBOT;
 
       $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
-              Helper::formatInput($this->_aRequest['subject']) :
+              \CandyCMS\Helper\Helper::formatInput($this->_aRequest['subject']) :
               str_replace('%u', $sSendersName, LANG_MAIL_GLOBAL_SUBJECT_BY);
 
-      $sMessage = Helper::formatInput($this->_aRequest['content']);
+      $sMessage = \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']);
 
       # Mail to, Subject, Message, Reply to
       $bStatus = Mail::send($sMailTo, $sSubject, $sMessage, $sReplyTo);
 
       if ($bStatus == true) {
-        Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
+        \CandyCMS\Controller\Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
 				return $this->_showSuccessMessage();
       }
 			else
-				Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+				\CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
     }
   }
 
@@ -212,7 +214,7 @@ class Mail extends Main {
     $this->_oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
     $this->_oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('mails', 'success');
     return $this->_oSmarty->fetch('success.tpl');
   }
 
@@ -228,7 +230,7 @@ class Mail extends Main {
 		$sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
 		$sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
 
-    $oMail = new PHPMailer(true);
+    $oMail = new \PHPMailer(true);
 
     if (SMTP_ON == true)
       $oMail->IsSMTP();

@@ -7,6 +7,9 @@
 
 # TODO: MERGE METHODS
 
+
+namespace CandyCMS\Helper;
+
 class Image {
   protected $_sOriginalPath;
   protected $_sFolder;

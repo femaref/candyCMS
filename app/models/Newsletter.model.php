@@ -5,7 +5,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-class Model_Newsletter extends Model_Main {
+namespace CandyCMS\Model;
+
+class Newsletter extends \CandyCMS\Model\Main {
 
   public function handleNewsletter($sEmail) {
     try {
@@ -20,9 +22,9 @@ class Model_Newsletter extends Model_Main {
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -43,7 +45,7 @@ class Model_Newsletter extends Model_Main {
       $oQuery->bindParam('email', $sEmail);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -58,7 +60,7 @@ class Model_Newsletter extends Model_Main {
       $oQuery->bindParam('email', $sEmail);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -71,9 +73,9 @@ class Model_Newsletter extends Model_Main {
                                       FROM
                                         " . SQL_PREFIX . "newsletters");
 
-        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        return $oQuery->fetchAll(\PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -86,9 +88,9 @@ class Model_Newsletter extends Model_Main {
                                       WHERE
                                         receive_newsletter = '1'");
 
-        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        return $oQuery->fetchAll(\PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }

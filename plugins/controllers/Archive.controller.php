@@ -6,12 +6,15 @@
  */
 
 # The archive plugin lists all blog entries by month and date.
+
+namespace CandyCMS\Plugin;
+
 require_once 'app/models/Blog.model.php';
 
 final class Archive {
 
   public final function show() {
-    $oModel = new Model_Blog();
+    $oModel = new \CandyCMS\Model\Blog();
     $aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
     foreach ($aData as $aRow) {
@@ -20,13 +23,13 @@ final class Archive {
       $aMonth[$m][$id] = $aRow;
     }
 
-    $oSmarty = new Smarty();
+    $oSmarty = new \Smarty();
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
 
     $oSmarty->assign('data', $aMonth);
 
-    $oSmarty->template_dir = Helper::getPluginTemplateDir('archive', 'show');
+    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getPluginTemplateDir('archive', 'show');
     return $oSmarty->fetch('show.tpl');
   }
 }

@@ -11,6 +11,8 @@
 # A detailed documentation of how to use the tags can be found at
 # http://github.com/marcoraddatz/candyCMS/wiki/BBCode
 
+namespace CandyCMS\Plugin;
+
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
@@ -56,7 +58,7 @@ final class Bbcode {
       else {
 
         if (!file_exists($sTempFilePath)) {
-          $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
+          $oImage = new \CandyCMS\Helper\Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
 

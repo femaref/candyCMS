@@ -9,6 +9,8 @@
 # NOTE: This plugin slows down your page rapidly by sending a request to facebook each load!
 # If you don't need it, keep it disabled.
 
+namespace CandyCMS\Plugin;
+
 require_once 'lib/facebook/facebook.php';
 
 class FacebookCMS extends Facebook {
@@ -20,9 +22,8 @@ class FacebookCMS extends Facebook {
     $params['format'] = 'json-strings';
 
     $result = json_decode($this->_oauthRequest(
-      $this->getApiUrl($params['method']),
-      $params
-    ), true);
+                    $this->getApiUrl($params['method']), $params
+            ), true);
 
     // results are returned, errors are thrown
     if (is_array($result) && isset($result['error_code'])) {
@@ -32,7 +33,7 @@ class FacebookCMS extends Facebook {
   }
 
   public function getConnectButton() {
-    $oSmarty = new Smarty();
+    $oSmarty = new \Smarty();
 
     $oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
@@ -56,7 +57,7 @@ class FacebookCMS extends Facebook {
         $aData = $this->api($aApiCall);
         return !empty($sKey) ? $aData[$sKey] : $aData;
       }
-      catch (AdvancedException $e) {
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         die($e->getMessage());
       }
     }
@@ -72,7 +73,7 @@ class FacebookCMS extends Facebook {
 
       return $this->api($aApiCall);
     }
-    catch (AdvancedException $e) {
+    catch (\CandyCMS\Helper\AdvancedException $e) {
       die($e->getMessage());
     }
   }

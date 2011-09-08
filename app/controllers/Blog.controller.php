@@ -10,6 +10,8 @@
  *
  */
 
+namespace CandyCMS\Controller;
+
 require_once 'app/models/Blog.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'app/controllers/Comment.controller.php';
@@ -30,7 +32,7 @@ class Blog extends Main {
    *
    */
   public function __init() {
-    $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
+    $this->_oModel = new \CandyCMS\Model\Blog($this->_aRequest, $this->_aSession);
   }
 
   /**
@@ -45,7 +47,7 @@ class Blog extends Main {
 
     # Load comments
     if (!empty($this->_iId)) {
-      $oComments = new Comment($this->_aRequest, $this->_aSession);
+      $oComments = new \CandyCMS\Controller\Comment($this->_aRequest, $this->_aSession);
       $oComments->__init($this->_aData);
 
       $this->_oSmarty->assign('_blog_footer_', $oComments->show());
@@ -61,7 +63,7 @@ class Blog extends Main {
 
     $this->_oSmarty->assign('blog', $this->_aData);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', 'show');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('blogs', 'show');
     return $this->_oSmarty->fetch('show.tpl');
   }
 
@@ -74,7 +76,7 @@ class Blog extends Main {
    */
   private function _setBlogDescription() {
     if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
-      return Helper::removeSlahes($this->_aRequest['id']); # Term that is being searched
+      return \CandyCMS\Helper\Helper::removeSlahes($this->_aRequest['id']); # Term that is being searched
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
@@ -114,11 +116,11 @@ class Blog extends Main {
     if (isset($this->_aRequest['action']) &&
             'create' == $this->_aRequest['action'] &&
             'blog' == $this->_aRequest['section'])
-      return Helper::removeSlahes($this->_aRequest['title']);
+      return \CandyCMS\Helper\Helper::removeSlahes($this->_aRequest['title']);
 
     # Show overview by blog tag
     elseif (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
-      return Helper::removeSlahes($this->_aRequest['id']);
+      return \CandyCMS\Helper\Helper::removeSlahes($this->_aRequest['id']);
 
     # default blog entry
     elseif (!empty($this->_iId))
@@ -142,7 +144,7 @@ class Blog extends Main {
     # Update
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle(\CandyCMS\Helper\Helper::removeSlahes($this->_aData['title']));
 
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
@@ -172,7 +174,7 @@ class Blog extends Main {
     $this->_oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
     $this->_oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
+    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('blogs', '_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 
@@ -193,11 +195,11 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
-      return Helper::successMessage(LANG_SUCCESS_CREATE, '/blog');
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('blogs'));
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/blog');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
   }
 
   /**
@@ -216,11 +218,11 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
   }
 
   /**
@@ -234,10 +236,10 @@ class Blog extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/blog');
+      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/blog');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
   }
 }

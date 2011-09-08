@@ -5,10 +5,12 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
+namespace CandyCMS\Addon;
+
 if (!class_exists('Section'))
   require_once 'app/helpers/Section.helper.php';
 
-final class Addon extends Section {
+final class Index extends \CandyCMS\Helper\Section {
 
   public final function getSection() {
 

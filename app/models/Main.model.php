@@ -9,7 +9,9 @@
  * @since 1.5
  */
 
-abstract class Model_Main {
+namespace CandyCMS\Model;
+
+abstract class Main {
 
   /**
    * Alias for $_REQUEST
@@ -31,9 +33,9 @@ abstract class Model_Main {
    * Returned data from models.
    *
    * @var array
-   * @access private
+   * @access protected
    */
-  private $_aData = array();
+  protected $_aData = array();
 
   /**
    * ID to process.
@@ -64,9 +66,9 @@ abstract class Model_Main {
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
 
-    $this->_oDb = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                PDO::ATTR_PERSISTENT => true));
-    $this->_oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $this->_oDb = new \PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+                \PDO::ATTR_PERSISTENT => true));
+    $this->_oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
   }
 
   public function create() {
@@ -91,7 +93,7 @@ abstract class Model_Main {
    */
   protected function _formatForUpdate($aRow) {
     foreach ($aRow as $sColumn => $sData)
-      $aData[$sColumn] = Helper::removeSlahes($sData);
+      $aData[$sColumn] = \CandyCMS\Helper\Helper::removeSlahes($sData);
 
     return $aData;
   }
@@ -107,12 +109,12 @@ abstract class Model_Main {
    */
   protected function _formatForOutput($aRow, $sSection) {
     foreach ($aRow as $sColumn => $sData)
-      $aData[$sColumn] = is_int($sData) ? (int) $sData : Helper::formatOutput($sData);
+      $aData[$sColumn] = is_int($sData) ? (int) $sData : \CandyCMS\Helper\Helper::formatOutput($sData);
 
     # Format data
     if (isset($aRow['date'])) {
-      $aData['date'] = Helper::formatTimestamp($aRow['date'], true);
-      $aData['datetime'] = Helper::formatTimestamp($aRow['date']);
+      $aData['date'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true);
+      $aData['datetime'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']);
       $aData['date_raw'] = (int) $aRow['date'];
       $aData['date_rss'] = date('D, d M Y H:i:s O', $aRow['date']);
       $aData['date_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
@@ -128,9 +130,9 @@ abstract class Model_Main {
       else
         $aGravatar = array('use_gravatar' => false);
 
-      $aData['avatar_64'] = Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar);
-      $aData['avatar_100'] = Helper::getAvatar('user', 100, $aRow['author_id'], $aGravatar);
-      $aData['avatar_popup'] = Helper::getAvatar('user', 'popup', $aRow['author_id'], $aGravatar);
+      $aData['avatar_64'] = \CandyCMS\Helper\Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar);
+      $aData['avatar_100'] = \CandyCMS\Helper\Helper::getAvatar('user', 100, $aRow['author_id'], $aGravatar);
+      $aData['avatar_popup'] = \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $aRow['author_id'], $aGravatar);
     }
 
     # Build full user name
@@ -152,9 +154,9 @@ abstract class Model_Main {
 
     # Highlight text for search results
     if(!empty($sHighlight)) {
-      $aData['title'] = Helper::formatOutput($aData['title'], $sHighlight);
-      $aData['teaser'] = Helper::formatOutput($aData['teaser'], $sHighlight);
-      $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
+      $aData['title'] = \CandyCMS\Helper\Helper::formatOutput($aData['title'], $sHighlight);
+      $aData['teaser'] = \CandyCMS\Helper\Helper::formatOutput($aData['teaser'], $sHighlight);
+      $aData['content'] = \CandyCMS\Helper\Helper::formatOutput($aData['content'], $sHighlight);
     }
 
     return $aData;
