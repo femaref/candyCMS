@@ -16,7 +16,7 @@ require_once 'app/models/Content.model.php';
 require_once 'app/models/Gallery.model.php';
 require_once 'app/models/User.model.php';
 
-class Sitemap extends Main {
+class Sitemap extends \CandyCMS\Controller\Main {
 
 	/**
 	 * Show the sitemap as XML.

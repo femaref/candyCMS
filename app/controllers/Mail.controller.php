@@ -15,7 +15,7 @@ require_once 'app/models/Blog.model.php';
 require_once 'app/controllers/User.controller.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
-class Mail extends Main {
+class Mail extends \CandyCMS\Controller\Main {
 
 	/**
 	 * ReCaptcha public key.

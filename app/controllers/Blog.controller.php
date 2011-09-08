@@ -16,7 +16,7 @@ require_once 'app/models/Blog.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'app/controllers/Comment.controller.php';
 
-class Blog extends Main {
+class Blog extends \CandyCMS\Controller\Main {
 
   /**
    * @var object

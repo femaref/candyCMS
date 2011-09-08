@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
-class Media extends Main {
+class Media extends \CandyCMS\Controller\Main {
 
   /**
    * Upload media file.

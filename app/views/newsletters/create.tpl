@@ -1,4 +1,4 @@
-<form method='post' action='/newsletter/create'>
+<form method='post'>
   <h1>{$lang_headline}</h1>
   <p {if isset($error_subject)}class="error" title="{$error_subject}"{/if}>
     <label for='input-subject'>{$lang_subject} <span title="{$lang_required}">*</span></label>
@@ -10,7 +10,7 @@
     <div class='description'>{$lang_content_info}</div>
   </p>
   <p class="center">
-    <input type='hidden' value='formdata' name='send_newsletter' />
+    <input type='hidden' value='formdata' name='create_newsletter' />
     <input type='submit' value='{$lang_submit}' />
   </p>
 </form>

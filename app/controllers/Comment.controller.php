@@ -16,7 +16,7 @@ require_once 'app/models/Comment.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
-class Comment extends Main {
+class Comment extends \CandyCMS\Controller\Main {
 
   /**
    * The provided blog data.

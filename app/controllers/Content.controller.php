@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 require_once 'app/models/Content.model.php';
 
-class Content extends Main {
+class Content extends \CandyCMS\Controller\Main {
 
   /**
    * Include the content model.

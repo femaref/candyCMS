@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 require_once 'app/models/Search.model.php';
 
-class Search extends Main {
+class Search extends \CandyCMS\Controller\Main {
 
 	/**
 	 * Search headline.

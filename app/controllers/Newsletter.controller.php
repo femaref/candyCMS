@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 require_once 'app/models/Newsletter.model.php';
 require_once 'app/controllers/Mail.controller.php';
 
-class Newsletter extends Main {
+class Newsletter extends \CandyCMS\Controller\Main {
 
   /**
    * Include the newsletter model.
@@ -100,7 +100,7 @@ class Newsletter extends Main {
       return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else
-      return isset($this->_aRequest['send_newsletter']) ? $this->_newsletterMail() : $this->_showCreateNewsletterTemplate();
+      return isset($this->_aRequest['create_newsletter']) ? $this->_create() : $this->_showCreateNewsletterTemplate();
   }
 
   /**
@@ -139,7 +139,7 @@ class Newsletter extends Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  private function _newsletterMail() {
+  private function _create() {
     $this->_setError('subject');
     $this->_setError('content');
 
@@ -161,7 +161,7 @@ class Newsletter extends Main {
                         (str_replace('%u', $sReceiversName, $this->_aRequest['content']), false
         );
 
-        $bStatusUser = Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
+        $bStatusUser = \CandyCMS\Controller\Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
       }
 
       # Deliver Newsletter to newsletter-subscripers
@@ -176,7 +176,7 @@ class Newsletter extends Main {
                         (str_replace('%u', $sReceiversName, $this->_aRequest['content']), false
         );
 
-        $bStatusNewsletter = Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
+        $bStatusNewsletter = \CandyCMS\Controller\Mail::send($sReceiversMail, $sMailSubject, $sMailContent);
       }
 
       if(isset($bStatusNewsletter) || isset($bStatusUser)) {

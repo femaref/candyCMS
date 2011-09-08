@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 
 require_once 'app/models/Download.model.php';
 
-class Download extends Main {
+class Download extends \CandyCMS\Controller\Main {
 
   /**
    * Include the download model.

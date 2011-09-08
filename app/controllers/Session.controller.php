@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 require_once 'app/models/Session.model.php';
 
-class Session extends Main {
+class Session extends \CandyCMS\Controller\Main {
 
 	/**
 	 * Include the session model.

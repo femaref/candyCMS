@@ -15,7 +15,7 @@ require_once 'app/models/Blog.model.php';
 require_once 'app/models/Gallery.model.php';
 require_once 'app/helpers/Page.helper.php';
 
-class Rss extends Main {
+class Rss extends \CandyCMS\Controller\Main {
 
   /**
    * Define the content type as RSS.

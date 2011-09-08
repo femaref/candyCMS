@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 require_once 'app/controllers/Search.controller.php';
 
-class Error extends Main {
+class Error extends \CandyCMS\Controller\Main {
 
   /**
    * Show a 404 error when a page is not avaiable or found.

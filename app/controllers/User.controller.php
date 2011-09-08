@@ -17,7 +17,7 @@ require_once 'app/models/User.model.php';
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
-class User extends Main {
+class User extends \CandyCMS\Controller\Main {
 
 	/**
 	 * Include the user model.
@@ -302,6 +302,7 @@ class User extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo Better success message.
 	 *
 	 */
 	protected function _create() {
@@ -333,10 +334,12 @@ class User extends Main {
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
 			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('users'));
-			return Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
+			\CandyCMS\Controller\Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
 																								LANG_MAIL_USER_CREATE_SUBJECT,
 																								$sMailMessage,
 																								WEBSITE_MAIL_NOREPLY);
+
+      return \CandyCMS\Helper\Helper::successMessage(LANG_MAIL_GLOBAL_SENT_TITLE, '/');
 		}
 		else
 			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');

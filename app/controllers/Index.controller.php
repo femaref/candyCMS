@@ -11,7 +11,7 @@
 
 namespace CandyCMS\Controller;
 
-class Index extends Main {
+class Index extends \CandyCMS\Controller\Main {
 
   /**
   * @var array

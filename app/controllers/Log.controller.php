@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 require_once 'app/models/Log.model.php';
 require_once 'app/helpers/Page.helper.php';
 
-class Log extends Main {
+class Log extends \CandyCMS\Controller\Main {
 
   /**
    * Include the log model.

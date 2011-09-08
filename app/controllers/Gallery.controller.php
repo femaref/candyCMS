@@ -16,7 +16,7 @@ require_once 'app/helpers/Page.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
-class Gallery extends Main {
+class Gallery extends \CandyCMS\Controller\Main {
 
   /**
    * Include the gallery model.
