@@ -26,8 +26,6 @@ class Blog extends \CandyCMS\Model\Main {
    *
    */
   private function _setData($bUpdate, $iLimit) {
-
-    # Show overview
     if (empty($this->_iId)) {
 
       # Show unpublished items to moderators or administrators only
@@ -97,7 +95,6 @@ class Blog extends \CandyCMS\Model\Main {
                 '';
       }
     }
-    # Show ID
     else {
 
       # Show unpublished items to moderators or administrators only
@@ -133,11 +130,9 @@ class Blog extends \CandyCMS\Model\Main {
         $this->_oDb->rollBack();
       }
 
-      # Edit entry
       if ($bUpdate == true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
-      # Blog entry
       else {
         $this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);

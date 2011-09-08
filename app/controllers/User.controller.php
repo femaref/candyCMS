@@ -127,7 +127,7 @@ class User extends Main {
 		$iId = ($this->_iId !== USER_ID && USER_RIGHT == 4) ? $this->_iId : USER_ID;
 
 		# Fetch data from database
-		$this->_aData = $this->_oModel->getData($iId);
+		$this->_aData = $this->_oModel->getData($iId, false, true);
 
 		# Override if we want to use request
 		if ($bUseRequest == true) {
@@ -211,6 +211,11 @@ class User extends Main {
 			$this->_iId = (int) $iUserId;
 
 		$this->_aData = $this->_oModel->getData($iUserId);
+    $this->_oSmarty->assign('user', $this->_aData);
+
+    # Language
+    $this->_oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
+    $this->_oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 
 		if (empty($this->_iId)) {
 			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
@@ -220,8 +225,6 @@ class User extends Main {
 				return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 			else {
-				$this->_oSmarty->assign('user', $this->_aData);
-
 				# Language
 				$this->_oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
 				$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
@@ -231,17 +234,13 @@ class User extends Main {
 			}
 		}
 		else {
-			$this->_oSmarty->assign('u', $this->_aData);
-
 			# Manage title and description (content)
-			$this->_setTitle($this->_aData['full_name']);
-			$this->_setDescription($this->_aData['full_name']);
+			$this->_setTitle($this->_aData[1]['full_name']);
+			$this->_setDescription($this->_aData[1]['full_name']);
 
 			# Language
-			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
-			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
-      $this->_oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
-      $this->_oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
+			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
+			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
 
 			$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('users', 'show');
 			return $this->_oSmarty->fetch('show.tpl');

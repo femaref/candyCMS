@@ -1,22 +1,18 @@
-{if $USER_RIGHT == 4}
-  <p>
-    <a href='/user/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-      {$lang_create}
-    </a>
-  </p>
-{/if}
 <section id="user">
+  {if $USER_RIGHT == 4}
+    <p class="center">
+      <a href='/user/create'>
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
+        {$lang_create}
+      </a>
+    </p>
+  {/if}
+  <h1>{$lang_headline}</h1>
   <table>
-    <tr>
-      <th colspan='5'>
-        <h1>{$lang_headline}</h1>
-      </th>
-    </tr>
     {foreach $user as $u}
       <tr>
         <td style='width:5%'>
-          <img src='{$u.avatar_64}' width="18" height="18" alt='' />
+          <img src='{$u.avatar_32}' width="18" height="18" alt='' />
         </td>
         <td style='width:35%' class="left">
           <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>

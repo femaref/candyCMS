@@ -123,7 +123,7 @@ class Log extends \CandyCMS\Model\Main {
 
       $oQuery->bindParam('section_name', strtolower($sSectionName));
       $oQuery->bindParam('action_name', strtolower($sActionName));
-      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
+      $oQuery->bindParam('action_id', $iActionId, \PDO::PARAM_INT);
       $oQuery->bindParam('time_start', $iTimeStart);
       $oQuery->bindParam('time_end', $iTimeEnd);
       $oQuery->bindParam('user_id', $iUserId);

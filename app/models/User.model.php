@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Handle all user SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 namespace CandyCMS\Model;
@@ -49,58 +53,51 @@ class User extends \CandyCMS\Model\Main {
     }
   }
 
-  private function _setData() {
+  /**
+   * Set user entry or user overview data.
+   *
+   * @access private
+   * @param boolean $bUpdate prepare data for update
+   * @param integer $iLimit blog post limit
+   * @return array data
+   *
+   */
+  private function _setData($bUpdate, $iLimit) {
     if (empty($this->_iId)) {
       try {
-        $oQuery = $this->_oDb->query("SELECT
-                                        id,
-                                        name,
-                                        email,
-                                        surname,
-                                        last_login,
-                                        date,
-                                        use_gravatar
-                                      FROM
-                                        " . SQL_PREFIX . "users
-                                      ORDER BY
-                                        id ASC");
+        $oQuery = $this->_oDb->prepare("SELECT
+                                          id,
+                                          name,
+                                          email,
+                                          surname,
+                                          last_login,
+                                          date,
+                                          use_gravatar
+                                        FROM
+                                          " . SQL_PREFIX . "users
+                                        ORDER BY
+                                          id ASC
+                                        LIMIT
+                                          :limit");
+
+        $oQuery->bindParam('limit', $iLimit, \PDO::PARAM_INT);
+        $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
-
-        foreach ($aResult as $aRow) {
-          $iId = $aRow['id'];
-          $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
-
-          # Set SEO friendly user names
-          $sName      = \CandyCMS\Helper\Helper::formatOutput($aRow['name']);
-          $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aRow['surname']);
-          $sFullName  = $sName . ' ' . $sSurname;
-
-          $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($sFullName));
-          $sUrl = WEBSITE_URL . '/user/' . $aRow['id'];
-
-          $this->_aData[$iId] = array(
-              'name'          => $sName,
-              'surname'       => $sSurname,
-              'full_name'     => $sFullName,
-              'encoded_full_name' => urlencode($sFullName),
-              'last_login'    => \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login']),
-              'date'          => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
-              'datetime'      => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']),
-              'date_raw'      => $aRow['date'],
-              'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
-              'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
-              'id'            => $aRow['id'],
-              'use_gravatar'  => $aRow['use_gravatar'],
-              'avatar_64'     => \CandyCMS\Helper\Helper::getAvatar('user', 64, $aRow['id'], $aGravatar),
-              'url'           => $sUrl . '/' . $sEncodedTitle,
-              'url_clean'     => $sUrl
-          );
-        }
-      } catch (\CandyCMS\Helper\AdvancedException $e) {
+      }
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
-    } else {
+
+      foreach ($aResult as $aRow) {
+        $iId = $aRow['id'];
+
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[$iId]['last_login'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login'], true);
+      }
+
+    }
+    else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           *
@@ -110,61 +107,46 @@ class User extends \CandyCMS\Model\Main {
                                           id = :id
                                         LIMIT 1");
 
-        $oQuery->bindParam('id', $this->_iId);
+        $oQuery->bindParam('id', $this->_iId, \PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aData = $oQuery->fetch(\PDO::FETCH_ASSOC);
-
-      } catch (\CandyCMS\Helper\AdvancedException $e) {
+        $aRow = & $oQuery->fetch(\PDO::FETCH_ASSOC);
+      }
+      catch (\CandyCMS\Helper\AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
-      $aGravatar = array('use_gravatar' => $aData['use_gravatar'], 'email' => $aData['email']);
+      if ($bUpdate == true)
+        $this->_aData = $this->_formatForUpdate($aRow);
 
-      # Set SEO friendly user names
-      $sName      = \CandyCMS\Helper\Helper::formatOutput($aData['name']);
-      $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aData['surname']);
-      $sFullName  = $sName . ' ' . $sSurname;
-
-      $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($sFullName));
-      $sUrl = WEBSITE_URL . '/user/' . $this->_iId;
-
-      $this->_aData = array(
-          'id'            => $aData['id'],
-          'name'          => $sName,
-          'surname'       => $sSurname,
-          'full_name'     => $sFullName,
-          'encoded_full_name' => urlencode($sFullName),
-          'last_login'    => \CandyCMS\Helper\Helper::formatTimestamp($aData['last_login']),
-          'date'          => \CandyCMS\Helper\Helper::formatTimestamp($aData['date'], true),
-          'datetime'      => \CandyCMS\Helper\Helper::formatTimestamp($aData['date']),
-          'date_raw'      => $aData['date'],
-          'date_rss'      => date('r', $aData['date']),
-          'date_w3c'      => date(DATE_W3C),
-          'content'       => \CandyCMS\Helper\Helper::formatOutput($aData['content']),
-          'email'         => \CandyCMS\Helper\Helper::formatOutput($aData['email']),
-          'receive_newsletter' => $aData['receive_newsletter'],
-          'user_right'    => $aData['user_right'],
-          'use_gravatar'  => $aData['use_gravatar'],
-          'avatar_64'     => \CandyCMS\Helper\Helper::getAvatar('user', 64, $this->_iId, $aGravatar),
-          'avatar_100'    => \CandyCMS\Helper\Helper::getAvatar('user', 100, $this->_iId, $aGravatar),
-          'avatar_popup'  => \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $this->_iId, $aGravatar),
-          'url'           => $sUrl . '/' . $sEncodedTitle,
-          'url_clean'     => $sUrl
-      );
+      else {
+        $this->_aData[1] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[1]['last_login'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login'], true);
+      }
     }
 
     return $this->_aData;
   }
 
-  public function getData($iId = '', $bForceNoId = false) {
+  /**
+   * Get user entry or user overview data. Depends on avaiable ID.
+   *
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
+   * @param boolean $bForceNoId Override ID to show user overview
+   * @param boolean $bUpdate prepare data for update
+   * @param integer $iLimit user overview limit
+   * @return array data from _setData
+   *
+   */
+  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
 
-    if($bForceNoId == true)
+    if ($bForceNoId == true)
       $this->_iId = '';
 
-    return $this->_setData();
+    return $this->_setData($bUpdate, $iLimit);
   }
 
   public function create($iVerificationCode) {

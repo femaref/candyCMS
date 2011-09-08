@@ -123,7 +123,7 @@ class Download extends Main {
    */
   protected function _create() {
     $this->_setError('title');
-    $this->_setError('file');
+    #$this->_setError('file');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();
@@ -147,7 +147,6 @@ class Download extends Main {
    */
   protected function _update() {
     $this->_setError('title');
-    $this->_setError('file');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();

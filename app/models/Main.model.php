@@ -66,6 +66,9 @@ abstract class Main {
     $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
 
+    # Set ID if needed (fix for detailed user view)
+    $this->_iId = isset($this->_aRequest['id']) && !isset($this->_iId) ? (int) $this->_aRequest['id'] : '';
+
     $this->_oDb = new \PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
                 \PDO::ATTR_PERSISTENT => true));
     $this->_oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -120,7 +123,11 @@ abstract class Main {
       $aData['date_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
     }
 
-    if(isset($aRow['author_id'])) {
+    if(isset($aRow['author_id']) || isset($aRow['id']) && $this->_aRequest['section'] == 'user') {
+
+      # If we got a user overview, this fix view by setting author_id to id
+      $aRow['author_id'] = $this->_aRequest['section'] == 'user' ? $aRow['id'] : $aRow['author_id'];
+
       if ($aRow['author_id'] > 1)
         $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
@@ -130,6 +137,7 @@ abstract class Main {
       else
         $aGravatar = array('use_gravatar' => false);
 
+      $aData['avatar_32'] = \CandyCMS\Helper\Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar);
       $aData['avatar_64'] = \CandyCMS\Helper\Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar);
       $aData['avatar_100'] = \CandyCMS\Helper\Helper::getAvatar('user', 100, $aRow['author_id'], $aGravatar);
       $aData['avatar_popup'] = \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $aRow['author_id'], $aGravatar);
