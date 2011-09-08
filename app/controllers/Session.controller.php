@@ -120,7 +120,7 @@ class Session extends \CandyCMS\Controller\Main {
 					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_PASSWORD_BODY);
 					$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-					$bStatus = Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
+					$bStatus = \CandyCMS\Controller\Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
 																LANG_MAIL_SESSION_PASSWORD_SUBJECT,
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
@@ -141,7 +141,7 @@ class Session extends \CandyCMS\Controller\Main {
 					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
 					$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
-					$bStatus = Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
+					$bStatus = \CandyCMS\Controller\Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
 																LANG_MAIL_SESSION_VERIFICATION_SUBJECT,
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
