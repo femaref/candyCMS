@@ -55,7 +55,11 @@ class Newsletter extends \CandyCMS\Controller\Main {
         return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
 
       elseif ($sQuery == 'INSERT') {
-        Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']), LANG_MAIL_NEWSLETTER_CREATE_SUBJECT, LANG_MAIL_NEWSLETTER_CREATE_BODY, WEBSITE_MAIL_NOREPLY);
+        \CandyCMS\Controller\Mail::send(
+                \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
+                LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
+                LANG_MAIL_NEWSLETTER_CREATE_BODY,
+                WEBSITE_MAIL_NOREPLY);
         return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
       }
       else
