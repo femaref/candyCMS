@@ -9,6 +9,12 @@
   {/if}
   <h1>{$lang_headline}</h1>
   <table>
+    <tr>
+      <th>{$lang_name}</th>
+      <th>{$lang_date}</th>
+      <th>{$lang_author}</th>
+      <th></th>
+    </tr>
     {foreach $content as $c}
       <tr class='{cycle values="row1,row2"}'>
         <td>

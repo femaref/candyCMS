@@ -134,7 +134,7 @@ class Index extends \CandyCMS\Controller\Main {
   *
   */
 	public function loadFacebookExtension() {
-		if (class_exists('FacebookCMS')) {
+		if (class_exists('\CandyCMS\Plugin\FacebookCMS')) {
 			return new \CandyCMS\Plugin\FacebookCMS(array(
 					'appId' => FACEBOOK_APP_ID,
 					'secret' => FACEBOOK_SECRET,
@@ -233,7 +233,7 @@ class Index extends \CandyCMS\Controller\Main {
   *
   */
   public function loadCronjob() {
-    if (class_exists('Cronjob')) {
+    if (class_exists('\CandyCMS\Plugin\Cronjob')) {
       if (\CandyCMS\Plugin\Cronjob::getNextUpdate() === true) {
         \CandyCMS\Plugin\Cronjob::cleanup();
         \CandyCMS\Plugin\Cronjob::optimize();

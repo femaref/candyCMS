@@ -8,8 +8,8 @@
 require_once '../plugins/controllers/Cronjob.controller.php';
 
 # Backup database
-if(class_exists('Cronjob'))
-  Cronjob::backup(0, '../');
+if(class_exists('\CandyCMS\Plugin\Cronjob'))
+  \CandyCMS\Plugin\Cronjob::backup(0, '../');
 
 $sDir = 'migrate/sql';
 $oDir = opendir($sDir);

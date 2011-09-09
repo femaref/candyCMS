@@ -113,7 +113,7 @@ class Media extends \CandyCMS\Controller\Main {
           $aImgDim = '';
           $aFiles[] = array(
               'name'  => $sFile,
-              'cdate' => \CandyCMS\Helper\Helper::formatTimestamp(filectime($sPath)),
+              'cdate' => \CandyCMS\Helper\Helper::formatTimestamp(filectime($sPath), true),
               'size'  => \CandyCMS\Helper\Helper::getFileSize($sPath),
               'type'  => $sFileType,
               'dim'   => $aImgDim

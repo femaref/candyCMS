@@ -72,7 +72,7 @@ class Comment extends \CandyCMS\Model\Main {
     }
 
     # We crawl the facebook avatars
-    if (class_exists('FacebookCMS'))
+    if (class_exists('\CandyCMS\Plugin\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
 
     return $this->_aData;

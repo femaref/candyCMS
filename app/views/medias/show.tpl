@@ -17,6 +17,13 @@
           </td>
         </tr>
       {else}
+        <tr>
+          <th></th>
+          <th>{$lang_file}</th>
+          <th>{$lang_size}</th>
+          <th>{$lang_uploaded_at}</th>
+          <th></th>
+        </tr>
         {foreach $files as $f}
           <tr class='{cycle values="row1,row2"}'>
             <td style='width:10%'>
@@ -28,11 +35,11 @@
                      width='32' height='32' alt='{$f.type}' />
               {/if}
             </td>
-            <td style='text-align:left;width:45%'>
+            <td style='width:55%'>
               {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
-                <a href='%PATH_UPLOAD%/media/{$f.name}' 
-                   class="js-fancybox" 
-                   rel="image" 
+                <a href='%PATH_UPLOAD%/media/{$f.name}'
+                   class="js-fancybox"
+                   rel="image"
                    title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
                   {$f.name}
                 </a> ({$f.dim[0]} x {$f.dim[1]} px)
@@ -43,10 +50,10 @@
               {/if}
               <input type='text' class="copybox" value='%PATH_UPLOAD%/media/{$f.name}' onclick="this.focus();this.select();" />
             </td>
-            <td style='width:20%'>
+            <td style='width:15%'>
               {$f.size}
             </td>
-            <td style='width:20%'>
+            <td style='width:15%'>
               {$f.cdate}
             </td>
             <td style='width:5%'>

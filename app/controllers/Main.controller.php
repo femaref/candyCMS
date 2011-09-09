@@ -185,32 +185,32 @@ abstract class Main {
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
-		$this->_oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
+		$this->_oSmarty->assign('_facebook_plugin_', class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false);
 		$this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
 		$this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_pubdate_', date('r'));
 		$this->_oSmarty->assign('_request_id_', $this->_iId);
 
 		# Include Google Adsense
-		if (class_exists('Adsense')) {
+		if (class_exists('\CandyCMS\Plugin\Adsense')) {
 			$oAdsense = new \CandyCMS\Plugin\Adsense();
 			$this->_oSmarty->assign('_plugin_adsense_', $oAdsense->show());
 		}
 
 		# Include news archive
-		if (class_exists('Archive')) {
+		if (class_exists('\CandyCMS\Plugin\Archive')) {
 			$oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_archive_', $oArchive->show());
 		}
 
 		# Include latest headlines
-		if (class_exists('Headlines')) {
+		if (class_exists('\CandyCMS\Plugin\Headlines')) {
 			$oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
 		}
 
 		# Include latest teaser
-		if (class_exists('Teaser')) {
+		if (class_exists('\CandyCMS\Plugin\Teaser')) {
 			$oTeaser = new \CandyCMS\Plugin\Teaser($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_teaser_', $oTeaser->show());
 		}
@@ -231,6 +231,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_comments', LANG_GLOBAL_COMMENTS);
 		$this->_oSmarty->assign('lang_contact', LANG_GLOBAL_CONTACT);
 		$this->_oSmarty->assign('lang_cronjob_exec', LANG_GLOBAL_CRONJOB_EXEC);
+		$this->_oSmarty->assign('lang_date', LANG_GLOBAL_DATE);
 		$this->_oSmarty->assign('lang_deleted_user', LANG_GLOBAL_DELETED_USER);
 		$this->_oSmarty->assign('lang_description', LANG_GLOBAL_DESCRIPTION);
 		$this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
@@ -241,6 +242,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_downloads', LANG_GLOBAL_DOWNLOADS);
 		$this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
 		$this->_oSmarty->assign('lang_email_info', LANG_COMMENT_INFO_EMAIL);
+		$this->_oSmarty->assign('lang_file', LANG_GLOBAL_FILE);
 		$this->_oSmarty->assign('lang_files', LANG_GLOBAL_FILES);
 		$this->_oSmarty->assign('lang_filemanager', LANG_GLOBAL_FILEMANAGER);
 		$this->_oSmarty->assign('lang_gallery', LANG_GLOBAL_GALLERY);
@@ -269,6 +271,7 @@ abstract class Main {
 		$this->_oSmarty->assign('lang_settings', LANG_GLOBAL_SETTINGS);
 		$this->_oSmarty->assign('lang_share', LANG_GLOBAL_SHARE);
 		$this->_oSmarty->assign('lang_sitemap', LANG_GLOBAL_SITEMAP);
+		$this->_oSmarty->assign('lang_size', LANG_GLOBAL_SIZE);
 		$this->_oSmarty->assign('lang_subject', LANG_GLOBAL_SUBJECT);
 		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
 		$this->_oSmarty->assign('lang_surname', LANG_GLOBAL_SURNAME);

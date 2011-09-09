@@ -9,6 +9,13 @@
   {/if}
   <h1>{$lang_headline}</h1>
   <table>
+    <tr>
+      <th></th>
+      <th>{$lang_name}</th>
+      <th>{$lang_registered_since}</th>
+      <th>{$lang_last_login}</th>
+      <th></th>
+    </tr>
     {foreach $user as $u}
       <tr>
         <td style='width:5%'>

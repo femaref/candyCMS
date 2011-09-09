@@ -123,24 +123,23 @@ abstract class Main {
       $aData['date_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
     }
 
-    if(isset($aRow['author_id']) || isset($aRow['id']) && $this->_aRequest['section'] == 'user') {
+    # Build user ID
+    $iUserId = isset($aRow['author_id']) ? $aRow['author_id'] : $aRow['id'];
 
-      # If we got a user overview, this fix view by setting author_id to id
-      $aRow['author_id'] = $this->_aRequest['section'] == 'user' ? $aRow['id'] : $aRow['author_id'];
-
-      if ($aRow['author_id'] > 1)
+    if(isset($this->_aRequest['section']) && 'log' !== $this->_aRequest['section']) {
+      if ($iUserId > 1)
         $aGravatar = array('use_gravatar' => $aRow['use_gravatar'], 'email' => $aRow['email']);
 
-      elseif ($aRow['author_id'] == 0)
+      elseif ($iUserId == 0)
         $aGravatar = array('use_gravatar' => true, 'email' => $aRow['author_email']);
 
       else
         $aGravatar = array('use_gravatar' => false);
 
-      $aData['avatar_32'] = \CandyCMS\Helper\Helper::getAvatar('user', 32, $aRow['author_id'], $aGravatar);
-      $aData['avatar_64'] = \CandyCMS\Helper\Helper::getAvatar('user', 64, $aRow['author_id'], $aGravatar);
-      $aData['avatar_100'] = \CandyCMS\Helper\Helper::getAvatar('user', 100, $aRow['author_id'], $aGravatar);
-      $aData['avatar_popup'] = \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $aRow['author_id'], $aGravatar);
+      $aData['avatar_32'] = \CandyCMS\Helper\Helper::getAvatar('user', 32, $iUserId, $aGravatar);
+      $aData['avatar_64'] = \CandyCMS\Helper\Helper::getAvatar('user', 64, $iUserId, $aGravatar);
+      $aData['avatar_100'] = \CandyCMS\Helper\Helper::getAvatar('user', 100, $iUserId, $aGravatar);
+      $aData['avatar_popup'] = \CandyCMS\Helper\Helper::getAvatar('user', 'popup', $iUserId, $aGravatar);
     }
 
     # Build full user name

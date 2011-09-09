@@ -11,7 +11,7 @@
 
 namespace CandyCMS\Model;
 
-if(!class_exists('Pages'))
+if(!class_exists('\CandyCMS\Helper\Pages'))
   require_once 'app/helpers/Page.helper.php';
 
 class Blog extends \CandyCMS\Model\Main {

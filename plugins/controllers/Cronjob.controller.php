@@ -247,7 +247,7 @@ final class Cronjob {
     }
 
     # Send the backup via mail
-    if (class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
+    if (class_exists('\CandyCMS\Controller\Mail') && CRONJOB_SEND_PER_MAIL == true)
       \CandyCMS\Controller\Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
 
     # Write into backup log

@@ -85,7 +85,7 @@
             <a href='/Disclaimer'>{$lang_disclaimer}</a>
           </li>
           <li>
-            <a href='/Sitemap'>{$lang_sitemap}</a>
+            <a href='/sitemap'>{$lang_sitemap}</a>
           </li>
         </ul>
       </section>

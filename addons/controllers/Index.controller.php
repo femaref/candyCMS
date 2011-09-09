@@ -7,7 +7,7 @@
 
 namespace CandyCMS\Addon;
 
-if (!class_exists('Section'))
+if (!class_exists('\CandyCMS\Controller\Section'))
   require_once 'app/helpers/Section.helper.php';
 
 final class Index extends \CandyCMS\Helper\Section {

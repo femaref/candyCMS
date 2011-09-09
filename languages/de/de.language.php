@@ -76,6 +76,7 @@ define( 'LANG_GLOBAL_SEARCH', 'Suche' );
 define( 'LANG_GLOBAL_SETTINGS', 'Einstellungen' );
 define( 'LANG_GLOBAL_SHARE', 'Teilen' );
 define( 'LANG_GLOBAL_SITEMAP', 'Sitemap' );
+define( 'LANG_GLOBAL_SIZE', 'Größe' ); # TODO
 define( 'LANG_GLOBAL_SUBJECT', 'Betreff' );
 define( 'LANG_GLOBAL_SURNAME', 'Nachname' );
 define( 'LANG_GLOBAL_SYSTEMBOT', 'System' );
@@ -91,6 +92,7 @@ define( 'LANG_GLOBAL_UPDATE', 'Editieren' );
 define( 'LANG_GLOBAL_UPDATE_AVAIABLE', 'Es ist ein Update (#%v) für diese Software verfügbar. Besuche %l für weitere Informationen.' );
 define( 'LANG_GLOBAL_UPDATE_ENTRY', 'Eintrag bearbeiten' );
 define( 'LANG_GLOBAL_UPDATE_SHOW', 'Update anzeigen?' );
+define( 'LANG_GLOBAL_UPDATED_AT', 'Aktualisiert am' ); # TODO
 define( 'LANG_GLOBAL_UPLOADED_AT', 'Datum des Hochladens' );
 define( 'LANG_GLOBAL_USER', 'User' );
 define( 'LANG_GLOBAL_USERMANAGER', 'Userverwaltung' );
