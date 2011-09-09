@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\User as Model;
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/controllers/User.controller.php';
@@ -107,7 +108,7 @@ class Mail extends Main {
             (string)$this->_aRequest['content']:
             '';
 
-    $this->_oSmarty->assign('contact', \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId));
+    $this->_oSmarty->assign('contact', Model::getUserNamesAndEmail($this->_iId));
 		$this->_oSmarty->assign('content', $sContent);
 		$this->_oSmarty->assign('email', $sEmail);
 		$this->_oSmarty->assign('subject', $sSubject);
@@ -180,7 +181,7 @@ class Mail extends Main {
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
-      $aRow = \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId);
+      $aRow = Model::getUserNamesAndEmail($this->_iId);
 
 			# When mail is set, send to mail. Otherwise send to system mail
       $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;

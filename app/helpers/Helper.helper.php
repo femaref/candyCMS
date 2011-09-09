@@ -7,6 +7,11 @@
 
 namespace CandyCMS\Helper;
 
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Plugin\Bbcode as Bbcode;
+use CandyCMS\Plugin\FormatTimestamp as FormatTimestamp;
+use PDO;
+
 class Helper {
 
   public static function successMessage($sMSG, $sRedirectTo = '') {
@@ -16,7 +21,7 @@ class Helper {
     $_SESSION['flash_message']['show']      = '0';
 
     if(!empty($sRedirectTo))
-      \CandyCMS\Helper\Helper::redirectTo ($sRedirectTo);
+      Helper::redirectTo ($sRedirectTo);
 
     return true;
   }
@@ -28,7 +33,7 @@ class Helper {
     $_SESSION['flash_message']['show']    = '0';
 
     if(!empty($sRedirectTo))
-      \CandyCMS\Helper\Helper::redirectTo ($sRedirectTo);
+      Helper::redirectTo ($sRedirectTo);
 
     return false;
   }
@@ -124,7 +129,7 @@ class Helper {
       else {
 
         if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new \CandyCMS\Helper\AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
 
         else
           return 'app/views/' . $sDir;
@@ -144,7 +149,7 @@ class Helper {
       # Standard views
       else {
         if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new \CandyCMS\Helper\AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
 
         else
           return 'plugins/views/' . $sDir;
@@ -165,12 +170,12 @@ class Helper {
   public static function formatInput($sStr, $bDisableHTML = true) {
     try {
       if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
-        throw new \CandyCMS\Helper\CandyCMS\Helper\AdvancedException('Input seems not valid.');
+        throw new AdvancedException('Input seems not valid.');
 
       if ($bDisableHTML == true)
         $sStr = htmlspecialchars($sStr);
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -182,8 +187,8 @@ class Helper {
     # Set active locale
     setlocale(LC_ALL, WEBSITE_LOCALE);
 
-    if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
-      $oDate = new \CandyCMS\Plugin\FormatTimestamp();
+    if (class_exists('FormatTimestamp') == true) {
+      $oDate = new FormatTimestamp();
       return $oDate->getDate($iTime, $bDateOnly);
     }
     else {
@@ -201,14 +206,14 @@ class Helper {
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
     # Remove Slashes
-    $sStr = \CandyCMS\Helper\Helper::removeSlahes($sStr);
+    $sStr = Helper::removeSlahes($sStr);
 
     # Highlight string
     if (!empty($sHighlight))
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
-    if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
-      $oBbcode = new \CandyCMS\Plugin\Bbcode();
+    if (class_exists('Bbcode') == true) {
+      $oBbcode = new Bbcode();
       return $oBbcode->getFormatedText($sStr);
     }
     else
@@ -217,13 +222,13 @@ class Helper {
 
   public static function getLastEntry($sTable) {
     try {
-      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->query(" SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
       $aRow = $oQuery->fetch();
       return $aRow['id'];
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
   }

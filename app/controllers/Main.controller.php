@@ -13,6 +13,12 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Plugin\Adsense as Adsense;
+use CandyCMS\Plugin\Archive as Archive;
+use CandyCMS\Plugin\Bbcode as Bbcode;
+use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use CandyCMS\Plugin\Headlines as Headlines;
+use CandyCMS\Plugin\Teaser as Teaser;
 
 abstract class Main {
 
@@ -187,33 +193,33 @@ abstract class Main {
 
 		# Define system variables
 		$this->_oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
-		$this->_oSmarty->assign('_facebook_plugin_', class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false);
+		$this->_oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
 		$this->_oSmarty->assign('_language_', WEBSITE_LANGUAGE);
 		$this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
 		$this->_oSmarty->assign('_pubdate_', date('r'));
 		$this->_oSmarty->assign('_request_id_', $this->_iId);
 
 		# Include Google Adsense
-		if (class_exists('\CandyCMS\Plugin\Adsense')) {
-			$oAdsense = new \CandyCMS\Plugin\Adsense();
+		if (class_exists('Adsense')) {
+			$oAdsense = new Adsense();
 			$this->_oSmarty->assign('_plugin_adsense_', $oAdsense->show());
 		}
 
 		# Include news archive
-		if (class_exists('\CandyCMS\Plugin\Archive')) {
-			$oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
+		if (class_exists('Archive')) {
+			$oArchive = new Archive($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_archive_', $oArchive->show());
 		}
 
 		# Include latest headlines
-		if (class_exists('\CandyCMS\Plugin\Headlines')) {
-			$oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
+		if (class_exists('Headlines')) {
+			$oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
 		}
 
 		# Include latest teaser
-		if (class_exists('\CandyCMS\Plugin\Teaser')) {
-			$oTeaser = new \CandyCMS\Plugin\Teaser($this->_aRequest, $this->_aSession);
+		if (class_exists('Teaser')) {
+			$oTeaser = new Teaser($this->_aRequest, $this->_aSession);
 			$this->_oSmarty->assign('_plugin_teaser_', $oTeaser->show());
 		}
 

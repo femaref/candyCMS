@@ -16,6 +16,7 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Section as Section;
 use CandyCMS\Plugin\Cronjob as Cronjob;
+use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
 class Index extends Main {
 
@@ -140,8 +141,8 @@ class Index extends Main {
   *
   */
 	public function loadFacebookExtension() {
-		if (class_exists('\CandyCMS\Plugin\FacebookCMS')) {
-			return new \CandyCMS\Plugin\FacebookCMS(array(
+		if (class_exists('FacebookCMS')) {
+			return new FacebookCMS(array(
 					'appId' => FACEBOOK_APP_ID,
 					'secret' => FACEBOOK_SECRET,
 					'cookie' => true,
@@ -243,11 +244,11 @@ class Index extends Main {
   *
   */
   public function loadCronjob() {
-    if (class_exists('\CandyCMS\Plugin\Cronjob')) {
-      if (\CandyCMS\Plugin\Cronjob::getNextUpdate() === true) {
-        \CandyCMS\Plugin\Cronjob::cleanup();
-        \CandyCMS\Plugin\Cronjob::optimize();
-        \CandyCMS\Plugin\Cronjob::backup(USER_ID);
+    if (class_exists('Cronjob')) {
+      if (Cronjob::getNextUpdate() === true) {
+          Cronjob::cleanup();
+          Cronjob::optimize();
+          Cronjob::backup(USER_ID);
       }
     }
   }

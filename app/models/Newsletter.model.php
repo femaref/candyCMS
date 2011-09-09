@@ -7,7 +7,12 @@
 
 namespace CandyCMS\Model;
 
-class Newsletter extends \CandyCMS\Model\Main {
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use PDO;
+
+class Newsletter extends Main {
 
   public function handleNewsletter($sEmail) {
     try {
@@ -22,9 +27,9 @@ class Newsletter extends \CandyCMS\Model\Main {
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
-      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -45,7 +50,7 @@ class Newsletter extends \CandyCMS\Model\Main {
       $oQuery->bindParam('email', $sEmail);
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -60,7 +65,7 @@ class Newsletter extends \CandyCMS\Model\Main {
       $oQuery->bindParam('email', $sEmail);
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -73,9 +78,9 @@ class Newsletter extends \CandyCMS\Model\Main {
                                       FROM
                                         " . SQL_PREFIX . "newsletters");
 
-        return $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -88,9 +93,9 @@ class Newsletter extends \CandyCMS\Model\Main {
                                       WHERE
                                         receive_newsletter = '1'");
 
-        return $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        return $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }

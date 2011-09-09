@@ -7,7 +7,12 @@
 
 namespace CandyCMS\Model;
 
-class Search extends \CandyCMS\Model\Main {
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use PDO;
+
+class Search extends Main {
 
   private function _setData($sSearch, $aTables) {
 
@@ -25,7 +30,7 @@ class Search extends \CandyCMS\Model\Main {
                                               date
                                             DESC");
 
-        $aResult = $this->oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
 
         # Build table names and order them
         if ($sTable == 'gallery_albums') {
@@ -44,13 +49,13 @@ class Search extends \CandyCMS\Model\Main {
           $iId = $aRow['id'];
           $this->_aData[$sTable][$iId] = array(
               'id'      => $aRow['id'],
-              'title'   => \CandyCMS\Helper\Helper::formatOutput($aRow['title']),
-              'date'    => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
-              'datetime'=> \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'])
+              'title'   => Helper::formatOutput($aRow['title']),
+              'date'    => Helper::formatTimestamp($aRow['date'], true),
+              'datetime'=> Helper::formatTimestamp($aRow['date'])
           );
         }
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $oDb->rollBack();
       }
     }

@@ -11,7 +11,12 @@
 
 namespace CandyCMS\Model;
 
-class Comment extends \CandyCMS\Model\Main {
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use PDO;
+
+class Comment extends Main {
 
   /**
    * Set comment data.
@@ -24,7 +29,7 @@ class Comment extends \CandyCMS\Model\Main {
    *
    */
   private function _setData($iId, $iEntries, $iLimit) {
-    $this->oPage = new \CandyCMS\Helper\Page($this->_aRequest, $iEntries, $iLimit);
+    $this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
 
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -50,13 +55,13 @@ class Comment extends \CandyCMS\Model\Main {
                                         :limit");
 
       $oQuery->bindParam('parent_id', $iId);
-      $oQuery->bindParam('limit', $this->oPage->getLimit(), \PDO::PARAM_INT);
-      $oQuery->bindParam('offset', $this->oPage->getOffset(), \PDO::PARAM_INT);
+      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
 
-      $aResult = & $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
 
@@ -72,7 +77,7 @@ class Comment extends \CandyCMS\Model\Main {
     }
 
     # We crawl the facebook avatars
-    if (class_exists('\CandyCMS\Plugin\FacebookCMS'))
+    if (class_exists('FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
 
     return $this->_aData;
@@ -86,7 +91,7 @@ class Comment extends \CandyCMS\Model\Main {
    *
    */
   private function _getFacebookAvatars($aResult) {
-    $oFacebook = new \CandyCMS\Plugin\FacebookCMS(array(
+    $oFacebook = new FacebookCMS(array(
                 'appId' => FACEBOOK_APP_ID,
                 'secret' => FACEBOOK_SECRET,
             ));
@@ -152,9 +157,9 @@ class Comment extends \CandyCMS\Model\Main {
    *
    */
   public function create() {
-    $sAuthorName  = isset($this->_aRequest['name']) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']) : '';
-    $sAuthorEmail = isset($this->_aRequest['email']) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']) : USER_EMAIL;
-    $iFacebookId  = isset($this->_aRequest['facebook_id']) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['facebook_id']) : '';
+    $sAuthorName  = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
+    $sAuthorEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) : USER_EMAIL;
+    $iFacebookId  = isset($this->_aRequest['facebook_id']) ? Helper::formatInput($this->_aRequest['facebook_id']) : '';
 
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
@@ -183,13 +188,13 @@ class Comment extends \CandyCMS\Model\Main {
       $oQuery->bindParam('author_name', $sAuthorName);
       $oQuery->bindParam('author_email', $sAuthorEmail);
       $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
-      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -216,7 +221,7 @@ class Comment extends \CandyCMS\Model\Main {
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }

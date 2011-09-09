@@ -11,6 +11,10 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Upload as Upload;
+use CandyCMS\Model\User as Model;
+
 require_once 'app/controllers/Session.controller.php';
 require_once 'app/controllers/Mail.controller.php';
 require_once 'app/models/User.model.php';
@@ -27,7 +31,7 @@ class User extends Main {
 	 *
 	 */
 	public function __init() {
-		$this->_oModel = new \CandyCMS\Model\User($this->_aRequest, $this->_aSession, $this->_aFile);
+		$this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
 
 	/**
@@ -180,7 +184,7 @@ class User extends Main {
 	 *
 	 */
 	private function _createAvatar() {
-		$oUpload = new \CandyCMS\Helper\Upload($this->_aRequest, $this->_aFile);
+		$oUpload = new Upload($this->_aRequest, $this->_aFile);
 
 		$this->_setError('terms', LANG_ERROR_USER_UPDATE_AGREE_UPLOAD);
 
@@ -310,7 +314,7 @@ class User extends Main {
 		$this->_setError('email');
 		$this->_setError('password');
 
-		if (\CandyCMS\Model\User::getExistingUser($this->_aRequest['email']))
+		if (Model::getExistingUser($this->_aRequest['email']))
 			$this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
 
 		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])

@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
 
 require_once 'app/helpers/Image.helper.php';
@@ -108,7 +109,7 @@ class Media extends Main {
           $aImgDim = getImageSize($sPath);
 
           if (!file_exists(PATH_UPLOAD . '/temp/media/' . $sFile)) {
-            $oImage = new \CandyCMS\Helper\Image($sFileName, 'temp', $sPath, $sFileType);
+            $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32', 'media');
           }
         }

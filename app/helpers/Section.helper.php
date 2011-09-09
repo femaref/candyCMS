@@ -7,6 +7,8 @@
 
 namespace CandyCMS\Helper;
 
+use CandyCMS\Addon\Addon as Addon;
+
 require_once 'addons/controllers/Addon.controller.php';
 
 class Section extends \CandyCMS\Controller\Main {
@@ -17,7 +19,7 @@ class Section extends \CandyCMS\Controller\Main {
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists('addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
       require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
-      $oAddon = new \CandyCMS\Addon\Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);

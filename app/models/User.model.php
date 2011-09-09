@@ -11,44 +11,49 @@
 
 namespace CandyCMS\Model;
 
-class User extends \CandyCMS\Model\Main {
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use PDO;
+
+class User extends Main {
 
   # Get user name and surname
   public static final function getUserNamesAndEmail($iId) {
     try {
-      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT name, surname, email FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
 
       $oQuery->bindParam('id', $iId);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       $oDb = null;
 
       return $aResult;
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
   }
 
   public static function getExistingUser($sEmail) {
     try {
-      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT email FROM " . SQL_PREFIX . "users WHERE email = :email LIMIT 1");
 
       $oQuery->bindParam('email', $sEmail);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       $oDb = null;
 
       if (isset($aResult['email']) && !empty($aResult['email']))
         return true;
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
   }
@@ -80,12 +85,12 @@ class User extends \CandyCMS\Model\Main {
                                         LIMIT
                                           :limit");
 
-        $oQuery->bindParam('limit', $iLimit, \PDO::PARAM_INT);
+        $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -93,7 +98,7 @@ class User extends \CandyCMS\Model\Main {
         $iId = $aRow['id'];
 
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[$iId]['last_login'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login'], true);
+        $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login'], true);
       }
 
     }
@@ -107,12 +112,12 @@ class User extends \CandyCMS\Model\Main {
                                           id = :id
                                         LIMIT 1");
 
-        $oQuery->bindParam('id', $this->_iId, \PDO::PARAM_INT);
+        $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aRow = & $oQuery->fetch(\PDO::FETCH_ASSOC);
+        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -121,7 +126,7 @@ class User extends \CandyCMS\Model\Main {
 
       else {
         $this->_aData[1] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[1]['last_login'] = \CandyCMS\Helper\Helper::formatTimestamp($aRow['last_login'], true);
+        $this->_aData[1]['last_login'] = Helper::formatTimestamp($aRow['last_login'], true);
       }
     }
 
@@ -157,16 +162,16 @@ class User extends \CandyCMS\Model\Main {
                                       VALUES
                                         ( :name, :surname, :password, :email, :date, :verification_code )");
 
-      $oQuery->bindParam('name', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
       $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
-      $oQuery->bindParam('email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('verification_code', $iVerificationCode);
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -177,10 +182,10 @@ class User extends \CandyCMS\Model\Main {
       $oQuery->bindParam('id', $iId);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       return $aResult['password'];
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -221,10 +226,10 @@ class User extends \CandyCMS\Model\Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('name', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['surname']));
-      $oQuery->bindParam('email', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
       $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter);
       $oQuery->bindParam('use_gravatar', $iUseGravatar);
       $oQuery->bindParam('password', $sPassword);
@@ -233,7 +238,7 @@ class User extends \CandyCMS\Model\Main {
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -258,7 +263,7 @@ class User extends \CandyCMS\Model\Main {
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -276,9 +281,9 @@ class User extends \CandyCMS\Model\Main {
       $oQuery->bindParam('verification_code', $iVerificationCode);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(\PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -292,10 +297,10 @@ class User extends \CandyCMS\Model\Main {
                                           id = :id");
 
         $oQuery->bindParam('id', $aResult['id']);
-        \CandyCMS\Model\Session::setActiveSession($aResult['id']);
+        Session::setActiveSession($aResult['id']);
         return $oQuery->execute();
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }

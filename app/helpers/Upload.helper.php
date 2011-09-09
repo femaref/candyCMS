@@ -7,6 +7,8 @@
 
 namespace CandyCMS\Helper;
 
+use CandyCMS\Helper\Helper as Helper;
+
 class Upload {
 
   private $_aFile;
@@ -23,11 +25,11 @@ class Upload {
   }
 
   public function uploadFile($sFolder = 'media') {
-    $this->_iId = \CandyCMS\Helper\Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
+    $this->_iId = Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
 
     if (!empty($this->_sRename)) {
-      $this->_sRename = & \CandyCMS\Helper\Helper::replaceNonAlphachars($this->_sRename);
+      $this->_sRename = & Helper::replaceNonAlphachars($this->_sRename);
       $this->_iId = $this->_sRename . '.' . $this->_sFileExtension;
     }
 
@@ -38,7 +40,7 @@ class Upload {
   public function uploadGalleryFile($sResize = '') {
     $this->_aRequest['cut'] = !empty($sResize) ? $sResize : $this->_aRequest['cut'];
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['name'], '.'), 1));
-    $this->_iId = \CandyCMS\Helper\Helper::replaceNonAlphachars($this->_aFile['name']);
+    $this->_iId = Helper::replaceNonAlphachars($this->_aFile['name']);
     $this->_iId = substr($this->_iId, 0, strlen($this->_iId) - strlen($this->_sFileExtension) - 1) . rand(100, 999);
     $this->_sUploadFolder = 'gallery/' . (int) $this->_aRequest['id'];
     $this->sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId . '.' . $this->_sFileExtension;
@@ -68,10 +70,10 @@ class Upload {
     $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_iId;
 
     if ($this->_iId == '0')
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID);
 
     elseif ($this->_aFile['image']['size'] > 409600)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
+      return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
 
     else {
 

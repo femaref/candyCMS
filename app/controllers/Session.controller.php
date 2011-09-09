@@ -12,7 +12,8 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Model\Search as Model;
+use CandyCMS\Model\Session as Model;
+use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
 require_once 'app/models/Session.model.php';
 
@@ -207,7 +208,7 @@ class Session extends Main {
 	 */
   public function destroy() {
     if (USER_RIGHT == 2) {
-      $oFacebook = new \CandyCMS\Plugin\FacebookCMS(array(
+      $oFacebook = new FacebookCMS(array(
                   'appId' => FACEBOOK_APP_ID,
                   'secret' => FACEBOOK_SECRET,
                   'cookie' => true,

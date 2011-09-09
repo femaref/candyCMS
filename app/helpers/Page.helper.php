@@ -7,6 +7,8 @@
 
 namespace CandyCMS\Helper;
 
+use CandyCMS\Helper\Helper as Helper;
+
 class Page {
 
   private $_aRequest;
@@ -17,9 +19,9 @@ class Page {
   private $_iCurrentPage;
 
   public function __construct($aRequest, $iEntries, $iLimit = 10) {
-    $this->_aRequest =& $aRequest;
-    $this->_iEntries =& $iEntries;
-    $this->_iLimit =& $iLimit;
+    $this->_aRequest  =& $aRequest;
+    $this->_iEntries  =& $iEntries;
+    $this->_iLimit    =& $iLimit;
 
     $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
     $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ? (int) $this->_aRequest['page'] : 1;
@@ -35,7 +37,7 @@ class Page {
 
     if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
       header('Status: 404 Not Found');
-      return \CandyCMS\Helper\Helper::redirectTo('/error/404');
+      return Helper::redirectTo('/error/404');
     }
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
@@ -62,7 +64,7 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('pages' ,'show');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'show');
     return $oSmarty->fetch('show.tpl');
   }
 
@@ -91,7 +93,7 @@ class Page {
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('pages' ,'surrounding');
+    $oSmarty->template_dir = Helper::getTemplateDir('pages' ,'surrounding');
     return $oSmarty->fetch('surrounding.tpl');
   }
 }

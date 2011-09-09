@@ -11,7 +11,12 @@
 
 namespace CandyCMS\Model;
 
-class Content extends \CandyCMS\Model\Main {
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use PDO;
+
+class Content extends Main {
 
   /**
    * Set content entry or content overview data.
@@ -42,9 +47,9 @@ class Content extends \CandyCMS\Model\Main {
                                         c.title ASC
                                       LIMIT " . $iLimit);
 
-        $aResult = & $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -72,9 +77,9 @@ class Content extends \CandyCMS\Model\Main {
         $oQuery->execute();
 
         # Fix for using it in the same template as overview
-        $aResult = & $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -137,15 +142,15 @@ class Content extends \CandyCMS\Model\Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content'], false));
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -175,16 +180,16 @@ class Content extends \CandyCMS\Model\Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('user_id', $iUserId);
-      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::removeSlahes($this->_aRequest['content'], false));
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
+      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
       $oQuery->bindParam('date', time());
       $oQuery->bindParam('where', $iId);
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -211,7 +216,7 @@ class Content extends \CandyCMS\Model\Main {
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }

@@ -7,9 +7,15 @@
 
 namespace CandyCMS\Model;
 
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Upload as Upload;
+use PDO;
+
 require_once 'app/helpers/Upload.helper.php';
 
-class Download extends \CandyCMS\Model\Main {
+class Download extends Main {
 
   private function _setData($bUpdate) {
 
@@ -31,9 +37,9 @@ class Download extends \CandyCMS\Model\Main {
                                           d.title ASC");
 
         $oQuery->execute();
-        $aResult = $oQuery->fetchAll(\PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -42,11 +48,11 @@ class Download extends \CandyCMS\Model\Main {
         $sCategory = $aRow['category'];
 
         # Set SEO friendly user names
-        $sName      = \CandyCMS\Helper\Helper::formatOutput($aRow['name']);
-        $sSurname   = \CandyCMS\Helper\Helper::formatOutput($aRow['surname']);
+        $sName      = Helper::formatOutput($aRow['name']);
+        $sSurname   = Helper::formatOutput($aRow['surname']);
         $sFullName  = $sName . ' ' . $sSurname;
 
-        $sEncodedTitle = \CandyCMS\Helper\Helper::formatOutput(urlencode($aRow['title']));
+        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
         $sUrl = WEBSITE_URL . '/download/' . $aRow['id'];
 
         # Do we need to highlight text?
@@ -60,14 +66,14 @@ class Download extends \CandyCMS\Model\Main {
         # Fetch normal data
         $this->_aData[$sCategory]['files'][$iId] = array(
                 'id'                => $aRow['id'],
-                'title'             => \CandyCMS\Helper\Helper::formatOutput($aRow['title'], $sHighlight),
-                'content'           => \CandyCMS\Helper\Helper::formatOutput($aRow['content'], $sHighlight),
-                'category'          => \CandyCMS\Helper\Helper::formatOutput($aRow['category']),
-                'file'              => \CandyCMS\Helper\Helper::formatOutput($aRow['file']),
-                'extension'         => \CandyCMS\Helper\Helper::formatOutput($aRow['extension']),
+                'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
+                'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
+                'category'          => Helper::formatOutput($aRow['category']),
+                'file'              => Helper::formatOutput($aRow['file']),
+                'extension'         => Helper::formatOutput($aRow['extension']),
                 'downloads'         => (int) $aRow['downloads'],
-                'date'              => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date'], true),
-                'datetime'          => \CandyCMS\Helper\Helper::formatTimestamp($aRow['date']),
+                'date'              => Helper::formatTimestamp($aRow['date'], true),
+                'datetime'          => Helper::formatTimestamp($aRow['date']),
                 'date_raw'          => $aRow['date'],
                 'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),
                 'date_w3c'          => date('Y-m-d\TH:i:sP', $aRow['date']),
@@ -76,11 +82,11 @@ class Download extends \CandyCMS\Model\Main {
                 'surname'           => $sSurname,
                 'full_name'         => $sFullName,
                 'encoded_full_name' => urlencode($sFullName),
-                'encoded_title'     => \CandyCMS\Helper\Helper::formatOutput(urlencode($aRow['title'])),
+                'encoded_title'     => Helper::formatOutput(urlencode($aRow['title'])),
                 'encoded_url'       => urlencode($sUrl),
                 'url'               => $sUrl . '/' . $sEncodedTitle,
                 'url_clean'         => $sUrl,
-                'size'              => \CandyCMS\Helper\Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file'])
+                'size'              => Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file'])
         );
       }
     }
@@ -95,9 +101,9 @@ class Download extends \CandyCMS\Model\Main {
 
         $oQuery->bindParam('id', $this->_iId);
         $oQuery->execute();
-        $aRow = & $oQuery->fetch(\PDO::FETCH_ASSOC);
+        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
 
@@ -105,9 +111,9 @@ class Download extends \CandyCMS\Model\Main {
       if ($bUpdate == true) {
         $this->_aData = array(
             'id'        => $aRow['id'],
-            'title'     => \CandyCMS\Helper\Helper::removeSlahes($aRow['title']),
-            'content'   => \CandyCMS\Helper\Helper::removeSlahes($aRow['content']),
-            'category'  => \CandyCMS\Helper\Helper::removeSlahes($aRow['category']),
+            'title'     => Helper::removeSlahes($aRow['title']),
+            'content'   => Helper::removeSlahes($aRow['content']),
+            'category'  => Helper::removeSlahes($aRow['category']),
             'downloads' => (int) $aRow['downloads']
         );
       }
@@ -128,7 +134,7 @@ class Download extends \CandyCMS\Model\Main {
 
   public function create() {
     # Set up upload helper and rename file to title
-    $oUploadFile = new \CandyCMS\Helper\Upload($this->_aRequest, $this->_aFile, \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title']));
+    $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
 
     # File is up so insert data into database
     if($oUploadFile->uploadFile('download') == true) {
@@ -153,16 +159,16 @@ class Download extends \CandyCMS\Model\Main {
 
         $iUserId = USER_ID;
         $oQuery->bindParam('author_id', $iUserId);
-        $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title']));
-        $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
-        $oQuery->bindParam('category', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['category']));
+        $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
+        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+        $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']));
         $oQuery->bindParam('file', $oUploadFile->getId(false));
         $oQuery->bindParam('extension', $oUploadFile->getExtension());
         $oQuery->bindParam('date', time());
 
         return $oQuery->execute();
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         $this->_oDb->rollBack();
       }
     }
@@ -183,15 +189,15 @@ class Download extends \CandyCMS\Model\Main {
 
       $iUserId = USER_ID;
       $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('category', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['category']));
-      $oQuery->bindParam('content', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('downloads', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['downloads']));
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
+      $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']));
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
+      $oQuery->bindParam('downloads', Helper::formatInput($this->_aRequest['downloads']));
       $oQuery->bindParam('id', $iId);
 
       return $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
@@ -208,7 +214,7 @@ class Download extends \CandyCMS\Model\Main {
       $oQuery->bindParam('id', $iId);
       $bReturn = $oQuery->execute();
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
 
@@ -223,8 +229,8 @@ class Download extends \CandyCMS\Model\Main {
 
   public static function updateDownloadCount($iId) {
     try {
-      $oDb = new \PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->prepare("  UPDATE
                                   " . SQL_PREFIX . "downloads
@@ -239,7 +245,7 @@ class Download extends \CandyCMS\Model\Main {
       $oDb = null;
       return $bResult;
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       $oDb->rollBack();
     }
   }
