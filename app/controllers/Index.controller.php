@@ -11,7 +11,13 @@
 
 namespace CandyCMS\Controller;
 
-class Index extends \CandyCMS\Controller\Main {
+use CandyCMS\Addon\Addon as Addon;
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Section as Section;
+use CandyCMS\Plugin\Cronjob as Cronjob;
+
+class Index extends Main {
 
   /**
   * @var array
@@ -83,11 +89,11 @@ class Index extends \CandyCMS\Controller\Main {
     # Essential config file
     try {
       if (!file_exists($sPath . 'config/Candy.inc.php'))
-        throw new \CandyCMS\Helper\AdvancedException('Missing Candy.inc.php file.');
+        throw new AdvancedException('Missing Candy.inc.php file.');
       else
         require_once $sPath . 'config/Candy.inc.php';
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       die($e->getMessage());
     }
 
@@ -107,11 +113,11 @@ class Index extends \CandyCMS\Controller\Main {
   public function loadPlugins($sPath = '') {
 		try {
       if (!file_exists($sPath . 'config/Plugins.inc.php'))
-        throw new \CandyCMS\Helper\AdvancedException('Missing plugin config file.');
+        throw new AdvancedException('Missing plugin config file.');
       else
         require_once $sPath . 'config/Plugins.inc.php';
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       die($e->getMessage());
     }
 
@@ -213,14 +219,18 @@ class Index extends \CandyCMS\Controller\Main {
 		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
 		define('WEBSITE_LOCALE',    $sLocale);
 
+    # Switch to YML language
+    #$value = \sfYaml::load(file_get_contents($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.yml'));
+    #die(print_r( $value['website']['title'] ));
+
     # Include language if possible
 		try {
       if (!file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
-        throw new \CandyCMS\Helper\AdvancedException('Missing language file.');
+        throw new AdvancedException('Missing language file.');
       else
         require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       die($e->getMessage());
     }
 	}
@@ -275,7 +285,7 @@ class Index extends \CandyCMS\Controller\Main {
   public function show() {
 		# Redirect to landing page if we got no section
 		if (!isset($this->_aRequest['section'])) {
-			\CandyCMS\Helper\Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
 			exit();
 		}
 
@@ -303,7 +313,7 @@ class Index extends \CandyCMS\Controller\Main {
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
             str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
             '';
-    $sLangUpdateAvaiable = str_replace('%l', \CandyCMS\Helper\Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
 
 		# System variables
 		$oSmarty->assign('_javascript_language_file_', $sLangVars);
@@ -341,25 +351,25 @@ class Index extends \CandyCMS\Controller\Main {
             strtolower($this->_aRequest['section']) == 'static' ||
 						strtolower($this->_aRequest['section']) == 'user') {
 
-			$oSection = new \CandyCMS\Helper\Section($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
 			$oSection->getSection();
 		}
 
 		# We do not have a standard action, so fetch it from the addon folder.
 		# If addon exists, proceed with override.
 		elseif (ALLOW_ADDONS === true) {
-      $oSection = new \CandyCMS\Addon\Index($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }
 
     # Redirect to start page
     elseif (strtolower($this->_aRequest['section']) == 'start')
-      \CandyCMS\Helper\Helper::redirectTo('/');
+      Helper::redirectTo('/');
 
 		# There's no request on a core module and Addons are disabled. */
 		else {
 			header('Status: 404 Not Found');
-      \CandyCMS\Helper\Helper::redirectTo('/error/404');
+      Helper::redirectTo('/error/404');
     }
 
 		# Avoid Header and Footer HTML if RSS or AJAX are requested
@@ -381,7 +391,7 @@ class Index extends \CandyCMS\Controller\Main {
 			$oSmarty->assign('_content_', $oSection->getContent());
 			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
-			$oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('layouts', 'application');
+			$oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
 			$sCachedHTML = $oSmarty->fetch('application.tpl');
 		}
 

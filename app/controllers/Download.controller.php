@@ -12,9 +12,12 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Download as Model;
+
 require_once 'app/models/Download.model.php';
 
-class Download extends \CandyCMS\Controller\Main {
+class Download extends Main {
 
   /**
    * Include the download model.
@@ -24,7 +27,7 @@ class Download extends \CandyCMS\Controller\Main {
    *
    */
   public function __init() {
-    $this->_oModel = new \CandyCMS\Model\Download($this->_aRequest, $this->_aSession, $this->_aFile);
+    $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
   /**
@@ -42,7 +45,7 @@ class Download extends \CandyCMS\Controller\Main {
       $sFile = $this->_aData['file'];
 
       # Update download count
-      \CandyCMS\Model\Download::updateDownloadCount($this->_iId);
+      Model::updateDownloadCount($this->_iId);
 
       # Get mime type
       if(function_exists('finfo_open')) {
@@ -65,7 +68,7 @@ class Download extends \CandyCMS\Controller\Main {
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_DOWNLOAD);
 
-      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('downloads', 'show');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('downloads', 'show');
       return $this->_oSmarty->fetch('show.tpl');
     }
   }
@@ -107,7 +110,7 @@ class Download extends \CandyCMS\Controller\Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('downloads', '_form');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('downloads', '_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 
@@ -129,11 +132,11 @@ class Download extends \CandyCMS\Controller\Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('downloads'));
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/download');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('downloads'));
+      return Helper::successMessage(LANG_SUCCESS_CREATE, '/download');
     }
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
   }
 
   /**
@@ -152,11 +155,11 @@ class Download extends \CandyCMS\Controller\Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, '/download');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/download');
     }
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
   }
 
   /**
@@ -170,10 +173,10 @@ class Download extends \CandyCMS\Controller\Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/download');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/download');
     }
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
   }
 }

@@ -161,8 +161,8 @@ abstract class Main {
 
     # Highlight text for search results
     if(!empty($sHighlight)) {
-      $aData['title'] = \CandyCMS\Helper\Helper::formatOutput($aData['title'], $sHighlight);
-      $aData['teaser'] = \CandyCMS\Helper\Helper::formatOutput($aData['teaser'], $sHighlight);
+      $aData['title'] = isset($aData['title']) ? \CandyCMS\Helper\Helper::formatOutput($aData['title'], $sHighlight) : '';
+      $aData['teaser'] = isset($aData['teaser']) ? \CandyCMS\Helper\Helper::formatOutput($aData['teaser'], $sHighlight) : '';
       $aData['content'] = \CandyCMS\Helper\Helper::formatOutput($aData['content'], $sHighlight);
     }
 

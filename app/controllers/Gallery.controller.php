@@ -11,12 +11,15 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Gallery as Model;
+
 require_once 'app/models/Gallery.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
-class Gallery extends \CandyCMS\Controller\Main {
+class Gallery extends Main {
 
   /**
    * Include the gallery model.
@@ -26,7 +29,7 @@ class Gallery extends \CandyCMS\Controller\Main {
    *
    */
   public function __init() {
-    $this->_oModel = new \CandyCMS\Model\Gallery($this->_aRequest, $this->_aSession, $this->_aFile);
+    $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
   /**
@@ -44,8 +47,8 @@ class Gallery extends \CandyCMS\Controller\Main {
     # Album images
     if (!empty($this->_iId)) {
       # collect data array
-      $sAlbumName = \CandyCMS\Model\Gallery::getAlbumName($this->_iId);
-      $sAlbumDescription = \CandyCMS\Model\Gallery::getAlbumContent($this->_iId);
+      $sAlbumName = Model::getAlbumName($this->_iId);
+      $sAlbumDescription = Model::getAlbumContent($this->_iId);
 
       # Get data and count afterwards
       $this->_aData = $this->_oModel->getThumbs($this->_iId);
@@ -58,7 +61,7 @@ class Gallery extends \CandyCMS\Controller\Main {
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle($this->_removeHighlight(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
-      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('galleries' ,'files');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
       return $this->_oSmarty->fetch('files.tpl');
     }
     # Album overview
@@ -73,7 +76,7 @@ class Gallery extends \CandyCMS\Controller\Main {
       $this->_oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
-      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('galleries' ,'albums');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
       return $this->_oSmarty->fetch('albums.tpl');
     }
   }
@@ -93,7 +96,7 @@ class Gallery extends \CandyCMS\Controller\Main {
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
       $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
-      $this->_setTitle(\CandyCMS\Helper\Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
     else {
       $this->_aData['title']        = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
@@ -112,7 +115,7 @@ class Gallery extends \CandyCMS\Controller\Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('galleries', '_form_album');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_album');
     return $this->_oSmarty->fetch('_form_album.tpl');
   }
 
@@ -133,12 +136,12 @@ class Gallery extends \CandyCMS\Controller\Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('gallery_albums'));
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, '/gallery');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
+      return Helper::successMessage(LANG_SUCCESS_CREATE, '/gallery');
     }
 
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
   }
 
   /**
@@ -159,12 +162,12 @@ class Gallery extends \CandyCMS\Controller\Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
     }
 
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
   }
 
   /**
@@ -178,13 +181,13 @@ class Gallery extends \CandyCMS\Controller\Main {
    */
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
-      \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
     }
 
     else {
       unset($this->_iId);
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
     }
   }
 
@@ -199,7 +202,7 @@ class Gallery extends \CandyCMS\Controller\Main {
   protected function _showFormFileTemplate() {
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
-      $this->_oSmarty->assign('content', \CandyCMS\Model\Gallery::getFileContent($this->_iId));
+      $this->_oSmarty->assign('content', Model::getFileContent($this->_iId));
 
       # Language
       $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
@@ -208,7 +211,7 @@ class Gallery extends \CandyCMS\Controller\Main {
     else {
       # See helper/Image.helper.php for details!
       # r = resize, c = cut
-      $sDefault = isset($this->_aRequest['cut']) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['cut']) : 'c';
+      $sDefault = isset($this->_aRequest['cut']) ? Helper::formatInput($this->_aRequest['cut']) : 'c';
 
       $this->_oSmarty->assign('default', $sDefault);
       $this->_oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
@@ -225,7 +228,7 @@ class Gallery extends \CandyCMS\Controller\Main {
         $this->_oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('galleries', '_form_file');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
     return $this->_oSmarty->fetch('_form_file.tpl');
   }
 
@@ -241,17 +244,17 @@ class Gallery extends \CandyCMS\Controller\Main {
    */
   public function createFile() {
     if (USER_RIGHT < 3)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
 
     else {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
           # Log uploaded image. Request ID = album id
-          \CandyCMS\Controller\Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-          return \CandyCMS\Helper\Helper::successMessage(LANG_GALLERY_FILE_CREATE_SUCCESS, '/gallery/' . $this->_iId);
+          Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
+          return Helper::successMessage(LANG_GALLERY_FILE_CREATE_SUCCESS, '/gallery/' . $this->_iId);
         }
         else
-          return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId . '/createfile');
+          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId . '/createfile');
       }
       else
         return $this->_showFormFileTemplate();
@@ -297,16 +300,16 @@ class Gallery extends \CandyCMS\Controller\Main {
    */
   public function updateFile() {
     if( USER_RIGHT < 3 )
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
     else {
       if( isset($this->_aRequest['updatefile_gallery']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true) {
-          \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-          return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
         }
         else
-          return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL, '/gallery');
+          return Helper::errorMessage(LANG_ERROR_GLOBAL, '/gallery');
       }
       else
         return $this->_showFormFileTemplate();
@@ -322,16 +325,16 @@ class Gallery extends \CandyCMS\Controller\Main {
    */
   public function destroyFile() {
     if( USER_RIGHT < 3 )
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
-        \CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         unset($this->_iId);
-        return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
+        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
       }
       else
-        return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/gallery');
+        return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/gallery');
     }
   }
 }

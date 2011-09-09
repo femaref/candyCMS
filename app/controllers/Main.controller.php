@@ -12,6 +12,8 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+
 abstract class Main {
 
 	/**
@@ -398,7 +400,7 @@ abstract class Main {
 	 *
 	 */
 	protected function _removeHighlight($sTitle) {
-		$sTitle = \CandyCMS\Helper\Helper::removeSlahes($sTitle);
+		$sTitle = Helper::removeSlahes($sTitle);
 		$sTitle = str_replace('<mark>', '', $sTitle);
 		$sTitle = str_replace('</mark>', '', $sTitle);
 		return $sTitle;
@@ -416,7 +418,7 @@ abstract class Main {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
 			$this->_aError[$sField] = empty($sMessage) ? constant('LANG_ERROR_FORM_MISSING_' . strtoupper($sField)) : $sMessage;
 
-		if (isset($this->_aRequest['email']) && ( \CandyCMS\Helper\Helper::checkEmailAddress($this->_aRequest['email']) == false ))
+		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
 			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
 	}
 
@@ -433,10 +435,10 @@ abstract class Main {
 	 */
 	public function create($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
-			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
 			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
 		}
 	}
@@ -454,10 +456,10 @@ abstract class Main {
 	 */
 	public function update($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 		else {
-			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
 			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
 		}
 	}
@@ -473,7 +475,7 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRight = 3) {
-		\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-		return (USER_RIGHT < $iUserRight) ? \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
 	}
 }

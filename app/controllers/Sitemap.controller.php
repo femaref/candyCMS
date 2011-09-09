@@ -11,12 +11,16 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Blog as Model_Blog;
+use CandyCMS\Model\Content as Model_Content;
+use CandyCMS\Model\Gallery as Model_Gallery;
+
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
 require_once 'app/models/Gallery.model.php';
-require_once 'app/models/User.model.php';
 
-class Sitemap extends \CandyCMS\Controller\Main {
+class Sitemap extends Main {
 
 	/**
 	 * Show the sitemap as XML.
@@ -33,7 +37,7 @@ class Sitemap extends \CandyCMS\Controller\Main {
 
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sitemaps', 'xml');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
 		return $this->_oSmarty->fetch('xml.tpl');
 	}
 
@@ -47,7 +51,7 @@ class Sitemap extends \CandyCMS\Controller\Main {
 	public function show() {
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('sitemaps', 'show');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
 		return $this->_oSmarty->fetch('show.tpl');
 	}
 
@@ -58,13 +62,13 @@ class Sitemap extends \CandyCMS\Controller\Main {
 	 *
 	 */
 	private function _getSitemap() {
-		$oBlog = new \CandyCMS\Model\Blog();
+		$oBlog = new Model_Blog();
 		$aBlog = $oBlog->getData('', false, 1000);
 
-		$oContent = new \CandyCMS\Model\Content();
+		$oContent = new Model_Content();
 		$aContent = $oContent->getData('', false, 1000);
 
-		$oGallery = new \CandyCMS\Model\Gallery();
+		$oGallery = new Model_Gallery();
 		$aGallery = $oGallery->getData('', false, false, 1000);
 
 		$this->_oSmarty->assign('blog', $aBlog);

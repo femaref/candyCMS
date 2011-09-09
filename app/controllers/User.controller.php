@@ -17,7 +17,7 @@ require_once 'app/models/User.model.php';
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
-class User extends \CandyCMS\Controller\Main {
+class User extends Main {
 
 	/**
 	 * Include the user model.
@@ -44,7 +44,7 @@ class User extends \CandyCMS\Controller\Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
@@ -102,11 +102,11 @@ class User extends \CandyCMS\Controller\Main {
 							(int) $this->_aRequest['id'] :
 							USER_ID;
 
-			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-			return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
 		}
 		else
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/' . $this->_iId);
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/' . $this->_iId);
 	}
 
 	/**
@@ -119,7 +119,7 @@ class User extends \CandyCMS\Controller\Main {
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
 		if ($this->_iId !== USER_ID && USER_RIGHT < 4) {
-			\CandyCMS\Helper\Helper::redirectTo('/user/update');
+			Helper::redirectTo('/user/update');
 			exit();
 		}
 
@@ -168,7 +168,7 @@ class User extends \CandyCMS\Controller\Main {
 		$this->_oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
 		$this->_oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
 
-		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('users', '_form');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
 		return $this->_oSmarty->fetch('_form.tpl');
 	}
 
@@ -191,10 +191,10 @@ class User extends \CandyCMS\Controller\Main {
 			return $this->_showFormTemplate();
 
 		elseif ($oUpload->uploadAvatarFile(false) === true)
-			return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
 
 		else
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
+			return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
 	}
 
 	/**
@@ -222,14 +222,14 @@ class User extends \CandyCMS\Controller\Main {
 			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
 
 			if (USER_RIGHT < 3)
-				return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 			else {
 				# Language
 				$this->_oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
 				$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
 
-				$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('users', 'overview');
+				$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
 				return $this->_oSmarty->fetch('overview.tpl');
 			}
 		}
@@ -242,7 +242,7 @@ class User extends \CandyCMS\Controller\Main {
 			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
 			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
 
-			$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('users', 'show');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
 			return $this->_oSmarty->fetch('show.tpl');
 		}
 	}
@@ -261,25 +261,25 @@ class User extends \CandyCMS\Controller\Main {
 		if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
 			if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
 				if ($this->_oModel->destroy($this->_iId) === true)
-					return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/');
+					return Helper::successMessage(LANG_SUCCESS_DESTROY, '/');
 				else
-					return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
+					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
 			} else
-				return \CandyCMS\Helper\Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
+				return Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
 
 		# We are admin and can delete users
 		} elseif (USER_RIGHT == 4) {
 			if ($this->_oModel->destroy($this->_iId) === true) {
-				\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-				return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
+				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+				return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
 			}
 			else
-				return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
+				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
 		}
 
 		# No admin and not the active user
 		else
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 	}
 
 	/**
@@ -323,26 +323,26 @@ class User extends \CandyCMS\Controller\Main {
 		}
 
 		# Generate verification code for users (double-opt-in)
-		$iVerificationCode = \CandyCMS\Helper\Helper::createRandomChar(12, true);
-		$sVerificationUrl = \CandyCMS\Helper\Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
+		$iVerificationCode = Helper::createRandomChar(12, true);
+		$sVerificationUrl = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
 		elseif ($this->_oModel->create($iVerificationCode) === true) {
-			$sMailMessage = str_replace('%u', \CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']), LANG_MAIL_USER_CREATE_BODY);
+			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), LANG_MAIL_USER_CREATE_BODY);
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
-			\CandyCMS\Controller\Log::insert($this->_aRequest['section'], $this->_aRequest['action'], \CandyCMS\Helper\Helper::getLastEntry('users'));
-			\CandyCMS\Controller\Mail::send(\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']),
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
+			Mail::send(Helper::formatInput($this->_aRequest['email']),
 																								LANG_MAIL_USER_CREATE_SUBJECT,
 																								$sMailMessage,
 																								WEBSITE_MAIL_NOREPLY);
 
-      return \CandyCMS\Helper\Helper::successMessage(LANG_MAIL_GLOBAL_SENT_TITLE, '/');
+      return Helper::successMessage(LANG_MAIL_GLOBAL_SENT_TITLE, '/');
 		}
 		else
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
 	}
 
 	/**
@@ -354,15 +354,15 @@ class User extends \CandyCMS\Controller\Main {
 	 */
 	protected function _showCreateUserTemplate() {
 		$this->_oSmarty->assign('name', isset($this->_aRequest['name']) ?
-										\CandyCMS\Helper\Helper::formatInput($this->_aRequest['name']) :
+										Helper::formatInput($this->_aRequest['name']) :
 										'');
 
 		$this->_oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
-										\CandyCMS\Helper\Helper::formatInput($this->_aRequest['surname']) :
+										Helper::formatInput($this->_aRequest['surname']) :
 										'');
 
 		$this->_oSmarty->assign('email', isset($this->_aRequest['email']) ?
-										\CandyCMS\Helper\Helper::formatInput($this->_aRequest['email']) :
+										Helper::formatInput($this->_aRequest['email']) :
 										'');
 
     if (!empty($this->_aError)) {
@@ -370,7 +370,7 @@ class User extends \CandyCMS\Controller\Main {
 				$this->_oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('users', 'create');
+		$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'create');
 		return $this->_oSmarty->fetch('create.tpl');
 	}
 
@@ -383,12 +383,12 @@ class User extends \CandyCMS\Controller\Main {
 	 */
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
+			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return \CandyCMS\Helper\Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
+			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
 
 		else
-			return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
+			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
 	}
 }

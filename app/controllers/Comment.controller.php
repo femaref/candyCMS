@@ -12,11 +12,14 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Comment as Model;
+
 require_once 'app/models/Comment.model.php';
 require_once 'app/helpers/Page.helper.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
-class Comment extends \CandyCMS\Controller\Main {
+class Comment extends Main {
 
   /**
    * The provided blog data.
@@ -70,7 +73,7 @@ class Comment extends \CandyCMS\Controller\Main {
    */
   public function __init($aParentData = '') {
     $this->_aParentData =& $aParentData;
-    $this->_oModel = new \CandyCMS\Model\Comment($this->_aRequest, $this->_aSession);
+    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
   /**
@@ -99,7 +102,7 @@ class Comment extends \CandyCMS\Controller\Main {
       # Language
       $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
-      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('comments', 'show');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
       return $this->_oSmarty->fetch('show.tpl') . $this->create('create_comment');
     }
   }
@@ -134,7 +137,7 @@ class Comment extends \CandyCMS\Controller\Main {
     # Language
     $this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('comments', '_form');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', '_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 
@@ -184,16 +187,16 @@ class Comment extends \CandyCMS\Controller\Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      $iLastComment = \CandyCMS\Helper\Helper::getLastEntry('comments') + 1;
+      $iLastComment = Helper::getLastEntry('comments') + 1;
       $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
 
       if ($this->_oModel->create() === true) {
-        \CandyCMS\Controller\Log::insert('comment', 'create', $iLastComment);
-        return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+        Log::insert('comment', 'create', $iLastComment);
+        return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
       }
 
       else
-        return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
     }
   }
 
@@ -210,11 +213,11 @@ class Comment extends \CandyCMS\Controller\Main {
     $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      \CandyCMS\Controller\Log::insert('comment', 'destroy', (int) $this->_aRequest['id']);
-      return \CandyCMS\Helper\Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+      Log::insert('comment', 'destroy', (int) $this->_aRequest['id']);
+      return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
     }
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
   }
 
   /**
@@ -242,6 +245,6 @@ class Comment extends \CandyCMS\Controller\Main {
       }
     }
     else
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
+      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
   }
 }

@@ -11,9 +11,11 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+
 require_once 'app/controllers/Search.controller.php';
 
-class Error extends \CandyCMS\Controller\Main {
+class Error extends Main {
 
   /**
    * Show a 404 error when a page is not avaiable or found.
@@ -29,12 +31,12 @@ class Error extends \CandyCMS\Controller\Main {
     $this->_oSmarty->assign('lang_subheadline', 'Meinten Sie vielleicht:');
 
     if (isset($this->_aRequest['seo_title'])) {
-      $oSearch = new \CandyCMS\Helper\Search($this->_aRequest, $this->_aSession);
+      $oSearch = new Search($this->_aRequest, $this->_aSession);
       $oSearch->__init();
       $this->_oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));
     }
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('errors', '404');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('errors', '404');
     return $this->_oSmarty->fetch('404.tpl');
   }
 }

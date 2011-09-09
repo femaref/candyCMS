@@ -11,10 +11,13 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Upload as Upload;
+
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
-class Media extends \CandyCMS\Controller\Main {
+class Media extends Main {
 
   /**
    * Upload media file.
@@ -27,14 +30,14 @@ class Media extends \CandyCMS\Controller\Main {
    */
   public function create() {
     if (USER_RIGHT < 3)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       if (isset($this->_aRequest['create_file'])) {
         if ($this->_proceedUpload() == true)
-          return \CandyCMS\Helper\Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
+          return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
         else
-          return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
+          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
       }
       else
         return $this->_showUploadFileTemplate();
@@ -55,7 +58,7 @@ class Media extends \CandyCMS\Controller\Main {
     $this->_oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
     $this->_oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('medias', 'create');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('medias', 'create');
     return $this->_oSmarty->fetch('create.tpl');
   }
 
@@ -67,7 +70,7 @@ class Media extends \CandyCMS\Controller\Main {
    *
    */
   private function _proceedUpload() {
-    $oUpload = new \CandyCMS\Helper\Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
+    $oUpload = new Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
     return $oUpload->uploadFile('media');
   }
 
@@ -80,7 +83,7 @@ class Media extends \CandyCMS\Controller\Main {
    */
   public function show() {
     if (USER_RIGHT < 3)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       $sOriginalPath = PATH_UPLOAD . '/media';
@@ -113,8 +116,8 @@ class Media extends \CandyCMS\Controller\Main {
           $aImgDim = '';
           $aFiles[] = array(
               'name'  => $sFile,
-              'cdate' => \CandyCMS\Helper\Helper::formatTimestamp(filectime($sPath), true),
-              'size'  => \CandyCMS\Helper\Helper::getFileSize($sPath),
+              'cdate' => Helper::formatTimestamp(filectime($sPath), true),
+              'size'  => Helper::getFileSize($sPath),
               'type'  => $sFileType,
               'dim'   => $aImgDim
         );
@@ -129,7 +132,7 @@ class Media extends \CandyCMS\Controller\Main {
       $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
       $this->_oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
       $this->_oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
-      $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('medias', 'show');
+      $this->_oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
       return $this->_oSmarty->fetch('show.tpl');
     }
   }
@@ -144,15 +147,15 @@ class Media extends \CandyCMS\Controller\Main {
    */
   public function destroy() {
     if (USER_RIGHT < 3)
-      return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
       if (is_file(PATH_UPLOAD . '/media/' . $this->_aRequest['id'])) {
         unlink(PATH_UPLOAD . '/media/' . $this->_aRequest['id']);
-        return \CandyCMS\Helper\Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/media');
+        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/media');
       }
       else
-        return \CandyCMS\Helper\Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/media');
+        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/media');
     }
   }
 }

@@ -11,9 +11,12 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Search as Model;
+
 require_once 'app/models/Search.model.php';
 
-class Search extends \CandyCMS\Controller\Main {
+class Search extends Main {
 
 	/**
 	 * Search headline.
@@ -39,7 +42,7 @@ class Search extends \CandyCMS\Controller\Main {
 	 *
 	 */
   public function __init() {
-    $this->_oModel = new \CandyCMS\Model\Search($this->_aRequest, $this->_aSession);
+    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -65,7 +68,7 @@ class Search extends \CandyCMS\Controller\Main {
 			# Language
 			$this->_oSmarty->assign('lang_headline', $this->_sHeadline);
 
-			$this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', 'show');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
 			return $this->_oSmarty->fetch('show.tpl');
 		}
 	}
@@ -82,13 +85,13 @@ class Search extends \CandyCMS\Controller\Main {
 	 */
   public function getSearch($sTitle = '') {
     $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
-    $this->_sSearch = empty($sTitle) ? \CandyCMS\Helper\Helper::formatInput($this->_aRequest['id']) : \CandyCMS\Helper\Helper::formatInput($sTitle);
+    $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 
     $this->_oSmarty->assign('search', $this->_sSearch);
     $this->_oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', '_show');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
     return $this->_oSmarty->fetch('_show.tpl');
   }
 
@@ -105,7 +108,7 @@ class Search extends \CandyCMS\Controller\Main {
 
     $this->_oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
 
-    $this->_oSmarty->template_dir = \CandyCMS\Helper\Helper::getTemplateDir('searches', '_form');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
     return $this->_oSmarty->fetch('_form.tpl');
   }
 }
