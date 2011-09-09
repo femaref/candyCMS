@@ -14,9 +14,9 @@ namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\Helper as Helper;
 
-class Adsense {
+final class Adsense {
 
-  public function show() {
+  public final function show() {
     $oSmarty = new \Smarty();
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;

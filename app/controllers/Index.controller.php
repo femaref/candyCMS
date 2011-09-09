@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Addon\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Section as Section;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
@@ -220,9 +221,8 @@ class Index extends Main {
 		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
 		define('WEBSITE_LOCALE',    $sLocale);
 
-    # Switch to YML language
-    #$value = \sfYaml::load(file_get_contents($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.yml'));
-    #die(print_r( $value['website']['title'] ));
+    #$oI18n = new I18n($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.yml');
+    #I18n::get();
 
     # Include language if possible
 		try {

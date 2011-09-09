@@ -16,7 +16,7 @@ use Smarty;
 
 require_once 'lib/facebook/facebook.php';
 
-class FacebookCMS extends Facebook {
+final class FacebookCMS extends Facebook {
 
   # @Override because of OAUTH - Bug
   protected function _restserver($params) {

@@ -10,7 +10,7 @@
 
 namespace CandyCMS\Plugin;
 
-class FormatTimestamp {
+final class FormatTimestamp {
   private final function _setDate($iTime, $bDateOnly) {
     if(date('Ymd', $iTime) == date('Ymd', time())) {
       $sDay = LANG_GLOBAL_TODAY;

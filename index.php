@@ -51,7 +51,7 @@ try {
       !file_exists('app/helpers/AdvancedException.helper.php') ||
       !file_exists('app/helpers/Section.helper.php') ||
       !file_exists('app/helpers/Helper.helper.php') ||
-      !file_exists('lib/symfony_yaml/sfYaml.php') ||
+      !file_exists('app/helpers/I18n.helper.php') ||
       !file_exists('lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
@@ -64,7 +64,7 @@ try {
     require_once 'app/helpers/AdvancedException.helper.php';
     require_once 'app/helpers/Section.helper.php';
     require_once 'app/helpers/Helper.helper.php';
-    require_once 'lib/symfony_yaml/sfYaml.php';
+    require_once 'app/helpers/I18n.helper.php';
     require_once 'lib/smarty/Smarty.class.php';
   }
 }
