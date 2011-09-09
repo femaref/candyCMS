@@ -19,6 +19,7 @@ use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use CandyCMS\Plugin\Headlines as Headlines;
 use CandyCMS\Plugin\Teaser as Teaser;
+use Smarty;
 
 abstract class Main {
 
@@ -167,7 +168,7 @@ abstract class Main {
 	 */
 	protected function _setSmarty() {
 		# Initialize smarty
-		$this->_oSmarty = new \Smarty();
+		$this->_oSmarty = new Smarty();
 		$this->_oSmarty->cache_dir = CACHE_DIR;
 		$this->_oSmarty->compile_dir = COMPILE_DIR;
 

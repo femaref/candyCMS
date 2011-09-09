@@ -12,6 +12,8 @@
 
 namespace CandyCMS\Plugin;
 
+use CandyCMS\Helper\Helper as Helper;
+
 class Adsense {
 
   public function show() {
@@ -19,7 +21,7 @@ class Adsense {
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
 
-    $oSmarty->template_dir = \CandyCMS\Helper\Helper::getPluginTemplateDir('adsense', 'show');
+    $oSmarty->template_dir = Helper::getPluginTemplateDir('adsense', 'show');
     return $oSmarty->fetch('show.tpl');
   }
 }

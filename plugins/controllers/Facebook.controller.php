@@ -11,6 +11,9 @@
 
 namespace CandyCMS\Plugin;
 
+use CandyCMS\Helper\AdvancedException as AdvancedException;
+use Smarty;
+
 require_once 'lib/facebook/facebook.php';
 
 class FacebookCMS extends Facebook {
@@ -33,7 +36,7 @@ class FacebookCMS extends Facebook {
   }
 
   public function getConnectButton() {
-    $oSmarty = new \Smarty();
+    $oSmarty = new Smarty();
 
     $oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
     $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
@@ -57,7 +60,7 @@ class FacebookCMS extends Facebook {
         $aData = $this->api($aApiCall);
         return !empty($sKey) ? $aData[$sKey] : $aData;
       }
-      catch (\CandyCMS\Helper\AdvancedException $e) {
+      catch (AdvancedException $e) {
         die($e->getMessage());
       }
     }
@@ -73,7 +76,7 @@ class FacebookCMS extends Facebook {
 
       return $this->api($aApiCall);
     }
-    catch (\CandyCMS\Helper\AdvancedException $e) {
+    catch (AdvancedException $e) {
       die($e->getMessage());
     }
   }

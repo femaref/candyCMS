@@ -13,6 +13,8 @@
 
 namespace CandyCMS\Plugin;
 
+use CandyCMS\Helper\Image as Image;
+
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
@@ -58,7 +60,7 @@ final class Bbcode {
       else {
 
         if (!file_exists($sTempFilePath)) {
-          $oImage = new \CandyCMS\Helper\Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
+          $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
 
