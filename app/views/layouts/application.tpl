@@ -41,7 +41,7 @@
     <nav>
       <ul>
         {if $USER_RIGHT > 0}
-          <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$user}</a>!</strong></li>
+          <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$USER_NAME}</a>!</strong></li>
         {/if}
         <li><a href='/blog'>{$lang_blog}</a></li>
         <li><a href='/gallery'>{$lang_gallery}</a></li>

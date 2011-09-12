@@ -183,11 +183,10 @@ class Helper {
   }
 
   public static function formatTimestamp($iTime, $bDateOnly = false) {
-
     # Set active locale
     setlocale(LC_ALL, WEBSITE_LOCALE);
 
-    if (class_exists('FormatTimestamp') == true) {
+    if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
       $oDate = new FormatTimestamp();
       return $oDate->getDate($iTime, $bDateOnly);
     }
@@ -212,7 +211,7 @@ class Helper {
     if (!empty($sHighlight))
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
-    if (class_exists('Bbcode') == true) {
+    if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
       $oBbcode = new Bbcode();
       return $oBbcode->getFormatedText($sStr);
     }

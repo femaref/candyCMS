@@ -153,6 +153,11 @@ abstract class Main {
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
 
+    if (!isset($this->_aRequest['section'])) {
+      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+      exit();
+    }
+
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
     $this->_setI18n();
@@ -281,6 +286,8 @@ abstract class Main {
 		$this->oSmarty->assign('lang_message_close', LANG_GLOBAL_MESSAGE_CLOSE);
 		$this->oSmarty->assign('lang_missing_entry', LANG_ERROR_GLOBAL_MISSING_ENTRY);
 		$this->oSmarty->assign('lang_name', LANG_GLOBAL_NAME);
+		$this->oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
+		$this->oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
 		$this->oSmarty->assign('lang_keywords', LANG_GLOBAL_KEYWORDS);
 		$this->oSmarty->assign('lang_last_update', LANG_GLOBAL_LAST_UPDATE);
 		$this->oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
@@ -418,6 +425,17 @@ abstract class Main {
 	 */
 	public function getContent() {
 		return $this->_sContent;
+	}
+
+	/**
+	 * Give back ID.
+	 *
+	 * @access public
+	 * @return integer id
+	 *
+	 */
+	public function getId() {
+		return !empty($this->_iId) ? $this->_iId : '';
 	}
 
 	/**

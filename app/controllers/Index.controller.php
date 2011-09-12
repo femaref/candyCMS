@@ -123,6 +123,7 @@ class Index {
   *
   * @access public
   * @see config/Candy.inc.php
+  * @todo remove deprecated language parts
   *
   */
   public function loadLanguage($sPath = '') {
@@ -203,7 +204,6 @@ class Index {
   * @see config/Candy.inc.php
   * @see plugins/controllers/Facebook.controller.php
   * @return object FacebookCMS
-  * @todo better return
   *
   */
 	public function loadFacebookExtension() {
@@ -246,12 +246,13 @@ class Index {
   * @see config/Candy.inc.php
   *
   */
-  protected function _setTemplate() {
+  public function setTemplate() {
 		# We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
       setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
       $this->_sTemplate = (string) $this->_aRequest['template'];
     }
+
     # There is no request, but there might be a cookie instead
     else {
       $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
@@ -264,6 +265,47 @@ class Index {
   }
 
   /**
+  * Checks the empuxa server for a new CandyCMS version.
+  *
+  * @access private
+  * @return string string with info message and link to download.
+  *
+  */
+  private function checkForNewVersion() {
+    if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
+      $sVersionContent = @stream_get_contents($oFile);
+      @fclose($oFile);
+
+      $sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
+    }
+
+    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+            '';
+    return str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+  }
+
+  /**
+  * Load the JS language file.
+  *
+  * @access private
+  * @return string $sLangVars string with translated js
+  * @todo remove when YAML is complete and provide js language via Main.controller.php
+  *
+  */
+  private function _loadJavaScriptLanguage() {
+    $sLangVars = '';
+    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
+
+    while (!feof($oFile)) {
+      $sLangVars .= fgets($oFile);
+    }
+
+    return $sLangVars;
+  }
+
+  /**
    * Define user constants for global use.
    *
    * List of user rights:
@@ -273,6 +315,7 @@ class Index {
    * 3 = Moderators
    * 4 = Administrators
    *
+   * @access public
    * @see index.php
    *
    */
@@ -305,12 +348,6 @@ class Index {
   *
   */
   public function show() {
-		# Redirect to landing page if we got no section
-    if (!isset($this->_aRequest['section'])) {
-      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-      exit();
-    }
-
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
@@ -336,8 +373,8 @@ class Index {
 		}
 
 		# We do not have a standard action, so fetch it from the addon folder.
-		# If addon exists, proceed with override.
-		elseif (ALLOW_ADDONS === true) {
+    # If addon exists, proceed with override.
+    elseif (ALLOW_ADDONS === true) {
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }
@@ -346,63 +383,29 @@ class Index {
     elseif (strtolower($this->_aRequest['section']) == 'start')
       Helper::redirectTo('/');
 
-		# There's no request on a core module and Addons are disabled. */
-		else {
-			header('Status: 404 Not Found');
+    # There's no request on a core module and addons are disabled. */
+    else {
+      header('Status: 404 Not Found');
       Helper::redirectTo('/error/404');
     }
 
-    # Set template
-    $this->_setTemplate();
-
-		# Load JS language
-    $sLangVars = '';
-    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
-
-    while (!feof($oFile)) {
-      $sLangVars .= fgets($oFile);
-    }
-
-		# Header.tpl
-		$oSection->oSmarty->assign('user', USER_NAME);
-
-		# Check for new version of script
-		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
-      $sVersionContent = @stream_get_contents($oFile);
-      @fclose($oFile);
-
-      $sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
-    }
-
-    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
-            '';
-    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
-
-		# System variables
-		$oSection->oSmarty->assign('_javascript_language_file_', $sLangVars);
-		$oSection->oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
-
-		# Get possible flash messages
-		$aFlashMessages = $this->_getFlashMessage();
-
-		# Replace flash message with content
-		$oSection->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-		$oSection->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-		$oSection->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
-
-		# Global language
-		$oSection->oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
-		$oSection->oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
-
-
-		# Avoid Header and Footer HTML if RSS or AJAX are requested
+    # Minimal settings for AJAX-request
 		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
 			$sCachedHTML = $oSection->getContent();
 
+    # HTML with template
 		else {
+
+      # Get flash messages (success and error)
+      # *********************************************
+      $aFlashMessages = $this->_getFlashMessage();
+      $oSection->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+      $oSection->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+      $oSection->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+
+      # Define meta elements
+      # *********************************************
 			$oSection->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
 			$oSection->oSmarty->assign('meta_description', $oSection->getDescription());
 			$oSection->oSmarty->assign('meta_keywords', $oSection->getKeywords());
@@ -411,21 +414,25 @@ class Index {
 			$oSection->oSmarty->assign('meta_og_title', $oSection->getTitle());
 			$oSection->oSmarty->assign('meta_og_url', CURRENT_URL);
 
-      # We must recreate the request id because it's yet only set in the Main.controller.php
-      $oSection->oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
+      # System required variables
+      # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
+      $oSection->oSmarty->assign('_javascript_language_file_', $this->_loadJavaScriptLanguage());
+			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . $oSection->oI18n->get('website.title'));
+      $oSection->oSmarty->assign('_update_avaiable_', $this->checkForNewVersion());
 
 			$oSection->oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
 			$sCachedHTML = $oSection->oSmarty->fetch('application.tpl');
 		}
 
-		# Build absolute Path because of pretty URLs
+		# Build absolute URLs
+    # *********************************************
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
-		# Check for user custom css
+		# Check for template CSS files
+    # *********************************************
 		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
 		if (!empty($this->_sTemplate))
 			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
@@ -435,7 +442,8 @@ class Index {
 
 		$sCachedHTML = & $sCachedCss;
 
-		# Check for user custom icons etc.
+		# Check for template images
+    # *********************************************
 		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
 		if (!empty($this->_sTemplate))
 			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
@@ -446,10 +454,12 @@ class Index {
 		$sCachedHTML = & $sCachedImages;
 
 		# Cut spaces to minimize filesize
+    # *********************************************
 		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
 		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
 
 		# Compress Data
+    # *********************************************
 		if (extension_loaded('zlib'))
 			@ob_start('ob_gzhandler');
 

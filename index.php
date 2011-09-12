@@ -83,7 +83,6 @@ define('AJAX_REQUEST', (int) $iAjax);
 # Define current url
 define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
-
 @session_start();
 
 # Initialize software
@@ -94,6 +93,7 @@ $oIndex->loadPlugins(ALLOW_PLUGINS);
 $oIndex->loadLanguage(); #@deprecated when yaml is productive
 $oIndex->loadCronjob();
 $oIndex->setUser();
+$oIndex->setTemplate();
 
 /**
  * If we are on a productive enviroment, make sure that we can't override the system.
