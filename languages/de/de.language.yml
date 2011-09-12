@@ -2,3 +2,6 @@ website:
   title: CandyCMS
   description: Free, fast and simple PHP CMS.
   keywords: PHP, CMS, Free CMS, Open Source CMS
+
+global:
+  about: Über

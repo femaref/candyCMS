@@ -140,40 +140,40 @@ class User extends Main {
 		}
 
 		foreach ($this->_aData as $sColumn => $sData)
-			$this->_oSmarty->assign($sColumn, $sData);
+			$this->oSmarty->assign($sColumn, $sData);
 
 		if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->_oSmarty->assign('uid', $iId);
+		$this->oSmarty->assign('uid', $iId);
 
 		# Set Form params
-		$this->_oSmarty->assign('style', 'display:none');
+		$this->oSmarty->assign('style', 'display:none');
 
 		# Language
-		$this->_oSmarty->assign('lang_account_title', LANG_USER_UPDATE_ACCOUNT_TITLE);
-		$this->_oSmarty->assign('lang_account_info', LANG_USER_UPDATE_ACCOUNT_INFO);
-		$this->_oSmarty->assign('lang_image_change', LANG_USER_UPDATE_IMAGE_LABEL_CHANGE);
-		$this->_oSmarty->assign('lang_image_choose', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
-		$this->_oSmarty->assign('lang_image_headline', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
-		$this->_oSmarty->assign('lang_image_terms', LANG_USER_UPDATE_IMAGE_LABEL_TERMS);
-		$this->_oSmarty->assign('lang_image_upload', LANG_USER_UPDATE_IMAGE_TITLE);
-		$this->_oSmarty->assign('lang_image_upload_info', LANG_USER_UPDATE_IMAGE_INFO);
-		$this->_oSmarty->assign('lang_password_change', LANG_USER_UPDATE_PASSWORD_TITLE);
-		$this->_oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
-		$this->_oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
-		$this->_oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
-		$this->_oSmarty->assign('lang_user_content', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
-		$this->_oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
-		$this->_oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
-		$this->_oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);
-		$this->_oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
-		$this->_oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
+		$this->oSmarty->assign('lang_account_title', LANG_USER_UPDATE_ACCOUNT_TITLE);
+		$this->oSmarty->assign('lang_account_info', LANG_USER_UPDATE_ACCOUNT_INFO);
+		$this->oSmarty->assign('lang_image_change', LANG_USER_UPDATE_IMAGE_LABEL_CHANGE);
+		$this->oSmarty->assign('lang_image_choose', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
+		$this->oSmarty->assign('lang_image_headline', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
+		$this->oSmarty->assign('lang_image_terms', LANG_USER_UPDATE_IMAGE_LABEL_TERMS);
+		$this->oSmarty->assign('lang_image_upload', LANG_USER_UPDATE_IMAGE_TITLE);
+		$this->oSmarty->assign('lang_image_upload_info', LANG_USER_UPDATE_IMAGE_INFO);
+		$this->oSmarty->assign('lang_password_change', LANG_USER_UPDATE_PASSWORD_TITLE);
+		$this->oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
+		$this->oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
+		$this->oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
+		$this->oSmarty->assign('lang_user_content', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
+		$this->oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
+		$this->oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
+		$this->oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);
+		$this->oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
+		$this->oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
-		return $this->_oSmarty->fetch('_form.tpl');
+		$this->oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
+		return $this->oSmarty->fetch('_form.tpl');
 	}
 
 	/**
@@ -215,11 +215,11 @@ class User extends Main {
 			$this->_iId = (int) $iUserId;
 
 		$this->_aData = $this->_oModel->getData($iUserId);
-    $this->_oSmarty->assign('user', $this->_aData);
+    $this->oSmarty->assign('user', $this->_aData);
 
     # Language
-    $this->_oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
-    $this->_oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
+    $this->oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
+    $this->oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
 
 		if (empty($this->_iId)) {
 			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
@@ -230,11 +230,11 @@ class User extends Main {
 
 			else {
 				# Language
-				$this->_oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
-				$this->_oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
+				$this->oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
+				$this->oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
 
-				$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
-				return $this->_oSmarty->fetch('overview.tpl');
+				$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
+				return $this->oSmarty->fetch('overview.tpl');
 			}
 		}
 		else {
@@ -243,11 +243,11 @@ class User extends Main {
 			$this->_setDescription($this->_aData[1]['full_name']);
 
 			# Language
-			$this->_oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
-			$this->_oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
+			$this->oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
+			$this->oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
-			return $this->_oSmarty->fetch('show.tpl');
+			$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
+			return $this->oSmarty->fetch('show.tpl');
 		}
 	}
 
@@ -357,25 +357,25 @@ class User extends Main {
 	 *
 	 */
 	protected function _showCreateUserTemplate() {
-		$this->_oSmarty->assign('name', isset($this->_aRequest['name']) ?
+		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
 										'');
 
-		$this->_oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
 										Helper::formatInput($this->_aRequest['surname']) :
 										'');
 
-		$this->_oSmarty->assign('email', isset($this->_aRequest['email']) ?
+		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
 										Helper::formatInput($this->_aRequest['email']) :
 										'');
 
     if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('users', 'create');
-		return $this->_oSmarty->fetch('create.tpl');
+		$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'create');
+		return $this->oSmarty->fetch('create.tpl');
 	}
 
 	/**

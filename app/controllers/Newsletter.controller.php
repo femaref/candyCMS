@@ -80,18 +80,18 @@ class Newsletter extends Main {
   private function _showHandleNewsletterTemplate() {
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     # Language
-    $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
-    $this->_oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
+    $this->oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
+    $this->oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
 
     $this->_setDescription(LANG_NEWSLETTER_HANDLE_INFO);
     $this->_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'newsletter');
-    return $this->_oSmarty->fetch('newsletter.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'newsletter');
+    return $this->oSmarty->fetch('newsletter.tpl');
   }
 
   /**
@@ -121,21 +121,21 @@ class Newsletter extends Main {
     $sSubject = isset($this->_aRequest['subject']) ? (string) $this->_aRequest['subject'] : '';
     $sContent = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
 
-    $this->_oSmarty->assign('subject', $sSubject);
-    $this->_oSmarty->assign('content', $sContent);
+    $this->oSmarty->assign('subject', $sSubject);
+    $this->oSmarty->assign('content', $sContent);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     # Language
-    $this->_oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
-    $this->_oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
-    $this->_oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
+    $this->oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
+    $this->oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
+    $this->oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'create');
-    return $this->_oSmarty->fetch('create.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'create');
+    return $this->oSmarty->fetch('create.tpl');
   }
 
   /**

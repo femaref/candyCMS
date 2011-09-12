@@ -14,12 +14,12 @@ namespace CandyCMS\Controller;
 use CandyCMS\Addon\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Section as Section;
+use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
-class Index extends Main {
+class Index {
 
   /**
   * @var array
@@ -61,115 +61,60 @@ class Index extends Main {
   */
   private $_sLanguage;
 
-  /**
-  * Overrides parent method because we didn't load the config files yet.
-  *
-  * @see Main.controller.php
-  * @access public
-  * @param array $aRequest alias for the combination of $_GET and $_POST
-  * @param array $aSession alias for $_SESSION
-  * @param array $aFile alias for $_FILE
-  * @param array $aCookie alias for $_COOKIE
-  *
-  */
-  public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
-    $this->_aRequest  = & $aRequest;
-    $this->_aSession  = & $aSession;
-    $this->_aFile     = & $aFile;
-    $this->_aCookie   = & $aCookie;
-  }
+	/**
+	 * Initialize the software by adding input params.
+	 *
+	 * @access public
+	 * @param array $aRequest alias for the combination of $_GET and $_POST
+	 * @param array $aSession alias for $_SESSION
+	 * @param array $aFile alias for $_FILE
+	 * @param array $aCookie alias for $_COOKIE
+	 *
+	 */
+	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+		$this->_aRequest	= & $aRequest;
+		$this->_aSession	= & $aSession;
+		$this->_aFile			= & $aFile;
+		$this->_aCookie		= & $aCookie;
+	}
 
   /**
-  * Load the Candy.inc.php and Facebook.inc.php files with our all our configuration constants.
+  * Load all config files.
   *
   * @access public
+  * @param array $aConfigs array of config files
   * @param string $sPath Path prefix. Needed when not in root path
   * @see install/index.php
   *
   */
-  public function loadConfig($sPath = '') {
-    # Essential config file
-    try {
-      if (!file_exists($sPath . 'config/Candy.inc.php'))
-        throw new AdvancedException('Missing Candy.inc.php file.');
-      else
-        require_once $sPath . 'config/Candy.inc.php';
+  public function loadConfigFiles($aConfigs, $sPath = '') {
+    foreach ($aConfigs as $sConfig) {
+      try {
+        if (!file_exists($sPath . 'config/' . ucfirst($sConfig) . '.inc.php'))
+          throw new AdvancedException('Missing ' . ucfirst($sConfig) . ' config file.');
+        else
+          require_once $sPath . 'config/' . ucfirst($sConfig) . '.inc.php';
+      }
+      catch (AdvancedException $e) {
+        die($e->getMessage());
+      }
     }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
-
-    # Optional facebook config. Used for apps and share buttons
-    if (file_exists($sPath . 'config/Facebook.inc.php'))
-      require_once $sPath . 'config/Facebook.inc.php';
 	}
 
   /**
   * Load all defined plugins.
   *
   * @access public
+  * @param string $sAllowedPlugins comma separated plugin names
   * @param string $sPath Path prefix. Needed when not in root path
   * @see config/Candy.inc.php
   *
   */
-  public function loadPlugins($sPath = '') {
-		try {
-      if (!file_exists($sPath . 'config/Plugins.inc.php'))
-        throw new AdvancedException('Missing plugin config file.');
-      else
-        require_once $sPath . 'config/Plugins.inc.php';
-    }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
-
-		$aPlugins = preg_split("/[\s]*[,][\s]*/", ALLOW_PLUGINS);
-
-		foreach ($aPlugins as $sPluginName) {
-			if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
-				require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
-		}
-	}
-
-  /**
-  * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  * @see plugins/controllers/Facebook.controller.php
-  * @return object FacebookCMS
-  * @todo better return
-  *
-  */
-	public function loadFacebookExtension() {
-		if (class_exists('FacebookCMS')) {
-			return new FacebookCMS(array(
-					'appId' => FACEBOOK_APP_ID,
-					'secret' => FACEBOOK_SECRET,
-					'cookie' => true,
-			));
-		}
-	}
-
-  /**
-  * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  *
-  */
-  public function setTemplate() {
-		# We got a template request? Let's change it!
-    if (isset($this->_aRequest['template'])) {
-      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
-      $this->_sTemplate = (string) $this->_aRequest['template'];
-    }
-    # There is no request, but there might be a cookie instead
-    else {
-      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $this->_sTemplate = isset($aRequest['default_template']) ?
-              (string) $aRequest['default_template'] :
-              '';
+  public function loadPlugins($sAllowedPlugins, $sPath = '') {
+    $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
+    foreach ($aPlugins as $sPluginName) {
+      if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+        require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
     }
   }
 
@@ -180,7 +125,7 @@ class Index extends Main {
   * @see config/Candy.inc.php
   *
   */
-  public function setLanguage($sPath = '') {
+  public function loadLanguage($sPath = '') {
 		# We got a language request? Let's change it!
 		if (isset($this->_aRequest['language'])) {
 			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
@@ -221,9 +166,7 @@ class Index extends Main {
 		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
 		define('WEBSITE_LOCALE',    $sLocale);
 
-    #$oI18n = new I18n($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.yml');
-    #I18n::get();
-
+    # @deprecated
     # Include language if possible
 		try {
       if (!file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
@@ -254,6 +197,26 @@ class Index extends Main {
   }
 
   /**
+  * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  * @see plugins/controllers/Facebook.controller.php
+  * @return object FacebookCMS
+  * @todo better return
+  *
+  */
+	public function loadFacebookExtension() {
+		if (class_exists('FacebookCMS')) {
+			return new FacebookCMS(array(
+					'appId' => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+					'cookie' => true,
+			));
+		}
+	}
+
+  /**
   * Store and show flash status messages in the application.
   *
   * @access protected
@@ -277,6 +240,64 @@ class Index extends Main {
   }
 
   /**
+  * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
+  *
+  * @access public
+  * @see config/Candy.inc.php
+  *
+  */
+  protected function _setTemplate() {
+		# We got a template request? Let's change it!
+    if (isset($this->_aRequest['template'])) {
+      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
+      $this->_sTemplate = (string) $this->_aRequest['template'];
+    }
+    # There is no request, but there might be a cookie instead
+    else {
+      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $this->_sTemplate = isset($aRequest['default_template']) ?
+              (string) $aRequest['default_template'] :
+              '';
+    }
+
+    return $this->_sTemplate;
+  }
+
+  /**
+   * Define user constants for global use.
+   *
+   * List of user rights:
+   * 0 = Guests / unregistered users
+   * 1 = Members
+   * 2 = Facebook users
+   * 3 = Moderators
+   * 4 = Administrators
+   *
+   * @see index.php
+   *
+   */
+	public function setUser() {
+    $aUser = Model_Session::getSessionData();
+
+    define('USER_ID', (int) $aUser['id']);
+    define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');
+
+    # Try to get facebook data
+    if (USER_ID == 0) {
+      $oFacebook = $this->loadFacebookExtension();
+      if ($oFacebook == true)
+        $aFacebookData = $oFacebook->getUserData();
+    }
+
+    define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $aUser['user_right']);
+    define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ? $aFacebookData[0]['uid'] : '');
+    define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $aUser['email']);
+    define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $aUser['name']);
+    define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $aUser['surname']);
+    define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
+  }
+
+  /**
   * Show the application.tpl with all header and footer data such as meta tags etc.
   *
   * @access public
@@ -285,54 +306,12 @@ class Index extends Main {
   */
   public function show() {
 		# Redirect to landing page if we got no section
-		if (!isset($this->_aRequest['section'])) {
-			Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-			exit();
-		}
-
-		# Load JS language
-    $sLangVars = '';
-    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
-
-    while (!feof($oFile)) {
-      $sLangVars .= fgets($oFile);
+    if (!isset($this->_aRequest['section'])) {
+      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+      exit();
     }
 
-		# Header.tpl
-		$oSmarty = $this->_setSmarty();
-		$oSmarty->assign('user', USER_NAME);
-
-		# Check for new version of script
-		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
-      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
-      $sVersionContent = @stream_get_contents($oFile);
-      @fclose($oFile);
-
-      $sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
-    }
-
-    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
-            '';
-    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
-
-		# System variables
-		$oSmarty->assign('_javascript_language_file_', $sLangVars);
-		$oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
-
-		# Get possible flash messages
-		$aFlashMessages = $this->_getFlashMessage();
-
-		# Replace flash message with content
-		$oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-		$oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-		$oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
-
-		# Global language
-		$oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
-		$oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
-
-		# Define out core modules. All of them are separately handled in app/helper/Section.helper.php
+    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						strtolower($this->_aRequest['section']) == 'blog' ||
@@ -373,27 +352,72 @@ class Index extends Main {
       Helper::redirectTo('/error/404');
     }
 
+    # Set template
+    $this->_setTemplate();
+
+		# Load JS language
+    $sLangVars = '';
+    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
+
+    while (!feof($oFile)) {
+      $sLangVars .= fgets($oFile);
+    }
+
+		# Header.tpl
+		$oSection->oSmarty->assign('user', USER_NAME);
+
+		# Check for new version of script
+		if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
+      $sVersionContent = @stream_get_contents($oFile);
+      @fclose($oFile);
+
+      $sVersionContent &= ( $sVersionContent > VERSION ) ? (int) $sVersionContent : '';
+    }
+
+    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
+            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+            '';
+    $sLangUpdateAvaiable = str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+
+		# System variables
+		$oSection->oSmarty->assign('_javascript_language_file_', $sLangVars);
+		$oSection->oSmarty->assign('_update_avaiable_', $sLangUpdateAvaiable);
+
+		# Get possible flash messages
+		$aFlashMessages = $this->_getFlashMessage();
+
+		# Replace flash message with content
+		$oSection->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+		$oSection->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+		$oSection->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+
+		# Global language
+		$oSection->oSmarty->assign('lang_newsletter_handle', LANG_NEWSLETTER_HANDLE_TITLE);
+		$oSection->oSmarty->assign('lang_newsletter_create', LANG_NEWSLETTER_CREATE_TITLE);
+
+
 		# Avoid Header and Footer HTML if RSS or AJAX are requested
 		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
 			$sCachedHTML = $oSection->getContent();
 
 		else {
-			$oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oSmarty->assign('meta_description', $oSection->getDescription());
-			$oSmarty->assign('meta_keywords', $oSection->getKeywords());
-			$oSmarty->assign('meta_og_description', $oSection->getDescription());
-			$oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
-			$oSmarty->assign('meta_og_title', $oSection->getTitle());
-			$oSmarty->assign('meta_og_url', CURRENT_URL);
+			$oSection->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oSection->oSmarty->assign('meta_description', $oSection->getDescription());
+			$oSection->oSmarty->assign('meta_keywords', $oSection->getKeywords());
+			$oSection->oSmarty->assign('meta_og_description', $oSection->getDescription());
+			$oSection->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+			$oSection->oSmarty->assign('meta_og_title', $oSection->getTitle());
+			$oSection->oSmarty->assign('meta_og_url', CURRENT_URL);
 
       # We must recreate the request id because it's yet only set in the Main.controller.php
-      $oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
-			$oSmarty->assign('_content_', $oSection->getContent());
-			$oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
+      $oSection->oSmarty->assign('_request_id_', isset($this->_aRequest['id']) ? (int)$this->_aRequest['id'] : '');
+			$oSection->oSmarty->assign('_content_', $oSection->getContent());
+			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . LANG_WEBSITE_TITLE);
 
-			$oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
-			$sCachedHTML = $oSmarty->fetch('application.tpl');
+			$oSection->oSmarty->template_dir = Helper::getTemplateDir('layouts', 'application');
+			$sCachedHTML = $oSection->oSmarty->fetch('application.tpl');
 		}
 
 		# Build absolute Path because of pretty URLs

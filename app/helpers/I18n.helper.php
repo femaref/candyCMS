@@ -19,18 +19,31 @@ require_once 'lib/symfony_yaml/sfYaml.php';
 
 class I18n {
 
-  protected $_aYaml;
+  protected $_aI18n = array();
 
   public function __construct($sLanguageFile) {
     try {
-      $this->_aYaml = sfYaml::load(file_get_contents($sLanguageFile));
+      $this->_aI18n = sfYaml::load(file_get_contents($sLanguageFile));
     }
     catch (AdvancedException $e) {
       die('Unable to load language file.');
     }
   }
 
-  public static function get() {
-    return parent::$_aYaml;
+  public function getArray() {
+    return $this_aI18n;
+  }
+
+  public function get($sLanguagePart) {
+    $aLang = preg_split("/[\s]*[.][\s]*/", $sLanguagePart);
+
+    $aTemp = $this->_aI18n;
+    foreach ($aLang as $sPart) {
+      if (array_key_exists($sPart, $aTemp)) {
+        $aTemp = & $aTemp[$sPart];
+      }
+    }
+
+    return $aTemp;
   }
 }

@@ -74,12 +74,12 @@ class Rss extends Main {
    *
    */
   private function _showDefault() {
-    $this->_oSmarty->assign('data', $this->_aData);
-    $this->_oSmarty->assign('_section_', $this->_sSection);
-    $this->_oSmarty->assign('_title_', $this->getTitle());
+    $this->oSmarty->assign('data', $this->_aData);
+    $this->oSmarty->assign('_section_', $this->_sSection);
+    $this->oSmarty->assign('_title_', $this->getTitle());
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'default');
-    return $this->_oSmarty->fetch('default.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('rss', 'default');
+    return $this->oSmarty->fetch('default.tpl');
   }
 
   /**
@@ -93,17 +93,17 @@ class Rss extends Main {
     $aData = $this->_aData[$this->_iId]['files'];
     rsort($aData);
 
-    $this->_oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
-    $this->_oSmarty->assign('_content_', $this->_aData[$this->_iId]['content']);
-    $this->_oSmarty->assign('_locale_', WEBSITE_LOCALE);
-    $this->_oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
-    $this->_oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
-    $this->_oSmarty->assign('_section_', $this->_sSection);
-    $this->_oSmarty->assign('_title_', $this->getTitle());
+    $this->oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
+    $this->oSmarty->assign('_content_', $this->_aData[$this->_iId]['content']);
+    $this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
+    $this->oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
+    $this->oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
+    $this->oSmarty->assign('_section_', $this->_sSection);
+    $this->oSmarty->assign('_title_', $this->getTitle());
 
-    $this->_oSmarty->assign('data', $aData);
+    $this->oSmarty->assign('data', $aData);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('rss', 'gallery');
-    return $this->_oSmarty->fetch('gallery.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('rss', 'gallery');
+    return $this->oSmarty->fetch('gallery.tpl');
   }
 }

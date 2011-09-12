@@ -32,13 +32,13 @@ class Sitemap extends Main {
 	public function showXML() {
 		Header('Content-Type: text/xml');
 
-		$this->_oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-		$this->_oSmarty->assign('_website_url_', WEBSITE_URL);
+		$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+		$this->oSmarty->assign('_website_url_', WEBSITE_URL);
 
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
-		return $this->_oSmarty->fetch('xml.tpl');
+		$this->oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
+		return $this->oSmarty->fetch('xml.tpl');
 	}
 
 	/**
@@ -51,8 +51,8 @@ class Sitemap extends Main {
 	public function show() {
 		$this->_getSitemap();
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
-		return $this->_oSmarty->fetch('show.tpl');
+		$this->oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
+		return $this->oSmarty->fetch('show.tpl');
 	}
 
 	/**
@@ -71,8 +71,8 @@ class Sitemap extends Main {
 		$oGallery = new Model_Gallery();
 		$aGallery = $oGallery->getData('', false, false, 1000);
 
-		$this->_oSmarty->assign('blog', $aBlog);
-		$this->_oSmarty->assign('content', $aContent);
-		$this->_oSmarty->assign('gallery', $aGallery);
+		$this->oSmarty->assign('blog', $aBlog);
+		$this->oSmarty->assign('content', $aContent);
+		$this->oSmarty->assign('gallery', $aGallery);
 	}
 }

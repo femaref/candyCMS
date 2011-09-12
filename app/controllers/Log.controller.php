@@ -42,17 +42,17 @@ class Log extends Main {
       return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
     else {
-      $this->_oSmarty->assign('logs', $this->_oModel->getData());
+      $this->oSmarty->assign('logs', $this->_oModel->getData());
 
       # Do we need pages?
-      $this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/log'));
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/log'));
 
       # Language
-      $this->_oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
+      $this->oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('logs', 'show');
-      return $this->_oSmarty->fetch('show.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('logs', 'show');
+      return $this->oSmarty->fetch('show.tpl');
     }
   }
 

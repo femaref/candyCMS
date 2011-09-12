@@ -59,17 +59,17 @@ class Search extends Main {
 			return $this->showFormTemplate();
 
 		else {
-			$this->_oSmarty->assign('_search_', $this->getSearch());
+			$this->oSmarty->assign('_search_', $this->getSearch());
 
 			# Create page title and description
 			$this->_setDescription($this->_sHeadline);
 			$this->_setTitle($this->_sHeadline);
 
 			# Language
-			$this->_oSmarty->assign('lang_headline', $this->_sHeadline);
+			$this->oSmarty->assign('lang_headline', $this->_sHeadline);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
-			return $this->_oSmarty->fetch('show.tpl');
+			$this->oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
+			return $this->oSmarty->fetch('show.tpl');
 		}
 	}
 
@@ -88,11 +88,11 @@ class Search extends Main {
     $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
     $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
 
-    $this->_oSmarty->assign('search', $this->_sSearch);
-    $this->_oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
+    $this->oSmarty->assign('search', $this->_sSearch);
+    $this->oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
-    return $this->_oSmarty->fetch('_show.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
+    return $this->oSmarty->fetch('_show.tpl');
   }
 
 	/**
@@ -106,9 +106,9 @@ class Search extends Main {
     $this->_setDescription(LANG_GLOBAL_SEARCH);
     $this->_setTitle(LANG_GLOBAL_SEARCH);
 
-    $this->_oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
+    $this->oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
-    return $this->_oSmarty->fetch('_form.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
+    return $this->oSmarty->fetch('_form.tpl');
   }
 }

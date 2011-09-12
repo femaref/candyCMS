@@ -54,13 +54,13 @@ class Media extends Main {
    */
   private function _showUploadFileTemplate() {
     # Language
-    $this->_oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
-    $this->_oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
-    $this->_oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
-    $this->_oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
+    $this->oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
+    $this->oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
+    $this->oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
+    $this->oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('medias', 'create');
-    return $this->_oSmarty->fetch('create.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('medias', 'create');
+    return $this->oSmarty->fetch('create.tpl');
   }
 
   /**
@@ -126,15 +126,15 @@ class Media extends Main {
 
       closedir($oDir);
 
-      $this->_oSmarty->assign('files', $aFiles);
+      $this->oSmarty->assign('files', $aFiles);
 
       # Language
-      $this->_oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
-      $this->_oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
-      $this->_oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
-      return $this->_oSmarty->fetch('show.tpl');
+      $this->oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
+      $this->oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
+      $this->oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
+      $this->oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
+      return $this->oSmarty->fetch('show.tpl');
     }
   }
 

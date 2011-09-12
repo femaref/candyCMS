@@ -38,22 +38,22 @@ class Content extends Main {
    */
   public function show() {
     $this->_aData = $this->_oModel->getData($this->_iId);
-    $this->_oSmarty->assign('content', $this->_aData);
+    $this->oSmarty->assign('content', $this->_aData);
 
     if (empty($this->_iId)) {
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CONTENTMANAGER);
       $this->_setTitle(LANG_GLOBAL_CONTENTMANAGER);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'overview');
-      return $this->_oSmarty->fetch('overview.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('contents', 'overview');
+      return $this->oSmarty->fetch('overview.tpl');
     }
     else {
       $this->_setDescription($this->_aData[$this->_iId]['teaser']);
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
       $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('contents', 'show');
-      return $this->_oSmarty->fetch('show.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('contents', 'show');
+      return $this->oSmarty->fetch('show.tpl');
     }
   }
 
@@ -71,8 +71,8 @@ class Content extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
@@ -84,23 +84,23 @@ class Content extends Main {
       $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY);
+      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
     }
 
     foreach($this->_aData as $sColumn => $sData)
-      $this->_oSmarty->assign($sColumn, $sData);
+      $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->assign('lang_create_keywords_info', LANG_CONTENT_INFO_KEYWORDS);
-    $this->_oSmarty->assign('lang_create_teaser_info', LANG_CONTENT_INFO_TEASER);
+    $this->oSmarty->assign('lang_create_keywords_info', LANG_CONTENT_INFO_KEYWORDS);
+    $this->oSmarty->assign('lang_create_teaser_info', LANG_CONTENT_INFO_TEASER);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('contents' ,'_form');
-    return $this->_oSmarty->fetch('_form.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('contents' ,'_form');
+    return $this->oSmarty->fetch('_form.tpl');
   }
 
   /**

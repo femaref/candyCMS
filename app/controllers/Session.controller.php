@@ -77,17 +77,17 @@ class Session extends Main {
   public function showCreateSessionTemplate() {
 		if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->_oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
+		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
 		# Language
-		$this->_oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
-		$this->_oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
+		$this->oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
+		$this->oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
-		$this->_oSmarty->template_dir = Helper::getTemplateDir('sessions', 'create');
-		return $this->_oSmarty->fetch('create.tpl');
+		$this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'create');
+		return $this->oSmarty->fetch('create.tpl');
 	}
 
 	/**
@@ -175,27 +175,27 @@ class Session extends Main {
       $this->_setDescription(LANG_SESSION_PASSWORD_INFO);
 
 			# Language
-      $this->_oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
-      $this->_oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
-      $this->_oSmarty->assign('lang_submit', LANG_SESSION_PASSWORD_LABEL_SUBMIT);
+      $this->oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
+      $this->oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
+      $this->oSmarty->assign('lang_submit', LANG_SESSION_PASSWORD_LABEL_SUBMIT);
     }
     else {
       $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
       $this->_setDescription(LANG_SESSION_VERIFICATION_INFO);
 
 			# Language
-      $this->_oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
-      $this->_oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
-      $this->_oSmarty->assign('lang_submit', LANG_SESSION_VERIFICATION_LABEL_SUBMIT);
+      $this->oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
+      $this->oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
+      $this->oSmarty->assign('lang_submit', LANG_SESSION_VERIFICATION_LABEL_SUBMIT);
     }
 
     if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
-    return $this->_oSmarty->fetch('resend.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
+    return $this->oSmarty->fetch('resend.tpl');
   }
 
 	/**

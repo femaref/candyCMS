@@ -53,21 +53,21 @@ class Blog extends Main {
       $oComments = new Comment($this->_aRequest, $this->_aSession);
       $oComments->__init($this->_aData);
 
-      $this->_oSmarty->assign('_blog_footer_', $oComments->show());
+      $this->oSmarty->assign('_blog_footer_', $oComments->show());
 
     # Load blog pages
     } else
-      $this->_oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
+      $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
 
     # Create page title and description
     $this->_setDescription($this->_setBlogDescription());
     $this->_setKeywords($this->_setBlogKeywords());
     $this->_setTitle($this->_setBlogTitle());
 
-    $this->_oSmarty->assign('blog', $this->_aData);
+    $this->oSmarty->assign('blog', $this->_aData);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', 'show');
-    return $this->_oSmarty->fetch('show.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('blogs', 'show');
+    return $this->oSmarty->fetch('show.tpl');
   }
 
   /**
@@ -149,8 +149,8 @@ class Blog extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
     }
     # Create
     else {
@@ -161,24 +161,24 @@ class Blog extends Main {
       $this->_aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
+      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
-      $this->_oSmarty->assign($sColumn, $sData);
+      $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->assign('lang_create_keywords_info', LANG_BLOG_INFO_KEYWORDS);
-    $this->_oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
-    $this->_oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
+    $this->oSmarty->assign('lang_create_keywords_info', LANG_BLOG_INFO_KEYWORDS);
+    $this->oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
+    $this->oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
-    return $this->_oSmarty->fetch('_form.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
+    return $this->oSmarty->fetch('_form.tpl');
   }
 
   /**

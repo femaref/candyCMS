@@ -41,8 +41,8 @@ class Gallery extends Main {
    */
   public function show() {
     # Language
-    $this->_oSmarty->assign('lang_create_file_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-    $this->_oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
+    $this->oSmarty->assign('lang_create_file_headline', LANG_GALLERY_FILE_CREATE_TITLE);
+    $this->oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
 
     # Album images
     if (!empty($this->_iId)) {
@@ -53,31 +53,31 @@ class Gallery extends Main {
       # Get data and count afterwards
       $this->_aData = $this->_oModel->getThumbs($this->_iId);
 
-      $this->_oSmarty->assign('files', $this->_aData);
-      $this->_oSmarty->assign('file_no', count($this->_aData));
-      $this->_oSmarty->assign('gallery_name', $sAlbumName);
-      $this->_oSmarty->assign('gallery_content', $sAlbumDescription);
+      $this->oSmarty->assign('files', $this->_aData);
+      $this->oSmarty->assign('file_no', count($this->_aData));
+      $this->oSmarty->assign('gallery_name', $sAlbumName);
+      $this->oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle($this->_removeHighlight(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
-      return $this->_oSmarty->fetch('files.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
+      return $this->oSmarty->fetch('files.tpl');
     }
     # Album overview
     else {
       $this->_setDescription(LANG_GLOBAL_GALLERY);
       $this->_setTitle(LANG_GLOBAL_GALLERY);
 
-      $this->_oSmarty->assign('albums', $this->_oModel->getData());
-      $this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/gallery'));
+      $this->oSmarty->assign('albums', $this->_oModel->getData());
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/gallery'));
 
       # Language
-      $this->_oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
+      $this->oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
-      return $this->_oSmarty->fetch('albums.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
+      return $this->oSmarty->fetch('albums.tpl');
     }
   }
 
@@ -93,8 +93,8 @@ class Gallery extends Main {
 
     if (!empty($this->_iId)) {
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->_oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
+      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
 
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
@@ -103,20 +103,20 @@ class Gallery extends Main {
       $this->_aData['description']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
-      $this->_oSmarty->assign('lang_submit', LANG_GALLERY_ALBUM_CREATE_TITLE);
+      $this->oSmarty->assign('lang_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
+      $this->oSmarty->assign('lang_submit', LANG_GALLERY_ALBUM_CREATE_TITLE);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
-      $this->_oSmarty->assign($sColumn, $sData);
+      $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_album');
-    return $this->_oSmarty->fetch('_form_album.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_album');
+    return $this->oSmarty->fetch('_form_album.tpl');
   }
 
   /**
@@ -202,10 +202,10 @@ class Gallery extends Main {
   protected function _showFormFileTemplate() {
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
-      $this->_oSmarty->assign('content', Model::getFileContent($this->_iId));
+      $this->oSmarty->assign('content', Model::getFileContent($this->_iId));
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
+      $this->oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
     }
     # Create
     else {
@@ -213,23 +213,23 @@ class Gallery extends Main {
       # r = resize, c = cut
       $sDefault = isset($this->_aRequest['cut']) ? Helper::formatInput($this->_aRequest['cut']) : 'c';
 
-      $this->_oSmarty->assign('default', $sDefault);
-      $this->_oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
+      $this->oSmarty->assign('default', $sDefault);
+      $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
 
       # Language
-      $this->_oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
-      $this->_oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
-      $this->_oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
-      $this->_oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
+      $this->oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
+      $this->oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
+      $this->oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
+      $this->oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
     }
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
-    return $this->_oSmarty->fetch('_form_file.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
+    return $this->oSmarty->fetch('_form_file.tpl');
   }
 
   /**

@@ -108,17 +108,17 @@ class Mail extends Main {
             (string)$this->_aRequest['content']:
             '';
 
-    $this->_oSmarty->assign('contact', Model::getUserNamesAndEmail($this->_iId));
-		$this->_oSmarty->assign('content', $sContent);
-		$this->_oSmarty->assign('email', $sEmail);
-		$this->_oSmarty->assign('subject', $sSubject);
+    $this->oSmarty->assign('contact', Model::getUserNamesAndEmail($this->_iId));
+		$this->oSmarty->assign('content', $sContent);
+		$this->oSmarty->assign('email', $sEmail);
+		$this->oSmarty->assign('subject', $sSubject);
 
 		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
-			$this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
 		if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
-				$this->_oSmarty->assign('error_' . $sField, $sMessage);
+				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
     # Create page title and description
@@ -126,12 +126,12 @@ class Mail extends Main {
     $this->_setTitle(LANG_GLOBAL_CONTACT);
 
     # Language
-    $this->_oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
-		$this->_oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
+    $this->oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
+    $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
+		$this->oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
-    return $this->_oSmarty->fetch('create.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
+    return $this->oSmarty->fetch('create.tpl');
   }
 
 	/**
@@ -214,11 +214,11 @@ class Mail extends Main {
   private function _showSuccessMessage() {
     $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
 
-    $this->_oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
-    $this->_oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
+    $this->oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
+    $this->oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
-    return $this->_oSmarty->fetch('success.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
+    return $this->oSmarty->fetch('success.tpl');
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {

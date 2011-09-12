@@ -85,25 +85,25 @@ class Comment extends Main {
    */
   public function show() {
     if ($this->_iId) {
-      $this->_oSmarty->assign('comments',
+      $this->oSmarty->assign('comments',
               $this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
       # Set author of blog entry
-      $this->_oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
+      $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
 
       # For correct information, do some math to display entries.
       # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
       # when other people don't see it
-      $this->_oSmarty->assign('comment_number', ($this->_oModel->oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
+      $this->oSmarty->assign('comment_number', ($this->_oModel->oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
       # Do we need pages?
-      $this->_oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
 
       # Language
-      $this->_oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
+      $this->oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
-      return $this->_oSmarty->fetch('show.tpl') . $this->create('create_comment');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
+      return $this->oSmarty->fetch('show.tpl') . $this->create('create_comment');
     }
   }
 
@@ -121,24 +121,24 @@ class Comment extends Main {
     $sEmail     = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
     $sContent   = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
 
-    $this->_oSmarty->assign('_parent_id_', $iParentId);
-    $this->_oSmarty->assign('content', $sContent);
-    $this->_oSmarty->assign('email', $sEmail);
-    $this->_oSmarty->assign('name', $sName);
+    $this->oSmarty->assign('_parent_id_', $iParentId);
+    $this->oSmarty->assign('content', $sContent);
+    $this->oSmarty->assign('email', $sEmail);
+    $this->oSmarty->assign('name', $sName);
 
     if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
-      $this->_oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+      $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
     # Language
-    $this->_oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
+    $this->oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('comments', '_form');
-    return $this->_oSmarty->fetch('_form.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('comments', '_form');
+    return $this->oSmarty->fetch('_form.tpl');
   }
 
   /**

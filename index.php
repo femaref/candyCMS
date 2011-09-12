@@ -9,6 +9,10 @@
  * @since 1.0
  */
 
+namespace CandyCMS;
+
+use CandyCMS\Controller\Index as Index;
+
 /**
  * Set how to handle PHP error messages.
  */
@@ -72,77 +76,30 @@ catch (\CandyCMS\Helper\AdvancedException $e) {
   die($e->getMessage());
 }
 
-/*
- * Start user session.
- */
+# If this is an ajax request, no layout is loaded
+$iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
+define('AJAX_REQUEST', (int) $iAjax);
+
+# Define current url
+define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+
+
 @session_start();
 
 # Initialize software
-$oIndex = new \CandyCMS\Controller\Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
-$oIndex->loadConfig();
-$oIndex->loadPlugins();
-$oIndex->setTemplate();
-$oIndex->setLanguage();
+$oIndex->loadConfigFiles(array('Candy', 'Facebook', 'Plugins'));
+$oIndex->loadPlugins(ALLOW_PLUGINS);
+$oIndex->loadLanguage(); #@deprecated when yaml is productive
 $oIndex->loadCronjob();
+$oIndex->setUser();
 
 /**
  * If we are on a productive enviroment, make sure that we can't override the system.
  */
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
-
-# Set active user
-$aUser = \CandyCMS\Model\Session::getSessionData();
-
-define('USER_ID', (int) $aUser['id']);
-define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');
-
-# Try to get facebook data
-if (USER_ID == 0) {
-  $oFacebook = $oIndex->loadFacebookExtension();
-  if ($oFacebook == true)
-    $aFacebookData = $oFacebook->getUserData();
-}
-
-/**
- * Define user constants for global use.
- *
- * List of user rights:
- * 0 = Guests / unregistered users
- * 1 = Members
- * 2 = Facebook users
- * 3 = Moderators
- * 4 = Administrators
- */
-define('USER_RIGHT', isset($aFacebookData[0]['uid']) ?
-                2 :
-                (int) $aUser['user_right']);
-
-define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ?
-                $aFacebookData[0]['uid'] :
-                '');
-
-define('USER_EMAIL', isset($aFacebookData[0]['email']) ?
-                $aFacebookData[0]['email'] :
-                $aUser['email']);
-
-define('USER_NAME', isset($aFacebookData[0]['first_name']) ?
-                $aFacebookData[0]['first_name'] :
-                $aUser['name']);
-
-define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ?
-                $aFacebookData[0]['last_name'] :
-                $aUser['surname']);
-
-define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
-
-# If this is an ajax request, no layout is loaded
-$iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
-define('AJAX_REQUEST', (int) $iAjax);
-
-# Define current url
-define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 echo $oIndex->show();
 ?>

@@ -63,13 +63,13 @@ class Download extends Main {
     }
     # Overview
     else {
-      $this->_oSmarty->assign('download', $this->_aData);
+      $this->oSmarty->assign('download', $this->_aData);
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_GLOBAL_DOWNLOAD);
+      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_DOWNLOAD);
 
-      $this->_oSmarty->template_dir = Helper::getTemplateDir('downloads', 'show');
-      return $this->_oSmarty->fetch('show.tpl');
+      $this->oSmarty->template_dir = Helper::getTemplateDir('downloads', 'show');
+      return $this->oSmarty->fetch('show.tpl');
     }
   }
 
@@ -86,32 +86,32 @@ class Download extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
 
       # Language
-      $this->_oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_UPDATE);
+      $this->oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_UPDATE);
     }
     # Create
     else {
-      $this->_oSmarty->assign('_action_url_', '/download/create');
-      $this->_oSmarty->assign('_formdata_', 'create_download');
+      $this->oSmarty->assign('_action_url_', '/download/create');
+      $this->oSmarty->assign('_formdata_', 'create_download');
 
       $this->_aData['category']    = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
       $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 
       # Language
-      $this->_oSmarty->assign('lang_file_choose', LANG_DOWNLOAD_FILE_CREATE_TITLE);
-      $this->_oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_CREATE);
+      $this->oSmarty->assign('lang_file_choose', LANG_DOWNLOAD_FILE_CREATE_TITLE);
+      $this->oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_CREATE);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
-      $this->_oSmarty->assign($sColumn, $sData);
+      $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError)) {
       foreach ($this->_aError as $sField => $sMessage)
-        $this->_oSmarty->assign('error_' . $sField, $sMessage);
+        $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('downloads', '_form');
-    return $this->_oSmarty->fetch('_form.tpl');
+    $this->oSmarty->template_dir = Helper::getTemplateDir('downloads', '_form');
+    return $this->oSmarty->fetch('_form.tpl');
   }
 
   /**
