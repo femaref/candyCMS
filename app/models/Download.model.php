@@ -17,6 +17,14 @@ require_once 'app/helpers/Upload.helper.php';
 
 class Download extends Main {
 
+  /**
+   * Set download data.
+   *
+   * @access private
+   * @param boolean $bUpdate prepare data for update
+   * @return array data
+   *
+   */
   private function _setData($bUpdate) {
 
     if (empty($this->_iId)) {
@@ -47,47 +55,9 @@ class Download extends Main {
         $iId = $aRow['id'];
         $sCategory = $aRow['category'];
 
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/download/' . $aRow['id'];
-
-        # Do we need to highlight text?
-        $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
-                $this->_aRequest['highlight'] :
-                '';
-
-        # Name category for overview
-        $this->_aData[$sCategory]['category'] = $sCategory;
-
-        # Fetch normal data
-        $this->_aData[$sCategory]['files'][$iId] = array(
-                'id'                => $aRow['id'],
-                'title'             => Helper::formatOutput($aRow['title'], $sHighlight),
-                'content'           => Helper::formatOutput($aRow['content'], $sHighlight),
-                'category'          => Helper::formatOutput($aRow['category']),
-                'file'              => Helper::formatOutput($aRow['file']),
-                'extension'         => Helper::formatOutput($aRow['extension']),
-                'downloads'         => (int) $aRow['downloads'],
-                'date'              => Helper::formatTimestamp($aRow['date'], true),
-                'datetime'          => Helper::formatTimestamp($aRow['date']),
-                'date_raw'          => $aRow['date'],
-                'date_rss'          => date('D, d M Y H:i:s O', $aRow['date']),
-                'date_w3c'          => date('Y-m-d\TH:i:sP', $aRow['date']),
-                'uid'               => $aRow['uid'],
-                'name'              => $sName,
-                'surname'           => $sSurname,
-                'full_name'         => $sFullName,
-                'encoded_full_name' => urlencode($sFullName),
-                'encoded_title'     => Helper::formatOutput(urlencode($aRow['title'])),
-                'encoded_url'       => urlencode($sUrl),
-                'url'               => $sUrl . '/' . $sEncodedTitle,
-                'url_clean'         => $sUrl,
-                'size'              => Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file'])
-        );
+        $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
+        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, 'download');
+        $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
       }
     }
     else {
@@ -107,17 +77,9 @@ class Download extends Main {
         $this->_oDb->rollBack();
       }
 
-      # we want to edit an entry
-      if ($bUpdate == true) {
-        $this->_aData = array(
-            'id'        => $aRow['id'],
-            'title'     => Helper::removeSlahes($aRow['title']),
-            'content'   => Helper::removeSlahes($aRow['content']),
-            'category'  => Helper::removeSlahes($aRow['category']),
-            'downloads' => (int) $aRow['downloads']
-        );
-      }
-      # We do only need the file name
+      if ($bUpdate == true)
+        $this->_aData = $this->_formatForUpdate($aRow);
+
       else
         $this->_aData = & $aRow;
     }

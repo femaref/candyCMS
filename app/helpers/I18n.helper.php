@@ -31,19 +31,19 @@ class I18n {
   }
 
   public function getArray() {
-    return $this_aI18n;
+    return $this->_aI18n;
   }
 
   public function get($sLanguagePart) {
     $aLang = preg_split("/[\s]*[.][\s]*/", $sLanguagePart);
 
-    $aTemp = $this->_aI18n;
+    $mTemp = $this->_aI18n;
     foreach ($aLang as $sPart) {
-      if (array_key_exists($sPart, $aTemp)) {
-        $aTemp = & $aTemp[$sPart];
+      if (array_key_exists($sPart, $mTemp)) {
+        $mTemp = & $mTemp[$sPart];
       }
     }
 
-    return $aTemp;
+    return $mTemp;
   }
 }

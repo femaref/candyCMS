@@ -5,3 +5,16 @@ website:
 
 global:
   about: Über
+  album: Album
+  author: Autor
+  backup: Backup
+  bbcode:
+    help: Weiterführende Informationen zur Verwendung von BB-Code.
+  blog: Blog
+  by: von
+  category: Kategorie
+  close: Schließen
+  create:
+    bookmark: Lesezeichen hinzufügen
+    entry: Eintrag hinzufügen
+  created_at: Hinzugefügt am
