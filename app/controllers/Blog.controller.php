@@ -92,7 +92,7 @@ class Blog extends Main {
         return $this->_setBlogTitle();
 
     } else
-      return LANG_GLOBAL_BLOG;
+      return $this->oI18n->get('global.blog');
   }
 
   /**
@@ -132,7 +132,9 @@ class Blog extends Main {
     # show overview with pages
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
-      return $iPage > 1 ? LANG_GLOBAL_BLOG . ' - ' . LANG_GLOBAL_PAGE . ' ' . $iPage : LANG_GLOBAL_BLOG;
+			return $iPage > 1 ?
+							$this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . $iPage :
+							$this->oI18n->get('global.blog');
     }
   }
 

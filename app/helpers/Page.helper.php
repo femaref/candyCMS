@@ -8,6 +8,7 @@
 namespace CandyCMS\Helper;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 
 class Page {
 
@@ -89,7 +90,7 @@ class Page {
     # Language
     $oSmarty->assign('lang_next_entries', LANG_PAGES_NEXT_ENTRIES);
     $oSmarty->assign('lang_previous_entries', LANG_PAGES_PREVIOUS_ENTRIES);
-    $oSmarty->assign('lang_rss_feed', LANG_GLOBAL_RSS);
+    $oSmarty->assign('lang_rss_feed', I18n::fetch('global.rss'));
 
     $oSmarty->cache_dir = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;

@@ -182,7 +182,7 @@ abstract class Main {
 	 *
 	 */
   protected function _setI18n() {
-    $this->oI18n = new I18n('languages/' . WEBSITE_LANGUAGE . '/' . WEBSITE_LANGUAGE . '.language.yml');
+    $this->oI18n = new I18n(WEBSITE_LANGUAGE);
     return $this->oI18n;
   }
 
@@ -278,7 +278,7 @@ abstract class Main {
 	public function getDescription() {
 		# Show default description if this is our landing page or we got no descrption.
 		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || empty($this->_sDescription))
-			return LANG_WEBSITE_DESCRIPTION;
+			return $this->oI18n->get('website.description');
 
 		# We got no description. Fall back to default description.
 		else
@@ -304,7 +304,7 @@ abstract class Main {
 	 *
 	 */
 	public function getKeywords() {
-		return !empty($this->_sKeywords) ? $this->_sKeywords : LANG_WEBSITE_KEYWORDS;
+		return !empty($this->_sKeywords) ? $this->_sKeywords : $this->oI18n->get('website.keywords');
 	}
 
 	/**

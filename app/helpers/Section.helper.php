@@ -281,8 +281,8 @@ class Section extends \CandyCMS\Controller\Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setDescription(LANG_GLOBAL_LOGIN);
-          parent::_setTitle(LANG_GLOBAL_LOGIN);
+          parent::_setDescription($this->oI18n->get('global.login'));
+          parent::_setTitle($this->oI18n->get('global.login'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'resendpassword' ||
                 $this->_aRequest['action'] == 'resendverification') {
@@ -292,8 +292,8 @@ class Section extends \CandyCMS\Controller\Main {
         }
         else {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription(LANG_GLOBAL_LOGOUT);
-          parent::_setTitle(LANG_GLOBAL_LOGOUT);
+          parent::_setDescription($this->oI18n->get('global.logout'));
+          parent::_setTitle($this->oI18n->get('global.logout'));
         }
 
         break;

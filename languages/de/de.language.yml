@@ -122,6 +122,19 @@ success:
   update: Update erfolgreich!
   upload: Datei(en) erfolgreich hochgeladen!
 
+  mail:
+    create: E-Mail erfolgreich verschickt!
+
+  session:
+    create: Login erfolgreich
+    destroy: Logout erfolgreich
+
+  password:
+    create: Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!
+
+  user:
+    create: Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!
+
 error:
 
 blog:
@@ -188,6 +201,42 @@ media:
 newsletter:
   info:
     name: %u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
+    handle: Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!
+  label:
+    submit: Newsletter versenden
+  receipients: Abonnenten
+  title:
+    create: Newsletter verfassen
+    handle: Newsletter abonieren / abbestellen
 
-mail:
-  sent: E-Mail erfolgreich verschickt!
+pages:
+  next: Ältere Beiträge
+  previous: Neuere Beiträge
+
+search:
+  label:
+    terms: Suchbegriffe
+  title:
+    show: Suchergebnisse für "%s"
+
+session:
+  password:
+    info: Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.
+    label: Passwort anfordern
+    title: Passwort vergessen?
+  verification:
+    info: Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.
+    label:
+      submit: Bestätigungslink zuschicken
+    title: E-Mail-Bestätigung erneut zusenden
+
+user:
+  label:
+    description: Über %u
+    last_login: Letzter Login
+    registered_since: Registriert seit
+  title:
+    contact_via_email: Klicke hier, um %u eine E-Mail zu schicken!
+    create: Benutzer erstellen
+    overview: Übersicht
+

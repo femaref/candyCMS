@@ -5,23 +5,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  */
 
-define( 'LANG_NEWSLETTER_CREATE_INFO', '%u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.' );
-define( 'LANG_NEWSLETTER_CREATE_TITLE', 'Newsletter verfassen' );
-define( 'LANG_NEWSLETTER_CREATE_LABEL_SUBMIT', 'Newsletter verschicken' );
-define( 'LANG_NEWSLETTER_HANDLE_INFO', 'Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!' );
-define( 'LANG_NEWSLETTER_HANDLE_TITLE', 'Newsletter abonieren / abbestellen' );
-define( 'LANG_NEWSLETTER_SHOW_DEFAULT_NAME', 'Abonnenten' ); # Name of anonymous receivers
-define( 'LANG_PAGES_NEXT_ENTRIES', 'Ältere Beiträge' );
-define( 'LANG_PAGES_PREVIOUS_ENTRIES', 'Neuere Beiträge' );
-define( 'LANG_SEARCH_SHOW_TITLE', 'Suchergebnisse für "%s"' );
-define( 'LANG_SEARCH_SHOW_LABEL_TERMS', 'Suchbegriffe' );
-define( 'LANG_SESSION_CREATE_SUCCESSFUL', 'Login erfolgreich!' );
-define( 'LANG_SESSION_DESTROY_SUCCESSFUL', 'Logout erfolgreich!' );
-define( 'LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL', 'Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!' );
-define( 'LANG_SESSION_PASSWORD_TITLE', 'Password vergessen?' );
-define( 'LANG_SESSION_PASSWORD_INFO', 'Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.' );
-define( 'LANG_SESSION_PASSWORD_LABEL_SUBMIT', 'Password zuschicken' );
-define( 'LANG_SESSION_VERIFICATION_TITLE', 'E-Mail-Bestätigung erneut zusenden' );
 define( 'LANG_SESSION_VERIFICATION_INFO', 'Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.' );
 define( 'LANG_SESSION_VERIFICATION_LABEL_SUBMIT', 'E-Mail zuschicken' );
 define( 'LANG_USER_CREATE_SUCCESSFUL', 'Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!' );
