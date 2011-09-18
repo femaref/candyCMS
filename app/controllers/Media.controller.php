@@ -31,14 +31,14 @@ class Media extends Main {
    */
   public function create() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
       if (isset($this->_aRequest['create_file'])) {
         if ($this->_proceedUpload() == true)
-          return Helper::successMessage(LANG_MEDIA_FILE_CREATE_SUCCESSFUL, '/media');
+          return Helper::successMessage($this->oI18n->get('success.file.upload'), '/media');
         else
-          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/media');
+          return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/media');
       }
       else
         return $this->_showUploadFileTemplate();
@@ -53,12 +53,6 @@ class Media extends Main {
    *
    */
   private function _showUploadFileTemplate() {
-    # Language
-    $this->oSmarty->assign('lang_file_choose', LANG_MEDIA_FILE_CREATE_LABEL_CHOOSE);
-    $this->oSmarty->assign('lang_file_rename', LANG_MEDIA_FILE_CREATE_LABEL_RENAME_FILE);
-    $this->oSmarty->assign('lang_file_create_info', LANG_MEDIA_FILE_CREATE_INFO);
-    $this->oSmarty->assign('lang_headline', LANG_MEDIA_FILE_CREATE_TITLE);
-
     $this->oSmarty->template_dir = Helper::getTemplateDir('medias', 'create');
     return $this->oSmarty->fetch('create.tpl');
   }
@@ -84,7 +78,7 @@ class Media extends Main {
    */
   public function show() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
       $sOriginalPath = PATH_UPLOAD . '/media';
@@ -128,12 +122,7 @@ class Media extends Main {
 
       $this->oSmarty->assign('files', $aFiles);
 
-      # Language
-      $this->oSmarty->assign('lang_destroy', LANG_MEDIA_FILE_DESTROY_TITLE);
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_FILEMANAGER);
-      $this->oSmarty->assign('lang_file_create', LANG_MEDIA_FILE_CREATE_TITLE);
-      $this->oSmarty->assign('lang_no_files', LANG_ERROR_MEDIA_FILE_EMPTY_FOLDER);
-      $this->oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
+			$this->oSmarty->template_dir = Helper::getTemplateDir('medias', 'show');
       return $this->oSmarty->fetch('show.tpl');
     }
   }
@@ -148,15 +137,15 @@ class Media extends Main {
    */
   public function destroy() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
       if (is_file(PATH_UPLOAD . '/media/' . $this->_aRequest['id'])) {
         unlink(PATH_UPLOAD . '/media/' . $this->_aRequest['id']);
-        return Helper::successMessage(LANG_MEDIA_FILE_DESTROY_SUCCESSFUL, '/media');
+        return Helper::successMessage($this->oI18n->get('success.file.destroy'), '/media');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MEDIA_FILE_NOT_AVAIABLE, '/media');
+        return Helper::errorMessage($this->oI18n->get('error.missing.file'), '/media');
     }
   }
 }

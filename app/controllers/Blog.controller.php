@@ -150,9 +150,6 @@ class Blog extends Main {
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
-
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
     }
     # Create
     else {
@@ -162,9 +159,6 @@ class Blog extends Main {
       $this->_aData['tags']       = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
       $this->_aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CREATE_ENTRY_HEADLINE);
-      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_CREATE_ENTRY);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
@@ -174,10 +168,6 @@ class Blog extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
-
-    $this->oSmarty->assign('lang_create_keywords_info', LANG_BLOG_INFO_KEYWORDS);
-    $this->oSmarty->assign('lang_create_tag_info', LANG_BLOG_INFO_TAG);
-    $this->oSmarty->assign('lang_create_teaser_info', LANG_BLOG_INFO_TEASER);
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
     return $this->oSmarty->fetch('_form.tpl');
@@ -201,10 +191,10 @@ class Blog extends Main {
 
     elseif ($this->_oModel->create() === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('blogs'));
-      return Helper::successMessage(LANG_SUCCESS_CREATE, '/blog');
+      return Helper::successMessage($this->oI18n->get('success.create'), '/blog');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
   }
 
   /**
@@ -224,10 +214,10 @@ class Blog extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/blog/' . (int) $this->_aRequest['id']);
+      return Helper::successMessage($this->oI18n->get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
   }
 
   /**
@@ -242,9 +232,9 @@ class Blog extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/blog');
+      return Helper::successMessage($this->oI18n->get('success.destroy'), '/blog');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/blog');
+      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
   }
 }

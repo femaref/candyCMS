@@ -122,13 +122,8 @@ class Mail extends Main {
 		}
 
     # Create page title and description
-    $this->_setDescription(LANG_GLOBAL_CONTACT);
-    $this->_setTitle(LANG_GLOBAL_CONTACT);
-
-    # Language
-    $this->oSmarty->assign('lang_email', LANG_GLOBAL_EMAIL);
-    $this->oSmarty->assign('lang_headline', LANG_GLOBAL_CONTACT);
-		$this->oSmarty->assign('lang_submit', LANG_GLOBAL_MAIL_SEND);
+    $this->_setDescription($this->oI18n->get('global.contact'));
+    $this->_setTitle($this->oI18n->get('global.contact'));
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
     return $this->oSmarty->fetch('create.tpl');
@@ -153,12 +148,12 @@ class Mail extends Main {
         return $this->_standardMail(true);
 
       else {
-        $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
+        $this->_aError['captcha'] = $this->oI18n->get('error.captcha.incorrect');
         return $this->_showCreateMailTemplate(true);
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/');
+      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/');
   }
 
 	/**
@@ -191,11 +186,11 @@ class Mail extends Main {
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
-              LANG_GLOBAL_SYSTEMBOT;
+              $this->oI18n->get('global.system');
 
       $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
               Helper::formatInput($this->_aRequest['subject']) :
-              str_replace('%u', $sSendersName, LANG_MAIL_GLOBAL_SUBJECT_BY);
+              str_replace('%u', $sSendersName, $this->oI18n->get('mail.subject.by'));
 
       $sMessage = Helper::formatInput($this->_aRequest['content']);
 
@@ -207,16 +202,12 @@ class Mail extends Main {
 				return $this->_showSuccessMessage();
       }
 			else
-				Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+				Helper::errorMessage($this->oI18n->get('error.email.sending'), '/');
     }
   }
 
   private function _showSuccessMessage() {
-    $this->_setTitle(LANG_MAIL_GLOBAL_SENT_TITLE);
-
-    $this->oSmarty->assign('lang_info', LANG_MAIL_GLOBAL_SENT_INFO);
-    $this->oSmarty->assign('lang_title', LANG_MAIL_GLOBAL_SENT_TITLE);
-
+    $this->_setTitle($this->oI18n->get('mail.info.redirect'));
     $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
     return $this->oSmarty->fetch('success.tpl');
   }
@@ -225,8 +216,8 @@ class Mail extends Main {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
 		# Parse message and replace with (footer) variables
-		$sMessage = str_replace('%NOREPLY', LANG_MAIL_GLOBAL_NO_REPLY, $sMessage);
-		$sMessage = str_replace('%SIGNATURE', LANG_MAIL_GLOBAL_SIGNATURE, $sMessage);
+		$sMessage = str_replace('%NOREPLY', $this->oI18n->get('mail.body.no_reply'), $sMessage);
+		$sMessage = str_replace('%SIGNATURE', $this->oI18n->get('mail.body.signature'), $sMessage);
 		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
 		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 

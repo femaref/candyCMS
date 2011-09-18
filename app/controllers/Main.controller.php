@@ -214,7 +214,6 @@ abstract class Main {
 		$this->oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->oSmarty->assign('USER_SURNAME', USER_SURNAME);
 		$this->oSmarty->assign('VERSION', VERSION);
-		$this->oSmarty->assign('WEBSITE_DESCRIPTION', $this->oI18n->get('website.description'));
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);

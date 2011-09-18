@@ -61,10 +61,10 @@ class Session extends Main {
 			return $this->showCreateSessionTemplate();
 
 		elseif ($this->_oModel->create() === true)
-			return Helper::successMessage(LANG_SESSION_CREATE_SUCCESSFUL, '/');
+			return Helper::successMessage($this->oI18n->get('success.session.create'), '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_SESSION_CREATE, '/session/create');
+			return Helper::errorMessage($this->oI18n->get('error.session.create'), '/session/create');
 	}
 
 	/**
@@ -81,10 +81,6 @@ class Session extends Main {
 		}
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
-
-		# Language
-		$this->oSmarty->assign('lang_lost_password', LANG_SESSION_PASSWORD_TITLE);
-		$this->oSmarty->assign('lang_resend_verification', LANG_SESSION_VERIFICATION_TITLE);
 
 		$this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'create');
 		return $this->oSmarty->fetch('create.tpl');
@@ -173,20 +169,10 @@ class Session extends Main {
     if($this->_aRequest['action'] == 'resendpassword') {
       $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
       $this->_setDescription(LANG_SESSION_PASSWORD_INFO);
-
-			# Language
-      $this->oSmarty->assign('lang_headline', LANG_SESSION_PASSWORD_TITLE);
-      $this->oSmarty->assign('lang_description', LANG_SESSION_PASSWORD_INFO);
-      $this->oSmarty->assign('lang_submit', LANG_SESSION_PASSWORD_LABEL_SUBMIT);
     }
     else {
       $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
       $this->_setDescription(LANG_SESSION_VERIFICATION_INFO);
-
-			# Language
-      $this->oSmarty->assign('lang_headline', LANG_SESSION_VERIFICATION_TITLE);
-      $this->oSmarty->assign('lang_description', LANG_SESSION_VERIFICATION_INFO);
-      $this->oSmarty->assign('lang_submit', LANG_SESSION_VERIFICATION_LABEL_SUBMIT);
     }
 
     if (!empty($this->_aError)) {
@@ -223,6 +209,6 @@ class Session extends Main {
       return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
   }
 }

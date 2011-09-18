@@ -48,7 +48,7 @@ class Rss extends Main {
     if ($this->_sSection == 'blog') {
       $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData();
-      $this->_setTitle(LANG_GLOBAL_BLOG . ' - ' . WEBSITE_NAME);
+      $this->_setTitle($this->oI18n->get('global.blog') . ' - ' . WEBSITE_NAME);
 
       return $this->_showDefault();
     }
@@ -57,7 +57,7 @@ class Rss extends Main {
       $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
 
-      $this->_setTitle(Helper::removeSlahes(LANG_GLOBAL_GALLERY . ': ' .
+      $this->_setTitle(Helper::removeSlahes($this->oI18n->get('global.gallery') . ': ' .
                       $this->_aData[$this->_iId]['title']));
 
       return $this->_showGallery();

@@ -88,8 +88,8 @@ class Page {
     $oSmarty->assign('_rss_section_', $sRssAction);
 
     # Language
-    $oSmarty->assign('lang_next_entries', LANG_PAGES_NEXT_ENTRIES);
-    $oSmarty->assign('lang_previous_entries', LANG_PAGES_PREVIOUS_ENTRIES);
+    $oSmarty->assign('lang_next_entries', I18n::fetch('pages.next'));
+    $oSmarty->assign('lang_previous_entries', I18n::fetch('pages.previous'));
     $oSmarty->assign('lang_rss_feed', I18n::fetch('global.rss'));
 
     $oSmarty->cache_dir = CACHE_DIR;

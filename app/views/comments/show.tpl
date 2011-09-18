@@ -1,7 +1,7 @@
 <section id="comments">
   <header>
     <a name='comments'></a>
-    <h3>{$lang_comments}</h3>
+    <h3>{$lang.global.comments}</h3>
   </header>
   <div id="js-commments">
     {foreach $comments as $c}

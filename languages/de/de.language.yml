@@ -80,6 +80,7 @@ global:
   share: Teilen
   sitemap: Sitemap
   size: Größe
+  submit: Abschicken
   subject: Betreff
   surname: Nachname
   system: System
@@ -119,23 +120,82 @@ global:
 success:
   create: Eintrag wurde hinzugefügt!
   destroy: Eintrag wurde gelöscht!
+  file:
+    destroy: Datei erfolgreich gelöscht!
   update: Update erfolgreich!
   upload: Datei(en) erfolgreich hochgeladen!
-
   mail:
     create: E-Mail erfolgreich verschickt!
-
   session:
     create: Login erfolgreich
     destroy: Logout erfolgreich
-
   password:
     create: Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!
-
   user:
     create: Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!
+    verification: Vielen Dank für die Bestätigung deiner E-Mail-Adresse.
 
 error:
+  404:
+    info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
+    title: Error 404
+  audio: Dein Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicke auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
+  captcha:
+    incorrect: Der Code war leider nicht korrekt!
+    loading: Captcha konnte nicht geladen werden, bitte aktiviere Javascript!
+  email:
+    format: Dies ist keine gültige E-Mail-Adresse!
+    sending: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
+  file:
+    destroy: Die Datei konnte nicht gelöscht werden!
+    size: Maximale Dateigröße von 400KB erreicht!
+    type: Es wurde ein falscher Dateityp hochgeladen!
+    upload: Es gab einen Fehler beim Upload!
+  form:
+    title: "Bitte fülle folgende Felder aus:"
+    missing:
+      category: Bitte wähle eine Kategorie!
+      content: Bitte fülle den Inhalt aus!
+      email: Bitte gib deine E-Mail-Adresse an!
+      file: Bitte gib eine Datei zum Upload an!
+      name: Bitte gib deinen Namen an!
+      terms: Bitte den Nutzungsbedingungen zustimmen!
+      title: Bitte gib einen Titel an!
+      password: Bitte gib ein Passwort an!
+      subject: Bitte gib einen Betreff ein!
+  gallery:
+    no_files: Es wurden noch keine Bilder hochgeladen!
+  missing:
+    action: Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!
+    id: Falsche oder keine ID angegeben.
+    entries: Es existieren noch keine Einträge!
+    entry: Eintrag nicht vorhanden!
+    flash: Downloade den Flashplayer, um dieses Video anzugucken!
+    file: Datei nicht verfügbar.
+    files: Es wurden noch keine Dateien hochgeladen.
+    language: Die Sprachdatei konnte nicht geladen werden!
+    permission: Du hast keine Berechtigung diese Aktion auszuführen!
+    template: Es wurde keine passende Template gefunden!
+  passwords: Bitte zwei identische Passwörter angeben!
+  published: "Nicht veröffentlicht:"
+  session:
+    create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls du deine E-Mail-Adresse noch nicht bestätigt hast, mache das bitte vor dem Login.
+    create_first: Bitte logge dich zuerst ein!
+  standard: Es trat ein Fehler auf!
+  sql: Es gab einen Fehler beim Verarbeiten des SQL-Statements.
+  user:
+    create:
+      email: Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!
+    update:
+      terms: Du musst das Bild hochladen dürfen!
+      password:
+        new:
+          empty: Bitte trage dein neues Passwort ein!
+          match: Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!
+        old:
+          empty: Bitte trage dein altes Passwort ein!
+          wrong: Dein altes Passwort stimmt leider nicht!
+      verification: Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
 
 blog:
   info:
@@ -172,6 +232,11 @@ download:
     destroy: Download löschen
     update: Download bearbeiten
 
+cronjob:
+  mail:
+    body: Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n
+    subject: Sicherungskopie vom %d
+
 gallery:
   album:
     title:
@@ -187,6 +252,15 @@ gallery:
       create: Bild(er) hochladen
       destroy: Bild löschen
       update: Bildinformationen bearbeiten
+
+mail:
+  body:
+    no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
+    signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
+  info:
+    redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
+  subject:
+    by: Neue Nachricht von %u
 
 media:
   info:
@@ -204,6 +278,9 @@ newsletter:
     handle: Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!
   label:
     submit: Newsletter versenden
+  mail:
+    body: Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE
+    subject: Newsletter von %WEBSITE_NAME
   receipients: Abonnenten
   title:
     create: Newsletter verfassen
@@ -223,20 +300,51 @@ session:
   password:
     info: Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
+    mail:
+      body: "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      subject: Dein neues Passwort
     title: Passwort vergessen?
   verification:
     info: Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.
     label:
       submit: Bestätigungslink zuschicken
+    mail:
+      body: "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
+      subject: Deine E-Mail-Bestätigung für %WEBSITE_NAME
     title: E-Mail-Bestätigung erneut zusenden
 
 user:
+  info:
+    destroy_account: Bitte gib zur eigenen Sicherheit dein aktuelles Passwort ein. Sobald du auf "Account löschen" klickst, wird dein Zugang gelöscht und ist nicht wiederherstellbar!
+    gravatar: Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.
+    image: Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!
   label:
-    description: Über %u
+    description:
+      show: Über %u
+      update: Über dich
+    gravatar: Gravatar verwenden?
+    image:
+      choose: Bild auswählen
+      create: Bild hochladen
+      terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
+      update: Userbild ändern?
     last_login: Letzter Login
+    newsletter: Newsletter abonnieren?
+    password:
+      new: Neues Passwort
+      old: Altes Passwort
     registered_since: Registriert seit
+    submit: Profil aktualisieren
+  mail:
+    body: "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
+    subject: Deine Registrierung auf %WEBSITE_NAME.
   title:
+    account:
+      destroy: Account löschen
     contact_via_email: Klicke hier, um %u eine E-Mail zu schicken!
     create: Benutzer erstellen
     overview: Übersicht
+    password: Passwort ändern
+    personal_data: Persönliche Daten
+    update: Einstellungen bearbeiten
 
