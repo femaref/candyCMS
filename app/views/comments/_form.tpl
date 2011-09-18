@@ -24,7 +24,7 @@
         <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
     {else}
-      <input type="email" value="{$email}" name="email" title="{$lang_email_info}" />
+      <input type="email" value="{$email}" name="email" />
     {/if}
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>

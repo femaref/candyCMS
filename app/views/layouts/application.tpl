@@ -41,20 +41,20 @@
     <nav>
       <ul>
         {if $USER_RIGHT > 0}
-          <li><strong>{$lang_welcome} <a href='/user/{$USER_ID}'>{$USER_NAME}</a>!</strong></li>
+          <li><strong>{$lang.global.welcome} <a href='/user/{$USER_ID}'>{$USER_NAME}</a>!</strong></li>
         {/if}
-        <li><a href='/blog'>{$lang_blog}</a></li>
-        <li><a href='/gallery'>{$lang_gallery}</a></li>
-        <li><a href='/download'>{$lang_download}</a></li>
-        <li><a href='/search'>{$lang_search}</a></li>
+        <li><a href='/blog'>{$lang.global.blog}</a></li>
+        <li><a href='/gallery'>{$lang.global.gallery}</a></li>
+        <li><a href='/download'>{$lang.global.download}</a></li>
+        <li><a href='/search'>{$lang.global.search}</a></li>
         {if $USER_RIGHT == 0}
-          <li class="right"><a href='/user/create'>{$lang_register}</a></li>
-          <li class="right"><a href='/session/create'>{$lang_login}</a></li>
+          <li class="right"><a href='/user/create'>{$lang.global.register}</a></li>
+          <li class="right"><a href='/session/create'>{$lang.global.login}</a></li>
         {else}
           {if $USER_ID > 0}
-            <li><a href='/user/update'>{$lang_settings}</a></li>
+            <li><a href='/user/update'>{$lang.global.settings}</a></li>
           {/if}
-          <li class="right"><a href='/session/destroy'>{$lang_logout}</a></li>
+          <li class="right"><a href='/session/destroy'>{$lang.global.logout}</a></li>
         {/if}
       </ul>
     </nav>
@@ -76,54 +76,54 @@
     </div>
     <footer id="footer">
       <section id="about">
-        <h3>{$lang_overview}</h3>
+        <h3>{$lang.global.overview}</h3>
         <ul>
           <li>
-            <a href='/About'>{$lang_about} {$WEBSITE_NAME}</a>
+            <a href='/About'>{$lang.global.about} {$WEBSITE_NAME}</a>
           </li>
           <li>
-            <a href='/Disclaimer'>{$lang_disclaimer}</a>
+            <a href='/Disclaimer'>{$lang.global.disclaimer}</a>
           </li>
           <li>
-            <a href='/sitemap'>{$lang_sitemap}</a>
+            <a href='/sitemap'>{$lang.global.sitemap}</a>
           </li>
         </ul>
       </section>
       <section id="settings">
-        <h3>{$lang_settings}</h3>
+        <h3>{$lang.global.settings}</h3>
         <ul>
           {if $USER_RIGHT >= 3}
             <li>
-              <a href='/newsletter/create' title='{$lang_newsletter_create}'>
-                {$lang_newsletter_create}
+              <a href='/newsletter/create' title='{$lang.newsletter.title.create}'>
+                {$lang.newsletter.title.create}
               </a>
             </li>
             <li>
-              <a href='/media' title='{$lang_filemanager}'>
-                {$lang_filemanager}
+              <a href='/media' title='{$lang.global.manager.file}'>
+                {$lang.global.manager.file}
               </a>
             </li>
             <li>
-              <a href='/content' title='{$lang_contentmanager}'>
-                {$lang_contentmanager}
+              <a href='/content' title='{$lang.global.manager.content}'>
+                {$lang.global.manager.content}
               </a>
             </li>
             {if $USER_RIGHT == 4}
               <li>
-                <a href='/log' title='{$lang_logs}'>
-                  {$lang_logs}
+                <a href='/log' title='{$lang.global.logs}'>
+                  {$lang.global.logs}
                 </a>
               </li>
               <li>
-                <a href='/user' title='{$lang_usermanager}'>
-                  {$lang_usermanager}
+                <a href='/user' title='{$lang.global.manager.user}'>
+                  {$lang.global.manager.user}
                 </a>
               </li>
             {/if}
           {else}
             <li>
-              <a href='/newsletter' title='{$lang_newsletter_handle}'>
-                {$lang_newsletter_handle}
+              <a href='/newsletter' title='{$lang.newsletter.handle}'>
+                {$lang.newsletter.handle}
               </a>
             </li>
           {/if}

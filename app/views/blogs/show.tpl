@@ -3,32 +3,32 @@
     <p class="center">
       <a href='/blog/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-        {$lang_create_entry_headline}
+        {$lang.global.create_entry_headline}
       </a>
     </p>
   {/if}
   {if !$blog}
-    <div class='error' id='js-error' title='{$lang_no_entries}'>
-      <p>{$lang_no_entries}</p>
+    <div class='error' id='js-error' title='{$lang.global.no_entries}'>
+      <p>{$lang.global.no_entries}</p>
     </div>
   {else}
     {foreach $blog as $b}
       {if !$b.id}
-        <div class='error' id='js-error' title='{$lang_missing_entry}'>
-          <p>{$lang_missing_entry}</p>
+        <div class='error' id='js-error' title='{$lang.error.missing.entry}'>
+          <p>{$lang.global.missing_entry}</p>
         </div>
       {else}
         <article class="blogs">
           <header>
             <h2>
               {if $b.published == false}
-                {$lang_not_published}
+                {$lang.global.not_published}
               {/if}
               <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
               {if $USER_RIGHT >= 3}
                 <a href='/blog/{$b.id}/update'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                       title='{$lang_update}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}'
+                       title='{$lang.global.update}' width="16" height="16" />
                 </a>
               {/if}
             </h2>
@@ -36,10 +36,10 @@
               <time datetime="{$b.date_w3c}">
                 {$b.datetime}
                 {if $b.date_modified != ''}
-                  - {$lang_last_update}: {$b.date_modified}
+                  - {$lang.global.last_update}: {$b.date_modified}
                 {/if}
               </time>
-              {$lang_by}
+              {$lang.global.by}
               <a href='/user/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
             </p>
           </header>
@@ -50,14 +50,14 @@
           <footer>
             {if $b.tags[0] !== ''}
               <div class="tags">
-                {$lang_tags}:
+                {$lang.global.tags.tags}:
                 {foreach from=$b.tags item=t name=tags}
-                  <a title='{$lang_tags_info}: {$t}' href='/blog/{$t}'>{$t}</a>
+                  <a title='{$lang.global.tags.info}: {$t}' href='/blog/{$t}'>{$t}</a>
                 {/foreach}
               </div>
             {/if}
             <div class="share">
-              {$lang_share}:
+              {$lang.global.share}:
               <a href='http://www.facebook.com/share.php?u={$b.url}&amp;t={$b.encoded_title}'
                  title='http://www.facebook.com'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />
@@ -86,7 +86,7 @@
             <div class="comments">
               <a href='/blog/{$b.id}/{$b.encoded_title}#comments'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-comments" alt='' width='16' height='16' />
-                {$b.comment_sum} {$lang_comments}
+                {$b.comment_sum} {$lang.global.comments}
               </a>
             </div>
             {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}

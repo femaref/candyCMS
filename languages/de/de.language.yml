@@ -14,7 +14,180 @@ global:
   by: von
   category: Kategorie
   close: Schließen
+  comments: Kommentare
+  contact: Kontakt
+  content: Text
   create:
     bookmark: Lesezeichen hinzufügen
+    create: Erstellen
     entry: Eintrag hinzufügen
   created_at: Hinzugefügt am
+  cronjob_exec: Datenbank optimieren, sichern und temporäre Dateien löschen.
+  currently: momentan
+  cut: Schnitt
+  date: Datum
+  deleted_user: Gelöschte Person
+  description: Beschreibung
+  destroy:
+    destroy: Löschen
+    entry: Eintrag löschen
+  disclaimer: Impressum
+  download: Download
+  downloads: Downloads
+  email:
+    email: E-Mail-Adresse
+    send: E-Mail versenden
+    verification: E-Mail-Adresse bestätigen
+  file: Datei
+  files: Dateien
+  gallery: Galerie
+  image:
+    click_to_enlage: Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!
+    image: Bild
+  in: in
+  keywords: Schlagworte
+  last_update: letzte Änderung
+  location: Ort
+  login: Login
+  logs: Logs
+  logout: Logout
+  manager:
+    content: Seitenmanagement
+    file: Dateimanager
+    user: Benutzermanagement
+  name: Name
+  optional: optional
+  overview: Übersicht
+  page: Seite
+  password: Passwort
+  password:
+    repeat: Passwort wiederholen
+  published: Veröffentlicht?
+  quote:
+    by: Zitat von
+    quote: Zitat
+  register: Registrieren
+  registration: Registrierung
+  report:
+    error: Fehler melden
+    report: Melden
+  reply_to: Antwort an
+  reset: Zurücksetzen
+  required: benötigt
+  rss: RSS-Feed
+  search: Suche
+  settings: Einstellungen
+  share: Teilen
+  sitemap: Sitemap
+  size: Größe
+  subject: Betreff
+  surname: Nachname
+  system: System
+  tags:
+    info: Suche nach ähnlichen Einträgen
+    tags: Tags
+  teaser: Teaser
+  terms:
+    terms: Bedingungen
+    read: Nutzungsbedingungen gelesen?
+  time:
+    am: Uhr
+    pm: Uhr
+    time: Zeit
+  title: Titel
+  today: Heute
+  update:
+    at: Aktualisiert am
+    avaiable: Es ist ein Update (#%v) für diese Software verfügbar. Besuche %l für weitere Informationen.
+    show: Update anzeigen?
+    update: Editieren
+  upload:
+    at: Datum des Hochladens
+    upload: Upload
+  user:
+    right: Userrecht
+    rights:
+      0: Gast
+      1: Mitglied
+      2: Facebook-Nutzer
+      3: Moderator
+      4: Administrator
+    user: User
+    welcome: Hallo
+    yesterday: Gestern
+
+success:
+  create: Eintrag wurde hinzugefügt!
+  destroy: Eintrag wurde gelöscht!
+  update: Update erfolgreich!
+  upload: Datei(en) erfolgreich hochgeladen!
+
+error:
+
+blog:
+  info:
+    keywords: Gib die wichtigsten Schlagworte dieses Eintrags an.
+    tag: Trenne Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
+    teaser: Schreib einen Teaser um den Blogeintrag interessanter zu machen!
+  title:
+    create: Blogeintrag hinzufügen
+    destroy: Blogeintrag löschen
+    update: \'%p\' bearbeiten
+
+comment:
+  info:
+    email: Die E-Mail-Adresse wird nicht veröffentlicht.
+  title:
+    create: Kommentar erstellen
+    destroy: Kommentar löschen
+
+content:
+  info:
+    keywords: Gib die wichtigsten Schlagworte dieser Seite an.
+    teaser: Schreib eine Zusammenfassung für die Suchmaschinen.
+
+  title:
+    create: Seite erstellen
+    destroy: Seite löschen
+    update: \'%p\' bearbeiten
+
+download:
+  label:
+    choose: Datei auswählen
+  title:
+    create: Download erstellen
+    destroy: Download löschen
+    update: Download bearbeiten
+
+gallery:
+  album:
+    title:
+      create: Album erstellen
+      destroy: Album löschen
+      update: \'%p\' bearbeiten
+  files:
+    label:
+      choose: Datei(en) auswählen
+      cut: Bild quadratisch zuschneiden
+      reseize: Bild proportional verkleinern
+    title:
+      create: Bild(er) hochladen
+      destroy: Bild löschen
+      update: Bildinformationen bearbeiten
+
+media:
+  info:
+    upload: Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.
+  label:
+    choose: Datei auswählen
+    rename: Datei umbenennen
+  title:
+    create: Datei erstellen
+    destroy: Datei löschen
+
+newsletter:
+  info:
+    name: %u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
+
+mail:
+  sent: E-Mail erfolgreich verschickt!

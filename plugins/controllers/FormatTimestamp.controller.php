@@ -10,14 +10,21 @@
 
 namespace CandyCMS\Plugin;
 
+use CandyCMS\Helper\I18n as I18n;
+
 final class FormatTimestamp {
+
+	public final function __construct() {
+		$this->oI18n = new I18n('languages/' . WEBSITE_LANGUAGE . '/' . WEBSITE_LANGUAGE . '.language.yml');
+	}
+
   private final function _setDate($iTime, $bDateOnly) {
     if(date('Ymd', $iTime) == date('Ymd', time())) {
-      $sDay = LANG_GLOBAL_TODAY;
+      $sDay = $this->oI18n->get('global.today');
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
     elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24))) {
-      $sDay = LANG_GLOBAL_YESTERDAY;
+      $sDay = $this->oI18n->get('global.yesterday');
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
     else {
@@ -25,8 +32,8 @@ final class FormatTimestamp {
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
 
-    $sTime = str_replace('am', LANG_GLOBAL_TIME_AM, $sTime);
-    $sTime = str_replace('pm', LANG_GLOBAL_TIME_PM, $sTime);
+    $sTime = str_replace('am', $this->oI18n->get('global.time.am'), $sTime);
+    $sTime = str_replace('pm', $this->oI18n->get('global.time.pm'), $sTime);
 
     if ($bDateOnly == true)
       return $sDay;
