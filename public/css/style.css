@@ -360,7 +360,7 @@ form input[type="reset"] {
   text-align: center;
   text-shadow: 0 1px 0 #EEEEEE;
   text-transform: uppercase;
-  width: 150px;
+  min-width: 150px;
 }
 
 form input[type="submit"]:hover,

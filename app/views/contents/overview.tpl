@@ -3,16 +3,16 @@
     <p class="center">
       <a href='/content/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-        {$lang_create_entry_headline}
+        {$lang.content.title.create}
       </a>
     </p>
   {/if}
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.global.contents}</h1>
   <table>
     <tr>
-      <th>{$lang_name}</th>
-      <th>{$lang_date}</th>
-      <th>{$lang_author}</th>
+      <th>{$lang.global.name}</th>
+      <th>{$lang.global.date}</th>
+      <th>{$lang.global.author}</th>
       <th></th>
     </tr>
     {foreach $content as $c}
@@ -31,11 +31,11 @@
         {if $USER_RIGHT >= 3}
           <td>
             <a href='/content/{$c.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                title='{$lang_update}' width="16" height="16" />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}'
+                title='{$lang.global.update}' width="16" height="16" />
             </a>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
-              title='{$lang_destroy}' width="16" height="16"
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy}'
+              title='{$lang.global.destroy}' width="16" height="16"
               onclick="confirmDelete('/content/{$c.id}/destroy')" />
           </td>
         {/if}

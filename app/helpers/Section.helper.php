@@ -8,10 +8,11 @@
 namespace CandyCMS\Helper;
 
 use CandyCMS\Addon\Addon as Addon;
+use CandyCMS\Controller\Main as Main;
 
 require_once 'addons/controllers/Addon.controller.php';
 
-class Section extends \CandyCMS\Controller\Main {
+class Section extends Main {
 
   protected $_oObject;
 
@@ -126,13 +127,13 @@ class Section extends \CandyCMS\Controller\Main {
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription(LANG_GLOBAL_DOWNLOAD);
-          parent::_setTitle(LANG_GLOBAL_DOWNLOAD);
+          parent::_setDescription($this->oI18n->get('global.download'));
+          parent::_setTitle($this->oI18n->get('global.download'));
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setDescription(LANG_GLOBAL_DOWNLOAD);
-          parent::_setTitle(LANG_GLOBAL_DOWNLOAD);
+          parent::_setDescription($this->oI18n->get('global.download'));
+          parent::_setTitle($this->oI18n->get('global.download'));
         }
 
         break;

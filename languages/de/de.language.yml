@@ -17,6 +17,7 @@ global:
   comments: Kommentare
   contact: Kontakt
   content: Text
+  contents: Seiten
   create:
     bookmark: Lesezeichen hinzufügen
     create: Erstellen
@@ -59,8 +60,8 @@ global:
   optional: optional
   overview: Übersicht
   page: Seite
-  password: Passwort
   password:
+    password: Passwort
     repeat: Passwort wiederholen
   published: Veröffentlicht?
   quote:
@@ -80,7 +81,7 @@ global:
   share: Teilen
   sitemap: Sitemap
   size: Größe
-  submit: Abschicken
+  submit: Absenden
   subject: Betreff
   surname: Nachname
   system: System

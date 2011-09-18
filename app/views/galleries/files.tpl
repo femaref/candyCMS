@@ -8,7 +8,7 @@
 {/if}
 <section id="gallery">
   <h1>
-    {$gallery_name} ({$file_no} {$lang_files})
+    {$gallery_name} ({$file_no} {$lang.global.files})
     <a href='/rss/gallery/{$_request_id_}'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang_rss_feed}' width="16" height="16" />
     </a>

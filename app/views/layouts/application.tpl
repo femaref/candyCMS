@@ -122,8 +122,8 @@
             {/if}
           {else}
             <li>
-              <a href='/newsletter' title='{$lang.newsletter.handle}'>
-                {$lang.newsletter.handle}
+              <a href='/newsletter' title='{$lang.newsletter.title.handle}'>
+                {$lang.newsletter.title.handle}
               </a>
             </li>
           {/if}
