@@ -65,9 +65,6 @@ class Download extends Main {
     else {
       $this->oSmarty->assign('download', $this->_aData);
 
-      # Language
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_DOWNLOAD);
-
       $this->oSmarty->template_dir = Helper::getTemplateDir('downloads', 'show');
       return $this->oSmarty->fetch('show.tpl');
     }
@@ -82,24 +79,17 @@ class Download extends Main {
    */
   protected function _showFormTemplate() {
     # Update
-    if (!empty($this->_iId)) {
+    if (!empty($this->_iId))
       $this->_aData = $this->_oModel->getData($this->_iId, true);
 
-      # Language
-      $this->oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_UPDATE);
-    }
     # Create
     else {
       $this->oSmarty->assign('_action_url_', '/download/create');
       $this->oSmarty->assign('_formdata_', 'create_download');
 
-      $this->_aData['category']    = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
+      $this->_aData['category']   = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
       $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-
-      # Language
-      $this->oSmarty->assign('lang_file_choose', LANG_DOWNLOAD_FILE_CREATE_TITLE);
-      $this->oSmarty->assign('lang_headline', LANG_DOWNLOAD_TITLE_CREATE);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
@@ -126,17 +116,16 @@ class Download extends Main {
    */
   protected function _create() {
     $this->_setError('title');
-    #$this->_setError('file');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('downloads'));
-      return Helper::successMessage(LANG_SUCCESS_CREATE, '/download');
+      return Helper::successMessage($this->oI18n->get('success.create'), '/download');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
   }
 
   /**
@@ -156,10 +145,10 @@ class Download extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, '/download');
+      return Helper::successMessage($this->oI18n->get('success.update'), '/download');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
   }
 
   /**
@@ -174,9 +163,9 @@ class Download extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/download');
+      return Helper::successMessage($this->oI18n->get('success.destroy'), '/download');
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/download');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
   }
 }

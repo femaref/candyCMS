@@ -1,8 +1,8 @@
 <a name='create'></a>
 <form method="post">
-  <h3>{$lang_headline}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
+  <h3>{$lang.comment.title.create}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
   <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-    <label for="input-name">{$lang_name} <span title="{$lang_required}">*</span></label>
+    <label for="input-name">{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
     {if $USER_NAME}
       {$USER_FULL_NAME}
       {if $USER_FACEBOOK_ID}
@@ -17,18 +17,18 @@
     {/if}
   </p>
   <p>
-    <label for="input-email">{$lang_email}</label>
+    <label for="input-email">{$lang.global.email.email}</label>
     {if $USER_EMAIL}
       {$USER_EMAIL}
       {if $USER_FACEBOOK_ID}
         <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
     {else}
-      <input type="email" value="{$email}" name="email" title="{$lang_email_info}" />
+      <input type="email" value="{$email}" name="email" />
     {/if}
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='js-create_commment_text'>{$lang_content} <span title="{$lang_required}">*</span></label>
+    <label for='js-create_commment_text'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
   </p>
   {if isset($_captcha_)}
@@ -38,9 +38,9 @@
     </div>
   {/if}
   <p class="center">
-    <input type='submit' value='{$lang_submit}' />
+    <input type='submit' value='{$lang.global.submit}' />
     <input type='hidden' value='formdata' name='create_comment' />
     <input type='hidden' value='{$_parent_id_}' name='parent_id' />
-    <input type='reset' value='{$lang_reset}' />
+    <input type='reset' value='{$lang.global.reset}' />
   </p>
 </form>

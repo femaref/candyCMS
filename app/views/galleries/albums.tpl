@@ -29,7 +29,7 @@
                 </a>
               {/if}
             </h2>
-            <p>{$a.datetime} - {$a.files_sum} {$lang_files}</p>
+            <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
           </header>
           <summary>
             <a href='/gallery/{$a.id}'>

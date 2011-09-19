@@ -53,7 +53,7 @@ class Search extends Main {
 	 *
 	 */
   public function show() {
-		$this->_setError('id', LANG_ERROR_FORM_MISSING_CONTENT);
+		$this->_setError('id', $this->oI18n->get('error.missing.content'));
 
 		if (isset($this->_aError))
 			return $this->showFormTemplate();
@@ -66,7 +66,7 @@ class Search extends Main {
 			$this->_setTitle($this->_sHeadline);
 
 			# Language
-			$this->oSmarty->assign('lang_headline', $this->_sHeadline);
+			$this->oSmarty->assign('_headline_', $this->_sHeadline);
 
 			$this->oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
 			return $this->oSmarty->fetch('show.tpl');
@@ -86,7 +86,7 @@ class Search extends Main {
   public function getSearch($sTitle = '') {
     $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
     $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
-    $this->_sHeadline = str_replace('%s', $this->_sSearch, LANG_SEARCH_SHOW_TITLE);
+    $this->_sHeadline = str_replace('%s', $this->_sSearch, $this->oI18n->get('search.title.show'));
 
     $this->oSmarty->assign('search', $this->_sSearch);
     $this->oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
@@ -103,10 +103,8 @@ class Search extends Main {
 	 *
 	 */
   public function showFormTemplate() {
-    $this->_setDescription(LANG_GLOBAL_SEARCH);
-    $this->_setTitle(LANG_GLOBAL_SEARCH);
-
-    $this->oSmarty->assign('lang_terms', LANG_SEARCH_SHOW_LABEL_TERMS);
+    $this->_setDescription($this->oI18n->get('global.search'));
+    $this->_setTitle($this->oI18n->get('global.search'));
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
     return $this->oSmarty->fetch('_form.tpl');

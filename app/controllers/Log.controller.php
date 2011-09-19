@@ -39,17 +39,13 @@ class Log extends Main {
    */
   public function show() {
     if (USER_RIGHT < 4)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
       $this->oSmarty->assign('logs', $this->_oModel->getData());
 
       # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/log'));
-
-      # Language
-      $this->oSmarty->assign('lang_destroy', LANG_GLOBAL_DESTROY);
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_LOGS);
 
       $this->oSmarty->template_dir = Helper::getTemplateDir('logs', 'show');
       return $this->oSmarty->fetch('show.tpl');
@@ -84,7 +80,7 @@ class Log extends Main {
    *
    */
   public function destroy() {
-    return (USER_RIGHT < 4) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+    return (USER_RIGHT < 4) ? Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') : $this->_destroy();
   }
 
   /**
@@ -97,11 +93,11 @@ class Log extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/log');
+      return Helper::successMessage($this->oI18n->get('success.destroy'), '/log');
     }
     else {
       unset($this->_iId);
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/log');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/log');
     }
   }
 }

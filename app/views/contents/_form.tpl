@@ -1,12 +1,12 @@
 <form method='post' action='/content/{$smarty.get.action}'>
-  <h1>{$lang_headline}</h1>
+  <h1>{$smarty.get.action == 'create' ? $lang.content.title.create : $lang.content.title.update}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for="input-title">{$lang_title} <span title="{$lang_required}">*</span></label>
-    <input type='text' name='title' title='{$lang_title}' value='{$title}' id="input-title" autofocus required />
+    <label for="input-title">{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
+    <input type='text' name='title' title='{$lang.global.title}' value='{$title}' id="input-title" autofocus required />
   </p>
   <p>
     <label for='input-teaser'>
-      {$lang_teaser}
+      {$lang.global.teaser}
     </label>
     <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
            {* @todo put onkeyup into jQuery function *}
@@ -14,20 +14,20 @@
     <span id="js-chars">160</span>
   </p>
   <p>
-    <label for='input-keywords'>{$lang_keywords}</label>
+    <label for='input-keywords'>{$lang.global.keywords}</label>
     <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' id="input-keywords" />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for="input-content">{$lang_content} *</label>
-    <textarea name='content' title='{$lang_content}' class="js-tinymce" id="input-content">{$content}</textarea>
+    <label for="input-content">{$lang.global.content} *</label>
+    <textarea name='content' title='{$lang.global.content}' class="js-tinymce" id="input-content">{$content}</textarea>
   </p>
   <p class="center">
-    <input type='submit' value='{$lang_submit}' />
+    <input type='submit' value='{$lang.global.submit}' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />
-      <input type='reset' value='{$lang_reset}' />
-      <input type='button' value='{$lang_destroy_entry}'
+      <input type='reset' value='{$lang.global.reset}' />
+      <input type='button' value='{$lang.global.destroy.entry}'
              onclick="confirmDelete('/content/{$_request_id_}/destroy')" />
     {/if}
   </p>

@@ -1,7 +1,7 @@
 <section id="content">
   {if !$content}
-    <div class='error' id='js-error' title='{$lang_missing_entry}'>
-      <p>{$lang_missing_entry}</p>
+    <div class='error' id='js-error' title='{$lang.error.missing.entry}'>
+      <p>{$lang.error.missing.entry}</p>
     </div>
   {else}
     {foreach $content as $c}
@@ -11,15 +11,15 @@
             {$c.title}
             {if $USER_RIGHT >= 3}
               <a href='/content/{$c.id}/update'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}' width="16" height="16" title='{$lang_update}' />
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}' width="16" height="16" title='{$lang_update}' />
               </a>
             {/if}
           </h1>
           <p>
             <time datetime="{$c.date_w3c}">
-              {$lang_last_update}: {$c.datetime}
+              {$lang.global.last_update}: {$c.datetime}
             </time>
-            {$lang_by}
+            {$lang.global.by}
             <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
           </p>
         </header>
@@ -29,7 +29,7 @@
         {$c.content}
         <footer>
           <div class="share">
-            {$lang_share}:
+            {$lang.global.share}:
             <a href='http://www.facebook.com/share.php?u={$c.url}&amp;t={$c.encoded_title}'
                title='http://www.facebook.com'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-facebook" alt='Facebook' width='16' height='16' />

@@ -26,8 +26,8 @@ class Error extends Main {
    *
    */
   public function show404() {
-    $this->oSmarty->assign('lang_headline', LANG_ERROR_GLOBAL_404_TITLE);
-    $this->oSmarty->assign('lang_info', LANG_ERROR_GLOBAL_404_INFO);
+    $this->oSmarty->assign('lang_headline', $this->oI18n->get('error.404.title'));
+    $this->oSmarty->assign('lang_info', $this->oI18n->get('error.404.info'));
     $this->oSmarty->assign('lang_subheadline', 'Meinten Sie vielleicht:');
 
     if (isset($this->_aRequest['seo_title'])) {

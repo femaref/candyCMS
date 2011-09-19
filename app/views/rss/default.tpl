@@ -4,7 +4,7 @@
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{$_title_}</title>
-    <description>{$WEBSITE_DESCRIPTION}</description>
+    <description>{$lang.website.description}</description>
     <language>{$_language_}</language>
     <link>{$WEBSITE_URL}</link>
     <copyright>{$WEBSITE_NAME}</copyright>

@@ -30,7 +30,7 @@ class Helper {
     $_SESSION['flash_message']['type']      = 'error';
     $_SESSION['flash_message']['message']   = $sMSG;
     $_SESSION['flash_message']['headline']  = LANG_ERROR_GLOBAL;
-    $_SESSION['flash_message']['show']    = '0';
+    $_SESSION['flash_message']['show']			= '0';
 
     if(!empty($sRedirectTo))
       Helper::redirectTo ($sRedirectTo);

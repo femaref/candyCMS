@@ -40,10 +40,6 @@ class Gallery extends Main {
    *
    */
   public function show() {
-    # Language
-    $this->oSmarty->assign('lang_create_file_headline', LANG_GALLERY_FILE_CREATE_TITLE);
-    $this->oSmarty->assign('lang_no_files_uploaded', LANG_ERROR_GALLERY_NO_FILES_UPLOADED);
-
     # Album images
     if (!empty($this->_iId)) {
       # collect data array
@@ -59,22 +55,18 @@ class Gallery extends Main {
       $this->oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight(LANG_GLOBAL_GALLERY . ': ' . $sAlbumName));
+      $this->_setTitle($this->_removeHighlight($this->oI18n->get('global.gallery') . ': ' . $sAlbumName));
 
       $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
       return $this->oSmarty->fetch('files.tpl');
     }
     # Album overview
     else {
-      $this->_setDescription(LANG_GLOBAL_GALLERY);
-      $this->_setTitle(LANG_GLOBAL_GALLERY);
+      $this->_setDescription($this->oI18n->get('global.gallery'));
+      $this->_setTitle($this->oI18n->get('global.gallery'));
 
       $this->oSmarty->assign('albums', $this->_oModel->getData());
       $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/gallery'));
-
-      # Language
-      $this->oSmarty->assign('lang_create_album_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_GALLERY);
 
       $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
       return $this->oSmarty->fetch('albums.tpl');
@@ -91,20 +83,12 @@ class Gallery extends Main {
   protected function _showFormTemplate() {
     $this->_aData = $this->_oModel->getData($this->_iId, true);
 
-    if (!empty($this->_iId)) {
-      # Language
-      $this->oSmarty->assign('lang_headline', LANG_GLOBAL_UPDATE_ENTRY);
-      $this->oSmarty->assign('lang_submit', LANG_GLOBAL_UPDATE_ENTRY);
-
+    if (!empty($this->_iId))
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
-    }
+
     else {
       $this->_aData['title']        = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $this->_aData['description']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-
-      # Language
-      $this->oSmarty->assign('lang_headline', LANG_GALLERY_ALBUM_CREATE_TITLE);
-      $this->oSmarty->assign('lang_submit', LANG_GALLERY_ALBUM_CREATE_TITLE);
     }
 
     foreach ($this->_aData as $sColumn => $sData)
@@ -137,11 +121,11 @@ class Gallery extends Main {
 
     elseif ($this->_oModel->create() === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('gallery_albums'));
-      return Helper::successMessage(LANG_SUCCESS_CREATE, '/gallery');
+      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery');
     }
 
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
   }
 
   /**
@@ -163,11 +147,11 @@ class Gallery extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_UPDATE, $sRedirect);
+      return Helper::successMessage($this->oI18n->get('success.update'), $sRedirect);
     }
 
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+      return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
   }
 
   /**
@@ -182,12 +166,12 @@ class Gallery extends Main {
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
+      return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
     }
 
     else {
       unset($this->_iId);
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
     }
   }
 
@@ -201,12 +185,9 @@ class Gallery extends Main {
    */
   protected function _showFormFileTemplate() {
     # Update
-    if ($this->_aRequest['action'] == 'updatefile') {
+    if ($this->_aRequest['action'] == 'updatefile')
       $this->oSmarty->assign('content', Model::getFileContent($this->_iId));
 
-      # Language
-      $this->oSmarty->assign('lang_headline', LANG_GALLERY_FILE_UPDATE_TITLE);
-    }
     # Create
     else {
       # See helper/Image.helper.php for details!
@@ -215,12 +196,6 @@ class Gallery extends Main {
 
       $this->oSmarty->assign('default', $sDefault);
       $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
-
-      # Language
-      $this->oSmarty->assign('lang_create_file_cut', LANG_GALLERY_FILE_CREATE_LABEL_CUT);
-      $this->oSmarty->assign('lang_create_file_resize', LANG_GALLERY_FILE_CREATE_LABEL_RESIZE);
-      $this->oSmarty->assign('lang_file_choose', LANG_GALLERY_FILE_CREATE_LABEL_CHOOSE);
-      $this->oSmarty->assign('lang_headline', LANG_GALLERY_FILE_CREATE_TITLE);
     }
 
     if (!empty($this->_aError)) {
@@ -244,17 +219,17 @@ class Gallery extends Main {
    */
   public function createFile() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION);
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'));
 
     else {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
           # Log uploaded image. Request ID = album id
           Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
-          return Helper::successMessage(LANG_GALLERY_FILE_CREATE_SUCCESS, '/gallery/' . $this->_iId);
+          return Helper::successMessage($this->oI18n->get('success.file.upload'), '/gallery/' . $this->_iId);
         }
         else
-          return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/gallery/' . $this->_iId . '/createfile');
+          return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/gallery/' . $this->_iId . '/createfile');
       }
       else
         return $this->_showFormFileTemplate();
@@ -284,7 +259,7 @@ class Gallery extends Main {
       return true;
     }
     else {
-      $this->_aError['file'] = LANG_ERROR_FORM_MISSING_FILE;
+      $this->_aError['file'] = $this->oI18n->get('error.form.missing.file');
       return $this->_showFormFileTemplate();
     }
   }
@@ -300,16 +275,16 @@ class Gallery extends Main {
    */
   public function updateFile() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {
       if( isset($this->_aRequest['updatefile_gallery']) ) {
         if( $this->_oModel->updateFile($this->_iId) === true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-          return Helper::successMessage(LANG_SUCCESS_UPDATE, '/gallery');
+          return Helper::successMessage($this->oI18n->get('success.update'), '/gallery');
         }
         else
-          return Helper::errorMessage(LANG_ERROR_GLOBAL, '/gallery');
+          return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
       }
       else
         return $this->_showFormFileTemplate();
@@ -325,16 +300,16 @@ class Gallery extends Main {
    */
   public function destroyFile() {
     if( USER_RIGHT < 3 )
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
         unset($this->_iId);
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/gallery');
+        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_GLOBAL_FILE_COULD_NOT_BE_DESTROYED, '/gallery');
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
     }
   }
 }

@@ -110,7 +110,7 @@ class User extends Main {
 			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
 		}
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/' . $this->_iId);
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/' . $this->_iId);
 	}
 
 	/**
@@ -151,26 +151,6 @@ class User extends Main {
 
 		# Set Form params
 		$this->oSmarty->assign('style', 'display:none');
-
-		# Language
-		$this->oSmarty->assign('lang_account_title', LANG_USER_UPDATE_ACCOUNT_TITLE);
-		$this->oSmarty->assign('lang_account_info', LANG_USER_UPDATE_ACCOUNT_INFO);
-		$this->oSmarty->assign('lang_image_change', LANG_USER_UPDATE_IMAGE_LABEL_CHANGE);
-		$this->oSmarty->assign('lang_image_choose', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
-		$this->oSmarty->assign('lang_image_headline', LANG_USER_UPDATE_IMAGE_LABEL_CHOOSE);
-		$this->oSmarty->assign('lang_image_terms', LANG_USER_UPDATE_IMAGE_LABEL_TERMS);
-		$this->oSmarty->assign('lang_image_upload', LANG_USER_UPDATE_IMAGE_TITLE);
-		$this->oSmarty->assign('lang_image_upload_info', LANG_USER_UPDATE_IMAGE_INFO);
-		$this->oSmarty->assign('lang_password_change', LANG_USER_UPDATE_PASSWORD_TITLE);
-		$this->oSmarty->assign('lang_password_new', LANG_USER_UPDATE_PASSWORD_LABEL_NEW);
-		$this->oSmarty->assign('lang_password_old', LANG_USER_UPDATE_PASSWORD_LABEL_OLD);
-		$this->oSmarty->assign('lang_password_repeat', LANG_GLOBAL_PASSWORD_REPEAT);
-		$this->oSmarty->assign('lang_user_content', LANG_USER_UPDATE_USER_LABEL_DESCRIPTION); # TODO: Rename to content
-		$this->oSmarty->assign('lang_user_gravatar', LANG_USER_UPDATE_USER_LABEL_GRAVATAR);
-		$this->oSmarty->assign('lang_user_gravatar_info', LANG_USER_UPDATE_USER_GRAVATAR_INFO);
-		$this->oSmarty->assign('lang_user_newsletter', LANG_USER_UPDATE_USER_LABEL_NEWSLETTER);
-		$this->oSmarty->assign('lang_user_submit', LANG_USER_UPDATE_USER_LABEL_SUBMIT);
-		$this->oSmarty->assign('lang_user_title', LANG_USER_UPDATE_USER_TITLE);
 
 		$this->oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
 		return $this->oSmarty->fetch('_form.tpl');
@@ -217,10 +197,6 @@ class User extends Main {
 		$this->_aData = $this->_oModel->getData($iUserId);
     $this->oSmarty->assign('user', $this->_aData);
 
-    # Language
-    $this->oSmarty->assign('lang_last_login', LANG_USER_SHOW_USER_LABEL_LAST_LOGIN);
-    $this->oSmarty->assign('lang_registered_since', LANG_USER_SHOW_USER_REGISTERED_SINCE);
-
 		if (empty($this->_iId)) {
 			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
 			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
@@ -229,10 +205,6 @@ class User extends Main {
 				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
 
 			else {
-				# Language
-				$this->oSmarty->assign('lang_create', LANG_USER_CREATE_TITLE);
-				$this->oSmarty->assign('lang_headline', LANG_GLOBAL_USERMANAGER);
-
 				$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
 				return $this->oSmarty->fetch('overview.tpl');
 			}
@@ -267,7 +239,7 @@ class User extends Main {
 				if ($this->_oModel->destroy($this->_iId) === true)
 					return Helper::successMessage(LANG_SUCCESS_DESTROY, '/');
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user/update');
+					return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
 			} else
 				return Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
 
@@ -278,12 +250,12 @@ class User extends Main {
 				return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
 			}
 			else
-				return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/user');
+				return Helper::errorMessage($this->oI18n->get('error.sql'), '/user');
 		}
 
 		# No admin and not the active user
 		else
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 	}
 
 	/**
@@ -346,7 +318,7 @@ class User extends Main {
       return Helper::successMessage(LANG_MAIL_GLOBAL_SENT_TITLE, '/');
 		}
 		else
-			return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/');
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
 	}
 
 	/**

@@ -55,18 +55,19 @@ class Newsletter extends Main {
       $sQuery = $this->_oModel->handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
       if ($sQuery == 'DESTROY')
-        return Helper::successMessage(LANG_SUCCESS_DESTROY, '/newsletter');
+        return Helper::successMessage($this->oI18n->get('success.destroy'), '/newsletter');
 
       elseif ($sQuery == 'INSERT') {
         Mail::send(
                 Helper::formatInput($this->_aRequest['email']),
-                LANG_MAIL_NEWSLETTER_CREATE_SUBJECT,
-                LANG_MAIL_NEWSLETTER_CREATE_BODY,
+                $this->oI18n->get('newsletter.mail.subject'),
+                $this->oI18n->get('newsletter.mail.body'),
                 WEBSITE_MAIL_NOREPLY);
-        return Helper::successMessage(LANG_SUCCESS_CREATE, '/newsletter');
+
+        return Helper::successMessage($this->oI18n->get('success.create'), '/newsletter');
       }
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/newsletter');
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/newsletter');
     }
   }
 
@@ -83,12 +84,8 @@ class Newsletter extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    # Language
-    $this->oSmarty->assign('lang_headline', LANG_NEWSLETTER_HANDLE_TITLE);
-    $this->oSmarty->assign('lang_description', LANG_NEWSLETTER_HANDLE_INFO);
-
-    $this->_setDescription(LANG_NEWSLETTER_HANDLE_INFO);
-    $this->_setTitle(LANG_NEWSLETTER_HANDLE_TITLE);
+    $this->_setDescription($this->oI18n->get('newsletter.info.handle'));
+    $this->_setTitle($this->oI18n->get('newsletter.title.handle'));
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'newsletter');
     return $this->oSmarty->fetch('newsletter.tpl');
@@ -104,7 +101,7 @@ class Newsletter extends Main {
    */
   public function create() {
     if (USER_RIGHT < 3)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else
       return isset($this->_aRequest['create_newsletter']) ? $this->_create() : $this->_showCreateNewsletterTemplate();
@@ -128,11 +125,6 @@ class Newsletter extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
-
-    # Language
-    $this->oSmarty->assign('lang_content_info', LANG_NEWSLETTER_CREATE_INFO);
-    $this->oSmarty->assign('lang_headline', LANG_NEWSLETTER_CREATE_TITLE);
-    $this->oSmarty->assign('lang_submit', LANG_NEWSLETTER_CREATE_LABEL_SUBMIT);
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'create');
     return $this->oSmarty->fetch('create.tpl');
@@ -175,7 +167,7 @@ class Newsletter extends Main {
       $aResult = $this->_oModel->getNewsletterRecipients('newsletter');
 
       foreach ($aResult as $aRow) {
-        $sReceiversName = LANG_NEWSLETTER_SHOW_DEFAULT_NAME;
+        $sReceiversName = $this->oI18n->get('newsletter.receipients');
         $sReceiversMail = $aRow['email'];
 
         $sMailSubject = Helper::formatInput($this->_aRequest['subject']);
@@ -188,10 +180,10 @@ class Newsletter extends Main {
 
       if(isset($bStatusNewsletter) || isset($bStatusUser)) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action']);
-        return Helper::successMessage( LANG_SUCCESS_MAIL_SENT, '/' );
+        return Helper::successMessage( $this->oI18n->get('success.mail.create'), '/' );
       }
       else
-        return Helper::errorMessage(LANG_ERROR_MAIL_ERROR, '/');
+        return Helper::errorMessage($this->oI18n->get('error.email.sending'), '/');
     }
   }
 }

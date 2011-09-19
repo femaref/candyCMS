@@ -99,9 +99,6 @@ class Comment extends Main {
       # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
 
-      # Language
-      $this->oSmarty->assign('lang_destroy', LANG_COMMENT_TITLE_DESTROY);
-
       $this->oSmarty->template_dir = Helper::getTemplateDir('comments', 'show');
       return $this->oSmarty->fetch('show.tpl') . $this->create('create_comment');
     }
@@ -133,9 +130,6 @@ class Comment extends Main {
       foreach ($this->_aError as $sField => $sMessage)
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
-
-    # Language
-    $this->oSmarty->assign('lang_headline', LANG_COMMENT_TITLE_CREATE);
 
     $this->oSmarty->template_dir = Helper::getTemplateDir('comments', '_form');
     return $this->oSmarty->fetch('_form.tpl');
@@ -177,7 +171,7 @@ class Comment extends Main {
    *
    */
   protected function _create($bShowCaptcha = true) {
-    $this->_setError('parent_id', LANG_ERROR_GLOBAL_WRONG_ID);
+    $this->_setError('parent_id', $this->oI18n->get('error.missing.id'));
     $this->_setError('content');
 
     if (USER_ID < 1)
@@ -192,11 +186,11 @@ class Comment extends Main {
 
       if ($this->_oModel->create() === true) {
         Log::insert('comment', 'create', $iLastComment);
-        return Helper::successMessage(LANG_SUCCESS_CREATE, $sRedirect);
+        return Helper::successMessage($this->oI18n->get('success.create'), $sRedirect);
       }
 
       else
-        return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+        return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
     }
   }
 
@@ -214,10 +208,10 @@ class Comment extends Main {
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert('comment', 'destroy', (int) $this->_aRequest['id']);
-      return Helper::successMessage(LANG_SUCCESS_DESTROY, $sRedirect);
+      return Helper::successMessage($this->oI18n->get('success.destroy'), $sRedirect);
     }
     else
-      return Helper::errorMessage(LANG_ERROR_SQL_QUERY, $sRedirect);
+      return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
   }
 
   /**
@@ -240,11 +234,11 @@ class Comment extends Main {
         return $this->_create(true);
 
       else {
-        $this->_aError['captcha'] = LANG_ERROR_MAIL_CAPTCHA_NOT_CORRECT;
+        $this->_aError['captcha'] = $this->oI18n->get('error.captcha.incorrect');
         return $this->_showFormTemplate(true);
       }
     }
     else
-      return Helper::errorMessage(LANG_ERROR_MAIL_CAPTCHA_NOT_LOADED, '/blog/' . $this->_iId);
+      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/blog/' . $this->_iId);
   }
 }

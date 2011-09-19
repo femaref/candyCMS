@@ -166,18 +166,6 @@ class Index {
 
 		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
 		define('WEBSITE_LOCALE',    $sLocale);
-
-    # @deprecated
-    # Include language if possible
-		try {
-      if (!file_exists($sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php'))
-        throw new AdvancedException('Missing language file.');
-      else
-        require_once $sPath . 'languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.php';
-    }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
 	}
 
   /**
@@ -281,7 +269,7 @@ class Index {
     }
 
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, LANG_GLOBAL_UPDATE_AVAIABLE) :
+            str_replace('%v', $sVersionContent, $this->oI18n->get('global.update.avaiable')) :
             '';
     return str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
   }

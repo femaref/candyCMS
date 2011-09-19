@@ -7,7 +7,7 @@
       </a>
     </p>
   {/if}
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.global.downloads}</h1>
   {if !$download}
     <div class='error' id='js-error' title='{$lang_no_entries}'>
       <p>{$lang_no_entries}</p>

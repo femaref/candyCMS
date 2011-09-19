@@ -25,7 +25,7 @@
     <p {if isset($error_disclaimer)}class="error" title="{$error_disclaimer}"{/if}>
       <label>
         <a href='/help/Registration' id="js-fancybox">
-          {$lang_disclaimer_read} <span title="{$lang_required}">*</span>
+          {$lang_terms_read} <span title="{$lang_required}">*</span>
         </a>
       </label>
       <input name='disclaimer' value='' type='checkbox' required />
