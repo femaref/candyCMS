@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Handle all download SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
  */
 
 namespace CandyCMS\Model;
@@ -77,16 +81,21 @@ class Download extends Main {
         $this->_oDb->rollBack();
       }
 
-      if ($bUpdate == true)
-        $this->_aData = $this->_formatForUpdate($aRow);
-
-      else
-        $this->_aData = & $aRow;
+      $this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
     }
 
     return $this->_aData;
   }
 
+  /**
+   * Get download data.
+   *
+   * @access public
+   * @param integer $iId ID to get data from
+   * @param boolean $bUpdate prepare data for update
+   * @return array data
+   *
+   */
   public function getData($iId = '', $bUpdate = false) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
@@ -94,6 +103,13 @@ class Download extends Main {
     return $this->_setData($bUpdate);
   }
 
+  /**
+   * Create new download.
+   *
+   * @access public
+   * @return boolean status of query
+   *
+   */
   public function create() {
     # Set up upload helper and rename file to title
     $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
@@ -136,6 +152,14 @@ class Download extends Main {
     }
   }
 
+  /**
+   * Update a download.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
   public function update($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
@@ -164,6 +188,14 @@ class Download extends Main {
     }
   }
 
+  /**
+   * Destroy a download and its file.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
   public function destroy($iId) {
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
@@ -180,6 +212,7 @@ class Download extends Main {
       $this->_oDb->rollBack();
     }
 
+    # Get file name
     $aFile = $this->getData($iId);
     $sFile = $aFile['file'];
 
@@ -189,6 +222,14 @@ class Download extends Main {
     return $bReturn;
   }
 
+  /**
+   * Updates a download count +1.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
   public static function updateDownloadCount($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);

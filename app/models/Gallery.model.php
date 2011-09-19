@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Handle all gallery SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 namespace CandyCMS\Model;
@@ -17,14 +21,20 @@ class Gallery extends Main {
   private $_aThumbs;
   private $_sFilePath;
 
+  /**
+   * Set gallery album data.
+   *
+   * @access private
+   * @param boolean $bUpdate prepare data for update
+   * @param integer $iLimit blog post limit
+   * @return array data
+   *
+   */
   private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
     $sWhere = '';
     $iResult = 1;
 
-    if (!empty($this->_iId))
-      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
-
-    else {
+    if (empty($this->_iId)) {
       try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
         $iResult = $oQuery->fetchColumn();
@@ -33,6 +43,9 @@ class Gallery extends Main {
         $this->_oDb->rollBack();
       }
     }
+
+    else
+      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
     $this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
 
@@ -68,55 +81,33 @@ class Gallery extends Main {
       $this->_oDb->rollBack();
     }
 
-    if($bUpdate == true) {
-      $aRow = & $aResult;
+    # Update a single entry. Fix it with 0 o
+    if ($bUpdate == true)
+      $this->_aData = $this->_formatForUpdate($aResult[0]);
 
-      # Fix fetchAll with array 0
-      $this->_aData = array(
-          'title'       => Helper::removeSlahes($aRow[0]['title']),
-          'content'     => Helper::removeSlahes($aRow[0]['content'], true));
-    }
     else {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        # Set SEO friendly user names
-        $sName      = Helper::formatOutput($aRow['name']);
-        $sSurname   = Helper::formatOutput($aRow['surname']);
-        $sFullName  = $sName . ' ' . $sSurname;
-
-        $sEncodedTitle = Helper::formatOutput(urlencode($aRow['title']));
-        $sUrl = WEBSITE_URL . '/gallery/' . $iId;
-
-        $this->_aData[$iId] = array(
-            'id'          => $aRow['id'],
-            'author_id'   => $aRow['author_id'],
-            'title'       => Helper::formatOutput($aRow['title']),
-            'content'     => Helper::formatOutput($aRow['content']),
-            'date'        => Helper::formatTimestamp($aRow['date'], true),
-            'datetime'    => Helper::formatTimestamp($aRow['date']),
-            'date_raw'    => $aRow['date'],
-            'date_rss'    => date('D, d M Y H:i:s O', $aRow['date']),
-            'date_w3c'    => date('Y-m-d\TH:i:sP', $aRow['date']),
-            'name'        => $sName,
-            'surname'     => $sSurname,
-            'full_name'   => $sFullName,
-            'files_sum'   => $aRow['files_sum'],
-            'url'         => $sUrl . '/' . $sEncodedTitle,
-            'url_clean'   => $sUrl
-        );
-
-        # Are there any thumbs? If yes, get them!
-        if ($aRow['files_sum'] > 0)
-          $this->_aData[$iId]['files'] = $this->getThumbs($iId, $bAdvancedImageInformation);
-        else
-          $this->_aData[$iId]['files'] = '';
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'gallery');
+        $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($iId, $bAdvancedImageInformation) : '';
       }
     }
 
     return $this->_aData;
   }
 
+  /**
+   * Get blog entry or blog overview data. Depends on avaiable ID.
+   *
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
+   * @param boolean $bUpdate prepare data for update
+   * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
+   * @param integer $iLimit blog post limit
+   * @return array data from _setData
+   *
+   */
   public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     if (!empty($iId))
       $this->_iId = (int) $iId;
