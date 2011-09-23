@@ -57,7 +57,7 @@ class Blog extends Main {
 
     # Load blog pages
     } else
-      $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('/blog', 'blog'));
+      $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('blog'));
 
     # Create page title and description
     $this->_setDescription($this->_setBlogDescription());
