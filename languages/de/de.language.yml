@@ -315,6 +315,7 @@ session:
     title: E-Mail-Bestätigung erneut zusenden
 
 user:
+  contact_via_email: "Klicke hier, um %u eine E-Mail zu schicken!"
   info:
     destroy_account: Bitte gib zur eigenen Sicherheit dein aktuelles Passwort ein. Sobald du auf "Account löschen" klickst, wird dein Zugang gelöscht und ist nicht wiederherstellbar!
     gravatar: Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.
@@ -342,10 +343,8 @@ user:
   title:
     account:
       destroy: Account löschen
-    contact_via_email: Klicke hier, um %u eine E-Mail zu schicken!
     create: Benutzer erstellen
     overview: Übersicht
     password: Passwort ändern
     personal_data: Persönliche Daten
     update: Einstellungen bearbeiten
-

@@ -48,7 +48,7 @@ class User extends Main {
       $this->_iId = USER_ID;
 
     if (USER_ID == 0)
-      return Helper::errorMessage(LANG_ERROR_GLOBAL_CREATE_SESSION_FIRST, '/');
+      return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
@@ -76,27 +76,27 @@ class User extends Main {
 		$this->_setError('email');
 
 		# Check if old password is set
-		if (empty($this->_aRequest['password_old']) &&
-						!empty($this->_aRequest['password_new']) &&
-						!empty($this->_aRequest['password_new2']))
-			$this->_aError['password_old'] = LANG_ERROR_USER_UPDATE_PASSWORD_OLD_EMPTY;
+    if (empty($this->_aRequest['password_old']) &&
+            !empty($this->_aRequest['password_new']) &&
+            !empty($this->_aRequest['password_new2']))
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
 
-		# Check if old password is correct
-		if (!empty($this->_aRequest['password_old']) &&
-						md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-						$this->_aSession['userdata']['password'])
-			$this->_aError['password_old'] = LANG_ERROR_USER_UPDATE_PASSWORD_OLD_WRONG;
+    # Check if old password is correct
+    if (!empty($this->_aRequest['password_old']) &&
+            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
+            $this->_aSession['userdata']['password'])
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
 
-		# Check if new password fields aren't empty
-		if (!empty($this->_aRequest['password_old']) && (
-						empty($this->_aRequest['password_new']) ||
-						empty($this->_aRequest['password_new2']) ))
-			$this->_aError['password_new'] = LANG_ERROR_USER_UPDATE_PASSWORD_NEW_EMPTY;
+    # Check if new password fields aren't empty
+    if (!empty($this->_aRequest['password_old']) && (
+            empty($this->_aRequest['password_new']) ||
+            empty($this->_aRequest['password_new2']) ))
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
 
-		# Check if new password fields match
-		if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
-						$this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
-			$this->_aError['password_new'] = LANG_ERROR_USER_UPDATE_PASSWORD_NEW_DO_NOT_MATCH;
+    # Check if new password fields match
+    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
+            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
@@ -107,7 +107,7 @@ class User extends Main {
 							USER_ID;
 
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+			return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
 		}
 		else
 			return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/' . $this->_iId);
@@ -166,19 +166,19 @@ class User extends Main {
 	private function _createAvatar() {
 		$oUpload = new Upload($this->_aRequest, $this->_aFile);
 
-		$this->_setError('terms', LANG_ERROR_USER_UPDATE_AGREE_UPLOAD);
+		$this->_setError('terms', $this->oI18n->get('error.file.upload'));
 
 		if(!isset($this->_aFile['image']))
-			$this->_aError['image'] = LANG_ERROR_FORM_MISSING_FILE;
+			$this->_aError['image'] = $this->oI18n->get('error.form.missing.file');
 
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
 
 		elseif ($oUpload->uploadAvatarFile(false) === true)
-			return Helper::successMessage(LANG_SUCCESS_UPDATE, '/user/' . $this->_iId);
+			return Helper::successMessage($this->oI18n->get('success.upload'), '/user/' . $this->_iId);
 
 		else
-			return Helper::errorMessage(LANG_ERROR_UPLOAD_CREATE, '/user/' . $this->_iId);
+			return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/user/' . $this->_iId);
 	}
 
 	/**
@@ -198,11 +198,11 @@ class User extends Main {
     $this->oSmarty->assign('user', $this->_aData);
 
 		if (empty($this->_iId)) {
-			$this->_setTitle(LANG_USER_SHOW_OVERVIEW_TITLE);
-			$this->_setDescription(LANG_USER_SHOW_OVERVIEW_TITLE);
+			$this->_setTitle($this->oI18n->get('user.title.overview'));
+			$this->_setDescription($this->oI18n->get('user.title.overview'));
 
 			if (USER_RIGHT < 3)
-				return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+				return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 			else {
 				$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
@@ -213,10 +213,6 @@ class User extends Main {
 			# Manage title and description (content)
 			$this->_setTitle($this->_aData[1]['full_name']);
 			$this->_setDescription($this->_aData[1]['full_name']);
-
-			# Language
-			$this->oSmarty->assign('lang_about_himself', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_LABEL_DESCRIPTION));
-			$this->oSmarty->assign('lang_contact_via_mail', str_replace('%u', $this->_aData[1]['full_name'], LANG_USER_SHOW_USER_ACTION_CONTACT_VIA_EMAIL));
 
 			$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
 			return $this->oSmarty->fetch('show.tpl');

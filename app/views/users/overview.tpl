@@ -3,17 +3,17 @@
     <p class="center">
       <a href='/user/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-        {$lang_create}
+        {$lang.global.create}
       </a>
     </p>
   {/if}
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.user.title.overview}</h1>
   <table>
     <tr>
       <th></th>
-      <th>{$lang_name}</th>
-      <th>{$lang_registered_since}</th>
-      <th>{$lang_last_login}</th>
+      <th>{$lang.global.name}</th>
+      <th>{$lang.user.label.registered_since}</th>
+      <th>{$lang.user.label.last_login}</th>
       <th></th>
     </tr>
     {foreach $user as $u}
@@ -24,16 +24,16 @@
         <td style='width:35%' class="left">
           <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
         </td>
-        <td style='width:25%' title='{$lang_registered_since}'>{$u.date}</td>
-        <td style='width:25%' title='{$lang_last_login}'>{$u.last_login}</td>
+        <td style='width:25%'>{$u.date}</td>
+        <td style='width:25%'>{$u.last_login}</td>
         <td style='width:10%'>
           {if $USER_RIGHT == 4}
             <a href='/user/{$u.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                   title='{$lang_update}' width="16" height="16" />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}'
+                   title='{$lang.global.update}' width="16" height="16" />
             </a>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
-                 title='{$lang_destroy}' class="pointer" width="16" height="16"
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang.global.destroy}'
+                 title='{$lang.global.destroy}' class="pointer" width="16" height="16"
                  onclick="confirmDelete('/user/{$u.id}/destroy')" />
           {/if}
         </td>
