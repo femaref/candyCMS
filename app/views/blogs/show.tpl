@@ -3,7 +3,7 @@
     <p class="center">
       <a href='/blog/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-        {$lang.global.create_entry_headline}
+        {$lang.global.create.entry}
       </a>
     </p>
   {/if}

@@ -65,6 +65,14 @@ class Page {
   private $_iCurrentPage;
 
 	/**
+	 * Set up Smarty.
+	 *
+	 * @var object
+	 * @access private
+	 */
+  private $_oSmarty;
+
+	/**
 	 * Initialize page helper.
 	 *
 	 * @access public
@@ -74,6 +82,8 @@ class Page {
 	 *
 	 */
   public function __construct($aRequest, $iEntries, $iLimit = 10) {
+		$oI18n						= new I18n(WEBSITE_LANGUAGE);
+
     $this->_aRequest  =& $aRequest;
     $this->_iEntries  =& $iEntries;
     $this->_iLimit    =& $iLimit;
@@ -96,6 +106,12 @@ class Page {
     }
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
+
+
+    $this->_oSmarty = new \Smarty();
+    $this->_oSmarty->cache_dir = CACHE_DIR;
+    $this->_oSmarty->compile_dir = COMPILE_DIR;
+		$this->_oSmarty->assign('lang', $oI18n->getArray());
   }
 
 	/**
@@ -136,16 +152,13 @@ class Page {
    *
    */
   public function showPages($sUrl = '') {
-    $oSmarty = new \Smarty();
-    $oSmarty->assign('page_current', $this->_iCurrentPage);
-    $oSmarty->assign('page_last', $this->_iPages);
-    $oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
-    $oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
+    $this->_oSmarty->assign('page_current', $this->_iCurrentPage);
+    $this->_oSmarty->assign('page_last', $this->_iPages);
+    $this->_oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
+    $this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages', 'show');
-    return $oSmarty->fetch('show.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'show');
+    return $this->_oSmarty->fetch('show.tpl');
   }
 
 	/**
@@ -165,16 +178,13 @@ class Page {
     if ($this->_iCurrentPage > 1)
       $iPrevious = $this->_iCurrentPage - 1;
 
-    $oSmarty = new \Smarty();
-    $oSmarty->assign('_page_entries_', $this->_iEntries);
-    $oSmarty->assign('_page_limit_', $this->_iLimit);
-    $oSmarty->assign('_page_next_', $iNext);
-    $oSmarty->assign('_page_previous_', $iPrevious);
-    $oSmarty->assign('_rss_section_', $sRssAction);
+    $this->_oSmarty->assign('_page_entries_', $this->_iEntries);
+    $this->_oSmarty->assign('_page_limit_', $this->_iLimit);
+    $this->_oSmarty->assign('_page_next_', $iNext);
+    $this->_oSmarty->assign('_page_previous_', $iPrevious);
+    $this->_oSmarty->assign('_rss_section_', $sRssAction);
 
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = Helper::getTemplateDir('pages', 'surrounding');
-    return $oSmarty->fetch('surrounding.tpl');
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'surrounding');
+    return $this->_oSmarty->fetch('surrounding.tpl');
   }
 }

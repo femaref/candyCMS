@@ -18,7 +18,7 @@
           {elseif $c.author_name}
             {$c.author_name}
           {else}
-            <em style="text-decoration:line-through">{$lang_deleted_user}</em>
+            <em style="text-decoration:line-through">{$lang.global.deleted_user}</em>
           {/if}
           <br />
           <time datetime="{$c.date_w3c}">{$c.datetime}</time>

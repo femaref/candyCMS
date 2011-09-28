@@ -1,5 +1,5 @@
 <form method='post' action='/content/{$smarty.get.action}'>
-  <h1>{$smarty.get.action == 'create' ? $lang.content.title.create : $lang.content.title.update}</h1>
+  <h1>{if $smarty.get.action == 'create' ? $lang.content.title.create : $lang.content.title.update}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for="input-title">{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input type='text' name='title' title='{$lang.global.title}' value='{$title}' id="input-title" autofocus required />
