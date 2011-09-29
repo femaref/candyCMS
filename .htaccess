@@ -1,6 +1,9 @@
 # Many rules are taken from
 # http://github.com/paulirish/html5-boilerplate/blob/master/.htaccess
 
+# Add PHP5 support
+#AddHandler php53-cgi .php
+
 # Custom error pages
 ErrorDocument 404 /error/404
 ErrorDocument 422 /error/422

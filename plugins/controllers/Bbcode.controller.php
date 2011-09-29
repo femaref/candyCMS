@@ -13,13 +13,18 @@
 
 namespace CandyCMS\Plugin;
 
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Image as Image;
 
+require_once 'app/helpers/I18n.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
 
   private final function _setFormatedText($sStr) {
+
+		# Set up language
+		$oI18n = new I18n(WEBSITE_LANGUAGE);
 
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
@@ -56,7 +61,7 @@ final class Bbcode {
       if ($aInfo[0] <= MEDIA_DEFAULT_X)
         $sHTML = '<div class=\'image\'><img src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" /></div>';
 
-      # We do not have a preview, the image is local an biiig
+      # We do not have a preview
       else {
 
         if (!file_exists($sTempFilePath)) {
@@ -68,7 +73,7 @@ final class Bbcode {
         $aNewInfo = getimagesize($sTempFilePath);
 
         # Language
-        $sText = str_replace('%w', $aInfo[0], LANG_GLOBAL_IMAGE_CLICK_TO_ENLARGE);
+        $sText = str_replace('%w', $aInfo[0], I18n::get('global.image.click_to_enlarge'));
         $sText = str_replace('%h', $aInfo[1], $sText);
 
         $sHTML = '<div class="image">';
@@ -138,7 +143,7 @@ final class Bbcode {
     while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
     preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<blockquote>\\1</blockquote>", $sStr);
-      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h3>" . LANG_GLOBAL_QUOTE_BY . " \\1</h3>\\2</blockquote>", $sStr);
+      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h3>" . I18n::get('global.quote.by') . " \\1</h3>\\2</blockquote>", $sStr);
     }
 
     while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {

@@ -85,6 +85,11 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
 @session_start();
 
+# Update language after init
+# @todo besser implementation
+unset($_SESSION['lang']);
+$_SESSION['lang'] = array();
+
 # Initialize software
 $oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 

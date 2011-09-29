@@ -1,3 +1,3 @@
-<h2>{$lang_title}</h2>
-<p>{$lang_info}</p>
+<h2>{$lang.mail.info.title}</h2>
+<p>{$lang.mail.info.redirect}</p>
 <meta http-equiv="refresh" content="15; url=/" >

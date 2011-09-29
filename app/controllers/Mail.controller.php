@@ -11,6 +11,7 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\User as Model;
 
@@ -216,8 +217,8 @@ class Mail extends Main {
     require_once 'lib/phpmailer/class.phpmailer.php';
 
 		# Parse message and replace with (footer) variables
-		$sMessage = str_replace('%NOREPLY', $this->oI18n->get('mail.body.no_reply'), $sMessage);
-		$sMessage = str_replace('%SIGNATURE', $this->oI18n->get('mail.body.signature'), $sMessage);
+		$sMessage = str_replace('%NOREPLY', I18n::get('mail.body.no_reply'), $sMessage);
+		$sMessage = str_replace('%SIGNATURE', I18n::get('mail.body.signature'), $sMessage);
 		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
 		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 

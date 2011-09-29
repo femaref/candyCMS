@@ -72,29 +72,25 @@ class Helper {
   }
 
   public static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
-    if (!empty($aGravatar) && $aGravatar['use_gravatar'] == true) {
+		$sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
+
+		if (is_file($sFilePath . '.jpg'))
+			return WEBSITE_URL . '/' . $sFilePath . '.jpg';
+
+		elseif (is_file($sFilePath . '.png'))
+			return WEBSITE_URL . '/' . $sFilePath . '.png';
+
+		elseif (is_file($sFilePath . '.gif'))
+			return WEBSITE_URL . '/' . $sFilePath . '.gif';
+
+		else {
       if (!is_int($sSize))
         $sSize = POPUP_DEFAULT_X;
 
-      $sMail = md5($aGravatar['email']);
+      $sMail = isset($aGravatar['email']) ? md5($aGravatar['email']) : WEBSITE_MAIL;
       return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize .
-        '&d=' . WEBSITE_CDN . '/public/images/missing_avatar.jpg';
-    }
-    else {
-      $sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
-
-      if (is_file($sFilePath . '.jpg'))
-        return WEBSITE_URL . '/' . $sFilePath . '.jpg';
-
-      elseif (is_file($sFilePath . '.png'))
-        return WEBSITE_URL . '/' . $sFilePath . '.png';
-
-      elseif (is_file($sFilePath . '.gif'))
-        return WEBSITE_URL . '/' . $sFilePath . '.gif';
-
-      else
-        return WEBSITE_CDN . '/public/images/missing_avatar.jpg';
-    }
+        '&d=mm';
+		}
   }
 
   public static function getFileSize($sPath) {
@@ -129,7 +125,7 @@ class Helper {
       else {
 
         if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+          throw new AdvancedException('This template does not exist.');
 
         else
           return 'app/views/' . $sDir;
@@ -149,7 +145,7 @@ class Helper {
       # Standard views
       else {
         if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new AdvancedException(LANG_ERROR_GLOBAL_NO_TEMPLATE);
+          throw new AdvancedException('This template does not exist.');
 
         else
           return 'plugins/views/' . $sDir;

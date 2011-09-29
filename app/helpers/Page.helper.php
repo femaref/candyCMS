@@ -82,8 +82,6 @@ class Page {
 	 *
 	 */
   public function __construct($aRequest, $iEntries, $iLimit = 10) {
-		$oI18n						= new I18n(WEBSITE_LANGUAGE);
-
     $this->_aRequest  =& $aRequest;
     $this->_iEntries  =& $iEntries;
     $this->_iLimit    =& $iLimit;
@@ -107,11 +105,9 @@ class Page {
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
 
-
     $this->_oSmarty = new \Smarty();
     $this->_oSmarty->cache_dir = CACHE_DIR;
     $this->_oSmarty->compile_dir = COMPILE_DIR;
-		$this->_oSmarty->assign('lang', $oI18n->getArray());
   }
 
 	/**
@@ -177,6 +173,10 @@ class Page {
 
     if ($this->_iCurrentPage > 1)
       $iPrevious = $this->_iCurrentPage - 1;
+
+		# Set up language
+		$oI18n = new I18n(WEBSITE_LANGUAGE);
+		$this->_oSmarty->assign('lang', $oI18n->getArray());
 
     $this->_oSmarty->assign('_page_entries_', $this->_iEntries);
     $this->_oSmarty->assign('_page_limit_', $this->_iLimit);

@@ -303,7 +303,7 @@ abstract class Main {
 	 *
 	 */
 	public function getKeywords() {
-		return !empty($this->_sKeywords) ? $this->_sKeywords : $this->oI18n->get('website.keywords');
+		return !empty($this->_sKeywords) ? Helper::removeSlahes($this->_sKeywords) : $this->oI18n->get('website.keywords');
 	}
 
 	/**
@@ -325,7 +325,7 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		return !empty($this->_sTitle) ? $this->_sTitle : LANG_ERROR_GLOBAL_404_TITLE;
+		return !empty($this->_sTitle) ? Helper::removeSlahes($this->_sTitle) : $this->oI18n->get('error.404.title');
 	}
 
 	/**
@@ -387,10 +387,11 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError[$sField] = empty($sMessage) ? constant('LANG_ERROR_FORM_MISSING_' . strtoupper($sField)) : $sMessage;
+			$this->_aError[$sField] = empty($sMessage) ? constant($this->oI18n->get('error.form.missing.' . strtoupper($sField))) : $sMessage;
 
-		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ))
-			$this->_aError['email'] = LANG_ERROR_GLOBAL_WRONG_EMAIL_FORMAT;
+		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ) &&
+						'blog' !== $this->_aRequest['section'])
+			$this->_aError['email'] = $this->oI18n->get('error.form.missing.email');
 	}
 
 	/**
@@ -406,7 +407,7 @@ abstract class Main {
 	 */
 	public function create($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
@@ -427,7 +428,7 @@ abstract class Main {
 	 */
 	public function update($sInputName, $iUserRight = 3) {
 		if (USER_RIGHT < $iUserRight)
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/');
+			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
@@ -447,6 +448,6 @@ abstract class Main {
 	 */
 	public function destroy($iUserRight = 3) {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage(LANG_ERROR_GLOBAL_NO_PERMISSION, '/') : $this->_destroy();
+		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') : $this->_destroy();
 	}
 }

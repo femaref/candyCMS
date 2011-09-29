@@ -1,5 +1,5 @@
 <form method='post' action='/blog/{$smarty.get.action}' enctype="multipart/form-data">
-  <h1>{$smarty.get.action == 'create' ? $lang.blog.title.create : $lang.blog.title.update}</h1>
+  <h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update}{/if}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input name='title' value='{$title}' type='text' id="input-title" required />
@@ -37,7 +37,7 @@
   <p class="center">
     <input type='hidden' value='{$author_id}' name='author_id' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-    <input type='submit' value='{$smarty.get.action == 'create' ? $lang.blog.title.create : $lang.blog.title.update}' />
+    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update}{/if}' />
     {if $smarty.get.action == 'update'}
       <input type='button' value='{$lang.global.destroy.entry}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />

@@ -18,11 +18,11 @@ final class FormatTimestamp {
 
   private final function _setDate($iTime, $bDateOnly) {
     if(date('Ymd', $iTime) == date('Ymd', time())) {
-      $sDay = I18n::fetch('global.today');
+      $sDay = I18n::get('global.today');
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
     elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24))) {
-      $sDay = I18n::fetch('global.yesterday');
+      $sDay = I18n::get('global.yesterday');
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
     else {
@@ -30,13 +30,10 @@ final class FormatTimestamp {
       $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
     }
 
-    $sTime = str_replace('am', I18n::fetch('global.time.am'), $sTime);
-    $sTime = str_replace('pm', I18n::fetch('global.time.pm'), $sTime);
+    $sTime = str_replace('am', I18n::get('global.time.am'), $sTime);
+    $sTime = str_replace('pm', I18n::get('global.time.pm'), $sTime);
 
-    if ($bDateOnly == true)
-      return $sDay;
-    else
-      return $sDay.$sTime;
+    return ($bDateOnly == true) ? $sDay : $sDay.$sTime;
   }
 
   public final function getDate($iTime, $bDateOnly) {

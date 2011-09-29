@@ -43,7 +43,7 @@ global:
   files: Dateien
   gallery: Galerie
   image:
-    click_to_enlage: Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!
+    click_to_enlarge: "Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
     image: Bild
   in: in
   keywords: Schlagworte
@@ -115,8 +115,8 @@ global:
       3: Moderator
       4: Administrator
     user: User
-    welcome: Hallo
-    yesterday: Gestern
+  welcome: Hallo
+  yesterday: Gestern
 
 success:
   create: Eintrag wurde hinzugefügt!
@@ -206,7 +206,7 @@ blog:
   title:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen
-    update: \'%p\' bearbeiten
+    update: "%p bearbeiten"
 
 comment:
   info:
@@ -259,6 +259,7 @@ mail:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
     signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
   info:
+    title: "Vielen Dank für Deine Kontaktaufnahme!"
     redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
   subject:
     by: Neue Nachricht von %u
