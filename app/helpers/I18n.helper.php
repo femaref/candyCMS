@@ -28,15 +28,16 @@ class I18n {
    */
   public function __construct($sLanguage) {
     if (empty($_SESSION['lang'])) {
-      $sLanguageFile = 'languages/' . $sLanguage . '/' . $sLanguage . '.language.yml';
+			$sLanguageFile = 'languages/' . $sLanguage . '/' . $sLanguage . '.language.yml';
 
-      try {
-        $_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
-      }
-      catch (AdvancedException $e) {
-        die('Unable to load language file.');
-      }
-    }
+			try {
+				if (!isset($_SESSION['lang']) || empty($_SESSION['lang']))
+					$_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
+			}
+			catch (AdvancedException $e) {
+				die('Unable to load language file.');
+			}
+		}
   }
 
   /**

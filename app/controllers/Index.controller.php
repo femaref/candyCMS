@@ -164,8 +164,8 @@ class Index {
         break;
     }
 
-		define('WEBSITE_LANGUAGE',  $this->_sLanguage);
-		define('WEBSITE_LOCALE',    $sLocale);
+		define('WEBSITE_LANGUAGE', $this->_sLanguage);
+		define('WEBSITE_LOCALE', $sLocale);
 	}
 
   /**

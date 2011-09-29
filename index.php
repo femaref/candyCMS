@@ -85,17 +85,12 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
 @session_start();
 
-# Update language after init
-# @todo besser implementation
-unset($_SESSION['lang']);
-$_SESSION['lang'] = array();
-
 # Initialize software
 $oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->loadConfigFiles(array('Candy', 'Facebook', 'Plugins'));
 $oIndex->loadPlugins(ALLOW_PLUGINS);
-$oIndex->loadLanguage(); #@deprecated when yaml is productive
+$oIndex->loadLanguage();
 $oIndex->loadCronjob();
 $oIndex->setUser();
 $oIndex->setTemplate();
@@ -107,4 +102,5 @@ if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
 echo $oIndex->show();
+unset($_SESSION['lang']);
 ?>
