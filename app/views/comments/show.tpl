@@ -33,15 +33,15 @@
           {if $USER_RIGHT >= 3 && $c.author_ip}
             <span>{$c.author_ip}</span>
           {/if}
-          <a href='#add'
+          <a href='#create'
              onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
             <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                  title='{$lang.global.quote.quote}' />
           </a>
           {if $USER_RIGHT >= 3}
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
                  onclick="confirmDelete('/comment/{$c.id}/destroy/{$c.parent_id}')" width="16" height="16"
-                 title='{$lang_destroy}' />
+                 title='{$lang.global.destroy.destroy}' />
           {/if}
         </footer>
       </article>

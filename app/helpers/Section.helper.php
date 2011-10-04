@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Route the application to the given section.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  */
 
 namespace CandyCMS\Helper;
@@ -14,8 +18,21 @@ require_once 'addons/controllers/Addon.controller.php';
 
 class Section extends Main {
 
+	/**
+	 * Saves the object.
+	 *
+	 * @var object
+	 * @access protected
+	 */
   protected $_oObject;
 
+  /**
+   * Get the controller.
+   *
+   * @access public
+   * @return object created object
+   *
+   */
   private function _getController() {
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists('addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
@@ -43,7 +60,12 @@ class Section extends Main {
     return $this->_oObject;
   }
 
-  # Handle the pre-defined sections
+  /**
+   * Handle the pre-defined sections.
+   *
+   * @access public
+   *
+   */
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
       $this->_aRequest['section'] = '404';
@@ -93,8 +115,8 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_content'));
-          parent::_setDescription($this->oI18n->get('global.manager.content') . ': ' . $this->oI18n->get('content.title.create'));
-          parent::_setTitle($this->oI18n->get('global.manager.content') . ': ' . $this->oI18n->get('content.title.create'));
+          parent::_setDescription($this->oI18n->get('content.title.create'));
+          parent::_setTitle($this->oI18n->get('content.title.create'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_content'));
@@ -103,8 +125,8 @@ class Section extends Main {
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription($this->_oObject->getDescription());
-          parent::_setTitle($this->_oObject->getTitle());
+          parent::_setDescription($this->oI18n->get('global.content.destroy'));
+          parent::_setTitle($this->oI18n->get('global.content.destroy'));
         }
         else {
           parent::_setContent($this->_oObject->show());
@@ -154,33 +176,35 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_gallery'));
-          parent::_setDescription(LANG_GALLERY_ALBUM_CREATE_TITLE);
-          parent::_setTitle(LANG_GALLERY_ALBUM_CREATE_TITLE);
+          parent::_setDescription($this->oI18n->get('gallery.albums.title.create'));
+          parent::_setTitle($this->oI18n->get('gallery.albums.title.create'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'createfile') {
           parent::_setContent($this->_oObject->createFile());
-          parent::_setDescription(LANG_GALLERY_FILE_CREATE_TITLE);
-          parent::_setTitle(LANG_GALLERY_FILE_CREATE_TITLE);
+          parent::_setDescription($this->oI18n->get('gallery.files.title.create'));
+          parent::_setTitle($this->oI18n->get('gallery.files.title.update'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_gallery'));
-          parent::_setDescription($this->_oObject->getDescription(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE)));
-          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(), LANG_GALLERY_ALBUM_UPDATE_TITLE));
+          parent::_setDescription($this->_oObject->getDescription(str_replace('%p', $this->_oObject->getTitle(),
+									$this->oI18n->get('gallery.albums.title.update'))));
+          parent::_setTitle(str_replace('%p', $this->_oObject->getTitle(),
+									$this->oI18n->get('gallery.albums.title.update')));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'updatefile') {
           parent::_setContent($this->_oObject->updateFile());
-          parent::_setDescription(LANG_GALLERY_FILE_UPDATE_TITLE);
-          parent::_setTitle(LANG_GALLERY_FILE_UPDATE_TITLE);
+          parent::_setDescription($this->oI18n->get('gallery.files.title.update'));
+          parent::_setTitle($this->oI18n->get('gallery.files.title.update'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription(LANG_GLOBAL_GALLERY);
-          parent::_setTitle(LANG_GLOBAL_GALLERY);
+          parent::_setDescription($this->oI18n->get('gallery.albums.title.destroy'));
+          parent::_setTitle($this->oI18n->get('gallery.albums.title.destroy'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile') {
           parent::_setContent($this->_oObject->destroyFile());
-          parent::_setDescription(LANG_GLOBAL_GALLERY);
-          parent::_setTitle(LANG_GLOBAL_GALLERY);
+          parent::_setDescription($this->oI18n->get('gallery.files.title.destroy'));
+          parent::_setTitle($this->oI18n->get('gallery.files.title.destroy'));
         }
         else {
           parent::_setContent($this->_oObject->show());
@@ -193,17 +217,17 @@ class Section extends Main {
       case 'log':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
-          parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription($this->oI18n->get('global.logs'));
-          parent::_setTitle($this->oI18n->get('global.logs'));
-        }
-        else {
-          parent::_setContent($this->_oObject->show());
-          parent::_setDescription($this->oI18n->get('global.logs'));
-          parent::_setTitle($this->oI18n->get('global.logs'));
-        }
+					parent::_setContent($this->_oObject->destroy());
+					parent::_setDescription($this->oI18n->get('global.logs'));
+					parent::_setTitle($this->oI18n->get('global.logs'));
+				}
+				else {
+					parent::_setContent($this->_oObject->show());
+					parent::_setDescription($this->oI18n->get('global.logs'));
+					parent::_setTitle($this->oI18n->get('global.logs'));
+				}
 
-        break;
+				break;
 
       case 'mail':
 
@@ -257,7 +281,7 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setTitle($this->oI18n->get('global.search'));
+          parent::_setTitle($this->oI18n->get('search.title.create'));
         }
         else {
           parent::_setContent($this->_oObject->show());

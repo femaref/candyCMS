@@ -1,5 +1,5 @@
 <form method='post' action='/content/{$smarty.get.action}'>
-  <h1>{if $smarty.get.action == 'create' ? $lang.content.title.create : $lang.content.title.update}</h1>
+  <h1>{if $smarty.get.action == 'create'}{$lang.content.title.create}{else}{$lang.content.title.update}{/if}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for="input-title">{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input type='text' name='title' title='{$lang.global.title}' value='{$title}' id="input-title" autofocus required />
@@ -22,7 +22,7 @@
     <textarea name='content' title='{$lang.global.content}' class="js-tinymce" id="input-content">{$content}</textarea>
   </p>
   <p class="center">
-    <input type='submit' value='{$lang.global.submit}' />
+    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.content.title.create}{else}{$lang.content.title.update}{/if}' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />

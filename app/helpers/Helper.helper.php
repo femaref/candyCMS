@@ -1,9 +1,14 @@
 <?php
 
-/*
+/**
+ * Provide many helper methods.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
+ * @license MIT
+ * @since 1.0
+ *
+ */
 
 namespace CandyCMS\Helper;
 
@@ -14,9 +19,19 @@ use PDO;
 
 class Helper {
 
-  public static function successMessage($sMSG, $sRedirectTo = '') {
+  /**
+   * Display a success message after an action is done.
+   *
+	 * @static
+   * @access public
+	 * @param string $sMessage message to provide
+	 * @param string $sRedirectTo site to redirect to
+   * @return boolean true
+   *
+   */
+  public static function successMessage($sMessage, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'success';
-    $_SESSION['flash_message']['message']   = $sMSG;
+    $_SESSION['flash_message']['message']   = $sMessage;
     $_SESSION['flash_message']['headline']  = '';
     $_SESSION['flash_message']['show']      = '0';
 
@@ -26,9 +41,19 @@ class Helper {
     return true;
   }
 
-  public static function errorMessage($sMSG, $sRedirectTo = '') {
+  /**
+   * Display an error message after an action is done.
+   *
+	 * @static
+   * @access public
+	 * @param string $sMessage message to provide
+	 * @param string $sRedirectTo site to redirect to
+   * @return boolean false
+   *
+   */
+  public static function errorMessage($sMessage, $sRedirectTo = '') {
     $_SESSION['flash_message']['type']      = 'error';
-    $_SESSION['flash_message']['message']   = $sMSG;
+    $_SESSION['flash_message']['message']   = $sMessage;
     $_SESSION['flash_message']['headline']  = I18n::get('error.standard');
     $_SESSION['flash_message']['show']			= '0';
 
@@ -38,32 +63,69 @@ class Helper {
     return false;
   }
 
-  public static function redirectTo($sURL) {
-    header('Location:' . WEBSITE_URL . $sURL);
-    exit();
-  }
+  /**
+   * Redirect user to a specified page.
+   *
+	 * @static
+   * @access public
+	 * @param string $sUrl URL to redirect the user to
+   *
+   */
+  public static function redirectTo($sUrl) {
+		header('Location:' . WEBSITE_URL . $sUrl);
+		exit();
+	}
 
+  /**
+   * Check if the provided email address is in a correct format.
+   *
+	 * @static
+   * @access public
+	 * @param string $sMail email address to check
+   * @return boolean true if correct format
+   *
+   */
   public static function checkEmailAddress($sMail) {
-    if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
-      return true;
-  }
+		if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
+			return true;
+	}
 
+  /**
+   * Create a random charset.
+   *
+	 * @static
+   * @access public
+	 * @param integer $iLength length of the charset
+	 * @param boolean $bIntegerOnly create a charset of numbers
+   * @return string $sString created random charset
+   *
+   */
   public static function createRandomChar($iLength, $bIntegerOnly = false) {
-    $sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
+		$sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
 
-    if ($bIntegerOnly == true)
-      $sChars = '0123456789';
+		if ($bIntegerOnly == true)
+			$sChars = '0123456789';
 
-    $sString = '';
-    for ($iI = 1; $iI <= $iLength; $iI++) {
-      $iTemp = rand(1, strlen($sChars));
-      $iTemp--;
-      $sString .= $sChars[$iTemp];
-    }
+		$sString = '';
+		for ($iI = 1; $iI <= $iLength; $iI++) {
+			$iTemp = rand(1, strlen($sChars));
+			$iTemp--;
+			$sString .= $sChars[$iTemp];
+		}
 
-    return $sString;
-  }
+		return $sString;
+	}
 
+  /**
+   * Create a simple link with provided params
+   *
+	 * @static
+   * @access public
+	 * @param string $sUrl URL to create a link with
+	 * @param string $sExternal is this an external link?
+   * @return string HTML code with anchor
+   *
+   */
   public static function createLinkTo($sUrl, $bExternal = false) {
     if($bExternal == false)
       return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
@@ -71,8 +133,19 @@ class Helper {
       return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
-  public static function getAvatar($sPath, $sSize, $iUserId, $aGravatar = '') {
-		$sFilePath = PATH_UPLOAD . '/' . $sPath . '/' . $sSize . '/' . $iUserId;
+  /**
+	 * Return the URL of the user avatar.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sSize avatar size
+	 * @param integer $iUserId user ID
+	 * @param string $sEmail email address to search gravatar for
+	 * @return string URL of the avatar
+	 *
+	 */
+  public static function getAvatar($sSize, $iUserId, $sEmail = '') {
+		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
 
 		if (is_file($sFilePath . '.jpg'))
 			return WEBSITE_URL . '/' . $sFilePath . '.jpg';
@@ -87,82 +160,130 @@ class Helper {
       if (!is_int($sSize))
         $sSize = POPUP_DEFAULT_X;
 
-      $sMail = isset($aGravatar['email']) ? md5($aGravatar['email']) : WEBSITE_MAIL;
+      $sMail = isset($sEmail) ? md5($sEmail) : WEBSITE_MAIL;
       return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize .
         '&d=mm';
 		}
   }
 
+  /**
+	 * Count the file size.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sPath path of the file
+	 * @return string size of the file plus ending
+	 *
+	 */
   public static function getFileSize($sPath) {
-    $iSize = @filesize($sPath);
+		$iSize = @filesize($sPath);
 
-    if ($iSize > 1024 && $iSize < 1048576)
-      $sReturn = round(($iSize / 1024), 2) . ' KB';
+		if ($iSize > 1024 && $iSize < 1048576)
+			$sReturn = round(($iSize / 1024), 2) . ' KB';
 
-    elseif ($iSize >= 1048576 && $iSize < 1073741824)
-      $sReturn = round(($iSize / 1048576), 2) . ' MB';
+		elseif ($iSize >= 1048576 && $iSize < 1073741824)
+			$sReturn = round(($iSize / 1048576), 2) . ' MB';
 
-    elseif ($iSize >= 1073741824)
-      $sReturn = round(($iSize / 1073741824), 2) . ' GB';
+		elseif ($iSize >= 1073741824)
+			$sReturn = round(($iSize / 1073741824), 2) . ' GB';
 
-    else
-      $sReturn = round($iSize, 2) . ' Byte';
+		else
+			$sReturn = round($iSize, 2) . ' Byte';
 
-    return $sReturn;
-  }
+		return $sReturn;
+	}
 
+	/**
+	 * Get the template dir. Check if there are addon files and use them if avaiable.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sDir dir of the templates
+	 * @param string $sFile file name of the template
+	 * @return string path of the chosen template
+	 *
+	 */
   public function getTemplateDir($sDir, $sFile) {
-    try {
-      # Addons
-      if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
-        return 'addons/views/' . $sDir;
+		try {
+			# Addons
+			if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
+				return 'addons/views/' . $sDir;
 
-      # Template use
-      elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-        return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
+			# Template use
+			elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
 
-      # Standard views
-      else {
+			# Standard views
+			else {
 
-        if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new AdvancedException('This template does not exist.');
+				if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
+					throw new AdvancedException('This template does not exist.');
 
-        else
-          return 'app/views/' . $sDir;
-      }
-    }
-    catch (Exception $e) {
-      $e->getMessage();
-    }
-  }
+				else
+					return 'app/views/' . $sDir;
+			}
+		}
+		catch (Exception $e) {
+			$e->getMessage();
+		}
+	}
 
+	/**
+	 * Get the plugin template dir. Check if there are plugin files and use them if avaiable.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sDir dir of the templates
+	 * @param string $sFile file name of the template
+	 * @return string path of the chosen template
+	 *
+	 */
   public function getPluginTemplateDir($sDir, $sFile) {
-    try {
-      # Template
-      if (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-        return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
+		try {
+			# Template
+			if (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
 
-      # Standard views
-      else {
-        if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
-          throw new AdvancedException('This template does not exist.');
+			# Standard views
+			else {
+				if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
+					throw new AdvancedException('This template does not exist.');
 
-        else
-          return 'plugins/views/' . $sDir;
-      }
-    }
-    catch (Exception $e) {
-      $e->getMessage();
-    }
-  }
+				else
+					return 'plugins/views/' . $sDir;
+			}
+		}
+		catch (Exception $e) {
+			$e->getMessage();
+		}
+	}
 
+	/**
+	 * Remove slashes of provided string.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr string to remove slashes from
+	 * @return string string without slashes
+	 *
+	 */
   public static function removeSlahes($sStr) {
-    $sStr = str_replace('\&quot;', '"', $sStr);
-    $sStr = str_replace('\"', '"', $sStr);
-    $sStr = str_replace("\'", "'", $sStr);
-    return $sStr;
-  }
+		$sStr = str_replace('\&quot;', '"', $sStr);
+		$sStr = str_replace('\"', '"', $sStr);
+		$sStr = str_replace("\'", "'", $sStr);
+		return $sStr;
+	}
 
+	/**
+	 * Check the input to avoid XSS and SQL injections.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr string to check
+	 * @param boolean $bDisableHTML remove HTML code
+	 * @return string cleaned input
+	 *
+	 */
   public static function formatInput($sStr, $bDisableHTML = true) {
     try {
       if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
@@ -178,25 +299,50 @@ class Helper {
     return trim($sStr);
   }
 
+	/**
+	 * Format the linux timestamp into a user friendly format.
+	 *
+	 * If the "FormatTimestamp" plugin is enabled, load plugin and do some advanced work.
+	 *
+	 * @static
+	 * @access public
+	 * @param integer $iTime timestamp
+	 * @param boolean $bDateOnly show date only without time
+	 * @see plugins/controllers/FormatTimestamp.controller.php
+	 * @return string formatted timestamp
+	 *
+	 */
   public static function formatTimestamp($iTime, $bDateOnly = false) {
-    # Set active locale
-    setlocale(LC_ALL, WEBSITE_LOCALE);
+		# Set active locale
+		setlocale(LC_ALL, WEBSITE_LOCALE);
 
-    if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
-      $oDate = new FormatTimestamp();
-      return $oDate->getDate($iTime, $bDateOnly);
-    }
-    else {
+		if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
+			$oDate = new FormatTimestamp();
+			return $oDate->getDate($iTime, $bDateOnly);
+		}
+		else {
 
-      if ($bDateOnly == true)
-        return strftime(DEFAULT_DATE_FORMAT, $iTime);
+			if ($bDateOnly == true)
+				return strftime(DEFAULT_DATE_FORMAT, $iTime);
+			else
+				return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
+		}
+	}
 
-      else
-        return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
-    }
-  }
-
-  public static function formatOutput($sStr, $sHighlight = '') {
+	/**
+	 * Format HTML output .
+	 *
+	 * If the "Bbcode" plugin is enabled, load plugin do some advanced work.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr string to format
+	 * @param string $sHighlight enable string highlighting
+	 * @see plugins/controllers/Bbcode.controller.php
+	 * @return string formatted string
+	 *
+	 */
+  public static function formatOutput($sStr, $sHighlight = false) {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
 
@@ -204,7 +350,7 @@ class Helper {
     $sStr = Helper::removeSlahes($sStr);
 
     # Highlight string
-    if (!empty($sHighlight))
+    if ($sHighlight == true)
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
     if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
@@ -215,6 +361,15 @@ class Helper {
       return $sStr;
   }
 
+	/**
+	 * Fetch the last entry from database.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sTable table to fetch data from
+	 * @return integer latest ID
+	 *
+	 */
   public static function getLastEntry($sTable) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
@@ -228,6 +383,15 @@ class Helper {
     }
   }
 
+	/**
+	 * Replace non alphachars with predefined values.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr string to replace chars
+	 * @return string string with formatted chars
+	 *
+	 */
   public static function replaceNonAlphachars($sStr) {
     $sStr = str_replace('"', '', $sStr);
     $sStr = str_replace('Ä', 'Ae', $sStr);

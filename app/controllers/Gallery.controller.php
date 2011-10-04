@@ -87,7 +87,7 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
     else {
-      $this->_aData['title']        = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $this->_aData['description']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
 

@@ -2,30 +2,31 @@
   <p class="center">
     <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-      {$lang_create_album_headline}
+      {$lang.gallery.albums.title.create}
     </a>
   </p>
 {/if}
 {if !$albums}
-  <div class='error' id='js-error' title='{$lang_no_entries}'>
-    <p>{$lang_no_entries}</p>
+  <div class='error' id='js-error' title='{$lang.error.missing.entries}'>
+    <p>{$lang.error.missing.entries}</p>
   </div>
 {else}
   <section id='gallery'>
     {foreach $albums as $a}
       <article class='gallery_albums'>
+        {* Show gallery albums with uploaded images *}
         {if $a.files_sum > 0}
           <header>
             <h2>
               <a href='{$a.url}'>{$a.title}</a>
               {if $USER_RIGHT >= 3}
                 <a href='/gallery/{$a.id}/createfile'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang_create_file_headline}'
-                       title='{$lang_create_file_headline}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang.gallery.files.title.create}'
+                       title='{$lang.gallery.files.title.create}' width="16" height="16" />
                 </a>
                 <a href='/gallery/{$a.id}/update'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                       title='{$lang_update}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.gallery.albums.title.update}'
+                       title='{$lang.gallery.albums.title.update}' width="16" height="16" />
                 </a>
               {/if}
             </h2>
@@ -40,23 +41,24 @@
               {/foreach}
             </a>
           </summary>
+        {* Show gallery albums without uploaded images *}
         {elseif $USER_RIGHT >= 3}
           <header>
             <h2>
               <a href='{$a.url}'>{$a.title}</a>
               <a href='/gallery/{$a.id}/createfile'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang_create_file_headline}'
-                     title='{$lang_create_file_headline}' width="16" height="16" />
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang.gallery.files.title.create}'
+                     title='{$lang.gallery.files.title.create}' width="16" height="16" />
               </a>
               <a href='/gallery/{$a.id}/update'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                     title='{$lang_update}' width="16" height="16" />
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.gallery.albums.title.update}'
+                     title='{$lang.gallery.albums.title.update}' width="16" height="16" />
               </a>
             </h2>
-            <p>{$a.datetime} - {$a.files_sum} {$lang_files}</p>
+            <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
           </header>
           <p class="error">
-            {$lang_no_files_uploaded}
+            {$lang.error.gallery.no_files}
           </p>
         {/if}
       </article>

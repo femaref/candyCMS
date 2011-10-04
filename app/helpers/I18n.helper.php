@@ -69,7 +69,7 @@ class I18n {
       }
     }
 
-    return $mTemp;
+    return (string) $mTemp;
   }
 
   /**

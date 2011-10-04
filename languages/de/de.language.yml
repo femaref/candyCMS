@@ -128,8 +128,8 @@ success:
   mail:
     create: E-Mail erfolgreich verschickt!
   session:
-    create: Login erfolgreich
-    destroy: Logout erfolgreich
+    create: Login erfolgreich!
+    destroy: Logout erfolgreich!
   password:
     create: Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!
   user:
@@ -239,20 +239,20 @@ cronjob:
     subject: Sicherungskopie vom %d
 
 gallery:
-  album:
+  albums:
     title:
       create: Album erstellen
       destroy: Album löschen
-      update: \'%p\' bearbeiten
+      update: Album bearbeiten
   files:
     label:
       choose: Datei(en) auswählen
       cut: Bild quadratisch zuschneiden
-      reseize: Bild proportional verkleinern
+      resize: Bild proportional verkleinern
     title:
       create: Bild(er) hochladen
       destroy: Bild löschen
-      update: Bildinformationen bearbeiten
+      update: Bild bearbeiten
 
 mail:
   body:
@@ -296,6 +296,7 @@ search:
   label:
     terms: Suchbegriffe
   title:
+    create: Suche
     show: Suchergebnisse für "%s"
 
 session:

@@ -22,44 +22,44 @@ use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 class Index {
 
   /**
-  * @var array
-  * @access protected
-  */
-  protected $_aRequest;
+	 * @var array
+	 * @access protected
+	 */
+	protected $_aRequest;
 
-  /**
-  * @var array
-  * @access protected
-  */
-  protected $_aSession;
+	/**
+	 * @var array
+	 * @access protected
+	 */
+	protected $_aSession;
 
-  /**
-  * @var array
-  * @access protected
-  */
-  protected $_aFile;
+	/**
+	 * @var array
+	 * @access protected
+	 */
+	protected $_aFile;
 
-  /**
-  * @var array
-  * @access protected
-  */
-  protected $_aCookie;
+	/**
+	 * @var array
+	 * @access protected
+	 */
+	protected $_aCookie;
 
-  /**
-  * name of the selected template (via request)
-  *
-  * @var string
-  * @access private
-  */
-  private $_sTemplate;
+	/**
+	 * name of the selected template (via request)
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $_sTemplate;
 
-  /**
-  * name of the selected language (via request)
-  *
-  * @var string
-  * @access private
-  */
-  private $_sLanguage;
+	/**
+	 * name of the selected language (via request)
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $_sLanguage;
 
 	/**
 	 * Initialize the software by adding input params.
