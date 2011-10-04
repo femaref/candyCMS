@@ -183,7 +183,7 @@ class Newsletter extends Main {
         return Helper::successMessage( $this->oI18n->get('success.mail.create'), '/' );
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.email.sending'), '/');
+        return Helper::errorMessage($this->oI18n->get('error.mail.create'), '/');
     }
   }
 }

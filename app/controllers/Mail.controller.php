@@ -203,7 +203,7 @@ class Mail extends Main {
 				return $this->_showSuccessMessage();
       }
 			else
-				Helper::errorMessage($this->oI18n->get('error.email.sending'), '/');
+				Helper::errorMessage($this->oI18n->get('error.mail.create'), '/');
     }
   }
 

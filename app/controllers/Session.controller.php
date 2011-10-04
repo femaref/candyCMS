@@ -102,7 +102,7 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		# Check format of email
-		elseif(isset($this->_aRequest['email'])) {
+		elseif (isset($this->_aRequest['email'])) {
 			$this->_setError('email');
 		}
 
@@ -117,20 +117,20 @@ class Session extends Main {
 				if ($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
 					$aData = $this->_oModel->getData();
 
-					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_PASSWORD_BODY);
+					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.password.mail.body'));
 					$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
 					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																LANG_MAIL_SESSION_PASSWORD_SUBJECT,
+																$this->oI18n->get('session.password.mail.subject'),
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
 					return ($bStatus === true) ?
-									Helper::successMessage(LANG_SESSION_PASSWORD_CREATE_SUCCESSFUL, '/session/create') :
-									Helper::errorMessage(LANG_ERROR_MAIL_ERROR) . $this->showCreateSessionTemplate();
+									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
+									Helper::errorMessage($this->oI18n->get('error.mail.create')) . $this->showCreateSessionTemplate();
 				}
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
+					return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
 			}
 			elseif ($this->_aRequest['action'] == 'resendverification') {
 				if ($this->_oModel->createResendActions() === true) {
@@ -138,23 +138,23 @@ class Session extends Main {
 
 					$sVerificationUrl = Helper::createLinkTo('/user/' . $aData['verification_code'] . '/verification');
 
-					$sContent = str_replace('%u', $aData['name'], LANG_MAIL_SESSION_VERIFICATION_BODY);
+					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
 					$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
 					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																LANG_MAIL_SESSION_VERIFICATION_SUBJECT,
+																$this->oI18n->get('session.verification.mail.subject'),
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
 					return ($bStatus === true) ?
-									Helper::successMessage(LANG_SUCCESS_MAIL_SENT, '/session/create') :
+									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
 									$this->showCreateSessionTemplate();
 				}
 				else
-					return Helper::errorMessage(LANG_ERROR_SQL_QUERY, '/'); # TODO: Replace error message
+					return Helper::errorMessage($this->oI18n->get('error.sql'), '/'); # TODO: Replace error message
 			}
 			else
-				return Helper::errorMessage(LANG_ERROR_REQUEST_MISSING_ACTION, '/');
+				return Helper::errorMessage($this->oI18n->get('error.missing.action'), '/');
 		}
 	}
 
@@ -166,23 +166,23 @@ class Session extends Main {
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-    if($this->_aRequest['action'] == 'resendpassword') {
-      $this->_setTitle(LANG_SESSION_PASSWORD_TITLE);
-      $this->_setDescription(LANG_SESSION_PASSWORD_INFO);
-    }
-    else {
-      $this->_setTitle(LANG_SESSION_VERIFICATION_TITLE);
-      $this->_setDescription(LANG_SESSION_VERIFICATION_INFO);
-    }
+		if ($this->_aRequest['action'] == 'resendpassword') {
+			$this->_setTitle($this->oI18n->get('session.password.title'));
+			$this->_setDescription($this->oI18n->get('session.password.info'));
+		}
+		else {
+			$this->_setTitle($this->oI18n->get('session.verification.title'));
+			$this->_setDescription($this->oI18n->get('session.verification.info'));
+		}
 
-    if (!empty($this->_aError)) {
+		if (!empty($this->_aError)) {
 			foreach ($this->_aError as $sField => $sMessage)
 				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
-    return $this->oSmarty->fetch('resend.tpl');
-  }
+		$this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
+		return $this->oSmarty->fetch('resend.tpl');
+	}
 
 	/**
 	 * Destroy user session.
@@ -193,22 +193,22 @@ class Session extends Main {
 	 *
 	 */
   public function destroy() {
-    if (USER_RIGHT == 2) {
-      $oFacebook = new FacebookCMS(array(
-                  'appId' => FACEBOOK_APP_ID,
-                  'secret' => FACEBOOK_SECRET,
-                  'cookie' => true,
-              ));
+		if (USER_RIGHT == 2) {
+			$oFacebook = new FacebookCMS(array(
+									'appId' => FACEBOOK_APP_ID,
+									'secret' => FACEBOOK_SECRET,
+									'cookie' => true,
+							));
 
 			# Redirect user to start page. Success message is not be displayed.
-      Header('Location:' . $oFacebook->getLogoutUrl());
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
-    }
-    elseif ($this->_oModel->destroy() === true) {
-      unset($_SESSION);
-      return Helper::successMessage(LANG_SESSION_DESTROY_SUCCESSFUL, '/');
-    }
-    else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
-  }
+			Header('Location:' . $oFacebook->getLogoutUrl());
+			return Helper::successMessage($this->oI18n->get('success.session.create'), '/');
+		}
+		elseif ($this->_oModel->destroy() === true) {
+			unset($_SESSION);
+			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+		}
+		else
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+	}
 }

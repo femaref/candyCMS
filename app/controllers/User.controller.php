@@ -233,7 +233,7 @@ class User extends Main {
 		if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
 			if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
 				if ($this->_oModel->destroy($this->_iId) === true)
-					return Helper::successMessage(LANG_SUCCESS_DESTROY, '/');
+					return Helper::successMessage($this->oI18n->get('success.destroy'), '/');
 				else
 					return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
 			} else
@@ -243,7 +243,7 @@ class User extends Main {
 		} elseif (USER_RIGHT == 4) {
 			if ($this->_oModel->destroy($this->_iId) === true) {
 				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-				return Helper::successMessage(LANG_SUCCESS_DESTROY, '/user');
+				return Helper::successMessage($this->oI18n->get('success.destroy'), '/user');
 			}
 			else
 				return Helper::errorMessage($this->oI18n->get('error.sql'), '/user');
@@ -283,15 +283,15 @@ class User extends Main {
 		$this->_setError('password');
 
 		if (Model::getExistingUser($this->_aRequest['email']))
-			$this->_aError['email'] = LANG_ERROR_USER_CREATE_EMAIL_ALREADY_EXISTS;
+			$this->_aError['email'] = $this->oI18n->get('error.user.create.email');
 
 		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-			$this->_aError['password'] = LANG_ERROR_GLOBAL_PASSWORDS_DO_NOT_MATCH;
+			$this->_aError['password'] = $this->oI18n->get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
 		if (USER_RIGHT < 4) {
 			if (!isset($this->_aRequest['disclaimer']))
-				$this->_aError['disclaimer'] = LANG_ERROR_GLOBAL_READ_DISCLAIMER;
+				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
 		# Generate verification code for users (double-opt-in)
@@ -302,16 +302,13 @@ class User extends Main {
 			return $this->_showCreateUserTemplate();
 
 		elseif ($this->_oModel->create($iVerificationCode) === true) {
-			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), LANG_MAIL_USER_CREATE_BODY);
+			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
-			Mail::send(Helper::formatInput($this->_aRequest['email']),
-																								LANG_MAIL_USER_CREATE_SUBJECT,
-																								$sMailMessage,
-																								WEBSITE_MAIL_NOREPLY);
+			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-      return Helper::successMessage(LANG_MAIL_GLOBAL_SENT_TITLE, '/');
+			return Helper::successMessage($this->oI18n->get('success.mail.create'), '/');
 		}
 		else
 			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
@@ -355,12 +352,12 @@ class User extends Main {
 	 */
 	public function verifyEmail() {
 		if (empty($this->_iId))
-			return Helper::errorMessage(LANG_ERROR_GLOBAL_WRONG_ID, '/');
+			return Helper::errorMessage($this->oI18n->get('error.missing.id'), '/');
 
 		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
-			return Helper::successMessage(LANG_USER_VERIFICATION_SUCCESSFUL, '/');
+			return Helper::successMessage($this->oI18n->get('success.user.verification'), '/');
 
 		else
-			return Helper::errorMessage(LANG_ERROR_USER_VERIFICATION, '/');
+			return Helper::errorMessage($this->oI18n->get('error.user.verification'), '/');
 	}
 }

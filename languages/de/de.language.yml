@@ -144,9 +144,6 @@ error:
   captcha:
     incorrect: Der Code war leider nicht korrekt!
     loading: Captcha konnte nicht geladen werden, bitte aktiviere Javascript!
-  email:
-    format: Dies ist keine gültige E-Mail-Adresse!
-    sending: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
   file:
     destroy: Die Datei konnte nicht gelöscht werden!
     size: Maximale Dateigröße von 400KB erreicht!
@@ -166,6 +163,9 @@ error:
       subject: Bitte gib einen Betreff ein!
   gallery:
     no_files: Es wurden noch keine Bilder hochgeladen!
+  mail:
+    create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
+    format: Dies ist keine gültige E-Mail-Adresse!
   missing:
     action: Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!
     id: Falsche oder keine ID angegeben.
