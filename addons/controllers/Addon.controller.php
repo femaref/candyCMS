@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Addon dispatcher.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.5
  */
 
 namespace CandyCMS\Addon;

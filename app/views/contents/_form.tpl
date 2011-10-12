@@ -8,14 +8,14 @@
     <label for='input-teaser'>
       {$lang.global.teaser}
     </label>
-    <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang_create_teaser_info}'
+    <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.content.info.teaser}'
            {* @todo put onkeyup into jQuery function *}
-           title='{$lang_create_teaser_info}' id="input-teaser" onkeyup="$('#js-chars').html(160 - $(this).val().length)" />
+           title='{$lang.content.info.teaser}' id="input-teaser" onkeyup="$('#js-chars').html(160 - $(this).val().length)" />
     <span id="js-chars">160</span>
   </p>
   <p>
     <label for='input-keywords'>{$lang.global.keywords}</label>
-    <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang_create_keywords_info}' title='{$lang_create_keywords_info}' id="input-keywords" />
+    <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.content.info.keywords}' title='{$lang.content.info.keywords}' id="input-keywords" />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
     <label for="input-content">{$lang.global.content} *</label>

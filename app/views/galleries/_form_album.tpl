@@ -1,7 +1,7 @@
 <form method='post' action='/gallery/{$smarty.get.action}'>
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.global.gallery}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for='input-title'>{$lang_title} <span title="{$lang_required}">*</span></label>
+    <label for='input-title'>{$lang_title} <span title="{$lang.global.required}">*</span></label>
     <input name='title' value='{$title}' id="input-title" type='text' autofocus required />
   </p>
   <p>

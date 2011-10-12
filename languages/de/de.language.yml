@@ -54,7 +54,7 @@ global:
   logout: Logout
   manager:
     content: Seitenmanagement
-    file: Dateimanager
+    media: Dateimanager
     user: Benutzermanagement
   name: Name
   optional: optional
@@ -271,7 +271,7 @@ media:
     choose: Datei auswählen
     rename: Datei umbenennen
   title:
-    create: Datei erstellen
+    create: Datei hochladen
     destroy: Datei löschen
 
 newsletter:
@@ -279,7 +279,7 @@ newsletter:
     name: %u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
     handle: Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!
   label:
-    submit: Newsletter versenden
+    create: Newsletter versenden
   mail:
     body: Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE
     subject: Newsletter von %WEBSITE_NAME
@@ -310,7 +310,7 @@ session:
   verification:
     info: Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.
     label:
-      submit: Bestätigungslink zuschicken
+      create: Bestätigungslink zuschicken
     mail:
       body: "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
       subject: Deine E-Mail-Bestätigung für %WEBSITE_NAME
@@ -323,7 +323,9 @@ user:
     gravatar: Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.
     image: Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!
   label:
-    description:
+    account:
+      destroy: Account löschen
+    content:
       show: Über %u
       update: Über dich
     gravatar: Gravatar verwenden?
@@ -335,17 +337,17 @@ user:
     last_login: Letzter Login
     newsletter: Newsletter abonnieren?
     password:
+      create: Passwort ändern
       new: Neues Passwort
       old: Altes Passwort
     registered_since: Registriert seit
-    submit: Profil aktualisieren
+    update: Profil aktualisieren
   mail:
     body: "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
     subject: Deine Registrierung auf %WEBSITE_NAME.
   title:
-    account:
-      destroy: Account löschen
-    create: Benutzer erstellen
+    account: Account löschen
+    image: Profilbild ändern
     overview: Übersicht
     password: Passwort ändern
     personal_data: Persönliche Daten

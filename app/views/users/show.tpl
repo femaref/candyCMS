@@ -32,7 +32,7 @@
       </tr>
       <tr>
         <td>
-          {$lang.user.label.description.show|replace:'%u':$u.name}
+          {$lang.user.label.content.show|replace:'%u':$u.name}
         </td>
         <td>
           {$u.content}

@@ -13,7 +13,7 @@
     <span id="js-chars">160</span>
   </p>
   <p>
-    <label for='input-tags'>{$lang.global.tags}</label>
+    <label for='input-tags'>{$lang.global.tags.tags}</label>
     <input name='tags' value='{$tags}' type='text' placeholder='{$lang.blog.info.tag}' title='{$lang.blog.info.tag}' id="input-tags" />
   </p>
   <p>

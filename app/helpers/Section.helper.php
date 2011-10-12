@@ -39,7 +39,7 @@ class Section extends Main {
       require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
-      $sClassName = 'Addon_' . (string) ucfirst($this->_aRequest['section']);
+      $sClassName = '\CandyCMS\Addon\Addon_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
 
@@ -241,18 +241,18 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
-          parent::_setDescription(LANG_MEDIA_FILE_CREATE_TITLE);
-          parent::_setTitle(LANG_MEDIA_FILE_CREATE_TITLE);
+          parent::_setDescription($this->oI18n->get('media.title.create'));
+          parent::_setTitle($this->oI18n->get('media.title.create'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription(LANG_MEDIA_FILE_DESTROY_TITLE);
-          parent::_setTitle(LANG_MEDIA_FILE_DESTROY_TITLE);
+          parent::_setDescription($this->oI18n->get('media.title.destroy'));
+          parent::_setTitle($this->oI18n->get('media.title.destroy'));
         }
         else {
           parent::_setContent($this->_oObject->show());
-          parent::_setDescription(LANG_GLOBAL_FILEMANAGER);
-          parent::_setTitle(LANG_GLOBAL_FILEMANAGER);
+          parent::_setDescription($this->oI18n->get('global.manager.media'));
+          parent::_setTitle($this->oI18n->get('global.manager.media'));
         }
 
         break;
@@ -341,8 +341,8 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update());
-          parent::_setDescription(LANG_USER_UPDATE_TITLE);
-          parent::_setTitle(LANG_USER_UPDATE_TITLE);
+          parent::_setDescription($this->oI18n->get('user.title.update'));
+          parent::_setTitle($this->oI18n->get('user.title.update'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create());
@@ -351,13 +351,13 @@ class Section extends Main {
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
-          parent::_setDescription(LANG_GLOBAL_DESTROY);
-          parent::_setTitle(LANG_GLOBAL_DESTROY);
+          parent::_setDescription($this->oI18n->get('user.title.destroy'));
+          parent::_setTitle($this->oI18n->get('user.title.destroy'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification') {
           parent::_setContent($this->_oObject->verifyEmail());
-          parent::_setDescription(LANG_GLOBAL_EMAIL_VERIFICATION);
-          parent::_setTitle(LANG_GLOBAL_EMAIL_VERIFICATION);
+          parent::_setDescription($this->oI18n->get('global.email.verification'));
+          parent::_setTitle($this->oI18n->get('global.email.verification'));
         }
         else {
           parent::_setContent($this->_oObject->show());

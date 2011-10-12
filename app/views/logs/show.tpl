@@ -1,5 +1,5 @@
 <section id="logs">
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.global.logs}</h1>
   <table id="js-logs">
     {foreach $logs as $l}
       <tr>
@@ -23,8 +23,8 @@
         </td>
         <td style='width:10%'>
           {if $USER_RIGHT == 4}
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang_destroy}'
-                 title='{$lang_destroy}' class="pointer" width="16" height="16"
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang.global.destroy.destroy}'
+                 title='{$lang.global.destroy.destroy}' class="pointer" width="16" height="16"
                  onclick="confirmDelete('/log/{$l.id}/destroy')" />
           {/if}
         </td>
