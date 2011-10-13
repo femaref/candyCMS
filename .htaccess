@@ -32,6 +32,9 @@ RewriteRule ^About$ index.php?section=content&id=3 [L,QSA,NC]
 RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
 RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R,NC]
 
+# Install script
+RewriteRule ^install$ install/index.php [R,NC]
+
 # Universal rules
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1&page=1 [L,QSA,NC] # Show Section
 RewriteRule ^([A-Za-z]+)/([0-9]+)/ajax$ index.php?section=$1&id=$2&page=1&ajax=1 [L,QSA,NC] # Show entry with id and without header and footer
