@@ -18,14 +18,22 @@ use PDO;
 
 class User extends Main {
 
-  # Get user name and surname
+  /**
+   * Get user name, surname and email from user ID.
+   *
+	 * @static
+   * @access public
+   * @param integer $iId ID of the user
+   * @return array data with user information
+   *
+   */
   public static final function getUserNamesAndEmail($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT name, surname, email FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -38,13 +46,22 @@ class User extends Main {
     }
   }
 
+  /**
+   * Check, if the user already with given email address exists.
+   *
+	 * @static
+   * @access public
+   * @param string $sEmail email address of user.
+   * @return boolean status of user check
+   *
+   */
   public static function getExistingUser($sEmail) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT email FROM " . SQL_PREFIX . "users WHERE email = :email LIMIT 1");
 
-      $oQuery->bindParam('email', $sEmail);
+      $oQuery->bindParam('email', $sEmail, PDO::PARAM_STR);
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -154,6 +171,15 @@ class User extends Main {
     return $this->_setData($bUpdate, $iLimit);
   }
 
+  /**
+   * Create a user.
+   *
+   * @access public
+	 * @param integer $iVerificationCode verification code that was sent to the user.
+   * @return boolean status of query
+   * @override app/models/Main.model.php
+   *
+   */
   public function create($iVerificationCode) {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
@@ -162,12 +188,12 @@ class User extends Main {
                                       VALUES
                                         ( :name, :surname, :password, :email, :date, :verification_code )");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
-      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('verification_code', $iVerificationCode);
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
+      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']), PDO::PARAM_STR);
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
 
       return $oQuery->execute();
     }
@@ -176,10 +202,18 @@ class User extends Main {
     }
   }
 
+  /**
+   * Get the encrypted password of a user. This is required for user update actions.
+   *
+   * @access public
+   * @param integer $iId ID to get password from
+   * @return string encrypted password
+   *
+   */
   private function _getPassword($iId) {
     try {
       $oQuery = $this->_oDb->prepare("SELECT password FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -190,6 +224,14 @@ class User extends Main {
     }
   }
 
+  /**
+   * Update a user.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
   public function update($iId) {
     $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
@@ -226,15 +268,15 @@ class User extends Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']));
-      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter);
-      $oQuery->bindParam('use_gravatar', $iUseGravatar);
-      $oQuery->bindParam('password', $sPassword);
-      $oQuery->bindParam('user_right', $iUserRight);
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
+      $oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
+      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+      $oQuery->bindParam('user_right', $iUserRight, PDO::PARAM_INT);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -243,15 +285,15 @@ class User extends Main {
     }
   }
 
+  /**
+   * Destroy a user and his avatar images.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
   public function destroy($iId) {
-    # Delete avatars
-    @unlink(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
-
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
                                         " . SQL_PREFIX . "users
@@ -260,7 +302,7 @@ class User extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -268,6 +310,14 @@ class User extends Main {
     }
   }
 
+  /**
+   * Update a user account when verification link is clicked.
+   *
+   * @access public
+   * @param integer $iVerificationCode Code to remove.
+   * @return boolean status of query
+   *
+   */
   public function verifyEmail($iVerificationCode) {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -278,7 +328,7 @@ class User extends Main {
                                         verification_code = :verification_code
                                       LIMIT 1");
 
-      $oQuery->bindParam('verification_code', $iVerificationCode);
+      $oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -296,7 +346,7 @@ class User extends Main {
                                         WHERE
                                           id = :id");
 
-        $oQuery->bindParam('id', $aResult['id']);
+        $oQuery->bindParam('id', $aResult['id'], PDO::PARAM_INT);
         Session::setActiveSession($aResult['id']);
         return $oQuery->execute();
       }

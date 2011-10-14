@@ -54,7 +54,7 @@ class Comment extends Main {
                                         :offset,
                                         :limit");
 
-      $oQuery->bindParam('parent_id', $iId);
+      $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
       $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
       $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
@@ -77,7 +77,7 @@ class Comment extends Main {
     }
 
     # We crawl the facebook avatars
-    if (class_exists('FacebookCMS'))
+    if (class_exists('\CandyCMS\Plugin\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
 
     return $this->_aData;
@@ -183,14 +183,14 @@ class Comment extends Main {
                                           :parent_id )");
 
       $iAuthorId = USER_ID;
-      $oQuery->bindParam('author_id', $iAuthorId);
-      $oQuery->bindParam('author_facebook_id', $iFacebookId);
-      $oQuery->bindParam('author_name', $sAuthorName);
-      $oQuery->bindParam('author_email', $sAuthorEmail);
-      $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR']);
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('parent_id', $this->_aRequest['parent_id']);
+      $oQuery->bindParam('author_id', $iAuthorId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_facebook_id', $iFacebookId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_name', $sAuthorName, PDO::PARAM_STR);
+      $oQuery->bindParam('author_email', $sAuthorEmail, PDO::PARAM_STR);
+      $oQuery->bindParam('author_ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('parent_id', $this->_aRequest['parent_id'], PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -218,7 +218,7 @@ class Comment extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {

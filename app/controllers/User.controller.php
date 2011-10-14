@@ -220,6 +220,21 @@ class User extends Main {
 	}
 
 	/**
+	 * Destroy user avatar images.
+	 *
+	 * @access private
+	 * @param integer $iId user id.
+	 *
+	 */
+	private function _destroyUserAvatars($iId) {
+    @unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
+    @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
+	}
+
+	/**
 	 * Delete a user account.
 	 *
 	 * @access public
@@ -232,8 +247,10 @@ class User extends Main {
 		# We are a user and want to delete our account
 		if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
 			if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
-				if ($this->_oModel->destroy($this->_iId) === true)
+				if ($this->_oModel->destroy($this->_iId) === true) {
+					$this->_destroyUserAvatars($this->_iId);
 					return Helper::successMessage($this->oI18n->get('success.destroy'), '/');
+				}
 				else
 					return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
 			} else
@@ -242,6 +259,7 @@ class User extends Main {
 		# We are admin and can delete users
 		} elseif (USER_RIGHT == 4) {
 			if ($this->_oModel->destroy($this->_iId) === true) {
+				$this->_destroyUserAvatars($this->_iId);
 				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
 				return Helper::successMessage($this->oI18n->get('success.destroy'), '/user');
 			}

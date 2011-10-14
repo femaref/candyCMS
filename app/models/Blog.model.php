@@ -139,7 +139,7 @@ class Blog extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        
+
         $this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];
@@ -204,14 +204,14 @@ class Blog extends Main {
                                           :published )");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('published', $this->_aRequest['published']);
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']), PDO::PARAM_STR);
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -257,15 +257,15 @@ class Blog extends Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('author_id', $iUpdateAuthor);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-      $oQuery->bindParam('date_modified', $iDateModified);
-      $oQuery->bindParam('published', $iPublished);
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('author_id', $iUpdateAuthor, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']), PDO::PARAM_STR);
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('date_modified', $iDateModified, PDO::PARAM_INT);
+      $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -292,7 +292,7 @@ class Blog extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -305,7 +305,7 @@ class Blog extends Main {
                                       WHERE
                                         parent_id = :parent_id");
 
-      $oQuery->bindParam('parent_id', $iId);
+      $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
     }
     catch (AdvancedException $e) {

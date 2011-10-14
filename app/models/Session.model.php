@@ -22,8 +22,8 @@ class Session extends Main {
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "users WHERE session = :session_id AND ip = :ip LIMIT 1");
 
-      $oQuery->bindParam('session_id', session_id());
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
+      $oQuery->bindParam('session_id', session_id(), PDO::PARAM_STR);
+      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
       $bReturn = $oQuery->execute();
 
       if ($bReturn === false)
@@ -53,10 +53,10 @@ class Session extends Main {
                                 WHERE
                                   id = :id");
 
-      $oQuery->bindParam('session', session_id());
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $oQuery->bindParam('last_login', time());
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
+      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+      $oQuery->bindParam('last_login', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
 
       $oDb = null;
@@ -82,8 +82,8 @@ class Session extends Main {
                                         1");
 
       $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']));
-      $oQuery->bindParam('password', $sPassword);
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
       $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -111,7 +111,7 @@ class Session extends Main {
     if ($this->_aRequest['action'] == 'resendpassword') {
       try {
         $oQuery = $this->_oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
         $bResult = $oQuery->execute();
 
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -127,8 +127,8 @@ class Session extends Main {
         # Set new password
         try {
           $oQuery = $this->_oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
-          $oQuery->bindParam(':password', $sNewPasswordSecure);
-          $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+          $oQuery->bindParam(':password', $sNewPasswordSecure, PDO::PARAM_STR);
+          $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
 
           return $oQuery->execute();
         }
@@ -140,7 +140,7 @@ class Session extends Main {
     elseif ($this->_aRequest['action'] == 'resendverification') {
       try {
         $oQuery = $this->_oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']));
+        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
         $bResult = $oQuery->execute();
 
         $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -172,7 +172,7 @@ class Session extends Main {
       $sNull = 'NULL';
       $iSessionId = session_id();
       $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
-      $oQuery->bindParam('session_id', $iSessionId);
+      $oQuery->bindParam('session_id', $iSessionId, PDO::PARAM_STR);
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {

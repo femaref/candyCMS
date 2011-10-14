@@ -73,7 +73,7 @@ class Content extends Main {
                                         LIMIT
                                           1");
 
-        $oQuery->bindParam('id', $this->_iId);
+        $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
         $oQuery->execute();
 
         # Fix for using it in the same template as overview
@@ -141,12 +141,12 @@ class Content extends Main {
                                           :date )");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false));
-      $oQuery->bindParam('date', time());
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -179,13 +179,13 @@ class Content extends Main {
                                         id = :where");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('user_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false));
-      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']));
-      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']));
-      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false));
-      $oQuery->bindParam('date', time());
-      $oQuery->bindParam('where', $iId);
+      $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
+      $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('where', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -212,7 +212,7 @@ class Content extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }

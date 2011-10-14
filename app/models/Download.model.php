@@ -136,13 +136,13 @@ class Download extends Main {
                                             :date )");
 
         $iUserId = USER_ID;
-        $oQuery->bindParam('author_id', $iUserId);
-        $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-        $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']));
-        $oQuery->bindParam('file', $oUploadFile->getId(false));
-        $oQuery->bindParam('extension', $oUploadFile->getExtension());
-        $oQuery->bindParam('date', time());
+        $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+        $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+        $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']), PDO::PARAM_STR);
+        $oQuery->bindParam('file', $oUploadFile->getId(false), PDO::PARAM_STR);
+        $oQuery->bindParam('extension', $oUploadFile->getExtension(), PDO::PARAM_STR);
+        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
         return $oQuery->execute();
       }
@@ -174,12 +174,12 @@ class Download extends Main {
                                         id = :id");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('downloads', Helper::formatInput($this->_aRequest['downloads']));
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+      $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('downloads', Helper::formatInput($this->_aRequest['downloads']), PDO::PARAM_STR);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -205,7 +205,7 @@ class Download extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -225,6 +225,7 @@ class Download extends Main {
   /**
    * Updates a download count +1.
    *
+	 * @static
    * @access public
    * @param integer $iId ID to update
    * @return boolean status of query
@@ -242,7 +243,7 @@ class Download extends Main {
                                 WHERE
                                   id = :id");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
 
       $oDb = null;
