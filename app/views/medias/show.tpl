@@ -3,25 +3,25 @@
     <p class="center">
       <a href='/media/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' width="16" height="16" />
-        {$lang_file_create}
+        {$lang.global.create.entry}
       </a>
     </p>
-    <h1>{$lang_headline}</h1>
+    <h1>{$lang.global.manager.media}</h1>
     <table>
       {if !$files}
         <tr>
           <td colspan="5">
-            <div class='error' id='js-error' title='{$lang_no_files}'>
-              <p>{$lang_no_files}</p>
+            <div class='error' id='js-error' title='{$lang.error.missing.files}'>
+              <p>{$lang.error.missing.files}</p>
             </div>
           </td>
         </tr>
       {else}
         <tr>
           <th></th>
-          <th>{$lang_file}</th>
-          <th>{$lang_size}</th>
-          <th>{$lang_uploaded_at}</th>
+          <th>{$lang.global.file}</th>
+          <th>{$lang.global.size}</th>
+          <th>{$lang.global.upload.at}</th>
           <th></th>
         </tr>
         {foreach $files as $f}
@@ -57,8 +57,8 @@
               {$f.cdate}
             </td>
             <td style='width:5%'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
-                   title='{$lang_destroy}' width="16" height="16"
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
+                   title='{$lang.global.destroy.destroy}' width="16" height="16"
                    onclick="confirmDelete('/media/{$f.name}/destroy')" />
             </td>
           </tr>

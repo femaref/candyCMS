@@ -15,7 +15,7 @@
     {foreach $blog as $b}
       {if !$b.id}
         <div class='error' id='js-error' title='{$lang.error.missing.entry}'>
-          <p>{$lang.global.missing_entry}</p>
+          <p>{$lang.global.missing.entry}</p>
         </div>
       {else}
         <article class="blogs">

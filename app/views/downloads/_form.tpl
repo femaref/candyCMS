@@ -1,5 +1,5 @@
 <form action='/download/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.global.download}</h1>
   {if $smarty.get.action == 'create'}
     <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>
       <label for='input-file'>{$lang_file_choose} *</label>

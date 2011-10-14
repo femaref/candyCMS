@@ -5,16 +5,22 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
 */
 
+namespace CandyCMS\Install;
+
+use CandyCMS\Controller\Index as Index;
+use PDO;
+use Smarty;
+
 date_default_timezone_set('Europe/Berlin');
 
 try {
   #Load Parent
   if (!file_exists('../app/models/Main.model.php') ||
-          !file_exists('../app/controllers/Main.controller.php') ||
-          !file_exists('../app/controllers/Index.controller.php') ||
-          !file_exists('../app/helpers/AdvancedException.helper.php') ||
-          !file_exists('../plugins/controllers/Cronjob.controller.php') ||
-          !file_exists('../lib/smarty/Smarty.class.php')
+      !file_exists('../app/controllers/Main.controller.php') ||
+      !file_exists('../app/controllers/Index.controller.php') ||
+      !file_exists('../app/helpers/AdvancedException.helper.php') ||
+      !file_exists('../plugins/controllers/Cronjob.controller.php') ||
+      !file_exists('../lib/smarty/Smarty.class.php')
   )
     throw new Exception('Could not load required classes.');
   else {
@@ -23,8 +29,6 @@ try {
     require_once '../app/controllers/Index.controller.php';
     require_once '../app/helpers/AdvancedException.helper.php';
     require_once '../plugins/controllers/Cronjob.controller.php';
-
-    # Smarty template parsing
     require_once '../lib/smarty/Smarty.class.php';
   }
 }
@@ -35,7 +39,7 @@ catch (Exception $e) {
 session_start();
 
 $oIndex = new Index($_REQUEST, $_SESSION);
-$oIndex->loadConfig('../');
+$oIndex->loadConfigFiles(array('Candy'), '../');
 
 $oSmarty = new Smarty();
 $oSmarty->compile_dir = '../compile';

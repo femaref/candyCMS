@@ -6,6 +6,6 @@
     <input name='email' type="email" title='' id="input-email" autofocus required />
   </p>
   <p class="center">
-    <input type='submit' value='{$lang.global.submit}' />
+    <input type='submit' value='{$lang.global.create}' />
   </p>
 </form>

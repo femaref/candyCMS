@@ -31,11 +31,11 @@
         {if $USER_RIGHT >= 3}
           <td>
             <a href='/content/{$c.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}'
-                title='{$lang.global.update}' width="16" height="16" />
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
+                title='{$lang.global.update.update}' width="16" height="16" />
             </a>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy}'
-              title='{$lang.global.destroy}' width="16" height="16"
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
+              title='{$lang.global.destroy.destroy}' width="16" height="16"
               onclick="confirmDelete('/content/{$c.id}/destroy')" />
           </td>
         {/if}

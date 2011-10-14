@@ -112,6 +112,7 @@ class Index {
   */
   public function loadPlugins($sAllowedPlugins, $sPath = '') {
     $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
+
     foreach ($aPlugins as $sPluginName) {
       if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
         require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
