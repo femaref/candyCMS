@@ -9,6 +9,7 @@ namespace CandyCMS\Model;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Page as Page;
 use PDO;
 
@@ -35,14 +36,14 @@ class Search extends Main {
         # Build table names and order them
         if ($sTable == 'gallery_albums') {
           $this->_aData[$sTable]['section'] = 'gallery';
-          $this->_aData[$sTable]['title'] = LANG_GLOBAL_GALLERY;
+          $this->_aData[$sTable]['title'] = I18n::get('global.gallery');
         }
         else {
           # Get table name from language files
           $iTableLen = strlen($sTable) - 1;
           $sTableSingular = substr($sTable, 0, $iTableLen);
           $this->_aData[$sTable]['section'] = $sTableSingular;
-          $this->_aData[$sTable]['title'] = constant('LANG_GLOBAL_' . strtoupper($sTableSingular));
+          $this->_aData[$sTable]['title'] = I18n::get('global.' . strtolower($sTableSingular));
         }
 
         foreach ($aResult as $aRow) {

@@ -227,25 +227,25 @@ abstract class Main {
 		$this->oSmarty->assign('_request_id_', $this->_iId);
 
 		# Include Google Adsense
-		if (class_exists('Adsense')) {
+		if (class_exists('\CandyCMS\Plugin\Adsense')) {
 			$oAdsense = new Adsense();
 			$this->oSmarty->assign('_plugin_adsense_', $oAdsense->show());
 		}
 
 		# Include news archive
-		if (class_exists('Archive')) {
+		if (class_exists('\CandyCMS\Plugin\Archive')) {
 			$oArchive = new Archive($this->_aRequest, $this->_aSession);
 			$this->oSmarty->assign('_plugin_archive_', $oArchive->show());
 		}
 
 		# Include latest headlines
-		if (class_exists('Headlines')) {
+		if (class_exists('\CandyCMS\Plugin\Headlines')) {
 			$oHeadlines = new Headlines($this->_aRequest, $this->_aSession);
 			$this->oSmarty->assign('_plugin_headlines_', $oHeadlines->show());
 		}
 
 		# Include latest teaser
-		if (class_exists('Teaser')) {
+		if (class_exists('\CandyCMS\Plugin\Teaser')) {
 			$oTeaser = new Teaser($this->_aRequest, $this->_aSession);
 			$this->oSmarty->assign('_plugin_teaser_', $oTeaser->show());
 		}
