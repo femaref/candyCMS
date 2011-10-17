@@ -122,6 +122,7 @@ success:
   create: Eintrag wurde hinzugefügt!
   destroy: Eintrag wurde gelöscht!
   file:
+    upload: Datei erfolgreich hochgeladen!
     destroy: Datei erfolgreich gelöscht!
   update: Update erfolgreich!
   upload: Datei(en) erfolgreich hochgeladen!

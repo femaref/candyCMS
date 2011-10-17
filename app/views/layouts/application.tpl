@@ -99,8 +99,8 @@
               </a>
             </li>
             <li>
-              <a href='/media' title='{$lang.global.manager.file}'>
-                {$lang.global.manager.file}
+              <a href='/media' title='{$lang.global.manager.media}'>
+                {$lang.global.manager.media}
               </a>
             </li>
             <li>

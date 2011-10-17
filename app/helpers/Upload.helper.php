@@ -86,16 +86,25 @@ class Upload {
 	 *
 	 */
   public function uploadFile($sFolder = 'media') {
-    $this->_sFileName = Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name']));
-    $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['file']['name'], '.'), 1));
+    if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
 
-    if (!empty($this->_sRename)) {
-      $this->_sRename = & Helper::replaceNonAlphachars($this->_sRename);
-      $this->_sFileName = $this->_sRename . '.' . $this->_sFileExtension;
+
+      for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
+        $this->_sFileName       = & Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
+        $this->_sFileExtension  = & strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
+
+        if (!empty($this->_sRename) && $iI == 0)
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '.' . $this->_sFileExtension;
+
+        elseif (!empty($this->_sRename) && $iI > 0)
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '_' . $iI . '.' . $this->_sFileExtension;
+
+        $this->sFilePath = PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName;
+        $bReturn = & move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
+      }
+
+      return $bReturn;
     }
-
-    $this->sFilePath = PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName;
-    return move_uploaded_file($this->_aFile['file']['tmp_name'], $this->sFilePath);
   }
 
 	/**

@@ -416,29 +416,29 @@ class Index {
 
 		# Build absolute URLs
     # *********************************************
-		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public', $sCachedHTML);
-		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE, $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN, $sCachedHTML);
+		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', WEBSITE_URL . '/' . PATH_UPLOAD, $sCachedHTML);
 
 		# Check for template CSS files
     # *********************************************
-		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css', $sCachedHTML);
+		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/css', $sCachedHTML);
 		if (!empty($this->_sTemplate))
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
 
 		elseif (PATH_TEMPLATE !== '')
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
+			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedCss;
 
 		# Check for template images
     # *********************************************
-		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images', $sCachedHTML);
+		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/images', $sCachedHTML);
 		if (!empty($this->_sTemplate))
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
 
 		elseif (PATH_TEMPLATE !== '')
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
+			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
 
 		$sCachedHTML = & $sCachedImages;
 
