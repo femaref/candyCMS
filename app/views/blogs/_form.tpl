@@ -1,5 +1,5 @@
 <form method='post' action='/blog/{$smarty.get.action}' enctype="multipart/form-data">
-  <h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update}{/if}</h1>
+  <h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update|replace:'%p':$title}{/if}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input name='title' value='{$title}' type='text' id="input-title" required />
@@ -37,7 +37,7 @@
   <p class="center">
     <input type='hidden' value='{$author_id}' name='author_id' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update}{/if}' />
+    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
     {if $smarty.get.action == 'update'}
       <input type='button' value='{$lang.global.destroy.entry}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
@@ -45,11 +45,11 @@
     {/if}
   </p>
 </form>
-<script type='text/javascript' src='%PATH_PUBLIC%/lib/tiny_mce/jquery.tinymce.js'></script>
+<script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
 <script type='text/javascript'>
   $(document).ready(function(){
     $('.js-tinymce').tinymce({
-      script_url : '%PATH_PUBLIC%/lib/tiny_mce/tiny_mce.js',
+      script_url : '/lib/tiny_mce/tiny_mce.js',
       theme : "advanced",
       plugins : "autosave,safari,pagebreak,style,advimage,advlink,emotions,inlinepopups,insertdatetime,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras",
       theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen",

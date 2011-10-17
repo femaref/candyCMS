@@ -3,13 +3,13 @@
     <p class="center">
       <a href='/download/create'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-        {$lang_create_entry_headline}
+        {$lang.global.create.entry}
       </a>
     </p>
   {/if}
   <h1>{$lang.global.downloads}</h1>
   {if !$download}
-    <div class='error' id='js-error' title='{$lang_no_entries}'>
+    <div class='error' id='js-error' title='{$lang.error.missing.entries}'>
       <p>{$lang_no_entries}</p>
     </div>
   {else}
@@ -38,7 +38,7 @@
               {$f.size}
               {if $USER_RIGHT >= 3}
                 <br />
-                {$f.downloads} {$lang_downloads}
+                {$f.downloads} {$lang.global.downloads}
               {/if}
             </td>
             <td>
