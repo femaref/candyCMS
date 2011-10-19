@@ -3,6 +3,7 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @todo documentation and refactoring
  */
 
 namespace CandyCMS\Model;
