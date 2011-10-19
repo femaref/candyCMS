@@ -1,8 +1,11 @@
 <?php
 
-/*
+/**
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
+ * 
  */
 
 # This plugin gives users the opportunity to comment without registration.
@@ -33,18 +36,6 @@ final class FacebookCMS extends Facebook {
       #throw new FacebookApiException($result);
     }
     return $result;
-  }
-
-  public function getConnectButton() {
-    $oSmarty = new Smarty();
-
-    $oSmarty->assign('_url_', $this->getLoginUrl(array('req_perms' => 'email', 'next'=> CURRENT_URL)));
-    $oSmarty->assign('lang_login', LANG_GLOBAL_LOGIN);
-
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-    $oSmarty->template_dir = 'public/templates/_plugins/facebook';
-    return $oSmarty->fetch('button.tpl');
   }
 
   public function getUserData($sKey = '') {

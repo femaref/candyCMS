@@ -69,7 +69,13 @@ class I18n {
       }
     }
 
-    return (string) $mTemp;
+    try {
+      if (is_string($mTemp))
+        return $mTemp;
+    }
+    catch (AdvancedException $e) {
+      die('No such translation: ' . $mTemp);
+    }
   }
 
   /**
@@ -81,8 +87,8 @@ class I18n {
    * @return string
    *
    */
-  public static function fetch($sLanguagePart) {
+  /*public static function fetch($sLanguagePart) {
     $oI18n = new I18n(WEBSITE_LANGUAGE);
     return $oI18n->get($sLanguagePart);
-  }
+  }*/
 }

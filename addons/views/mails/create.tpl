@@ -1,7 +1,7 @@
 <form method='post' action='/mail/1'>
   <table>
     <tr>
-      <th colspan='2'>{$lang_headline} {$contact.name} {$contact.surname}</th>
+      <th colspan='2'>{$lang.global.email.send} {$contact.name} {$contact.surname}</th>
     </tr>
     <tr class='row1{if $error_content} error{/if}'>
       <td class='td_left'>

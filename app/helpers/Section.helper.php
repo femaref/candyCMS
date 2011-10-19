@@ -141,13 +141,13 @@ class Section extends Main {
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
           parent::_setContent($this->_oObject->create('create_download'));
-          parent::_setDescription($this->oI18n->get('download.create.title'));
-          parent::_setTitle($this->oI18n->get('download.create.title'));
+          parent::_setDescription($this->oI18n->get('download.title.create'));
+          parent::_setTitle($this->oI18n->get('download.title.create'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
           parent::_setContent($this->_oObject->update('update_download'));
-          parent::_setDescription($this->oI18n->get('download.title.destroy'));
-          parent::_setTitle($this->oI18n->get('download.title.destroy'));
+          parent::_setDescription($this->oI18n->get('download.title.update'));
+          parent::_setTitle($this->oI18n->get('download.title.update'));
         }
         elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());

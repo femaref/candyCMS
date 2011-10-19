@@ -1,17 +1,17 @@
 <form method='post'>
-  <h1>{$lang_headline}</h1>
+  <h1>{$lang.newsletter.title.create}</h1>
   <p {if isset($error_subject)}class="error" title="{$error_subject}"{/if}>
-    <label for='input-subject'>{$lang_subject} <span title="{$lang_required}">*</span></label>
+    <label for='input-subject'>{$lang.global.subject} <span title="{$lang.global.required}">*</span></label>
     <input name='subject' value='{$subject}' type='text' id="input-subject" required autofocus />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='input-content'>{$lang_content} <span title="{$lang_required}">*</span></label>
+    <label for='input-content'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' rows='20' cols='50' class="js-tinymce" id="input-content" required>{$content}</textarea>
-    <div class='description'>{$lang_content_info}</div>
+    <span class='description'>{$lang.newsletter.info.name}</span>
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='create_newsletter' />
-    <input type='submit' value='{$lang_submit}' />
+    <input type='submit' value='{$lang.global.submit}' />
   </p>
 </form>
 <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>

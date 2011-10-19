@@ -1,6 +1,6 @@
 <section id="sitemap">
-  <h1>{$lang_sitemap}</h1>
-  <h3>{$lang_blog}</h3>
+  <h1>{$lang.global.sitemap}</h1>
+  <h3>{$lang.global.blog}</h3>
   <ul>
     {foreach $blog as $b}
       <li>
@@ -8,7 +8,7 @@
       </li>
     {/foreach}
   </ul>
-  <h2>{$lang_content}</h2>
+  <h2>{$lang.global.content}</h2>
   <ul>
     {foreach $content as $c}
       <li>
@@ -16,7 +16,7 @@
       </li>
     {/foreach}
   </ul>
-  <h2>{$lang_gallery}</h2>
+  <h2>{$lang.global.gallery}</h2>
   <ul>
     {foreach $gallery as $g}
       <li>

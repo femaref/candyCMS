@@ -38,7 +38,7 @@
     </div>
   {/if}
   <p class="center">
-    <input type='submit' value='{$lang.global.submit}' />
+    <input type='submit' value='{$lang.comment.title.create}' />
     <input type='hidden' value='formdata' name='create_comment' />
     <input type='hidden' value='{$_parent_id_}' name='parent_id' />
     <input type='reset' value='{$lang.global.reset}' />

@@ -10,7 +10,7 @@
   <h1>{$lang.global.downloads}</h1>
   {if !$download}
     <div class='error' id='js-error' title='{$lang.error.missing.entries}'>
-      <p>{$lang_no_entries}</p>
+      <p>{$lang.error.missing.entries}</p>
     </div>
   {else}
     <table>
@@ -44,16 +44,16 @@
             <td>
               {if $USER_RIGHT >= 3}
                 <a href='/download/{$f.id}/update'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang_update}'
-                    title='{$lang_update}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
+                    title='{$lang.global.update.update}' width="16" height="16" />
                 </a>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
-                  title='{$lang_destroy}' width="16" height="16"
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
+                  title='{$lang.global.destroy.destroy}' width="16" height="16"
                   onclick="confirmDelete('/download/{$f.id}/destroy')" />
               {else}
                 <a href="{$f.url}" target="_blank">
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-download" alt='{$lang_download}'
-                    title='{$lang_download}' width="32" height="32" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-download" alt='{$lang.global.download}'
+                    title='{$lang.global.download}' width="32" height="32" />
                 </a>
               {/if}
             </td>

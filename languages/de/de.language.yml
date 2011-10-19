@@ -102,7 +102,7 @@ global:
     at: Aktualisiert am
     avaiable: Es ist ein Update (#%v) für diese Software verfügbar. Besuche %l für weitere Informationen.
     show: Update anzeigen?
-    update: Aktualisieren
+    update: Überarbeiten
   upload:
     at: Datum des Hochladens
     upload: Upload
@@ -224,7 +224,7 @@ content:
   title:
     create: Seite erstellen
     destroy: Seite löschen
-    update: \'%p\' bearbeiten
+    update: "'%p' bearbeiten"
 
 download:
   label:
@@ -244,7 +244,7 @@ gallery:
     title:
       create: Album erstellen
       destroy: Album löschen
-      update: Album bearbeiten
+      update: Album '%p' bearbeiten
   files:
     label:
       choose: Datei(en) auswählen
