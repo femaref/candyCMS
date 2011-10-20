@@ -8,16 +8,11 @@
     <link href='%PATH_CSS%/mobile/mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js"></script>
-    <script type="text/javascript">
-      $(document).bind("mobileinit", function() {
-        $.mobile.page.prototype.options.addBackBtn = true;
-      });
-    </script>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/mobile/jquery.mobile{$_compress_files_suffix_}.js"></script>
     <title>{$_title_}</title>
   </head>
   <body>
-    <div data-role="page">
+    <div data-role="page" data-add-back-btn="true">
       <div data-role="header">
         <h1>{$_title_}</h1>
       </div><!-- /header -->

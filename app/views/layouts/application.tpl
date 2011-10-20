@@ -18,7 +18,7 @@
     {if $FACEBOOK_APP_ID}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
-    <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
+    <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>

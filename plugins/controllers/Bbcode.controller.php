@@ -69,7 +69,7 @@ final class Bbcode {
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
 
-        $sTempFilePath = WEBSITE_URL . '/' . $sTempFilePath;
+        $sTempFilePath = '/' . $sTempFilePath;
         $aNewInfo = getimagesize($sTempFilePath);
 
         # Language

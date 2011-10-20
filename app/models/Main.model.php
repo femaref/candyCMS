@@ -146,7 +146,7 @@ abstract class Main {
     $aData['encoded_title'] = isset($aRow['title']) ? urlencode($aRow['title']) : '';
 
     # URL to entry
-    $aData['url_clean'] = WEBSITE_URL . '/' . $sSection . '/' . $aRow['id'];
+    $aData['url_clean'] = '/' . $sSection . '/' . $aRow['id'];
     $aData['url'] = $aData['url_clean'] . '/' . $aData['encoded_title'];
     $aData['encoded_url'] = urlencode($aData['url']);
 

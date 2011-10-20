@@ -4,8 +4,10 @@
       <p>{$lang.error.missing.entry}</p>
     </div>
   {else}
-    <div>
-      <img src="%PATH_UPLOAD%/gallery/{$i.album_id}/popup/{$i.file}" alt="{$i.file}" />
-    </div>
+    <h1>{$i.file}</h1>
+    {if isset($f.content)}
+      <h3>{$i.content}</h3>
+    {/if}
+    <img src="%PATH_UPLOAD%/gallery/{$i.album_id}/popup/{$i.file}" alt="{$i.file}" />
   {/if}
 </section>

@@ -205,7 +205,6 @@ abstract class Main {
 		$this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
 		$this->oSmarty->assign('MOBILE', MOBILE);
 		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
-		$this->oSmarty->assign('URL', WEBSITE_URL);
 		$this->oSmarty->assign('USER_EMAIL', USER_EMAIL);
 		$this->oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);
 		$this->oSmarty->assign('USER_FULL_NAME', USER_FULL_NAME);

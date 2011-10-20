@@ -159,7 +159,7 @@ class Gallery extends Main {
       $sSurname   = Helper::formatOutput($aRow['surname']);
       $sFullName  = $sName . ' ' . $sSurname;
 
-      $sUrlAlbum     = WEBSITE_URL . '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+      $sUrlAlbum     = '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
       $sUrl32        = $sUrlAlbum . '/32/' . $aRow['file'];
       $sUrlPopup     = $sUrlAlbum . '/popup/' . $aRow['file'];
       $sUrlOriginal  = $sUrlAlbum . '/original/' . $aRow['file'];
@@ -175,7 +175,7 @@ class Gallery extends Main {
           'date_raw'      => $aRow['date'],
           'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
           'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
-          'url'           => WEBSITE_URL . '/gallery/' . $aRow['album_id'] . '/image/' . $iId,
+          'url'           => '/gallery/' . $aRow['album_id'] . '/image/' . $iId,
           'url_32'        => $sUrl32,
           'url_album'     => $sUrlAlbum,
           'url_popup'     => $sUrlPopup,

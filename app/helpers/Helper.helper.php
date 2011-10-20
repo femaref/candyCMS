@@ -126,11 +126,8 @@ class Helper {
    * @return string HTML code with anchor
    *
    */
-  public static function createLinkTo($sUrl, $bExternal = false) {
-    if($bExternal == false)
-      return '<a href=\'' . WEBSITE_URL . $sUrl . '\'>' . WEBSITE_URL . $sUrl . '</a>';
-    else
-      return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
+  public static function createLinkTo($sUrl) {
+    return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
   }
 
   /**
@@ -148,13 +145,13 @@ class Helper {
 		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
 
 		if (is_file($sFilePath . '.jpg'))
-			return WEBSITE_URL . '/' . $sFilePath . '.jpg';
+			return '/' . $sFilePath . '.jpg';
 
 		elseif (is_file($sFilePath . '.png'))
-			return WEBSITE_URL . '/' . $sFilePath . '.png';
+			return '/' . $sFilePath . '.png';
 
 		elseif (is_file($sFilePath . '.gif'))
-			return WEBSITE_URL . '/' . $sFilePath . '.gif';
+			return '/' . $sFilePath . '.gif';
 
 		else {
       if (!is_int($sSize))
