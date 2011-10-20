@@ -68,8 +68,9 @@ class Search extends Main {
 			# Language
 			$this->oSmarty->assign('_headline_', $this->_sHeadline);
 
-			$this->oSmarty->template_dir = Helper::getTemplateDir('searches', 'show');
-			return $this->oSmarty->fetch('show.tpl');
+      $sTemplateDir = Helper::getTemplateDir('searches', 'show');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
 		}
 	}
 
@@ -91,8 +92,9 @@ class Search extends Main {
     $this->oSmarty->assign('search', $this->_sSearch);
     $this->oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('searches', '_show');
-    return $this->oSmarty->fetch('_show.tpl');
+    $sTemplateDir = Helper::getTemplateDir('searches', '_show');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_show'));
   }
 
 	/**
@@ -106,7 +108,8 @@ class Search extends Main {
     $this->_setDescription($this->oI18n->get('global.search'));
     $this->_setTitle($this->oI18n->get('global.search'));
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('searches', '_form');
-    return $this->oSmarty->fetch('_form.tpl');
+    $sTemplateDir = Helper::getTemplateDir('searches', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 }

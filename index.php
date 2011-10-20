@@ -101,8 +101,25 @@ $oIndex->setTemplate();
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
-define('MOBILE', false);
+/**
+ * Do we have a mobile access?
+ */
+$sUserAgent = $_SERVER['HTTP_USER_AGENT'];
+$bMobile = preg_match('/Opera Mini/i', $sUserAgent) ||
+        preg_match('/Symb/i', $sUserAgent) ||
+        preg_match('/Windows CE/i', $sUserAgent) ||
+        preg_match('/iPhone/i', $sUserAgent) ||
+        preg_match('/iPad/i', $sUserAgent) ||
+        preg_match('/iPod/i', $sUserAgent) ||
+        preg_match('/Blackberry/i', $sUserAgent) ||
+        preg_match('/Android/i', $sUserAgent) ?
+        true :
+        false;
+define('MOBILE', $bMobile);
 
+/**
+ * Print out website.
+ */
 echo $oIndex->show();
 unset($_SESSION['lang']);
 ?>

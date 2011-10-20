@@ -82,8 +82,9 @@ class Session extends Main {
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'create');
-		return $this->oSmarty->fetch('create.tpl');
+    $sTemplateDir = Helper::getTemplateDir('sessions', 'create');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
 	}
 
 	/**
@@ -180,8 +181,9 @@ class Session extends Main {
 				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('sessions', 'resend');
-		return $this->oSmarty->fetch('resend.tpl');
+    $sTemplateDir = Helper::getTemplateDir('sessions', 'resend');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'resend'));
 	}
 
 	/**

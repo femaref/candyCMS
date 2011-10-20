@@ -87,8 +87,10 @@ class Newsletter extends Main {
     $this->_setDescription($this->oI18n->get('newsletter.info.handle'));
     $this->_setTitle($this->oI18n->get('newsletter.title.handle'));
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'newsletter');
-    return $this->oSmarty->fetch('newsletter.tpl');
+
+    $sTemplateDir = Helper::getTemplateDir('newsletters', 'newsletter');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'newsletter'));
   }
 
   /**
@@ -126,8 +128,9 @@ class Newsletter extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('newsletters', 'create');
-    return $this->oSmarty->fetch('create.tpl');
+    $sTemplateDir = Helper::getTemplateDir('newsletters', 'create');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
   }
 
   /**

@@ -149,11 +149,9 @@ class User extends Main {
 
 		$this->oSmarty->assign('uid', $iId);
 
-		# Set Form params
-		$this->oSmarty->assign('style', 'display:none');
-
-		$this->oSmarty->template_dir = Helper::getTemplateDir('users', '_form');
-		return $this->oSmarty->fetch('_form.tpl');
+    $sTemplateDir = Helper::getTemplateDir('users', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
 	}
 
 	/**
@@ -205,8 +203,9 @@ class User extends Main {
 				return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 			else {
-				$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'overview');
-				return $this->oSmarty->fetch('overview.tpl');
+        $sTemplateDir = Helper::getTemplateDir('users', 'overview');
+        $this->oSmarty->template_dir = $sTemplateDir;
+        return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
 			}
 		}
 		else {
@@ -214,8 +213,9 @@ class User extends Main {
 			$this->_setTitle($this->_aData[1]['full_name']);
 			$this->_setDescription($this->_aData[1]['full_name']);
 
-			$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'show');
-			return $this->oSmarty->fetch('show.tpl');
+      $sTemplateDir = Helper::getTemplateDir('users', 'show');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
 		}
 	}
 
@@ -358,8 +358,9 @@ class User extends Main {
 				$this->oSmarty->assign('error_' . $sField, $sMessage);
 		}
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('users', 'create');
-		return $this->oSmarty->fetch('create.tpl');
+    $sTemplateDir = Helper::getTemplateDir('users', 'create');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
 	}
 
 	/**

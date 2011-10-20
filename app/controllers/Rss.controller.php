@@ -78,8 +78,9 @@ class Rss extends Main {
     $this->oSmarty->assign('_section_', $this->_sSection);
     $this->oSmarty->assign('_title_', $this->getTitle());
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('rss', 'default');
-    return $this->oSmarty->fetch('default.tpl');
+    $sTemplateDir = Helper::getTemplateDir('rss', 'default');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'));
   }
 
   /**
@@ -103,7 +104,8 @@ class Rss extends Main {
 
     $this->oSmarty->assign('data', $aData);
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('rss', 'gallery');
-    return $this->oSmarty->fetch('gallery.tpl');
+    $sTemplateDir = Helper::getTemplateDir('rss', 'gallery');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'gallery'));
   }
 }

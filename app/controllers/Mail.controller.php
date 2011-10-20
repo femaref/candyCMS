@@ -126,8 +126,9 @@ class Mail extends Main {
     $this->_setDescription($this->oI18n->get('global.contact'));
     $this->_setTitle($this->oI18n->get('global.contact'));
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'create');
-    return $this->oSmarty->fetch('create.tpl');
+    $sTemplateDir = Helper::getTemplateDir('mails', 'create');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
   }
 
 	/**
@@ -209,8 +210,10 @@ class Mail extends Main {
 
   private function _showSuccessMessage() {
     $this->_setTitle($this->oI18n->get('mail.info.redirect'));
-    $this->oSmarty->template_dir = Helper::getTemplateDir('mails', 'success');
-    return $this->oSmarty->fetch('success.tpl');
+
+    $sTemplateDir = Helper::getTemplateDir('mails', 'success');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'success'));
   }
 
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {

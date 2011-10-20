@@ -37,8 +37,9 @@ class Sitemap extends Main {
 
 		$this->_getSitemap();
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'xml');
-		return $this->oSmarty->fetch('xml.tpl');
+    $sTemplateDir = Helper::getTemplateDir('sitemaps', 'xml');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'));
 	}
 
 	/**
@@ -51,8 +52,9 @@ class Sitemap extends Main {
 	public function show() {
 		$this->_getSitemap();
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('sitemaps', 'show');
-		return $this->oSmarty->fetch('show.tpl');
+    $sTemplateDir = Helper::getTemplateDir('sitemaps', 'show');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
 	}
 
 	/**

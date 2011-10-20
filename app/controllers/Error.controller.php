@@ -31,7 +31,8 @@ class Error extends Main {
 			$this->oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));
 		}
 
-		$this->oSmarty->template_dir = Helper::getTemplateDir('errors', '404');
-		return $this->oSmarty->fetch('404.tpl');
+    $sTemplateDir = Helper::getTemplateDir('errors', '404');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '404'));
 	}
 }

@@ -65,8 +65,9 @@ class Download extends Main {
     else {
       $this->oSmarty->assign('download', $this->_aData);
 
-      $this->oSmarty->template_dir = Helper::getTemplateDir('downloads', 'show');
-      return $this->oSmarty->fetch('show.tpl');
+      $sTemplateDir = Helper::getTemplateDir('downloads', 'show');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
     }
   }
 
@@ -100,8 +101,9 @@ class Download extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('downloads', '_form');
-    return $this->oSmarty->fetch('_form.tpl');
+    $sTemplateDir = Helper::getTemplateDir('downloads', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 
   /**

@@ -65,8 +65,9 @@ class Blog extends Main {
 
     $this->oSmarty->assign('blog', $this->_aData);
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('blogs', 'show');
-    return $this->oSmarty->fetch('show.tpl');
+    $sTemplateDir = Helper::getTemplateDir('blogs', 'show');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
   }
 
   /**
@@ -168,8 +169,9 @@ class Blog extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('blogs', '_form');
-    return $this->oSmarty->fetch('_form.tpl');
+    $sTemplateDir = Helper::getTemplateDir('blogs', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 
   /**

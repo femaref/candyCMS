@@ -57,8 +57,9 @@ class Gallery extends Main {
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle($this->_removeHighlight($this->oI18n->get('global.gallery') . ': ' . $sAlbumName));
 
-      $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'files');
-      return $this->oSmarty->fetch('files.tpl');
+      $sTemplateDir = Helper::getTemplateDir('galleries', 'files');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'files'));
     }
     # Album overview
     else {
@@ -68,8 +69,9 @@ class Gallery extends Main {
       $this->oSmarty->assign('albums', $this->_oModel->getData());
       $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages());
 
-      $this->oSmarty->template_dir = Helper::getTemplateDir('galleries' ,'albums');
-      return $this->oSmarty->fetch('albums.tpl');
+      $sTemplateDir = Helper::getTemplateDir('galleries', 'albums');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'albums'));
     }
   }
 
@@ -99,8 +101,9 @@ class Gallery extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_album');
-    return $this->oSmarty->fetch('_form_album.tpl');
+    $sTemplateDir = Helper::getTemplateDir('galleries', '_form_album');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form_album'));
   }
 
   /**
@@ -203,8 +206,9 @@ class Gallery extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('galleries', '_form_file');
-    return $this->oSmarty->fetch('_form_file.tpl');
+    $sTemplateDir = Helper::getTemplateDir('galleries', '_form_file');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form_file'));
   }
 
   /**

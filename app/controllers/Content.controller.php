@@ -43,16 +43,18 @@ class Content extends Main {
     if (empty($this->_iId)) {
       $this->_setTitle($this->oI18n->get('global.manager.content'));
 
-      $this->oSmarty->template_dir = Helper::getTemplateDir('contents', 'overview');
-      return $this->oSmarty->fetch('overview.tpl');
+      $sTemplateDir = Helper::getTemplateDir('contents', 'overview');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
     }
     else {
       $this->_setDescription($this->_aData[$this->_iId]['teaser']);
       $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
       $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
 
-      $this->oSmarty->template_dir = Helper::getTemplateDir('contents', 'show');
-      return $this->oSmarty->fetch('show.tpl');
+      $sTemplateDir = Helper::getTemplateDir('contents', 'show');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
     }
   }
 
@@ -86,8 +88,9 @@ class Content extends Main {
         $this->oSmarty->assign('error_' . $sField, $sMessage);
     }
 
-    $this->oSmarty->template_dir = Helper::getTemplateDir('contents' ,'_form');
-    return $this->oSmarty->fetch('_form.tpl');
+    $sTemplateDir = Helper::getTemplateDir('contents', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 
   /**

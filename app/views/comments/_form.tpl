@@ -24,14 +24,14 @@
         <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
     {else}
-      <input type="email" value="{$email}" name="email" />
+      <input type="email" value="{$email}" name="email" id="input-email" />
     {/if}
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
     <label for='js-create_commment_text'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
   </p>
-  {if isset($_captcha_)}
+  {if isset($_captcha_) && $MOBILE === false}
     <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
       <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
       {$_captcha_}
