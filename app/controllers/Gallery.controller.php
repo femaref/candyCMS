@@ -41,7 +41,7 @@ class Gallery extends Main {
    */
   public function show() {
     # Album images
-    if (!empty($this->_iId)) {
+    if (!empty($this->_iId) && !isset($this->_aRequest['album_id'])) {
       # collect data array
       $sAlbumName = Model::getAlbumName($this->_iId);
       $sAlbumDescription = Model::getAlbumContent($this->_iId);
@@ -60,6 +60,19 @@ class Gallery extends Main {
       $sTemplateDir = Helper::getTemplateDir('galleries', 'files');
       $this->oSmarty->template_dir = $sTemplateDir;
       return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'files'));
+    }
+    # Specific image
+    elseif(!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
+      $this->_aData = Model::getFileData($this->_iId);
+
+      $this->_setDescription($this->_aData['content']);
+      $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
+
+      $this->oSmarty->assign('i', $this->_aData);
+
+      $sTemplateDir = Helper::getTemplateDir('galleries', 'image');
+      $this->oSmarty->template_dir = $sTemplateDir;
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'));
     }
     # Album overview
     else {

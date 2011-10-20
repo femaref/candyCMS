@@ -101,7 +101,7 @@ class Gallery extends Main {
    * Get blog entry or blog overview data. Depends on avaiable ID.
    *
    * @access public
-   * @param integer $iId ID to load data from. If empty, show overview.
+   * @param integer $iId Album-ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
    * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
    * @param integer $iLimit blog post limit
@@ -175,6 +175,7 @@ class Gallery extends Main {
           'date_raw'      => $aRow['date'],
           'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
           'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
+          'url'           => WEBSITE_URL . '/gallery/' . $aRow['album_id'] . '/image/' . $iId,
           'url_32'        => $sUrl32,
           'url_album'     => $sUrlAlbum,
           'url_popup'     => $sUrlPopup,
@@ -278,6 +279,25 @@ class Gallery extends Main {
 
     if ($bReturn === true)
       return Helper::formatOutput($aResult['content']);
+  }
+
+  public static function getFileData($iId) {
+    try {
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oQuery->bindParam('id', $iId);
+      $bReturn = $oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $oDb = null;
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+
+    if ($bReturn === true)
+      return $aResult;
   }
 
   public function create() {

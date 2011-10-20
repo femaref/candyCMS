@@ -8,6 +8,11 @@
     <link href='%PATH_CSS%/mobile/mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript">
+      $(document).bind("mobileinit", function() {
+        $.mobile.page.prototype.options.addBackBtn = true;
+      });
+    </script>
     <script type="text/javascript" src="%PATH_PUBLIC%/js/mobile/jquery.mobile{$_compress_files_suffix_}.js"></script>
     <title>{$_title_}</title>
   </head>
@@ -18,10 +23,10 @@
       </div><!-- /header -->
       <div data-role="navbar">
         <ul>
-          <li><a href='/blog'>{$lang.global.blog}</a></li>
-          <li><a href='/gallery'>{$lang.global.gallery}</a></li>
-          <li><a href='/download'>{$lang.global.download}</a></li>
-          <li><a href='/search'>{$lang.global.search}</a></li>
+          <li><a href='/blog' {if $smarty.get.section == 'blog'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
+          <li><a href='/gallery' {if $smarty.get.section == 'gallery'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
+          <li><a href='/download' {if $smarty.get.section == 'download'}class="ui-btn-active"{/if}>{$lang.global.download}</a></li>
+          <li><a href='/search' {if $smarty.get.section == 'search'}class="ui-btn-active"{/if}>{$lang.global.search}</a></li>
         </ul>
       </div><!-- /navbar -->
       <div data-role="content">
@@ -36,17 +41,8 @@
         {$_content_}
       </div><!-- /content -->
       <div data-role="footer">
-        <ul>
-          <li>
-            <a href='/About'>{$lang.global.about} {$WEBSITE_NAME}</a>
-          </li>
-          <li>
-            <a href='/Disclaimer'>{$lang.global.disclaimer}</a>
-          </li>
-          <li>
-            <a href='/sitemap'>{$lang.global.sitemap}</a>
-          </li>
-        </ul>
+        <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
+        <a href='/sitemap' {if $smarty.get.section == 'sitemap'}class="ui-btn-active"{/if}>{$lang.global.sitemap}</a>
       </div><!-- /footer -->
     </div><!-- /page -->
     {if $WEBSITE_TRACKING_CODE}

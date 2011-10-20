@@ -1,0 +1,30 @@
+<section id="gallery">
+  <h1>
+    {$gallery_name} ({$file_no} {$lang.global.files})
+    <a href='/rss/gallery/{$_request_id_}'>
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
+    </a>
+  </h1>
+  {if $gallery_content}
+    <h3>{$gallery_content}</h3>
+  {/if}
+  {if !$files}
+    <div class='error' id='js-error'>
+      <p>{$lang.error.gallery.no_files}</p>
+    </div>
+  {else}
+    <ul data-role="listview">
+      {foreach $files as $f}
+        <li>
+          <a href='{$f.url}' title='{$f.content}'>
+            <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' />
+            {if isset($f.content)}
+              <h3>{$f.content}</h3>
+            {/if}
+            <p>{$f.datetime}</p>
+          </a>
+        </li>
+      {/foreach}
+    </ul>
+  {/if}
+</section>
