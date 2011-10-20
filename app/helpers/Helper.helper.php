@@ -72,7 +72,7 @@ class Helper {
    *
    */
   public static function redirectTo($sUrl) {
-		header('Location:' . WEBSITE_URL . $sUrl);
+		header('Location:' . $sUrl);
 		exit();
 	}
 
@@ -203,7 +203,7 @@ class Helper {
 	 * @return string path of the chosen template
 	 *
 	 */
-  public function getTemplateDir($sDir, $sFile) {
+  public static function getTemplateDir($sDir, $sFile) {
 		try {
 			# Addons
 			if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
@@ -229,7 +229,7 @@ class Helper {
 	}
 
 	/**
-	 * Get the plugin template dir. Check if there are plugin files and use them if avaiable.
+	 * Get the template type. Check if mobile template is avaiable and return standard if not.
 	 *
 	 * @static
 	 * @access public
@@ -238,7 +238,32 @@ class Helper {
 	 * @return string path of the chosen template
 	 *
 	 */
-  public function getPluginTemplateDir($sDir, $sFile) {
+  public static function getTemplateType($sDir, $sFile) {
+    try {
+      # Mobile device.
+      if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
+        return $sDir . '/' . $sFile . '.mob';
+
+      # Standard template
+      else
+        return $sDir . '/' . $sFile . '.tpl';
+    }
+    catch (Exception $e) {
+      $e->getMessage();
+    }
+  }
+
+	/**
+	 * Get the template file. Check if there is a mobile device.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sDir dir of the templates
+	 * @param string $sFile file name of the template
+	 * @return string path of the chosen template
+	 *
+	 */
+  public static function getPluginTemplateDir($sDir, $sFile) {
 		try {
 			# Template
 			if (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))

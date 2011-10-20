@@ -101,6 +101,8 @@ $oIndex->setTemplate();
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
+define('MOBILE', false);
+
 echo $oIndex->show();
 unset($_SESSION['lang']);
 ?>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
+    <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <link href='%PATH_CSS%/mobile/jquery.mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <link href='%PATH_CSS%/mobile/mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <script type="text/javascript" src="%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="%PATH_PUBLIC%/js/mobile/jquery.mobile{$_compress_files_suffix_}.js"></script>
+    <title>{$_title_}</title>
+  </head>
+  <body>
+    <div data-role="page">
+      <div data-role="header">
+        <h1>{$_title_}</h1>
+      </div><!-- /header -->
+      <div data-role="navbar">
+        <ul>
+          <li><a href='/blog'>{$lang.global.blog}</a></li>
+          <li><a href='/gallery'>{$lang.global.gallery}</a></li>
+          <li><a href='/download'>{$lang.global.download}</a></li>
+          <li><a href='/search'>{$lang.global.search}</a></li>
+        </ul>
+      </div><!-- /navbar -->
+      <div data-role="content">
+        {if $_flash_type_}
+          <div id='js-flash_message'>
+            <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
+              <h4>{$_flash_headline_}</h4>
+              <p>{$_flash_message_}</p>
+            </div>
+          </div>
+        {/if}
+        {$_content_}
+      </div><!-- /content -->
+      <div data-role="footer">
+        <ul>
+          <li>
+            <a href='/About'>{$lang.global.about} {$WEBSITE_NAME}</a>
+          </li>
+          <li>
+            <a href='/Disclaimer'>{$lang.global.disclaimer}</a>
+          </li>
+          <li>
+            <a href='/sitemap'>{$lang.global.sitemap}</a>
+          </li>
+        </ul>
+      </div><!-- /footer -->
+    </div><!-- /page -->
+    {if $WEBSITE_TRACKING_CODE}
+      <script type="text/javascript">
+        var sTrackingCode = '{$WEBSITE_TRACKING_CODE}';
+        {literal}
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', sTrackingCode]);
+          _gaq.push (['_gat._anonymizeIp']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        {/literal}
+      </script>
+    {/if}
+  </body>
+</html>

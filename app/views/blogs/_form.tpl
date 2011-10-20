@@ -63,7 +63,7 @@
       document_base_url : "{$WEBSITE_URL}",
       entity_encoding : "raw",
       height : "300px",
-      content_css : "%PATH_CSS%/tinymce{$_compress_files_suffix_}.css"
+      content_css : "%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css"
     });
   });
 </script>

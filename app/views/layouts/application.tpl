@@ -21,8 +21,8 @@
     <link href='{$WEBSITE_URL}/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
-    <link href='%PATH_CSS%/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <link href='%PATH_CSS%/style{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       if (typeof jQuery == 'undefined')

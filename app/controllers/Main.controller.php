@@ -386,7 +386,7 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError[$sField] = empty($sMessage) ? constant($this->oI18n->get('error.form.missing.' . strtoupper($sField))) : $sMessage;
+			$this->_aError[$sField] = empty($sMessage) ? $this->oI18n->get('error.form.missing.' . strtoupper($sField)) : $sMessage;
 
 		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ) &&
 						'blog' !== $this->_aRequest['section'])
