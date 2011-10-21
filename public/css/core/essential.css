@@ -1,5 +1,5 @@
 /* count down remaining chars at blog entry */
-span#js-chars {
+span#js-count_chars {
   color: #666;
   margin-left: 10px;
 }

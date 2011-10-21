@@ -241,7 +241,6 @@ class User extends Main {
 	 * @access public
 	 * @return boolean status message
 	 * @override app/controllers/Main.controller.php
-	 * @todo translate error message
 	 *
 	 */
 	public function destroy() {
@@ -255,7 +254,7 @@ class User extends Main {
 				else
 					return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
 			} else
-				return Helper::errorMessage('Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.', '/user/update');
+				return Helper::errorMessage('error.user.destroy.password', '/user/update');
 
 		# We are admin and can delete users
 		} elseif (USER_RIGHT == 4) {
@@ -293,7 +292,6 @@ class User extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo Better success message.
 	 *
 	 */
 	protected function _create() {
@@ -327,7 +325,7 @@ class User extends Main {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-			return Helper::successMessage($this->oI18n->get('success.mail.create'), '/');
+			return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
 		}
 		else
 			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');

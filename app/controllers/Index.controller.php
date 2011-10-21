@@ -124,7 +124,6 @@ class Index {
   *
   * @access public
   * @see config/Candy.inc.php
-  * @todo remove deprecated language parts
   *
   */
   public function loadLanguage($sPath = '') {

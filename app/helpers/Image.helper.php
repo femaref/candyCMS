@@ -3,10 +3,8 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- * @todo documentation and refactoring
+ * @todo documentation and refactoring / merge methods
  */
-
-# TODO: MERGE METHODS
 
 
 namespace CandyCMS\Helper;

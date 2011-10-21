@@ -188,6 +188,8 @@ error:
   user:
     create:
       email: Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!
+    destroy:
+      password: Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.
     update:
       terms: Du musst das Bild hochladen dürfen!
       password:

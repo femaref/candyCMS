@@ -39,7 +39,7 @@ RewriteRule ^install$ install/index.php [R,NC]
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1&page=1 [L,QSA,NC] # Show Section
 RewriteRule ^([A-Za-z]+)/([0-9]+)/ajax$ index.php?section=$1&id=$2&page=1&ajax=1 [L,QSA,NC] # Show entry with id and without header and footer
 RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with id
-RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC] # Show pagination on sub id #TODO
+RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC] # Show pagination on sub id
 RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC] # Show entry with highlighted background
 RewriteRule ^([A-Za-z]+)/(create|update|destroy|show|createfile|updatefile|destroyfile)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
 RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA,NC] # Non AJAX pagination
