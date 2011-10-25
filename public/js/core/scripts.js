@@ -8,7 +8,8 @@ var candy = candy || {};
     hide: hide,
     quote: quote,
     stripNoAlphaChars: stripNoAlphaChars,
-    stripSlash: stripSlash
+    stripSlash: stripSlash,
+    confirmDestroy: confirmDestroy
   }
 
   function show(sDivId) {
@@ -51,15 +52,14 @@ var candy = candy || {};
     return sValue;
   }
 
+  function confirmDestroy(sUrl) {
+    if( confirm(lang.confirm_destroy) )
+      parent.location.href = sUrl;
+  }
+
 })(jQuery, window);
 
 /* Show success and error messages */
 if($('#js-flash_success') || $('#js-flash_error')) {
   candy.system.show('#js-flash_message');
-}
-
-/* Ask if user is sure to delete content */
-function confirmDelete(sUrl) {
-  if( confirm(LANG_DELETE_FILE_OR_CONTENT) )
-    parent.location.href = sUrl;
 }

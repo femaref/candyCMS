@@ -59,7 +59,7 @@
             <td style='width:5%'>
               <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
                    title='{$lang.global.destroy.destroy}' width="16" height="16"
-                   onclick="confirmDelete('/media/{$f.name}/destroy')" />
+                   onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')" />
             </td>
           </tr>
         {/foreach}

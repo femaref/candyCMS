@@ -213,6 +213,8 @@ abstract class Main {
 		$this->oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->oSmarty->assign('USER_SURNAME', USER_SURNAME);
 		$this->oSmarty->assign('VERSION', VERSION);
+		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
+		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
@@ -220,8 +222,7 @@ abstract class Main {
 		# Define system variables
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
 		$this->oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
-		$this->oSmarty->assign('_language_', WEBSITE_LANGUAGE);
-		$this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
+		$this->oSmarty->assign('_json_language_', $this->oI18n->getJson());
 		$this->oSmarty->assign('_pubdate_', date('r'));
 		$this->oSmarty->assign('_request_id_', $this->_iId);
 

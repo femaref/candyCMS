@@ -14,7 +14,7 @@
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='button' value='{$lang.gallery.albums.title.destroy}'
-        onclick="confirmDelete('/gallery/{$_request_id_}/destroy')" />
+        onclick="candy.system.confirmDestroy('/gallery/{$_request_id_}/destroy')" />
       <input type='reset' value='{$lang.global.reset}' />
     {/if}
   </p>

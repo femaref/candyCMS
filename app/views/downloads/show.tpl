@@ -49,7 +49,7 @@
                 </a>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
                   title='{$lang.global.destroy.destroy}' width="16" height="16"
-                  onclick="confirmDelete('/download/{$f.id}/destroy')" />
+                  onclick="candy.system.confirmDestroy('/download/{$f.id}/destroy')" />
               {else}
                 <a href="{$f.url}" target="_blank">
                   <img src='%PATH_IMAGES%/spacer.png' class="icon-download" alt='{$lang.global.download}'

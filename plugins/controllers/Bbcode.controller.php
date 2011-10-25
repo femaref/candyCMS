@@ -70,7 +70,7 @@ final class Bbcode {
         }
 
         $sTempFilePath = '/' . $sTempFilePath;
-        $aNewInfo = getimagesize($sTempFilePath);
+        $aNewInfo = @getimagesize($sTempFilePath);
 
         # Language
         $sText = str_replace('%w', $aInfo[0], I18n::get('global.image.click_to_enlarge'));

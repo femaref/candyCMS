@@ -41,15 +41,27 @@ class I18n {
   }
 
   /**
-   * Return the language array.
-   *
-   * @access public
-   * @return array $_SESSION['lang'] session array with language data
-   *
-   */
-  public function getArray() {
-    return $_SESSION['lang'];
-  }
+	 * Return the language array.
+	 *
+	 * @access public
+	 * @param string $sPart main part of the array to return string from
+	 * @return array $_SESSION['lang'] session array with language data
+	 *
+	 */
+	public function getArray($sPart = '') {
+		return empty($sPart) ? $_SESSION['lang'] : $_SESSION['lang'][$sPart];
+	}
+
+	/**
+	 * Get language as JSON
+	 *
+	 * @access public
+	 * @return string JSON
+	 *
+	 */
+	public function getJson() {
+		return json_encode($this->getArray('javascript'));
+	}
 
   /**
    * Get a specific string.
@@ -77,18 +89,4 @@ class I18n {
       die('No such translation: ' . $mTemp);
     }
   }
-
-  /**
-   * Get a specific string. (Static method)
-   *
-   * @static
-   * @access public
-   * @param string $sLanguagePart language part we want to load. Separated by dots.
-   * @return string
-   *
-   */
-  /*public static function fetch($sLanguagePart) {
-    $oI18n = new I18n(WEBSITE_LANGUAGE);
-    return $oI18n->get($sLanguagePart);
-  }*/
 }

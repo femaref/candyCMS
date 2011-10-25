@@ -25,8 +25,11 @@
     <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
+      {* Fallback to local jQuery when no Google access *}
       if (typeof jQuery == 'undefined')
         document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+      {* Load JSON language variables  *}
+      var lang = {$_json_language_};
     </script>
     <title>{$_title_}</title>
     <!--[if IE]>
@@ -130,8 +133,7 @@
         </ul>
       </section>
     </footer>
-    <script type='text/javascript'>{$_javascript_language_file_}</script>
-    <script src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script type='text/javascript' src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js'></script>
     {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
       <div id="fb-root"></div>
       <script type="text/javascript">
@@ -145,7 +147,7 @@
         (function() {
           var e = document.createElement('script'); e.async = true;
           e.src = document.location.protocol +
-            '//connect.facebook.net/{$_locale_}/all.js';
+            '//connect.facebook.net/{$WEBSITE_LOCALE}/all.js';
           document.getElementById('fb-root').appendChild(e);
         }());
       </script>

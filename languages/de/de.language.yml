@@ -118,6 +118,10 @@ global:
   welcome: Hallo
   yesterday: Gestern
 
+javascript:
+  loading: Lade...
+  confirm_destroy: Möchtest du diesen Eintrag oder diese Datei wirklich löschen? Diese Aktion ist nicht rückgängig zu machen!
+
 success:
   create: Eintrag wurde hinzugefügt!
   destroy: Eintrag wurde gelöscht!

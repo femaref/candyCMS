@@ -275,25 +275,6 @@ class Index {
   }
 
   /**
-  * Load the JS language file.
-  *
-  * @access private
-  * @return string $sLangVars string with translated js
-  * @todo remove when YAML is complete and provide js language via Main.controller.php
-  *
-  */
-  private function _loadJavaScriptLanguage() {
-    $sLangVars = '';
-    $oFile = fopen('languages/' . $this->_sLanguage . '/' . $this->_sLanguage . '.language.js', 'rb');
-
-    while (!feof($oFile)) {
-      $sLangVars .= fgets($oFile);
-    }
-
-    return $sLangVars;
-  }
-
-  /**
    * Define user constants for global use.
    *
    * List of user rights:
@@ -405,7 +386,6 @@ class Index {
       # System required variables
       # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-      $oSection->oSmarty->assign('_javascript_language_file_', $this->_loadJavaScriptLanguage());
 			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . $oSection->oI18n->get('website.title'));
       $oSection->oSmarty->assign('_update_avaiable_', $this->checkForNewVersion());
 

@@ -5,7 +5,7 @@
   <channel>
     <title>{$_title_}</title>
     <description>{$lang.website.description}</description>
-    <language>{$_language_}</language>
+    <language>{$WEBSITE_LANGUAGE}</language>
     <link>{$WEBSITE_URL}</link>
     <copyright>{$WEBSITE_NAME}</copyright>
     <pubDate>{$_pubdate_}</pubDate>

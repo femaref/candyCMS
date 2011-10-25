@@ -17,7 +17,7 @@
 </form>
 <script type="text/javascript">
   $("input[type='submit']").click(function() {
-    $(this).val(LANG_LOADING);
-    $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + LANG_LOADING + "' />");
+    $(this).val(lang.loading);
+    $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + lang.loading + "' />");
   });
 </script>

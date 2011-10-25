@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0" 
+<rss version="2.0"
      xmlns:media="http://search.yahoo.com/mrss/"
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{$_title_}</title>
     <description>{$_content_}</description>
-    <language>{$_language_}</language>
+    <language>{$WEBSITE_LANGUAGE}</language>
     <link>{$_link_}</link>
     <copyright>{$_copyright_}</copyright>
     <pubDate>{$_pubdate_}</pubDate>

@@ -27,7 +27,7 @@
 <div id="loading" style="text-align:center"></div>
 <script type="text/javascript" language="javascript">
   $("input[type='submit']").click(function() {
-    $(this).val(LANG_LOADING).attr('disabled',true);
+    $(this).val('Loading...').attr('disabled',true);
   });
 
   $("input[name='password2']").keyup(function(){

@@ -9,11 +9,11 @@
     <input name='surname' value='{$surname}' id="input-surname" type='text' />
   </p>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-    <label for='input-email'>{$lang.global.email} <span title="{$lang.global.required}">*</span></label>
+    <label for='input-email'>{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
     <input name='email' value='{$email}' type='email' id="input-email" required />
   </p>
   <p {if isset($error_password)}class="error" title="{$error_password}"{/if}>
-    <label for='input-password'>{$lang.global.password} <span title="{$lang.global.required}">*</span></label>
+    <label for='input-password'>{$lang.global.password.password} <span title="{$lang.global.required}">*</span></label>
     <input name='password' type='password' id="input-password" required />
   </p>
   <p>

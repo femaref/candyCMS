@@ -39,7 +39,7 @@
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
     <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.global.update.update}{/if}" />
     {if $smarty.get.action == 'update'}
-      <input type='button' value='{$lang.blog.title.destroy}' onclick="confirmDelete('/blog/{$_request_id_}/destroy')" />
+      <input type='button' value='{$lang.blog.title.destroy}' onclick="candy.system.confirmDestroy('/blog/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='reset' value='{$lang.global.reset}' />
     {/if}
@@ -57,7 +57,7 @@
       theme_advanced_buttons3 : "hr,|,link,unlink,anchor,image,cleanup,code,|,insertdate,inserttime,|,outdent,indent,|,pagebreak,|,charmap,emotions,media,|,print",
       theme_advanced_statusbar_location : "bottom",
       theme_advanced_resizing : true,
-      language : "{$_language_}",
+      language : "{$WEBSITE_LANGUAGE}",
       relative_urls : false,
       remove_script_host : false,
       document_base_url : "{$WEBSITE_URL}",

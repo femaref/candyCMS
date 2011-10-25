@@ -34,7 +34,7 @@
             </a>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang.global.destroy.destroy}'
                  title='{$lang.global.destroy.destroy}' class="pointer" width="16" height="16"
-                 onclick="confirmDelete('/user/{$u.id}/destroy')" />
+                 onclick="candy.system.confirmDestroyDelete('/user/{$u.id}/destroy')" />
           {/if}
         </td>
       </tr>

@@ -22,7 +22,7 @@
     <input type='submit' value='{if $smarty.get.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}' />
     {if $smarty.get.action == 'updatefile'}
       <input type='hidden' value='{$_request_id_}' name='id' />
-      <input type='button' value='{$lang.global.destroy.destroy}' onclick="confirmDelete('/gallery/{$_request_id_}/destroyfile')" />
+      <input type='button' value='{$lang.global.destroy.destroy}' onclick="candy.system.confirmDestroy('/gallery/{$_request_id_}/destroyfile')" />
       <input type='reset' value='{$lang.global.reset}' />
     {/if}
   </p>
