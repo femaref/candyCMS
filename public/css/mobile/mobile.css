@@ -1,142 +1,35 @@
-/* jqm docs css
-
-Beware: lots of last-minute CSS going on in here
-cobblers, shoes,
-*/
-
-body { background: #dddddd; }
-.ui-mobile .type-home .ui-content { margin: 0; background: #e5e5e5 url(../images/jqm-sitebg.png) top center repeat-x; }
-.ui-mobile #jqm-homeheader { padding: 40px 10px 0; text-align: center;  margin: 0 auto; }
-.ui-mobile #jqm-homeheader h1 { margin: 0 0 ; }
-.ui-mobile #jqm-homeheader p { margin: .3em 0 0; line-height: 1.3; font-size: .9em; font-weight: bold; color: #666; }
-.ui-mobile #jqm-version { text-indent: -99999px; background: url(../images/version.png) top right no-repeat; width: 119px; height: 122px; overflow: hidden; position: absolute; z-index: 50; top: -11px; right: 0; }
-.ui-mobile .jqm-themeswitcher { margin: 10px 25px 10px 10px;  }
-
-h2 { margin:1.2em 0 .4em 0; }
-p code { font-size:1.2em; font-weight:bold; }
-
-dt { font-weight: bold; margin: 2em 0 .5em; }
-dt code, dd code { font-size:1.3em; line-height:150%; }
-pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
-
-#jqm-homeheader img { width: 235px; }
-img { max-width: 100%; }
-
-.ui-header .jqm-home { top:0.65em; }
-nav { margin: 0; }
-
-p.intro {
-	font-size: .96em;
-	line-height: 1.3;
-		border-top: 1px solid #75ae18;
-		border-bottom: 0;
-		background: none;
-		margin: 1.5em 0;
-		padding: 1.5em 15px 0;
-
-}
-p.intro strong {
-	color:  #558e08;
-}
-#footer {
-	padding: 5px 0;
-}
-#footer p {
-	float: left;
-	margin-left:15px;
-	font-weight: normal;
-	font-size: .9em;
+/* Comments */
+section#comments {
+  clear:both;
+  padding:10px 0px;
 }
 
-.type-interior .content-secondary {
-	border-right: 0;
-	border-left: 0;
-	margin: 10px -15px 0;
-	background: #fff;
-	border-top: 1px solid #ccc;
-}
-.type-home .ui-content {
-	margin-top: 5px;
-}
-.type-interior .ui-content {
-	padding-bottom: 0;
-}
-.content-secondary .ui-collapsible {
-	padding: 0 15px 10px;
-
-}
-.content-secondary .ui-collapsible-content {
-	padding: 0;
-	background: none;
-	border-bottom: none;
-}
-.content-secondary .ui-listview {
-	margin: 0;
-}
-/* new API additions */
-
-dt {
-	margin: 35px 0 15px 0;
-	background-color:#ddd;
-	font-weight:normal;
-}
-dt code {
-	display:inline-block;
-	font-weight:bold;
-	color:#56A00E;
-	padding:3px 7px;
-	margin-right:10px;
-	background-color:#fff;
-}
-dd {
-	margin-bottom:10px;
-}
-dd .default { font-weight:bold; }
-dd pre {
-	margin:0 0 0 0;
-}
-dd code { font-weight: normal; }
-dd pre code {
-	margin:0;
-	border:none;
-	font-weight:normal;
-	font-size:100%;
-	background-color:transparent;
-}
-dd h4 { margin:15px 0 0 0; }
-
-.localnav {
-	margin:0 0 20px 0;
-	overflow:hidden;
-}
-.localnav li {
-	float:left;
-}
-.localnav .ui-btn-inner {
-	padding: .6em 10px;
-	font-size:80%;
+section#comments a {
+  font-weight: bold;
+  color: #000;
 }
 
+section#comments article {
+  margin-top:30px;
+  text-align:left;
+  padding:10px;
+  background:#eee;
+}
 
-/* F bar theme - just for the docs overview headers */
-.ui-bar-f {
-	border: 1px solid 		#56A00E;
-	background: 			#74b042;
-	color: 					#fff;
-	font-weight: bold;
-	text-shadow: 0 -1px 1px #234403;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#74b042), to(#56A00E)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(top, #74b042, #56A00E); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(top, #74b042, #56A00E); /* FF3.6 */
-	background-image:     -ms-linear-gradient(top, #74b042, #56A00E); /* IE10 */
-	background-image:      -o-linear-gradient(top, #74b042, #56A00E); /* Opera 11.10+ */
-	background-image:         linear-gradient(top, #74b042, #56A00E);
+section#comments article.from_author {
+  background: #E3E3E3;
 }
-.ui-bar-f,
-.ui-bar-f .ui-link-inherit {
-	color: 					#fff;
+
+section#comments article header {
+  padding: 0px 22px 0px 0px;
+  line-height:1.5em;
 }
-.ui-bar-f .ui-link {
-	color: 					#fff;
-	font-weight: bold;
+
+section#comments article header img {
+  float:left;
+  margin: 3px 10px 0px 0px;
+}
+
+section#comments article header a:hover {
+  text-decoration: none;
 }

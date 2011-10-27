@@ -8,7 +8,7 @@
       <article class='{if $author_id == $c.author_id}from_author{/if}'>
         <header>
           <a href='#{$c.id}' name='{$c.id}' class="count">{$c.loop+$comment_number}</a>
-          <img class="avatar" src="{$c.avatar_64}" width="32" height="32" alt="" />
+          <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
           {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
@@ -23,9 +23,9 @@
           <br />
           <time datetime="{$c.date_w3c}">{$c.datetime}</time>
         </header>
-        <details id="js-comment_{$c.id}" open="open">
+        <div id="js-comment_{$c.id}">
           {$c.content}
-        </details>
+        </div>
         <footer>
           {if $USER_RIGHT >= 3 && $c.author_email}
             <a href="mailto:{$c.author_email}">{$c.author_email}</a>

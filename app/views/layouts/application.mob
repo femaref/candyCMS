@@ -20,7 +20,6 @@
         <ul>
           <li><a href='/blog' {if $smarty.get.section == 'blog'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
           <li><a href='/gallery' {if $smarty.get.section == 'gallery'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
-          <li><a href='/download' {if $smarty.get.section == 'download'}class="ui-btn-active"{/if}>{$lang.global.download}</a></li>
           <li><a href='/search' {if $smarty.get.section == 'search'}class="ui-btn-active"{/if}>{$lang.global.search}</a></li>
         </ul>
       </div><!-- /navbar -->
@@ -36,8 +35,10 @@
         {$_content_}
       </div><!-- /content -->
       <div data-role="footer" class="ui-bar">
-        <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
-        <a href='/sitemap' {if $smarty.get.section == 'sitemap'}class="ui-btn-active"{/if}>{$lang.global.sitemap}</a>
+        <div data-role="controlgroup" data-type="horizontal">
+          <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
+          <a href='/sitemap' {if $smarty.get.section == 'sitemap'}class="ui-btn-active"{/if}>{$lang.global.sitemap}</a>
+        </div>
       </div><!-- /footer -->
     </div><!-- /page -->
     {if $WEBSITE_TRACKING_CODE}

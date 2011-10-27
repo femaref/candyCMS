@@ -115,7 +115,7 @@ $bMobile = preg_match('/Opera Mini/i', $sUserAgent) ||
         preg_match('/Android/i', $sUserAgent) ?
         true :
         false;
-define('MOBILE', true);
+define('MOBILE', $bMobile);
 
 /**
  * Print out website.
