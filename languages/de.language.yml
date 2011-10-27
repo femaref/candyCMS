@@ -115,6 +115,7 @@ global:
       3: Moderator
       4: Administrator
     user: User
+  webview: Webansicht
   welcome: Hallo
   yesterday: Gestern
 

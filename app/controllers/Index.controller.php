@@ -76,17 +76,20 @@ class Index {
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
+
+    # Does the user want to view the normal website instead of the mobile one?
+    $_SESSION['webview'] = isset($this->_aRequest['mobile']) && $this->_aRequest['mobile'] == false ? true : false;
 	}
 
   /**
-  * Load all config files.
-  *
-  * @access public
-  * @param array $aConfigs array of config files
-  * @param string $sPath Path prefix. Needed when not in root path
-  * @see install/index.php
-  *
-  */
+   * Load all config files.
+   *
+   * @access public
+   * @param array $aConfigs array of config files
+   * @param string $sPath Path prefix. Needed when not in root path
+   * @see install/index.php
+   *
+   */
   public function loadConfigFiles($aConfigs, $sPath = '') {
     foreach ($aConfigs as $sConfig) {
       try {
@@ -99,17 +102,17 @@ class Index {
         die($e->getMessage());
       }
     }
-	}
+  }
 
   /**
-  * Load all defined plugins.
-  *
-  * @access public
-  * @param string $sAllowedPlugins comma separated plugin names
-  * @param string $sPath Path prefix. Needed when not in root path
-  * @see config/Candy.inc.php
-  *
-  */
+   * Load all defined plugins.
+   *
+   * @access public
+   * @param string $sAllowedPlugins comma separated plugin names
+   * @param string $sPath Path prefix. Needed when not in root path
+   * @see config/Candy.inc.php
+   *
+   */
   public function loadPlugins($sAllowedPlugins, $sPath = '') {
     $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
 
@@ -120,27 +123,27 @@ class Index {
   }
 
   /**
-  * Sets the language. This can be done via a language request and be temporarily saved in a cookie.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  *
-  */
+   * Sets the language. This can be done via a language request and be temporarily saved in a cookie.
+   *
+   * @access public
+   * @see config/Candy.inc.php
+   *
+   */
   public function loadLanguage($sPath = '') {
-		# We got a language request? Let's change it!
-		if (isset($this->_aRequest['language'])) {
-			setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-			$this->_sLanguage = (string) $this->_aRequest['language'];
-		}
+    # We got a language request? Let's change it!
+    if (isset($this->_aRequest['language'])) {
+      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+      $this->_sLanguage = (string) $this->_aRequest['language'];
+    }
     # There is no request, but there might be a cookie instead
-		else {
-			$aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-			$this->_sLanguage = isset($aRequest['default_language']) ?
-							(string) $aRequest['default_language'] :
-							substr(DEFAULT_LANGUAGE, 0, 2);
-		}
+    else {
+      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $this->_sLanguage = isset($aRequest['default_language']) ?
+              (string) $aRequest['default_language'] :
+              substr(DEFAULT_LANGUAGE, 0, 2);
+    }
 
-		# Set iso language codes
+    # Set iso language codes
     switch ($this->_sLanguage) {
       default:
       case 'de':
@@ -169,49 +172,49 @@ class Index {
 	}
 
   /**
-  * Get the cronjob working. Check for last execution and plan next cleanup, optimization and backup.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  *
-  */
+   * Get the cronjob working. Check for last execution and plan next cleanup, optimization and backup.
+   *
+   * @access public
+   * @see config/Candy.inc.php
+   *
+   */
   public function loadCronjob() {
     if (class_exists('Cronjob')) {
       if (Cronjob::getNextUpdate() === true) {
-          Cronjob::cleanup();
-          Cronjob::optimize();
-          Cronjob::backup(USER_ID);
+        Cronjob::cleanup();
+        Cronjob::optimize();
+        Cronjob::backup(USER_ID);
       }
     }
   }
 
   /**
-  * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  * @see plugins/controllers/Facebook.controller.php
-  * @return object FacebookCMS
-  *
-  */
-	public function loadFacebookExtension() {
-		if (class_exists('FacebookCMS')) {
-			return new FacebookCMS(array(
-					'appId' => FACEBOOK_APP_ID,
-					'secret' => FACEBOOK_SECRET,
-					'cookie' => true,
-			));
-		}
-	}
+   * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
+   *
+   * @access public
+   * @see config/Candy.inc.php
+   * @see plugins/controllers/Facebook.controller.php
+   * @return object FacebookCMS
+   *
+   */
+  public function loadFacebookExtension() {
+    if (class_exists('FacebookCMS')) {
+      return new FacebookCMS(array(
+                  'appId' => FACEBOOK_APP_ID,
+                  'secret' => FACEBOOK_SECRET,
+                  'cookie' => true,
+              ));
+    }
+  }
 
   /**
-  * Store and show flash status messages in the application.
-  *
-  * @access protected
-  * @see config/Candy.inc.php
-  * @return array $aFlashMessage The message, its type and the headline of the message.
-  *
-  */
+   * Store and show flash status messages in the application.
+   *
+   * @access protected
+   * @see config/Candy.inc.php
+   * @return array $aFlashMessage The message, its type and the headline of the message.
+   *
+   */
   protected function _getFlashMessage() {
     $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
             $this->_aSession['flash_message']['type'] :
@@ -228,14 +231,14 @@ class Index {
   }
 
   /**
-  * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
-  *
-  * @access public
-  * @see config/Candy.inc.php
-  *
-  */
+   * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
+   *
+   * @access public
+   * @see config/Candy.inc.php
+   *
+   */
   public function setTemplate() {
-		# We got a template request? Let's change it!
+    # We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
       setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
       $this->_sTemplate = (string) $this->_aRequest['template'];
@@ -253,12 +256,12 @@ class Index {
   }
 
   /**
-  * Checks the empuxa server for a new CandyCMS version.
-  *
-  * @access private
-  * @return string string with info message and link to download.
-  *
-  */
+   * Checks the empuxa server for a new CandyCMS version.
+   *
+   * @access private
+   * @return string string with info message and link to download.
+   *
+   */
   private function checkForNewVersion() {
     if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');

@@ -38,6 +38,7 @@
         <div data-role="controlgroup" data-type="horizontal">
           <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
           <a href='/sitemap' {if $smarty.get.section == 'sitemap'}class="ui-btn-active"{/if}>{$lang.global.sitemap}</a>
+          <a href='?mobile=0' data-ajax="false" {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.webview}</a>
         </div>
       </div><!-- /footer -->
     </div><!-- /page -->

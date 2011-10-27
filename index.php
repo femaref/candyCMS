@@ -95,31 +95,38 @@ $oIndex->loadCronjob();
 $oIndex->setUser();
 $oIndex->setTemplate();
 
-/**
- * If we are on a productive enviroment, make sure that we can't override the system.
- */
+# If we are on a productive enviroment, make sure that we can't override the system.
+# *********************************************
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
-/**
- * Do we have a mobile access?
- */
+# Do we have a mobile device?
+# *********************************************
 $sUserAgent = $_SERVER['HTTP_USER_AGENT'];
-$bMobile = preg_match('/Opera Mini/i', $sUserAgent) ||
-        preg_match('/Symb/i', $sUserAgent) ||
-        preg_match('/Windows CE/i', $sUserAgent) ||
-        preg_match('/iPhone/i', $sUserAgent) ||
-        preg_match('/iPad/i', $sUserAgent) ||
-        preg_match('/iPod/i', $sUserAgent) ||
-        preg_match('/Blackberry/i', $sUserAgent) ||
-        preg_match('/Android/i', $sUserAgent) ?
-        true :
-        false;
-define('MOBILE', $bMobile);
+$bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
+              preg_match('/Symb/i', $sUserAgent) ||
+              preg_match('/Windows CE/i', $sUserAgent) ||
+              preg_match('/IEMobile/i', $sUserAgent) ||
+              preg_match('/iPhone/i', $sUserAgent) ||
+              preg_match('/iPad/i', $sUserAgent) ||
+              preg_match('/iPod/i', $sUserAgent) ||
+              preg_match('/Blackberry/i', $sUserAgent) ||
+              preg_match('/Android/i', $sUserAgent) ?
+              true :
+              false;
 
-/**
- * Print out website.
- */
+# Allow mobile access
+if(!isset($_REQUEST['mobile']))
+  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : true;
+
+# Override current session if there is a request.
+else
+  $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
+
+# Spread this information.
+define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
+
+# Print out HTML
 echo $oIndex->show();
-unset($_SESSION['lang']);
+
 ?>
