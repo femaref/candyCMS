@@ -60,3 +60,4 @@
     });
   });
 </script>
+{include file='_form.tpl'}

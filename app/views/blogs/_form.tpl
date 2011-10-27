@@ -1,7 +1,7 @@
 <form method='post' action='/blog/{$smarty.get.action}' enctype="multipart/form-data">
   <h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update|replace:'%p':$title}{/if}</h1>
   <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
-    <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
+    <label for='input-title'>{$lang.global.title}<span title="{$lang.global.required}">*</span></label>
     <input name='title' value='{$title}' type='text' id="input-title" required />
   </p>
   <p>
@@ -21,7 +21,7 @@
     <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.blog.info.keywords}' title='{$lang.blog.info.keywords}' id="input-keywords" />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='input-content'>{$lang.global.content} *</label>
+    <label for='input-content'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
     <textarea name='content' class="js-tinymce" rows='16' cols='50' id="input-content">{$content}</textarea>
   </p>
   <p>

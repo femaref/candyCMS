@@ -2,11 +2,11 @@
   <h1>{if $smarty.get.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}</h1>
   {if $smarty.get.action == 'createfile'}
     <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>
-      <label for='input-file'>{$lang.gallery.files.label.choose} *</label>
+      <label for='input-file'>{$lang.gallery.files.label.choose}<span title="{$lang.global.required}">*</span></label>
       <input type='file' name='file[]' id="input-file" multiple required />
     </p>
     <p>
-      <label for='input-cut'>{$lang.global.cut} *</label>
+      <label for='input-cut'>{$lang.global.cut}<span title="{$lang.global.required}">*</span></label>
       <select name='cut' id="input-cut">
         <option value='c' {if $default == 'c'}default='default'{/if}>{$lang.gallery.files.label.cut}</option>
         <option value='r' {if $default == 'r'}default='default'{/if}>{$lang.gallery.files.label.resize}</option>

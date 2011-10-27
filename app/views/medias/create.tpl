@@ -1,7 +1,7 @@
 <form action='/media/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
   <h1>{$lang.media.title.create}</h1>
   <p>
-    <label for='input-file'>{$lang.media.label.choose} *</label>
+    <label for='input-file'>{$lang.media.label.choose}<span title="{$lang.global.required}">*</span></label>
     <input type='file' name='file[]' id="input-file" multiple />
     <span class='description'>{$lang.media.info.upload}</span>
   </p>

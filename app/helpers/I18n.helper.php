@@ -28,7 +28,7 @@ class I18n {
    */
   public function __construct($sLanguage) {
     if (empty($_SESSION['lang'])) {
-			$sLanguageFile = 'languages/' . $sLanguage . '/' . $sLanguage . '.language.yml';
+			$sLanguageFile = 'languages/' . $sLanguage . '.language.yml';
 
 			try {
 				if (!isset($_SESSION['lang']) || empty($_SESSION['lang']))

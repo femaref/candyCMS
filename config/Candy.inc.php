@@ -206,7 +206,7 @@ define('COMPILE_DIR', 'compile');
 
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 2);
+define('LIMIT_BLOG', 8);
 
 # Limit of comments per page
 # DEFAULT: 10

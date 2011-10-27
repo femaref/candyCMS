@@ -10,7 +10,7 @@
         <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" />
       {/if}
     {else}
-      <input type="text" value="{$name}" name="name" id="input-name" required />
+      <input type="text" value="{if isset($name)}{$name}{/if}" name="name" id="input-name" required />
       {if isset($error_name)}
         <div class="description">{$error_name}</div>
       {/if}
@@ -24,12 +24,12 @@
         <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
     {else}
-      <input type="email" value="{$email}" name="email" id="input-email" />
+      <input type="email" value="{if isset($email)}{$email}{/if}" name="email" id="input-email" />
     {/if}
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='js-create_commment_text'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
-    <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{$content}</textarea>
+    <label for='js-create_commment_text'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
+    <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{if isset($content)}{$content}{/if}</textarea>
   </p>
   {if isset($_captcha_) && $MOBILE === false}
     <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
@@ -40,7 +40,7 @@
   <p class="center">
     <input type='submit' value='{$lang.comment.title.create}' />
     <input type='hidden' value='formdata' name='create_comment' />
-    <input type='hidden' value='{$_parent_id_}' name='parent_id' />
+    <input type='hidden' value='{$_request_id_}' name='parent_id' />
     <input type='reset' value='{$lang.global.reset}' />
   </p>
 </form>

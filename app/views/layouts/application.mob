@@ -12,7 +12,7 @@
     <title>{$_title_}</title>
   </head>
   <body>
-    <div data-role="page" data-add-back-btn="true">
+    <div data-role="page" data-add-back-btn="true" data-theme="d">
       <div data-role="header">
         <h1>{$_title_}</h1>
       </div><!-- /header -->
@@ -35,7 +35,7 @@
         {/if}
         {$_content_}
       </div><!-- /content -->
-      <div data-role="footer">
+      <div data-role="footer" class="ui-bar">
         <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
         <a href='/sitemap' {if $smarty.get.section == 'sitemap'}class="ui-btn-active"{/if}>{$lang.global.sitemap}</a>
       </div><!-- /footer -->

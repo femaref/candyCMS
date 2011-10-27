@@ -100,7 +100,7 @@ class Comment extends Main {
 
       $sTemplateDir = Helper::getTemplateDir('comments', 'show');
       $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show')) . $this->create('create_comment');
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
     }
   }
 
@@ -113,12 +113,10 @@ class Comment extends Main {
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
-    $iParentId  = isset($this->_aRequest['parent_id']) ? (int) $this->_aRequest['parent_id'] : (int) $this->_iId;
     $sName      = isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '';
     $sEmail     = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
     $sContent   = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
 
-    $this->oSmarty->assign('_parent_id_', $iParentId);
     $this->oSmarty->assign('content', $sContent);
     $this->oSmarty->assign('email', $sEmail);
     $this->oSmarty->assign('name', $sName);

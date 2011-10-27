@@ -3,7 +3,7 @@
     <h2><a href="#">{$lang.user.title.personal_data}</a></h2>
     <div>
       <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
-        <label for='input-name'>{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
+        <label for='input-name'>{$lang.global.name}<span title="{$lang.global.required}">*</span></label>
         <input name='name' value='{$name}' type='name' id="input-name" required />
       </p>
       <p>
@@ -11,7 +11,7 @@
         <input name='surname' value='{$surname}' type='text' id="input-surname" />
       </p>
       <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-        <label for='input-email'>{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
+        <label for='input-email'>{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
         <input name='email' value='{$email}' type='email' id="input-email" required />
       </p>
       <p>

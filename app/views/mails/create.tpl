@@ -1,7 +1,7 @@
 <form method='post' action='/mail/{$_request_id_}' id="create_mail">
   <h1>{$lang.global.contact} {$contact.name} {$contact.surname}</h1>
   <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
-    <label for='email'>{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
+    <label for='email'>{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
     {if $email == ''}
       <input name='email' value='{$email}' type='email' required />
       {if isset($error_email)}
@@ -16,7 +16,7 @@
     <input name='subject' class='' value='{$subject}' type='text' />
   </p>
   <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
-    <label for='content'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
+    <label for='content'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
     <textarea name='content' cols="30" required>{$content}</textarea>
   </p>
   {if isset($_captcha_) && $MOBILE === false}
