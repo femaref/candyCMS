@@ -203,7 +203,7 @@ class Helper {
   public static function getTemplateDir($sDir, $sFile) {
 		try {
 			# Addons
-			if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS === true)
+			if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS == true)
 				return 'addons/views/' . $sDir;
 
 			# Template use

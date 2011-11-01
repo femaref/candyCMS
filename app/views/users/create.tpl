@@ -1,6 +1,6 @@
 <form method='post'>
   <h1>{$lang.global.registration}</h1>
-  <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
+  <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
     <label for='input-name'>{$lang.global.name}<span title="{$lang.global.required}">*</span></label>
     <input name='name' value='{$name}' type='name' id="input-name" autofocus required />
   </p>
@@ -8,11 +8,11 @@
     <label for='input-surname'>{$lang.global.surname}</label>
     <input name='surname' value='{$surname}' id="input-surname" type='text' />
   </p>
-  <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
+  <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
     <label for='input-email'>{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
     <input name='email' value='{$email}' type='email' id="input-email" required />
   </p>
-  <p {if isset($error_password)}class="error" title="{$error_password}"{/if}>
+  <p {if isset($error.password)}class="error" title="{$error.password}"{/if}>
     <label for='input-password'>{$lang.global.password.password}<span title="{$lang.global.required}">*</span></label>
     <input name='password' type='password' id="input-password" required />
   </p>
@@ -22,7 +22,7 @@
     <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
   </p>
   {if $USER_RIGHT < 4}
-    <p {if isset($error_disclaimer)}class="error" title="{$error_disclaimer}"{/if}>
+    <p {if isset($error.disclaimer)}class="error" title="{$error.disclaimer}"{/if}>
       <label>
         <a href='/help/registration' id="js-fancybox">
           {$lang.global.terms.read}<span title="{$lang.global.required}">*</span>

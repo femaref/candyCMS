@@ -75,10 +75,8 @@ class Session extends Main {
 	 *
 	 */
   public function showCreateSessionTemplate() {
-		if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
@@ -176,10 +174,8 @@ class Session extends Main {
 			$this->_setDescription($this->oI18n->get('session.verification.info'));
 		}
 
-		if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('sessions', 'resend');
     $this->oSmarty->template_dir = $sTemplateDir;

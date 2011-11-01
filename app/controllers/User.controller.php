@@ -142,10 +142,8 @@ class User extends Main {
 		foreach ($this->_aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 
-		if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
 		$this->oSmarty->assign('uid', $iId);
 
@@ -351,10 +349,8 @@ class User extends Main {
 										Helper::formatInput($this->_aRequest['email']) :
 										'');
 
-    if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('users', 'create');
     $this->oSmarty->template_dir = $sTemplateDir;

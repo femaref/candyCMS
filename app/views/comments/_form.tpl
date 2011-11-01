@@ -1,7 +1,7 @@
 <a name='create'></a>
 <form method="post">
   <h3>{$lang.comment.title.create}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
-  <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
+  <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
     <label for="input-name">{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
     {if $USER_NAME}
       {$USER_FULL_NAME}
@@ -11,8 +11,8 @@
       {/if}
     {else}
       <input type="text" value="{if isset($name)}{$name}{/if}" name="name" id="input-name" required />
-      {if isset($error_name)}
-        <div class="description">{$error_name}</div>
+      {if isset($error.name)}
+        <div class="description">{$error.name}</div>
       {/if}
     {/if}
   </p>
@@ -27,12 +27,12 @@
       <input type="email" value="{if isset($email)}{$email}{/if}" name="email" id="input-email" />
     {/if}
   </p>
-  <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
+  <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
     <label for='js-create_commment_text'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{if isset($content)}{$content}{/if}</textarea>
   </p>
   {if isset($_captcha_) && $MOBILE === false}
-    <div {if isset($error_captcha)}class="error" title="{$error_captcha}"{/if}>
+    <div {if isset($error.captcha)}class="error" title="{$error.captcha}"{/if}>
       <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
       {$_captcha_}
     </div>

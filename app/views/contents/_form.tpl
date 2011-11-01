@@ -1,6 +1,6 @@
 <form method='post' action='/content/{$smarty.get.action}'>
   <h1>{if $smarty.get.action == 'create'}{$lang.content.title.create}{else}{$lang.content.title.update|replace:'%p':$title}{/if}</h1>
-  <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
+  <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
     <label for="input-title">{$lang.global.title}<span title="{$lang.global.required}">*</span></label>
     <input type='text' name='title' title='{$lang.global.title}' value='{$title}' id="input-title" autofocus required />
   </p>
@@ -16,7 +16,7 @@
     <label for='input-keywords'>{$lang.global.keywords}</label>
     <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.content.info.keywords}' title='{$lang.content.info.keywords}' id="input-keywords" />
   </p>
-  <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
+  <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
     <label for="input-content">{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
     <textarea name='content' title='{$lang.global.content}' class="js-tinymce" id="input-content">{$content}</textarea>
   </p>

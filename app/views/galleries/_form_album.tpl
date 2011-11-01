@@ -1,6 +1,6 @@
 <form method='post' action='/gallery/{$smarty.get.action}'>
   <h1>{if $smarty.get.action == 'create'}{$lang.gallery.albums.title.create}{else}{$lang.gallery.albums.title.update|replace:'%p':$title}{/if}</h1>
-  <p {if isset($error_title)}class="error" title="{$error_title}"{/if}>
+  <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
     <label for='input-title'>{$lang.global.title}<span title="{$lang.global.required}">*</span></label>
     <input name='title' value='{$title}' id="input-title" type='text' autofocus required />
   </p>

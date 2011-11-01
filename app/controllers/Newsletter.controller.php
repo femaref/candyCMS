@@ -79,10 +79,8 @@ class Newsletter extends Main {
    *
    */
   private function _showHandleNewsletterTemplate() {
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $this->_setDescription($this->oI18n->get('newsletter.info.handle'));
     $this->_setTitle($this->oI18n->get('newsletter.title.handle'));
@@ -123,10 +121,8 @@ class Newsletter extends Main {
     $this->oSmarty->assign('subject', $sSubject);
     $this->oSmarty->assign('content', $sContent);
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('newsletters', 'create');
     $this->oSmarty->template_dir = $sTemplateDir;

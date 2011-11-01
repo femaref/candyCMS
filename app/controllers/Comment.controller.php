@@ -100,7 +100,7 @@ class Comment extends Main {
 
       $sTemplateDir = Helper::getTemplateDir('comments', 'show');
       $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show')) . $this->create('create_comment');
     }
   }
 
@@ -124,10 +124,8 @@ class Comment extends Main {
     if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
       $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('comments', '_form');
     $this->oSmarty->template_dir = $sTemplateDir;
@@ -146,7 +144,7 @@ class Comment extends Main {
    */
   public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
-      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED === true)
+      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true)
         return $this->_checkCaptcha();
 
       else
@@ -221,13 +219,13 @@ class Comment extends Main {
    * status of error message (boolean) or HTML content of form template (string).
    *
    */
-  private function _checkCaptcha() {
+  protected function _checkCaptcha() {
     if (isset($this->_aRequest['recaptcha_response_field'])) {
-      $this->_oRecaptchaResponse = recaptcha_check_answer(
-                      $this->_sRecaptchaPrivateKey,
-                      $_SERVER['REMOTE_ADDR'],
-                      $this->_aRequest['recaptcha_challenge_field'],
-                      $this->_aRequest['recaptcha_response_field']);
+      $this->_oRecaptchaResponse = recaptcha_check_answer (
+              $this->_sRecaptchaPrivateKey,
+              $_SERVER['REMOTE_ADDR'],
+              $this->_aRequest['recaptcha_challenge_field'],
+              $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_oRecaptchaResponse->is_valid)
         return $this->_create(true);

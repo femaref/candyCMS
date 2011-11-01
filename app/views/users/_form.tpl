@@ -2,7 +2,7 @@
   <form method='post' action='/user/{$uid}/update'>
     <h2><a href="#">{$lang.user.title.personal_data}</a></h2>
     <div>
-      <p {if isset($error_name)}class="error" title="{$error_name}"{/if}>
+      <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
         <label for='input-name'>{$lang.global.name}<span title="{$lang.global.required}">*</span></label>
         <input name='name' value='{$name}' type='name' id="input-name" required />
       </p>
@@ -10,7 +10,7 @@
         <label for='input-surname'>{$lang.global.surname}</label>
         <input name='surname' value='{$surname}' type='text' id="input-surname" />
       </p>
-      <p {if isset($error_email)}class="error" title="{$error_email}"{/if}>
+      <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
         <label for='input-email'>{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
         <input name='email' value='{$email}' type='email' id="input-email" required />
       </p>
@@ -48,11 +48,11 @@
     {if $USER_ID === $uid}
       <h2><a href="#">{$lang.user.title.password}</a></h2>
         <div>
-        <p {if isset($error_password_old)}class="error" title="{$error_password_old}"{/if}>
+        <p {if isset($error.password_old)}class="error" title="{$error.password_old}"{/if}>
           <label for='input-password_old'>{$lang.user.label.password.old}</label>
           <input name='password_old' id="input-password_old" type='password' />
         </p>
-        <p {if isset($error_password_new)}class="error" title="{$error_password_new}"{/if}>
+        <p {if isset($error.password_new)}class="error" title="{$error.password_new}"{/if}>
           <label for='input-password_new'>{$lang.user.label.password.new}</label>
           <input name='password_new' id="input-password_new" type='password' />
         </p>
@@ -69,12 +69,12 @@
   <form enctype='multipart/form-data' method='post' action='/user/{$uid}/update'>
     <h2><a href="#">{$lang.user.title.image}</a></h2>
     <div>
-      <p {if isset($error_image)}class="error" title="{$error_image}"{/if}>
+      <p {if isset($error.image)}class="error" title="{$error.image}"{/if}>
         <label for='input-image'>{$lang.user.label.image.choose}</label>
         <input type='file' name='image' id="input-image" accept="image/jpg,image/gif,image/png" />
         <span class="description">{$lang.user.info.image}</span>
       </p>
-      <p {if isset($error_terms)}class="error" title="{$error_terms}"{/if}>
+      <p {if isset($error.terms)}class="error" title="{$error.terms}"{/if}>
         <label for='input-terms'>{$lang.user.label.image.terms}</label>
         <input type='checkbox' name='terms' id="input-terms" value='1' />
       </p>

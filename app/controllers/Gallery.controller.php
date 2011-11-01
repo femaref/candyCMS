@@ -109,10 +109,8 @@ class Gallery extends Main {
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('galleries', '_form_album');
     $this->oSmarty->template_dir = $sTemplateDir;
@@ -214,10 +212,8 @@ class Gallery extends Main {
       $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
     }
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('galleries', '_form_file');
     $this->oSmarty->template_dir = $sTemplateDir;

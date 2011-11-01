@@ -164,10 +164,8 @@ class Blog extends Main {
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError)) {
-      foreach ($this->_aError as $sField => $sMessage)
-        $this->oSmarty->assign('error_' . $sField, $sMessage);
-    }
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('blogs', '_form');
     $this->oSmarty->template_dir = $sTemplateDir;
@@ -186,6 +184,7 @@ class Blog extends Main {
    */
   protected function _create() {
     $this->_setError('title');
+    $this->_setError('content');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();

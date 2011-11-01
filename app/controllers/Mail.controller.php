@@ -55,6 +55,17 @@ class Mail extends Main {
 	 */
 	protected $_sRecaptchaError = '';
 
+  /**
+   * Redirect to admin if no ID is given.
+   *
+   * @access public
+   * @override app/controllers/Main.controller.php
+   *
+   */
+  public function __init() {
+    if (empty($this->_iId))
+      Helper::redirectTo('/mail/1');
+  }
 
 	/**
 	 * Create a mail.
@@ -71,7 +82,7 @@ class Mail extends Main {
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if (USER_RIGHT === 0 && RECAPTCHA_ENABLED === true && AJAX_REQUEST === false)
+			if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
 				return $this->_checkCaptcha();
 			else
 				return $this->_standardMail(false);
@@ -117,10 +128,8 @@ class Mail extends Main {
 		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
 			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-		if (!empty($this->_aError)) {
-			foreach ($this->_aError as $sField => $sMessage)
-				$this->oSmarty->assign('error_' . $sField, $sMessage);
-		}
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
 
     # Create page title and description
     $this->_setDescription($this->oI18n->get('global.contact'));
@@ -155,7 +164,7 @@ class Mail extends Main {
       }
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/');
+      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/mail/' . $this->_iId);
   }
 
 	/**

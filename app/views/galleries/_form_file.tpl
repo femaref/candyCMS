@@ -1,7 +1,7 @@
 <form action='/gallery/{$_request_id_}/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
   <h1>{if $smarty.get.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}</h1>
   {if $smarty.get.action == 'createfile'}
-    <p {if isset($error_file)}class="error" title="{$error_file}"{/if}>
+    <p {if isset($error.file)}class="error" title="{$error.file}"{/if}>
       <label for='input-file'>{$lang.gallery.files.label.choose}<span title="{$lang.global.required}">*</span></label>
       <input type='file' name='file[]' id="input-file" multiple required />
     </p>

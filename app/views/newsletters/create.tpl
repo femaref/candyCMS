@@ -1,10 +1,10 @@
 <form method='post'>
   <h1>{$lang.newsletter.title.create}</h1>
-  <p {if isset($error_subject)}class="error" title="{$error_subject}"{/if}>
+  <p {if isset($error.subject)}class="error" title="{$error.subject}"{/if}>
     <label for='input-subject'>{$lang.global.subject}<span title="{$lang.global.required}">*</span></label>
     <input name='subject' value='{$subject}' type='text' id="input-subject" required autofocus />
   </p>
-  <p {if isset($error_content)}class="error" title="{$error_content}"{/if}>
+  <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
     <label for='input-content'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
     <textarea name='content' rows='20' cols='50' class="js-tinymce" id="input-content" required>{$content}</textarea>
     <span class='description'>{$lang.newsletter.info.name}</span>
