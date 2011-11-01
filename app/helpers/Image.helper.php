@@ -1,27 +1,64 @@
 <?php
 
-/*
+/**
+ * Resize images.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- * @todo documentation and refactoring / merge methods
+ * @license MIT
+ * @since 1.0
  */
-
 
 namespace CandyCMS\Helper;
 
 class Image {
-  protected $_sOriginalPath;
-  protected $_sFolder;
+
+  /**
+   * @var array
+   * @access protected
+   */
   protected $_aInfo;
-  protected $_iId;
+
+  /**
+   * @var string
+   * @access protected
+   */
+  protected $_sFolder;
+
+  /**
+   * @var string
+   * @access protected
+   */
+  protected $_sId;
+
+  /**
+   * @var string
+   * @access protected
+   */
   protected $_sImgType;
 
-  public function __construct($iId, $sFolder, $sOriginalPath, $sImgType = 'jpg') {
-    $this->_iId = & $iId;
+  /**
+   * @var string
+   * @access protected
+   */
+  protected $_sOriginalPath;
+
+	/**
+	 * Set up the new image.
+	 *
+	 * @access public
+	 * @param string $sId name of the file.
+   * @param string $sFolder section to upload image into
+   * @param string $sOriginalPath path of the image to clone from
+   * @param string $sImgType type of image
+	 *
+	 */
+  public function __construct($sId, $sFolder, $sOriginalPath, $sImgType = 'jpg') {
+    $this->_sId           = & $sId;
     $this->_sOriginalPath = & $sOriginalPath;
-    $this->_sFolder = & $sFolder;
-    $this->_sImgType = & $sImgType;
-    $this->_aInfo = getimagesize($this->_sOriginalPath);
+    $this->_sFolder       = & $sFolder;
+    $this->_sImgType      = & $sImgType;
+    $this->_aInfo         = getimagesize($this->_sOriginalPath);
 
     if (!$this->_aInfo) {
       $this->_aInfo[0] = 1;
@@ -29,8 +66,60 @@ class Image {
     }
   }
 
+	/**
+   * Create the new image with given params.
+   *
+   * @access private
+   * @param integer $iX width of the new image
+   * @param integer $iY height of the new image
+   * @param string $sFolder section to upload image into
+   * @return string $sPath path of the new image
+   *
+   */
+  private function _createImage($iX, $iY, $sFolder) {
+    $sPath = PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_sId . '.' . $this->_sImgType;
+
+    if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
+      $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
+
+    elseif ($this->_sImgType == 'png')
+      $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
+
+    elseif ($this->_sImgType == 'gif')
+      $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
+
+    $oNewImg = imagecreatetruecolor($iX, $iY);
+    ImageColorAllocate($oNewImg, 255, 255, 255);
+    imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
+
+    if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
+      ImageJPEG($oNewImg, $sPath, 75);
+
+    elseif ($this->_sImgType == 'png') {
+      imagealphablending($oNewImg, false);
+      imagesavealpha($oNewImg, true);
+      ImagePNG($oNewImg, $sPath, 9);
+    }
+    elseif ($this->_sImgType == 'gif')
+      ImageGIF($oNewImg, $sPath);
+
+    imagedestroy($oNewImg);
+
+    return $sPath;
+  }
+
+	/**
+   * Proportional resizing.
+   *
+   * @access public
+   * @param integer $iWidth width of the new image
+   * @param integer $iMaxHeight maximum height of the new image
+   * @param string $sFolder folder of the new image
+   * @return string $sPath path of the new image
+   *
+   */
   public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
-    if(empty($sFolder))
+    if (empty($sFolder))
       $sFolder = $iWidth;
 
     if ($this->_aInfo[1] > $this->_aInfo[0] && !empty($iMaxHeight)) {
@@ -44,39 +133,24 @@ class Image {
       $iNewY = round($this->_aInfo[1] * $iFactor);
     }
 
-    $oNewImg = imagecreatetruecolor($iNewX, $iNewY);
-
-    if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg') {
-      $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
-      imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.jpg', 75);
-    }
-    elseif ($this->_sImgType == 'png') {
-      $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
-      imagealphablending($oNewImg, false);
-      imagesavealpha($oNewImg, true);
-      imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 5);
-    }
-    elseif ($this->_sImgType == 'gif') {
-      $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
-      imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-      ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
-    }
-
-    imagedestroy($oNewImg);
+    return $this->_createImage($iNewX, $iNewY, $sFolder);
   }
 
+	/**
+   * Cut resizing.
+   *
+   * @access public
+   * @param integer $iWidth width and height of the new image
+   * @param string $sFolder folder of the new image
+   * @return string $sPath path of the new image
+   *
+   */
   public function resizeAndCut($iWidth, $sFolder = '') {
-    if(empty($sFolder))
+    if (empty($sFolder))
       $sFolder = $iWidth;
 
-    $iNewX = $iWidth;
-    $iNewY = $iWidth;
-    $iDstX = 0;
-    $iDstY = 0;
-    $iSrcX = 0;
-    $iSrcY = 0;
+    $iNewX = & $iWidth;
+    $iNewY = & $iWidth;
 
     if ($this->_aInfo[1] > $this->_aInfo[0]) { // y bigger than x
       $iSrcY = ($this->_aInfo[1] - $this->_aInfo[0]) / 2;
@@ -89,32 +163,6 @@ class Image {
       $iNewX = round($this->_aInfo[0] * $iFactor);
     }
 
-    if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
-
-    elseif ($this->_sImgType == 'png')
-      $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
-
-    elseif ($this->_sImgType == 'gif')
-      $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
-
-    $oNewImg = imagecreatetruecolor($iWidth, $iWidth);
-    $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
-
-    imagefill($oNewImg, 0, 0, $oBg);
-    imagecopyresampled($oNewImg, $oOldImg, $iDstX, $iDstY, $iSrcX, $iSrcY, $iNewX, $iNewY, $this->_aInfo[0], $this->_aInfo[1]);
-
-    if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.' . $this->_sImgType, 75);
-
-    elseif ($this->_sImgType == 'png') {
-      imagealphablending($oNewImg, false);
-      imagesavealpha($oNewImg, true);
-      ImagePNG($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.png', 9);
-    }
-    elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_iId . '.gif');
-
-    imagedestroy($oNewImg);
+    return $this->_createImage($iNewX, $iNewY, $sFolder);
   }
 }
