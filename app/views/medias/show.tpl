@@ -11,8 +11,8 @@
       {if !$files}
         <tr>
           <td colspan="5">
-            <div class='error' id='js-error' title='{$lang.error.missing.files}'>
-              <p>{$lang.error.missing.files}</p>
+            <div class='error' title='{$lang.error.missing.files}'>
+              <h4>{$lang.error.missing.files}</h4>
             </div>
           </td>
         </tr>

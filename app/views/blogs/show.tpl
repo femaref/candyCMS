@@ -8,14 +8,14 @@
     </p>
   {/if}
   {if !$blog}
-    <div class='error' id='js-error' title='{$lang.global.no_entries}'>
-      <p>{$lang.global.no_entries}</p>
+    <div class='error' title='{$lang.error.missing.entries}'>
+      <h4>{$lang.error.missing.entries}</h4>
     </div>
   {else}
     {foreach $blog as $b}
       {if !$b.id}
-        <div class='error' id='js-error' title='{$lang.error.missing.entry}'>
-          <p>{$lang.global.missing.entry}</p>
+        <div class='error' title='{$lang.error.missing.entry}'>
+          <h4>{$lang.error.missing.entry}</h4>
         </div>
       {else}
         <article class="blogs">
@@ -99,7 +99,10 @@
       {/if}
     {/foreach}
   {/if}
-  {$_blog_footer_}
+  {* Show comments only if we got a entry *}
+  {if $b.id}
+    {$_blog_footer_}
+  {/if}
   <script src='%PATH_PUBLIC%/js/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script src='%PATH_PUBLIC%/js/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">

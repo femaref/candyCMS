@@ -48,9 +48,11 @@ class Content extends Main {
       return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
     }
     else {
-      $this->_setDescription($this->_aData[$this->_iId]['teaser']);
-      $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
-      $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
+      if(!empty($this->_aData)) {
+        $this->_setDescription($this->_aData[$this->_iId]['teaser']);
+        $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
+        $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
+      }
 
       $sTemplateDir = Helper::getTemplateDir('contents', 'show');
       $this->oSmarty->template_dir = $sTemplateDir;

@@ -20,6 +20,18 @@ class Image {
   protected $_aInfo;
 
   /**
+   * @var integer
+   * @access protected
+   */
+  protected $_iImageWidth;
+
+  /**
+   * @var integer
+   * @access protected
+   */
+  protected $_iImageHeight;
+
+  /**
    * @var string
    * @access protected
    */
@@ -43,6 +55,12 @@ class Image {
    */
   protected $_sOriginalPath;
 
+  /**
+   * @var string
+   * @access protected
+   */
+  protected $_sUploadDir;
+
 	/**
 	 * Set up the new image.
 	 *
@@ -53,10 +71,10 @@ class Image {
    * @param string $sImgType type of image
 	 *
 	 */
-  public function __construct($sId, $sFolder, $sOriginalPath, $sImgType = 'jpg') {
+  public function __construct($sId, $sUploadDir, $sOriginalPath, $sImgType = 'jpg') {
     $this->_sId           = & $sId;
     $this->_sOriginalPath = & $sOriginalPath;
-    $this->_sFolder       = & $sFolder;
+    $this->_sUploadDir    = & $sUploadDir;
     $this->_sImgType      = & $sImgType;
     $this->_aInfo         = getimagesize($this->_sOriginalPath);
 
@@ -70,14 +88,13 @@ class Image {
    * Create the new image with given params.
    *
    * @access private
-   * @param integer $iX width of the new image
-   * @param integer $iY height of the new image
+   * @param array $aParams width and height params
    * @param string $sFolder section to upload image into
    * @return string $sPath path of the new image
    *
    */
-  private function _createImage($iX, $iY, $sFolder) {
-    $sPath = PATH_UPLOAD . '/' . $this->_sFolder . '/' . $sFolder . '/' . $this->_sId . '.' . $this->_sImgType;
+  private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
+    $sPath = PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType;
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
@@ -88,9 +105,10 @@ class Image {
     elseif ($this->_sImgType == 'gif')
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
 
-    $oNewImg = imagecreatetruecolor($iX, $iY);
-    ImageColorAllocate($oNewImg, 255, 255, 255);
-    imagecopyresampled($oNewImg, $oOldImg, 0, 0, 0, 0, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
+    $oNewImg = imagecreatetruecolor($this->_iImageWidth, $this->_iImageHeight);
+
+    imagefill($oNewImg, 0, 0);
+    imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       ImageJPEG($oNewImg, $sPath, 75);
@@ -119,50 +137,58 @@ class Image {
    *
    */
   public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
-    if (empty($sFolder))
-      $sFolder = $iWidth;
-
+    # Y bigger than X and max height
     if ($this->_aInfo[1] > $this->_aInfo[0] && !empty($iMaxHeight)) {
       $iFactor = $iMaxHeight / $this->_aInfo[1];
-      $iNewY = $iMaxHeight;
-      $iNewX = round($this->_aInfo[0] * $iFactor);
+      $iX = round($this->_aInfo[0] * $iFactor);
+      $iY = $iMaxHeight;
     }
     else {
       $iFactor = $iWidth / $this->_aInfo[0];
-      $iNewX = $iWidth;
-      $iNewY = round($this->_aInfo[1] * $iFactor);
+      $iX = $iWidth;
+      $iY = round($this->_aInfo[1] * $iFactor);
     }
 
-    return $this->_createImage($iNewX, $iNewY, $sFolder);
+    $this->_sFolder = empty($sFolder) ? $iWidth : $sFolder;
+    $this->_iImageWidth   = $iX;
+    $this->_iImageHeight  = $iY;
+
+    return $this->_createImage($iX, $iY, 0, 0);
   }
 
 	/**
    * Cut resizing.
    *
    * @access public
-   * @param integer $iWidth width and height of the new image
+   * @param integer $iDim width and height of the new image
    * @param string $sFolder folder of the new image
    * @return string $sPath path of the new image
    *
    */
-  public function resizeAndCut($iWidth, $sFolder = '') {
-    if (empty($sFolder))
-      $sFolder = $iWidth;
+  public function resizeAndCut($iDim, $sFolder = '') {
+    $iX = $iDim;
+    $iY = $iDim;
+    $iSrcX = 0;
+    $iSrcY = 0;
 
-    $iNewX = & $iWidth;
-    $iNewY = & $iWidth;
-
-    if ($this->_aInfo[1] > $this->_aInfo[0]) { // y bigger than x
+    # Y bigger than X
+    if ($this->_aInfo[1] > $this->_aInfo[0]) {
       $iSrcY = ($this->_aInfo[1] - $this->_aInfo[0]) / 2;
-      $iFactor = $iNewX / $this->_aInfo[0];
-      $iNewY = round($this->_aInfo[1] * $iFactor);
+      $iFactor = $iDim / $this->_aInfo[0];
+      $iY = round($this->_aInfo[1] * $iFactor);
     }
+
+    # X bigger than Y
     else {
       $iSrcX = ($this->_aInfo[0] - $this->_aInfo[1]) / 2;
-      $iFactor = $iNewY / $this->_aInfo[1];
-      $iNewX = round($this->_aInfo[0] * $iFactor);
+      $iFactor = $iDim / $this->_aInfo[1];
+      $iX = round($this->_aInfo[0] * $iFactor);
     }
 
-    return $this->_createImage($iNewX, $iNewY, $sFolder);
+    $this->_sFolder = empty($sFolder) ? $iDim : $sFolder;
+    $this->_iImageWidth   = $iDim;
+    $this->_iImageHeight  = $iDim;
+
+    return $this->_createImage($iX, $iY, $iSrcX, $iSrcY);
   }
 }

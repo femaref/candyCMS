@@ -167,8 +167,6 @@ error:
       title: Bitte gib einen Titel an!
       password: Bitte gib ein Passwort an!
       subject: Bitte gib einen Betreff ein!
-  gallery:
-    no_files: Es wurden noch keine Bilder hochgeladen!
   mail:
     create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
     format: Dies ist keine gültige E-Mail-Adresse!

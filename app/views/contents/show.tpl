@@ -1,7 +1,7 @@
 <section id="content">
   {if !$content}
-    <div class='error' id='js-error' title='{$lang.error.missing.entry}'>
-      <p>{$lang.error.missing.entry}</p>
+    <div class='error' title='{$lang.error.missing.entry}'>
+      <h4>{$lang.error.missing.entry}</h4>
     </div>
   {else}
     {foreach $content as $c}

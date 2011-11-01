@@ -9,8 +9,8 @@
   {/if}
   <h1>{$lang.global.downloads}</h1>
   {if !$download}
-    <div class='error' id='js-error' title='{$lang.error.missing.entries}'>
-      <p>{$lang.error.missing.entries}</p>
+    <div class='error' title='{$lang.error.missing.entries}'>
+      <h4>{$lang.error.missing.entries}</h4>
     </div>
   {else}
     <table>

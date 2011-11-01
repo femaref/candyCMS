@@ -131,7 +131,7 @@ class Upload {
 			$oImage->resizeAndCut(THUMB_DEFAULT_X);
 
 		elseif (isset($this->_aRequest['cut']) && 'r' == $this->_aRequest['cut'])
-			$oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_X);
+			$oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y);
 
 		else
 			throw new Exception('No resizing information!');

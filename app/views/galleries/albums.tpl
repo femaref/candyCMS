@@ -7,7 +7,7 @@
   </p>
 {/if}
 {if !$albums}
-  <div class='error' id='js-error' title='{$lang.error.missing.entries}'>
+  <div class='error' title='{$lang.error.missing.entries}'>
     <p>{$lang.error.missing.entries}</p>
   </div>
 {else}
