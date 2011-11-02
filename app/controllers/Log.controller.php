@@ -15,7 +15,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Log as Model;
 
 require_once 'app/models/Log.model.php';
-require_once 'app/helpers/Page.helper.php';
 
 class Log extends Main {
 

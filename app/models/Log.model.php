@@ -16,6 +16,8 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Page as Page;
 use PDO;
 
+require_once 'app/helpers/Page.helper.php';
+
 class Log extends Main {
 
   /**

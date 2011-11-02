@@ -15,8 +15,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Blog as Model;
 
 require_once 'app/models/Blog.model.php';
-require_once 'app/helpers/Page.helper.php';
-require_once 'app/controllers/Comment.controller.php';
 
 class Blog extends Main {
 
@@ -45,6 +43,7 @@ class Blog extends Main {
    *
    */
   public function show() {
+    $this->__autoload('Comment');
     $this->_aData = $this->_oModel->getData($this->_iId);
 
     # Load comments

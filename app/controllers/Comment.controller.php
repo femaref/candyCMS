@@ -15,7 +15,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Comment as Model;
 
 require_once 'app/models/Comment.model.php';
-require_once 'app/helpers/Page.helper.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
 class Comment extends Main {

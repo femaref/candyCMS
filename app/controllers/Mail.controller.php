@@ -16,7 +16,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\User as Model;
 
 require_once 'app/models/Blog.model.php';
-require_once 'app/controllers/User.controller.php';
 require_once 'lib/recaptcha/recaptchalib.php';
 
 class Mail extends Main {

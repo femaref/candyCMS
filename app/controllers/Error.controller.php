@@ -11,9 +11,8 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Controllers\Search as Search;
 use CandyCMS\Helper\Helper as Helper;
-
-require_once 'app/controllers/Search.controller.php';
 
 class Error extends Main {
 
@@ -26,6 +25,8 @@ class Error extends Main {
 	 */
 	public function show404() {
 		if (isset($this->_aRequest['seo_title'])) {
+      $this->__autoload('Search');
+
 			$oSearch = new Search($this->_aRequest, $this->_aSession);
 			$oSearch->__init();
 			$this->oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));

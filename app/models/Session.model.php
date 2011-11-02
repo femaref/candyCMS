@@ -7,7 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * @todo documentation and refactoring
  */
 
 namespace CandyCMS\Model;
@@ -20,10 +19,12 @@ use PDO;
 class Session extends Main {
 
   /**
-   * Fetch all user data of active session.
+   * Fetch all user data of active session
    *
    * @static
+   * @access public
    * @return array $aResult user data
+   * @see app/controllers/Index.controller.php
    */
   public static function getSessionData() {
     try {
@@ -49,13 +50,14 @@ class Session extends Main {
   }
 
   /**
-   * Override session for current user.
+   * Update session for current user.
    *
    * @static
+   * @access public
    * @param integer $iId ID of user
    * @return boolean $bResult status of query
    */
-  public static function setActiveSession($iId) {
+  public static function update($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -83,7 +85,14 @@ class Session extends Main {
     }
   }
 
-  # Create session
+  /**
+   * Create a user session.
+   *
+   * @access public
+   * @return boolean status of query
+   * @todo improve return
+   *
+   */
   public function create() {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -114,12 +123,19 @@ class Session extends Main {
 
     # User did verify his and has id, so log in!
     elseif (isset($aResult['id']) && !empty($aResult['id']))
-      return Session::setActiveSession($aResult['id']);
+      return Session::update($aResult['id']);
 
     else
       return false;
   }
 
+  /**
+   * Resend password of verification code.
+   *
+   * @access public
+   * @param string $sNewPasswordSecure
+   * @return boolean status of query
+   */
   public function createResendActions($sNewPasswordSecure = '') {
     require_once 'app/controllers/Mail.controller.php';
     $bResult = false;
@@ -172,10 +188,13 @@ class Session extends Main {
     }
   }
 
-  public function getData() {
-    return $this->_aData;
-  }
-
+  /**
+   * Destroy a user session and logout.
+   *
+   * @access public
+   * @return boolean status of query
+   *
+   */
   public function destroy() {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE

@@ -16,6 +16,8 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Page as Page;
 use PDO;
 
+require_once 'app/controllers/Session.controller.php';
+
 class User extends Main {
 
   /**
@@ -347,7 +349,7 @@ class User extends Main {
                                           id = :id");
 
         $oQuery->bindParam('id', $aResult['id'], PDO::PARAM_INT);
-        Session::setActiveSession($aResult['id']);
+        Session::update($aResult['id']);
         return $oQuery->execute();
       }
       catch (AdvancedException $e) {

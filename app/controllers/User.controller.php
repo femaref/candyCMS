@@ -15,10 +15,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\User as Model;
 
-require_once 'app/controllers/Session.controller.php';
-require_once 'app/controllers/Mail.controller.php';
 require_once 'app/models/User.model.php';
-require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
 class User extends Main {
@@ -317,6 +314,8 @@ class User extends Main {
 			return $this->_showCreateUserTemplate();
 
 		elseif ($this->_oModel->create($iVerificationCode) === true) {
+      $this->__autoload('Mail');
+
 			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 

@@ -15,9 +15,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Gallery as Model;
 
 require_once 'app/models/Gallery.model.php';
-require_once 'app/helpers/Page.helper.php';
-require_once 'app/helpers/Upload.helper.php';
-require_once 'app/helpers/Image.helper.php';
 
 class Gallery extends Main {
 

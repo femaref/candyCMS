@@ -15,7 +15,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Newsletter as Model;
 
 require_once 'app/models/Newsletter.model.php';
-require_once 'app/controllers/Mail.controller.php';
 
 class Newsletter extends Main {
 
@@ -58,11 +57,11 @@ class Newsletter extends Main {
         return Helper::successMessage($this->oI18n->get('success.destroy'), '/newsletter');
 
       elseif ($sQuery == 'INSERT') {
-        Mail::send(
-                Helper::formatInput($this->_aRequest['email']),
-                $this->oI18n->get('newsletter.mail.subject'),
-                $this->oI18n->get('newsletter.mail.body'),
-                WEBSITE_MAIL_NOREPLY);
+        $this->__autoload('Mail');
+        Mail::send( Helper::formatInput($this->_aRequest['email']),
+                    $this->oI18n->get('newsletter.mail.subject'),
+                    $this->oI18n->get('newsletter.mail.body'),
+                    WEBSITE_MAIL_NOREPLY);
 
         return Helper::successMessage($this->oI18n->get('success.create'), '/newsletter');
       }
@@ -147,6 +146,8 @@ class Newsletter extends Main {
       return $this->_showCreateNewsletterTemplate();
 
     else {
+      $this->__autoload('Mail');
+
       # Deliver newsletter to users
       $aResult = $this->_oModel->getNewsletterRecipients('user');
 

@@ -37,7 +37,7 @@ define('WEBSITE_URL', 'http://phpcms.localhost');
 # Define the ABSOLUTE path of your cdn. If you don't use a cdn,
 # enter your website url. This is relevant for your public folder.
 # EXAMPLE: http://www.google.com
-define('WEBSITE_CDN', 'public');
+define('WEBSITE_CDN', '/public');
 
 # ------------------------------------------------------------------------------
 

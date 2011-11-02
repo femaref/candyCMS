@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ * @todo refactoring and documentation
  */
 
 namespace CandyCMS\Model;
@@ -17,8 +18,21 @@ use CandyCMS\Helper\Page as Page;
 use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
+require_once 'app/helpers/Page.helper.php';
+
 class Gallery extends Main {
+  /**
+   *
+   * @access private
+   * @var array
+   */
   private $_aThumbs;
+
+  /**
+   *
+   * @access private
+   * @var string
+   */
   private $_sFilePath;
 
   /**
@@ -26,6 +40,7 @@ class Gallery extends Main {
    *
    * @access private
    * @param boolean $bUpdate prepare data for update
+   * @param boolean $bAdvancedImageInformation get additional image information like MIME, size etc.
    * @param integer $iLimit blog post limit
    * @return array data
    *
@@ -115,6 +130,12 @@ class Gallery extends Main {
     return $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
   }
 
+  /**
+   * Simply return ID to work with.
+   *
+   * @access public
+   * @return integer $this->_iId ID to handle.
+   */
   public function getId() {
     return $this->_iId;
   }

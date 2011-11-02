@@ -163,6 +163,15 @@ abstract class Main {
     $this->_setSmarty();
 	}
 
+  /**
+   * Dynamically load classes.
+   *
+   * @param string $sClassName name of class to load
+   */
+  public function __autoload($sClassName) {
+    require_once 'app/controllers/' .$sClassName. '.controller.php';
+  }
+
 	/**
 	 * Method to include the model files.
 	 *

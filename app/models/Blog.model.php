@@ -16,8 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Page as Page;
 use PDO;
 
-if(!class_exists('Page'))
-  require_once 'app/helpers/Page.helper.php';
+require_once 'app/helpers/Page.helper.php';
 
 class Blog extends Main {
 
