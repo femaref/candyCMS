@@ -32,7 +32,7 @@
     {/foreach}
   </table>
   {$_pages_}
-  <script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='%PATH_JS%/core/jquery.infiniteScroll.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('table').infinitescroll({

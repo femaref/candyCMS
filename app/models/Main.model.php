@@ -77,18 +77,6 @@ abstract class Main {
     $this->_oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
 
-  public function create() {
-
-  }
-
-  protected function update() {
-
-  }
-
-  public function destroy() {
-
-  }
-
   /**
    * Remove slashes from content for update purposes.
    *

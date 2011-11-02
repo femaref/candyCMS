@@ -21,21 +21,22 @@
     <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
-    <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    {* Compress CSS files *}
+    {if $WEBSITE_COMPRESS_FILES == true}
+      <link href='/min?g=css_header' rel='stylesheet' type='text/css' media='screen, projection'/>
+    {else}
+      <link href='%PATH_CSS%/core/essential.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+      <link href='%PATH_CSS%/core/application.css' rel='stylesheet' type='text/css' media='screen, projection'/>
+    {/if}
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       {* Fallback to local jQuery when no Google access *}
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.2.js' type='text/javascript'%3E%3C/script%3E"));
       {* Load JSON language variables  *}
       var lang = {$_json_language_};
     </script>
     <title>{$_title_}</title>
-    <!--[if IE]>
-      <link href='%PATH_CSS%/ie{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-      <script src='%PATH_PUBLIC%/js/core/ie.html5{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <![endif]-->
   </head>
   <!--[if lt IE 7]><body class="ie6"><![endif]-->
   <!--[if IE 7]><body class="ie7><![endif]-->
@@ -133,7 +134,7 @@
         </ul>
       </section>
     </footer>
-    <script type='text/javascript' src='%PATH_PUBLIC%/js/core/scripts{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/scripts.js'></script>
     {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
       <div id="fb-root"></div>
       <script type="text/javascript">

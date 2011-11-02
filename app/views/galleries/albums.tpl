@@ -64,7 +64,7 @@
     {$_pages_}
   </section>
 {/if}
-<script src='%PATH_PUBLIC%/js/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script src='%PATH_PUBLIC%/core/jquery.lazyload.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".image img").lazyload({ effect : "fadeIn" });

@@ -213,6 +213,7 @@ abstract class Main {
 		$this->oSmarty->assign('USER_RIGHT', USER_RIGHT);
 		$this->oSmarty->assign('USER_SURNAME', USER_SURNAME);
 		$this->oSmarty->assign('VERSION', VERSION);
+		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
 		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);

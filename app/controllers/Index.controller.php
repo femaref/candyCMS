@@ -403,27 +403,31 @@ class Index {
 		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', '/' . PATH_UPLOAD, $sCachedHTML);
 
-		# Check for template CSS files
+		# Check for template files
     # *********************************************
-		$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/css', $sCachedHTML);
-		if (!empty($this->_sTemplate))
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/templates/' . $this->_sTemplate . '/css', $sCachedHTML);
+    if (!empty($this->_sTemplate)) {
+      $sPath = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
 
-		elseif (PATH_TEMPLATE !== '')
-			$sCachedCss = str_replace('%PATH_CSS%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE . '/css', $sCachedHTML);
+      $sCachedCss     = $sPath . '/css';
+      $sCachedImages  = $sPath . '/images';
+      $sCachedJs      = $sPath . '/js';
+    }
+    elseif (PATH_TEMPLATE !== '') {
+      $sPath = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
 
-		$sCachedHTML = & $sCachedCss;
+      $sCachedCss     = $sPath . '/css';
+      $sCachedImages  = $sPath . '/images';
+      $sCachedJs      = $sPath . '/js';
+    }
+    else {
+      $sCachedCss     = WEBSITE_CDN . '/css';
+      $sCachedImages  = WEBSITE_CDN . '/images';
+      $sCachedJs      = WEBSITE_CDN . '/js';
+    }
 
-		# Check for template images
-    # *********************************************
-		$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/images', $sCachedHTML);
-		if (!empty($this->_sTemplate))
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/templates/' . $this->_sTemplate . '/images', $sCachedHTML);
-
-		elseif (PATH_TEMPLATE !== '')
-			$sCachedImages = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE . '/images', $sCachedHTML);
-
-		$sCachedHTML = & $sCachedImages;
+    $sCachedHTML = & str_replace('%PATH_CSS%', WEBSITE_COMPRESS_FILES == true ? '/min?f=' . $sCachedCss : $sCachedCss, $sCachedHTML);
+    $sCachedHTML = & str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
+    $sCachedHTML = & str_replace('%PATH_JS%', WEBSITE_COMPRESS_FILES == true ? '/min?f=' . $sCachedJs : $sCachedJs, $sCachedHTML);
 
 		# Cut spaces to minimize filesize
     # *********************************************

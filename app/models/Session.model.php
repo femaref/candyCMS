@@ -1,8 +1,12 @@
 <?php
 
-/*
+/**
+ * Handle all blog SQL requests.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
  * @todo documentation and refactoring
  */
 
@@ -15,9 +19,13 @@ use PDO;
 
 class Session extends Main {
 
-  # Get userdata; static function and direct return due to uncritical action
+  /**
+   * Fetch all user data of active session.
+   *
+   * @static
+   * @return array $aResult user data
+   */
   public static function getSessionData() {
-
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,6 +48,13 @@ class Session extends Main {
     }
   }
 
+  /**
+   * Override session for current user.
+   *
+   * @static
+   * @param integer $iId ID of user
+   * @return boolean $bResult status of query
+   */
   public static function setActiveSession($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
