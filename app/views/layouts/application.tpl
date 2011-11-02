@@ -23,7 +23,7 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     {* Compress CSS files *}
     {if $WEBSITE_COMPRESS_FILES == true}
-      <link href='/min?g=css_header' rel='stylesheet' type='text/css' media='screen, projection'/>
+      <link href='/min?b=%PATH_PUBLIC%/css/core&f=essential.css,application.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     {else}
       <link href='%PATH_CSS%/core/essential.css' rel='stylesheet' type='text/css' media='screen, projection'/>
       <link href='%PATH_CSS%/core/application.css' rel='stylesheet' type='text/css' media='screen, projection'/>
