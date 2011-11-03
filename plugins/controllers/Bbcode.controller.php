@@ -99,7 +99,8 @@ final class Bbcode {
       $sUrl   = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis',
               '<a href="' . $aMatch[1] . '" class="js-media" title="' . $sUrl . '">' . $aMatch[1] . '</a>',
-              $sStr, 1);
+              $sStr,
+              1);
     }
 
     # [video thumbnail]file[/video]
@@ -107,7 +108,8 @@ final class Bbcode {
       $sUrl = 'http://url2video.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&p=' . $aMatch[1] . '&callback=?';
       $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis',
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[2] . '">' . $aMatch[2] . '</a></div>',
-              $sStr, 1);
+              $sStr,
+              1);
     }
 
     # [video width height thumbnail]file[/video]
@@ -115,7 +117,8 @@ final class Bbcode {
       $sUrl = 'http://url2video.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] . '&p=' . $aMatch[3] . '&callback=?';
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[4] . '" class="js-media">' . $aMatch[4] . '</a></div>',
-              $sStr, 1);
+              $sStr,
+              1);
     }
 
     # replace youtube directly
@@ -124,7 +127,8 @@ final class Bbcode {
       $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = str_replace($aMatch[0],
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
-              $sStr, 1);
+              $sStr,
+              1);
     }
 
     # replace vimeo directly
@@ -132,7 +136,8 @@ final class Bbcode {
       $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = str_replace($aMatch[0],
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
-              $sStr, 1);
+              $sStr,
+              1);
     }
 
     # Quote

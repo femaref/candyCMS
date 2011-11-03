@@ -18,6 +18,7 @@ function compress($sPath, $sType) {
       if (substr($sDir, 0, 1) == '.')
         continue;
 
+      chmod($oPathFile, '0755');
 
       $sPathFile = $sPath . '/' . $sDir;
       $oPathFile = opendir($sPathFile);
@@ -32,6 +33,7 @@ function compress($sPath, $sType) {
 
         if (file_exists($sFileUrlMin))
           unlink($sFileUrlMin);
+
 
         $sCmd = 'java -jar ' . __DIR__ . '/build/yuicompressor-2.4.6.jar --type ' . $sType . ' --charset UTF-8 ' . $sFileUrl . ' -o ' . $sFileUrlMin;
         exec($sCmd);
