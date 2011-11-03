@@ -425,9 +425,9 @@ class Index {
       $sCachedJs      = WEBSITE_CDN . '/js';
     }
 
-    $sCachedHTML = & str_replace('%PATH_CSS%', WEBSITE_COMPRESS_FILES == true ? '/min?f=' . $sCachedCss : $sCachedCss, $sCachedHTML);
+    $sCachedHTML = & str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
     $sCachedHTML = & str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
-    $sCachedHTML = & str_replace('%PATH_JS%', WEBSITE_COMPRESS_FILES == true ? '/min?f=' . $sCachedJs : $sCachedJs, $sCachedHTML);
+    $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
 		# Cut spaces to minimize filesize
     # *********************************************
