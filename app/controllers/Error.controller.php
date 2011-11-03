@@ -11,7 +11,7 @@
 
 namespace CandyCMS\Controller;
 
-use CandyCMS\Controllers\Search as Search;
+use CandyCMS\Controller\Search as Search;
 use CandyCMS\Helper\Helper as Helper;
 
 class Error extends Main {

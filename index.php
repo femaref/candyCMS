@@ -102,7 +102,7 @@ if (is_dir('install') && WEBSITE_DEV == false)
 
 # Do we have a mobile device?
 # *********************************************
-$sUserAgent = $_SERVER['HTTP_USER_AGENT'];
+$sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
 $bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
               preg_match('/Symb/i', $sUserAgent) ||
               preg_match('/Windows CE/i', $sUserAgent) ||
@@ -128,5 +128,7 @@ define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false
 
 # Print out HTML
 echo $oIndex->show();
+
+unset($_SESSION)
 
 ?>

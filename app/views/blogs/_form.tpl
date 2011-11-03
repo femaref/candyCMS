@@ -37,7 +37,7 @@
   <p class="center">
     <input type='hidden' value='{$author_id}' name='author_id' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-    <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.global.update.update}{/if}" />
+    <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     {if $smarty.get.action == 'update'}
       <input type='button' value='{$lang.blog.title.destroy}' onclick="candy.system.confirmDestroy('/blog/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />

@@ -21,7 +21,7 @@
     <textarea name='content' title='{$lang.global.content}' class="js-tinymce" id="input-content">{$content}</textarea>
   </p>
   <p class="center">
-    <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.content.title.create}{else}{$lang.global.update.update}{/if}" />
+    <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />

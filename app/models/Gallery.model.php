@@ -19,6 +19,7 @@ use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
 require_once 'app/helpers/Page.helper.php';
+require_once 'app/helpers/Upload.helper.php';
 
 class Gallery extends Main {
   /**

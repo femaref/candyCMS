@@ -106,8 +106,9 @@ class Image {
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
 
     $oNewImg = imagecreatetruecolor($this->_iImageWidth, $this->_iImageHeight);
+    $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
 
-    imagefill($oNewImg, 0, 0);
+    imagefill($oNewImg, 0, 0, $oBg);
     imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')

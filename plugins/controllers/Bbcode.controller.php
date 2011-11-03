@@ -121,25 +121,6 @@ final class Bbcode {
               1);
     }
 
-    # replace youtube directly
-    # TODO / @todo: Fix </p> bug
-    while (preg_match('/http:\/\/(www\.)?(youtube\.com\/watch\?v\=|embed|youtu\.be\/)(.*)/', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
-      $sStr = str_replace($aMatch[0],
-              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
-              $sStr,
-              1);
-    }
-
-    # replace vimeo directly
-    while (preg_match('/http:\/\/(www\.)?vimeo\.com\/(\d+).*/', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[0] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
-      $sStr = str_replace($aMatch[0],
-              '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[0] . '">' . $aMatch[0] . '</a></div>',
-              $sStr,
-              1);
-    }
-
     # Quote
     while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
     preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {

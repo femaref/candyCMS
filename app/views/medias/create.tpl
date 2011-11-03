@@ -18,6 +18,6 @@
 <script type="text/javascript">
   $("input[type='submit']").click(function() {
     $(this).val(lang.loading);
-    $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + lang.loading + "' />");
+    $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + lang.loading + "' widht='32' height='32 />");
   });
 </script>
