@@ -12,34 +12,39 @@
 function compress($sPath, $sType) {
   $sHtml = '';
 
-  $oPathDir = opendir($sPath);
-  while ($sDir = readdir($oPathDir)) {
-    if (substr($sDir, 0, 1) == '.')
-      continue;
-
-
-    $sPathFile = $sPath . '/' . $sDir;
-    $oPathFile = opendir($sPathFile);
-    $sHtml .= '<h1>' . $sPathFile . '</h1>';
-
-    while ($sFile = readdir($oPathFile)) {
-      if (substr($sFile, 0, 1) == '.' || preg_match('/min/', $sFile))
+  if (is_dir($sPath)) {
+    $oPathDir = opendir($sPath);
+    while ($sDir = readdir($oPathDir)) {
+      if (substr($sDir, 0, 1) == '.')
         continue;
 
-      $sFileUrl = $sPathFile . '/' . $sFile;
-      $sFileUrlMin = $sPathFile . '/' . substr($sFile, 0, strlen($sFile) - (strlen($sType) + 1)) . '.min.' . $sType;
 
-      $sCmd = 'java -jar ' . __DIR__ . '/build/yuicompressor-2.4.6.jar --type ' . $sType . ' --charset UTF-8 ' . $sFileUrl . ' -o ' . $sFileUrlMin;
-      #exec($sCmd);
-      $sHtml .= $sCmd . '<br />';
+      $sPathFile = $sPath . '/' . $sDir;
+      $oPathFile = opendir($sPathFile);
+      $sHtml .= '<h1>' . $sPathFile . '</h1>';
+
+      while ($sFile = readdir($oPathFile)) {
+        if (substr($sFile, 0, 1) == '.' || preg_match('/min/', $sFile))
+          continue;
+
+        $sFileUrl = $sPathFile . '/' . $sFile;
+        $sFileUrlMin = $sPathFile . '/' . substr($sFile, 0, strlen($sFile) - (strlen($sType) + 1)) . '.min.' . $sType;
+
+        if (file_exists($sFileUrlMin))
+          unlink($sFileUrlMin);
+
+        $sCmd = 'java -jar ' . __DIR__ . '/build/yuicompressor-2.4.6.jar --type ' . $sType . ' --charset UTF-8 ' . $sFileUrl . ' -o ' . $sFileUrlMin;
+        exec($sCmd);
+        $sHtml .= $sCmd . '<br />';
+      }
+
+      closedir($oPathFile);
     }
 
-    closedir($oPathFile);
+    closedir($oPathDir);
+
+    echo $sHtml;
   }
-
-  closedir($oPathDir);
-
-  echo $sHtml;
 }
 
 # Standard paths
