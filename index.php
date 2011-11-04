@@ -100,6 +100,11 @@ $oIndex->setTemplate();
 if (is_dir('install') && WEBSITE_DEV == false)
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
 
+# Also disable tools to avoid system crashes.
+# *********************************************
+if (is_dir('tools') && WEBSITE_DEV == false)
+  exit('Please delete the tools folder!');
+
 # Do we have a mobile device?
 # *********************************************
 $sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
