@@ -9,8 +9,8 @@
       {$lang.global.teaser}
     </label>
     <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.blog.info.teaser}'
-           title='{$lang.blog.info.teaser}' id="input-teaser" onkeyup="$('#js-chars').html(160 - $(this).val().length)" />
-    <span id="js-chars">160</span>
+           title='{$lang.blog.info.teaser}' id="input-teaser" onkeyup="$('#js-count_chars').html(160 - $(this).val().length)" />
+    <span id="js-count_chars">160</span>
   </p>
   <p>
     <label for='input-tags'>{$lang.global.tags.tags}</label>
