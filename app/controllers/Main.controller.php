@@ -213,6 +213,7 @@ abstract class Main {
 		$this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
 		$this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
 		$this->oSmarty->assign('MOBILE', MOBILE);
+		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
 		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
 		$this->oSmarty->assign('USER_EMAIL', USER_EMAIL);
 		$this->oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);

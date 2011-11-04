@@ -23,11 +23,11 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       {* Fallback to local jQuery when no Google access *}
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.7{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
       {* Load JSON language variables  *}
       var lang = {$_json_language_};
     </script>
