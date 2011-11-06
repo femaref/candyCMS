@@ -101,7 +101,32 @@ class Section extends Main {
 
         break;
 
-      case 'comment':
+      case 'calendar':
+
+				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
+					parent::_setContent($this->_oObject->create('create_calendar'));
+					parent::_setDescription($this->oI18n->get('calendar.title.create'));
+					parent::_setTitle($this->oI18n->get('calendar.title.create'));
+				}
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
+					parent::_setContent($this->_oObject->update('update_calendar'));
+					parent::_setDescription($this->oI18n->get('calendar.title.update'));
+					parent::_setTitle($this->oI18n->get('calendar.title.update'));
+				}
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
+					parent::_setContent($this->_oObject->destroy());
+					parent::_setDescription($this->oI18n->get('global.calendar.destroy'));
+					parent::_setTitle($this->oI18n->get('global.calendar.destroy'));
+				}
+				else {
+					parent::_setContent($this->_oObject->show());
+					parent::_setDescription($this->oI18n->get('global.calendar'));
+					parent::_setTitle($this->oI18n->get('global.calendar'));
+				}
+
+				break;
+
+			case 'comment':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
           parent::_setContent($this->_oObject->destroy());
@@ -326,12 +351,11 @@ class Section extends Main {
         break;
 
       case 'static':
+        $sTpl = isset($this->_aRequest['subsection']) ?
+                (string) $this->_aRequest['subsection'] :
+                die($this->oI18n->get('error.missing.template'));
 
-        $sTpl = isset($this->_aRequest['template']) ?
-                (string) $this->_aRequest['template'] :
-                $this->oI18n->get('error.missing.template');
-
-        parent::_setContent($this->_oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
+        parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
         parent::_setDescription(ucfirst($sTpl));
         parent::_setTitle(ucfirst($sTpl));
 

@@ -89,4 +89,14 @@ class I18n {
       die('No such translation: ' . $mTemp);
     }
   }
+
+	/**
+	 * Unset the language saved in the session.
+	 *
+	 * @access public
+	 *
+	 */
+	public function unsetLanguage() {
+		unset($_SESSION['lang']);
+	}
 }

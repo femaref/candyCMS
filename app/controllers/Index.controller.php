@@ -324,6 +324,7 @@ class Index {
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						strtolower($this->_aRequest['section']) == 'blog' ||
+						strtolower($this->_aRequest['section']) == 'calendar' ||
 						strtolower($this->_aRequest['section']) == 'comment' ||
 						strtolower($this->_aRequest['section']) == 'content' ||
 						strtolower($this->_aRequest['section']) == 'download' ||
@@ -438,6 +439,8 @@ class Index {
     # *********************************************
 		if (extension_loaded('zlib'))
 			@ob_start('ob_gzhandler');
+
+		$oSection->oI18n->unsetLanguage();
 
 		return $sCachedHTML;
 	}

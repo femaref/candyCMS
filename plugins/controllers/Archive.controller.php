@@ -10,6 +10,7 @@
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Blog as Model;
 use Smarty;
 
@@ -22,9 +23,14 @@ final class Archive {
     $aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
     foreach ($aData as $aRow) {
-      $m = strftime('%B %Y', $aRow['date_raw']);
-      $id = $aRow['id'];
-      $aMonth[$m][$id] = $aRow;
+			# Date format the month
+			$sMonth = strftime('%m', $aRow['date_raw']);
+			$sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
+      $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
+
+			# Prepare array
+			$iId = $aRow['id'];
+      $aMonth[$sMonth][$iId] = $aRow;
     }
 
     $oSmarty = new Smarty();
