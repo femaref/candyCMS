@@ -21,17 +21,17 @@ require_once 'app/helpers/Upload.helper.php';
 
 class Calendar extends Main {
 
-  /**
-   * Set calendar data.
-   *
-   * @access private
-   * @param boolean $bUpdate prepare data for update
-   * @return array data
-   *
-   */
-  private function _setData($bUpdate) {
-    if (empty($this->_iId)) {
-      try {
+	/**
+	 * Set calendar data.
+	 *
+	 * @access private
+	 * @param boolean $bUpdate prepare data for update
+	 * @return array data
+	 *
+	 */
+	private function _setData($bUpdate) {
+		if (empty($this->_iId)) {
+			try {
 				$oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
 																					MONTH(c.start_date) AS start_month,
@@ -61,68 +61,68 @@ class Calendar extends Main {
 			}
 
 			foreach ($aResult as $aRow) {
-				$iId		= $aRow['id'];
+				$iId = $aRow['id'];
 				$sMonth = I18n::get('global.months.' . $aRow['start_month']);
-				$sYear	= $aRow['start_year'];
-				$sDate	= $sMonth . $sYear;
+				$sYear = $aRow['start_year'];
+				$sDate = $sMonth . $sYear;
 
 				$this->_aData[$sDate]['month']	= $sMonth;
 				$this->_aData[$sDate]['year']		= $sYear;
 
 				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, 'calendar');
-				$this->_aData[$sDate]['dates'][$iId]['start_date']	= Helper::formatTimestamp($aRow['start_date'], 1);
+				$this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
-				if($aRow['end_date'] > 0)
+				if ($aRow['end_date'] > 0)
 					$this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
 			}
-    }
-    else {
-      try {
-        $oQuery = $this->_oDb->prepare("SELECT
+		}
+		else {
+			try {
+				$oQuery = $this->_oDb->prepare("SELECT
                                           *
                                         FROM
                                           " . SQL_PREFIX . "calendar
                                         WHERE
                                           id = :id");
 
-        $oQuery->bindParam('id', $this->_iId);
-        $oQuery->execute();
-        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+				$oQuery->bindParam('id', $this->_iId);
+				$oQuery->execute();
+				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
+			}
+			catch (AdvancedException $e) {
+				$this->_oDb->rollBack();
+			}
 
-      $this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
-    }
+			$this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
+		}
 
-    return $this->_aData;
+		return $this->_aData;
 	}
 
   /**
-   * Get calendar data.
-   *
-   * @access public
-   * @param integer $iId ID to get data from
-   * @param boolean $bUpdate prepare data for update
-   * @return array data
-   *
-   */
-  public function getData($iId = '', $bUpdate = false) {
-    if (!empty($iId))
-      $this->_iId = (int) $iId;
+	 * Get calendar data.
+	 *
+	 * @access public
+	 * @param integer $iId ID to get data from
+	 * @param boolean $bUpdate prepare data for update
+	 * @return array data
+	 *
+	 */
+	public function getData($iId = '', $bUpdate = false) {
+		if (!empty($iId))
+			$this->_iId = (int) $iId;
 
-    return $this->_setData($bUpdate);
-  }
+		return $this->_setData($bUpdate);
+	}
 
-  /**
-   * Create new calendar entry.
-   *
-   * @access public
-   * @return boolean status of query
-   *
-   */
-  public function create() {
+	/**
+	 * Create new calendar entry.
+	 *
+	 * @access public
+	 * @return boolean status of query
+	 *
+	 */
+	public function create() {
 		try {
 			$oQuery = $this->_oDb->prepare("INSERT INTO
 																				" . SQL_PREFIX . "calendar
@@ -153,19 +153,19 @@ class Calendar extends Main {
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
 		}
-  }
+	}
 
-  /**
-   * Update a calendar entry.
-   *
-   * @access public
-   * @param integer $iId ID to update
-   * @return boolean status of query
-   *
-   */
-  public function update($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("UPDATE
+	/**
+	 * Update a calendar entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to update
+	 * @return boolean status of query
+	 *
+	 */
+	public function update($iId) {
+		try {
+			$oQuery = $this->_oDb->prepare("UPDATE
                                         " . SQL_PREFIX . "calendar
                                       SET
                                         author_id = :author_id,
@@ -183,35 +183,35 @@ class Calendar extends Main {
 			$oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
 			$oQuery->bindParam('end_date', Helper::formatInput($this->_aRequest['end_date']), PDO::PARAM_STR, PDO::PARAM_INT);
 
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
-  }
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
 
-  /**
-   * Destroy a calendar entry.
-   *
-   * @access public
-   * @param integer $iId ID to destroy
-   * @return boolean status of query
-   *
-   */
-  public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
+	/**
+	 * Destroy a calendar entry.
+	 *
+	 * @access public
+	 * @param integer $iId ID to destroy
+	 * @return boolean status of query
+	 *
+	 */
+	public function destroy($iId) {
+		try {
+			$oQuery = $this->_oDb->prepare("DELETE FROM
                                         " . SQL_PREFIX . "calendar
                                       WHERE
                                         id = :id
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
+			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
   }
 }
