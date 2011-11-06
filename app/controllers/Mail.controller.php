@@ -101,6 +101,8 @@ class Mail extends Main {
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
+		$this->__autoload('User');
+
     # Look for existing E-Mail address
     if( isset($this->_aRequest['email']))
       $sEmail = (string)$this->_aRequest['email'];

@@ -100,7 +100,7 @@
     {/foreach}
   {/if}
   {* Show comments only if we got a entry *}
-  {if $b.id}
+  {if isset($b.id)}
     {$_blog_footer_}
   {/if}
   <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>

@@ -1,13 +1,13 @@
 <?php
 
-require_once '../config/Config.inc.php';
+require_once '../../config/Candy.inc.php';
 
-require_once '../app/helpers/Helper.helper.php';
-require_once '../app/helpers/Image.helper.php';
+require_once '../../app/helpers/Helper.helper.php';
+require_once '../../app/helpers/Image.helper.php';
 
 define('CREATE_IMAGES', false);
 
-class AddonImage extends Image {
+class AddonImage extends \CandyCMS\Helper\Image {
 
 	public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
 		if (empty($sFolder))
@@ -130,7 +130,7 @@ class Convert {
 	function getNews() {
 		$oQuery = $this->oDb->query("TRUNCATE website_blogs");
 		$oQuery = $this->oDb->query("TRUNCATE website_comments");
-		$oQuery = $this->oDb->query("SELECT * FROM news");
+		$oQuery = $this->oDb->query("SELECT * FROM news WHERE id > 1058");
 		$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
 		$iId = 1;
@@ -289,7 +289,7 @@ class Convert {
 	  ( :album_id, :author_id, :file, :extension, :content, :date )");
 
 			$sExtension = strtolower($aRow['file_extension']);
-			$sOldPath = '_pics/' . $aRow['aid'] . '/' . $aRow['file_name'];
+			$sOldPath = '../_convert/_pics/' . $aRow['aid'] . '/' . $aRow['file_name'];
 			$sNewPath = '../' . PATH_UPLOAD . '/gallery/' . $aRow['aid'] . '/original/' . $aRow['file_name'];
 
 			if (CREATE_IMAGES === true) {
@@ -331,4 +331,5 @@ class Convert {
 
 $c = new Convert();
 $c->getNews();
+#$c->getDates();
 ?>

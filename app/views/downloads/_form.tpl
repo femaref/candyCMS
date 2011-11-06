@@ -3,7 +3,7 @@
   {if $smarty.get.action == 'create'}
     <p {if isset($error.file)}class="error" title="{$error.file}"{/if}>
       <label for='input-file'>{$lang.download.label.choose}<span title="{$lang.global.required}">*</span></label>
-      <input type='file' name='file' id="input-file" required />
+      <input type='file' name='file[]' id="input-file" required />
     </p>
   {/if}
   <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>

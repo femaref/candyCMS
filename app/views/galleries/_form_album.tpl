@@ -9,7 +9,7 @@
     <input name='content' value='{$content}' id="input-description" type='text' />
   </p>
   <p class="center">
-    <input type='submit' value='{$lang.gallery.albums.title.create}' />
+    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_gallery' />
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />

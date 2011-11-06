@@ -74,20 +74,22 @@ class I18n {
   public function get($sLanguagePart) {
     $aLang = preg_split("/[\s]*[.][\s]*/", $sLanguagePart);
 
-    $mTemp = $_SESSION['lang'];
-    foreach ($aLang as $sPart) {
-      if (array_key_exists($sPart, $mTemp)) {
-        $mTemp = & $mTemp[$sPart];
-      }
-    }
+		if(isset($_SESSION['lang'])) {
+			$mTemp = $_SESSION['lang'];
+			foreach ($aLang as $sPart) {
+				if (array_key_exists($sPart, $mTemp)) {
+					$mTemp = & $mTemp[$sPart];
+				}
+			}
 
-    try {
-      if (is_string($mTemp))
-        return $mTemp;
-    }
-    catch (AdvancedException $e) {
-      die('No such translation: ' . $mTemp);
-    }
+			try {
+				if (is_string($mTemp))
+					return $mTemp;
+			}
+			catch (AdvancedException $e) {
+				die('No such translation: ' . $mTemp);
+			}
+		}
   }
 
 	/**

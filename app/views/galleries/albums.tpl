@@ -56,7 +56,7 @@
             <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
           </header>
           <p class="error">
-            {$lang.error.gallery.no_files}
+            {$lang.error.missing.files}
           </p>
         {/if}
       </article>
@@ -64,7 +64,7 @@
     {$_pages_}
   </section>
 {/if}
-<script src='%PATH_PUBLIC%/core/jquery.lazyload.js' type='text/javascript'></script>
+<script src='%PATH_JS%/core/jquery.lazyload.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".image img").lazyload({ effect : "fadeIn" });

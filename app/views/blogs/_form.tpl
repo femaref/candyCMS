@@ -9,7 +9,7 @@
       {$lang.global.teaser}
     </label>
     <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.blog.info.teaser}'
-           title='{$lang.blog.info.teaser}' id="input-teaser" onkeyup="$('#js-count_chars').html(160 - $(this).val().length)" />
+           title='{$lang.blog.info.teaser}' id="input-teaser" />
     <span id="js-count_chars">160</span>
   </p>
   <p>
@@ -64,6 +64,11 @@
       entity_encoding : "raw",
       height : "300px",
       content_css : "%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css"
+    });
+
+    $('#js-count_chars').bind('keyup', function() {
+      var iLength = 160 - $(this).val().length;
+      this.html(iLength);
     });
   });
 </script>
