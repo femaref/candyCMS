@@ -22,7 +22,7 @@
           <header>
             <h2>
               {if $b.published == false}
-                {$lang.global.not_published}
+                {$lang.error.published}
               {/if}
               <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
               {if $USER_RIGHT >= 3}

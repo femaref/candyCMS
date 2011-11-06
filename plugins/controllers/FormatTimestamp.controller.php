@@ -16,24 +16,29 @@ require_once 'app/helpers/I18n.helper.php';
 
 final class FormatTimestamp {
 
-  private final function _setDate($iTime, $bDateOnly) {
-    if(date('Ymd', $iTime) == date('Ymd', time())) {
+  private final function _setDate($iTime, $iOptions) {
+		$sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
+
+		if(date('Ymd', $iTime) == date('Ymd', time()))
       $sDay = I18n::get('global.today');
-      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
-    }
-    elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24))) {
+
+    elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24)))
       $sDay = I18n::get('global.yesterday');
-      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
-    }
-    else {
+
+    else
       $sDay = strftime(DEFAULT_DATE_FORMAT, $iTime);
-      $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
-    }
 
     $sTime = str_replace('am', I18n::get('global.time.am'), $sTime);
     $sTime = str_replace('pm', I18n::get('global.time.pm'), $sTime);
 
-    return ($bDateOnly == true) ? $sDay : $sDay.$sTime;
+		if($iOptions == 1)
+			return $sDay;
+
+		elseif($iOptions == 2)
+			return $sTime;
+
+		else
+			return $sDay . ', ' . $sTime;
   }
 
   public final function getDate($iTime, $bDateOnly) {

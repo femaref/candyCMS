@@ -137,7 +137,7 @@ define('DEFAULT_DATE_FORMAT', '%d.%m.%Y');
 # Set the standard time format (with seperator - if wanted)
 # (http://php.net/strftime)
 # DEFAULT: ', %H:%M %p'
-define('DEFAULT_TIME_FORMAT', ', %H:%M %p');
+define('DEFAULT_TIME_FORMAT', '%H:%M %p');
 
 # ------------------------------------------------------------------------------
 

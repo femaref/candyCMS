@@ -44,6 +44,7 @@
         {/if}
         <li><a href='/blog'>{$lang.global.blog}</a></li>
         <li><a href='/gallery'>{$lang.global.gallery}</a></li>
+        <li><a href='/calendar'>{$lang.global.calendar}</a></li>
         <li><a href='/download'>{$lang.global.download}</a></li>
         <li><a href='/search'>{$lang.global.search}</a></li>
         {if $USER_RIGHT == 0}

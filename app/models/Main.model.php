@@ -107,7 +107,8 @@ abstract class Main {
 
     # Format data
     if (isset($aRow['date'])) {
-      $aData['date'] = Helper::formatTimestamp($aRow['date'], true);
+      $aData['time'] = Helper::formatTimestamp($aRow['date'], 2);
+      $aData['date'] = Helper::formatTimestamp($aRow['date'], 1);
       $aData['datetime'] = Helper::formatTimestamp($aRow['date']);
       $aData['date_raw'] = (int) $aRow['date'];
       $aData['date_rss'] = date('D, d M Y H:i:s O', $aRow['date']);

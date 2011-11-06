@@ -192,7 +192,7 @@ class Gallery extends Main {
           'album_id'      => $aRow['album_id'],
           'file'          => $aRow['file'],
           'content'       => Helper::formatOutput($aRow['content']),
-          'date'          => Helper::formatTimestamp($aRow['date'], true),
+          'date'          => Helper::formatTimestamp($aRow['date'], 1),
           'datetime'      => Helper::formatTimestamp($aRow['date']),
           'date_raw'      => $aRow['date'],
           'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),

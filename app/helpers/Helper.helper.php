@@ -326,28 +326,36 @@ class Helper {
 	 *
 	 * If the "FormatTimestamp" plugin is enabled, load plugin and do some advanced work.
 	 *
+	 * Options:
+	 * 0 = default dates
+	 * 1 = date only
+	 * 2 = time only
+	 *
 	 * @static
 	 * @access public
 	 * @param integer $iTime timestamp
-	 * @param boolean $bDateOnly show date only without time
+	 * @param integer $iOptions options see above
 	 * @see plugins/controllers/FormatTimestamp.controller.php
 	 * @return string formatted timestamp
 	 *
 	 */
-  public static function formatTimestamp($iTime, $bDateOnly = false) {
+  public static function formatTimestamp($iTime, $iOptions = 0) {
 		# Set active locale
 		setlocale(LC_ALL, WEBSITE_LOCALE);
 
 		if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
 			$oDate = new FormatTimestamp();
-			return $oDate->getDate($iTime, $bDateOnly);
+			return $oDate->getDate($iTime, $iOptions);
 		}
 		else {
-
-			if ($bDateOnly == true)
+			if ($iOptions == 1)
 				return strftime(DEFAULT_DATE_FORMAT, $iTime);
+
+			elseif($iOptions == 2)
+				return strftime(DEFAULT_TIME_FORMAT, $iTime);
+
 			else
-				return strftime(DEFAULT_DATE_FORMAT . DEFAULT_TIME_FORMAT, $iTime);
+				return strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, $iTime);
 		}
 	}
 

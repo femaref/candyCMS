@@ -112,7 +112,7 @@ class Media extends Main {
           $aImgDim = '';
           $aFiles[] = array(
               'name'  => $sFile,
-              'cdate' => Helper::formatTimestamp(filectime($sPath), true),
+              'cdate' => Helper::formatTimestamp(filectime($sPath), 1),
               'size'  => Helper::getFileSize($sPath),
               'type'  => $sFileType,
               'dim'   => $aImgDim

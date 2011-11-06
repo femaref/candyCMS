@@ -52,7 +52,7 @@ class Search extends Main {
           $this->_aData[$sTable][$iId] = array(
               'id'      => $aRow['id'],
               'title'   => Helper::formatOutput($aRow['title']),
-              'date'    => Helper::formatTimestamp($aRow['date'], true),
+              'date'    => Helper::formatTimestamp($aRow['date'], 1),
               'datetime'=> Helper::formatTimestamp($aRow['date'])
           );
         }
