@@ -22,21 +22,14 @@
         </tr>
         {foreach $c.dates as $d}
           <tr class='{cycle values="row1,row2"}'>
-            <td style="width:20%">
+            <td style="width:30%">
               {$d.start_date}
-              {if isset($d.start_time)}
+              {if $d.end_date > 1}
                 -
-                {$d.start_time}
+                {$d.end_date}
               {/if}
             </td>
-            <td style="width:20%">
-              {$d.end_date}
-              {if isset($d.end_time)}
-                -
-                {$d.end_time}
-              {/if}
-            </td>
-            <td style="width:50%">
+            <td style="width:60%">
               <h3>
                 {$d.title}
               </h3>
@@ -46,7 +39,7 @@
             </td>
             <td style="width:10%">
               {if $USER_RIGHT >= 3}
-                <a href='/calendar/{$c.id}/update'>
+                <a href='/calendar/{$d.id}/update'>
                   <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
                     title='{$lang.global.update.update}' width="16" height="16" />
                 </a>

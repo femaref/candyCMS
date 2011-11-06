@@ -30,7 +30,6 @@ class Calendar extends Main {
    *
    */
   private function _setData($bUpdate) {
-
     if (empty($this->_iId)) {
       try {
 				$oQuery = $this->_oDb->prepare("SELECT
@@ -73,15 +72,8 @@ class Calendar extends Main {
 				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, 'calendar');
 				$this->_aData[$sDate]['dates'][$iId]['start_date']	= Helper::formatTimestamp($aRow['start_date'], 1);
 
-				if(date('His', $aRow['start_date']) !== '000000')
-					$this->_aData[$sDate]['dates'][$iId]['start_time']	= Helper::formatTimestamp($aRow['start_date'], 2);
-
-				if($aRow['end_date'] > 0) {
+				if($aRow['end_date'] > 0)
 					$this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
-
-					if(date('His', $aRow['end_date']) !== '000000')
-						$this->_aData[$sDate]['dates'][$iId]['end_time'] = Helper::formatTimestamp($aRow['end_date'], 2);
-				}
 			}
     }
     else {
@@ -121,5 +113,105 @@ class Calendar extends Main {
       $this->_iId = (int) $iId;
 
     return $this->_setData($bUpdate);
+  }
+
+  /**
+   * Create new calendar entry.
+   *
+   * @access public
+   * @return boolean status of query
+   *
+   */
+  public function create() {
+		try {
+			$oQuery = $this->_oDb->prepare("INSERT INTO
+																				" . SQL_PREFIX . "calendar
+																				( author_id,
+																					title,
+																					content,
+																					date,
+																					start_date,
+																					end_date)
+																			VALUES
+																				( :author_id,
+																					:title,
+																					:content,
+																					:date,
+																					:start_date,
+																					:end_date)");
+
+			$iUserId = USER_ID;
+			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+			$oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
+			$oQuery->bindParam('end_date', Helper::formatInput($this->_aRequest['end_date']), PDO::PARAM_STR, PDO::PARAM_INT);
+
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+  }
+
+  /**
+   * Update a calendar entry.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
+  public function update($iId) {
+    try {
+      $oQuery = $this->_oDb->prepare("UPDATE
+                                        " . SQL_PREFIX . "calendar
+                                      SET
+                                        author_id = :author_id,
+                                        title = :title,
+                                        content = :content,
+                                        start_date = :start_date,
+                                        end_date = :end_date,
+                                      WHERE
+                                        id = :id");
+
+			$iUserId = USER_ID;
+			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+			$oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
+			$oQuery->bindParam('end_date', Helper::formatInput($this->_aRequest['end_date']), PDO::PARAM_STR, PDO::PARAM_INT);
+
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
+  }
+
+  /**
+   * Destroy a calendar entry.
+   *
+   * @access public
+   * @param integer $iId ID to destroy
+   * @return boolean status of query
+   *
+   */
+  public function destroy($iId) {
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+                                        " . SQL_PREFIX . "calendar
+                                      WHERE
+                                        id = :id
+                                      LIMIT
+                                        1");
+
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      return $oQuery->execute();
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
+    }
   }
 }

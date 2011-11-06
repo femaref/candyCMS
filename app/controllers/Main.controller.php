@@ -231,6 +231,7 @@ abstract class Main {
 		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
 
 		# Define system variables
+		$this->oSmarty->assign('_date_', date('Y-m-d'));
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
 		$this->oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
 		$this->oSmarty->assign('_json_language_', $this->oI18n->getJson());

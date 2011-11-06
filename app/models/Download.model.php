@@ -192,7 +192,7 @@ class Download extends Main {
    * Destroy a download and its file.
    *
    * @access public
-   * @param integer $iId ID to update
+   * @param integer $iId ID to destroy
    * @return boolean status of query
    *
    */

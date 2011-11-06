@@ -126,6 +126,9 @@ form input[type="password"],
 form input[type="search"],
 form input[type="name"],
 form input[type="tel"],
+form input[type="date"],
+form input[type="datetime"],
+form input[type="datetime-local"],
 form textarea
 {
   display: table-cell;

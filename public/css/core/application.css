@@ -341,6 +341,9 @@ form input[type="password"],
 form input[type="name"],
 form input[type="search"],
 form input[type="tel"],
+form input[type="date"],
+form input[type="datetime"],
+form input[type="datetime-local"],
 form textarea {
   border: 1px solid #d7d7d7;
 }

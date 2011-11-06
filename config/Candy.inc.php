@@ -44,7 +44,7 @@ define('WEBSITE_CDN', '/public');
 # Use compressed or non-compressed files. Note that compressed files must be
 # updated every time you work on a non-compressed file!
 # DEFAULT: 'true'
-define('WEBSITE_COMPRESS_FILES', true);
+define('WEBSITE_COMPRESS_FILES', false);
 # ------------------------------------------------------------------------------
 
 # Enter the full name of website. This is used for Emails and RSS

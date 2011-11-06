@@ -44,4 +44,102 @@ class Calendar extends Main {
 		$this->oSmarty->template_dir = $sTemplateDir;
 		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
   }
+
+  /**
+   * Build form template to create or update a calendar entry.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
+  protected function _showFormTemplate() {
+    # Update
+    if (!empty($this->_iId))
+      $this->_aData = $this->_oModel->getData($this->_iId, true);
+
+    # Create
+    else {
+      $this->_aData['content'] = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+			$this->_aData['end_date'] = isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
+			$this->_aData['start_date'] = isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
+			$this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+    }
+
+		foreach ($this->_aData as $sColumn => $sData)
+      $this->oSmarty->assign($sColumn, $sData);
+
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
+
+    $sTemplateDir = Helper::getTemplateDir('calendars', '_form');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
+  }
+
+  /**
+   * Create a download entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, activate the model, insert them into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _create() {
+    $this->_setError('title');
+    $this->_setError('start_date');
+
+    if (isset($this->_aError))
+      return $this->_showFormTemplate();
+
+    elseif ($this->_oModel->create() === true) {
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('calendar'));
+      return Helper::successMessage($this->oI18n->get('success.create'), '/calendar');
+    }
+    else
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+  }
+
+  /**
+   * Update a calendar entry.
+   *
+   * Activate model, insert data into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _update() {
+    $this->_setError('title');
+    $this->_setError('start_date');
+
+    if (isset($this->_aError))
+      return $this->_showFormTemplate();
+
+    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return Helper::successMessage($this->oI18n->get('success.update'), '/calendar');
+    }
+    else
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+  }
+
+  /**
+   * Delete a calendar entry.
+   *
+   * Activate model, delete data from database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _destroy() {
+    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      return Helper::successMessage($this->oI18n->get('success.destroy'), '/calendar');
+    }
+    else
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+  }
 }

@@ -27,7 +27,10 @@ global:
   cronjob_exec: Datenbank optimieren, sichern und temporäre Dateien löschen.
   currently: momentan
   cut: Schnitt
-  date: Datum
+  date:
+    date: Datum
+    end: Enddatum
+    start: Startdatum
   deleted_user: Gelöschte Person
   description: Beschreibung
   destroy:
@@ -227,6 +230,12 @@ blog:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen
     update: "'%p' bearbeiten"
+
+calendar:
+  info:
+    date_format: 'Datumsformat: "YYYY-MM-DD"'
+  title:
+    create: Termin hinzufügen
 
 comment:
   info:

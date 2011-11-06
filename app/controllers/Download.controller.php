@@ -85,9 +85,6 @@ class Download extends Main {
 
     # Create
     else {
-      $this->oSmarty->assign('_action_url_', '/download/create');
-      $this->oSmarty->assign('_formdata_', 'create_download');
-
       $this->_aData['category']   = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
       $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

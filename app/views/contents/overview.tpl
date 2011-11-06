@@ -11,7 +11,7 @@
   <table>
     <tr>
       <th>{$lang.global.name}</th>
-      <th>{$lang.global.date}</th>
+      <th>{$lang.global.date.date}</th>
       <th>{$lang.global.author}</th>
       <th></th>
     </tr>
