@@ -177,6 +177,7 @@ class Calendar extends Main {
                                         id = :id");
 
 			$iUserId = USER_ID;
+			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
 			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);

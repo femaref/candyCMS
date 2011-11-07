@@ -22,7 +22,7 @@
   </p>
   <p class="center">
     <input type='hidden' value='formdata' name='{$smarty.get.action}_calendar' />
-    <input type='submit' value='{$lang.calendar.title.create}' />
+    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
     {if $smarty.get.action == 'update'}
       <input type='button' value='{$lang.global.destroy.destroy}' onclick="candy.system.confirmDestroy('/calendar/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
