@@ -235,6 +235,8 @@ calendar:
     date_format: 'Datumsformat: "YYYY-MM-DD"'
   title:
     create: Termin hinzufügen
+    update: Termin bearbeiten
+    destroy: Termin zerstören
 
 comment:
   info:

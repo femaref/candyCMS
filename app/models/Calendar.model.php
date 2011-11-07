@@ -172,7 +172,7 @@ class Calendar extends Main {
                                         title = :title,
                                         content = :content,
                                         start_date = :start_date,
-                                        end_date = :end_date,
+                                        end_date = :end_date
                                       WHERE
                                         id = :id");
 
