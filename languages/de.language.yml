@@ -195,7 +195,6 @@ error:
     flash: Downloade den Flashplayer, um dieses Video anzugucken!
     file: Datei nicht verfügbar.
     files: Es wurden noch keine Dateien hochgeladen.
-    language: Die Sprachdatei konnte nicht geladen werden!
     permission: Du hast keine Berechtigung diese Aktion auszuführen!
     template: Es wurde keine passende Template gefunden!
   passwords: Bitte zwei identische Passwörter angeben!

@@ -4,6 +4,7 @@ nbproject/*
 backup/*
 compile/*
 cache/*
+config/*
 upload/user/*
 upload/temp/*
 upload/media/*

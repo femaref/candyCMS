@@ -1,0 +1,383 @@
+website:
+  title: CandyCMS
+  description: Free, fast and simple PHP CMS.
+  keywords: PHP, CMS, Free CMS, Open Source CMS
+
+global:
+  about: About
+  album: Album
+  author: Author
+  backup: Backup
+  bbcode:
+    help: How to use bbcode.
+  blog: Blog
+  by: by
+  category: Category
+  calendar: Calender
+  close: Close
+  comments: Comments
+  contact: Contact
+  content: Content
+  contents: Contents
+  create:
+    bookmark: Add Bookmark
+    create: Erstellen
+    entry: Add Entry
+  created_at: Created at
+  cronjob_exec: Optimize and save database; clear temp-images
+  currently: currently
+  cut: Cut
+  date:
+    date: date
+    end: Enddatum
+    start: Startdatum
+  deleted_user: Deleted User
+  description: Description
+  destroy:
+    destroy: Delete
+    entry: Delete Entry
+  disclaimer: Disclaimer
+  download: Download
+  downloads: Downloads
+  email:
+    email: Email
+    send: Send Mail
+    verification: Verify Email
+  file: File
+  files: Files
+  gallery: Gallery
+  image:
+    click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
+    image: Image
+  in: in
+  keywords: Keywords
+  last_update: last Update
+  location: Location
+  login: Login
+  logs: Logs
+  logout: Logout
+  manager:
+    content: Seitenmanagement
+    media: Files
+    user: Users
+  months:
+    1: Januar
+    2: Februar
+    3: März
+    4: April
+    5: Mai
+    6: Juni
+    7: Juli
+    8: August
+    9: September
+    10: Oktober
+    11: November
+    12: Dezember
+  name: Name
+  optional: Optional
+  overview: Overview
+  page: Page
+  password:
+    password: Password
+    repeat: Repeat Password
+  published: Published?
+  quote:
+    by: Quote by
+    quote: Quote
+  register: Register
+  registration: Registration
+  report:
+    error: Report Error
+    report: Report
+  reply_to: Reply to
+  reset: Reset
+  required: Required
+  rss: RSS-Feed
+  search: Search
+  settings: Settings
+  share: Share
+  sitemap: Sitemap
+  size: Größe
+  submit: Absenden
+  subject: Subject
+  surname: Surname
+  system: System
+  tags:
+    info: Search for more entries with this tag.
+    tags: Tags
+  teaser: Teaser
+  terms:
+    terms: Terms
+    read: Read the terms?
+  time:
+    am: am
+    pm: pm
+    time: Time
+  title: Title
+  today: Today
+  update:
+    at: Updated at
+    avaiable: There is an update for this software avaiable (#%v). Please visit %l for more information.
+    show: Show update?
+    update: Update entry
+  upload:
+    at: Uploaded at
+    upload: Upload
+  user:
+    right: Userright
+    rights:
+      0: Guest
+      1: Member
+      2: special Member
+      3: Moderator
+      4: Administrator
+    user: User
+  webview: Webansicht
+  welcome: Welcome
+  yesterday: Yesterday
+
+javascript:
+  loading: Loading...
+  confirm_destroy: Are you sure to delete this file or entry? This cannot be undone.
+
+success:
+  create: Entry has been created!
+  destroy: Entry has been deleted!
+  file:
+    upload: Files successfully uploaded!
+    destroy: Files successfully deleted!
+  update: Entry has been updated!
+  upload: Upload successful!
+  mail:
+    create: Email has been sent!
+  session:
+    create: Login successful!
+    destroy: Logout successful!
+  password:
+    create: You got a mail with a new password.
+  user:
+    create: Congratulations! You are now a registered user and should have received an Email to confirm your Email address.
+    verification: Thank you. Your Email has been verified!
+
+error:
+  404:
+    info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
+    title: Error 404
+  audio: Your browser does not support playback of this audio file. Please click <a href="%u">here</a> to download this file.
+  captcha:
+    incorrect: The code was incorrect!
+    loading: Captcha could not be loaded, please activate Javascript!
+  file:
+    destroy: This file could not be deleted!
+    size: Your file is bigger than 400KB!
+    type: You uploaded an illegal filetype. Only *.jpg is allowed!
+    upload: Es gab einen Fehler beim Upload!
+  form:
+    title: "Please fill out the following information:"
+    missing:
+      category: Please select a category.
+      content: Please enter content.
+      email: Please enter your Email.
+      file: Please select file.
+      name: Please enter your name.
+      terms: You must accept the terms and conditions!
+      title: Please enter a title.
+      password: Please enter a password.
+      subject: Please enter a subject.
+  mail:
+    create: Mail delivery failed. If the Email is correct, please contact Admin.
+    format: This Email is not valid!
+  missing:
+    action: Aborting action due to missing parameters!
+    id: Wrong or no ID submitted.
+    entries: There are no entries yet!
+    entry: This entry does not exist!
+    flash: Download flash to watch this video.
+    file: File not avaiable!
+    files: No files have been uploaded.
+    permission: You do not have permission to proceed!
+    template: This template is not avaiable!
+  passwords: Passwords do not match, please retype.
+  published: "Not published:"
+  session:
+    create: Please check your Email and password. Also, is your Email verified?
+    create_first: Please login first!
+  standard: An error occured!
+  sql: This SQL query caused an error.
+  user:
+    create:
+      email: An account with that Email does already exist. If you lost your password, you can recover it at the login.
+    destroy:
+      password: Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.
+    update:
+      terms: Du musst das Bild hochladen dürfen!
+      password:
+        new:
+          empty: Please enter your new password!
+          match: Passwords do not match. Please enter again!
+        old:
+          empty: Please enter your old password!
+          wrong: Your old password was incorrect!
+      verification: Could not verify your account. This code does not exist!
+
+blog:
+  info:
+    keywords: Please enter the most relevant keywords.
+    tag: Seperate tags by comma and space, i.e. "tag1, tag2"
+    teaser: Write a short teaser!
+  title:
+    create: Create blog entry
+    destroy: Delete blog entry
+    update: "Update: '%p'"
+
+calendar:
+  info:
+    date_format: 'Datumsformat: "YYYY-MM-DD"'
+  title:
+    create: Termin hinzufügen
+
+comment:
+  info:
+    email: Your Email will not be published.
+  title:
+    create: Create comment
+    destroy: Delete comment
+
+content:
+  info:
+    keywords: Enter the most important keywords.
+    teaser: Write a teaser for SEO.
+    update: Update %p
+
+  title:
+    create: Seite erstellen
+    destroy: Seite löschen
+    update: Bearbeiten
+
+download:
+  label:
+    choose: Datei auswählen
+  title:
+    create: Download erstellen
+    destroy: Download löschen
+    update: Download bearbeiten
+
+cronjob:
+  mail:
+    body: Your backup has successfully been created and is avaiable as attachment.\r\n
+    subject: Backup from %d
+
+gallery:
+  albums:
+    title:
+      create: Create album
+      destroy: Destroy album
+      update: Update: '%p'
+  files:
+    label:
+      choose: Choose file(s)
+      cut: Cut and resize
+      resize: Resize only
+    title:
+      create: Add file
+      destroy: Delete file
+      update: Edit file
+
+mail:
+  body:
+    no_reply: <p>(This is a generated Mail. Do not reply!)</p>
+    signature: <p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>
+  info:
+    title: "Vielen Dank für Deine Kontaktaufnahme!"
+    redirect: You will be redirect to the front page in 15 seconds.
+  subject:
+    by: New message from %u
+
+media:
+  info:
+    upload: Make sure that your file(s) are virus-checked to avoid harm on your server!
+  label:
+    choose: Choose file
+    rename: Rename file
+  title:
+    create: Upload file
+    destroy: Delete file
+    
+newsletter:
+  info:
+    name: %u is converted to user name!<br />The newsletter will be sent directly after pressing the submit button.
+    handle: Please enter your Email to subscribe or unsubscribe to our newsletter. You don't need to subscribe if you are a registered user.
+  label:
+    create: Send newsletter
+  mail:
+    body: Hello,\r\nthank you for your interest in our newsletter. If you didn't subscribe, click <a href='%WEBSITE_URL/Newsletter'>here</a> to unsubscribe from list.%SIGNATURE
+    subject: Newsletters from %WEBSITE_NAME
+  receipients: Receiver
+  title:
+    create: Create newsletter
+    handle: Subscribe / unsubscribe newsletter
+
+pages:
+  next: Next entries
+  previous: Older entries
+
+search:
+  label:
+    terms: Terms
+  title:
+    create: Search
+    show: Search results for "%s"
+
+session:
+  password:
+    info: Enter your Email and we will send you a new password within a few minutes.
+    label: Send password
+    mail:
+      body: "Hello %u!\r\n\r\nYou can login via following password: <em>%p</em> %SIGNATURE %NOREPLY"
+      subject: Your new password
+    title: Lost password?
+  verification:
+    info: Resend the verification code.
+    label:
+      create: Send Email
+    mail:
+      body: "Hello %u!\r\n\r\nPlease click this link to verifiy your Email: %v %SIGNATURE %NOREPLY"
+      subject: Your Email verification for %WEBSITE_NAME
+    title: Resend Email verification
+
+user:
+  contact_via_email: "Click to send %u an Email!"
+  info:
+    destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
+    gravatar: If checked, we will automatically search <a href="http://gravatar.com" target="_blank">Gravatar.com</a> for an avatar of you.
+    image: You are only allowed images less than 400KB.
+  label:
+    account:
+      destroy: Delete account
+    content:
+      show: About %u
+      update: Personal data
+    gravatar: Use Gravatar?
+    image:
+      choose: Choose Image
+      create: Change Image
+      terms: I am allowed to upload this image and will not conflict with others copyright.
+      update: Change Image?
+    last_login: Last login
+    newsletter: Subscribe to newsletter?
+    password:
+      create: Change password
+      new: New password
+      old: Old password
+    registered_since: Registered since
+    update: Update profile
+  mail:
+    body: "Hello %u!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your Email address via this link: %v %SIGNATURE %NOREPLY"
+    subject: Your registration at %WEBSITE_NAME.
+  title:
+    account: Delete account
+    image: Change Avatar
+    overview: User Overview
+    password: Change Password
+    personal_data: Personal data
+    update: Update profile
