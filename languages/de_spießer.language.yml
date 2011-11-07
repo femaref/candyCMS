@@ -1,0 +1,382 @@
+website:
+  title: CandyCMS
+  description: Free, fast and simple PHP CMS.
+  keywords: PHP, CMS, Free CMS, Open Source CMS
+
+global:
+  about: Über
+  album: Album
+  author: Autor
+  backup: Backup
+  bbcode:
+    help: Weiterführende Informationen zur Verwendung von BB-Code.
+  blog: Blog
+  by: von
+  category: Kategorie
+  calendar: Kalender
+  close: Schließen
+  comments: Kommentare
+  contact: Kontakt
+  content: Text
+  contents: Seiten
+  create:
+    bookmark: Lesezeichen hinzufügen
+    create: Erstellen
+    entry: Eintrag hinzufügen
+  created_at: Hinzugefügt am
+  cronjob_exec: Datenbank optimieren, sichern und temporäre Dateien löschen.
+  currently: momentan
+  cut: Schnitt
+  date:
+    date: Datum
+    end: Enddatum
+    start: Startdatum
+  deleted_user: Gelöschte Person
+  description: Beschreibung
+  destroy:
+    destroy: Löschen
+    entry: Eintrag löschen
+  disclaimer: Impressum
+  download: Download
+  downloads: Downloads
+  email:
+    email: E-Mail-Adresse
+    send: E-Mail versenden
+    verification: E-Mail-Adresse bestätigen
+  file: Datei
+  files: Dateien
+  gallery: Galerie
+  image:
+    click_to_enlarge: "Klicken Sie auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
+    image: Bild
+  in: in
+  keywords: Schlagworte
+  last_update: letzte Änderung
+  location: Ort
+  login: Login
+  logs: Logs
+  logout: Logout
+  manager:
+    content: Seitenmanagement
+    media: Dateimanager
+    user: Benutzermanagement
+  months:
+    1: Januar
+    2: Februar
+    3: März
+    4: April
+    5: Mai
+    6: Juni
+    7: Juli
+    8: August
+    9: September
+    10: Oktober
+    11: November
+    12: Dezember
+  name: Name
+  optional: optional
+  overview: Übersicht
+  page: Seite
+  password:
+    password: Passwort
+    repeat: Passwort wiederholen
+  published: Veröffentlicht?
+  quote:
+    by: Zitat von
+    quote: Zitat
+  register: Registrieren
+  registration: Registrierung
+  report:
+    error: Fehler melden
+    report: Melden
+  reply_to: Antwort an
+  reset: Zurücksetzen
+  required: benötigt
+  rss: RSS-Feed
+  search: Suche
+  settings: Einstellungen
+  share: Teilen
+  sitemap: Sitemap
+  size: Größe
+  submit: Absenden
+  subject: Betreff
+  surname: Nachname
+  system: System
+  tags:
+    info: Suche nach ähnlichen Einträgen
+    tags: Tags
+  teaser: Teaser
+  terms:
+    terms: Bedingungen
+    read: Haben Sie die Nutzungsbedingungen gelesen?
+  time:
+    am: Uhr
+    pm: Uhr
+    time: Zeit
+  title: Titel
+  today: Heute
+  update:
+    at: Aktualisiert am
+    avaiable: Es ist ein Update (#%v) für diese Software verfügbar. Besuche %l für weitere Informationen.
+    show: Update anzeigen?
+    update: Bearbeiten
+  upload:
+    at: Datum des Hochladens
+    upload: Upload
+  user:
+    right: Userrecht
+    rights:
+      0: Gast
+      1: Mitglied
+      2: Facebook-Nutzer
+      3: Moderator
+      4: Administrator
+    user: User
+  webview: Webansicht
+  welcome: Hallo
+  yesterday: Gestern
+
+javascript:
+  loading: Lade...
+  confirm_destroy: Möchten Sie diesen Eintrag oder diese Datei wirklich löschen? Diese Aktion ist nicht rückgängig zu machen!
+
+success:
+  create: Eintrag wurde hinzugefügt!
+  destroy: Eintrag wurde gelöscht!
+  file:
+    upload: Datei erfolgreich hochgeladen!
+    destroy: Datei erfolgreich gelöscht!
+  update: Update erfolgreich!
+  upload: Datei(en) erfolgreich hochgeladen!
+  mail:
+    create: E-Mail erfolgreich verschickt!
+  session:
+    create: Login erfolgreich!
+    destroy: Logout erfolgreich!
+  password:
+    create: Ihr neues Passwort wurde Ihnen erfolgreich per E-Mail zugeschickt!
+  user:
+    create: Sie wurden erfolgreich registriert und sollten eine E-Mail erhalten haben, über die Sie die Echtheit Ihrer E-Mail-Adresse bestätigten können!
+    verification: Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse.
+
+error:
+  404:
+    info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
+    title: Error 404
+  audio: Ihr Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicken Sie auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
+  captcha:
+    incorrect: Der Code war leider nicht korrekt!
+    loading: Captcha konnte nicht geladen werden, bitte aktiviere Javascript!
+  file:
+    destroy: Die Datei konnte nicht gelöscht werden!
+    size: Maximale Dateigröße von 400KB erreicht!
+    type: Es wurde ein falscher Dateityp hochgeladen!
+    upload: Es gab einen Fehler beim Upload!
+  form:
+    title: "Bitte füllen Sie folgende Felder aus:"
+    missing:
+      category: Bitte wählen Sie eine Kategorie!
+      content: Füllen Sie bitte den Inhalt aus!
+      email: Geben Sie bitte Ihre E-Mail-Adresse an!
+      file: Geben Sie bitte eine Datei zum Upload an!
+      name: Geben Sie bitte Ihren Namen an!
+      terms: Bitte stimmen Sie den Nutzungsbedingungen!
+      title: Geben Sie bitte einen Titel an!
+      password: Geben Sie bitte ein Passwort an!
+      subject: Geben Sie bitte einen Betreff an!
+  mail:
+    create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfen Sie ggf. Ihre E-Mail-Adresse und falls diese korrekt sein sollte, kontaktieren Sie den Admin.
+    format: Dies ist keine gültige E-Mail-Adresse!
+  missing:
+    action: Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!
+    id: Falsche oder keine ID angegeben.
+    entries: Es existieren noch keine Einträge!
+    entry: Eintrag nicht vorhanden!
+    flash: Bitte installieren Sie den Flashplayer, um dieses Video anzusehen!
+    file: Datei nicht verfügbar.
+    files: Es wurden noch keine Dateien hochgeladen.
+    permission: Sie haben keine Berechtigung diese Aktion auszuführen!
+    template: Es wurde keine passendes Template gefunden!
+  passwords: Bitte geben Sie zwei identische Passwörter an!
+  published: "Nicht veröffentlicht:"
+  session:
+    create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls Sie Ihre E-Mail-Adresse noch nicht bestätigt haben, machen Sie dies bitte vor dem Login.
+    create_first: Bitte loggen Sie sich zuerst ein!
+  standard: Es trat ein Fehler auf!
+  sql: Es gab einen Fehler beim Verarbeiten des SQL-Statements.
+  user:
+    create:
+      email: Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!
+    destroy:
+      password: Ihr eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.
+    update:
+      terms: Sie müssen das Bild hochladen dürfen!
+      password:
+        new:
+          empty: Bitte tragen Sie Ihr neues Passwort ein!
+          match: Sie scheinen sich beim neuen Passwort vertippt zu haben. Achten Sie bitte darauf, dass Sie zweimal das gleiche Passwort eintippen!
+        old:
+          empty: Bitte tragen Sie Ihr altes Passwort ein!
+          wrong: Ihr altes Passwort stimmt leider nicht!
+      verification: Sie konnten nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
+
+blog:
+  info:
+    keywords: Geben Sie die wichtigsten Schlagworte dieses Eintrags an.
+    tag: Trennen Sie die Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
+    teaser: Schreiben Sie einen Teaser um den Blogeintrag interessanter zu machen!
+  title:
+    create: Blogeintrag hinzufügen
+    destroy: Blogeintrag löschen
+    update: "'%p' bearbeiten"
+
+calendar:
+  info:
+    date_format: 'Datumsformat: "YYYY-MM-DD"'
+  title:
+    create: Termin hinzufügen
+
+comment:
+  info:
+    email: Die E-Mail-Adresse wird nicht veröffentlicht.
+  title:
+    create: Kommentar erstellen
+    destroy: Kommentar löschen
+
+content:
+  info:
+    keywords: Geben Sie die wichtigsten Schlagworte dieser Seite an.
+    teaser: Schreiben Sie eine Zusammenfassung für die Suchmaschinen.
+
+  title:
+    create: Seite erstellen
+    destroy: Seite löschen
+    update: Bearbeiten
+
+download:
+  label:
+    choose: Datei auswählen
+  title:
+    create: Download erstellen
+    destroy: Download löschen
+    update: Download bearbeiten
+
+cronjob:
+  mail:
+    body: Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n
+    subject: Sicherungskopie vom %d
+
+gallery:
+  albums:
+    title:
+      create: Album erstellen
+      destroy: Album löschen
+      update: Album '%p' bearbeiten
+  files:
+    label:
+      choose: Datei(en) auswählen
+      cut: Bild quadratisch zuschneiden
+      resize: Bild proportional verkleinern
+    title:
+      create: Bild(er) hochladen
+      destroy: Bild löschen
+      update: Bild bearbeiten
+
+mail:
+  body:
+    no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
+    signature: <p>Viel Spaß wünscht Ihnen das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
+  info:
+    title: "Vielen Dank für Ihre Kontaktaufnahme!"
+    redirect: Sie werden in 15 Sekunden auf die Startseite weitergeleitet.
+  subject:
+    by: Neue Nachricht von %u
+
+media:
+  info:
+    upload: Bitte seien Sie sich bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.
+  label:
+    choose: Datei auswählen
+    rename: Datei umbenennen
+  title:
+    create: Datei hochladen
+    destroy: Datei löschen
+
+newsletter:
+  info:
+    name: %u wird zum Usernamen!<br />Bedenken Sie bitte ebenfalls, sich die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
+    handle: Tragen Sie hier Ihre E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Sie benötigen den Newsletter nicht mehr, wenn Sie sich auf dieser Seite registriert haben!
+  label:
+    create: Newsletter versenden
+  mail:
+    body: Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE
+    subject: Newsletter von %WEBSITE_NAME
+  receipients: Abonnenten
+  title:
+    create: Newsletter verfassen
+    handle: Newsletter abonieren / abbestellen
+
+pages:
+  next: Ältere Beiträge
+  previous: Neuere Beiträge
+
+search:
+  label:
+    terms: Suchbegriffe
+  title:
+    create: Suche
+    show: Suchergebnisse für "%s"
+
+session:
+  password:
+    info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
+    label: Passwort anfordern
+    mail:
+      body: "Hallo %u!\r\n\r\Sie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      subject: Ihr neues Passwort
+    title: Passwort vergessen?
+  verification:
+    info: Lassen Sie sich jetzt erneut eine E-Mail mit Bestätigungslink an Ihre Adresse zuschicken.
+    label:
+      create: Bestätigungslink zuschicken
+    mail:
+      body: "Hallo %u!\r\n\r\nBitte klicken Sie auf diesen Link, um Ihre E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
+      subject: Ihre E-Mail-Bestätigung für %WEBSITE_NAME
+    title: E-Mail-Bestätigung erneut zusenden
+
+user:
+  contact_via_email: "Klicken Sie hier, um %u eine E-Mail zu schicken!"
+  info:
+    destroy_account: Bitte geben Sie zur eigenen Sicherheit Ihr aktuelles Passwort ein. Sobald Sie auf "Account löschen" klicken, wird Ihr Zugang gelöscht und ist nicht wiederherstellbar!
+    gravatar: Aktivieren Sie dieses Kästchen, wird automatisch nach einem von Ihnen auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ können Sie aber auch direkt ein Bild hochladen.
+    image: Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!
+  label:
+    account:
+      destroy: Account löschen
+    content:
+      show: Über %u
+      update: Über Ihre Person
+    gravatar: Gravatar verwenden?
+    image:
+      choose: Bild auswählen
+      create: Bild hochladen
+      terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
+      update: Userbild ändern?
+    last_login: Letzter Login
+    newsletter: Newsletter abonnieren?
+    password:
+      create: Passwort ändern
+      new: Neues Passwort
+      old: Altes Passwort
+    registered_since: Registriert seit
+    update: Profil aktualisieren
+  mail:
+    body: "Hallo %u!\r\n\r\nDanke für Ihre Registrierung auf %WEBSITE_NAME. Um sich einzuloggen müssen Sie noch die Echtheit Ihrer E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
+    subject: Ihre Registrierung auf %WEBSITE_NAME.
+  title:
+    account: Account löschen
+    image: Profilbild ändern
+    overview: Übersicht
+    password: Passwort ändern
+    personal_data: Persönliche Daten
+    update: Einstellungen bearbeiten
