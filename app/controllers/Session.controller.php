@@ -93,6 +93,7 @@ class Session extends Main {
 	 * @todo this must be rewritten
 	 * @todo replace error message with wrong password information
 	 * @todo error message when email is wrong
+	 * @todo success messages
 	 *
 	 */
   public function createResendActions() {

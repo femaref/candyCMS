@@ -85,6 +85,16 @@ class Session extends Main {
     }
   }
 
+	/**
+	 * Return aggregated data
+	 *
+	 * @access public
+	 * @return array $this->_aData
+	 */
+  public function getData() {
+    return $this->_aData;
+  }
+
   /**
    * Create a user session.
    *
