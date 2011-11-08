@@ -160,8 +160,8 @@ section.gallery_albums p {
   margin: 0px;
 }
 
-section#blog article.blogs summary,
-section#content article.contents summary {
+section#blog article.blogs p.summary,
+section#content article.contents p.summary {
   font-weight: bold;
 }
 

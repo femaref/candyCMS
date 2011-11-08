@@ -134,7 +134,6 @@ define('MOBILE_DEVICE', $bMobile);
 
 # Print out HTML
 echo $oIndex->show();
-
 unset($_SESSION)
 
 ?>

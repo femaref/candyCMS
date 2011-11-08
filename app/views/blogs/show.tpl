@@ -44,7 +44,7 @@
             </p>
           </header>
           {if $b.teaser !== ''}
-            <div class="summary">{$b.teaser}</div>
+            <p class="summary">{$b.teaser}</p>
           {/if}
           {$b.content}
           <footer>

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv='content-type' content='text/html;charset=utf-8' />
-    <link href='%PATH_CSS%/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <link href='%PATH_CSS%/style.css' rel='stylesheet' type='text/css' media='screen, projection' />
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery{$_compress_files_suffix_}.js"></script>
+    <link href='%PATH_CSS%/core/essential.css' rel='stylesheet' type='text/css' media='screen, projection' />
+    <link href='%PATH_CSS%/core/application.css' rel='stylesheet' type='text/css' media='screen, projection' />
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.7{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
     <title>{$title}</title>
   </head>

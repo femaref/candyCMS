@@ -25,7 +25,7 @@
           </p>
         </header>
         {if $c.teaser !== ''}
-          <summary>{$c.teaser}</summary>
+          <p class="summary">{$c.teaser}</p>
         {/if}
         {$c.content}
         <footer>

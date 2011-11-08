@@ -131,9 +131,9 @@ if(!isset($_REQUEST['file'])) {
 } else
   $sCachedHTML = '';
 
-$sCachedHTML = str_replace('%PATH_CSS%', WEBSITE_CDN . '/public/css/', $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_IMAGES%', WEBSITE_CDN . '/public/images/', $sCachedHTML);
-$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN . '/public/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_CSS%', '/public/css/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_IMAGES%', '/public/images/', $sCachedHTML);
+$sCachedHTML = str_replace('%PATH_PUBLIC%', '/public/', $sCachedHTML);
 
 echo $sCachedHTML;
 ?>

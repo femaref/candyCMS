@@ -5,15 +5,18 @@
 #AddHandler php53-cgi .php
 
 # Custom error pages
-ErrorDocument 404 /error/404
 ErrorDocument 422 /error/422
 ErrorDocument 500 /error/500
 
 # Hide files for non script access
-<FilesMatch "\.(tpl|ini|yml|htaccess|class.php|inc.php|tpl.php|lang.php|function.php|helper.php|controller.php|model.php|config.php)$">
+<FilesMatch "\.(tpl|mob|ini|yml|php)$">
   order allow,deny
   deny from all
 </FilesMatch>
+
+<Files index.php>
+  Allow from all
+</Files>
 
 Options +FollowSymLinks
 
@@ -21,43 +24,25 @@ RewriteEngine On
 RewriteBase /
 
 # Redirect from root to public folder
-RewriteRule ^favicon.ico$ public/favicon.ico [L]
-RewriteRule ^human.txt$ public/human.txt [L]
-RewriteRule ^robots.txt$ public/robots.txt [L]
+RewriteRule ^(human|robots).(txt|ico)$ public/$1.$2 [L]
 RewriteRule ^sitemap.xml$ index.php?section=sitemap&action=xml&ajax=1 [L]
 
 # Nice to have
-RewriteRule ^(Disclaimer|Impressum)$ index.php?section=content&id=1 [L,QSA,NC]
-RewriteRule ^About$ index.php?section=content&id=3 [L,QSA,NC]
-RewriteRule ^Help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
-RewriteRule ^Help/Registration$ index.php?section=content&id=2&ajax=1 [R,NC]
-
-# Install script
-RewriteRule ^install$ install/index.php [R,NC]
-
-# Universal rules
-RewriteRule ^([A-Za-z]+)$ index.php?section=$1&page=1 [L,QSA,NC] # Show Section
-RewriteRule ^([A-Za-z]+)/([0-9]+)/ajax$ index.php?section=$1&id=$2&page=1&ajax=1 [L,QSA,NC] # Show entry with id and without header and footer
-RewriteRule ^([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&page=1 [L,QSA,NC] # Show entry with id
-RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC] # Show pagination on sub id
-RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC] # Show entry with highlighted background
-RewriteRule ^([A-Za-z]+)/(create|update|destroy|show|createfile|updatefile|destroyfile)$ index.php?section=$1&action=$2&page=1 [L,QSA,NC] # Default actions
-RewriteRule ^([A-Za-z]+)/page/([0-9]+)$ index.php?section=$1&page=$2 [L,QSA,NC] # Non AJAX pagination
-RewriteRule ^([A-Za-z]+)/(.*)/(update|destroy|upload|verification)$ index.php?section=$1&action=$3&id=$2&page=1 [L,QSA,NC] # Show update / destroy actions
+RewriteRule ^(disclaimer|impressum)$ index.php?section=content&id=1 [L,QSA,NC]
+RewriteRule ^help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
 
 # Section specific rules
 RewriteRule ^(blog|search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA,NC] # Show item sorted by tag
-RewriteRule ^comment/([0-9]+)/destroy/([0-9]+)$ index.php?section=comment&action=destroy&id=$1&parent_id=$2 [L,QSA,NC]
-RewriteRule ^gallery/([0-9]+)/(createfile|updatefile|destroyfile)$ index.php?section=gallery&action=$2&id=$1&page=1 [L,QSA,NC]
 RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2&page=1 [L,QSA,NC]
-RewriteRule ^(static|rss)/([a-z]+|[a-z]+.xml)$ index.php?section=$1&subsection=$2 [L,NC]
 RewriteRule ^language/([a-z]+)$ index.php?language=$1 [L,QSA,NC]
-RewriteRule ^rss/([A-Za-z]+)/([0-9]+)$ index.php?section=rss&subsection=$1&id=$2 [L,QSA,NC]
-RewriteRule ^session/(resendpassword|resendverification)$ index.php?section=session&action=$1 [L,QSA,NC]
-RewriteRule ^user/resendverification$ index.php?section=user&action=verification [L,NC]
 
-# Evil rule. Last one to avoid breaks.
-RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1&seo_title=$3 [L,QSA,NC] # Show entry with description in url
+# Universal rules
+RewriteRule ^([A-Za-z]+)$ index.php?section=$1&page=1 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)(/ajax)?$ index.php?section=$1&id=$2&page=1&ajax=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&action=$3&page=$4&parent_id=$4 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1&action=$3&seo_title=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([A-Za-z]+)(/[0-9]+)?$ index.php?section=$1&action=$2&subsection=$2&page=$3 [L,QSA,NC]
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920

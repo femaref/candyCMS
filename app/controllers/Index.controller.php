@@ -345,6 +345,9 @@ class Index {
 			$oSection->getSection();
 		}
 
+    elseif (strtolower($this->_aRequest['section']) == 'install')
+      Helper::redirectTo('/install');
+
 		# We do not have a standard action, so fetch it from the addon folder.
     # If addon exists, proceed with override.
     elseif (ALLOW_ADDONS === true) {

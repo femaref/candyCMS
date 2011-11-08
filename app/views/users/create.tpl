@@ -24,7 +24,7 @@
   {if $USER_RIGHT < 4}
     <p {if isset($error.disclaimer)}class="error" title="{$error.disclaimer}"{/if}>
       <label>
-        <a href='/help/registration' id="js-fancybox">
+        <a href='/content/2/ajax' id="js-fancybox">
           {$lang.global.terms.read}<span title="{$lang.global.required}">*</span>
         </a>
       </label>
