@@ -10,7 +10,7 @@
   </p>
   <p {if isset($error.start_date)}class="error" title="{$error.start_date}"{/if}>
     <label for='input-start_date'>{$lang.global.date.start}<span title="{$lang.global.required}">*</span></label>
-    <input type='date' name='start_date' id="input-start_date" value='2012-03-02'
+    <input type='date' name='start_date' id="input-start_date" value='{$start_date}'
            placeholder='{$lang.calendar.info.date_format}' autocomplete required
            min="{$_date_}" />
   </p>

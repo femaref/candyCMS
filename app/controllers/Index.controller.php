@@ -292,10 +292,10 @@ class Index {
    *
    */
 	public function setUser() {
-    $aUser = Model_Session::getSessionData();
+    $_SESSION['userdata'] = Model_Session::getSessionData();
 
-    define('USER_ID', (int) $aUser['id']);
-    define('USER_PASSWORD', isset($aUser['password']) ? $aUser['password'] : '');
+    define('USER_ID', (int) $_SESSION['userdata']['id']);
+    define('USER_PASSWORD', isset($_SESSION['userdata']['password']) ? $_SESSION['userdata']['password'] : '');
 
     # Try to get facebook data
     if (USER_ID == 0) {
@@ -304,11 +304,11 @@ class Index {
         $aFacebookData = $oFacebook->getUserData();
     }
 
-    define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $aUser['user_right']);
+    define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $_SESSION['userdata']['user_right']);
     define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ? $aFacebookData[0]['uid'] : '');
-    define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $aUser['email']);
-    define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $aUser['name']);
-    define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $aUser['surname']);
+    define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $_SESSION['userdata']['email']);
+    define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $_SESSION['userdata']['name']);
+    define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $_SESSION['userdata']['surname']);
     define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
   }
 
