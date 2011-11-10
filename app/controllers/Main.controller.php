@@ -182,6 +182,14 @@ abstract class Main {
 
   }
 
+  /**
+   * @access public
+   *
+   */
+  public function __call($sMethod, $Args) {
+
+  }
+
 	/**
 	 * Set up i18n.
 	 *

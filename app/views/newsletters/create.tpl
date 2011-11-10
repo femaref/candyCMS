@@ -26,7 +26,7 @@
       theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,media,|,print,|,ltr,rtl,|,help",
       theme_advanced_statusbar_location : "bottom",
       theme_advanced_resizing : true,
-      language : "{$_language_}",
+      language : "{$WEBSITE_LANGUAGE}",
       relative_urls : false,
       remove_script_host : false,
       document_base_url : "{$WEBSITE_URL}",
