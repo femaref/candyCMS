@@ -5,8 +5,8 @@
     <input name='title' value='{$title}' id="input-title" type='text' autofocus required />
   </p>
   <p>
-    <label for='input-description'>{$lang.global.description}</label>
-    <input name='content' value='{$content}' id="input-description" type='text' />
+    <label for='input-content'>{$lang.global.description}</label>
+    <input name='content' value='{$content}' id="input-content" type='text' />
   </p>
   <p class="center">
     <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />

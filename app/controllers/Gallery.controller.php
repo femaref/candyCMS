@@ -100,7 +100,7 @@ class Gallery extends Main {
 
     else {
       $this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-      $this->_aData['description']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
 
     foreach ($this->_aData as $sColumn => $sData)
