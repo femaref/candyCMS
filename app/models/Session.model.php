@@ -100,7 +100,6 @@ class Session extends Main {
    *
    * @access public
    * @return boolean status of query
-   * @todo improve return
    *
    */
   public function create() {
@@ -127,16 +126,9 @@ class Session extends Main {
       $this->_oDb->rollBack();
     }
 
-    # Check if user did not verify
-    if (isset($aResult['verification_code']) && !empty($aResult['verification_code']))
-      return false;
-
     # User did verify his and has id, so log in!
-    elseif (isset($aResult['id']) && !empty($aResult['id']))
+    if (isset($aResult['id']) && !empty($aResult['id']) && empty($aResult['verification_code']))
       return Session::update($aResult['id']);
-
-    else
-      return false;
   }
 
   /**

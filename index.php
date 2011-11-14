@@ -26,6 +26,7 @@ ini_set('arg_separator.output', '&amp;');
 /**
  * Compress output.
  */
+ini_set('zlib.output_compression', "On");
 ini_set('zlib.output_compression_level', 9);
 
 /**

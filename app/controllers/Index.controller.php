@@ -438,13 +438,9 @@ class Index {
 		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
 		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
 
-		# Compress Data
-    # *********************************************
-		if (extension_loaded('zlib'))
-			@ob_start('ob_gzhandler');
-
 		$oSection->oI18n->unsetLanguage();
 
+    header("Content-Type: text/html; charset=utf-8");
 		return $sCachedHTML;
 	}
 }

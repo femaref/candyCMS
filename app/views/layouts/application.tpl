@@ -130,7 +130,8 @@
         </ul>
       </section>
     </footer>
-    <script type='text/javascript' src='%PATH_JS%/core/scripts.js'></script>
+    {block "js-footer"}{/block}
+    <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
     {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
       <div id="fb-root"></div>
       <script type="text/javascript">

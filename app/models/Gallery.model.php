@@ -181,17 +181,15 @@ class Gallery extends Main {
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
       $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-      $this->_aThumbs[$iId] = $this->_formatForOutput($aRow, 'gallery');
-      $this->_aThumbs[$iId] = array(
-          'url'           => '/gallery/' . $aRow['album_id'] . '/image/' . $iId,
-          'url_32'        => $sUrl32,
-          'url_upload'    => $sUrlUpload,
-          'url_popup'     => $sUrlPopup,
-          'url_original'  => $sUrlOriginal,
-          'url_thumb'     => $sUrlThumb,
-          'thumb_width'   => THUMB_DEFAULT_X,
-          'loop'          => $iLoop
-      );
+      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'gallery');
+      $this->_aThumbs[$iId]['url']          = '/gallery/' . $aRow['album_id'] . '/image/' . $iId;
+      $this->_aThumbs[$iId]['url_32']       = $sUrl32;
+      $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;
+      $this->_aThumbs[$iId]['url_popup']    = $sUrlPopup;
+      $this->_aThumbs[$iId]['url_original'] = $sUrlOriginal;
+      $this->_aThumbs[$iId]['url_thumb']    = $sUrlThumb;
+      $this->_aThumbs[$iId]['thumb_width']  = THUMB_DEFAULT_X;
+      $this->_aThumbs[$iId]['loop']         = $iLoop;
 
       # We want to get the image dimension of the original image
       # This function is not set to default due its long processing time

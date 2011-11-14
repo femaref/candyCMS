@@ -21,12 +21,12 @@
               <a href='{$a.url}'>{$a.title}</a>
               {if $USER_RIGHT >= 3}
                 <a href='/gallery/{$a.id}/createfile'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang.gallery.files.title.create}'
-                       title='{$lang.gallery.files.title.create}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt="{$lang.gallery.files.title.create}"
+                       title="{$lang.gallery.files.title.create}" width="16" height="16" />
                 </a>
                 <a href='/gallery/{$a.id}/update'>
-                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.gallery.albums.title.update}'
-                       title='{$lang.gallery.albums.title.update}' width="16" height="16" />
+                  <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt="{$lang.gallery.albums.title.update}"
+                       title="{$lang.gallery.albums.title.update}" width="16" height="16" />
                 </a>
               {/if}
             </h2>
@@ -64,7 +64,7 @@
     {$_pages_}
   </section>
 {/if}
-<script src='%PATH_JS%/core/jquery.lazyload.js' type='text/javascript'></script>
+<script src='%PATH_JS%/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".image img").lazyload({ effect : "fadeIn" });
