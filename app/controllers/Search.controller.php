@@ -13,6 +13,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Search as Model;
+use Smarty;
 
 require_once 'app/models/Search.model.php';
 
@@ -110,6 +111,7 @@ class Search extends Main {
 
     $sTemplateDir = Helper::getTemplateDir('searches', '_form');
     $this->oSmarty->template_dir = $sTemplateDir;
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 }

@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
+use Smarty;
 
 require_once 'app/helpers/Image.helper.php';
 require_once 'app/helpers/Upload.helper.php';
@@ -55,6 +56,7 @@ class Media extends Main {
   private function _showUploadFileTemplate() {
     $sTemplateDir = Helper::getTemplateDir('medias', 'create');
     $this->oSmarty->template_dir = $sTemplateDir;
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
   }
 

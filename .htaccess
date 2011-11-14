@@ -34,7 +34,7 @@ RewriteRule ^help/(BB-Code|BBCode)$ http://github.com/marcoraddatz/candyCMS/wiki
 # Section specific rules
 RewriteRule ^(blog|search)/([A-Za-z0-9]+)$ index.php?section=$1&action=search&id=$2&page=1 [L,QSA,NC] # Show item sorted by tag
 RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2&page=1 [L,QSA,NC]
-RewriteRule ^language/([a-z]+)$ index.php?language=$1 [L,QSA,NC]
+RewriteRule ^language/([a-z]+)$ index.php?language=$1&clearcache=1 [L,QSA,NC]
 
 # Universal rules
 RewriteRule ^([A-Za-z]+)$ index.php?section=$1&page=1 [L,QSA,NC]

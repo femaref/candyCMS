@@ -215,6 +215,9 @@ abstract class Main {
 		$this->oSmarty->cache_dir = CACHE_DIR;
 		$this->oSmarty->compile_dir = COMPILE_DIR;
 
+    if(CLEAR_CACHE === true)
+      $this->oSmarty->clearAllCache();
+
 		# Define constants
 		$this->oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);

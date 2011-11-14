@@ -36,7 +36,7 @@ date_default_timezone_set('Europe/Berlin');
 /**
  * Current version we are working with.
  */
-define('VERSION', '20110714');
+define('VERSION', '20111114');
 
 /**
  * Display error messages when in development mode.
@@ -79,6 +79,9 @@ catch (\CandyCMS\Helper\AdvancedException $e) {
 # If this is an ajax request, no layout is loaded
 $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define('AJAX_REQUEST', (int) $iAjax);
+
+# Clear cache if needed
+define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
 
 # Define current url
 define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);

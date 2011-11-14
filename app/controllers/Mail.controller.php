@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\User as Model;
+use Smarty;
 
 require_once 'app/models/Blog.model.php';
 require_once 'lib/recaptcha/recaptchalib.php';
@@ -222,6 +223,7 @@ class Mail extends Main {
 
     $sTemplateDir = Helper::getTemplateDir('mails', 'success');
     $this->oSmarty->template_dir = $sTemplateDir;
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'success'));
   }
 
