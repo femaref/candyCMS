@@ -48,7 +48,7 @@ global:
   files: Dateien
   gallery: Galerie
   image:
-    click_to_enlarge: "Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
+    click_to_enlarge: "Klicken Sie auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
     image: Bild
   in: in
   keywords: Schlagworte
@@ -109,7 +109,7 @@ global:
   teaser: Teaser
   terms:
     terms: Bedingungen
-    read: Nutzungsbedingungen gelesen?
+    read: Haben Sie die Nutzungsbedingungen gelesen?
   time:
     am: Uhr
     pm: Uhr
@@ -139,7 +139,7 @@ global:
 
 javascript:
   loading: Lade...
-  confirm_destroy: Möchtest du diesen Eintrag oder diese Datei wirklich löschen? Diese Aktion ist nicht rückgängig zu machen!
+  confirm_destroy: Möchten Sie diesen Eintrag oder diese Datei wirklich löschen? Diese Aktion ist nicht rückgängig zu machen!
 
 success:
   create: Eintrag wurde hinzugefügt!
@@ -155,16 +155,16 @@ success:
     create: Login erfolgreich!
     destroy: Logout erfolgreich!
   password:
-    create: Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!
+    create: Ihr neues Passwort wurde Ihnen erfolgreich per E-Mail zugeschickt!
   user:
-    create: Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!
-    verification: Vielen Dank für die Bestätigung deiner E-Mail-Adresse.
+    create: Sie wurden erfolgreich registriert und sollten eine E-Mail erhalten haben, über die Sie die Echtheit Ihrer E-Mail-Adresse bestätigten können!
+    verification: Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse.
 
 error:
   404:
     info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
     title: Error 404
-  audio: Dein Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicke auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
+  audio: Ihr Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicken Sie auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
   captcha:
     incorrect: Der Code war leider nicht korrekt!
     loading: Captcha konnte nicht geladen werden, bitte aktiviere Javascript!
@@ -174,58 +174,58 @@ error:
     type: Es wurde ein falscher Dateityp hochgeladen!
     upload: Es gab einen Fehler beim Upload!
   form:
-    title: "Bitte fülle folgende Felder aus:"
+    title: "Bitte füllen Sie folgende Felder aus:"
     missing:
-      category: Bitte wähle eine Kategorie!
-      content: Bitte fülle den Inhalt aus!
-      email: Bitte gib deine E-Mail-Adresse an!
-      file: Bitte gib eine Datei zum Upload an!
-      name: Bitte gib deinen Namen an!
-      terms: Bitte den Nutzungsbedingungen zustimmen!
-      title: Bitte gib einen Titel an!
-      password: Bitte gib ein Passwort an!
-      subject: Bitte gib einen Betreff ein!
+      category: Bitte wählen Sie eine Kategorie!
+      content: Füllen Sie bitte den Inhalt aus!
+      email: Geben Sie bitte Ihre E-Mail-Adresse an!
+      file: Geben Sie bitte eine Datei zum Upload an!
+      name: Geben Sie bitte Ihren Namen an!
+      terms: Bitte stimmen Sie den Nutzungsbedingungen!
+      title: Geben Sie bitte einen Titel an!
+      password: Geben Sie bitte ein Passwort an!
+      subject: Geben Sie bitte einen Betreff an!
   mail:
-    create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
+    create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfen Sie ggf. Ihre E-Mail-Adresse und falls diese korrekt sein sollte, kontaktieren Sie den Admin.
     format: Dies ist keine gültige E-Mail-Adresse!
   missing:
     action: Die Aktion konnte aufgrund von fehlenden Parametern nicht durchgeführt werden!
     id: Falsche oder keine ID angegeben.
     entries: Es existieren noch keine Einträge!
     entry: Eintrag nicht vorhanden!
-    flash: Downloade den Flashplayer, um dieses Video anzugucken!
+    flash: Bitte installieren Sie den Flashplayer, um dieses Video anzusehen!
     file: Datei nicht verfügbar.
     files: Es wurden noch keine Dateien hochgeladen.
-    permission: Du hast keine Berechtigung diese Aktion auszuführen!
-    template: Es wurde keine passende Template gefunden!
-  passwords: Bitte zwei identische Passwörter angeben!
+    permission: Sie haben keine Berechtigung diese Aktion auszuführen!
+    template: Es wurde keine passendes Template gefunden!
+  passwords: Bitte geben Sie zwei identische Passwörter an!
   published: "Nicht veröffentlicht:"
   session:
-    create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls du deine E-Mail-Adresse noch nicht bestätigt hast, mache das bitte vor dem Login.
-    create_first: Bitte logge dich zuerst ein!
+    create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls Sie Ihre E-Mail-Adresse noch nicht bestätigt haben, machen Sie dies bitte vor dem Login.
+    create_first: Bitte loggen Sie sich zuerst ein!
   standard: Es trat ein Fehler auf!
   sql: Es gab einen Fehler beim Verarbeiten des SQL-Statements.
   user:
     create:
       email: Es ist bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden!
     destroy:
-      password: Dein eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.
+      password: Ihr eingegebenes Passwort stimmt nicht. Der Account konnte nicht gelöscht werden.
     update:
-      terms: Du musst das Bild hochladen dürfen!
+      terms: Sie müssen das Bild hochladen dürfen!
       password:
         new:
-          empty: Bitte trage dein neues Passwort ein!
-          match: Du scheinst dich beim neuen Passwort vertippt zu haben. Achte darauf, dass du zweimal das gleiche Passwort eintippst!
+          empty: Bitte tragen Sie Ihr neues Passwort ein!
+          match: Sie scheinen sich beim neuen Passwort vertippt zu haben. Achten Sie bitte darauf, dass Sie zweimal das gleiche Passwort eintippen!
         old:
-          empty: Bitte trage dein altes Passwort ein!
-          wrong: Dein altes Passwort stimmt leider nicht!
-      verification: Du konntest nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
+          empty: Bitte tragen Sie Ihr altes Passwort ein!
+          wrong: Ihr altes Passwort stimmt leider nicht!
+      verification: Sie konnten nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
 
 blog:
   info:
-    keywords: Gib die wichtigsten Schlagworte dieses Eintrags an.
-    tag: Trenne Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
-    teaser: Schreib einen Teaser um den Blogeintrag interessanter zu machen!
+    keywords: Geben Sie die wichtigsten Schlagworte dieses Eintrags an.
+    tag: Trennen Sie die Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
+    teaser: Schreiben Sie einen Teaser um den Blogeintrag interessanter zu machen!
   title:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen
@@ -248,8 +248,8 @@ comment:
 
 content:
   info:
-    keywords: Gib die wichtigsten Schlagworte dieser Seite an.
-    teaser: Schreib eine Zusammenfassung für die Suchmaschinen.
+    keywords: Geben Sie die wichtigsten Schlagworte dieser Seite an.
+    teaser: Schreiben Sie eine Zusammenfassung für die Suchmaschinen.
 
   title:
     create: Seite erstellen
@@ -288,16 +288,16 @@ gallery:
 mail:
   body:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
-    signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
+    signature: <p>Viel Spaß wünscht Ihnen das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
   info:
-    title: "Vielen Dank für Deine Kontaktaufnahme!"
-    redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
+    title: "Vielen Dank für Ihre Kontaktaufnahme!"
+    redirect: Sie werden in 15 Sekunden auf die Startseite weitergeleitet.
   subject:
     by: Neue Nachricht von %u
 
 media:
   info:
-    upload: Bitte sei dir bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.
+    upload: Bitte seien Sie sich bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.
   label:
     choose: Datei auswählen
     rename: Datei umbenennen
@@ -307,8 +307,8 @@ media:
 
 newsletter:
   info:
-    name: %u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
-    handle: Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!
+    name: %u wird zum Usernamen!<br />Bedenken Sie bitte ebenfalls, sich die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
+    handle: Tragen Sie hier Ihre E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Sie benötigen den Newsletter nicht mehr, wenn Sie sich auf dieser Seite registriert haben!
   label:
     create: Newsletter versenden
   mail:
@@ -332,33 +332,33 @@ search:
 
 session:
   password:
-    info: Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.
+    info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
     mail:
-      body: "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
-      subject: Dein neues Passwort
+      body: "Hallo %u!\r\n\r\Sie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      subject: Ihr neues Passwort
     title: Passwort vergessen?
   verification:
-    info: Lasse dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken.
+    info: Lassen Sie sich jetzt erneut eine E-Mail mit Bestätigungslink an Ihre Adresse zuschicken.
     label:
       create: Bestätigungslink zuschicken
     mail:
-      body: "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
-      subject: Deine E-Mail-Bestätigung für %WEBSITE_NAME
+      body: "Hallo %u!\r\n\r\nBitte klicken Sie auf diesen Link, um Ihre E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
+      subject: Ihre E-Mail-Bestätigung für %WEBSITE_NAME
     title: E-Mail-Bestätigung erneut zusenden
 
 user:
-  contact_via_email: "Klicke hier, um %u eine E-Mail zu schicken!"
+  contact_via_email: "Klicken Sie hier, um %u eine E-Mail zu schicken!"
   info:
-    destroy_account: Bitte gib zur eigenen Sicherheit dein aktuelles Passwort ein. Sobald du auf "Account löschen" klickst, wird dein Zugang gelöscht und ist nicht wiederherstellbar!
-    gravatar: Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.
+    destroy_account: Bitte geben Sie zur eigenen Sicherheit Ihr aktuelles Passwort ein. Sobald Sie auf "Account löschen" klicken, wird Ihr Zugang gelöscht und ist nicht wiederherstellbar!
+    gravatar: Aktivieren Sie dieses Kästchen, wird automatisch nach einem von Ihnen auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ können Sie aber auch direkt ein Bild hochladen.
     image: Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!
   label:
     account:
       destroy: Account löschen
     content:
       show: Über %u
-      update: Über dich
+      update: Über Ihre Person
     gravatar: Gravatar verwenden?
     image:
       choose: Bild auswählen
@@ -374,8 +374,8 @@ user:
     registered_since: Registriert seit
     update: Profil aktualisieren
   mail:
-    body: "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
-    subject: Deine Registrierung auf %WEBSITE_NAME.
+    body: "Hallo %u!\r\n\r\nDanke für Ihre Registrierung auf %WEBSITE_NAME. Um sich einzuloggen müssen Sie noch die Echtheit Ihrer E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
+    subject: Ihre Registrierung auf %WEBSITE_NAME.
   title:
     account: Account löschen
     image: Profilbild ändern

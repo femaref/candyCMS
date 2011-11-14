@@ -1,9 +1,12 @@
 <?php
 
-/*
+/**
+ * Create search.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- * @todo documentation and refactoring
+ * @license MIT
+ * @since 1.5
  */
 
 namespace CandyCMS\Model;
@@ -16,14 +19,22 @@ use PDO;
 
 class Search extends Main {
 
+  /**
+   * Fetch information from tables.
+   *
+   * @access private
+   * @param string $sSearch query string to search
+   * @param array $aTables tables to search in
+   * @return array $this->_aData search data
+   *
+   */
   private function _setData($sSearch, $aTables) {
-
     foreach ($aTables as $sTable) {
       try {
         $this->oQuery = $this->_oDb->query("SELECT
                                               id, title, date
                                             FROM
-                                              " . SQL_PREFIX . $sTable."
+                                              " . SQL_PREFIX . ":table
                                             WHERE
                                               title LIKE '%"  .$sSearch.  "%'
                                             OR
@@ -65,6 +76,15 @@ class Search extends Main {
     return $this->_aData;
   }
 
+  /**
+   * Get search information from tables.
+   *
+   * @access public
+   * @param string $sSearch query string to search
+   * @param array $aTables tables to search in
+   * @return array $this->_aData search data
+   *
+   */
   public function getData($sSearch, $aTables = '') {
     if (empty($aTables))
       $aTables = array('blogs', 'contents');

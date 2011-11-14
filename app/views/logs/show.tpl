@@ -15,11 +15,12 @@
         <td style='width:5%'>
           {$l.action_id}
         </td>
-        <td style='width:20%'>
+        <td style='width:40%'>
           {$l.time_start}
-        </td>
-        <td style='width:20%'>
-          {$l.time_end}
+          {if $l.time_start !== $l.time_end}
+            -
+            {$l.time_end}
+          {/if}
         </td>
         <td style='width:10%'>
           {if $USER_RIGHT == 4}

@@ -112,7 +112,7 @@ class Upload {
 	 * @access public
 	 * @param string $sResize cut or resize the image?!
 	 * @see app/controller/Gallery.controller.php
-	 * @return boolean status of upload.
+	 * @return boolean status of upload
 	 *
 	 */
   public function uploadGalleryFile($sResize = '') {

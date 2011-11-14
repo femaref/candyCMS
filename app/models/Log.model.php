@@ -24,7 +24,7 @@ class Log extends Main {
    * Set log overview data.
    *
    * @access private
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit page limit
    * @return array data
    *
    */
@@ -71,8 +71,8 @@ class Log extends Main {
       $iId = $aRow['id'];
 
       $this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
-      $this->_aData[$iId]['time_start'] = Helper::formatTimestamp($aRow['time_start']);
-      $this->_aData[$iId]['time_end ']  = Helper::formatTimestamp($aRow['time_end']);
+      $this->_aData[$iId]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
+      $this->_aData[$iId]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
     }
 
     return $this->_aData;
@@ -82,7 +82,7 @@ class Log extends Main {
    * Get log overview data.
    *
    * @access public
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit page limit
    * @return array data from _setData
    *
    */

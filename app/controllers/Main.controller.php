@@ -215,7 +215,7 @@ abstract class Main {
 		$this->oSmarty->cache_dir = CACHE_DIR;
 		$this->oSmarty->compile_dir = COMPILE_DIR;
 
-    if(CLEAR_CACHE === true)
+    if (CLEAR_CACHE == true)
       $this->oSmarty->clearAllCache();
 
 		# Define constants

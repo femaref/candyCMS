@@ -69,12 +69,10 @@ class Content extends Main {
    *
    */
   protected function _showFormTemplate() {
-    # Update
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
-    # Create
     else {
       $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $this->_aData['teaser']   = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';

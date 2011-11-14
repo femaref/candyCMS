@@ -162,7 +162,7 @@ class Comment extends Main {
    * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
-   * @param
+   * @param boolean $bShowCaptcha show captcha?
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
@@ -184,7 +184,6 @@ class Comment extends Main {
         Log::insert('comment', 'create', $iLastComment);
         return Helper::successMessage($this->oI18n->get('success.create'), $sRedirect);
       }
-
       else
         return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
     }

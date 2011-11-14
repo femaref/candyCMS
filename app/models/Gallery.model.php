@@ -7,7 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * @todo refactoring and documentation
  */
 
 namespace CandyCMS\Model;
@@ -28,13 +27,6 @@ class Gallery extends Main {
    * @var array
    */
   private $_aThumbs;
-
-  /**
-   *
-   * @access private
-   * @var string
-   */
-  private $_sFilePath;
 
   /**
    * Set gallery album data.
@@ -135,14 +127,22 @@ class Gallery extends Main {
    * Simply return ID to work with.
    *
    * @access public
-   * @return integer $this->_iId ID to handle.
+   * @return string $this->_iId ID to handle.
    */
   public function getId() {
     return $this->_iId;
   }
 
+  /**
+   * Fetch all thubms and put them into an array.
+   *
+   * @access private
+   * @param integer $iId album id to fetch images from
+   * @param boolean $bAdvancedImageInformation additional information like width, height etc.
+   * @return array $this->_aThumbs array with image information
+   *
+   */
   private function _setThumbs($iId, $bAdvancedImageInformation) {
-
     # Clear existing array (fix, when we got no images at a gallery
     if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
@@ -163,7 +163,7 @@ class Gallery extends Main {
                                       ORDER BY
                                         f.date ASC");
 
-      $oQuery->bindParam('album_id', $iId);
+      $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -174,39 +174,21 @@ class Gallery extends Main {
 
     $iLoop = 0;
     foreach ($aResult as $aRow) {
-      $iId = $aRow['id'];
+      $iId           = $aRow['id'];
+      $sUrlUpload    = '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+      $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
+      $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
+      $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
+      $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-      # Set SEO friendly user names
-      $sName      = Helper::formatOutput($aRow['name']);
-      $sSurname   = Helper::formatOutput($aRow['surname']);
-      $sFullName  = $sName . ' ' . $sSurname;
-
-      $sUrlAlbum     = '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
-      $sUrl32        = $sUrlAlbum . '/32/' . $aRow['file'];
-      $sUrlPopup     = $sUrlAlbum . '/popup/' . $aRow['file'];
-      $sUrlOriginal  = $sUrlAlbum . '/original/' . $aRow['file'];
-      $sUrlThumb     = $sUrlAlbum . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
-
+      $this->_aThumbs[$iId] = $this->_formatForOutput($aRow, 'gallery');
       $this->_aThumbs[$iId] = array(
-          'id'            => $aRow['id'],
-          'album_id'      => $aRow['album_id'],
-          'file'          => $aRow['file'],
-          'content'       => Helper::formatOutput($aRow['content']),
-          'date'          => Helper::formatTimestamp($aRow['date'], 1),
-          'datetime'      => Helper::formatTimestamp($aRow['date']),
-          'date_raw'      => $aRow['date'],
-          'date_rss'      => date('D, d M Y H:i:s O', $aRow['date']),
-          'date_w3c'      => date('Y-m-d\TH:i:sP', $aRow['date']),
           'url'           => '/gallery/' . $aRow['album_id'] . '/image/' . $iId,
           'url_32'        => $sUrl32,
-          'url_album'     => $sUrlAlbum,
+          'url_upload'    => $sUrlUpload,
           'url_popup'     => $sUrlPopup,
           'url_original'  => $sUrlOriginal,
           'url_thumb'     => $sUrlThumb,
-          'name'          => $sName,
-          'surname'       => $sSurname,
-          'full_name'     => $sFullName,
-          'extension'     => $aRow['extension'],
           'thumb_width'   => THUMB_DEFAULT_X,
           'loop'          => $iLoop
       );
@@ -232,16 +214,35 @@ class Gallery extends Main {
     return $this->_aThumbs;
   }
 
+  /**
+   * Get thumbnail array.
+   *
+   * @access public
+   * @param integer $iId album id to fetch images from
+   * @param boolean $bAdvancedImageInformation fetch additional information like width, height etc.
+   * @return array $this->_aThumbs processed array with image information
+   *
+   */
   public function getThumbs($iId, $bAdvancedImageInformation = false) {
     return $this->_setThumbs($iId, $bAdvancedImageInformation);
   }
 
+  /**
+   * Return album name.
+   *
+   * @static
+   * @access public
+   * @param integer $iId album ID
+   * @return string album name
+   * @todo better static methods
+   *
+   */
   public static function getAlbumName($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
-      $oQuery->bindParam('album_id', $iId);
+      $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -260,12 +261,22 @@ class Gallery extends Main {
       return Helper::formatOutput($aResult['title'], $sHighlight);
   }
 
+  /**
+   * Get the album content (former description).
+   *
+   * @static
+   * @access public
+   * @param integer $iId album ID
+   * @return string content/destription
+   * @todo better static methods
+   *
+   */
   public static function getAlbumContent($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
-      $oQuery->bindParam('album_id', $iId);
+      $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -284,12 +295,22 @@ class Gallery extends Main {
       return Helper::formatOutput($aResult['content'], $sHighlight);
   }
 
+  /**
+   * Get file content (former description).
+   *
+   * @static
+   * @access public
+   * @param integer $iId album ID
+   * @return string content (description)
+   * @todo better static methods
+   *
+   */
   public static function getFileContent($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -303,12 +324,22 @@ class Gallery extends Main {
       return Helper::formatOutput($aResult['content']);
   }
 
+  /**
+   * Get all file data.
+   *
+   * @static
+   * @access public
+   * @param integer $iId album ID
+   * @return array file data
+   * @todo better static methods
+   *
+   */
   public static function getFileData($iId) {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -322,6 +353,13 @@ class Gallery extends Main {
       return $aResult;
   }
 
+  /**
+   * Create a new album.
+   *
+   * @access public
+   * @return boolean status of query
+   *
+   */
   public function create() {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
@@ -337,10 +375,10 @@ class Gallery extends Main {
                                           :date )");
 
       $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId);
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('date', time());
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
       $bResult = $oQuery->execute();
 
       $this->_iId = $this->_oDb->lastInsertId();
@@ -349,6 +387,7 @@ class Gallery extends Main {
       $this->_oDb->rollBack();
     }
 
+    # Create image folders.
     if ($bResult === true) {
       $sPath = PATH_UPLOAD . '/gallery/' . (int) $this->_iId;
 
@@ -376,6 +415,14 @@ class Gallery extends Main {
     return $bResult;
   }
 
+  /**
+   * Update an album.
+   *
+   * @access public
+   * @param integer $iId
+   * @return boolean status of query
+   *
+   */
   public function update($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
@@ -386,9 +433,10 @@ class Gallery extends Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']));
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {
@@ -396,13 +444,28 @@ class Gallery extends Main {
     }
   }
 
+  /**
+   * Destroy a full album.
+   *
+   * @access public
+   * @param integer $iId album ID
+   * @return type
+   *
+   */
   public function destroy($iId) {
     $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
 
+    # Fetch all images
     try {
-      $oQuery = $this->_oDb->prepare("SELECT file FROM " . SQL_PREFIX . "gallery_files WHERE album_id = :album_id");
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        file
+                                      FROM
+                                        " . SQL_PREFIX . "gallery_files
+                                      WHERE
+                                        album_id = :album_id");
 
       $oQuery->bindParam('album_id', $iId);
+
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -418,13 +481,14 @@ class Gallery extends Main {
         @unlink($sPath . '/original/' . $aRow['file']);
       }
 
-      # Delete Folders
+      # Destroy Folders
       @rmdir($sPath . '/32/');
       @rmdir($sPath . '/' . THUMB_DEFAULT_X);
       @rmdir($sPath . '/popup');
       @rmdir($sPath . '/original');
       @rmdir($sPath);
 
+      # Destroy files from database
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
                                           " . SQL_PREFIX . "gallery_files
@@ -438,6 +502,7 @@ class Gallery extends Main {
         $this->_oDb->rollBack();
       }
 
+      # Destroy albums from database
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
                                           " . SQL_PREFIX . "gallery_albums
@@ -455,24 +520,42 @@ class Gallery extends Main {
     }
   }
 
+  /**
+   * Create a new file.
+   *
+   * @access public
+   * @param array $aFile uploaded file information
+   * @return boolean status of query
+   *
+   */
   public function createFile($aFile) {
     $oUploadFile = new Upload($this->_aRequest, $aFile);
 
-    if($oUploadFile->uploadGalleryFile() == true) {
+    if ($oUploadFile->uploadGalleryFile() == true) {
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
                                           " . SQL_PREFIX . "gallery_files
-                                            (album_id, author_id, file, extension, content, date)
+                                          ( album_id,
+                                            author_id,
+                                            file,
+                                            extension,
+                                            content,
+                                            date)
                                         VALUES
-                                          ( :album_id, :author_id, :file, :extension, :content, :date )");
+                                          ( :album_id,
+                                            :author_id,
+                                            :file,
+                                            :extension,
+                                            :content,
+                                            :date )");
 
         $iUserId = USER_ID;
-        $oQuery->bindParam('album_id', $this->_aRequest['id']);
-        $oQuery->bindParam('author_id', $iUserId);
-        $oQuery->bindParam('file', $oUploadFile->getId());
-        $oQuery->bindParam('extension', $oUploadFile->getExtension());
-        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-        $oQuery->bindParam('date', time());
+        $oQuery->bindParam('album_id', $this->_aRequest['id'], PDO::PARAM_INT);
+        $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+        $oQuery->bindParam('file', $oUploadFile->getId(), PDO::PARAM_STR);
+        $oQuery->bindParam('extension', $oUploadFile->getExtension(), PDO::PARAM_STR);
+        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
         return $oQuery->execute();
       }
@@ -482,10 +565,14 @@ class Gallery extends Main {
     }
   }
 
-  public function getFilePath() {
-    return $this->_sFilePath;
-  }
-
+  /**
+   * Update a file.
+   *
+   * @access public
+   * @param integer $iId file ID
+   * @return boolean status of query
+   *
+   */
   public function updateFile($iId) {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
@@ -495,8 +582,8 @@ class Gallery extends Main {
                                       WHERE
                                         id = :id");
 
-      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']));
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();
     }
@@ -505,12 +592,27 @@ class Gallery extends Main {
     }
   }
 
+  /**
+   * Destroy a file and delete from HDD.
+   *
+   * @access public
+   * @param integer $iId file ID
+   * @return boolean status of query
+   *
+   */
   public function destroyFile($iId) {
     try {
-      $oQuery = $this->_oDb->prepare("SELECT file, album_id FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-      $oQuery->bindParam('id', $iId);
-      $bReturn = $oQuery->execute();
+      $oQuery = $this->_oDb->prepare("SELECT
+                                        file,
+                                        album_id
+                                      FROM
+                                        " . SQL_PREFIX . "gallery_files
+                                      WHERE
+                                        id = :id");
 
+      $oQuery->bindParam('id', $iId);
+
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
