@@ -34,7 +34,7 @@ class Search extends Main {
         $this->oQuery = $this->_oDb->query("SELECT
                                               id, title, date
                                             FROM
-                                              " . SQL_PREFIX . ":table
+                                              " . SQL_PREFIX . $sTable . "
                                             WHERE
                                               title LIKE '%"  .$sSearch.  "%'
                                             OR
