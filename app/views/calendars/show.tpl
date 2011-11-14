@@ -8,6 +8,11 @@
     </p>
   {/if}
   <h1>{$lang.global.calendar}</h1>
+  {if isset($smarty.get.page) && $smarty.get.page > 1}
+    <a href="{$smarty.get.page - 1}">{$smarty.get.page - 1}</a>
+    {$smarty.get.page}
+    <a href="{$smarty.get.page + 1}">{$smarty.get.page + 1}</a>
+  {/if}
   {if !$calendar}
     <div class='error' title='{$lang.error.missing.entries}'>
       <h4>{$lang.error.missing.entries}</h4>
@@ -52,5 +57,10 @@
         {/foreach}
       {/foreach}
     </table>
+    {if !isset($smarty.get.action)}
+      <p class="center">
+        <a href="/calendar/archive/2011">{$lang.global.archive}</a>
+      </p>
+    {/if}
   {/if}
 </section>

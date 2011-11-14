@@ -6,6 +6,7 @@ website:
 global:
   about: Über
   album: Album
+  archive: Archiv
   author: Autor
   backup: Backup
   bbcode:

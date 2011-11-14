@@ -32,7 +32,36 @@ class Calendar extends Main {
 	private function _setData($bUpdate) {
 		if (empty($this->_iId)) {
 			try {
-				$oQuery = $this->_oDb->prepare("SELECT
+				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
+					$iYear = isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) ?
+									(int) $this->_aRequest['page'] :
+									date('Y');
+
+					$oQuery = $this->_oDb->prepare("SELECT
+                                          c.*,
+																					MONTH(c.start_date) AS start_month,
+																					YEAR(c.start_date) AS start_year,
+																					UNIX_TIMESTAMP(c.start_date) AS start_date,
+																					UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                          u.id AS uid,
+                                          u.name,
+                                          u.surname
+                                        FROM
+                                          " . SQL_PREFIX . "calendar c
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "users u
+                                        ON
+                                          c.author_id=u.id
+																				WHERE
+																					YEAR(c.start_date) = :year
+                                        ORDER BY
+                                          c.start_date ASC,
+                                          c.title ASC");
+
+					$oQuery->bindParam('year', $iYear, PDO::PARAM_INT);
+				}
+				else {
+					$oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
 																					MONTH(c.start_date) AS start_month,
 																					YEAR(c.start_date) AS start_year,
@@ -52,6 +81,7 @@ class Calendar extends Main {
                                         ORDER BY
                                           c.start_date ASC,
                                           c.title ASC");
+				}
 
 				$oQuery->execute();
 				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);

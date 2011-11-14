@@ -42,7 +42,7 @@ RewriteRule ^([A-Za-z]+)/([0-9]+)(/ajax)?$ index.php?section=$1&id=$2&page=1&aja
 RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1&action=$3&seo_title=$3 [L,QSA,NC]
 RewriteRule ^([A-Za-z]+)/([0-9]+)/([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&action=$3&page=$4&parent_id=$4 [L,QSA,NC]
 RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC]
-RewriteRule ^([A-Za-z]+)/([A-Za-z]+)(/[0-9]+)?$ index.php?section=$1&action=$2&subsection=$2&page=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([A-Za-z]+)(/([0-9]+))?$ index.php?section=$1&action=$2&subsection=$2&page=$4 [L,QSA,NC]
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
