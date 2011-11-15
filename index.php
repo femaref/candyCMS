@@ -92,10 +92,10 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 # Initialize software
 $oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
-$oIndex->loadConfigFiles(array('Candy', 'Facebook', 'Plugins'));
-$oIndex->loadPlugins(ALLOW_PLUGINS);
-$oIndex->loadLanguage();
-$oIndex->loadCronjob();
+$oIndex->getConfigFiles(array('Candy', 'Facebook', 'Plugins'));
+$oIndex->getPlugins(ALLOW_PLUGINS);
+$oIndex->getLanguage();
+$oIndex->getCronjob();
 $oIndex->setUser();
 $oIndex->setTemplate();
 

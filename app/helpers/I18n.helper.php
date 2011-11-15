@@ -30,6 +30,10 @@ class I18n {
     if (empty($_SESSION['lang'])) {
 			$sLanguageFile = 'languages/' . $sLanguage . '.language.yml';
 
+      # Remove mistakenly set cookie to avoid exceptions.
+      if(!file_exists($sLanguageFile))
+        $_COOKIE['default_language'] = 'en';
+
 			try {
 				if (!isset($_SESSION['lang']) || empty($_SESSION['lang']))
 					$_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));

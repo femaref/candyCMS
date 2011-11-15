@@ -90,7 +90,7 @@ class Index {
    * @see install/index.php
    *
    */
-  public function loadConfigFiles($aConfigs, $sPath = '') {
+  public function getConfigFiles($aConfigs, $sPath = '') {
     foreach ($aConfigs as $sConfig) {
       try {
         if (!file_exists($sPath . 'config/' . ucfirst($sConfig) . '.inc.php'))
@@ -113,7 +113,7 @@ class Index {
    * @see config/Candy.inc.php
    *
    */
-  public function loadPlugins($sAllowedPlugins, $sPath = '') {
+  public function getPlugins($sAllowedPlugins, $sPath = '') {
     $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
 
     foreach ($aPlugins as $sPluginName) {
@@ -129,7 +129,7 @@ class Index {
    * @see config/Candy.inc.php
    *
    */
-  public function loadLanguage($sPath = '') {
+  public function getLanguage($sPath = '') {
     # We got a language request? Let's change it!
     if (isset($this->_aRequest['language'])) {
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
@@ -178,7 +178,7 @@ class Index {
    * @see config/Candy.inc.php
    *
    */
-  public function loadCronjob() {
+  public function getCronjob() {
     if (class_exists('Cronjob')) {
       if (Cronjob::getNextUpdate() === true) {
         Cronjob::cleanup();
@@ -197,7 +197,7 @@ class Index {
    * @return object FacebookCMS
    *
    */
-  public function loadFacebookExtension() {
+  public function getFacebookExtension() {
     if (class_exists('FacebookCMS')) {
       return new FacebookCMS(array(
                   'appId' => FACEBOOK_APP_ID,
@@ -299,7 +299,7 @@ class Index {
 
     # Try to get facebook data
     if (USER_ID == 0) {
-      $oFacebook = $this->loadFacebookExtension();
+      $oFacebook = $this->getFacebookExtension();
       if ($oFacebook == true)
         $aFacebookData = $oFacebook->getUserData();
     }
