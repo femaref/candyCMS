@@ -105,6 +105,37 @@ class Index {
   }
 
   /**
+   * Get the page sections
+   *
+   * @param string $sUri URI to parse
+   *
+   */
+  public function getRoutes($sUri) {
+    #$aRoutes = preg_split("/[\s]*[\/][\s]*/", $sUri);
+/*
+    # Define standards
+    $this->_aRequest['action']      = '';
+    $this->_aRequest['ajax']        = 0;
+    $this->_aRequest['highlight']   = '';
+    $this->_aRequest['page']        = 1;
+    $this->_aRequest['parent_id']   = '';
+    $this->_aRequest['seo_title']   = '';
+    $this->_aRequest['subsection']  = '';
+
+    # Define start page and section
+    $this->_aRequest['section'] = isset($aRoutes[1]) && is_string($aRoutes[1]) ?
+            (string) $aRoutes[1] :
+            WEBSITE_LANDING_PAGE;
+
+    # Define ID
+    $this->_aRequest['id'] = isset($aRoutes[2]) && is_int($aRoutes[2]) ?
+            (int) $aRoutes[2] :
+            '';
+
+    die(print_r($this->_aRequest));*/
+  }
+
+  /**
    * Load all defined plugins.
    *
    * @access public
