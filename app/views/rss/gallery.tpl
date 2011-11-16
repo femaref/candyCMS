@@ -18,20 +18,23 @@
       <link>{$d.url_popup}</link>
       <description>
         <![CDATA[
-        <img src="{$d.url_thumb}"
+        <img src="{$WEBSITE_URL}/{$d.url_thumb}"
              width="{$d.thumb_width}"
              height="{$d.thumb_height}"
              alt="{$d.file}" />
+        {if $d.content}
+          <p>{$d.content}</p>
+        {/if}
         ]]>
       </description>
       <media:title>{$d.file}</media:title>
       <media:description><![CDATA[{$d.content}]]></media:description>
       <media:thumbnail
-        url="{$d.url_thumb}"
+        url="{$WEBSITE_URL}/{$d.url_thumb}"
         width="{$d.thumb_width}"
         height="{$d.thumb_height}" />
       <media:content
-        url="{$d.url_popup}"
+        url="{$WEBSITE_URL}/{$d.url_popup}"
         height="{$d.popup_height}"
         width="{$d.popup_width}"
         fileSize="{$d.popup_size}"

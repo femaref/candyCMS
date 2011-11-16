@@ -175,7 +175,7 @@ class Gallery extends Main {
     $iLoop = 0;
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
-      $sUrlUpload    = '/' . PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+      $sUrlUpload    = PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
       $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
       $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];

@@ -28,7 +28,7 @@ class Rss extends Main {
    *
    */
   public function __init() {
-    Header('Content-Type: application/rss+xml');
+    #Header('Content-Type: application/rss+xml');
 
     $this->_sSection = isset($this->_aRequest['subsection']) ?
             (string) strtolower($this->_aRequest['subsection']) :
@@ -53,6 +53,10 @@ class Rss extends Main {
     }
     # Gallery
     elseif ($this->_sSection == 'gallery' && $this->_iId > 0) {
+
+      # Empty page
+      unset($this->_aRequest['page']);
+
       $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData = $this->_oModel->getData($this->_iId, false, true);
 
