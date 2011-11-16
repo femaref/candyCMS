@@ -98,10 +98,11 @@ abstract class Main {
    * @access protected
    * @param array $aRow array with data to format
    * @param string $sSection name of the section we are working in
+	 * @param boolean $bNl2br format string to br
    * @return array $aData rebuild data
    *
    */
-  protected function _formatForOutput($aRow, $sSection) {
+  protected function _formatForOutput($aRow, $sSection, $bNl2br = false) {
     foreach ($aRow as $sColumn => $sData)
       $aData[$sColumn] = is_int($sData) ? (int) $sData : Helper::formatOutput($sData);
 
@@ -150,6 +151,9 @@ abstract class Main {
       $aData['teaser'] = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
       $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
     }
+
+		if ($bNl2br == true)
+			nl2br($aData['content']);
 
     return $aData;
   }

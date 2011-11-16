@@ -44,7 +44,7 @@ define('WEBSITE_CDN', '/public');
 # Use compressed or non-compressed files. Note that compressed files must be
 # updated every time you work on a non-compressed file!
 # DEFAULT: 'true'
-define('WEBSITE_COMPRESS_FILES', true);
+define('WEBSITE_COMPRESS_FILES', false);
 # ------------------------------------------------------------------------------
 
 # Enter the full name of website. This is used for Emails and RSS
@@ -189,7 +189,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use templates, enter name of template-folder here
 # They are placed at templates/<SkinName>/...
 # DEFAULT: ''
-define('PATH_TEMPLATE', '');
+define('PATH_TEMPLATE', 'v2');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
