@@ -8,6 +8,9 @@
  * @license MIT
  * @since 1.0
  */
+
+#require_once '../../config/Candy.inc.php';
+
 function search($sPath, $sType) {
   $sHtml = '';
   $sPath = $sPath . '/' . $sType;
@@ -76,9 +79,11 @@ function compress($sType, $sFileUrl, $sFileUrlMin) {
   exec($sCmd);
   return $sCmd . '<br />';
 }
+
 # Standard paths
 search($_SERVER['DOCUMENT_ROOT'] . '/public', 'js');
 search($_SERVER['DOCUMENT_ROOT'] . '/public', 'css');
+
 # Templates
 $sPath = $_SERVER['DOCUMENT_ROOT'] . '/public/templates';
 $oPathDir = opendir($sPath);
