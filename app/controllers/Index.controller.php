@@ -105,37 +105,6 @@ class Index {
   }
 
   /**
-   * Get the page sections
-   *
-   * @param string $sUri URI to parse
-   *
-   */
-  public function getRoutes($sUri) {
-    #$aRoutes = preg_split("/[\s]*[\/][\s]*/", $sUri);
-/*
-    # Define standards
-    $this->_aRequest['action']      = '';
-    $this->_aRequest['ajax']        = 0;
-    $this->_aRequest['highlight']   = '';
-    $this->_aRequest['page']        = 1;
-    $this->_aRequest['parent_id']   = '';
-    $this->_aRequest['seo_title']   = '';
-    $this->_aRequest['subsection']  = '';
-
-    # Define start page and section
-    $this->_aRequest['section'] = isset($aRoutes[1]) && is_string($aRoutes[1]) ?
-            (string) $aRoutes[1] :
-            WEBSITE_LANDING_PAGE;
-
-    # Define ID
-    $this->_aRequest['id'] = isset($aRoutes[2]) && is_int($aRoutes[2]) ?
-            (int) $aRoutes[2] :
-            '';
-
-    die(print_r($this->_aRequest));*/
-  }
-
-  /**
    * Load all defined plugins.
    *
    * @access public
@@ -163,13 +132,19 @@ class Index {
   public function getLanguage($sPath = '') {
     # We got a language request? Let's change it!
     if (isset($this->_aRequest['language'])) {
-      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      $this->_sLanguage = (string) $this->_aRequest['language'];
+      $this->_sLanguage = is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml') ?
+              (string) $this->_aRequest['language'] :
+              '';
+
+      if (!empty($this->_sLanguage))
+        setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
     }
     # There is no request, but there might be a cookie instead
     else {
       $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $this->_sLanguage = isset($aRequest['default_language']) ?
+
+      $this->_sLanguage = isset($aRequest['default_language']) &&
+              is_file('languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
     }
@@ -247,13 +222,16 @@ class Index {
    *
    */
   protected function _getFlashMessage() {
-    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) && !empty($this->_aSession['flash_message']['type']) ?
+    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) &&
+            !empty($this->_aSession['flash_message']['type']) ?
             $this->_aSession['flash_message']['type'] :
             '';
-    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) && !empty($this->_aSession['flash_message']['message']) ?
+    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) &&
+            !empty($this->_aSession['flash_message']['message']) ?
             $this->_aSession['flash_message']['message'] :
             '';
-    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) && !empty($this->_aSession['flash_message']['headline']) ?
+    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) &&
+            !empty($this->_aSession['flash_message']['headline']) ?
             $this->_aSession['flash_message']['headline'] :
             '';
 
@@ -271,14 +249,19 @@ class Index {
   public function setTemplate() {
     # We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
-      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
-      $this->_sTemplate = (string) $this->_aRequest['template'];
+      $this->_sTemplate = is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template']) ?
+              (string) $this->_aRequest['template'] :
+              '';
+
+      if (!empty($this->_sTemplate))
+        setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
     }
 
     # There is no request, but there might be a cookie instead
     else {
       $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $this->_sTemplate = isset($aRequest['default_template']) ?
+      $this->_sTemplate = isset($aRequest['default_template']) &&
+              is_dir(WEBSITE_CDN . '/templates/' . $aRequest['default_template']) ?
               (string) $aRequest['default_template'] :
               '';
     }

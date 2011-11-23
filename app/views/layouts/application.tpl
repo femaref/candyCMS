@@ -34,8 +34,8 @@
     <title>{$_title_}</title>
   </head>
   <!--[if lt IE 7]><body class="ie6"><![endif]-->
-  <!--[if IE 7]><body class="ie7><![endif]-->
-  <!--[if IE 8]><body class="ie8><![endif]-->
+  <!--[if IE 7]><body class="ie7"><![endif]-->
+  <!--[if IE 8]><body class="ie8"><![endif]-->
   <!--[if gt IE 8]><!--> <body><!--<![endif]-->
     <nav>
       <ul>

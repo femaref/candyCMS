@@ -88,7 +88,7 @@ final class Bbcode {
 
     # using [audio]file.ext[/audio]
     while (preg_match('#\[audio\](.*)\[\/audio\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30&callback=?';
+      $sUrl = 'http://url2vid.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=30&callback=?';
       $sStr = preg_replace('#\[audio\](.*)\[\/audio\]#Uis',
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $sUrl . '">' . $aMatch[1] . '</a></div>',
               $sStr);
@@ -96,7 +96,7 @@ final class Bbcode {
 
     # [video]file[/video]
     while (preg_match('#\[video\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl   = 'http://url2video.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
+      $sUrl   = 'http://url2vid.com/?url=' . $aMatch[1] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&callback=?';
       $sStr = preg_replace('#\[video\](.*)\[\/video\]#Uis',
               '<a href="' . $aMatch[1] . '" class="js-media" title="' . $sUrl . '">' . $aMatch[1] . '</a>',
               $sStr,
@@ -105,7 +105,7 @@ final class Bbcode {
 
     # [video thumbnail]file[/video]
     while (preg_match('#\[video (.*)\](.*)\[\/video]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&p=' . $aMatch[1] . '&callback=?';
+      $sUrl = 'http://url2vid.com/?url=' . $aMatch[2] . '&w=' . MEDIA_DEFAULT_X . '&h=' . MEDIA_DEFAULT_Y . '&p=' . $aMatch[1] . '&callback=?';
       $sStr = preg_replace('#\[video (.*)\](.*)\[\/video]#Uis',
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[2] . '">' . $aMatch[2] . '</a></div>',
               $sStr,
@@ -114,7 +114,7 @@ final class Bbcode {
 
     # [video width height thumbnail]file[/video]
     while (preg_match('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis', $sStr, $aMatch)) {
-      $sUrl = 'http://url2video.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] . '&p=' . $aMatch[3] . '&callback=?';
+      $sUrl = 'http://url2vid.com/?url=' . $aMatch[4] . '&w=' . $aMatch[1] . '&h=' . $aMatch[2] . '&p=' . $aMatch[3] . '&callback=?';
       $sStr = preg_replace('#\[video ([0-9]+) ([0-9]+) (.*)\](.*)\[\/video\]#Uis',
               '<div class="js-media" title="' . $sUrl . '"><a href="' . $aMatch[4] . '" class="js-media">' . $aMatch[4] . '</a></div>',
               $sStr,

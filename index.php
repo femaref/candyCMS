@@ -93,7 +93,6 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 $oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->getConfigFiles(array('Candy', 'Facebook', 'Plugins'));
-$oIndex->getRoutes($_SERVER['REQUEST_URI']);
 $oIndex->getPlugins(ALLOW_PLUGINS);
 $oIndex->getLanguage();
 $oIndex->getCronjob();
