@@ -96,7 +96,8 @@ class User extends Main {
                                           surname,
                                           last_login,
                                           date,
-                                          use_gravatar
+                                          use_gravatar,
+																					receive_newsletter
                                         FROM
                                           " . SQL_PREFIX . "users
                                         ORDER BY

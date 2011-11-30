@@ -13,6 +13,7 @@
     <th>{$lang.global.name}</th>
     <th>{$lang.user.label.registered_since}</th>
     <th>{$lang.user.label.last_login}</th>
+    <th>{$lang.global.newsletter}</th>
     <th></th>
   </tr>
   {foreach $user as $u}
@@ -20,11 +21,16 @@
       <td style='width:5%'>
         <img src='{$u.avatar_32}' width="18" height="18" alt='' />
       </td>
-      <td style='width:35%' class="left">
+      <td style='width:30%' class="left">
         <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
       </td>
       <td style='width:25%'>{$u.date}</td>
       <td style='width:25%'>{$u.last_login}</td>
+      <td style='width:5%'>
+        <img src='%PATH_IMAGES%/spacer.png'
+             class="icon-{if $u.receive_newsletter == 1}success{else}close{/if}"
+             alt='{$u.receive_newsletter}' title="" width="16" height="16" />
+      </td>
       <td style='width:10%'>
         {if $USER_RIGHT == 4}
           <a href='/user/{$u.id}/update'>
