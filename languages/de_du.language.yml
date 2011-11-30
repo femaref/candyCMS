@@ -310,7 +310,7 @@ newsletter:
   info:
     subscribe: Trage hier deine E-Mail-Adresse ein. Nach dem Absenden erhältst du umgehend eine E-Mail mit einem Link, durch den du die Echtheit deiner E-Mail-Adresse bestätigen kannst. Möchtest du den Newsletter abbestellen, so trage dich bitte am Ende eines Newsletters aus.
   title:
-    subscribe: Newsletter abonieren / abbestellen
+    subscribe: Newsletter abonnieren
 
 pages:
   next: Ältere Beiträge
@@ -359,7 +359,7 @@ user:
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login
-    newsletter: Newsletter abonieren?
+    newsletter: Newsletter abonnieren?
     password:
       create: Passwort ändern
       new: Neues Passwort
