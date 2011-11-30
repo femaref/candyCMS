@@ -28,20 +28,19 @@ class Search extends Main {
    * @return array $this->_aData search data
    *
    */
-  private function _setData($sSearch, $aTables) {
+  private function _setData($sSearch, $aTables, $sOrderBy = 'date DESC') {
     foreach ($aTables as $sTable) {
       try {
-        $this->oQuery = $this->_oDb->query("SELECT
-                                              id, title, date
-                                            FROM
-                                              " . SQL_PREFIX . $sTable . "
-                                            WHERE
-                                              title LIKE '%"  .$sSearch.  "%'
-                                            OR
-                                              content LIKE '%"  .$sSearch.  "%'
-                                            ORDER BY
-                                              date
-                                            DESC");
+        $this->oQuery = $this->_oDb->query(" SELECT
+                                  *
+                                FROM
+                                  " . SQL_PREFIX . $sTable . "
+                                WHERE
+                                  title LIKE '%" . $sSearch . "%'
+                                OR
+                                  content LIKE '%" . $sSearch . "%'
+                                ORDER BY
+                                  " . (string) $sOrderBy);
 
         $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -59,13 +58,11 @@ class Search extends Main {
         }
 
         foreach ($aResult as $aRow) {
+          if (isset($aRow['published']) && $aRow['published'] < 1)
+            continue;
+
           $iId = $aRow['id'];
-          $this->_aData[$sTable][$iId] = array(
-              'id'      => $aRow['id'],
-              'title'   => Helper::formatOutput($aRow['title']),
-              'date'    => Helper::formatTimestamp($aRow['date'], 1),
-              'datetime'=> Helper::formatTimestamp($aRow['date'])
-          );
+          $this->_aData[$sTable][$iId] = $this->_formatForOutput($aRow, $sTableSingular);
         }
       }
       catch (AdvancedException $e) {

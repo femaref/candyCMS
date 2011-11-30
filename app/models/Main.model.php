@@ -129,6 +129,8 @@ abstract class Main {
     }
 
     # Build full user name
+    $aData['name']    = isset($aData['name']) ? (string) $aData['name'] : '';
+    $aData['surname'] = isset($aData['surname']) ? (string) $aData['surname'] : '';
     $aData['full_name'] = trim($aData['name'] . ' ' . $aData['surname']);
 
     # Encode data for SEO

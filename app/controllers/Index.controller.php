@@ -127,6 +127,7 @@ class Index {
    *
    * @access public
    * @see config/Candy.inc.php
+   * @todo rewrite with less code
    *
    */
   public function getLanguage($sPath = '') {
@@ -244,6 +245,7 @@ class Index {
    *
    * @access public
    * @see config/Candy.inc.php
+   * @todo rewrite with less code
    *
    */
   public function setTemplate() {

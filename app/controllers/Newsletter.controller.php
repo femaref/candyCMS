@@ -13,8 +13,10 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Newsletter as Model;
+use MCAPI;
 
 require_once 'app/models/Newsletter.model.php';
+require_once 'lib/mailchimp/MCAPI.class.php';
 
 class Newsletter extends Main {
 
@@ -51,7 +53,7 @@ class Newsletter extends Main {
 
     else {
       # Query the model and get back the status code of the action
-      $sQuery = $this->_oModel->handleNewsletter(Helper::formatInput($this->_aRequest['email']));
+      /*$sQuery = $this->_oModel->handleNewsletter(Helper::formatInput($this->_aRequest['email']));
 
       if ($sQuery == 'DESTROY')
         return Helper::successMessage($this->oI18n->get('success.destroy'), '/newsletter');
@@ -66,7 +68,7 @@ class Newsletter extends Main {
         return Helper::successMessage($this->oI18n->get('success.create'), '/newsletter');
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.sql'), '/newsletter');
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/newsletter');*/
     }
   }
 
@@ -84,7 +86,6 @@ class Newsletter extends Main {
     $this->_setDescription($this->oI18n->get('newsletter.info.handle'));
     $this->_setTitle($this->oI18n->get('newsletter.title.handle'));
 
-
     $sTemplateDir = Helper::getTemplateDir('newsletters', 'newsletter');
     $this->oSmarty->template_dir = $sTemplateDir;
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'newsletter'));
@@ -96,6 +97,7 @@ class Newsletter extends Main {
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    * @override app/controllers/Main.controller.php
+   * @todo show link for mailchimp
    *
    */
   public function create() {
@@ -111,6 +113,7 @@ class Newsletter extends Main {
    *
    * @access private
    * @return string HTML content
+   * @todo show link for mailchimp
    *
    */
   private function _showCreateNewsletterTemplate() {
