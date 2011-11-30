@@ -25,9 +25,8 @@
         <textarea name='content' rows='6' cols='30' id="input-content">{$content}</textarea>
       </p>
       <p>
-        <label for='input-receive_newsletter'>{$lang.user.label.newsletter}</label>
-        <input name='receive_newsletter' id="input-receive_newsletter" value='1' type='checkbox'
-               {if $receive_newsletter == 1}checked{/if} />
+        <label for='input-unsubscribe_newsletter'>{$lang.user.label.newsletter}</label>
+        <input name='unsubscribe_newsletter' id="input-unsubscribe_newsletter" value='1' type='checkbox' />
       </p>
       {if $USER_RIGHT === 4 && $USER_ID !== $uid}
         <p>

@@ -14,9 +14,11 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\User as Model;
+use MCAPI;
 
 require_once 'app/models/User.model.php';
 require_once 'app/helpers/Upload.helper.php';
+require_once 'lib/mailchimp/MCAPI.class.php';
 
 class User extends Main {
 
@@ -99,6 +101,11 @@ class User extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_iId) === true) {
+
+      # Check if user wants to unsubscribe from mailchimp
+      if (isset($this->_aRequest['unsubscribe_newsletter']) && $this->_aRequest['unsubscribe_newsletter'] == true)
+        $this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
+
 			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
 							(int) $this->_aRequest['id'] :
 							USER_ID;
@@ -239,33 +246,48 @@ class User extends Main {
 	 *
 	 */
 	public function destroy() {
-		# We are a user and want to delete our account
-		if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
-			if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
-				if ($this->_oModel->destroy($this->_iId) === true) {
-					$this->_destroyUserAvatars($this->_iId);
-					return Helper::successMessage($this->oI18n->get('success.destroy'), '/');
-				}
-				else
-					return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
-			} else
-				return Helper::errorMessage('error.user.destroy.password', '/user/update');
+    $aUser = MODEL::getUserNamesAndEmail($this->_iId);
 
-		# We are admin and can delete users
-		} elseif (USER_RIGHT == 4) {
-			if ($this->_oModel->destroy($this->_iId) === true) {
-				$this->_destroyUserAvatars($this->_iId);
-				Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-				return Helper::successMessage($this->oI18n->get('success.destroy'), '/user');
-			}
-			else
-				return Helper::errorMessage($this->oI18n->get('error.sql'), '/user');
-		}
+    # We are a user and want to delete our account
+    if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
 
-		# No admin and not the active user
-		else
-			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
-	}
+      # Password matches with user password
+      if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
+        if ($this->_oModel->destroy($this->_iId) === true) {
+
+          # Unsubscribe from newsletter
+          $this->_unsubscribeFromNewsletter($aUser['email']);
+
+          # Destroy profile image
+          $this->_destroyUserAvatars($this->_iId);
+          return Helper::successMessage($this->oI18n->get('success.destroy'), '/');
+        }
+        else
+          return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
+      } else
+        return Helper::errorMessage('error.user.destroy.password', '/user/update');
+
+      # We are admin and can delete users
+    } elseif (USER_RIGHT == 4) {
+      if ($this->_oModel->destroy($this->_iId) === true) {
+
+        # Unsubscribe from newsletter
+        $this->_unsubscribeFromNewsletter($aUser['email']);
+
+        # Destroy profile image
+        $this->_destroyUserAvatars($this->_iId);
+
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        return Helper::successMessage($this->oI18n->get('success.destroy'), '/user');
+      }
+      else
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/user');
+    }
+
+    # No admin and not the active user
+    else
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+  }
 
 	/**
 	 * Create user or show form template.
@@ -306,14 +328,22 @@ class User extends Main {
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
-		# Generate verification code for users (double-opt-in)
-		$iVerificationCode = Helper::createRandomChar(12, true);
-		$sVerificationUrl = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
-
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
 		elseif ($this->_oModel->create($iVerificationCode) === true) {
+      # Subscribe to MailChimp
+      require_once 'config/Mailchimp.inc.php';
+
+      $aVars = array( 'FNAME' => Helper::formatInput($this->_aRequest['name']),
+                      'LNAME' => Helper::formatInput($this->_aRequest['surname']));
+
+      $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+      $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, Helper::formatInput($this->_aRequest['email']), $aVars, '', false);
+
+      # Generate verification code for users (double-opt-in)
+      $iVerificationCode  = Helper::createRandomChar(12, true);
+      $sVerificationUrl   = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
       $this->__autoload('Mail');
 
 			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
@@ -373,4 +403,19 @@ class User extends Main {
 		else
 			return Helper::errorMessage($this->oI18n->get('error.user.verification'), '/');
 	}
+
+  /**
+   * Remove from newsletter list
+   *
+   * @access private
+   * @param string $sEmail
+   * @return boolean status of action
+   *
+   */
+  private function _unsubscribeFromNewsletter($sEmail) {
+      require_once 'config/Mailchimp.inc.php';
+
+    $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+    return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail);
+  }
 }

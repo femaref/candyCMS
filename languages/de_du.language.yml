@@ -75,6 +75,7 @@ global:
     11: November
     12: Dezember
   name: Name
+  newsletter: Newsletter
   optional: optional
   overview: Übersicht
   page: Seite
@@ -366,7 +367,7 @@ user:
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login
-    newsletter: Newsletter abonnieren?
+    newsletter: Newsletter kündigen?
     password:
       create: Passwort ändern
       new: Neues Passwort

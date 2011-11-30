@@ -75,6 +75,7 @@ global:
     11: November
     12: Dezember
   name: Name
+  newsletter: Newsletter
   optional: optional
   overview: Übersicht
   page: Seite
@@ -307,17 +308,9 @@ media:
 
 newsletter:
   info:
-    name: %u wird zum Usernamen!<br />Bedenken Sie bitte ebenfalls, sich die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
-    handle: Tragen Sie hier Ihre E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Sie benötigen den Newsletter nicht mehr, wenn Sie sich auf dieser Seite registriert haben!
-  label:
-    create: Newsletter versenden
-  mail:
-    body: Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE
-    subject: Newsletter von %WEBSITE_NAME
-  receipients: Abonnenten
+    subscribe: Tragen Sie hier Ihre E-Mai-Adresse ein. Nach dem Absenden erhalten Sie umgehend eine E-Mail mit einem Link, durch den Sie die Echtheit Ihrer E-Mail-Adresse bestätigen können. Möchten Sie den Newsletter abbestellen, so tragen Sie sich bitte am Ende eines Newsletters aus.
   title:
-    create: Newsletter verfassen
-    handle: Newsletter abonieren / abbestellen
+    subscribe: Newsletter abonieren
 
 pages:
   next: Ältere Beiträge
@@ -366,7 +359,7 @@ user:
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login
-    newsletter: Newsletter abonnieren?
+    newsletter: Newsletter kündigen?
     password:
       create: Passwort ändern
       new: Neues Passwort

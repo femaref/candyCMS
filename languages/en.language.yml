@@ -74,6 +74,7 @@ global:
     11: November
     12: December
   name: Name
+  newsletter: Newsletter
   optional: Optional
   overview: Overview
   page: Page
@@ -301,7 +302,7 @@ media:
   title:
     create: Upload file
     destroy: Delete file
-    
+
 newsletter:
   info:
     name: %u is converted to user name!<br />The newsletter will be sent directly after pressing the submit button.
@@ -363,7 +364,7 @@ user:
       terms: I am allowed to upload this image and will not conflict with others copyright.
       update: Change Image?
     last_login: Last login
-    newsletter: Subscribe to newsletter?
+    newsletter: Unsubscribe from newsletter?
     password:
       create: Change password
       new: New password

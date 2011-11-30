@@ -284,15 +284,9 @@ class Section extends Main {
 
       case 'newsletter':
 
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->_oObject->create());
-          parent::_setTitle($this->oI18n->get('newsletter.title.create'));
-        }
-        else { # CREATE and DESTROY functions
-          parent::_setContent($this->_oObject->handleNewsletter());
-          parent::_setDescription($this->_oObject->getDescription());
-          parent::_setTitle($this->_oObject->getTitle());
-        }
+        parent::_setContent($this->_oObject->createSubscription());
+        parent::_setDescription($this->oI18n->get('newsletter.title.subscribe'));
+        parent::_setTitle($this->oI18n->get('newsletter.title.subscribe'));
 
         break;
 

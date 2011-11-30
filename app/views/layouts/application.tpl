@@ -94,11 +94,6 @@
         <ul>
           {if $USER_RIGHT >= 3}
             <li>
-              <a href='/newsletter/create' title='{$lang.newsletter.title.create}'>
-                {$lang.newsletter.title.create}
-              </a>
-            </li>
-            <li>
               <a href='/media' title='{$lang.global.manager.media}'>
                 {$lang.global.manager.media}
               </a>
@@ -122,8 +117,8 @@
             {/if}
           {else}
             <li>
-              <a href='/newsletter' title='{$lang.newsletter.title.handle}'>
-                {$lang.newsletter.title.handle}
+              <a href='/newsletter' title='{$lang.newsletter.title.subscribe}'>
+                {$lang.newsletter.title.subscribe}
               </a>
             </li>
           {/if}

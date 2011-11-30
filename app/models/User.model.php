@@ -235,7 +235,6 @@ class User extends Main {
    *
    */
   public function update($iId) {
-    $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user right
@@ -263,7 +262,6 @@ class User extends Main {
                                         surname = :surname,
                                         email = :email,
                                         content = :content,
-                                        receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
                                         password = :password,
                                         user_right = :user_right
@@ -274,7 +272,6 @@ class User extends Main {
       $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
       $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
-      $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
       $oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
       $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
       $oQuery->bindParam('user_right', $iUserRight, PDO::PARAM_INT);
