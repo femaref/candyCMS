@@ -46,23 +46,6 @@ function search($sPath, $sType) {
         $sHtml .= compress($sType, $sFileUrl, $sFileUrlMin);
       }
 
-      # Bundle files
-      /* if ($sType == 'css') {
-        $sFileContent .= file_exists($sPathFile . 'essential.css') ? file_get_contents($sPathFile . 'essential.css') : $sFileContent;
-        $sFileContent .= is_file($sPathFile . 'application.css') ? file_get_contents($sPathFile . 'application.css') : $sFileContent;
-        $sFileContent .= is_file($sPathFile . 'tinymce.css') ? file_get_contents($sPathFile . 'tinymce.css') : $sFileContent;
-        }
-        elseif ($sType == 'js') {
-
-        }
-
-        if (!empty($sFileContent)) {
-        $sCompressedFile = $sPathFile . '/_bundle.' . $sType;
-        $oFile = fopen($sCompressedFile, 'w');
-        fwrite($oFile, $sFileContent);
-        $sHtml .= compress($sType, $sCompressedFile, $sPathFile . '/_bundle.min.' . $sType);
-        } */
-
       closedir($oPathFile);
 
       # Clear function data

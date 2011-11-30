@@ -103,30 +103,24 @@ footer#footer ul {
   font-size:90%;
 }
 
-/* Main content area */
-div#content {
-  display: table;
-  width: 100%;
-}
-
 /* pagination */
-div#content div.pages {
+div.pages {
   text-align: center;
 }
 
-div#content div.pages span {
+div.pages span {
   border:1px solid #ababab;
   padding:5px;
   margin:1px;
 }
 
-div#content div.pages a {
+div.pages a {
   padding:5px;
 }
 
 /* Add / edit content links */
-div#content p a img,
-div#content div.pages a img,
+p a img,
+div.pages a img,
 span.js-toggle-headline img {
   vertical-align: bottom;
   margin-bottom: 3px;
