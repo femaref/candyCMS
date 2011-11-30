@@ -433,6 +433,6 @@ class User extends Main {
       require_once 'config/Mailchimp.inc.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-    return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail);
+    return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);
   }
 }
