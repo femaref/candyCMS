@@ -1,4 +1,4 @@
-<section id="comments">
+<div id="comments">
   <header>
     <a name='comments'></a>
     <h3>{$lang.global.comments}</h3>
@@ -47,14 +47,14 @@
       </article>
     {/foreach}
   </div>
-</section>
+</div>
 {$_pages_}
 <script src='%PATH_JS%/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $('#js-commments').infinitescroll({
-      navSelector  : "section.pages",
-      nextSelector : "section.pages a:first",
+      navSelector  : "div.pages",
+      nextSelector : "div.pages a:first",
       itemSelector : "#js-commments article",
       loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
     });

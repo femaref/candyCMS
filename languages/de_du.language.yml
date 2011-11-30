@@ -158,7 +158,7 @@ success:
   password:
     create: Dein neues Passwort wurde dir erfolgreich per E-Mail zugeschickt!
   user:
-    create: Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst!
+    create: "Du wurdest erfolgreich registriert und solltest eine E-Mail erhalten haben, über die du die Echtheit deiner E-Mail-Adresse bestätigten kannst. Ebenfalls wurdest du automatisch für den Newsletter eingetragen. Um sich abzumelden gehe bitte auf 'Einstellungen', dann auf 'Persönliche Daten' und klicke dort auf 'Newsletter kündigen'."
     verification: Vielen Dank für die Bestätigung deiner E-Mail-Adresse.
 
 error:
@@ -308,17 +308,9 @@ media:
 
 newsletter:
   info:
-    name: %u wird zum Usernamen!<br />Bedenke bitte ebenfalls, dir die gesamte Nachricht noch einmal vor dem Abschicken durchzulesen, um Rechtschreibfehler oder falsch gesetzte Links in der E-Mail zu vermeiden.
-    handle: Trage hier deine E-Mail Adresse ein um den Newsletter zu abonieren, bzw. abzubestellen. Du benötigst den Newsletter nicht mehr, wenn du dich auf dieser Seite registriert hast!
-  label:
-    create: Newsletter versenden
-  mail:
-    body: Hallo,\r\nvielen Dank für Ihr Interesse an unserem Newsletter. Falls Sie diese E-Mail fälschlicherweise erreicht hat, klicken Sie bitte <a href='%WEBSITE_URL/Newsletter'>hier</a>.%SIGNATURE
-    subject: Newsletter von %WEBSITE_NAME
-  receipients: Abonnenten
+    subscribe: Trage hier deine E-Mai-Adresse ein. Nach dem Absenden erhältst du umgehend eine E-Mail mit einem Link, durch den du die Echtheit deiner E-Mail-Adresse bestätigen kannst. Möchtest du den Newsletter abbestellen, so trage dich bitte am Ende eines Newsletters aus.
   title:
-    create: Newsletter verfassen
-    handle: Newsletter abonieren / abbestellen
+    subscribe: Newsletter abonieren / abbestellen
 
 pages:
   next: Ältere Beiträge
@@ -367,7 +359,7 @@ user:
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login
-    newsletter: Newsletter kündigen?
+    newsletter: Newsletter abonieren?
     password:
       create: Passwort ändern
       new: Neues Passwort

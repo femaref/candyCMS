@@ -63,7 +63,7 @@ class Rss extends Main {
       $this->_setTitle(Helper::removeSlahes($this->oI18n->get('global.gallery') . ': ' .
                       $this->_aData[$this->_iId]['title']));
 
-      return $this->_showGallery();
+      return $this->_showMedia();
     }
     else
       return Helper::redirectTo('/error/404');
@@ -93,7 +93,7 @@ class Rss extends Main {
    * @return string HTML content
    *
    */
-  private function _showGallery() {
+  private function _showMedia() {
     $aData = $this->_aData[$this->_iId]['files'];
     rsort($aData);
 
@@ -107,8 +107,8 @@ class Rss extends Main {
 
     $this->oSmarty->assign('data', $aData);
 
-    $sTemplateDir = Helper::getTemplateDir('rss', 'gallery');
+    $sTemplateDir = Helper::getTemplateDir('rss', 'media');
     $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'gallery'));
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'));
   }
 }

@@ -1,4 +1,2 @@
-<section id="search">
-  <h1>{$lang.global.search}</h1>
-  {$_search_}
-</section>
+<h1>{$lang.global.search}</h1>
+{include file="_show.tpl"}

@@ -110,37 +110,37 @@ div#content {
 }
 
 /* pagination */
-div#content section.pages {
+div#content div.pages {
   text-align: center;
 }
 
-div#content section.pages span {
+div#content div.pages span {
   border:1px solid #ababab;
   padding:5px;
   margin:1px;
 }
 
-div#content section.pages a {
+div#content div.pages a {
   padding:5px;
 }
 
 /* Add / edit content links */
 div#content p a img,
-div#content section.pages a img,
+div#content div.pages a img,
 span.js-toggle-headline img {
   vertical-align: bottom;
   margin-bottom: 3px;
 }
 
 /* blog and content pages */
-section#blog article.blogs,
-section#content article.contents,
-section#gallery article.gallery_albums,
-section#gallery article.search,
-section#download table,
-section#user table,
-section#logs table,
-section#content table,
+#blog article.blogs,
+#content article.contents,
+#gallery article.gallery_albums,
+#gallery article.search,
+#download table,
+#user table,
+#logs table,
+#content table,
 form,
 table {
   clear: both;
@@ -149,29 +149,28 @@ table {
   overflow:auto;
 }
 
-section#blog article.blogs header,
-section#content article.contents header {
+#blog article.blogs header,
+#content article.contents header {
   margin-bottom: 10px;
 }
 
-section#blog article.blogs header p,
-section#content article.contents header p,
-section.gallery_albums p {
+#blog article.blogs header p,
+#content article.contents header p {
   margin: 0px;
 }
 
-section#blog article.blogs p.summary,
-section#content article.contents p.summary {
+#blog article.blogs p.summary,
+#content article.contents p.summary {
   font-weight: bold;
 }
 
-section#blog article.blogs footer div.share,
-section#content article footer div.share {
+#blog article.blogs footer div.share,
+#content article footer div.share {
   float: left;
   margin: 5px 0px 0px;
 }
 
-section#blog article.blogs footer div.tags a {
+#blog article.blogs footer div.tags a {
   background: none repeat scroll 0 0 #E1E1E1;
   border-radius: 10px;
   color: #000;
@@ -180,56 +179,56 @@ section#blog article.blogs footer div.tags a {
   font-size:90%;
 }
 
-section#blog article.blogs footer div.share img,
-section#content article footer div.share img,
+#blog article.blogs footer div.share img,
+#content article footer div.share img,
 section article.blogs footer div.comments img {
   vertical-align: bottom;
   margin: 3px 1px;
 }
 
-section#blog article.blogs footer div.comments {
+#blog article.blogs footer div.comments {
   float: right;
 }
 
-section#blog article.blogs iframe,
-section#content article.contents iframe {
+#blog article.blogs iframe,
+#content article.contents iframe {
   display:block;
   margin-top: 10px;
 }
 
-section#gallery header {
+#gallery header {
   font-size: 90%;
 }
 
-section#gallery article.gallery_albums {
+#gallery article.gallery_albums {
   text-align: left;
 }
 
-section#gallery article.gallery_albums header p {
+#gallery article.gallery_albums header p {
   margin-top:0px;
 }
 
-section#gallery article.gallery_albums summary img {
+#gallery article.gallery_albums summary img {
   border: 1px solid #ccc;
 }
 
 /* Margin from headlines to images */
-section#gallery ul.js-caption {
+#gallery ul.js-caption {
   margin-top: 15px;
 }
 
 /* Comments */
-section#comments {
+#comments {
   clear:both;
   padding:10px 0px;
 }
 
-section#comments a {
+#comments a {
   font-weight: bold;
   color: #000;
 }
 
-section#comments article {
+#comments article {
   display: table;
   padding: 25px;
   width: 650px;
@@ -237,7 +236,7 @@ section#comments article {
   text-align:left;
 }
 
-section#comments article.from_author {
+#comments article.from_author {
   background: #E3E3E3;
   border: 1px solid #d7d7d7;
   -moz-border-radius: 10px;
@@ -245,19 +244,19 @@ section#comments article.from_author {
   border-radius: 10px;
 }
 
-section#comments article header {
+#comments article header {
   display: table-cell;
   width: 235px;
   padding: 0px 22px 0px 0px;
   line-height:1.5em;
 }
 
-section#comments article header img {
+#comments article header img {
   float:left;
   margin: 3px 10px 0px 0px;
 }
 
-section#comments article header a.count {
+#comments article header a.count {
   font-size: 24px;
   color: #CCCCCC;
   width: 50px;
@@ -265,24 +264,24 @@ section#comments article header a.count {
   margin-top: 10px;
 }
 
-section#comments article header a:hover {
+#comments article header a:hover {
   text-decoration: none;
 }
 
-section#comments article details {
+#comments article details {
   padding: 0;
 }
 
-section#comments article footer {
+#comments article footer {
   text-align: right;
 }
 
-section#user form {
+#user form {
   padding:0px;
   margin:0px;
 }
 
-section#user form h2 {
+#user form h2 {
   margin-bottom:0px;
 }
 
@@ -309,7 +308,7 @@ form {
 }
 
 form h1, form h2, form h3,
-section#comments h3 {
+#comments h3 {
   font-size: 20px;
   padding-bottom: 5px;
   margin-bottom: 20px;
@@ -317,7 +316,7 @@ section#comments h3 {
 }
 
 form h3,
-section#comments h3 {
+#comments h3 {
   font-size:16px;
 }
 

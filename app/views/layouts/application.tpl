@@ -58,22 +58,22 @@
         {/if}
       </ul>
     </nav>
-    <div id="content">
-      {if $_flash_type_}
-        <div id='js-flash_message'>
-          <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
-            <h4>{$_flash_headline_}</h4>
-            <p>{$_flash_message_}</p>
-          </div>
+    {if $_flash_type_}
+      <div id='js-flash_message'>
+        <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
+          <h4>{$_flash_headline_}</h4>
+          <p>{$_flash_message_}</p>
         </div>
-      {/if}
-      {if $_update_avaiable_}
-        <div class="notice">
-          {$_update_avaiable_}
-        </div>
-      {/if}
+      </div>
+    {/if}
+    {if $_update_avaiable_}
+      <div class="notice">
+        {$_update_avaiable_}
+      </div>
+    {/if}
+    <section id="{$smarty.get.section}">
       {$_content_}
-    </div>
+    </section>
     <footer id="footer">
       <section id="about">
         <h3>{$lang.global.overview}</h3>
@@ -125,42 +125,12 @@
         </ul>
       </section>
     </footer>
-    {block "js-footer"}{/block}
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
-    {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
-      <div id="fb-root"></div>
-      <script type="text/javascript">
-        var sFacebookAppId = '{$FACEBOOK_APP_ID}';
-        {literal}
-          window.fbAsyncInit = function() {
-                  FB.init({appId: sFacebookAppId, status: true, cookie: true,
-                    xfbml: true});
-                };
-        {/literal}
-        (function() {
-          var e = document.createElement('script'); e.async = true;
-          e.src = document.location.protocol +
-            '//connect.facebook.net/{$WEBSITE_LOCALE}/all.js';
-          document.getElementById('fb-root').appendChild(e);
-        }());
-      </script>
-    {/if}
-    {if $WEBSITE_TRACKING_CODE}
-      <script type="text/javascript">
-        var sTrackingCode = '{$WEBSITE_TRACKING_CODE}';
-        {literal}
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', sTrackingCode]);
-          _gaq.push (['_gat._anonymizeIp']);
-          _gaq.push(['_trackPageview']);
-
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        {/literal}
-      </script>
-    {/if}
+    <script type="text/javascript">
+      $('p.error').tipTip({ maxWidth: "auto" });
+    </script>
+    {include file="_facebook.tpl"}
+    {include file="_google.tpl"}
   </body>
 </html>

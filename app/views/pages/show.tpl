@@ -1,4 +1,4 @@
-<section class="pages">
+<div class="pages">
   <a href="{$_action_url_}/page/{$smarty.get.page + 1}"></a>
   {section pages start=1 loop=$page_last+1 step=1}
     {if $smarty.get.page == $smarty.section.pages.index && $page_last > 1}
@@ -9,4 +9,4 @@
       </a>
     {/if}
   {/section}
-</section>
+</div>

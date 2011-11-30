@@ -1,4 +1,4 @@
-<section class="pages">
+<div class="pages">
   {if $_page_previous_}
     <a href='/{$smarty.get.section}/page/{$_page_previous_}' rel="prev">&laquo; {$lang.pages.previous}</a>&nbsp;&nbsp;
   {/if}
@@ -10,4 +10,4 @@
   {if $_page_next_ && $_page_entries_ > $_page_limit_}
     &nbsp;&nbsp;<a href='/{$smarty.get.section}/page/{$_page_next_}' rel="next">{$lang.pages.next} &raquo;</a>
   {/if}
-</section>
+</div>

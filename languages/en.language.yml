@@ -305,17 +305,9 @@ media:
 
 newsletter:
   info:
-    name: %u is converted to user name!<br />The newsletter will be sent directly after pressing the submit button.
-    handle: Please enter your Email to subscribe or unsubscribe to our newsletter. You don't need to subscribe if you are a registered user.
-  label:
-    create: Send newsletter
-  mail:
-    body: Hello,\r\nthank you for your interest in our newsletter. If you didn't subscribe, click <a href='%WEBSITE_URL/Newsletter'>here</a> to unsubscribe from list.%SIGNATURE
-    subject: Newsletters from %WEBSITE_NAME
-  receipients: Receiver
+    subscribe: Please enter your Email to subscribe to our newsletter.
   title:
-    create: Create newsletter
-    handle: Subscribe / unsubscribe newsletter
+    subscribe: Subscribe to newsletter
 
 pages:
   next: Next entries
@@ -364,7 +356,7 @@ user:
       terms: I am allowed to upload this image and will not conflict with others copyright.
       update: Change Image?
     last_login: Last login
-    newsletter: Unsubscribe from newsletter?
+    newsletter: Subscribe to newsletter?
     password:
       create: Change password
       new: New password

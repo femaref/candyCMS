@@ -1,13 +1,11 @@
-<section id="image">
-  {if !$i}
-    <div class='error' title='{$lang.error.missing.entry}'>
-      <h4>{$lang.error.missing.entry}</h4>
-    </div>
-  {else}
-    <h1>{$i.file}</h1>
-    {if isset($f.content)}
-      <h3>{$i.content}</h3>
-    {/if}
-    <img src="%PATH_UPLOAD%/gallery/{$i.album_id}/popup/{$i.file}" alt="{$i.file}" />
+{if !$i}
+  <div class='error' title='{$lang.error.missing.entry}'>
+    <h4>{$lang.error.missing.entry}</h4>
+  </div>
+{else}
+  <h1>{$i.file}</h1>
+  {if isset($f.content)}
+    <h3>{$i.content}</h3>
   {/if}
-</section>
+  <img src="%PATH_UPLOAD%/gallery/{$i.album_id}/popup/{$i.file}" alt="{$i.file}" />
+{/if}

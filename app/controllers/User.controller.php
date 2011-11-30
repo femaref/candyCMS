@@ -34,90 +34,6 @@ class User extends Main {
 	}
 
 	/**
-	 * Update a user.
-	 *
-	 * Update entry or show form template if we have enough rights.
-	 *
-	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	public function update() {
-    if (empty($this->_iId))
-      $this->_iId = USER_ID;
-
-    if (USER_ID == 0)
-      return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
-
-    else {
-      if (isset($this->_aRequest['create_avatar']))
-				return $this->_createAvatar($this->_iId);
-
-			elseif (isset($this->_aRequest['update_user']))
-				return $this->_update();
-
-			else
-				return $this->_showFormTemplate();
-    }
-  }
-
-	/**
-	 * Update a user.
-	 *
-	 * Activate model, insert data into the database and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	protected function _update() {
-		$this->_setError('name');
-		$this->_setError('email');
-
-		# Check if old password is set
-    if (empty($this->_aRequest['password_old']) &&
-            !empty($this->_aRequest['password_new']) &&
-            !empty($this->_aRequest['password_new2']))
-      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
-
-    # Check if old password is correct
-    if (!empty($this->_aRequest['password_old']) &&
-            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-            $this->_aSession['userdata']['password'])
-      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
-
-    # Check if new password fields aren't empty
-    if (!empty($this->_aRequest['password_old']) && (
-            empty($this->_aRequest['password_new']) ||
-            empty($this->_aRequest['password_new2']) ))
-      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
-
-    # Check if new password fields match
-    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
-            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
-      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
-
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
-
-		elseif ($this->_oModel->update((int) $this->_iId) === true) {
-
-      # Check if user wants to unsubscribe from mailchimp
-      if (isset($this->_aRequest['unsubscribe_newsletter']) && $this->_aRequest['unsubscribe_newsletter'] == true)
-        $this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
-
-			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
-							(int) $this->_aRequest['id'] :
-							USER_ID;
-
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
-			return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
-		}
-		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/' . $this->_iId);
-	}
-
-	/**
 	 * Build form template to create or update a user.
 	 *
 	 * @access protected
@@ -222,6 +138,182 @@ class User extends Main {
 	}
 
 	/**
+	 * Create user or show form template.
+	 *
+	 * @access public
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @override app/controllers/Main.controller.php
+	 *
+	 */
+	public function create() {
+		return isset($this->_aRequest['create_user']) ? $this->_create() : $this->_showCreateUserTemplate();
+	}
+
+	/**
+	 * Create a user.
+	 *
+	 * Check if required data is given or throw an error instead.
+	 * If data is given, activate the model, insert them into the database, send mail and redirect afterwards.
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+	protected function _create() {
+		$this->_setError('name');
+		$this->_setError('email');
+		$this->_setError('password');
+
+		if (Model::getExistingUser($this->_aRequest['email']))
+			$this->_aError['email'] = $this->oI18n->get('error.user.create.email');
+
+		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+			$this->_aError['password'] = $this->oI18n->get('error.passwords');
+
+		# Admin does not need to confirm disclaimer
+		if (USER_RIGHT < 4) {
+			if (!isset($this->_aRequest['disclaimer']))
+				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
+		}
+
+		if (isset($this->_aError))
+			return $this->_showCreateUserTemplate();
+
+		elseif ($this->_oModel->create($iVerificationCode) === true) {
+
+      # Generate verification code for users (double-opt-in)
+      $iVerificationCode  = Helper::createRandomChar(12, true);
+      $sVerificationUrl   = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
+      $this->__autoload('Mail');
+
+			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
+			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
+
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
+			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
+
+			return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
+		}
+		else
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+	}
+
+	/**
+	 * Build form template to create a user.
+	 *
+	 * @access protected
+	 * @return string HTML content
+	 *
+	 */
+	protected function _showCreateUserTemplate() {
+		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
+										Helper::formatInput($this->_aRequest['name']) :
+										'');
+
+		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+										Helper::formatInput($this->_aRequest['surname']) :
+										'');
+
+		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+										Helper::formatInput($this->_aRequest['email']) :
+										'');
+
+    if (!empty($this->_aError))
+      $this->oSmarty->assign('error', $this->_aError);
+
+    $sTemplateDir = Helper::getTemplateDir('users', 'create');
+    $this->oSmarty->template_dir = $sTemplateDir;
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
+	}
+
+	/**
+	 * Update a user.
+	 *
+	 * Update entry or show form template if we have enough rights.
+	 *
+	 * @access public
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+	public function update() {
+    if (empty($this->_iId))
+      $this->_iId = USER_ID;
+
+    if (USER_ID == 0)
+      return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
+
+    else {
+      if (isset($this->_aRequest['create_avatar']))
+				return $this->_createAvatar($this->_iId);
+
+			elseif (isset($this->_aRequest['update_user']))
+				return $this->_update();
+
+			else
+				return $this->_showFormTemplate();
+    }
+  }
+
+	/**
+	 * Update a user.
+	 *
+	 * Activate model, insert data into the database and redirect afterwards.
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+	protected function _update() {
+		$this->_setError('name');
+		$this->_setError('email');
+
+		# Check if old password is set
+    if (empty($this->_aRequest['password_old']) &&
+            !empty($this->_aRequest['password_new']) &&
+            !empty($this->_aRequest['password_new2']))
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
+
+    # Check if old password is correct
+    if (!empty($this->_aRequest['password_old']) &&
+            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
+            $this->_aSession['userdata']['password'])
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
+
+    # Check if new password fields aren't empty
+    if (!empty($this->_aRequest['password_old']) && (
+            empty($this->_aRequest['password_new']) ||
+            empty($this->_aRequest['password_new2']) ))
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
+
+    # Check if new password fields match
+    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
+            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
+
+		if (isset($this->_aError))
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->update((int) $this->_iId) === true) {
+
+      # Check if user wants to unsubscribe from mailchimp
+			if (!isset($this->_aRequest['receive_newsletter']))
+				$this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
+
+			else
+				$this->_subscribeToNewsletter($this->_aRequest);
+
+			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
+							(int) $this->_aRequest['id'] :
+							USER_ID;
+
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+			return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
+		}
+		else
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/' . $this->_iId);
+	}
+
+	/**
 	 * Destroy user avatar images.
 	 *
 	 * @access private
@@ -290,103 +382,6 @@ class User extends Main {
   }
 
 	/**
-	 * Create user or show form template.
-	 *
-	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 * @override app/controllers/Main.controller.php
-	 *
-	 */
-	public function create() {
-		return isset($this->_aRequest['create_user']) ? $this->_create() : $this->_showCreateUserTemplate();
-	}
-
-	/**
-	 * Create a user.
-	 *
-	 * Check if required data is given or throw an error instead.
-	 * If data is given, activate the model, insert them into the database, send mail and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	protected function _create() {
-		$this->_setError('name');
-		$this->_setError('email');
-		$this->_setError('password');
-
-		if (Model::getExistingUser($this->_aRequest['email']))
-			$this->_aError['email'] = $this->oI18n->get('error.user.create.email');
-
-		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-			$this->_aError['password'] = $this->oI18n->get('error.passwords');
-
-		# Admin does not need to confirm disclaimer
-		if (USER_RIGHT < 4) {
-			if (!isset($this->_aRequest['disclaimer']))
-				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
-		}
-
-		if (isset($this->_aError))
-			return $this->_showCreateUserTemplate();
-
-		elseif ($this->_oModel->create($iVerificationCode) === true) {
-      # Subscribe to MailChimp
-      require_once 'config/Mailchimp.inc.php';
-
-      $aVars = array( 'FNAME' => Helper::formatInput($this->_aRequest['name']),
-                      'LNAME' => Helper::formatInput($this->_aRequest['surname']));
-
-      $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-      $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, Helper::formatInput($this->_aRequest['email']), $aVars, '', false);
-
-      # Generate verification code for users (double-opt-in)
-      $iVerificationCode  = Helper::createRandomChar(12, true);
-      $sVerificationUrl   = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
-      $this->__autoload('Mail');
-
-			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
-			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
-
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
-			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
-
-			return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
-		}
-		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
-	}
-
-	/**
-	 * Build form template to create a user.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
-	protected function _showCreateUserTemplate() {
-		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
-										Helper::formatInput($this->_aRequest['name']) :
-										'');
-
-		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
-										Helper::formatInput($this->_aRequest['surname']) :
-										'');
-
-		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
-										Helper::formatInput($this->_aRequest['email']) :
-										'');
-
-    if (!empty($this->_aError))
-      $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir = Helper::getTemplateDir('users', 'create');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
-	}
-
-	/**
 	 * Verify email address.
 	 *
 	 * @access public
@@ -397,11 +392,33 @@ class User extends Main {
 		if (empty($this->_iId))
 			return Helper::errorMessage($this->oI18n->get('error.missing.id'), '/');
 
-		elseif ($this->_oModel->verifyEmail($this->_iId) === true)
+		elseif ($this->_oModel->verifyEmail($this->_iId) === true) {
+			# Get data from activating user
+			$aUserData = $this->_oModel->getVerificationData();
+
+			# Subscribe to MailChimp after email adress is confirmed
+			$this->_subscribeToNewsletter($aUserData);
+
 			return Helper::successMessage($this->oI18n->get('success.user.verification'), '/');
+		}
 
 		else
 			return Helper::errorMessage($this->oI18n->get('error.user.verification'), '/');
+	}
+
+	/**
+	 * Subscribe to newsletter list.
+	 *
+	 * @access private
+	 * @param array $aData user data
+	 * @return boolean status of subscription
+	 */
+	private function _subscribeToNewsletter($aData) {
+		require_once 'config/Mailchimp.inc.php';
+		$aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
+
+		$oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+		return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', false);
 	}
 
   /**

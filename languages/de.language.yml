@@ -158,7 +158,7 @@ success:
   password:
     create: Ihr neues Passwort wurde Ihnen erfolgreich per E-Mail zugeschickt!
   user:
-    create: Sie wurden erfolgreich registriert und sollten eine E-Mail erhalten haben, über die Sie die Echtheit Ihrer E-Mail-Adresse bestätigten können!
+    create: "Sie wurden erfolgreich registriert und sollten eine E-Mail erhalten haben, über die Sie die Echtheit Ihrer E-Mail-Adresse bestätigten können. Ebenfalls wurden Sie automatisch für den Newsletter eingetragen. Um sich abzumelden gehen Sie bitte auf 'Einstellungen', dann auf 'Persönliche Daten' und klicken dort auf 'Newsletter kündigen'."
     verification: Vielen Dank für die Bestätigung Ihrer E-Mail-Adresse.
 
 error:
@@ -359,7 +359,7 @@ user:
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login
-    newsletter: Newsletter kündigen?
+    newsletter: Newsletter abonieren?
     password:
       create: Passwort ändern
       new: Neues Passwort

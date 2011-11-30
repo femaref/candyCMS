@@ -110,15 +110,6 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `newsletters`;
-
-CREATE TABLE `newsletters` (
-  `id` smallint(5) NOT NULL AUTO_INCREMENT,
-  `email` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQUE` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
