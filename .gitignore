@@ -1,3 +1,4 @@
+config/Mailchimp.inc.php
 config/Facebook.inc.php
 .DS_Store
 nbproject/*
