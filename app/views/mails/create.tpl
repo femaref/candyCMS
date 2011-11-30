@@ -21,7 +21,7 @@
   </p>
   {if isset($_captcha_) && $MOBILE === false}
     <div {if isset($error.captcha)}class="error" title="{$error.captcha}"{/if}>
-      <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
+      <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'clean' };</script>
       {$_captcha_}
     </div>
   {/if}

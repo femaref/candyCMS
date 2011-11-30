@@ -308,7 +308,7 @@ media:
 
 newsletter:
   info:
-    subscribe: Trage hier deine E-Mai-Adresse ein. Nach dem Absenden erhältst du umgehend eine E-Mail mit einem Link, durch den du die Echtheit deiner E-Mail-Adresse bestätigen kannst. Möchtest du den Newsletter abbestellen, so trage dich bitte am Ende eines Newsletters aus.
+    subscribe: Trage hier deine E-Mail-Adresse ein. Nach dem Absenden erhältst du umgehend eine E-Mail mit einem Link, durch den du die Echtheit deiner E-Mail-Adresse bestätigen kannst. Möchtest du den Newsletter abbestellen, so trage dich bitte am Ende eines Newsletters aus.
   title:
     subscribe: Newsletter abonieren / abbestellen
 

@@ -19,10 +19,10 @@ require_once 'lib/mailchimp/MCAPI.class.php';
 class Newsletter extends Main {
 
   /**
-   * Handle newsletter actions. Decide whether to add or remove an entry.
+   * Create a newsletter subscription. Send email information to mailchimp servers.
    *
    * @access public
-   * @return string status message
+   * @return string HTML content
    *
    */
   public function createSubscription() {
@@ -40,24 +40,22 @@ class Newsletter extends Main {
 
       if ($oMCAPI->errorCode)
         return Helper::errorMessage($oMCAPI->errorMessage, '/newsletter');
+
       else
         return Helper::successMessage($this->oI18n->get('success.create'), '/newsletter');
     }
   }
 
   /**
-   * Build newsletter template to insert or delete an email address.
+   * Show a form for email subscription.
    *
-   * @access protected
+   * @access private
    * @return string HTML content
    *
    */
   private function _showCreateSubscriptionTemplate() {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
-
-    $this->_setDescription($this->oI18n->get('newsletter.info.handle'));
-    $this->_setTitle($this->oI18n->get('newsletter.title.handle'));
 
     $sTemplateDir = Helper::getTemplateDir('newsletters', 'subscribe');
     $this->oSmarty->template_dir = $sTemplateDir;
