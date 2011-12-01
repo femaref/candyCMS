@@ -176,14 +176,14 @@ class User extends Main {
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
+      # Generate verification code for users (double-opt-in)
+    $iVerificationCode = Helper::createRandomChar(12, true);
+    $sVerificationUrl = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
+
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
-		elseif ($this->_oModel->create($iVerificationCode) === true) {
-
-      # Generate verification code for users (double-opt-in)
-      $iVerificationCode  = Helper::createRandomChar(12, true);
-      $sVerificationUrl   = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
+    elseif ($this->_oModel->create($iVerificationCode) === true) {
       $this->__autoload('Mail');
 
 			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));

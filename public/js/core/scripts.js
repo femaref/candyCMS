@@ -16,7 +16,7 @@ var candy = candy || {};
     $(sDivId).slideDown();
 
     if($('#js-flash_success') || $('#js-flash_error')) {
-      hide(sDivId, 5000);
+      hide(sDivId, 10000);
     }
   }
 
@@ -63,3 +63,11 @@ var candy = candy || {};
 if($('#js-flash_success') || $('#js-flash_error')) {
   candy.system.show('#js-flash_message');
 }
+
+$('#js-flash_success').click(function() {
+  candy.system.hide(this, 0);
+});
+
+$('#js-flash_error').click(function() {
+  candy.system.hide(this, 0);
+});

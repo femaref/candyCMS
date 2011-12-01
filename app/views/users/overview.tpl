@@ -10,7 +10,7 @@
 <table>
   <tr>
     <th></th>
-    <th>{$lang.global.name}</th>
+    <th class="left">{$lang.global.name}</th>
     <th>{$lang.user.label.registered_since}</th>
     <th>{$lang.user.label.last_login}</th>
     <th>{$lang.global.newsletter}</th>
@@ -19,13 +19,29 @@
   {foreach $user as $u}
     <tr>
       <td style='width:5%'>
-        <img src='{$u.avatar_32}' width="18" height="18" alt='' />
+        <img src='{$u.avatar_32}' width="20" height="20" alt='' />
       </td>
       <td style='width:30%' class="left">
         <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
+        <br />
+        {if $u.user_right == 2}
+          ({$lang.global.user.rights.2})
+        {elseif $u.user_right == 3}
+          ({$lang.global.user.rights.3})
+        {elseif $u.user_right == 4}
+          ({$lang.global.user.rights.4})
+        {/if}
       </td>
-      <td style='width:25%'>{$u.date}</td>
-      <td style='width:25%'>{$u.last_login}</td>
+      <td style='width:25%'>
+        {if $u.verification_code !== ''}
+          <span style="text-decoration:line-through">{$u.date}</span>
+        {else}
+          {$u.date}
+        {/if}
+      </td>
+      <td style='width:25%'>
+        {$u.last_login}
+      </td>
       <td style='width:5%'>
         <img src='%PATH_IMAGES%/spacer.png'
              class="icon-{if $u.receive_newsletter == 1}success{else}close{/if}"

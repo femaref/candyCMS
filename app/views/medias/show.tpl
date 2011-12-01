@@ -18,14 +18,14 @@
     {else}
       <tr>
         <th></th>
-        <th>{$lang.global.file}</th>
+        <th class="left">{$lang.global.file}</th>
         <th>{$lang.global.size}</th>
         <th>{$lang.global.upload.at}</th>
         <th></th>
       </tr>
       {foreach $files as $f}
         <tr class='{cycle values="row1,row2"}'>
-          <td style='width:10%'>
+          <td style='width:5%'>
             {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
               <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
                    width='32' height='32' alt='{$f.type}' />
@@ -34,7 +34,7 @@
                    width='32' height='32' alt='{$f.type}' />
             {/if}
           </td>
-          <td style='width:55%'>
+          <td style='width:60%' class="left">
             {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
               <a href='%PATH_UPLOAD%/media/{$f.name}'
                  class="js-fancybox"

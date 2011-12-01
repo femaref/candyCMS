@@ -97,7 +97,9 @@ class User extends Main {
                                           last_login,
                                           date,
                                           use_gravatar,
-																					receive_newsletter
+																					receive_newsletter,
+                                          verification_code,
+                                          user_right
                                         FROM
                                           " . SQL_PREFIX . "users
                                         ORDER BY
@@ -118,7 +120,7 @@ class User extends Main {
         $iId = $aRow['id'];
 
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login'], 1);
+        $this->_aData[$iId]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
       }
 
     }
@@ -184,6 +186,9 @@ class User extends Main {
    *
    */
   public function create($iVerificationCode) {
+    if (empty($iVerificationCode))
+      die('No verification code given.');
+
 		try {
 			$oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
@@ -362,11 +367,15 @@ class User extends Main {
 				$oQuery = $this->_oDb->prepare("UPDATE
                                           " . SQL_PREFIX . "users
                                         SET
-                                          verification_code = ''
+                                          verification_code = '',
+                                          receive_newsletter = '1'
+                                          date = :date
                                         WHERE
                                           id = :id");
 
 				$oQuery->bindParam('id', $this->_aData['id'], PDO::PARAM_INT);
+				$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+
 				Session::update($this->_aData['id']);
 				return $oQuery->execute();
 			}

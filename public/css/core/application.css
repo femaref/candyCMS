@@ -327,10 +327,14 @@ table img {
 
 table td, table th {
   padding: 2px;
+  text-align:center;
 }
 
 table th {
-  text-align: left;
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
+}
+
+table .left {
+  text-align:left;
 }

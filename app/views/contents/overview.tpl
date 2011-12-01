@@ -9,14 +9,14 @@
 <h1>{$lang.global.contents}</h1>
 <table>
   <tr>
-    <th>{$lang.global.name}</th>
+    <th class="left">{$lang.global.name}</th>
     <th>{$lang.global.date.date}</th>
     <th>{$lang.global.author}</th>
     <th></th>
   </tr>
   {foreach $content as $c}
     <tr class='{cycle values="row1,row2"}'>
-      <td>
+      <td class="left">
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>

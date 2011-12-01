@@ -36,6 +36,11 @@ div.notice {
   padding: 10px;
 }
 
+div.success:hover,
+div.error:hover {
+  cursor: pointer;
+}
+
 div.success {
   border: 1px solid #41a62a;
   background: #cbe472;
@@ -91,7 +96,7 @@ input.copybox {
   display: block;
   font-size: 80%;
   border: none;
-  width:95%;
+  width:100%;
 }
 
 form {
