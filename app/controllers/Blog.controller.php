@@ -77,8 +77,8 @@ class Blog extends Main {
    *
    */
   private function _setBlogDescription() {
-    if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
-      return Helper::removeSlahes($this->_aRequest['id']); # Term that is being searched
+    if (isset($this->_aRequest['search']))
+      return Helper::removeSlahes($this->_aRequest['search']); # Term that is being searched
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))

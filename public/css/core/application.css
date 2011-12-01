@@ -40,7 +40,7 @@ h1 a:visited, h2 a:visited, h3 a:visited {
   color: #000;
 }
 
-h3 {
+h3, #comments blockquote h3 {
   margin: 5px 0px 0px;
   font-size: 16px;
 }
@@ -152,12 +152,8 @@ article iframe {
   margin-top: 10px;
 }
 
-#gallery p {
+#gallery article p {
   margin:0px;
-}
-
-#gallery article img {
-  border: 1px solid #ccc;
 }
 
 /* Comments */
@@ -205,10 +201,6 @@ article iframe {
   width: 50px;
   float:left;
   margin-top: 10px;
-}
-
-#comments article header a:hover {
-  text-decoration: none;
 }
 
 #comments article details {

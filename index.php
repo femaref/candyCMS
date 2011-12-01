@@ -90,7 +90,7 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 @session_start();
 
 # Initialize software
-$oIndex = new Index(array_merge($_POST, $_GET), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->getConfigFiles(array('Candy', 'Facebook', 'Plugins'));
 $oIndex->getPlugins(ALLOW_PLUGINS);

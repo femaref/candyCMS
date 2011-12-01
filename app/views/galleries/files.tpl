@@ -34,8 +34,8 @@
     <ul class="js-caption">
       {foreach $files as $f}
         <li>
-          <a href='{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
-            <img src='{$f.url_thumb}'
+          <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title=''>
+            <img src='/{$f.url_thumb}'
                  alt='{$f.content}'
                  title='{$f.content}'
                  class="js-image" />
@@ -61,7 +61,7 @@
 <script src='%PATH_JS%/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".js-fancybox").fancybox();
+    $(".js-fancybox").fancybox({ nextEffect : 'fade', prevEffect : 'fade' });
     $(".js-image").lazyload({ threshold : 200, effect : "fadeIn" });
   });
 </script>

@@ -44,3 +44,7 @@
     <input type='reset' value='{$lang.global.reset}' />
   </p>
 </form>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
+<script type="text/javascript">
+  $('p.error').tipTip({ maxWidth: "auto" });
+</script>

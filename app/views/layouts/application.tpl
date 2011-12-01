@@ -125,11 +125,7 @@
         </ul>
       </section>
     </footer>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
-    <script type="text/javascript">
-      $('p.error').tipTip({ maxWidth: "auto" });
-    </script>
     {include file="_facebook.tpl"}
     {include file="_google.tpl"}
   </body>

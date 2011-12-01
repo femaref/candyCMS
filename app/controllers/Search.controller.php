@@ -54,48 +54,26 @@ class Search extends Main {
 	 *
 	 */
   public function show() {
-		$this->_setError('id', $this->oI18n->get('error.missing.content'));
+    if (!isset($this->_aRequest['id']) || empty($this->_aRequest['id']))
+      return $this->showFormTemplate();
 
-		if (isset($this->_aError))
-			return $this->showFormTemplate();
+    else {
+      $sString = Helper::formatInput($this->_aRequest['id']);
 
-		else {
-			$this->oSmarty->assign('_search_', $this->getSearch());
+      $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
+      $this->_sHeadline = str_replace('%s', $sString, $this->oI18n->get('search.title.show'));
 
-			# Create page title and description
-			$this->_setDescription($this->_sHeadline);
-			$this->_setTitle($this->_sHeadline);
+      $this->oSmarty->assign('string', $sString);
+      $this->oSmarty->assign('tables', $this->_oModel->getData($sString, $aTables));
 
-			# Language
-			$this->oSmarty->assign('_headline_', $this->_sHeadline);
+      # Create page title and description
+      $this->_setDescription($this->_sHeadline);
+      $this->_setTitle($this->_sHeadline);
 
       $sTemplateDir = Helper::getTemplateDir('searches', 'show');
       $this->oSmarty->template_dir = $sTemplateDir;
       return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
-		}
-	}
-
-	/**
-	 * Get search results.
-	 * This method is also used by the Error controller to display alternative entries.
-	 *
-	 * @access public
-	 * @param string $sTitle Optional string we search for instead of title and content. ($_REQUEST['seo_title])
-	 * @return string HTML content
-	 * @see app/controllers/Error.controller.php
-	 *
-	 */
-  public function getSearch($sTitle = '') {
-    $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
-    $this->_sSearch = empty($sTitle) ? Helper::formatInput($this->_aRequest['id']) : Helper::formatInput($sTitle);
-    $this->_sHeadline = str_replace('%s', $this->_sSearch, $this->oI18n->get('search.title.show'));
-
-    $this->oSmarty->assign('search', $this->_sSearch);
-    $this->oSmarty->assign('tables', $this->_oModel->getData($this->_sSearch, $aTables));
-
-    $sTemplateDir = Helper::getTemplateDir('searches', '_show');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_show'));
+    }
   }
 
 	/**

@@ -9,6 +9,11 @@ header, footer, section, aside, nav, article {
   display: block;
 }
 
+/* Center loading image */
+#infscr-loading {
+  text-align:center;
+}
+
 /* count down remaining chars at blog entry */
 span#js-count_chars {
   color: #666;
@@ -63,6 +68,7 @@ pre {
 div.center,
 p.center {
   text-align:center;
+  margin:10px 0px;
 }
 
 div.left,
@@ -508,10 +514,6 @@ form input[type="button"] {
 
 .js-caption li {
   display: inline-block;
-}
-
-.js-image {
-  background: transparent url('../../images/loading.gif') no-repeat center;
 }
 
 div.capty-caption {

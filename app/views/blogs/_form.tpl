@@ -46,6 +46,7 @@
   </p>
 </form>
 <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript'>
   $(document).ready(function(){
     $('.js-tinymce').tinymce({
@@ -71,4 +72,6 @@
       this.html(iLength);
     });
   });
+
+  $('p.error').tipTip({ maxWidth: "auto" });
 </script>

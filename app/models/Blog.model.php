@@ -36,11 +36,9 @@ class Blog extends Main {
       $sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
       # Search blog for tags
-      if (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'] &&
-              isset($this->_aRequest['id']) && !empty($this->_aRequest['id'])) {
-
+      if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
         $sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
-        $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['id']) . "%'";
+        $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }
 
       # Count entries for pagination

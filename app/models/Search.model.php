@@ -31,16 +31,16 @@ class Search extends Main {
   private function _setData($sSearch, $aTables, $sOrderBy = 'date DESC') {
     foreach ($aTables as $sTable) {
       try {
-        $this->oQuery = $this->_oDb->query(" SELECT
-                                  *
-                                FROM
-                                  " . SQL_PREFIX . $sTable . "
-                                WHERE
-                                  title LIKE '%" . $sSearch . "%'
-                                OR
-                                  content LIKE '%" . $sSearch . "%'
-                                ORDER BY
-                                  " . (string) $sOrderBy);
+        $this->oQuery = $this->_oDb->query("SELECT
+                                              *
+                                            FROM
+                                              " . SQL_PREFIX . $sTable . "
+                                            WHERE
+                                              title LIKE '%" . $sSearch . "%'
+                                            OR
+                                              content LIKE '%" . $sSearch . "%'
+                                            ORDER BY
+                                              " . (string) $sOrderBy);
 
         $aResult = $this->oQuery->fetchAll(PDO::FETCH_ASSOC);
 
@@ -58,7 +58,7 @@ class Search extends Main {
         }
 
         foreach ($aResult as $aRow) {
-          if (isset($aRow['published']) && $aRow['published'] < 1)
+          if (isset($aRow['published']) && $aRow['published'] == 0)
             continue;
 
           $iId = $aRow['id'];
