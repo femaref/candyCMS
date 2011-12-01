@@ -133,8 +133,14 @@ else
   $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
 
 # Spread this information.
-define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
-define('MOBILE_DEVICE', $bMobile);
+if (WEBSITE_DEV == false) {
+  define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
+  define('MOBILE_DEVICE', $bMobile);
+}
+else {
+  define('MOBILE', true);
+  define('MOBILE_DEVICE', true);
+}
 
 # Print out HTML
 echo $oIndex->show();

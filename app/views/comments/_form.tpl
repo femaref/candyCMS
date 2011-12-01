@@ -37,12 +37,10 @@
       {$_captcha_}
     </div>
   {/if}
-  <p class="center">
-    <input type='submit' value='{$lang.comment.title.create}' />
-    <input type='hidden' value='formdata' name='create_comment' />
-    <input type='hidden' value='{$_request_id_}' name='parent_id' />
-    <input type='reset' value='{$lang.global.reset}' />
-  </p>
+  <input type='submit' value='{$lang.comment.title.create}' data-theme="b" />
+  <input type='hidden' value='formdata' name='create_comment' />
+  <input type='hidden' value='{$_request_id_}' name='parent_id' />
+  <input type='reset' value='{$lang.global.reset}' />
 </form>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">

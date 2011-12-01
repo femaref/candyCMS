@@ -1,4 +1,4 @@
-<form method='post'>
+<form method='post' data-ajax="false">
   <h1>{$lang.global.login}</h1>
   <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
     <label for="input-email">{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
@@ -14,7 +14,7 @@
     <a href='/session/resendverification'>{$lang.session.verification.title}</a>
   </p>
   <p class="center">
-    <input type='submit' value='{$lang.global.login}' />
+    <input type='submit' value='{$lang.global.login}' data-theme="b" />
     <input type='hidden' value='formdata' name='create_session' />
   </p>
 </form>

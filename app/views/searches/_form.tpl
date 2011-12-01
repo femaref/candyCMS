@@ -5,7 +5,7 @@
     <input type="search" name="id" id="input-id" autofocus required />
   </p>
   <p class="center">
-    <input type="submit" value="{$lang.global.search}" />
+    <input type="submit" value="{$lang.global.search}" data-theme="b" />
   </p>
 </form>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
