@@ -21,6 +21,13 @@
         <p id="js-comment_{$c.id}">
           {$c.content}
         </p>
+        <footer>
+          <a href='#create'
+             onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
+                 title='{$lang.global.quote.quote}' />
+          </a>
+        </footer>
       </article>
     {/foreach}
   </div>
@@ -30,8 +37,8 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $('#js-commments').infinitescroll({
-      navSelector  : "section.pages",
-      nextSelector : "section.pages a:first",
+      navSelector  : "div.pages",
+      nextSelector : "div.pages a:first",
       itemSelector : "#js-commments article",
       loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
     });

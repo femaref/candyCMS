@@ -1,10 +1,10 @@
 <a name='create'></a>
-<form method="post">
+<form method="post" data-ajax="false">
   <h3>{$lang.comment.title.create}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
   <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
     <label for="input-name">{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
     {if $USER_NAME}
-      {$USER_FULL_NAME}
+      <input type="text" name="name" value="{$USER_FULL_NAME}" disabled />
       {if $USER_FACEBOOK_ID}
         <input type="hidden" value="{$USER_FULL_NAME}" name="name" id="input-name" />
         <input type="hidden" value="{$USER_FACEBOOK_ID}" name="facebook_id" />
@@ -19,7 +19,7 @@
   <p>
     <label for="input-email">{$lang.global.email.email}</label>
     {if $USER_EMAIL}
-      {$USER_EMAIL}
+      <input type="text" name="email" value="{$USER_EMAIL}" disabled />
       {if $USER_FACEBOOK_ID}
         <input type="hidden" value="{$USER_EMAIL}" name="email" id="input-email" />
       {/if}
@@ -28,7 +28,7 @@
     {/if}
   </p>
   <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
-    <label for='js-create_commment_text'>{$lang.global.content}<span title="{$lang.global.required}">*</span></label>
+    <label for='js-create_commment_text'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{if isset($content)}{$content}{/if}</textarea>
   </p>
   {if isset($_captcha_) && $MOBILE === false}

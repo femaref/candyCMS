@@ -54,8 +54,8 @@
     </div><!-- /page -->
     <script type="text/javascript">
       $('#top').live('click', function(e){
-        $.mobile.silentScroll(0);
         $('body').clearQueue();
+        $.mobile.silentScroll(0);
       });
 
       $('img').each(function() {
@@ -67,7 +67,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="%PATH_JS%/core/scripts{$_compress_files_suffix_}.js"></script>
+    <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
     {include file="_google.tpl"}
   </body>
 </html>

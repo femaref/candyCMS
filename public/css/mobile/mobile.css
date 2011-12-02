@@ -2,6 +2,13 @@ a:hover {
   text-decoration: none;
 }
 
+
+/* Center loading image */
+#infscr-loading {
+  text-align:center;
+  margin-top:20px;
+}
+
 /* Hide toggle on load */
 div.success h4,
 div.notice h4,
@@ -10,12 +17,16 @@ span.js-toggle-element {
 }
 
 /* Success and error Messages */
+#js-flash_message {
+  margin-bottom:30px;
+}
+
 div.success,
 div.error,
 p.error,
 div.notice {
-  margin: 0px 0px 10px 0px;
   padding: 10px;
+  overflow:auto;
 }
 
 div.success:hover,
@@ -38,7 +49,7 @@ p.error {
   background:#EED0D0 !important; /* Override .row1 and .row2 */
   color:#333;
   border:1px solid red;
-  margin: 5px 0px;
+  margin:0px 0px 5px;
 }
 
 div.error h4,
@@ -62,6 +73,9 @@ p.error h4 {
   text-align:left;
   padding:10px;
   background:#eee;
+  -webkit-border-radius: .6em;
+  -moz-border-radius: .6em;
+  border-radius: .6em;
 }
 
 #comments article.from_author {
@@ -69,8 +83,9 @@ p.error h4 {
 }
 
 #comments article header {
-  padding: 0px 22px 0px 0px;
   line-height:1.5em;
+  border-bottom:1px solid #ccc;
+  padding-bottom:8px;
 }
 
 #comments article header img {
@@ -82,9 +97,31 @@ p.error h4 {
   text-decoration: none;
 }
 
+#comments article p {
+  font-size:90%;
+}
+
+#comments  footer {
+  text-align:right;
+}
+
 #session p.center {
   font-size:80%;
   text-align:center;
+}
+
+/* quotes */
+blockquote {
+  padding:0px 15px;
+  margin:10px auto;
+  text-align:left;
+  border-left:5px solid #ccc;
+}
+
+blockquote h3 {
+  margin-top:0px;
+  margin-bottom:0px;
+  font-size:90%;
 }
 
 .ui-header,

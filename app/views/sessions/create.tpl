@@ -1,11 +1,11 @@
 <form method='post' data-ajax="false">
   <h1>{$lang.global.login}</h1>
   <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
-    <label for="input-email">{$lang.global.email.email}<span title="{$lang.global.required}">*</span></label>
+    <label for="input-email">{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
     <input name='email' type='email' value="{$email}" id="input-email" autofocus required />
   </p>
   <p {if isset($error.password)}class="error" title="{$error.password}"{/if}>
-    <label for='input-password'>{$lang.global.password.password}<span title="{$lang.global.required}">*</span></label>
+    <label for='input-password'>{$lang.global.password.password} <span title="{$lang.global.required}">*</span></label>
     <input name='password' type='password' id="input-password" required />
   </p>
   <p class="center">

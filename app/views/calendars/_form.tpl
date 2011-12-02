@@ -1,7 +1,7 @@
 <form action='/calendar/{$smarty.get.action}' method='post'>
   <h1>{$lang.global.calendar}</h1>
   <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
-    <label for='input-title'>{$lang.global.title}<span title="{$lang.global.required}">*</span></label>
+    <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input type='text' name='title' id="input-title" value='{$title}' required />
   </p>
   <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
@@ -9,7 +9,7 @@
     <input type='text' name='content' id="input-content" value='{$content}' />
   </p>
   <p {if isset($error.start_date)}class="error" title="{$error.start_date}"{/if}>
-    <label for='input-start_date'>{$lang.global.date.start}<span title="{$lang.global.required}">*</span></label>
+    <label for='input-start_date'>{$lang.global.date.start} <span title="{$lang.global.required}">*</span></label>
     <input type='date' name='start_date' id="input-start_date" value='{$start_date}'
            placeholder='{$lang.calendar.info.date_format}' autocomplete required
            min="{$_date_}" />

@@ -16,7 +16,7 @@
     {foreach $files as $f}
       <li>
         <a href='{$f.url}' title='{$f.content}'>
-          <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' />
+          <img src='/{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' />
           {if isset($f.content)}
             <h3>{$f.content}</h3>
           {/if}

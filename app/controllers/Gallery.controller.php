@@ -62,6 +62,16 @@ class Gallery extends Main {
     elseif(!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
       $this->_aData = Model::getFileData($this->_iId);
 
+      # Absolute URL for image information
+      $sUrl = PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file'];
+
+      # Get image information
+      $aImageInfo = getimagesize($sUrl);
+
+      $this->_aData['url']    = $sUrl;
+      $this->_aData['width']  = $aImageInfo[0];
+      $this->_aData['height'] = $aImageInfo[1];
+
       $this->_setDescription($this->_aData['content']);
       $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
 

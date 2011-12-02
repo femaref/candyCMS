@@ -143,7 +143,7 @@ class Comment extends Main {
    */
   public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
-      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true)
+      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
         return $this->_checkCaptcha();
 
       else
@@ -178,7 +178,7 @@ class Comment extends Main {
 
     else {
       $iLastComment = Helper::getLastEntry('comments') + 1;
-      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#' . $iLastComment;
+      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
       if ($this->_oModel->create() === true) {
         Log::insert('comment', 'create', $iLastComment);
