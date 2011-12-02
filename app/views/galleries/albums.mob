@@ -12,11 +12,9 @@
         </h2>
       </header>
       {foreach $a.files as $f}
-        <a href='/gallery/{$a.id}'>
-          <img src='/{$f.url_32}'
-               alt='{$f.file}' title='{$f.content}'
-               height='32' width='32' />
-        </a>
+        <img src='/{$f.url_32}'
+             alt='{$f.file}' title='{$f.content}'
+             height='32' width='32' />
       {/foreach}
     {* Show gallery albums without uploaded images *}
     {elseif $USER_RIGHT >= 3}

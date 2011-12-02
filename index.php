@@ -133,7 +133,7 @@ else
   $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
 
 # Spread this information.
-if (WEBSITE_DEV == false) {
+if (WEBSITE_DEV == true) {
   define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
   define('MOBILE_DEVICE', $bMobile);
 }

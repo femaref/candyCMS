@@ -15,7 +15,7 @@
   <table>
     {foreach $download as $d}
       <tr>
-        <th colspan="5">
+        <th colspan="5" class="left">
           <h2>{$d.category}</h2>
         </th>
       </tr>
@@ -25,7 +25,7 @@
             <img src='%PATH_IMAGES%/files/{$f.extension}.png'
                  width='32' height='32' alt='{$f.extension}' />
           </td>
-          <td>
+          <td class="left">
             <a href="{$f.url}" target="_blank">{$f.title}</a>
             {if $f.content !== ''}
               <br />
