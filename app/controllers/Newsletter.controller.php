@@ -12,7 +12,6 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use MCAPI;
 
 require_once 'lib/mailchimp/MCAPI.class.php';
 
@@ -32,17 +31,11 @@ class Newsletter extends Main {
       return $this->_showCreateSubscriptionTemplate();
 
     else {
-      # Subscribe to MailChimp
-      require_once 'config/Mailchimp.inc.php';
-
-      $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-      $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, Helper::formatInput($this->_aRequest['email']));
-
-      if ($oMCAPI->errorCode)
-        return Helper::errorMessage($oMCAPI->errorMessage, '/newsletter');
+      if ($this->_subscribeToNewsletter($this->_aRequest, true) == true)
+        return Helper::successMessage($this->oI18n->get('success.newsletter.create'), '/newsletter');
 
       else
-        return Helper::successMessage($this->oI18n->get('success.create'), '/newsletter');
+        return Helper::errorMessage($this->oI18n->get('error.standard'), '/newsletter');
     }
   }
 

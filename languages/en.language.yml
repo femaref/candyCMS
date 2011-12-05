@@ -149,6 +149,8 @@ success:
     destroy: Files successfully deleted!
   update: Entry has been updated!
   upload: Upload successful!
+  newsletter:
+    create: Thank you for your interest in our newsletter. You should recive an email within a few minutes containing a link to verify your account.
   mail:
     create: Email has been sent!
   session:

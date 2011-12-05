@@ -74,7 +74,7 @@ global:
     10: Oktober
     11: November
     12: Dezember
-  name: Name
+  name: Vorname
   newsletter: Newsletter
   optional: optional
   overview: Übersicht
@@ -150,6 +150,8 @@ success:
     destroy: Datei erfolgreich gelöscht!
   update: Update erfolgreich!
   upload: Datei(en) erfolgreich hochgeladen!
+  newsletter:
+    create: Vielen Dank für Ihr Interesse an unserem Newsletter. In wenigen Minuten sollten Sie eine E-Mail zur Bestätigung der E-Mail-Adresse erhalten.
   mail:
     create: E-Mail erfolgreich verschickt!
   session:

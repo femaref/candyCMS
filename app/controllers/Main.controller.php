@@ -20,6 +20,7 @@ use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use CandyCMS\Plugin\Headlines as Headlines;
 use CandyCMS\Plugin\Teaser as Teaser;
+use MCAPI;
 use Smarty;
 
 abstract class Main {
@@ -473,4 +474,34 @@ abstract class Main {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
 		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') : $this->_destroy();
 	}
+
+	/**
+	 * Subscribe to newsletter list.
+	 *
+	 * @access protected
+	 * @param array $aData user data
+	 * @return boolean status of subscription
+	 */
+	protected function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
+		require_once 'config/Mailchimp.inc.php';
+		$aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
+
+		$oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+		return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', $bDoubleOptIn);
+	}
+
+  /**
+   * Remove from newsletter list
+   *
+   * @access private
+   * @param string $sEmail
+   * @return boolean status of action
+   *
+   */
+  protected function _unsubscribeFromNewsletter($sEmail) {
+      require_once 'config/Mailchimp.inc.php';
+
+    $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+    return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);
+  }
 }
