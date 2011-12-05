@@ -115,7 +115,7 @@ article header {
 }
 
 article p {
-  margin:10px 0px;
+  margin:0px 0px 10px 0px;
 }
 
 article p.summary {
@@ -213,6 +213,14 @@ article iframe {
 
 #user form h2 {
   margin-bottom:0px;
+}
+
+#newsletter h1 {
+  margin-bottom:0px;
+}
+
+#newsletter h4 {
+  margin:10px 0px;
 }
 
 /* Pagination */
@@ -335,6 +343,6 @@ table th {
   padding-bottom: 5px;
 }
 
-table .left {
+table .left, #user table td {
   text-align:left;
 }
