@@ -161,6 +161,7 @@ class User extends Main {
 	 */
 	protected function _create() {
 		$this->_setError('name');
+		$this->_setError('surname');
 		$this->_setError('email');
 		$this->_setError('password');
 
@@ -405,34 +406,4 @@ class User extends Main {
 		else
 			return Helper::errorMessage($this->oI18n->get('error.user.verification'), '/');
 	}
-
-	/**
-	 * Subscribe to newsletter list.
-	 *
-	 * @access private
-	 * @param array $aData user data
-	 * @return boolean status of subscription
-	 */
-	private function _subscribeToNewsletter($aData) {
-		require_once 'config/Mailchimp.inc.php';
-		$aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
-
-		$oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-		return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', false);
-	}
-
-  /**
-   * Remove from newsletter list
-   *
-   * @access private
-   * @param string $sEmail
-   * @return boolean status of action
-   *
-   */
-  private function _unsubscribeFromNewsletter($sEmail) {
-      require_once 'config/Mailchimp.inc.php';
-
-    $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-    return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);
-  }
 }

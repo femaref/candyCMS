@@ -150,6 +150,8 @@ success:
     destroy: Datei erfolgreich gelöscht!
   update: Update erfolgreich!
   upload: Datei(en) erfolgreich hochgeladen!
+  newsletter:
+    create: Vielen Dank für dein Interesse an unserem Newsletter. In wenigen Minuten solltest du eine E-Mail zur Bestätigung der E-Mail-Adresse erhalten.
   mail:
     create: E-Mail erfolgreich verschickt!
   session:

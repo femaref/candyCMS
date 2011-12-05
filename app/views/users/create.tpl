@@ -5,7 +5,7 @@
     <input name='name' value='{$name}' type='name' id="input-name" autofocus required />
   </p>
   <p>
-    <label for='input-surname'>{$lang.global.surname}</label>
+    <label for='input-surname'>{$lang.global.surname} <span title="{$lang.global.required}">*</span></label>
     <input name='surname' value='{$surname}' id="input-surname" type='text' />
   </p>
   <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>

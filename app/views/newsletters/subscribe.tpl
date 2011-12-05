@@ -3,6 +3,14 @@
   <h4>
     {$lang.newsletter.info.subscribe}
   </h4>
+  <p>
+    <label for='input-name'>{$lang.global.name}</label>
+    <input name='name' type='name' id="input-name" autofocus />
+  </p>
+  <p>
+    <label for='input-surname'>{$lang.global.surname}</label>
+    <input name='surname' id="input-surname" type='text' />
+  </p>
   <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
     <label for="input-email">{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
     <input type="email" name='email' id="input-email" autofocus required />
