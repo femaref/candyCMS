@@ -232,15 +232,14 @@ class Gallery extends Main {
    * @access public
    * @param integer $iId album ID
    * @return string album name
-   * @todo better static methods
    *
    */
   public static function getAlbumName($iId) {
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
-      $bReturn = $oQuery->execute();
 
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
@@ -263,22 +262,18 @@ class Gallery extends Main {
    * @access public
    * @param integer $iId album ID
    * @return string content/destription
-   * @todo better static methods
    *
    */
   public static function getAlbumContent($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
-      $bReturn = $oQuery->execute();
 
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
 
     # Do we need to highlight text?
@@ -297,22 +292,18 @@ class Gallery extends Main {
    * @access public
    * @param integer $iId album ID
    * @return string content (description)
-   * @todo better static methods
    *
    */
   public static function getFileContent($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bReturn = $oQuery->execute();
 
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
 
     if ($bReturn === true)
@@ -326,22 +317,18 @@ class Gallery extends Main {
    * @access public
    * @param integer $iId album ID
    * @return array file data
-   * @todo better static methods
    *
    */
   public static function getFileData($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bReturn = $oQuery->execute();
 
+      $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
 
     if ($bReturn === true)
