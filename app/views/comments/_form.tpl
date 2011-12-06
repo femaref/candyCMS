@@ -1,6 +1,10 @@
 <a name='create'></a>
 <form method="post" data-ajax="false">
-  <h3>{$lang.comment.title.create}{if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true} <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>{/if}</h3>
+  {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
+    <p>
+      <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
+    </p>
+  {/if}
   <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
     <label for="input-name">{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
     {if $USER_NAME}
@@ -32,10 +36,7 @@
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{if isset($content)}{$content}{/if}</textarea>
   </p>
   {if isset($_captcha_) && $MOBILE === false}
-    <div {if isset($error.captcha)}class="error" title="{$error.captcha}"{/if}>
-      <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'clean' };</script>
-      {$_captcha_}
-    </div>
+    {include file='../layouts/_recaptcha.tpl'}
   {/if}
   <p class="center">
     <input type='submit' value='{$lang.comment.title.create}' data-theme="b" />

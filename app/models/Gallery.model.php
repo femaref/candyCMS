@@ -140,7 +140,6 @@ class Gallery extends Main {
    * @param integer $iId album id to fetch images from
    * @param boolean $bAdvancedImageInformation additional information like width, height etc.
    * @return array $this->_aThumbs array with image information
-   * @todo remove absolute file url
    *
    */
   private function _setThumbs($iId, $bAdvancedImageInformation) {
