@@ -135,7 +135,7 @@ class Index {
         $this->_sLanguage = (string) $this->_aRequest['language'];
         setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       }
- 
+
       else
         $this->_sLanguage = '';
     }
