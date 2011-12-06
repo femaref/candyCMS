@@ -349,6 +349,8 @@ class Section extends Main {
                 (string) $this->_aRequest['subsection'] :
                 die($this->oI18n->get('error.missing.template'));
 
+        $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+
         parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
         parent::_setDescription(ucfirst($sTpl));
         parent::_setTitle(ucfirst($sTpl));

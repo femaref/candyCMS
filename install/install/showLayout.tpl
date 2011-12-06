@@ -12,6 +12,9 @@
     <style stype="text/css">
       div.hidden{ display:none }
       h3:hover{ cursor:pointer }
+      h1,h2,h3{ margin:10px 0px }
+      p a { margin:10px 0px}
+      ul { padding:10px;margin:10px}
     </style>
     <title>{$title}</title>
   </head>

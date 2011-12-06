@@ -87,7 +87,6 @@ class Index {
    * @access public
    * @param array $aConfigs array of config files
    * @param string $sPath Path prefix. Needed when not in root path
-   * @see install/index.php
    *
    */
   public function getConfigFiles($aConfigs, $sPath = '') {

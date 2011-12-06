@@ -17,14 +17,9 @@
     Read each description and modify the software for your needs.
   </p>
 </div>
-<h3>2.3. Edit your website title and slogan in <em>languages/yl/yourlanguage.language.php</em>:</h3>
+<h3>2.3. Edit your website title and slogan in <em>languages/yourlanguage.language.yml</em>.</h3>
 <div class="hidden">
   <p>This helps you to provide individual information about your website for each language.</p>
-  <ul>
-    <li>LANG_WEBSITE_TITLE</li>
-    <li>LANG_WEBSITE_SLOGAN</li>
-    <li>LANG_WEBSITE_KEYWORDS</li>
-  </ul>
 </div>
 <h3>2.4. Set following dirs to <em>CHMOD 777 (recursive)</em> via the FTP software of your choice:</h3>
 <div class="hidden">
@@ -42,6 +37,18 @@
   </p>
   <div class="notice">
     Don't forget to enter your App ID and Secret into <em>config/Facebook.inc.php</em>!
+  </div>
+</div>
+<h3>2.6. Register at MailChimp to send newsletters.</h3>
+<div class="hidden">
+  <p>
+    MailChimp helps you design email newsletters, share them on social networks, integrate with services you already use, and track your results. It's like your own personal publishing platform.
+  </p>
+  <p>
+    <a href="http://mailchimp.com/">MailChimp</a>
+  </p>
+  <div class="notice">
+    Don't forget to to set information at <em>config/Mailchimp.inc.php</em>!
   </div>
 </div>
 <script type="text/javascript">

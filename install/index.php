@@ -39,7 +39,7 @@ catch (Exception $e) {
 session_start();
 
 $oIndex = new Index($_REQUEST, $_SESSION);
-$oIndex->loadConfigFiles(array('Candy'), '../');
+$oIndex->getConfigFiles(array('Candy'), '../');
 
 $oSmarty = new Smarty();
 $oSmarty->compile_dir = '../compile';
