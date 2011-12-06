@@ -237,17 +237,14 @@ class Gallery extends Main {
    */
   public static function getAlbumName($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
 
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
 
     # Do we need to highlight text?

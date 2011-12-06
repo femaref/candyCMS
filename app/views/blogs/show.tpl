@@ -26,8 +26,8 @@
             <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
             {if $USER_RIGHT >= 3}
               <a href='/blog/{$b.id}/update'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update}'
-                     title='{$lang.global.update}' width="16" height="16" />
+                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
+                     title='{$lang.global.update.update}' width="16" height="16" />
               </a>
             {/if}
           </h2>

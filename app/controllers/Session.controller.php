@@ -102,9 +102,8 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		# Check format of email
-		elseif (isset($this->_aRequest['email'])) {
+		else
 			$this->_setError('email');
-		}
 
 		if (isset($this->_aError))
 			return $this->_showCreateResendActionsTemplate();

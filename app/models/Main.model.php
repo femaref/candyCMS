@@ -64,6 +64,17 @@ abstract class Main {
    */
   public $oPage;
 
+  static $_oDbStatic;
+
+  /**
+	 * Initialize the model by adding input params, set default id connect to database.
+   *
+   * @access public
+	 * @param array $aRequest alias for the combination of $_GET and $_POST
+	 * @param array $aSession alias for $_SESSION
+	 * @param array $aFile alias for $_FILE
+   *
+   */
   public function __construct($aRequest = '', $aSession = '', $aFile = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
@@ -72,9 +83,47 @@ abstract class Main {
     # Set ID if needed (fix for detailed user view)
     $this->_iId = isset($this->_aRequest['id']) && !isset($this->_iId) ? (int) $this->_aRequest['id'] : '';
 
-    $this->_oDb = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
-                PDO::ATTR_PERSISTENT => true));
-    $this->_oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $this->_oDb = $this->_connectToDatabase();
+  }
+
+  /**
+   * Close DB connection.
+   *
+   * @access public
+   * @return string null
+   *
+   */
+  public function __destruct() {
+    return $this->_disconnectFromDatabase();
+  }
+
+  /**
+   * Connect to database.
+   *
+   * @access protected
+   * @return object PDO
+   *
+   */
+  protected function _connectToDatabase() {
+    if (empty(self::$_oDbStatic)) {
+      self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB,
+                                  SQL_USER,
+                                  SQL_PASSWORD,
+                                  array(PDO::ATTR_PERSISTENT => true));
+      self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    return self::$_oDbStatic;
+  }
+
+  /**
+   * Disconnect from database.
+   *
+   * @return boolean
+   *
+   */
+  protected function _disconnectFromDatabase() {
+    return self::$_oDbStatic = null;
   }
 
   /**

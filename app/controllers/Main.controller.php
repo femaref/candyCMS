@@ -138,7 +138,7 @@ abstract class Main {
 	public $oSmarty;
 
 	/**
-	 * Initialize the software by adding input params, set default id and start template engine.
+	 * Initialize the controller by adding input params, set default id and start template engine.
 	 *
 	 * @access public
 	 * @param array $aRequest alias for the combination of $_GET and $_POST
@@ -165,9 +165,19 @@ abstract class Main {
 	}
 
   /**
+   * Destructor.
+   *
+   * @access public
+   *
+   */
+  public function __destruct() {
+  }
+
+  /**
    * Dynamically load classes.
    *
    * @param string $sClassName name of class to load
+   * 
    */
   public function __autoload($sClassName) {
     require_once 'app/controllers/' .$sClassName. '.controller.php';

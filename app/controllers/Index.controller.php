@@ -126,18 +126,18 @@ class Index {
    *
    * @access public
    * @see config/Candy.inc.php
-   * @todo rewrite with less code
    *
    */
   public function getLanguage($sPath = '') {
     # We got a language request? Let's change it!
     if (isset($this->_aRequest['language'])) {
-      $this->_sLanguage = is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml') ?
-              (string) $this->_aRequest['language'] :
-              '';
-
-      if (!empty($this->_sLanguage))
+      if (is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
+        $this->_sLanguage = (string) $this->_aRequest['language'];
         setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+      }
+ 
+      else
+        $this->_sLanguage = '';
     }
     # There is no request, but there might be a cookie instead
     else {
@@ -151,11 +151,11 @@ class Index {
 
     # Set iso language codes
     switch ($this->_sLanguage) {
-      default:
       case 'de':
         $sLocale = 'de_DE';
         break;
 
+      default:
       case 'en':
         $sLocale = 'en_US';
         break;
@@ -244,18 +244,19 @@ class Index {
    *
    * @access public
    * @see config/Candy.inc.php
-   * @todo rewrite with less code
    *
    */
   public function setTemplate() {
     # We got a template request? Let's change it!
     if (isset($this->_aRequest['template'])) {
-      $this->_sTemplate = is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template']) ?
-              (string) $this->_aRequest['template'] :
-              '';
 
-      if (!empty($this->_sTemplate))
+      if (is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template'])) {
+        $this->_sTemplate = (string) $this->_aRequest['template'];
         setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
+      }
+
+      else
+        $this->_sTemplate = '';
     }
 
     # There is no request, but there might be a cookie instead
