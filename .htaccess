@@ -43,7 +43,7 @@ ErrorDocument 500 /error/500
   RewriteRule ^(language|template)/([a-z]+)$ index.php?language=$2&template=$2&clearcache=1 [L,QSA,NC]
 
   # Universal rules
-  RewriteRule ^([A-Za-z]+)(/[0-9]+)?(/ajax)?$ index.php?section=$1&id=$2&page=1&ajax=$3 [L,QSA,NC]
+  RewriteRule ^([A-Za-z]+)/?([0-9]+)?(/ajax)?$ index.php?section=$1&id=$2&page=1&ajax=$3 [L,QSA,NC]
   RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&page=1&highlight=$3 [L,QSA,NC]
   RewriteRule ^([A-Za-z]+)/([0-9]+)/([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&action=$3&page=$4&parent_id=$4 [L,QSA,NC]
   RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&page=1&action=$3&seo_title=$3 [L,QSA,NC]
