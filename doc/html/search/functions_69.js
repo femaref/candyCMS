@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['insert',['insert',['../class_candy_c_m_s_1_1_controller_1_1_log.html#a15369b144eebd1ddf5f3f5a7af5b34a6',1,'CandyCMS::Controller::Log\insert()'],['../class_candy_c_m_s_1_1_model_1_1_log.html#ac12ff1e5cbc2d726365f51532d3b556a',1,'CandyCMS::Model::Log\insert()']]]
+  ['insert',['insert',['../class_candy_c_m_s_1_1_controller_1_1_log.html#afbeb450fa10434690bbc5c2962bca477',1,'CandyCMS::Controller::Log\insert()'],['../class_candy_c_m_s_1_1_model_1_1_log.html#ac253f4e2b5bf1102dcc40689063d0602',1,'CandyCMS::Model::Log\insert()']]]
 ];

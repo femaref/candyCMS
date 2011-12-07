@@ -11,6 +11,7 @@ a:hover {
 #comments a {
   font-weight: bold;
   color: #000;
+  text-decoration: none;
 }
 
 #comments article {

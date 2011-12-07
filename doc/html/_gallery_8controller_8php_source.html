@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,11 +109,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00018"></a>00018 
 <a name="l00019"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html">00019</a> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html">Gallery</a> <span class="keyword">extends</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">Main</a> {
 <a name="l00020"></a>00020 
-<a name="l00028"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#aaf9ecfd2a779d5475810865321760c38">00028</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#aaf9ecfd2a779d5475810865321760c38">__init</a>() {
+<a name="l00028"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a500847c43f5178b8ea1f329b3eb5cf46">00028</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a500847c43f5178b8ea1f329b3eb5cf46">__init</a>() {
 <a name="l00029"></a>00029     $this-&gt;_oModel = <span class="keyword">new</span> Model($this-&gt;_aRequest, $this-&gt;_aSession, $this-&gt;_aFile);
 <a name="l00030"></a>00030   }
 <a name="l00031"></a>00031 
-<a name="l00039"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ae068ff64fe9c3d5fe253e5cddf55d252">00039</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ae068ff64fe9c3d5fe253e5cddf55d252">show</a>() {
+<a name="l00039"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a2b8e3779f5bd8c38f70307574859bd36">00039</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a2b8e3779f5bd8c38f70307574859bd36">show</a>() {
 <a name="l00040"></a>00040 <span class="preprocessor">    # Album images</span>
 <a name="l00041"></a>00041 <span class="preprocessor"></span>    <span class="keywordflow">if</span> (!empty($this-&gt;_iId) &amp;&amp; !isset($this-&gt;_aRequest[<span class="stringliteral">&#39;album_id&#39;</span>])) {
 <a name="l00042"></a>00042 <span class="preprocessor">      # collect data array</span>
@@ -172,7 +172,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00095"></a>00095     }
 <a name="l00096"></a>00096   }
 <a name="l00097"></a>00097 
-<a name="l00105"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a2daa7e6fa169a442a93a91c98986cfe0">00105</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a2daa7e6fa169a442a93a91c98986cfe0">_showFormTemplate</a>() {
+<a name="l00105"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a91fb73d959d3ce25f270ad445c067538">00105</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a91fb73d959d3ce25f270ad445c067538">_showFormTemplate</a>() {
 <a name="l00106"></a>00106     $this-&gt;_aData = $this-&gt;_oModel-&gt;getData($this-&gt;_iId, <span class="keyword">true</span>);
 <a name="l00107"></a>00107 
 <a name="l00108"></a>00108     <span class="keywordflow">if</span> (!empty($this-&gt;_iId))
@@ -194,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00124"></a>00124     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;_form_album&#39;</span>));
 <a name="l00125"></a>00125   }
 <a name="l00126"></a>00126 
-<a name="l00137"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ad253751edd2a6bbec20b908b98becd10">00137</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ad253751edd2a6bbec20b908b98becd10">_create</a>() {
+<a name="l00137"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a50defc2110196e3caed66d4f61ca4d57">00137</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a50defc2110196e3caed66d4f61ca4d57">_create</a>() {
 <a name="l00138"></a>00138     $this-&gt;_setError(<span class="stringliteral">&#39;title&#39;</span>);
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140     <span class="keywordflow">if</span> (isset($this-&gt;_aError))
@@ -209,7 +209,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00149"></a>00149       <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.sql&#39;</span>), <span class="stringliteral">&#39;/gallery&#39;</span>);
 <a name="l00150"></a>00150   }
 <a name="l00151"></a>00151 
-<a name="l00161"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a33c075ccb1eb971a2bc61de56ed1fa5f">00161</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a33c075ccb1eb971a2bc61de56ed1fa5f">_update</a>() {
+<a name="l00161"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#af9983414374dd40b269e6a94177e5f08">00161</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#af9983414374dd40b269e6a94177e5f08">_update</a>() {
 <a name="l00162"></a>00162     $this-&gt;_setError(<span class="stringliteral">&#39;title&#39;</span>);
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164     $sRedirect = <span class="stringliteral">&#39;/gallery/&#39;</span> . (int) $this-&gt;_aRequest[<span class="stringliteral">&#39;id&#39;</span>];
@@ -226,7 +226,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00175"></a>00175       <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.sql&#39;</span>), $sRedirect);
 <a name="l00176"></a>00176   }
 <a name="l00177"></a>00177 
-<a name="l00187"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a3c95c66fddb071cf2359a4605654be0f">00187</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a3c95c66fddb071cf2359a4605654be0f">_destroy</a>() {
+<a name="l00187"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a0f7a368149029acbc1c85c2237c403b9">00187</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a0f7a368149029acbc1c85c2237c403b9">_destroy</a>() {
 <a name="l00188"></a>00188     <span class="keywordflow">if</span>($this-&gt;_oModel-&gt;destroy($this-&gt;_iId) === <span class="keyword">true</span>) {
 <a name="l00189"></a>00189       Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId);
 <a name="l00190"></a>00190       <span class="keywordflow">return</span> Helper::successMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;success.destroy&#39;</span>), <span class="stringliteral">&#39;/gallery&#39;</span>);
@@ -238,7 +238,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00196"></a>00196     }
 <a name="l00197"></a>00197   }
 <a name="l00198"></a>00198 
-<a name="l00207"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a084b18492bf64ed5ae08946a422ab882">00207</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a084b18492bf64ed5ae08946a422ab882">_showFormFileTemplate</a>() {
+<a name="l00207"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a38f0f263fc89f3266b2d01b22a8e4ece">00207</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a38f0f263fc89f3266b2d01b22a8e4ece">_showFormFileTemplate</a>() {
 <a name="l00208"></a>00208 <span class="preprocessor">    # Update</span>
 <a name="l00209"></a>00209 <span class="preprocessor"></span>    <span class="keywordflow">if</span> ($this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>] == <span class="stringliteral">&#39;updatefile&#39;</span>)
 <a name="l00210"></a>00210       $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;content&#39;</span>, Model::getFileContent($this-&gt;_iId));
@@ -261,7 +261,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00227"></a>00227     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;_form_file&#39;</span>));
 <a name="l00228"></a>00228   }
 <a name="l00229"></a>00229 
-<a name="l00240"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#abf20ab008b440bc951d8bdc1f7c6d766">00240</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#abf20ab008b440bc951d8bdc1f7c6d766">createFile</a>() {
+<a name="l00240"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a88d851df8f49c1fb269f182142c9ec0e">00240</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a88d851df8f49c1fb269f182142c9ec0e">createFile</a>() {
 <a name="l00241"></a>00241     <span class="keywordflow">if</span> (USER_RIGHT &lt; 3)
 <a name="l00242"></a>00242       <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>));
 <a name="l00243"></a>00243 
@@ -301,7 +301,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00284"></a>00284     }
 <a name="l00285"></a>00285   }
 <a name="l00286"></a>00286 
-<a name="l00296"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a437339c9d3671e4bf98bf5f2fdea5c75">00296</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a437339c9d3671e4bf98bf5f2fdea5c75">updateFile</a>() {
+<a name="l00296"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a399b3140dbda629622969c1e03fee5e5">00296</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a399b3140dbda629622969c1e03fee5e5">updateFile</a>() {
 <a name="l00297"></a>00297     <span class="keywordflow">if</span>( USER_RIGHT &lt; 3 )
 <a name="l00298"></a>00298       <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="stringliteral">&#39;/gallery&#39;</span>);
 <a name="l00299"></a>00299 
@@ -319,7 +319,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00311"></a>00311     }
 <a name="l00312"></a>00312   }
 <a name="l00313"></a>00313 
-<a name="l00321"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ac117b85d93f7c2e66fd614378a2265b9">00321</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#ac117b85d93f7c2e66fd614378a2265b9">destroyFile</a>() {
+<a name="l00321"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a06adcb08d1781c119f862a3c092c8626">00321</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_gallery.html#a06adcb08d1781c119f862a3c092c8626">destroyFile</a>() {
 <a name="l00322"></a>00322     <span class="keywordflow">if</span>( USER_RIGHT &lt; 3 )
 <a name="l00323"></a>00323       <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="stringliteral">&#39;/gallery&#39;</span>);
 <a name="l00324"></a>00324 
@@ -341,7 +341,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -354,7 +354,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Gallery.controller.php</b>      </li>
 
-    <li class="footer">Generated on Tue Dec 6 2011 10:54:35 for CandyCMS by
+    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>

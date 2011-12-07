@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -109,7 +109,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00019"></a>00019 
 <a name="l00020"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html">00020</a> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html">Helper</a> {
 <a name="l00021"></a>00021 
-<a name="l00032"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#aa0e276a32b65da99e64eed2619fada51">00032</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#aa0e276a32b65da99e64eed2619fada51">successMessage</a>($sMessage, $sRedirectTo = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00032"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ad8649ed1435714ba7d665dd636a83046">00032</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ad8649ed1435714ba7d665dd636a83046">successMessage</a>($sMessage, $sRedirectTo = <span class="stringliteral">&#39;&#39;</span>) {
 <a name="l00033"></a>00033     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;type&#39;</span>]      = <span class="stringliteral">&#39;success&#39;</span>;
 <a name="l00034"></a>00034     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;message&#39;</span>]   = $sMessage;
 <a name="l00035"></a>00035     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;headline&#39;</span>]  = <span class="stringliteral">&#39;&#39;</span>;
@@ -121,7 +121,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00041"></a>00041     <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00042"></a>00042   }
 <a name="l00043"></a>00043 
-<a name="l00054"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ac23ec72c42684b1f3a11fa55e7d4c150">00054</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ac23ec72c42684b1f3a11fa55e7d4c150">errorMessage</a>($sMessage, $sRedirectTo = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00054"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae5ad3fe750beb0493525c96cf4564331">00054</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae5ad3fe750beb0493525c96cf4564331">errorMessage</a>($sMessage, $sRedirectTo = <span class="stringliteral">&#39;&#39;</span>) {
 <a name="l00055"></a>00055     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;type&#39;</span>]      = <span class="stringliteral">&#39;error&#39;</span>;
 <a name="l00056"></a>00056     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;message&#39;</span>]   = $sMessage;
 <a name="l00057"></a>00057     $_SESSION[<span class="stringliteral">&#39;flash_message&#39;</span>][<span class="stringliteral">&#39;headline&#39;</span>]  = I18n::get(<span class="stringliteral">&#39;error.standard&#39;</span>);
@@ -133,17 +133,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00063"></a>00063     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00064"></a>00064   }
 <a name="l00065"></a>00065 
-<a name="l00074"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a651b39621ece9c4b344f412b9b859f88">00074</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a651b39621ece9c4b344f412b9b859f88">redirectTo</a>($sUrl) {
+<a name="l00074"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a80869588511cb79016601ca3ac5556ec">00074</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a80869588511cb79016601ca3ac5556ec">redirectTo</a>($sUrl) {
 <a name="l00075"></a>00075                 header(<span class="stringliteral">&#39;Location:&#39;</span> . $sUrl);
 <a name="l00076"></a>00076                 exit();
 <a name="l00077"></a>00077         }
 <a name="l00078"></a>00078 
-<a name="l00088"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ade3cd1bbd0d8f44dfb90a23061611606">00088</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ade3cd1bbd0d8f44dfb90a23061611606">checkEmailAddress</a>($sMail) {
+<a name="l00088"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a40de646e13de2eff3200e57095325c41">00088</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a40de646e13de2eff3200e57095325c41">checkEmailAddress</a>($sMail) {
 <a name="l00089"></a>00089                 <span class="keywordflow">if</span> (preg_match(<span class="stringliteral">&quot;/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/&quot;</span>, $sMail))
 <a name="l00090"></a>00090                         <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00091"></a>00091         }
 <a name="l00092"></a>00092 
-<a name="l00103"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a09d3e1a470d0330ee5f516ebe446706a">00103</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a09d3e1a470d0330ee5f516ebe446706a">createRandomChar</a>($iLength, $bIntegerOnly = <span class="keyword">false</span>) {
+<a name="l00103"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afce443b4b4bdad85ef5ea00f1a14cc96">00103</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afce443b4b4bdad85ef5ea00f1a14cc96">createRandomChar</a>($iLength, $bIntegerOnly = <span class="keyword">false</span>) {
 <a name="l00104"></a>00104                 $sChars = <span class="stringliteral">&#39;ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789&#39;</span>;
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106                 <span class="keywordflow">if</span> ($bIntegerOnly == <span class="keyword">true</span>)
@@ -159,198 +159,201 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00116"></a>00116                 <span class="keywordflow">return</span> $sString;
 <a name="l00117"></a>00117         }
 <a name="l00118"></a>00118 
-<a name="l00129"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a931ba80002c01e881cb7f7ac61bdf723">00129</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a931ba80002c01e881cb7f7ac61bdf723">createLinkTo</a>($sUrl) {
-<a name="l00130"></a>00130     <span class="keywordflow">return</span> <span class="stringliteral">&#39;&lt;a href=\&#39;&#39;</span> . $sUrl . <span class="charliteral">&#39;\&#39;</span>&gt;<span class="stringliteral">&#39; . $sUrl . &#39;</span>&lt;/a&gt;<span class="stringliteral">&#39;;</span>
-<a name="l00131"></a>00131 <span class="stringliteral">  }</span>
-<a name="l00132"></a>00132 <span class="stringliteral"></span>
-<a name="l00144"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a20d83020b3ba08469af587a95e77cc2e">00144</a> <span class="stringliteral">  public static function getAvatar($sSize, $iUserId, $sEmail = &#39;</span><span class="stringliteral">&#39;) {</span>
-<a name="l00145"></a>00145 <span class="stringliteral">                $sFilePath = PATH_UPLOAD . &#39;</span>/user/<span class="stringliteral">&#39; . $sSize . &#39;</span>/<span class="stringliteral">&#39; . $iUserId;</span>
-<a name="l00146"></a>00146 <span class="stringliteral"></span>
-<a name="l00147"></a>00147 <span class="stringliteral">                if (is_file($sFilePath . &#39;</span>.jpg<span class="stringliteral">&#39;))</span>
-<a name="l00148"></a>00148 <span class="stringliteral">                        return &#39;</span>/<span class="stringliteral">&#39; . $sFilePath . &#39;</span>.jpg<span class="stringliteral">&#39;;</span>
-<a name="l00149"></a>00149 <span class="stringliteral"></span>
-<a name="l00150"></a>00150 <span class="stringliteral">                elseif (is_file($sFilePath . &#39;</span>.png<span class="stringliteral">&#39;))</span>
-<a name="l00151"></a>00151 <span class="stringliteral">                        return &#39;</span>/<span class="stringliteral">&#39; . $sFilePath . &#39;</span>.png<span class="stringliteral">&#39;;</span>
-<a name="l00152"></a>00152 <span class="stringliteral"></span>
-<a name="l00153"></a>00153 <span class="stringliteral">                elseif (is_file($sFilePath . &#39;</span>.gif<span class="stringliteral">&#39;))</span>
-<a name="l00154"></a>00154 <span class="stringliteral">                        return &#39;</span>/<span class="stringliteral">&#39; . $sFilePath . &#39;</span>.gif<span class="stringliteral">&#39;;</span>
-<a name="l00155"></a>00155 <span class="stringliteral"></span>
-<a name="l00156"></a>00156 <span class="stringliteral">                else {</span>
-<a name="l00157"></a>00157 <span class="stringliteral">      if (!is_int($sSize))</span>
-<a name="l00158"></a>00158 <span class="stringliteral">        $sSize = POPUP_DEFAULT_X;</span>
-<a name="l00159"></a>00159 <span class="stringliteral"></span>
-<a name="l00160"></a>00160 <span class="stringliteral">      $sMail = isset($sEmail) ? md5($sEmail) : WEBSITE_MAIL;</span>
-<a name="l00161"></a>00161 <span class="stringliteral">      return &#39;</span>http:<span class="comment">//www.gravatar.com/avatar/&#39; . $sMail . &#39;.jpg?s=&#39; . $sSize .</span>
-<a name="l00162"></a>00162         <span class="stringliteral">&#39;&amp;d=mm&#39;</span>;
-<a name="l00163"></a>00163                 }
-<a name="l00164"></a>00164   }
-<a name="l00165"></a>00165 
-<a name="l00175"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a2a74d0db1865bb9b9fdf5bd7d6707a78">00175</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a2a74d0db1865bb9b9fdf5bd7d6707a78">getFileSize</a>($sPath) {
-<a name="l00176"></a>00176                 $iSize = @filesize($sPath);
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178                 <span class="keywordflow">if</span> ($iSize &gt; 1024 &amp;&amp; $iSize &lt; 1048576)
-<a name="l00179"></a>00179                         $sReturn = round(($iSize / 1024), 2) . <span class="stringliteral">&#39; KB&#39;</span>;
+<a name="l00129"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae2d7c2a7afdfa8bf08193e21ca3cbd1f">00129</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae2d7c2a7afdfa8bf08193e21ca3cbd1f">createLinkTo</a>($sUrl, $bExternal = <span class="keyword">false</span>) {
+<a name="l00130"></a>00130                 <span class="keywordflow">if</span> ($bExternal == <span class="keyword">true</span>)
+<a name="l00131"></a>00131                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . $sUrl . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $sUrl . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
+<a name="l00132"></a>00132                 <span class="keywordflow">else</span>
+<a name="l00133"></a>00133                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;&lt;a href=&quot;&#39;</span> . WEBSITE_URL . <span class="charliteral">&#39;/&#39;</span> . $sUrl . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . WEBSITE_URL . <span class="charliteral">&#39;/&#39;</span> . $sUrl . <span class="stringliteral">&#39;&lt;/a&gt;&#39;</span>;
+<a name="l00134"></a>00134         }
+<a name="l00135"></a>00135 
+<a name="l00147"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a84b4541bb2aa14ebea690ac47b5aacfa">00147</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a84b4541bb2aa14ebea690ac47b5aacfa">getAvatar</a>($sSize, $iUserId, $sEmail = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00148"></a>00148                 $sFilePath = PATH_UPLOAD . <span class="stringliteral">&#39;/user/&#39;</span> . $sSize . <span class="charliteral">&#39;/&#39;</span> . $iUserId;
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150                 <span class="keywordflow">if</span> (is_file($sFilePath . <span class="stringliteral">&#39;.jpg&#39;</span>))
+<a name="l00151"></a>00151                         <span class="keywordflow">return</span> <span class="charliteral">&#39;/&#39;</span> . $sFilePath . <span class="stringliteral">&#39;.jpg&#39;</span>;
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153                 elseif (is_file($sFilePath . <span class="stringliteral">&#39;.png&#39;</span>))
+<a name="l00154"></a>00154                         <span class="keywordflow">return</span> <span class="charliteral">&#39;/&#39;</span> . $sFilePath . <span class="stringliteral">&#39;.png&#39;</span>;
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156                 elseif (is_file($sFilePath . <span class="stringliteral">&#39;.gif&#39;</span>))
+<a name="l00157"></a>00157                         <span class="keywordflow">return</span> <span class="charliteral">&#39;/&#39;</span> . $sFilePath . <span class="stringliteral">&#39;.gif&#39;</span>;
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159                 <span class="keywordflow">else</span> {
+<a name="l00160"></a>00160       <span class="keywordflow">if</span> (!is_int($sSize))
+<a name="l00161"></a>00161         $sSize = POPUP_DEFAULT_X;
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163       $sMail = isset($sEmail) ? md5($sEmail) : WEBSITE_MAIL;
+<a name="l00164"></a>00164       <span class="keywordflow">return</span> <span class="stringliteral">&#39;http://www.gravatar.com/avatar/&#39;</span> . $sMail . <span class="stringliteral">&#39;.jpg?s=&#39;</span> . $sSize .
+<a name="l00165"></a>00165         <span class="stringliteral">&#39;&amp;d=mm&#39;</span>;
+<a name="l00166"></a>00166                 }
+<a name="l00167"></a>00167   }
+<a name="l00168"></a>00168 
+<a name="l00178"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a65b16d2de1e77984ef37dc554f5728b2">00178</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a65b16d2de1e77984ef37dc554f5728b2">getFileSize</a>($sPath) {
+<a name="l00179"></a>00179                 $iSize = @filesize($sPath);
 <a name="l00180"></a>00180 
-<a name="l00181"></a>00181                 elseif ($iSize &gt;= 1048576 &amp;&amp; $iSize &lt; 1073741824)
-<a name="l00182"></a>00182                         $sReturn = round(($iSize / 1048576), 2) . <span class="stringliteral">&#39; MB&#39;</span>;
+<a name="l00181"></a>00181                 <span class="keywordflow">if</span> ($iSize &gt; 1024 &amp;&amp; $iSize &lt; 1048576)
+<a name="l00182"></a>00182                         $sReturn = round(($iSize / 1024), 2) . <span class="stringliteral">&#39; KB&#39;</span>;
 <a name="l00183"></a>00183 
-<a name="l00184"></a>00184                 elseif ($iSize &gt;= 1073741824)
-<a name="l00185"></a>00185                         $sReturn = round(($iSize / 1073741824), 2) . <span class="stringliteral">&#39; GB&#39;</span>;
+<a name="l00184"></a>00184                 elseif ($iSize &gt;= 1048576 &amp;&amp; $iSize &lt; 1073741824)
+<a name="l00185"></a>00185                         $sReturn = round(($iSize / 1048576), 2) . <span class="stringliteral">&#39; MB&#39;</span>;
 <a name="l00186"></a>00186 
-<a name="l00187"></a>00187                 <span class="keywordflow">else</span>
-<a name="l00188"></a>00188                         $sReturn = round($iSize, 2) . <span class="stringliteral">&#39; Byte&#39;</span>;
+<a name="l00187"></a>00187                 elseif ($iSize &gt;= 1073741824)
+<a name="l00188"></a>00188                         $sReturn = round(($iSize / 1073741824), 2) . <span class="stringliteral">&#39; GB&#39;</span>;
 <a name="l00189"></a>00189 
-<a name="l00190"></a>00190                 <span class="keywordflow">return</span> $sReturn;
-<a name="l00191"></a>00191         }
+<a name="l00190"></a>00190                 <span class="keywordflow">else</span>
+<a name="l00191"></a>00191                         $sReturn = round($iSize, 2) . <span class="stringliteral">&#39; Byte&#39;</span>;
 <a name="l00192"></a>00192 
-<a name="l00203"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a81a73747203672d6013728fa0d0b0547">00203</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a81a73747203672d6013728fa0d0b0547">getTemplateDir</a>($sDir, $sFile) {
-<a name="l00204"></a>00204                 <span class="keywordflow">try</span> {
-<a name="l00205"></a>00205 <span class="preprocessor">                        # Addons</span>
-<a name="l00206"></a>00206 <span class="preprocessor"></span>                        <span class="keywordflow">if</span> (file_exists(<span class="stringliteral">&#39;addons/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>) &amp;&amp; ALLOW_ADDONS == <span class="keyword">true</span>)
-<a name="l00207"></a>00207                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;addons/views/&#39;</span> . $sDir;
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209 <span class="preprocessor">                        # Template use</span>
-<a name="l00210"></a>00210 <span class="preprocessor"></span>                        elseif (file_exists(<span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
-<a name="l00211"></a>00211                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir;
-<a name="l00212"></a>00212 
-<a name="l00213"></a>00213 <span class="preprocessor">                        # Standard views</span>
-<a name="l00214"></a>00214 <span class="preprocessor"></span>                        <span class="keywordflow">else</span> {
+<a name="l00193"></a>00193                 <span class="keywordflow">return</span> $sReturn;
+<a name="l00194"></a>00194         }
+<a name="l00195"></a>00195 
+<a name="l00206"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a5e6e3bc33d9564b830dcca5f22471cac">00206</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a5e6e3bc33d9564b830dcca5f22471cac">getTemplateDir</a>($sDir, $sFile) {
+<a name="l00207"></a>00207                 <span class="keywordflow">try</span> {
+<a name="l00208"></a>00208 <span class="preprocessor">                        # Addons</span>
+<a name="l00209"></a>00209 <span class="preprocessor"></span>                        <span class="keywordflow">if</span> (file_exists(<span class="stringliteral">&#39;addons/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>) &amp;&amp; ALLOW_ADDONS == <span class="keyword">true</span>)
+<a name="l00210"></a>00210                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;addons/views/&#39;</span> . $sDir;
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212 <span class="preprocessor">                        # Template use</span>
+<a name="l00213"></a>00213 <span class="preprocessor"></span>                        elseif (file_exists(<span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
+<a name="l00214"></a>00214                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir;
 <a name="l00215"></a>00215 
-<a name="l00216"></a>00216                                 <span class="keywordflow">if</span> (!file_exists(<span class="stringliteral">&#39;app/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
-<a name="l00217"></a>00217                                         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;This template does not exist.&#39;</span>);
+<a name="l00216"></a>00216 <span class="preprocessor">                        # Standard views</span>
+<a name="l00217"></a>00217 <span class="preprocessor"></span>                        <span class="keywordflow">else</span> {
 <a name="l00218"></a>00218 
-<a name="l00219"></a>00219                                 <span class="keywordflow">else</span>
-<a name="l00220"></a>00220                                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;app/views/&#39;</span> . $sDir;
-<a name="l00221"></a>00221                         }
-<a name="l00222"></a>00222                 }
-<a name="l00223"></a>00223                 <span class="keywordflow">catch</span> (Exception $e) {
-<a name="l00224"></a>00224                         $e-&gt;getMessage();
+<a name="l00219"></a>00219                                 <span class="keywordflow">if</span> (!file_exists(<span class="stringliteral">&#39;app/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
+<a name="l00220"></a>00220                                         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;This template does not exist.&#39;</span>);
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222                                 <span class="keywordflow">else</span>
+<a name="l00223"></a>00223                                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;app/views/&#39;</span> . $sDir;
+<a name="l00224"></a>00224                         }
 <a name="l00225"></a>00225                 }
-<a name="l00226"></a>00226         }
-<a name="l00227"></a>00227 
-<a name="l00238"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a666d39b343a477e63f325cf66feed3ec">00238</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a666d39b343a477e63f325cf66feed3ec">getTemplateType</a>($sDir, $sFile) {
-<a name="l00239"></a>00239     <span class="keywordflow">try</span> {
-<a name="l00240"></a>00240 <span class="preprocessor">      # Mobile device.</span>
-<a name="l00241"></a>00241 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (file_exists($sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.mob&#39;</span>) &amp;&amp; MOBILE === <span class="keyword">true</span>)
-<a name="l00242"></a>00242         <span class="keywordflow">return</span> $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.mob&#39;</span>;
-<a name="l00243"></a>00243 
-<a name="l00244"></a>00244 <span class="preprocessor">      # Standard template</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>      <span class="keywordflow">else</span>
-<a name="l00246"></a>00246         <span class="keywordflow">return</span> $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>;
-<a name="l00247"></a>00247     }
-<a name="l00248"></a>00248     <span class="keywordflow">catch</span> (Exception $e) {
-<a name="l00249"></a>00249       $e-&gt;getMessage();
+<a name="l00226"></a>00226                 <span class="keywordflow">catch</span> (Exception $e) {
+<a name="l00227"></a>00227                         $e-&gt;getMessage();
+<a name="l00228"></a>00228                 }
+<a name="l00229"></a>00229         }
+<a name="l00230"></a>00230 
+<a name="l00241"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#abffb3aa2bf719a9cacd3f5c25130b3dd">00241</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#abffb3aa2bf719a9cacd3f5c25130b3dd">getTemplateType</a>($sDir, $sFile) {
+<a name="l00242"></a>00242     <span class="keywordflow">try</span> {
+<a name="l00243"></a>00243 <span class="preprocessor">      # Mobile device.</span>
+<a name="l00244"></a>00244 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (file_exists($sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.mob&#39;</span>) &amp;&amp; MOBILE === <span class="keyword">true</span>)
+<a name="l00245"></a>00245         <span class="keywordflow">return</span> $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.mob&#39;</span>;
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247 <span class="preprocessor">      # Standard template</span>
+<a name="l00248"></a>00248 <span class="preprocessor"></span>      <span class="keywordflow">else</span>
+<a name="l00249"></a>00249         <span class="keywordflow">return</span> $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>;
 <a name="l00250"></a>00250     }
-<a name="l00251"></a>00251   }
-<a name="l00252"></a>00252 
-<a name="l00263"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afb7dc3daa63082f72020fefb105a3c0c">00263</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afb7dc3daa63082f72020fefb105a3c0c">getPluginTemplateDir</a>($sDir, $sFile) {
-<a name="l00264"></a>00264                 <span class="keywordflow">try</span> {
-<a name="l00265"></a>00265 <span class="preprocessor">                        # Template</span>
-<a name="l00266"></a>00266 <span class="preprocessor"></span>                        <span class="keywordflow">if</span> (file_exists(<span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
-<a name="l00267"></a>00267                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir;
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269 <span class="preprocessor">                        # Standard views</span>
-<a name="l00270"></a>00270 <span class="preprocessor"></span>                        <span class="keywordflow">else</span> {
-<a name="l00271"></a>00271                                 <span class="keywordflow">if</span> (!file_exists(<span class="stringliteral">&#39;plugins/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
-<a name="l00272"></a>00272                                         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;This template does not exist.&#39;</span>);
-<a name="l00273"></a>00273 
-<a name="l00274"></a>00274                                 <span class="keywordflow">else</span>
-<a name="l00275"></a>00275                                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;plugins/views/&#39;</span> . $sDir;
-<a name="l00276"></a>00276                         }
-<a name="l00277"></a>00277                 }
-<a name="l00278"></a>00278                 <span class="keywordflow">catch</span> (Exception $e) {
-<a name="l00279"></a>00279                         $e-&gt;getMessage();
+<a name="l00251"></a>00251     <span class="keywordflow">catch</span> (Exception $e) {
+<a name="l00252"></a>00252       $e-&gt;getMessage();
+<a name="l00253"></a>00253     }
+<a name="l00254"></a>00254   }
+<a name="l00255"></a>00255 
+<a name="l00266"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a546a3f77c6c391348691c31c788db10f">00266</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a546a3f77c6c391348691c31c788db10f">getPluginTemplateDir</a>($sDir, $sFile) {
+<a name="l00267"></a>00267                 <span class="keywordflow">try</span> {
+<a name="l00268"></a>00268 <span class="preprocessor">                        # Template</span>
+<a name="l00269"></a>00269 <span class="preprocessor"></span>                        <span class="keywordflow">if</span> (file_exists(<span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
+<a name="l00270"></a>00270                                 <span class="keywordflow">return</span> <span class="stringliteral">&#39;public/templates/&#39;</span> . PATH_TEMPLATE . <span class="stringliteral">&#39;/views/&#39;</span> . $sDir;
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272 <span class="preprocessor">                        # Standard views</span>
+<a name="l00273"></a>00273 <span class="preprocessor"></span>                        <span class="keywordflow">else</span> {
+<a name="l00274"></a>00274                                 <span class="keywordflow">if</span> (!file_exists(<span class="stringliteral">&#39;plugins/views/&#39;</span> . $sDir . <span class="charliteral">&#39;/&#39;</span> . $sFile . <span class="stringliteral">&#39;.tpl&#39;</span>))
+<a name="l00275"></a>00275                                         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;This template does not exist.&#39;</span>);
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277                                 <span class="keywordflow">else</span>
+<a name="l00278"></a>00278                                         <span class="keywordflow">return</span> <span class="stringliteral">&#39;plugins/views/&#39;</span> . $sDir;
+<a name="l00279"></a>00279                         }
 <a name="l00280"></a>00280                 }
-<a name="l00281"></a>00281         }
-<a name="l00282"></a>00282 
-<a name="l00292"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#aeea25a8a1ab87d0a3e08b443465a4e67">00292</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#aeea25a8a1ab87d0a3e08b443465a4e67">removeSlahes</a>($sStr) {
-<a name="l00293"></a>00293                 $sStr = str_replace(<span class="stringliteral">&#39;\&amp;quot;&#39;</span>, <span class="charliteral">&#39;&quot;&#39;</span>, $sStr);
-<a name="l00294"></a>00294                 $sStr = str_replace(<span class="charliteral">&#39;\&quot;&#39;</span>, <span class="charliteral">&#39;&quot;&#39;</span>, $sStr);
-<a name="l00295"></a>00295                 $sStr = str_replace(<span class="stringliteral">&quot;\&#39;&quot;</span>, <span class="stringliteral">&quot;&#39;&quot;</span>, $sStr);
-<a name="l00296"></a>00296                 <span class="keywordflow">return</span> $sStr;
-<a name="l00297"></a>00297         }
-<a name="l00298"></a>00298 
-<a name="l00309"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#adb75a48ee7162d4814beff21b937f141">00309</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#adb75a48ee7162d4814beff21b937f141">formatInput</a>($sStr, $bDisableHTML = <span class="keyword">true</span>) {
-<a name="l00310"></a>00310     <span class="keywordflow">try</span> {
-<a name="l00311"></a>00311       <span class="keywordflow">if</span> (is_string($sStr) == <span class="keyword">false</span> &amp;&amp; is_int($sStr) == <span class="keyword">false</span> &amp;&amp; $bDisableHTML == <span class="keyword">true</span>)
-<a name="l00312"></a>00312         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;Input seems not valid.&#39;</span>);
-<a name="l00313"></a>00313 
-<a name="l00314"></a>00314       <span class="keywordflow">if</span> ($bDisableHTML == <span class="keyword">true</span>)
-<a name="l00315"></a>00315         $sStr = htmlspecialchars($sStr);
-<a name="l00316"></a>00316     }
-<a name="l00317"></a>00317     <span class="keywordflow">catch</span> (<a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a> $e) {
-<a name="l00318"></a>00318       $oDb-&gt;rollBack();
+<a name="l00281"></a>00281                 <span class="keywordflow">catch</span> (Exception $e) {
+<a name="l00282"></a>00282                         $e-&gt;getMessage();
+<a name="l00283"></a>00283                 }
+<a name="l00284"></a>00284         }
+<a name="l00285"></a>00285 
+<a name="l00295"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ac39925f0a5fe739c2d67ea1ad1f4c03b">00295</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ac39925f0a5fe739c2d67ea1ad1f4c03b">removeSlahes</a>($sStr) {
+<a name="l00296"></a>00296                 $sStr = str_replace(<span class="stringliteral">&#39;\&amp;quot;&#39;</span>, <span class="charliteral">&#39;&quot;&#39;</span>, $sStr);
+<a name="l00297"></a>00297                 $sStr = str_replace(<span class="charliteral">&#39;\&quot;&#39;</span>, <span class="charliteral">&#39;&quot;&#39;</span>, $sStr);
+<a name="l00298"></a>00298                 $sStr = str_replace(<span class="stringliteral">&quot;\&#39;&quot;</span>, <span class="stringliteral">&quot;&#39;&quot;</span>, $sStr);
+<a name="l00299"></a>00299                 <span class="keywordflow">return</span> $sStr;
+<a name="l00300"></a>00300         }
+<a name="l00301"></a>00301 
+<a name="l00312"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a7d148611f40547221d44d3f0e6b17e94">00312</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a7d148611f40547221d44d3f0e6b17e94">formatInput</a>($sStr, $bDisableHTML = <span class="keyword">true</span>) {
+<a name="l00313"></a>00313     <span class="keywordflow">try</span> {
+<a name="l00314"></a>00314       <span class="keywordflow">if</span> (is_string($sStr) == <span class="keyword">false</span> &amp;&amp; is_int($sStr) == <span class="keyword">false</span> &amp;&amp; $bDisableHTML == <span class="keyword">true</span>)
+<a name="l00315"></a>00315         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a>(<span class="stringliteral">&#39;Input seems not valid.&#39;</span>);
+<a name="l00316"></a>00316 
+<a name="l00317"></a>00317       <span class="keywordflow">if</span> ($bDisableHTML == <span class="keyword">true</span>)
+<a name="l00318"></a>00318         $sStr = htmlspecialchars($sStr);
 <a name="l00319"></a>00319     }
-<a name="l00320"></a>00320 
-<a name="l00321"></a>00321     <span class="keywordflow">return</span> trim($sStr);
-<a name="l00322"></a>00322   }
+<a name="l00320"></a>00320     <span class="keywordflow">catch</span> (<a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a> $e) {
+<a name="l00321"></a>00321       $oDb-&gt;rollBack();
+<a name="l00322"></a>00322     }
 <a name="l00323"></a>00323 
-<a name="l00342"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afe2a8e9ec6369ee3ed0a2fb643438e5c">00342</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afe2a8e9ec6369ee3ed0a2fb643438e5c">formatTimestamp</a>($iTime, $iOptions = 0) {
-<a name="l00343"></a>00343 <span class="preprocessor">                # Set active locale</span>
-<a name="l00344"></a>00344 <span class="preprocessor"></span>                setlocale(LC_ALL, WEBSITE_LOCALE);
-<a name="l00345"></a>00345 
-<a name="l00346"></a>00346                 <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\FormatTimestamp&#39;</span>) == <span class="keyword">true</span>) {
-<a name="l00347"></a>00347                         $oDate = <span class="keyword">new</span> FormatTimestamp();
-<a name="l00348"></a>00348                         <span class="keywordflow">return</span> $oDate-&gt;getDate($iTime, $iOptions);
-<a name="l00349"></a>00349                 }
-<a name="l00350"></a>00350                 <span class="keywordflow">else</span> {
-<a name="l00351"></a>00351                         <span class="keywordflow">if</span> ($iOptions == 1)
-<a name="l00352"></a>00352                                 <span class="keywordflow">return</span> strftime(DEFAULT_DATE_FORMAT, $iTime);
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354                         elseif($iOptions == 2)
-<a name="l00355"></a>00355                                 <span class="keywordflow">return</span> strftime(DEFAULT_TIME_FORMAT, $iTime);
+<a name="l00324"></a>00324     <span class="keywordflow">return</span> trim($sStr);
+<a name="l00325"></a>00325   }
+<a name="l00326"></a>00326 
+<a name="l00345"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a4399502f36e32994a4f25d23fc02cb4c">00345</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a4399502f36e32994a4f25d23fc02cb4c">formatTimestamp</a>($iTime, $iOptions = 0) {
+<a name="l00346"></a>00346 <span class="preprocessor">                # Set active locale</span>
+<a name="l00347"></a>00347 <span class="preprocessor"></span>                setlocale(LC_ALL, WEBSITE_LOCALE);
+<a name="l00348"></a>00348 
+<a name="l00349"></a>00349                 <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\FormatTimestamp&#39;</span>) == <span class="keyword">true</span>) {
+<a name="l00350"></a>00350                         $oDate = <span class="keyword">new</span> FormatTimestamp();
+<a name="l00351"></a>00351                         <span class="keywordflow">return</span> $oDate-&gt;getDate($iTime, $iOptions);
+<a name="l00352"></a>00352                 }
+<a name="l00353"></a>00353                 <span class="keywordflow">else</span> {
+<a name="l00354"></a>00354                         <span class="keywordflow">if</span> ($iOptions == 1)
+<a name="l00355"></a>00355                                 <span class="keywordflow">return</span> strftime(DEFAULT_DATE_FORMAT, $iTime);
 <a name="l00356"></a>00356 
-<a name="l00357"></a>00357                         <span class="keywordflow">else</span>
-<a name="l00358"></a>00358                                 <span class="keywordflow">return</span> strftime(DEFAULT_DATE_FORMAT . <span class="stringliteral">&#39;, &#39;</span> . DEFAULT_TIME_FORMAT, $iTime);
-<a name="l00359"></a>00359                 }
-<a name="l00360"></a>00360         }
-<a name="l00361"></a>00361 
-<a name="l00375"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afbb2e91dc8adc8ac61a8ddeea56a9bac">00375</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#afbb2e91dc8adc8ac61a8ddeea56a9bac">formatOutput</a>($sStr, $sHighlight = <span class="keyword">false</span>) {
-<a name="l00376"></a>00376     $sStr = trim($sStr);
-<a name="l00377"></a>00377     $sStr = preg_replace(<span class="stringliteral">&#39;/\S{500}/&#39;</span>, <span class="stringliteral">&#39;\0 &#39;</span>, $sStr);
-<a name="l00378"></a>00378 
-<a name="l00379"></a>00379 <span class="preprocessor">    # Remove Slashes</span>
-<a name="l00380"></a>00380 <span class="preprocessor"></span>    $sStr = Helper::removeSlahes($sStr);
+<a name="l00357"></a>00357                         elseif($iOptions == 2)
+<a name="l00358"></a>00358                                 <span class="keywordflow">return</span> strftime(DEFAULT_TIME_FORMAT, $iTime);
+<a name="l00359"></a>00359 
+<a name="l00360"></a>00360                         <span class="keywordflow">else</span>
+<a name="l00361"></a>00361                                 <span class="keywordflow">return</span> strftime(DEFAULT_DATE_FORMAT . <span class="stringliteral">&#39;, &#39;</span> . DEFAULT_TIME_FORMAT, $iTime);
+<a name="l00362"></a>00362                 }
+<a name="l00363"></a>00363         }
+<a name="l00364"></a>00364 
+<a name="l00378"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a0899aa9e021fcc15b6a3c2c0bd7e6715">00378</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a0899aa9e021fcc15b6a3c2c0bd7e6715">formatOutput</a>($sStr, $sHighlight = <span class="keyword">false</span>) {
+<a name="l00379"></a>00379     $sStr = trim($sStr);
+<a name="l00380"></a>00380     $sStr = preg_replace(<span class="stringliteral">&#39;/\S{500}/&#39;</span>, <span class="stringliteral">&#39;\0 &#39;</span>, $sStr);
 <a name="l00381"></a>00381 
-<a name="l00382"></a>00382 <span class="preprocessor">    # Highlight string</span>
-<a name="l00383"></a>00383 <span class="preprocessor"></span>    <span class="keywordflow">if</span> ($sHighlight == <span class="keyword">true</span>)
-<a name="l00384"></a>00384       $sStr = str_ireplace($sHighlight, <span class="stringliteral">&#39;&lt;mark&gt;&#39;</span> . $sHighlight . <span class="stringliteral">&#39;&lt;/mark&gt;&#39;</span>, $sStr);
-<a name="l00385"></a>00385 
-<a name="l00386"></a>00386     <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Bbcode&#39;</span>) == <span class="keyword">true</span>) {
-<a name="l00387"></a>00387       $oBbcode = <span class="keyword">new</span> Bbcode();
-<a name="l00388"></a>00388       <span class="keywordflow">return</span> $oBbcode-&gt;getFormatedText($sStr);
-<a name="l00389"></a>00389     }
-<a name="l00390"></a>00390     <span class="keywordflow">else</span>
-<a name="l00391"></a>00391       <span class="keywordflow">return</span> $sStr;
-<a name="l00392"></a>00392   }
-<a name="l00393"></a>00393 
-<a name="l00403"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#acf6ca09c64fe6e8ee30bc91c0920d3f2">00403</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#acf6ca09c64fe6e8ee30bc91c0920d3f2">getLastEntry</a>($sTable) {
-<a name="l00404"></a>00404     <span class="keywordflow">try</span> {
-<a name="l00405"></a>00405       $oDb = <span class="keyword">new</span> PDO(<span class="stringliteral">&#39;mysql:host=&#39;</span> . SQL_HOST . <span class="stringliteral">&#39;;dbname=&#39;</span> . SQL_DB, SQL_USER, SQL_PASSWORD);
-<a name="l00406"></a>00406       $oDb-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-<a name="l00407"></a>00407       $oQuery = $oDb-&gt;query(<span class="stringliteral">&quot; SELECT id FROM &quot;</span> . SQL_PREFIX . $sTable . <span class="stringliteral">&quot; ORDER BY id DESC LIMIT 1&quot;</span>);
-<a name="l00408"></a>00408       $aRow = $oQuery-&gt;fetch();
-<a name="l00409"></a>00409       <span class="keywordflow">return</span> $aRow[<span class="stringliteral">&#39;id&#39;</span>];
-<a name="l00410"></a>00410     }
-<a name="l00411"></a>00411     <span class="keywordflow">catch</span> (<a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a> $e) {
-<a name="l00412"></a>00412       $oDb-&gt;rollBack();
+<a name="l00382"></a>00382 <span class="preprocessor">    # Remove Slashes</span>
+<a name="l00383"></a>00383 <span class="preprocessor"></span>    $sStr = Helper::removeSlahes($sStr);
+<a name="l00384"></a>00384 
+<a name="l00385"></a>00385 <span class="preprocessor">    # Highlight string</span>
+<a name="l00386"></a>00386 <span class="preprocessor"></span>    <span class="keywordflow">if</span> ($sHighlight == <span class="keyword">true</span>)
+<a name="l00387"></a>00387       $sStr = str_ireplace($sHighlight, <span class="stringliteral">&#39;&lt;mark&gt;&#39;</span> . $sHighlight . <span class="stringliteral">&#39;&lt;/mark&gt;&#39;</span>, $sStr);
+<a name="l00388"></a>00388 
+<a name="l00389"></a>00389     <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Bbcode&#39;</span>) == <span class="keyword">true</span>) {
+<a name="l00390"></a>00390       $oBbcode = <span class="keyword">new</span> Bbcode();
+<a name="l00391"></a>00391       <span class="keywordflow">return</span> $oBbcode-&gt;getFormatedText($sStr);
+<a name="l00392"></a>00392     }
+<a name="l00393"></a>00393     <span class="keywordflow">else</span>
+<a name="l00394"></a>00394       <span class="keywordflow">return</span> $sStr;
+<a name="l00395"></a>00395   }
+<a name="l00396"></a>00396 
+<a name="l00406"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a989a279830943b43796cfc2d1cdcc5ee">00406</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#a989a279830943b43796cfc2d1cdcc5ee">getLastEntry</a>($sTable) {
+<a name="l00407"></a>00407     <span class="keywordflow">try</span> {
+<a name="l00408"></a>00408       $oDb = <span class="keyword">new</span> PDO(<span class="stringliteral">&#39;mysql:host=&#39;</span> . SQL_HOST . <span class="stringliteral">&#39;;dbname=&#39;</span> . SQL_DB, SQL_USER, SQL_PASSWORD);
+<a name="l00409"></a>00409       $oDb-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+<a name="l00410"></a>00410       $oQuery = $oDb-&gt;query(<span class="stringliteral">&quot; SELECT id FROM &quot;</span> . SQL_PREFIX . $sTable . <span class="stringliteral">&quot; ORDER BY id DESC LIMIT 1&quot;</span>);
+<a name="l00411"></a>00411       $aRow = $oQuery-&gt;fetch();
+<a name="l00412"></a>00412       <span class="keywordflow">return</span> $aRow[<span class="stringliteral">&#39;id&#39;</span>];
 <a name="l00413"></a>00413     }
-<a name="l00414"></a>00414   }
-<a name="l00415"></a>00415 
-<a name="l00425"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae95cf2e099489ace780dd7c8de49e4d8">00425</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#ae95cf2e099489ace780dd7c8de49e4d8">replaceNonAlphachars</a>($sStr) {
-<a name="l00426"></a>00426     $sStr = str_replace(<span class="charliteral">&#39;&quot;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sStr);
-<a name="l00427"></a>00427     $sStr = str_replace(<span class="stringliteral">&#39;Ä&#39;</span>, <span class="stringliteral">&#39;Ae&#39;</span>, $sStr);
-<a name="l00428"></a>00428     $sStr = str_replace(<span class="stringliteral">&#39;ä&#39;</span>, <span class="stringliteral">&#39;ae&#39;</span>, $sStr);
-<a name="l00429"></a>00429     $sStr = str_replace(<span class="stringliteral">&#39;Ü&#39;</span>, <span class="stringliteral">&#39;Ue&#39;</span>, $sStr);
-<a name="l00430"></a>00430     $sStr = str_replace(<span class="stringliteral">&#39;ü&#39;</span>, <span class="stringliteral">&#39;ue&#39;</span>, $sStr);
-<a name="l00431"></a>00431     $sStr = str_replace(<span class="stringliteral">&#39;Ö&#39;</span>, <span class="stringliteral">&#39;Oe&#39;</span>, $sStr);
-<a name="l00432"></a>00432     $sStr = str_replace(<span class="stringliteral">&#39;ö&#39;</span>, <span class="stringliteral">&#39;oe&#39;</span>, $sStr);
-<a name="l00433"></a>00433     $sStr = str_replace(<span class="stringliteral">&#39;ß&#39;</span>, <span class="stringliteral">&#39;ss&#39;</span>, $sStr);
-<a name="l00434"></a>00434     $sStr = str_replace(<span class="charliteral">&#39; &#39;</span>, <span class="charliteral">&#39;_&#39;</span>, $sStr);
-<a name="l00435"></a>00435     $sStr = strtolower($sStr);
-<a name="l00436"></a>00436     <span class="keywordflow">return</span> $sStr;
-<a name="l00437"></a>00437   }
-<a name="l00438"></a>00438 }
+<a name="l00414"></a>00414     <span class="keywordflow">catch</span> (<a class="code" href="class_candy_c_m_s_1_1_helper_1_1_advanced_exception.html">AdvancedException</a> $e) {
+<a name="l00415"></a>00415       $oDb-&gt;rollBack();
+<a name="l00416"></a>00416     }
+<a name="l00417"></a>00417   }
+<a name="l00418"></a>00418 
+<a name="l00428"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#acaeed07fa46e11ffb1defad1ba4ab0c6">00428</a>   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_helper.html#acaeed07fa46e11ffb1defad1ba4ab0c6">replaceNonAlphachars</a>($sStr) {
+<a name="l00429"></a>00429     $sStr = str_replace(<span class="charliteral">&#39;&quot;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sStr);
+<a name="l00430"></a>00430     $sStr = str_replace(<span class="stringliteral">&#39;Ä&#39;</span>, <span class="stringliteral">&#39;Ae&#39;</span>, $sStr);
+<a name="l00431"></a>00431     $sStr = str_replace(<span class="stringliteral">&#39;ä&#39;</span>, <span class="stringliteral">&#39;ae&#39;</span>, $sStr);
+<a name="l00432"></a>00432     $sStr = str_replace(<span class="stringliteral">&#39;Ü&#39;</span>, <span class="stringliteral">&#39;Ue&#39;</span>, $sStr);
+<a name="l00433"></a>00433     $sStr = str_replace(<span class="stringliteral">&#39;ü&#39;</span>, <span class="stringliteral">&#39;ue&#39;</span>, $sStr);
+<a name="l00434"></a>00434     $sStr = str_replace(<span class="stringliteral">&#39;Ö&#39;</span>, <span class="stringliteral">&#39;Oe&#39;</span>, $sStr);
+<a name="l00435"></a>00435     $sStr = str_replace(<span class="stringliteral">&#39;ö&#39;</span>, <span class="stringliteral">&#39;oe&#39;</span>, $sStr);
+<a name="l00436"></a>00436     $sStr = str_replace(<span class="stringliteral">&#39;ß&#39;</span>, <span class="stringliteral">&#39;ss&#39;</span>, $sStr);
+<a name="l00437"></a>00437     $sStr = str_replace(<span class="charliteral">&#39; &#39;</span>, <span class="charliteral">&#39;_&#39;</span>, $sStr);
+<a name="l00438"></a>00438     $sStr = strtolower($sStr);
+<a name="l00439"></a>00439     <span class="keywordflow">return</span> $sStr;
+<a name="l00440"></a>00440   }
+<a name="l00441"></a>00441 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -358,7 +361,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -371,7 +374,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Helper.helper.php</b>      </li>
 
-    <li class="footer">Generated on Tue Dec 6 2011 10:54:36 for CandyCMS by
+    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>

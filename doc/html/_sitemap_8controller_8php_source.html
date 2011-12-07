@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a>00022 
 <a name="l00023"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">00023</a> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">Sitemap</a> <span class="keyword">extends</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">Main</a> {
 <a name="l00024"></a>00024 
-<a name="l00032"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#ad5c382585829d3391bf1d9eba8de880f">00032</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#ad5c382585829d3391bf1d9eba8de880f">showXML</a>() {
+<a name="l00032"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#aaff754d9bd1dfde1df22945743970c95">00032</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#aaff754d9bd1dfde1df22945743970c95">showXML</a>() {
 <a name="l00033"></a>00033                 Header(<span class="stringliteral">&#39;Content-Type: text/xml&#39;</span>);
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_website_landing_page_&#39;</span>, WEBSITE_URL . <span class="charliteral">&#39;/&#39;</span> . WEBSITE_LANDING_PAGE);
@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00042"></a>00042     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;xml&#39;</span>));
 <a name="l00043"></a>00043         }
 <a name="l00044"></a>00044 
-<a name="l00052"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#affc6021db3d643097692a19d8e642d09">00052</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#affc6021db3d643097692a19d8e642d09">show</a>() {
+<a name="l00052"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#a2b8e3779f5bd8c38f70307574859bd36">00052</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#a2b8e3779f5bd8c38f70307574859bd36">show</a>() {
 <a name="l00053"></a>00053                 $this-&gt;_getSitemap();
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055     $sTemplateDir = Helper::getTemplateDir(<span class="stringliteral">&#39;sitemaps&#39;</span>, <span class="stringliteral">&#39;show&#39;</span>);
@@ -156,7 +156,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -169,7 +169,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Sitemap.controller.php</b>      </li>
 
-    <li class="footer">Generated on Tue Dec 6 2011 10:54:36 for CandyCMS by
+    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>

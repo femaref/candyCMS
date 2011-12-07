@@ -2,16 +2,16 @@ var NAVTREE =
 [
   [ "CandyCMS", "index.html", [
     [ "Related Pages", "pages.html", "pages" ],
-    [ "Packages", null, [
-      [ "Packages", "namespaces.html", "namespaces" ]
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],
-    [ "Classes", null, [
-      [ "Class List", "annotated.html", "annotated" ],
-      [ "Class Index", "classes.html", null ],
+    [ "Data Structures", null, [
+      [ "Data Structures", "annotated.html", "annotated" ],
+      [ "Data Structure Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+      [ "Data Fields", "functions.html", [
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ]
       ] ]
     ] ],
     [ "Files", null, [

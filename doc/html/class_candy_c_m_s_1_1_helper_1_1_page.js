@@ -1,9 +1,9 @@
 var class_candy_c_m_s_1_1_helper_1_1_page =
 [
-    [ "__construct", "class_candy_c_m_s_1_1_helper_1_1_page.html#a3a114b7988bcfa89a871ab84594e9669", null ],
-    [ "getCurrentPage", "class_candy_c_m_s_1_1_helper_1_1_page.html#ac7c563fdc86310ade983e2f770c7421c", null ],
-    [ "getLimit", "class_candy_c_m_s_1_1_helper_1_1_page.html#ab2114d47f7793e049d0c7874f2cc3b8f", null ],
-    [ "getOffset", "class_candy_c_m_s_1_1_helper_1_1_page.html#a26de1791a221ced4660e4e6629c834d4", null ],
-    [ "showPages", "class_candy_c_m_s_1_1_helper_1_1_page.html#a45ce0ded7f475a8c5177c03fcc1fd9cc", null ],
-    [ "showSurrounding", "class_candy_c_m_s_1_1_helper_1_1_page.html#ab7949579d16ad930b73cd0aea6f1d5b9", null ]
+    [ "__construct", "class_candy_c_m_s_1_1_helper_1_1_page.html#a5e84e922e3cf1999fb5fd48be216f290", null ],
+    [ "getCurrentPage", "class_candy_c_m_s_1_1_helper_1_1_page.html#a1162a00ab3a7146680cf51a76bf60c78", null ],
+    [ "getLimit", "class_candy_c_m_s_1_1_helper_1_1_page.html#adc86593a522f6adc4e47b02b97a6f8d0", null ],
+    [ "getOffset", "class_candy_c_m_s_1_1_helper_1_1_page.html#aee8782a6009ae7e59aef9d88588d498a", null ],
+    [ "showPages", "class_candy_c_m_s_1_1_helper_1_1_page.html#ae256025f95ada240ea779e882cc474b5", null ],
+    [ "showSurrounding", "class_candy_c_m_s_1_1_helper_1_1_page.html#a9a75d4a693da19dab426de4fc5181241", null ]
 ];

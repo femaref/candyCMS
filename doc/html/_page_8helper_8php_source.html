@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Packages</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -121,7 +121,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00066"></a>00066 
 <a name="l00073"></a>00073   <span class="keyword">private</span> $_oSmarty;
 <a name="l00074"></a>00074 
-<a name="l00084"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a3a114b7988bcfa89a871ab84594e9669">00084</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a3a114b7988bcfa89a871ab84594e9669">__construct</a>($aRequest, $iEntries, $iLimit = 10) {
+<a name="l00084"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a5e84e922e3cf1999fb5fd48be216f290">00084</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a5e84e922e3cf1999fb5fd48be216f290">__construct</a>($aRequest, $iEntries, $iLimit = 10) {
 <a name="l00085"></a>00085     $this-&gt;_aRequest  =&amp; $aRequest;
 <a name="l00086"></a>00086     $this-&gt;_iEntries  =&amp; $iEntries;
 <a name="l00087"></a>00087     $this-&gt;_iLimit    =&amp; $iLimit;
@@ -150,19 +150,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00110"></a>00110     $this-&gt;_oSmarty-&gt;compile_dir = COMPILE_DIR;
 <a name="l00111"></a>00111   }
 <a name="l00112"></a>00112 
-<a name="l00119"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a26de1791a221ced4660e4e6629c834d4">00119</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a26de1791a221ced4660e4e6629c834d4">getOffset</a>() {
+<a name="l00119"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#aee8782a6009ae7e59aef9d88588d498a">00119</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#aee8782a6009ae7e59aef9d88588d498a">getOffset</a>() {
 <a name="l00120"></a>00120     <span class="keywordflow">return</span> $this-&gt;_iOffset;
 <a name="l00121"></a>00121   }
 <a name="l00122"></a>00122 
-<a name="l00129"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ab2114d47f7793e049d0c7874f2cc3b8f">00129</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ab2114d47f7793e049d0c7874f2cc3b8f">getLimit</a>() {
+<a name="l00129"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#adc86593a522f6adc4e47b02b97a6f8d0">00129</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#adc86593a522f6adc4e47b02b97a6f8d0">getLimit</a>() {
 <a name="l00130"></a>00130     <span class="keywordflow">return</span> $this-&gt;_iLimit;
 <a name="l00131"></a>00131   }
 <a name="l00132"></a>00132 
-<a name="l00139"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ac7c563fdc86310ade983e2f770c7421c">00139</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ac7c563fdc86310ade983e2f770c7421c">getCurrentPage</a>() {
+<a name="l00139"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a1162a00ab3a7146680cf51a76bf60c78">00139</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a1162a00ab3a7146680cf51a76bf60c78">getCurrentPage</a>() {
 <a name="l00140"></a>00140     <span class="keywordflow">return</span> $this-&gt;_iCurrentPage;
 <a name="l00141"></a>00141   }
 <a name="l00142"></a>00142 
-<a name="l00150"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a45ce0ded7f475a8c5177c03fcc1fd9cc">00150</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a45ce0ded7f475a8c5177c03fcc1fd9cc">showPages</a>($sUrl = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00150"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ae256025f95ada240ea779e882cc474b5">00150</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ae256025f95ada240ea779e882cc474b5">showPages</a>($sUrl = <span class="stringliteral">&#39;&#39;</span>) {
 <a name="l00151"></a>00151     $this-&gt;_oSmarty-&gt;assign(<span class="stringliteral">&#39;page_current&#39;</span>, $this-&gt;_iCurrentPage);
 <a name="l00152"></a>00152     $this-&gt;_oSmarty-&gt;assign(<span class="stringliteral">&#39;page_last&#39;</span>, $this-&gt;_iPages);
 <a name="l00153"></a>00153     $this-&gt;_oSmarty-&gt;assign(<span class="stringliteral">&#39;_action_url_&#39;</span>, !empty($sUrl) ? $sUrl : Helper::formatInput($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>]));
@@ -172,7 +172,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00157"></a>00157     <span class="keywordflow">return</span> $this-&gt;_oSmarty-&gt;fetch(<span class="stringliteral">&#39;show.tpl&#39;</span>);
 <a name="l00158"></a>00158   }
 <a name="l00159"></a>00159 
-<a name="l00167"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ab7949579d16ad930b73cd0aea6f1d5b9">00167</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#ab7949579d16ad930b73cd0aea6f1d5b9">showSurrounding</a>($sRssAction = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00167"></a><a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a9a75d4a693da19dab426de4fc5181241">00167</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_helper_1_1_page.html#a9a75d4a693da19dab426de4fc5181241">showSurrounding</a>($sRssAction = <span class="stringliteral">&#39;&#39;</span>) {
 <a name="l00168"></a>00168     $iNext = <span class="stringliteral">&#39;&#39;</span>;
 <a name="l00169"></a>00169     $iPrevious = <span class="stringliteral">&#39;&#39;</span>;
 <a name="l00170"></a>00170 
@@ -203,7 +203,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -216,7 +216,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Page.helper.php</b>      </li>
 
-    <li class="footer">Generated on Tue Dec 6 2011 10:54:36 for CandyCMS by
+    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>
