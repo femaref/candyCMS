@@ -372,7 +372,7 @@ class User extends Main {
                                           " . SQL_PREFIX . "users
                                         SET
                                           verification_code = '',
-                                          receive_newsletter = '1'
+                                          receive_newsletter = '1',
                                           date = :date
                                         WHERE
                                           id = :id");
