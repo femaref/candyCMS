@@ -122,6 +122,9 @@
               </a>
             </li>
           {/if}
+          {if $MOBILE_DEVICE == true}
+            <a href="/?mobile=1">{$lang.global.view.mobile}</a>
+          {/if}
         </ul>
       </section>
     </footer>

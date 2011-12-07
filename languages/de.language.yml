@@ -134,7 +134,9 @@ global:
       3: Moderator
       4: Administrator
     user: User
-  webview: Webansicht
+  view:
+    mobile: Mobile Version
+    web: Webansicht
   welcome: Hallo
   yesterday: Gestern
 

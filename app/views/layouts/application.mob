@@ -49,7 +49,7 @@
         <div data-role="controlgroup" data-type="horizontal">
           <a id='top' data-role="button" class="ui-btn-right" data-icon="arrow-u">Top</a>
           <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
-          <a href='?mobile=0' data-ajax="false">{$lang.global.webview}</a>
+          <a href='?mobile=0' data-ajax="false">{$lang.global.view.web}</a>
         </div>
       </div><!-- /footer -->
     </div><!-- /page -->
@@ -59,13 +59,15 @@
         $.mobile.silentScroll(0);
       });
 
-      $('img').each(function() {
-        var iNewWidth = screen.width - 30;
-        var iNewHeight =  iNewWidth / $(this).width() * $(this).height();
-        if($(this).width() > iNewWidth) {
-          $(this).attr('width', iNewWidth);
-          $(this).attr('height', iNewHeight);
-        }
+      $(document).ready(function() {
+        $('img').each(function() {
+          var iNewWidth = screen.width - 30;
+          var iNewHeight =  iNewWidth / $(this).width() * $(this).height();
+          if($(this).width() > iNewWidth) {
+            $(this).attr('width', iNewWidth);
+            $(this).attr('height', iNewHeight);
+          }
+        });
       });
     </script>
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>

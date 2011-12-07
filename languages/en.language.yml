@@ -133,7 +133,9 @@ global:
       3: Moderator
       4: Administrator
     user: User
-  webview: Webview
+  view:
+    mobile: Mobile Version
+    web: Webview
   welcome: Welcome
   yesterday: Yesterday
 
