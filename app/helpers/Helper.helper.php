@@ -117,18 +117,21 @@ class Helper {
 	}
 
   /**
-   * Create a simple link with provided params
+   * Create a simple link with provided params.
    *
 	 * @static
    * @access public
 	 * @param string $sUrl URL to create a link with
-	 * @param string $sExternal is this an external link?
+	 * @param boolean $bInternal Is this an absolute URL?
    * @return string HTML code with anchor
    *
    */
-  public static function createLinkTo($sUrl) {
-    return '<a href=\'' . $sUrl . '\'>' . $sUrl . '</a>';
-  }
+  public static function createLinkTo($sUrl, $bExternal = false) {
+		if ($bExternal == true)
+			return '<a href="' . $sUrl . '">' . $sUrl . '</a>';
+		else
+			return '<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
+	}
 
   /**
 	 * Return the URL of the user avatar.

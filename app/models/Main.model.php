@@ -97,7 +97,7 @@ abstract class Main {
    * Close DB connection.
    *
    * @access public
-   * @return string null
+   * @return null
    *
    */
   public function __destruct() {

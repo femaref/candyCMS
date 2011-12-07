@@ -135,7 +135,7 @@ class Session extends Main {
 				if ($this->_oModel->createResendActions() === true) {
 					$aData = $this->_oModel->getData();
 
-					$sVerificationUrl = Helper::createLinkTo('/user/' . $aData['verification_code'] . '/verification');
+					$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
 
 					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
 					$sContent = str_replace('%v', $sVerificationUrl, $sContent);
