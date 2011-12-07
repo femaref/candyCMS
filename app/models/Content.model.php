@@ -89,8 +89,8 @@ class Content extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $iId = $aRow['id'];
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'content');
+        $iDate = $aRow['date'];
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'content');
       }
     }
 

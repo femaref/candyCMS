@@ -27,10 +27,20 @@ class Session extends Main {
    * @see app/controllers/Index.controller.php
    */
   public static function getSessionData() {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT * FROM " . SQL_PREFIX . "users WHERE session = :session_id AND ip = :ip LIMIT 1");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                *
+                                              FROM
+                                                " . SQL_PREFIX . "users
+                                              WHERE
+                                                session = :session_id
+                                              AND
+                                                ip = :ip
+                                              LIMIT
+                                                1");
 
       $oQuery->bindParam('session_id', session_id(), PDO::PARAM_STR);
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
@@ -39,13 +49,10 @@ class Session extends Main {
       if ($bReturn === false)
         $this->destroy();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
-
-      return $aResult;
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
   }
 
@@ -59,29 +66,24 @@ class Session extends Main {
    */
   public static function update($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("  UPDATE
-                                  " . SQL_PREFIX . "users
-                                SET
-                                  session = :session,
-                                  ip = :ip,
-                                  last_login = :last_login
-                                WHERE
-                                  id = :id");
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
+                                                " . SQL_PREFIX . "users
+                                              SET
+                                                session = :session,
+                                                ip = :ip,
+                                                last_login = :last_login
+                                              WHERE
+                                                id = :id");
 
       $oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
       $oQuery->bindParam('last_login', time(), PDO::PARAM_INT);
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bResult = $oQuery->execute();
 
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
   }
 

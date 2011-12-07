@@ -68,11 +68,11 @@ class Log extends Main {
     }
 
     foreach ($aResult as $aRow) {
-      $iId = $aRow['id'];
+      $iDate = $aRow['date'];
 
-      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
-      $this->_aData[$iId]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
-      $this->_aData[$iId]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
+      $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'log');
+      $this->_aData[$iDate]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
+      $this->_aData[$iDate]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
     }
 
     return $this->_aData;
@@ -106,27 +106,24 @@ class Log extends Main {
    */
   public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
     $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
-    $iTimeEnd   = empty($iTimeEnd) ? time() : $iTimeEnd;
+    $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
 
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "logs
-                                  ( section_name,
-                                    action_name,
-                                    action_id,
-                                    time_start,
-                                    time_end,
-                                    user_id)
-                                VALUES
-                                  ( :section_name,
-                                    :action_name,
-                                    :action_id,
-                                    :time_start,
-                                    :time_end,
-                                    :user_id)");
+      $oQuery = parent::$_oDbStatic->prepare("INSERT INTO
+                                                " . SQL_PREFIX . "logs
+                                                ( section_name,
+                                                  action_name,
+                                                  action_id,
+                                                  time_start,
+                                                  time_end,
+                                                  user_id)
+                                              VALUES
+                                                ( :section_name,
+                                                  :action_name,
+                                                  :action_id,
+                                                  :time_start,
+                                                  :time_end,
+                                                  :user_id)");
 
       $oQuery->bindParam('section_name', strtolower($sSectionName));
       $oQuery->bindParam('action_name', strtolower($sActionName));
@@ -135,13 +132,10 @@ class Log extends Main {
       $oQuery->bindParam('time_end', $iTimeEnd);
       $oQuery->bindParam('user_id', $iUserId);
 
-      $bResult = $oQuery->execute();
-      $oDb = null;
-
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
   }
 

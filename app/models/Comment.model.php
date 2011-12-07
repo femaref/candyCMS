@@ -68,10 +68,10 @@ class Comment extends Main {
     # Count the loops to display comment number
     $iLoop = 1;
     foreach ($aResult as $aRow) {
-      $iId = $aRow['id'];
+      $iDate = $aRow['date'];
 
-      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
-      $this->_aData[$iId]['loop'] = $iLoop;
+      $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');
+      $this->_aData[$iDate]['loop'] = $iLoop;
 
       $iLoop++;
     }

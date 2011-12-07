@@ -56,12 +56,12 @@ class Download extends Main {
       }
 
       foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
+        $iDate = $aRow['date'];
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, 'download');
-        $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
+        $this->_aData[$sCategory]['files'][$iDate] = $this->_formatForOutput($aRow, 'download');
+        $this->_aData[$sCategory]['files'][$iDate]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
       }
     }
     else {
@@ -233,24 +233,18 @@ class Download extends Main {
    */
   public static function updateDownloadCount($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->prepare("  UPDATE
-                                  " . SQL_PREFIX . "downloads
-                                SET
-                                  downloads = downloads + 1
-                                WHERE
-                                  id = :id");
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
+                                                " . SQL_PREFIX . "downloads
+                                              SET
+                                                downloads = downloads + 1
+                                              WHERE
+                                                id = :id");
 
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bResult = $oQuery->execute();
-
-      $oDb = null;
-      return $bResult;
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
   }
 }

@@ -61,8 +61,8 @@ class Search extends Main {
           if (isset($aRow['published']) && $aRow['published'] == 0)
             continue;
 
-          $iId = $aRow['id'];
-          $this->_aData[$sTable][$iId] = $this->_formatForOutput($aRow, $sTableSingular);
+          $iDate = $aRow['date'];
+          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTableSingular);
         }
       }
       catch (AdvancedException $e) {

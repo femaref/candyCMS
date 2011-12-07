@@ -87,12 +87,12 @@ class Blog extends Main {
       }
 
       foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
+        $iDate = $aRow['date'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
-        $this->_aData[$iId]['tags'] = explode(', ', $aRow['tags']);
-        $this->_aData[$iId]['tags_raw'] = $aRow['tags'];
-        $this->_aData[$iId]['date_modified'] = !empty($aRow['date_modified']) ?
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[$iDate]['tags'] = explode(', ', $aRow['tags']);
+        $this->_aData[$iDate]['tags_raw'] = $aRow['tags'];
+        $this->_aData[$iDate]['date_modified'] = !empty($aRow['date_modified']) ?
                 Helper::formatTimestamp($aRow['date_modified']) :
                 '';
       }

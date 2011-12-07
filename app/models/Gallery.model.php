@@ -95,10 +95,10 @@ class Gallery extends Main {
 
     else {
       foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
+        $iDate = $aRow['date'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'gallery');
-        $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($iId, $bAdvancedImageInformation) : '';
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'gallery');
+        $this->_aData[$iDate]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($iId, $bAdvancedImageInformation) : '';
       }
     }
 

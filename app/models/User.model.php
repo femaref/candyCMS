@@ -31,20 +31,21 @@ class User extends Main {
    */
   public static final function getUserNamesAndEmail($iId) {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->prepare("SELECT name, surname, email FROM " . SQL_PREFIX . "users WHERE id = :id LIMIT 1");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                name, surname, email
+                                              FROM
+                                                " . SQL_PREFIX . "users
+                                              WHERE
+                                                id = :id
+                                              LIMIT 1");
 
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      $oDb = null;
-
-      return $aResult;
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      parent::$_oDbStatic->rollBack();
     }
   }
 
@@ -58,24 +59,27 @@ class User extends Main {
    *
    */
   public static function getExistingUser($sEmail) {
-		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$oQuery = $oDb->prepare("SELECT email FROM " . SQL_PREFIX . "users WHERE email = :email LIMIT 1");
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                email
+                                              FROM
+                                                " . SQL_PREFIX . "users
+                                              WHERE
+                                                email = :email
+                                              LIMIT 1");
 
-			$oQuery->bindParam('email', $sEmail, PDO::PARAM_STR);
-			$oQuery->execute();
+      $oQuery->bindParam('email', $sEmail, PDO::PARAM_STR);
+      $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			$oDb = null;
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
 
-			if (isset($aResult['email']) && !empty($aResult['email']))
-				return true;
-		}
-		catch (AdvancedException $e) {
-			$oDb->rollBack();
-		}
-	}
+      if (isset($aResult['email']) && !empty($aResult['email']))
+        return true;
+    }
+    catch (AdvancedException $e) {
+      parent::$_oDbStatic->rollBack();
+    }
+  }
 
   /**
    * Set user entry or user overview data.
@@ -117,10 +121,10 @@ class User extends Main {
       }
 
       foreach ($aResult as $aRow) {
-        $iId = $aRow['id'];
+        $iDate = $aRow['date'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[$iId]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[$iDate]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
       }
 
     }

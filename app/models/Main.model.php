@@ -64,6 +64,13 @@ abstract class Main {
    */
   public $oPage;
 
+  /**
+   * Database connection.
+   *
+   * @var object
+   * @access protected
+   *
+   */
   static $_oDbStatic;
 
   /**

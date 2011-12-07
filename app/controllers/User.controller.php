@@ -178,8 +178,8 @@ class User extends Main {
 		}
 
       # Generate verification code for users (double-opt-in)
-    $iVerificationCode = Helper::createRandomChar(12, true);
-    $sVerificationUrl = Helper::createLinkTo('/user/' . $iVerificationCode . '/verification');
+    $iVerificationCode  = Helper::createRandomChar(12, true);
+    $sVerificationUrl   = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
