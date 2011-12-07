@@ -89,7 +89,7 @@
     <h2><a href="#">{$lang.user.title.account}</a></h2>
     <div>
       <div class="error">
-        {$lang.user.info.account}
+        {$lang.user.info.destroy_account}
       </div>
       <p>
         <label for='input-password'>{$lang.global.password.password}</label>

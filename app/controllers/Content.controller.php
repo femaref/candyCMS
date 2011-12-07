@@ -49,9 +49,9 @@ class Content extends Main {
     }
     else {
       if(!empty($this->_aData)) {
-        $this->_setDescription($this->_aData[$this->_iId]['teaser']);
-        $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
-        $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
+        $this->_setDescription($this->_aData[1]['teaser']);
+        $this->_setKeywords($this->_aData[1]['keywords']);
+        $this->_setTitle($this->_removeHighlight($this->_aData[1]['title']));
       }
 
       $sTemplateDir = Helper::getTemplateDir('contents', 'show');

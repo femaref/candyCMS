@@ -88,10 +88,8 @@ class Content extends Main {
       if ($bUpdate == true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
-      else {
-        $iDate = $aRow['date'];
-        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'content');
-      }
+      else
+        $this->_aData[1] = $this->_formatForOutput($aRow, 'content');
     }
 
     return $this->_aData;
