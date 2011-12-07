@@ -31,7 +31,6 @@ class Blog extends Main {
    */
   private function _setData($bUpdate, $iLimit) {
     if (empty($this->_iId)) {
-
       # Show unpublished items to moderators or administrators only
       $sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
 
@@ -88,18 +87,17 @@ class Blog extends Main {
 
       foreach ($aResult as $aRow) {
         # We use the date as identifier to give plugins the possibility to patch into the system.
-        $iDate = $aRow['date'];
+        $iDate = $aRow['id'];
 
         $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');
-        $this->_aData[$iDate]['tags'] = explode(', ', $aRow['tags']);
-        $this->_aData[$iDate]['tags_raw'] = $aRow['tags'];
-        $this->_aData[$iDate]['date_modified'] = !empty($aRow['date_modified']) ?
+        $this->_aData[$iDate]['tags']           = explode(', ', $aRow['tags']);
+        $this->_aData[$iDate]['tags_raw']       = $aRow['tags'];
+        $this->_aData[$iDate]['date_modified']  = !empty($aRow['date_modified']) ?
                 Helper::formatTimestamp($aRow['date_modified']) :
                 '';
       }
     }
     else {
-
       # Show unpublished items to moderators or administrators only
       $sWhere = USER_RIGHT < 3 ? "AND published = '1'" : '';
 
@@ -137,7 +135,6 @@ class Blog extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-
         $this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];

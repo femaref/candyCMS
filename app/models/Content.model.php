@@ -90,7 +90,6 @@ class Content extends Main {
 
       else {
         $iId = $aRow['id'];
-
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'content');
       }
     }

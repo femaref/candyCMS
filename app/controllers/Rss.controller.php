@@ -28,11 +28,13 @@ class Rss extends Main {
    *
    */
   public function __init() {
-    #Header('Content-Type: application/rss+xml');
-
+    Header('Content-Type: application/rss+xml');
     $this->_sSection = isset($this->_aRequest['subsection']) ?
             (string) strtolower($this->_aRequest['subsection']) :
             'blog';
+
+    # Empty page
+    unset($this->_aRequest['page']);
   }
 
   /**
@@ -45,20 +47,17 @@ class Rss extends Main {
   public function show() {
     # Blog
     if ($this->_sSection == 'blog') {
-      $this->_oModel = new Model_Blog($this->_aRequest, $this->_aSession);
-      $this->_aData = $this->_oModel->getData();
+      $this->_oModel  = new Model_Blog($this->_aRequest, $this->_aSession);
+      $this->_aData   = $this->_oModel->getData();
+
       $this->_setTitle($this->oI18n->get('global.blog') . ' - ' . WEBSITE_NAME);
 
       return $this->_showDefault();
     }
     # Gallery
     elseif ($this->_sSection == 'gallery' && $this->_iId > 0) {
-
-      # Empty page
-      unset($this->_aRequest['page']);
-
-      $this->_oModel = new Model_Gallery($this->_aRequest, $this->_aSession);
-      $this->_aData = $this->_oModel->getData($this->_iId, false, true);
+      $this->_oModel  = new Model_Gallery($this->_aRequest, $this->_aSession);
+      $this->_aData   = $this->_oModel->getData($this->_iId, false, true);
 
       $this->_setTitle(Helper::removeSlahes($this->oI18n->get('global.gallery') . ': ' .
                       $this->_aData[$this->_iId]['title']));
