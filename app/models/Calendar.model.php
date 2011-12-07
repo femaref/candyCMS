@@ -91,7 +91,7 @@ class Calendar extends Main {
 			}
 
 			foreach ($aResult as $aRow) {
-				$iDate = $aRow['date'];
+				$iId = $aRow['id'];
 				$sMonth = I18n::get('global.months.' . $aRow['start_month']);
 				$sYear = $aRow['start_year'];
 				$sDate = $sMonth . $sYear;
@@ -99,11 +99,11 @@ class Calendar extends Main {
 				$this->_aData[$sDate]['month']	= $sMonth;
 				$this->_aData[$sDate]['year']		= $sYear;
 
-				$this->_aData[$sDate]['dates'][$iDate] = $this->_formatForOutput($aRow, 'calendar');
-				$this->_aData[$sDate]['dates'][$iDate]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
+				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, 'calendar');
+				$this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
 				if ($aRow['end_date'] > 0)
-					$this->_aData[$sDate]['dates'][$iDate]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
+					$this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
 			}
 		}
 		else {

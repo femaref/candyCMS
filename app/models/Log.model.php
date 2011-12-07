@@ -68,11 +68,11 @@ class Log extends Main {
     }
 
     foreach ($aResult as $aRow) {
-      $iDate = $aRow['date'];
+      $iId = $aRow['id'];
 
-      $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'log');
-      $this->_aData[$iDate]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
-      $this->_aData[$iDate]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
+      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'log');
+      $this->_aData[$iId]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
+      $this->_aData[$iId]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
     }
 
     return $this->_aData;

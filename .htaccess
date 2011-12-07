@@ -38,6 +38,7 @@ ErrorDocument 500 /error/500
 
   # Show gallery image (used for mobile views)
   RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2&page=1 [L,QSA,NC]
+  RewriteRule ^user/([A-Za-z0-9]+)/verification?$ index.php?section=user&action=verification&code=$1 [L,QSA,NC]
 
   # Switch language or template
   RewriteRule ^(language|template)/([a-z]+)$ index.php?language=$2&template=$2&clearcache=1 [L,QSA,NC]

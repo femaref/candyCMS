@@ -121,10 +121,10 @@ class User extends Main {
       }
 
       foreach ($aResult as $aRow) {
-        $iDate = $aRow['date'];
+        $iId = $aRow['id'];
 
-        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[$iDate]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[$iId]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
       }
 
     }
@@ -344,11 +344,11 @@ class User extends Main {
    * Update a user account when verification link is clicked.
    *
    * @access public
-   * @param integer $iVerificationCode Code to remove.
+   * @param string $sVerificationCode Code to remove.
    * @return boolean status of query
    *
    */
-  public function verifyEmail($iVerificationCode) {
+  public function verifyEmail($sVerificationCode) {
 		try {
 			$oQuery = $this->_oDb->prepare("SELECT
                                         *
@@ -358,7 +358,7 @@ class User extends Main {
                                         verification_code = :verification_code
                                       LIMIT 1");
 
-			$oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
+			$oQuery->bindParam('verification_code', Helper::formatInput($sVerificationCode), PDO::PARAM_STR);
 			$oQuery->execute();
 
 			$this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);

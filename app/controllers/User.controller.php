@@ -178,8 +178,7 @@ class User extends Main {
 		}
 
       # Generate verification code for users (double-opt-in)
-    $iVerificationCode  = Helper::createRandomChar(12, true);
-    $sVerificationUrl   = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
+    $iVerificationCode = Helper::createRandomChar(12);
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
@@ -187,10 +186,13 @@ class User extends Main {
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       $this->__autoload('Mail');
 
-			$sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
+      $iUserId = Helper::getLastEntry('users');
+      $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification/' . $iUserId);
+
+      $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('users'));
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
 			return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
@@ -390,10 +392,10 @@ class User extends Main {
 	 *
 	 */
 	public function verifyEmail() {
-		if (empty($this->_iId))
+		if (!isset($this->_aRequest['code']) || empty($this->_aRequest['code']))
 			return Helper::errorMessage($this->oI18n->get('error.missing.id'), '/');
 
-		elseif ($this->_oModel->verifyEmail($this->_iId) === true) {
+		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
 			# Get data from activating user
 			$aUserData = $this->_oModel->getVerificationData();
 

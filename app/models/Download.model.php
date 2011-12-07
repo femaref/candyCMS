@@ -56,12 +56,12 @@ class Download extends Main {
       }
 
       foreach ($aResult as $aRow) {
-        $iDate = $aRow['date'];
+        $iId = $aRow['id'];
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-        $this->_aData[$sCategory]['files'][$iDate] = $this->_formatForOutput($aRow, 'download');
-        $this->_aData[$sCategory]['files'][$iDate]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
+        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, 'download');
+        $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
       }
     }
     else {

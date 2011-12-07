@@ -9,7 +9,7 @@
 <h1>{$lang.global.contents}</h1>
 <table>
   <tr>
-    <th class="left">{$lang.global.name}</th>
+    <th class="left">{$lang.global.title}</th>
     <th>{$lang.global.date.date}</th>
     <th>{$lang.global.author}</th>
     <th></th>

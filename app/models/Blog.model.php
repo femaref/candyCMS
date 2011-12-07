@@ -87,6 +87,7 @@ class Blog extends Main {
       }
 
       foreach ($aResult as $aRow) {
+        # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
 
         $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');

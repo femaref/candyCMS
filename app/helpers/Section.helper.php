@@ -13,6 +13,7 @@ namespace CandyCMS\Helper;
 
 use CandyCMS\Addon\Addon as Addon;
 use CandyCMS\Controller\Main as Main;
+use Smarty;
 
 require_once 'addons/controllers/Addon.controller.php';
 
@@ -349,7 +350,8 @@ class Section extends Main {
                 (string) $this->_aRequest['subsection'] :
                 die($this->oI18n->get('error.missing.template'));
 
-        $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+        $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+        $this->oSmarty->setCacheLifetime(300);
 
         parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
         parent::_setDescription(ucfirst($sTpl));
