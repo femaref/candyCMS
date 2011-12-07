@@ -33,8 +33,8 @@ class Rss extends Main {
             (string) strtolower($this->_aRequest['subsection']) :
             'blog';
 
-    # Empty page
-    unset($this->_aRequest['page']);
+    # Empty page and search to avoid news filters.
+    unset($this->_aRequest['page'], $this->_aRequest['search']);
   }
 
   /**
