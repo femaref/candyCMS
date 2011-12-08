@@ -54,7 +54,7 @@ class Section extends Main {
 
     # Some files are missing. Quit work!
     else
-      throw new Exception('Module not found:' . 'app/controllers/' .
+      throw new AdvancedException('Module not found:' . 'app/controllers/' .
               (string) ucfirst($this->_aRequest['section']) . '.controller.php');
 
     $this->_oObject->__init();
@@ -69,7 +69,7 @@ class Section extends Main {
    */
   public function getSection() {
     if (!isset($this->_aRequest['section']) || empty($this->_aRequest['section']))
-      $this->_aRequest['section'] = '404';
+      $this->_aRequest['section'] = 'Error';
 
     if ((string) strtolower($this->_aRequest['section']) !== 'static')
       $this->_oObject = & $this->_getController();

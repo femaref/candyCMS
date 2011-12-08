@@ -105,6 +105,9 @@ class Log extends Main {
    *
    */
   public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
     $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
 
@@ -132,7 +135,10 @@ class Log extends Main {
       $oQuery->bindParam('time_end', $iTimeEnd);
       $oQuery->bindParam('user_id', $iUserId);
 
-      return $oQuery->execute();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('logs');
+
+      return $bReturn;
     }
     catch (AdvancedException $e) {
       parent::$_oDbStatic->rollBack();

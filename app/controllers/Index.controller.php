@@ -87,6 +87,7 @@ class Index {
    * @access public
    * @param array $aConfigs array of config files
    * @param string $sPath Path prefix. Needed when not in root path
+   * @return boolean true if no errors occurred.
    *
    */
   public function getConfigFiles($aConfigs, $sPath = '') {
@@ -101,6 +102,8 @@ class Index {
         die($e->getMessage());
       }
     }
+
+    return true;
   }
 
   /**
@@ -110,6 +113,7 @@ class Index {
    * @param string $sAllowedPlugins comma separated plugin names
    * @param string $sPath Path prefix. Needed when not in root path
    * @see config/Candy.inc.php
+   * @return boolean true if no errors occurred.
    *
    */
   public function getPlugins($sAllowedPlugins, $sPath = '') {
@@ -119,6 +123,8 @@ class Index {
       if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
         require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
     }
+
+    return true;
   }
 
   /**
@@ -134,6 +140,7 @@ class Index {
       if (is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
         $this->_sLanguage = (string) $this->_aRequest['language'];
         setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+        Helper::redirectTo('/');
       }
 
       else
@@ -141,7 +148,7 @@ class Index {
     }
     # There is no request, but there might be a cookie instead
     else {
-      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
               is_file('languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
@@ -244,6 +251,7 @@ class Index {
    *
    * @access public
    * @see config/Candy.inc.php
+   * @return string $this->_sTemplate template name
    *
    */
   public function setTemplate() {
@@ -253,6 +261,7 @@ class Index {
       if (is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template'])) {
         $this->_sTemplate = (string) $this->_aRequest['template'];
         setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
+        Helper::redirectTo('/');
       }
 
       else
@@ -261,7 +270,7 @@ class Index {
 
     # There is no request, but there might be a cookie instead
     else {
-      $aRequest = isset($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
       $this->_sTemplate = isset($aRequest['default_template']) &&
               is_dir(WEBSITE_CDN . '/templates/' . $aRequest['default_template']) ?
               (string) $aRequest['default_template'] :
@@ -305,6 +314,7 @@ class Index {
    *
    * @access public
    * @see index.php
+   * @return array|boolean array of userdata or boolean false
    *
    */
 	public function setUser() {
@@ -326,6 +336,8 @@ class Index {
     define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $_SESSION['userdata']['name']);
     define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $_SESSION['userdata']['surname']);
     define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
+
+    return $_SESSION['userdata'];
   }
 
   /**

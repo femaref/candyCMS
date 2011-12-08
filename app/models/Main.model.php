@@ -74,6 +74,15 @@ abstract class Main {
   static $_oDbStatic;
 
   /**
+   * Return ID of last inserted data.
+   *
+   * @var integer
+   * @access public
+   *
+   */
+  static $iLastInsertId;
+
+  /**
 	 * Initialize the model by adding input params, set default id connect to database.
    *
    * @access public
@@ -214,5 +223,15 @@ abstract class Main {
 			nl2br($aData['content']);
 
     return $aData;
+  }
+
+  /**
+   * Return last inserted ID.
+   *
+   * @access public
+   * @return integer last inserted ID.
+   */
+  public function getLastInsertId() {
+    return self::$iLastInsertId;
   }
 }

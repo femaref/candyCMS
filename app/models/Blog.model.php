@@ -208,7 +208,10 @@ class Blog extends Main {
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
       $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
 
-      return $oQuery->execute();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('blogs');
+
+      return $bReturn;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();

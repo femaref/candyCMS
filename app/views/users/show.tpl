@@ -42,7 +42,8 @@
         {$lang.global.contact}
       </td>
       <td>
-        <a href='/mail/{$_request_id_}/ajax' class="js-fancybox">
+        {* Absolute URL due to fancybox bug *}
+        <a href='{$WEBSITE_URL}/mail/{$_request_id_}/ajax' class="js-fancybox">
           {$lang.user.contact_via_email|replace:'%u':$u.name}
         </a>
       </td>

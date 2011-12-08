@@ -193,13 +193,15 @@ class Comment extends Main {
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
       $oQuery->bindParam('parent_id', $this->_aRequest['parent_id'], PDO::PARAM_INT);
 
-      return $oQuery->execute();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('logs');
+
+      return $bReturn;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
   }
-
 
   /**
    * Delete a comment.

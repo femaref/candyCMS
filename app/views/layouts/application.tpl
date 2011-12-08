@@ -12,10 +12,8 @@
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
     {/if}
-    {if $FACEBOOK_ADMIN_ID}
+    {if _facebook_plugin_ == true}
       <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>
-    {/if}
-    {if $FACEBOOK_APP_ID}
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
     <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
@@ -23,11 +21,11 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       {* Fallback to local jQuery when no Google access *}
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.7{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.7.1{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
       {* Load JSON language variables  *}
       var lang = {$_json_language_};
     </script>

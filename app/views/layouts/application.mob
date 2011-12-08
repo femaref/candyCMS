@@ -6,10 +6,10 @@
     <link href='%PATH_CSS%/mobile/jquery.mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/mobile/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/mobile/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.4{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
     <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">

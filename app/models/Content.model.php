@@ -148,7 +148,10 @@ class Content extends Main {
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-      return $oQuery->execute();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('contents');
+
+      return $bReturn;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();

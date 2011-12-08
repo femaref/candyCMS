@@ -153,6 +153,9 @@ abstract class Main {
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
 
+    # Load config files if not already done (important for unit testing)
+    require_once 'config/Candy.inc.php';
+
     if (!isset($this->_aRequest['section'])) {
       Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
       exit();
@@ -177,7 +180,7 @@ abstract class Main {
    * Dynamically load classes.
    *
    * @param string $sClassName name of class to load
-   * 
+   *
    */
   public function __autoload($sClassName) {
     require_once 'app/controllers/' .$sClassName. '.controller.php';
@@ -229,11 +232,16 @@ abstract class Main {
     if (CLEAR_CACHE == true)
       $this->oSmarty->clearAllCache();
 
+    $bUseFacebook = class_exists('FacebookCMS') ? true : false;
+
+    if($bUseFacebook == true) {
+      $this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
+      $this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
+    }
+
 		# Define constants
 		$this->oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
-		$this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
-		$this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
 		$this->oSmarty->assign('MOBILE', MOBILE);
 		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
 		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
@@ -255,7 +263,7 @@ abstract class Main {
 		# Define system variables
 		$this->oSmarty->assign('_date_', date('Y-m-d'));
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
-		$this->oSmarty->assign('_facebook_plugin_', class_exists('FacebookCMS') ? true : false);
+		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
 		$this->oSmarty->assign('_json_language_', $this->oI18n->getJson());
 		$this->oSmarty->assign('_pubdate_', date('r'));
 		$this->oSmarty->assign('_request_id_', $this->_iId);

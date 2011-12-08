@@ -361,9 +361,9 @@ class Gallery extends Main {
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
-      $bResult = $oQuery->execute();
 
-      $this->_iId = $this->_oDb->lastInsertId();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('gallery_albums');
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
@@ -371,7 +371,7 @@ class Gallery extends Main {
 
     # Create image folders.
     if ($bResult === true) {
-      $sPath = PATH_UPLOAD . '/gallery/' . (int) $this->_iId;
+      $sPath = PATH_UPLOAD . '/gallery/' . (int) parent::$iLastInsertId;
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;

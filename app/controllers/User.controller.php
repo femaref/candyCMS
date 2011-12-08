@@ -186,7 +186,7 @@ class User extends Main {
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       $this->__autoload('Mail');
 
-      $iUserId = Helper::getLastEntry('users');
+      $iUserId = $this->_oModel->getLastInsertId('users');
       $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification/' . $iUserId);
 
       $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));

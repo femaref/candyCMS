@@ -144,7 +144,10 @@ class Download extends Main {
         $oQuery->bindParam('extension', $oUploadFile->getExtension(), PDO::PARAM_STR);
         $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-        return $oQuery->execute();
+        $bReturn = $oQuery->execute();
+        parent::$iLastInsertId = Helper::getLastEntry('downloads');
+
+        return $bReturn;
       }
       catch (AdvancedException $e) {
         $this->_oDb->rollBack();

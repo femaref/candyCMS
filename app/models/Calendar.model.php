@@ -47,7 +47,7 @@ class Calendar extends Main {
                                           u.name,
                                           u.surname
                                         FROM
-                                          " . SQL_PREFIX . "calendar c
+                                          " . SQL_PREFIX . "calendars c
                                         LEFT JOIN
                                           " . SQL_PREFIX . "users u
                                         ON
@@ -71,7 +71,7 @@ class Calendar extends Main {
                                           u.name,
                                           u.surname
                                         FROM
-                                          " . SQL_PREFIX . "calendar c
+                                          " . SQL_PREFIX . "calendars c
                                         LEFT JOIN
                                           " . SQL_PREFIX . "users u
                                         ON
@@ -111,7 +111,7 @@ class Calendar extends Main {
 				$oQuery = $this->_oDb->prepare("SELECT
                                           *
                                         FROM
-                                          " . SQL_PREFIX . "calendar
+                                          " . SQL_PREFIX . "calendars
                                         WHERE
                                           id = :id");
 
@@ -155,7 +155,7 @@ class Calendar extends Main {
 	public function create() {
 		try {
 			$oQuery = $this->_oDb->prepare("INSERT INTO
-																				" . SQL_PREFIX . "calendar
+																				" . SQL_PREFIX . "calendars
 																				( author_id,
 																					title,
 																					content,
@@ -178,7 +178,10 @@ class Calendar extends Main {
 			$oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
 			$oQuery->bindParam('end_date', Helper::formatInput($this->_aRequest['end_date']), PDO::PARAM_STR, PDO::PARAM_INT);
 
-			return $oQuery->execute();
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('calendars');
+
+      return $bReturn;
 		}
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
@@ -196,7 +199,7 @@ class Calendar extends Main {
 	public function update($iId) {
 		try {
 			$oQuery = $this->_oDb->prepare("UPDATE
-                                        " . SQL_PREFIX . "calendar
+                                        " . SQL_PREFIX . "calendars
                                       SET
                                         author_id = :author_id,
                                         title = :title,
@@ -232,7 +235,7 @@ class Calendar extends Main {
 	public function destroy($iId) {
 		try {
 			$oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "calendar
+                                        " . SQL_PREFIX . "calendars
                                       WHERE
                                         id = :id
                                       LIMIT

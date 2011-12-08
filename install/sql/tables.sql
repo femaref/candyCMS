@@ -45,9 +45,9 @@ CREATE TABLE `contents` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `calendar`;
+DROP TABLE IF EXISTS `calendars`;
 
-CREATE TABLE `calendar` (
+CREATE TABLE `calendars` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) NOT NULL DEFAULT '',

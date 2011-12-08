@@ -1,4 +1,4 @@
-{if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
+{if $_facebook_plugin_ == true}
   <div id="fb-root"></div>
   <script type="text/javascript">
     var sFacebookAppId = '{$FACEBOOK_APP_ID}';

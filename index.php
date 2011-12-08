@@ -92,7 +92,7 @@ define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
-$oIndex->getConfigFiles(array('Candy', 'Facebook', 'Plugins'));
+$oIndex->getConfigFiles(array('Candy', 'Plugins'));
 $oIndex->getPlugins(ALLOW_PLUGINS);
 $oIndex->getLanguage();
 $oIndex->getCronjob();
@@ -102,12 +102,17 @@ $oIndex->setTemplate();
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************
 if (is_dir('install') && WEBSITE_DEV == false)
-  exit('Please install software via <strong>install/</strong> and delete the folder afterwards!');
+  exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
 
 # Also disable tools to avoid system crashes.
 # *********************************************
 if (is_dir('tools') && WEBSITE_DEV == false)
-  exit('Please delete the tools folder!');
+  exit('Please delete the tools folder.');
+
+# Disable tests on productive system.
+# *********************************************
+if (is_file('tests.php') && WEBSITE_DEV == false)
+  exit('Please delete the tests enviroment (tests.php).');
 
 # Do we have a mobile device?
 # *********************************************

@@ -118,7 +118,7 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('downloads'));
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'));
       return Helper::successMessage($this->oI18n->get('success.create'), '/download');
     }
     else

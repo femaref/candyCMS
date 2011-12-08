@@ -94,7 +94,7 @@ class Calendar extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], Helper::getLastEntry('calendar'));
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('calendar'));
 			return Helper::successMessage($this->oI18n->get('success.create'), '/calendar');
 		}
 		else

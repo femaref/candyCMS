@@ -30,6 +30,9 @@ class User extends Main {
    *
    */
   public static final function getUserNamesAndEmail($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
                                                 name, surname, email
@@ -217,8 +220,11 @@ class User extends Main {
 			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
 			$oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
 
-			return $oQuery->execute();
-		}
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('users');
+
+      return $bReturn;
+    }
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
 		}

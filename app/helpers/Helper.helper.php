@@ -73,6 +73,7 @@ class Helper {
    */
   public static function redirectTo($sUrl) {
 		header('Location:' . $sUrl);
+    return true;
 		exit();
 	}
 
@@ -343,6 +344,10 @@ class Helper {
 	 *
 	 */
   public static function formatTimestamp($iTime, $iOptions = 0) {
+    # Fallback for unit testing
+    if(!constant('WEBSITE_LOCALE'))
+      define('WEBSITE_LOCALE', 'de_DE');
+
 		# Set active locale
 		setlocale(LC_ALL, WEBSITE_LOCALE);
 
