@@ -36,6 +36,10 @@ class AllTests extends TestSuite {
   function AllTests() {
     $this->TestSuite('All tests');
     $this->addFile('app/tests/Index.controller.php');
+    $this->addFile('app/tests/Download.controller.php');
+    $this->addFile('app/tests/Gallery.controller.php');
+    $this->addFile('app/tests/Media.controller.php');
+    $this->addFile('app/tests/User.controller.php');
     $this->addFile('app/tests/Blog.model.php');
     $this->addFile('app/tests/Calendar.model.php');
     $this->addFile('app/tests/Comment.model.php');
@@ -46,7 +50,6 @@ class AllTests extends TestSuite {
     $this->addFile('app/tests/Search.model.php');
     $this->addFile('app/tests/Session.model.php');
     $this->addFile('app/tests/User.model.php');
-    #$this->addFile('app/tests/Rss.controller.php');
   }
 }
 ?>

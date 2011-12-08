@@ -49,6 +49,15 @@ class TestOfIndexController extends UnitTestCase {
     $this->assertIsA($this->oIndex->setTemplate(), 'string');
   }
 
+  function testDirIsWritable() {
+    $oFile = fopen('upload/temp/test.log', 'a');
+    fwrite($oFile, 'Is writeable.' . "\n");
+    fclose($oFile);
+
+    $this->assertTrue(file_exists('upload/temp/test.log'), 'File was created.');
+    @unlink('upload/temp/test.log');
+  }
+
   function testShow() {
     #$this->expectException($this->oIndex->show(), 'string');
   }
