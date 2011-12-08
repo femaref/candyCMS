@@ -190,6 +190,8 @@ class Session extends Main {
         $this->_oDb->rollBack();
       }
     }
+    else
+      return false;
   }
 
   /**

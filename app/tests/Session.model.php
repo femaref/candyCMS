@@ -34,6 +34,12 @@ class TestOfSessionModel extends UnitTestCase {
     $this->assertFalse($this->oSession->create(), 'Session created.');
   }
 
+  function testCreateResendActions() {
+    # Can not login with that data
+    # False, because user doesn't exist
+    #$this->assertFalse($this->oSession->createResendActions('new_password'), 'Resend actions.');
+  }
+
   function testGetData() {
     $this->assertIsA($this->oSession->getData(), 'array');
   }

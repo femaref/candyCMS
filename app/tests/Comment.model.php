@@ -34,8 +34,8 @@ class TestOfCommentModel extends UnitTestCase {
   function testCreate() {
     $this->assertTrue($this->oComment->create());
 
-    $this->iLastInsertId = Comment::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Comment #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Comment::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Comment #' . $this->iLastInsertId . ' created.');
   }
 
   function testGetData() {

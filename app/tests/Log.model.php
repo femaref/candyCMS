@@ -31,8 +31,8 @@ class TestOfLogModel extends UnitTestCase {
   function testCreate() {
     $this->assertTrue(Log::insert('test', 'create', 1, 0, time(), time()));
 
-    $this->iLastInsertId = Log::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Log #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Log::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Log #' . $this->iLastInsertId . ' created.');
   }
 
   function testGetData() {

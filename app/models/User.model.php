@@ -372,6 +372,7 @@ class User extends Main {
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
 		}
+
 		if (!empty($this->_aData['id'])) {
 			try {
 				$oQuery = $this->_oDb->prepare("UPDATE

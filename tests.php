@@ -45,6 +45,7 @@ class AllTests extends TestSuite {
     $this->addFile('app/tests/Log.model.php');
     $this->addFile('app/tests/Search.model.php');
     $this->addFile('app/tests/Session.model.php');
+    $this->addFile('app/tests/User.model.php');
     #$this->addFile('app/tests/Rss.controller.php');
   }
 }

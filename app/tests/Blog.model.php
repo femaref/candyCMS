@@ -37,8 +37,8 @@ class TestOfBlogModel extends UnitTestCase {
   function testCreate() {
     $this->assertTrue($this->oBlog->create());
 
-    $this->iLastInsertId = Blog::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Blog #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Blog::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Blog #' . $this->iLastInsertId . ' created.');
   }
 
   function testGetData() {

@@ -34,8 +34,8 @@ class TestOfContentModel extends UnitTestCase {
   function testCreate() {
     $this->assertTrue($this->oContent->create());
 
-    $this->iLastInsertId = Content::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Content #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Content::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Content #' . $this->iLastInsertId . ' created.');
   }
 
   function testGetData() {

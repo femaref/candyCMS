@@ -10,11 +10,13 @@
  */
 
 require_once('lib/simpletest/autorun.php');
+require_once('app/models/Session.model.php');
 require_once('app/models/User.model.php');
 
 use \CandyCMS\Model\User as User;
+use \CandyCMS\Model\Session as Session;
 
-class TestOfUserModel extends UnitTestCase {
+class TestOfUserModel extends TestOfSessionModel {
 
   public $oUser;
   public $iLastInsertId;
@@ -24,29 +26,102 @@ class TestOfUserModel extends UnitTestCase {
     $aRequest = array('email' => 'email@example.com',
                       'password' => 'Password',
                       'name' => 'Name',
-                      'surname' => 'Surname');
+                      'content' => 'Content',
+                      'surname' => 'Surname',
+                      'receive_newsltter' => 0,
+                      'user_right' => 0,
+                      'use_gravatar' => 0);
     $aSession = array();
     $aCookie  = array();
 
-    $this->oUser = new User($aRequest, $aUser, $aCookie, '');
+    $this->oUser = new User($aRequest, $aSession, $aCookie, '');
   }
 
   function testCreate() {
     $this->assertTrue($this->oUser->create('000000000000'));
 
-    $this->iLastInsertId = User::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'User #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) User::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'User #' . $this->iLastInsertId . ' created.');
   }
-/*
+
   function testGetData() {
+    $this->assertIsA($this->oUser->getData(0), 'array');
     $this->assertIsA($this->oUser->getData(), 'array');
   }
 
-  function testUpdate() {
-    $this->assertTrue($this->oUser->update(0), 'User updated.');
+  # Private method
+  #function testGetPassword() {
+  #  $this->assertIsA($this->oUser->_getPassword($this->iLastInsertId), 'string');
+  #}
+
+  function testGetExistingUser() {
+    # Email exists
+    $this->assertTrue($this->oUser->getExistingUser('email@example.com'));
+
+    # Email doesn't exist
+    $this->assertFalse($this->oUser->getExistingUser('adsfadsfsda@fghfghfgfg.com'));
   }
+
+  function testGetUserNameAndEmail() {
+    $this->assertIsA($this->oUser->getUserNamesAndEmail($this->iLastInsertId), 'array');
+  }
+
+  function testVerificationData() {
+    $this->assertIsA($this->oUser->getVerificationData(), 'array');
+  }
+
+  function testVerifyEmail() {
+    # Code doesn't exist
+    $this->assertFalse($this->oUser->verifyEmail('000100010001'));
+
+    # Code exists
+    $this->assertTrue($this->oUser->verifyEmail('000000000000'));
+  }
+
+  function testUpdate() {
+    $this->assertTrue($this->oUser->update($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' updated.');
+  }
+
+  /**
+   * Start of session tests
+   */
+  function testSessionCreate() {
+    $aRequest = array('email' => 'email@example.com',
+                      'password' => 'Password');
+    $aSession = array();
+    $aCookie  = array();
+
+    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
+    $this->assertTrue($this->oSession->create(), 'Session created.');
+  }
+
+  function testCreateResendActionsPW() {
+    $aRequest = array('email' => 'email@example.com',
+                      'action' => 'resendpassword');
+    $aSession = array();
+    $aCookie  = array();
+
+    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
+    $this->assertTrue($this->oSession->createResendActions(), 'Resend password.');
+  }
+
+  function testCreateResendActionsVC() {
+    $aRequest = array('email' => 'email@example.com',
+                      'action' => 'verification');
+    $aSession = array();
+    $aCookie  = array();
+
+    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
+    $this->assertFalse($this->oSession->createResendActions(), 'Resend verification.');
+  }
+
+  /**
+   * End of session tests
+   */
 
   function testDestroy() {
     $this->assertTrue($this->oUser->destroy($this->iLastInsertId), 'User #' .$this->iLastInsertId. ' destroyed.');
-  }*/
+  }
+
+  /* Now the same stuff but with login */
 }

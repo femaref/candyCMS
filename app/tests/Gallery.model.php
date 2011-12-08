@@ -30,42 +30,62 @@ class TestOfGalleryModel extends UnitTestCase {
     $this->oGallery = new Gallery($aRequest, $aSession, $aCookie, '');
   }
 
-  function testCreateAlbum() {
+  function testCreate() {
     $this->assertTrue($this->oGallery->create());
 
-    $this->iLastInsertId = Gallery::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Gallery album #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Gallery::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Gallery album #' . $this->iLastInsertId . ' created.');
   }
 
-  function testGetDataAlbum() {
+  function testGetData() {
     $this->assertIsA($this->oGallery->getData(0), 'array');
     $this->assertIsA($this->oGallery->getData(), 'array');
   }
 
-  function testUpdateAlbum() {
+  function testGetAlbumName() {
+    $this->assertIsA($this->oGallery->getAlbumName($this->iLastInsertId), 'string');
+  }
+
+  function testGetAlbumContent() {
+    $this->assertIsA($this->oGallery->getAlbumContent($this->iLastInsertId), 'string');
+  }
+
+  function testGetId() {
+    $this->assertIsA($this->oGallery->getId(), 'integer');
+  }
+
+  function testUpdate() {
     $this->assertTrue($this->oGallery->update($this->iLastInsertId), 'Gallery album #' . $this->iLastInsertId . ' updated.');
   }
 
-  function testDestroyAlbum() {
+  function testDestroy() {
     $this->assertTrue($this->oGallery->destroy($this->iLastInsertId), 'Gallery album #' .$this->iLastInsertId. ' destroyed.');
   }
 
   function testCreateFile() {
     $this->assertTrue($this->oGallery->createFile('test.test', 'test'));
 
-    $this->iLastInsertId = Gallery::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Gallery album #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Gallery::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Gallery album #' . $this->iLastInsertId . ' created.');
   }
 
-  function testGetDataFile() {
+  function testGetThumbs() {
     $this->assertIsA($this->oGallery->getThumbs(0), 'array');
   }
 
+  function testGetFileContent() {
+    $this->assertIsA($this->oGallery->getFileContent($this->iLastInsertId), 'string');
+  }
+
+  function testGetFileData() {
+    $this->assertIsA($this->oGallery->getFileData($this->iLastInsertId), 'array');
+  }
+
   function testUpdateFile() {
-    $this->assertTrue($this->oGallery->update($this->iLastInsertId), 'Gallery file #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oGallery->updateFile($this->iLastInsertId), 'Gallery file #' . $this->iLastInsertId . ' updated.');
   }
 
   function testDestroyFile() {
-    $this->assertTrue($this->oGallery->destroy($this->iLastInsertId), 'Gallery file #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oGallery->destroyFile($this->iLastInsertId), 'Gallery file #' .$this->iLastInsertId. ' destroyed.');
   }
 }

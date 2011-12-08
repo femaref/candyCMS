@@ -34,8 +34,8 @@ class TestOfCalendarModel extends UnitTestCase {
   function testCreate() {
     $this->assertTrue($this->oCalendar->create());
 
-    $this->iLastInsertId = Calendar::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string', 'Calendar #' . $this->iLastInsertId . ' created.');
+    $this->iLastInsertId = (int) Calendar::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer', 'Calendar #' . $this->iLastInsertId . ' created.');
   }
 
   function testGetData() {
