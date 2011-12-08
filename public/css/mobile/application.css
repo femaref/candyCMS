@@ -1,5 +1,13 @@
-a:hover {
+.center {
+	text-align: center;
+}
+
+a, a:hover {
   text-decoration: none;
+}
+
+p.create {
+ margin: 0px 0px 30px;
 }
 
 /* Comments */
@@ -11,7 +19,6 @@ a:hover {
 #comments a {
   font-weight: bold;
   color: #000;
-  text-decoration: none;
 }
 
 #comments article {

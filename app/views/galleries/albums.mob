@@ -4,38 +4,28 @@
   </div>
 {else}
   {foreach $albums as $a}
+  <ul data-role="listview" data-inset="true" data-split-theme="c">
     {* Show gallery albums with uploaded images *}
     {if $a.files_sum > 0}
-      <header>
-        <h2>
-          <a href='{$a.url}'>{$a.title}</a> - {$a.date}
-        </h2>
-      </header>
-      {foreach $a.files as $f}
-        <img src='/{$f.url_32}'
-             alt='{$f.file}' title='{$f.content}'
-             height='32' width='32' />
-      {/foreach}
-    {* Show gallery albums without uploaded images *}
-    {elseif $USER_RIGHT >= 3}
-      <header>
-        <h2>
-          <a href='{$a.url}'>{$a.title}</a>
-          <a href='/gallery/{$a.id}/createfile'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='{$lang.gallery.files.title.create}'
-                 title='{$lang.gallery.files.title.create}' width="16" height="16" />
+      <li data-role="list-divider">
+        <h3>
+          {$a.title} - {$a.date}
+        </h3>
+      </li>
+      <li>
+          <a href='{$a.url}'>
+            <div>
+              {foreach $a.files as $f}
+                <img src='/{$f.url_32}'
+                     alt='{$f.file}' title='{$f.content}'
+                     height='32' width='32' />
+              {/foreach}
+            </div>
           </a>
-          <a href='/gallery/{$a.id}/update'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.gallery.albums.title.update}'
-                 title='{$lang.gallery.albums.title.update}' width="16" height="16" />
-          </a>
-        </h2>
-        <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
-      </header>
-      <p class="error">
-        {$lang.error.gallery.no_files}
-      </p>
+        <a href='{$a.url}'></a>
+      </li>
     {/if}
+  </ul>
   {/foreach}
   {$_pages_}
 {/if}
