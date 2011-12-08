@@ -6,10 +6,10 @@
     <link href='%PATH_CSS%/mobile/jquery.mobile{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/mobile/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/mobile/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4{$_compress_files_suffix_}.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
       if (typeof jQuery == 'undefined')
-        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.4{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.6.2{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
     <script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0{$_compress_files_suffix_}.js"></script>
     <script type="text/javascript">
@@ -23,9 +23,9 @@
       <div data-role="header">
         <h1>{$_title_}</h1>
         {if $USER_RIGHT == 0}
-          <a href="/session/create" class="ui-btn-right">{$lang.global.login}</a>
+          <a href="/session/create" data-icon="gear" class="ui-btn-right">{$lang.global.login}</a>
         {else}
-          <a href="/session/destroy" class="ui-btn-right">{$lang.global.logout}</a>
+          <a href="/session/destroy" data-icon="gear" class="ui-btn-right">{$lang.global.logout}</a>
         {/if}
       </div><!-- /header -->
       <div data-role="navbar">
@@ -53,7 +53,7 @@
         <div data-role="controlgroup" data-type="horizontal">
           <a id='top' data-role="button" class="ui-btn-right" data-icon="arrow-u">Top</a>
           <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
-          <a href='?mobile=0' data-ajax="false">{$lang.global.view.web}</a>
+          <a href='?mobile=0' data-ajax="false">{$lang.global.webview}</a>
         </div>
       </div><!-- /footer -->
     </div><!-- /page -->
@@ -63,15 +63,13 @@
         $.mobile.silentScroll(0);
       });
 
-      $(document).ready(function() {
-        $('img').each(function() {
-          var iNewWidth = screen.width - 30;
-          var iNewHeight =  iNewWidth / $(this).width() * $(this).height();
-          if($(this).width() > iNewWidth) {
-            $(this).attr('width', iNewWidth);
-            $(this).attr('height', iNewHeight);
-          }
-        });
+      $('img').each(function() {
+        var iNewWidth = screen.width - 30;
+        var iNewHeight =  iNewWidth / $(this).width() * $(this).height();
+        if($(this).width() > iNewWidth) {
+          $(this).attr('width', iNewWidth);
+          $(this).attr('height', iNewHeight);
+        }
       });
     </script>
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>

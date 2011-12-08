@@ -1,3 +1,10 @@
+{if $USER_RIGHT >= 3}
+  <p class="create">
+    <a href='/blog/create' data-role="button" data-theme="b" data-icon="plus">
+      {$lang.global.create.entry}
+    </a>
+  </p>
+{/if}
 {if !$blog}
   <div class='error' title='{$lang.global.no_entries}'>
     <h4>{$lang.global.no_entries}</h4>

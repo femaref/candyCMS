@@ -13,14 +13,14 @@ span.js-toggle-element {
 
 /* Success and error Messages */
 #js-flash_message {
-  margin-bottom:30px;
+  margin: -15px -15px 30px;
 }
 
 div.success,
 div.error,
 p.error,
 div.notice {
-  padding: 10px;
+  padding: 10px 15px;
   overflow:auto;
 }
 
