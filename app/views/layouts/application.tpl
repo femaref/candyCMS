@@ -12,7 +12,7 @@
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
     {/if}
-    {if _facebook_plugin_ == true}
+    {if $_facebook_plugin_ == true}
       <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>
       <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
     {/if}
