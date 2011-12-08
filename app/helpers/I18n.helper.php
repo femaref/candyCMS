@@ -81,8 +81,10 @@ class I18n {
 		if(isset($_SESSION['lang'])) {
 			$mTemp = $_SESSION['lang'];
 			foreach ($aLang as $sPart) {
-				if (array_key_exists($sPart, $mTemp)) {
-					$mTemp = & $mTemp[$sPart];
+				if(!is_string($mTemp)) {
+					if (array_key_exists($sPart, $mTemp)) {
+						$mTemp = & $mTemp[$sPart];
+					}
 				}
 			}
 

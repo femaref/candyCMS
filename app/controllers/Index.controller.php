@@ -403,7 +403,7 @@ class Index {
 
       # Get flash messages (success and error)
       # *********************************************
-      $aFlashMessages = $this->_getFlashMessage();
+      $aFlashMessages =& $this->_getFlashMessage();
       $oSection->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
       $oSection->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
       $oSection->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);

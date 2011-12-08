@@ -34,7 +34,7 @@ class TestOfSessionController extends WebTestCase {
 
   function testShowPost() {
     $aRequest = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_session');
-    $this->post($this->get(WEBSITE_URL . '/session', $aRequest));
+    $this->post(WEBSITE_URL . '/session', $aRequest);
   }
 
   function testCreate() {
