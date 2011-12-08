@@ -117,12 +117,23 @@ class Download extends Main {
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
-    elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'));
-      return Helper::successMessage($this->oI18n->get('success.create'), '/download');
+    else {
+      # Set up upload helper and rename file to title
+      $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
+
+      # File is up so insert data into database
+      if ($oUploadFile->uploadFile('download') == true) {
+
+        if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'));
+          return Helper::successMessage($this->oI18n->get('success.create'), '/download');
+        }
+        else
+          return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
+      }
+      else
+        return Helper::errorMessage($this->oI18n->get('error.missing.file'), '/download');
     }
-    else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
   }
 
   /**

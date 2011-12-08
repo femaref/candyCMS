@@ -325,14 +325,11 @@ class Gallery extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (AdvancedException $e) {
       parent::$_oDbStatic->rollBack();
     }
-
-    if ($bReturn === true)
-      return $aResult;
   }
 
   /**
@@ -364,37 +361,12 @@ class Gallery extends Main {
 
       $bReturn = $oQuery->execute();
       parent::$iLastInsertId = Helper::getLastEntry('gallery_albums');
+
+      return $bReturn;
     }
     catch (AdvancedException $e) {
       $this->_oDb->rollBack();
     }
-
-    # Create image folders.
-    if ($bResult === true) {
-      $sPath = PATH_UPLOAD . '/gallery/' . (int) parent::$iLastInsertId;
-
-      $sPathThumbS = $sPath . '/32';
-      $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
-      $sPathThumbP = $sPath . '/popup';
-      $sPathThumbO = $sPath . '/original';
-
-      if (!is_dir($sPath))
-        mkdir($sPath, 0755);
-
-      if (!is_dir($sPathThumbS))
-        mkdir($sPathThumbS, 0755);
-
-      if (!is_dir($sPathThumbL))
-        mkdir($sPathThumbL, 0755);
-
-      if (!is_dir($sPathThumbP))
-        mkdir($sPathThumbP, 0755);
-
-      if (!is_dir($sPathThumbO))
-        mkdir($sPathThumbO, 0755);
-    }
-
-    return $bResult;
   }
 
   /**
@@ -506,44 +478,44 @@ class Gallery extends Main {
    * Create a new file.
    *
    * @access public
-   * @param array $aFile uploaded file information
+   * @param string $sFile file name
+   * @param string $sExtension file extension
    * @return boolean status of query
    *
    */
-  public function createFile($aFile) {
-    $oUploadFile = new Upload($this->_aRequest, $aFile);
+  public function createFile($sFile, $sExtension) {
+    try {
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+                                        " . SQL_PREFIX . "gallery_files
+                                        ( album_id,
+                                          author_id,
+                                          file,
+                                          extension,
+                                          content,
+                                          date)
+                                      VALUES
+                                        ( :album_id,
+                                          :author_id,
+                                          :file,
+                                          :extension,
+                                          :content,
+                                          :date )");
 
-    if ($oUploadFile->uploadGalleryFile() == true) {
-      try {
-        $oQuery = $this->_oDb->prepare("INSERT INTO
-                                          " . SQL_PREFIX . "gallery_files
-                                          ( album_id,
-                                            author_id,
-                                            file,
-                                            extension,
-                                            content,
-                                            date)
-                                        VALUES
-                                          ( :album_id,
-                                            :author_id,
-                                            :file,
-                                            :extension,
-                                            :content,
-                                            :date )");
+      $iUserId = USER_ID;
+      $oQuery->bindParam('album_id', $this->_aRequest['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('file', $sFile, PDO::PARAM_STR);
+      $oQuery->bindParam('extension', $sExtension, PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-        $iUserId = USER_ID;
-        $oQuery->bindParam('album_id', $this->_aRequest['id'], PDO::PARAM_INT);
-        $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
-        $oQuery->bindParam('file', $oUploadFile->getId(), PDO::PARAM_STR);
-        $oQuery->bindParam('extension', $oUploadFile->getExtension(), PDO::PARAM_STR);
-        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
-        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('gallery_files');
 
-        return $oQuery->execute();
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+      return $bReturn;
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
     }
   }
 

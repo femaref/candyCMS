@@ -141,6 +141,28 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
+      $sPath = PATH_UPLOAD . '/gallery/' . $this->_oModel->getLastInsertId('blogs');
+
+      $sPathThumbS = $sPath . '/32';
+      $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
+      $sPathThumbP = $sPath . '/popup';
+      $sPathThumbO = $sPath . '/original';
+
+      if (!is_dir($sPath))
+        mkdir($sPath, 0755);
+
+      if (!is_dir($sPathThumbS))
+        mkdir($sPathThumbS, 0755);
+
+      if (!is_dir($sPathThumbL))
+        mkdir($sPathThumbL, 0755);
+
+      if (!is_dir($sPathThumbP))
+        mkdir($sPathThumbP, 0755);
+
+      if (!is_dir($sPathThumbO))
+        mkdir($sPathThumbO, 0755);
+
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'));
       return Helper::successMessage($this->oI18n->get('success.create'), '/gallery');
     }
@@ -267,13 +289,16 @@ class Gallery extends Main {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
 
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
-        $aFile['name'] = $this->_aFile['file']['name'][$iI];
-        $aFile['type'] = $this->_aFile['file']['type'][$iI];
-        $aFile['tmp_name'] = $this->_aFile['file']['tmp_name'][$iI];
-        $aFile['error'] = $this->_aFile['file']['error'][$iI];
-        $aFile['size'] = $this->_aFile['file']['size'][$iI];
+        $aFile['name']      = $this->_aFile['file']['name'][$iI];
+        $aFile['type']      = $this->_aFile['file']['type'][$iI];
+        $aFile['tmp_name']  = $this->_aFile['file']['tmp_name'][$iI];
+        $aFile['error']     = $this->_aFile['file']['error'][$iI];
+        $aFile['size']      = $this->_aFile['file']['size'][$iI];
 
-        $this->_oModel->createFile($aFile);
+        $oUploadFile = new Upload ($this->_aRequest, $aFile);
+
+        if ($oUploadFile->uploadGalleryFile () == true)
+          $this->_oModel->createFile($oUploadFile->getId(), $oUploadFile->getExtension());
       }
 
       return true;

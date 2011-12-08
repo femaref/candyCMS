@@ -8,7 +8,7 @@
 {/if}
 {if !$albums}
   <div class='error' title='{$lang.error.missing.entries}'>
-    <p>{$lang.error.missing.entries}</p>
+    <h4>{$lang.error.missing.entries}<h4>
   </div>
 {else}
   {foreach $albums as $a}
@@ -52,9 +52,9 @@
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
-        <p class="error">
+        <h4 class="error">
           {$lang.error.missing.files}
-        </p>
+        </h4>
       {/if}
     </article>
   {/foreach}

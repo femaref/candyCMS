@@ -107,51 +107,47 @@ class Download extends Main {
    * Create new download.
    *
    * @access public
+   * @param string $sFile file name
+   * @param string $sExtension file extension
    * @return boolean status of query
    *
    */
-  public function create() {
-    # Set up upload helper and rename file to title
-    $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
-
-    # File is up so insert data into database
-    if($oUploadFile->uploadFile('download') == true) {
+  public function create($sFile, $sExtension) {
       try {
-        $oQuery = $this->_oDb->prepare("INSERT INTO
-                                          " . SQL_PREFIX . "downloads
-                                          ( author_id,
-                                            title,
-                                            content,
-                                            category,
-                                            file,
-                                            extension,
-                                            date)
-                                        VALUES
-                                          ( :author_id,
-                                            :title,
-                                            :content,
-                                            :category,
-                                            :file,
-                                            :extension,
-                                            :date )");
+      $oQuery = $this->_oDb->prepare("INSERT INTO
+                                        " . SQL_PREFIX . "downloads
+                                        ( author_id,
+                                          title,
+                                          content,
+                                          category,
+                                          file,
+                                          extension,
+                                          date)
+                                      VALUES
+                                        ( :author_id,
+                                          :title,
+                                          :content,
+                                          :category,
+                                          :file,
+                                          :extension,
+                                          :date )");
 
-        $iUserId = USER_ID;
-        $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
-        $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
-        $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
-        $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']), PDO::PARAM_STR);
-        $oQuery->bindParam('file', $oUploadFile->getId(false), PDO::PARAM_STR);
-        $oQuery->bindParam('extension', $oUploadFile->getExtension(), PDO::PARAM_STR);
-        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $iUserId = USER_ID;
+      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('category', Helper::formatInput($this->_aRequest['category']), PDO::PARAM_STR);
+      $oQuery->bindParam('file', $sFile, PDO::PARAM_STR);
+      $oQuery->bindParam('extension', $sExtension, PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-        $bReturn = $oQuery->execute();
-        parent::$iLastInsertId = Helper::getLastEntry('downloads');
+      $bReturn = $oQuery->execute();
+      parent::$iLastInsertId = Helper::getLastEntry('downloads');
 
-        return $bReturn;
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+      return $bReturn;
+    }
+    catch (AdvancedException $e) {
+      $this->_oDb->rollBack();
     }
   }
 

@@ -212,6 +212,7 @@ class Session extends Main {
       $iSessionId = session_id();
       $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
       $oQuery->bindParam('session_id', $iSessionId, PDO::PARAM_STR);
+
       return $oQuery->execute();
     }
     catch (AdvancedException $e) {

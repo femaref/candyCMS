@@ -70,8 +70,7 @@ CREATE TABLE `downloads` (
   `extension` varchar(4) NOT NULL DEFAULT '',
   `downloads` int(11) DEFAULT '0',
   `date` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `title` (`title`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `gallery_albums`;
