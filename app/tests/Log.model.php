@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Tests
+ * PHP unit tests
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
@@ -23,32 +23,23 @@ class TestOfLogModel extends UnitTestCase {
 
     $aRequest = array();
     $aSession = array();
-    $aCookie = array();
+    $aCookie  = array();
 
     $this->oLog = new Log($aRequest, $aSession, $aCookie, '');
   }
 
-  /**
-   * Create a log entry.
-   */
   function testCreate() {
     $this->assertTrue(Log::insert('test', 'create', 1, 0, time(), time()));
 
     $this->iLastInsertId = Log::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'string');
+    $this->assertIsA($this->iLastInsertId, 'string', 'Log #' . $this->iLastInsertId . ' created.');
   }
 
-  /**
-   * Fetch data from logs.
-   */
   function testGetData() {
-    $oLog = new Log();
-    $aData = $oLog->getData();
-
-    $this->assertIsA($aData, 'array');
+    $this->assertIsA($this->oLog->getData(), 'array');
   }
 
   function testDestroy() {
-    $this->assertTrue($this->iLastInsertId);
+    $this->assertTrue($this->oLog->destroy($this->iLastInsertId), 'Log #' .$this->iLastInsertId. ' destroyed.');
   }
 }

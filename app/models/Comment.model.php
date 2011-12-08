@@ -194,7 +194,7 @@ class Comment extends Main {
       $oQuery->bindParam('parent_id', $this->_aRequest['parent_id'], PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
-      parent::$iLastInsertId = Helper::getLastEntry('logs');
+      parent::$iLastInsertId = Helper::getLastEntry('comments');
 
       return $bReturn;
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP Tests
+ * PHP unit tests
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>

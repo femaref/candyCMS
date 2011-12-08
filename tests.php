@@ -36,7 +36,11 @@ class AllTests extends TestSuite {
   function AllTests() {
     $this->TestSuite('All tests');
     $this->addFile('app/tests/Index.controller.php');
+    $this->addFile('app/tests/Blog.model.php');
+    $this->addFile('app/tests/Comment.model.php');
+    $this->addFile('app/tests/Content.model.php');
     $this->addFile('app/tests/Log.model.php');
+    $this->addFile('app/tests/Search.model.php');
     #$this->addFile('app/tests/Rss.controller.php');
   }
 }

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PHP Tests
+ * PHP unit tests
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
- * @since 1.0
+ * @since 2.0
  */
 
 require_once('lib/simpletest/autorun.php');
