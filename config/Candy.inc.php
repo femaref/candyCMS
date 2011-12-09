@@ -211,7 +211,7 @@ define('LIMIT_BLOG', 8);
 
 # Limit of comments per page
 # DEFAULT: 10
-define('LIMIT_COMMENTS', 10);
+define('LIMIT_COMMENTS', 2);
 
 # Limit of gallery albums per page
 # DEFAULT: 10

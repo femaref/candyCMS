@@ -24,7 +24,7 @@ class TestOfSessionController extends WebTestCase {
     $aSession = array();
     $aCookie  = array();
 
-    $this->osession = new Session($aRequest, $aSession, $aCookie, '');
+    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
   }
 
   function testShow() {
@@ -32,23 +32,21 @@ class TestOfSessionController extends WebTestCase {
     $this->assertResponse('200');
   }
 
-  function testShowPost() {
-    $aRequest = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_session');
-    $this->post(WEBSITE_URL . '/session', $aRequest);
-  }
-
   function testCreate() {
-    $this->get(WEBSITE_URL . '/session/create');
-    $this->assertResponse('200');
+    $this->setMaximumRedirects(0);
+    $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_create');
+    $this->assertTrue($this->post(WEBSITE_URL . '/session/create', $aParams));
   }
 
-  function testUpdate() {
+ /* function testUpdate() {
+    $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/update');
     $this->assertResponse('200');
-  }
+  }*/
 
   function testDestroy() {
+    $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/destroy');
-    $this->assertResponse('200');
+    $this->assertResponse('302');
   }
 }

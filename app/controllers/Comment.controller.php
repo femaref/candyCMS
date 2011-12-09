@@ -83,8 +83,8 @@ class Comment extends Main {
    */
   public function show() {
     if ($this->_iId) {
-      $this->oSmarty->assign('comments',
-              $this->_oModel->getData($this->_iId, $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
+      $aData = $this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS);
+      $this->oSmarty->assign('comments', $aData);
 
       # Set author of blog entry
       $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);

@@ -113,6 +113,7 @@ class Page {
 	/**
    * Return offset.
    *
+   * @access public
    * @return integer $this->_iOffset
    *
    */
@@ -123,6 +124,7 @@ class Page {
 	/**
    * Return entry limit.
    *
+   * @access public
    * @return integer $this->_iLimit
    *
    */
@@ -131,8 +133,20 @@ class Page {
   }
 
 	/**
+   * Return pages count.
+   *
+   * @access public
+   * @return integer $this->_iPages
+   *
+   */
+  public function getPages() {
+    return $this->_iPages;
+  }
+
+	/**
    * Return current page.
    *
+   * @access public
    * @return integer $this->_iCurrentPage
    *
    */
@@ -143,6 +157,7 @@ class Page {
 	/**
    * Show all page numbers as a link.
    *
+   * @access public
    * @param string $sUrl section to show.
    * @return string HTML content
    *
@@ -160,6 +175,7 @@ class Page {
 	/**
    * Show surrounding pages.
    *
+   * @access public
    * @param string $sRssAction section to show for RSS
    * @return string HTML content
    *

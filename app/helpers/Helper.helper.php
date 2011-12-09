@@ -142,19 +142,20 @@ class Helper {
 	 * @param string $sSize avatar size
 	 * @param integer $iUserId user ID
 	 * @param string $sEmail email address to search gravatar for
+   * @param boolean $bUseGravatar do we want to use gravatar?
 	 * @return string URL of the avatar
 	 *
 	 */
-  public static function getAvatar($sSize, $iUserId, $sEmail = '') {
+  public static function getAvatar($sSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
 		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
 
-		if (is_file($sFilePath . '.jpg'))
+		if (is_file($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
 
-		elseif (is_file($sFilePath . '.png'))
+		elseif (is_file($sFilePath . '.png') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.png';
 
-		elseif (is_file($sFilePath . '.gif'))
+		elseif (is_file($sFilePath . '.gif') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.gif';
 
 		else {

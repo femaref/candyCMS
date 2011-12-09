@@ -24,7 +24,7 @@ ErrorDocument 500 /error/500
   RewriteBase /
 
   # Redirect from root to public folder
-  RewriteRule ^(human|robots).(txt|ico)$ public/$1.$2 [L]
+  RewriteRule ^(human|robots|favicon).(txt|ico)$ public/$1.$2 [L]
   RewriteRule ^sitemap.xml$ index.php?section=sitemap&action=xml&ajax=1 [L]
 
   # Nice to have

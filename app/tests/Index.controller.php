@@ -23,7 +23,7 @@ class TestOfIndexController extends WebTestCase {
   function testConstructor() {
     $aRequest = array();
     $aSession = array();
-    $aCookie = array();
+    $aCookie  = array();
 
     $this->oIndex = new Index($aRequest, $aSession, $aCookie, '');
 

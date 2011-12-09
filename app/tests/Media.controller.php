@@ -14,7 +14,7 @@ require_once('app/controllers/Media.controller.php');
 
 use \CandyCMS\Controller\Media as Media;
 
-class TestOfMediaController extends UnitTestCase {
+class TestOfMediaController extends WebTestCase {
 
   public $oMedia;
 

@@ -185,12 +185,13 @@ abstract class Main {
     $iUserId = isset($aRow['author_id']) ? $aRow['author_id'] : $aRow['id'];
 
     if(isset($this->_aRequest['section']) && 'log' !== $this->_aRequest['section']) {
-			$sEmail = isset($aRow['email']) ? $aRow['email'] : '';
+			$sEmail       = isset($aRow['email']) ? $aRow['email'] : '';
+      $bUseGravatar = isset($aRow['use_gravatar']) ? (bool) $aRow['use_gravatar'] : false;
 
-      $aData['avatar_32']			= Helper::getAvatar(32, $iUserId, $sEmail);
-      $aData['avatar_64']			= Helper::getAvatar(64, $iUserId, $sEmail);
-      $aData['avatar_100']		= Helper::getAvatar(100, $iUserId, $sEmail);
-      $aData['avatar_popup']	= Helper::getAvatar('popup', $iUserId, $sEmail);
+      $aData['avatar_32']			= Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
+      $aData['avatar_64']			= Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
+      $aData['avatar_100']		= Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);
+      $aData['avatar_popup']	= Helper::getAvatar('popup', $iUserId, $sEmail, $bUseGravatar);
     }
 
     # Build full user name
