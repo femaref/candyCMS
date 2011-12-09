@@ -23,9 +23,9 @@
       <div data-role="header">
         <h1>{$_title_}</h1>
         {if $USER_RIGHT == 0}
-          <a href="/session/create" data-icon="gear" class="ui-btn-right">{$lang.global.login}</a>
+          <a href="/session/create" class="ui-btn-right">{$lang.global.login}</a>
         {else}
-          <a href="/session/destroy" data-icon="gear" class="ui-btn-right">{$lang.global.logout}</a>
+          <a href="/session/destroy" class="ui-btn-right">{$lang.global.logout}</a>
         {/if}
       </div><!-- /header -->
       <div data-role="navbar">
@@ -53,7 +53,7 @@
         <div data-role="controlgroup" data-type="horizontal">
           <a id='top' data-role="button" class="ui-btn-right" data-icon="arrow-u">Top</a>
           <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
-          <a href='?mobile=0' data-ajax="false">{$lang.global.webview}</a>
+          <a href='?mobile=0' data-ajax="false">{$lang.global.view.web}</a>
         </div>
       </div><!-- /footer -->
     </div><!-- /page -->
