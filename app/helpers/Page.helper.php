@@ -100,6 +100,7 @@ class Page {
 
     if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
       header('Status: 404 Not Found');
+			header("HTTP/1.0 404 Not Found");
       return Helper::redirectTo('/error/404');
     }
 

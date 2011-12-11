@@ -73,7 +73,6 @@ class Helper {
    */
   public static function redirectTo($sUrl) {
 		header('Location:' . $sUrl);
-    return true;
 		exit();
 	}
 

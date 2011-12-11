@@ -24,6 +24,7 @@ final class Addon extends \CandyCMS\Helper\Section {
 
         # There is no such requested addon
         header('Status: 404 Not Found');
+				header("HTTP/1.0 404 Not Found");
         Helper::redirectTo('/error/404');
 
         break;
