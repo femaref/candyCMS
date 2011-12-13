@@ -13,8 +13,9 @@ require_once('lib/simpletest/autorun.php');
 require_once('app/controllers/User.controller.php');
 
 use \CandyCMS\Controller\User as User;
+use \CandyCMS\Helper\I18n as I18n;
 
-class TestOfUserController extends UnitTestCase {
+class TestOfUserController extends WebTestCase {
 
   public $oUser;
 
@@ -25,6 +26,30 @@ class TestOfUserController extends UnitTestCase {
     $aCookie  = array();
 
     $this->oUser = new User($aRequest, $aSession, $aCookie, '');
+  }
+
+  function testShow() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/user'));
+    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
+    $this->assertResponse('200');
+  }
+
+  function testCreate() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/user/create'));
+    $this->assertNoText(I18n::get('lang.error.missing.permission')); # user has not enough permission
+    $this->assertResponse('200');
+  }
+
+  function testUpdate() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/user/0/update'));
+    $this->assertText(I18n::get('lang.error.session.create_first')); # user has not enough permission
+    $this->assertResponse('200');
+  }
+
+  function testDestroy() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/user/0/destroy'));
+    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
+    $this->assertResponse('200');
   }
 
   function testDirIsWritable() {

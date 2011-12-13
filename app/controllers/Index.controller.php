@@ -182,6 +182,8 @@ class Index {
 
 		define('WEBSITE_LANGUAGE', $this->_sLanguage);
 		define('WEBSITE_LOCALE', $sLocale);
+
+    return WEBSITE_LOCALE;
 	}
 
   /**
@@ -317,7 +319,7 @@ class Index {
    * @return array|boolean array of userdata or boolean false
    *
    */
-	public function setUser() {
+	public function setUser($bDefineConstants = true) {
     $_SESSION['userdata'] = Model_Session::getSessionData();
 
     define('USER_ID', (int) $_SESSION['userdata']['id']);
@@ -330,12 +332,14 @@ class Index {
         $aFacebookData = $oFacebook->getUserData();
     }
 
-    define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $_SESSION['userdata']['user_right']);
-    define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ? $aFacebookData[0]['uid'] : '');
-    define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $_SESSION['userdata']['email']);
-    define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $_SESSION['userdata']['name']);
-    define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $_SESSION['userdata']['surname']);
-    define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
+    if($bDefineConstants === true) {
+      define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $_SESSION['userdata']['user_right']);
+      define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ? $aFacebookData[0]['uid'] : '');
+      define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $_SESSION['userdata']['email']);
+      define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $_SESSION['userdata']['name']);
+      define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $_SESSION['userdata']['surname']);
+      define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
+    }
 
     return $_SESSION['userdata'];
   }

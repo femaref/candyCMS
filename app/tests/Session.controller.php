@@ -29,24 +29,26 @@ class TestOfSessionController extends WebTestCase {
 
   function testShow() {
     $this->assertTrue($this->get(WEBSITE_URL . '/session'));
+    $this->assertNoText('error');
     $this->assertResponse('200');
   }
 
   function testCreate() {
     $this->setMaximumRedirects(0);
+    $this->get(WEBSITE_URL . '/session/create');
+    $this->assertFieldById('input-email');
+    $this->assertFieldById('input-password');
+    $this->showSource();
+
     $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_create');
     $this->assertTrue($this->post(WEBSITE_URL . '/session/create', $aParams));
+    $this->assertNoText('error');
   }
-
- /* function testUpdate() {
-    $this->setMaximumRedirects(0);
-    $this->get(WEBSITE_URL . '/session/update');
-    $this->assertResponse('200');
-  }*/
 
   function testDestroy() {
     $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/destroy');
     $this->assertResponse('302');
+    $this->assertNoText('error');
   }
 }

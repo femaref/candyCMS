@@ -42,11 +42,11 @@ class TestOfIndexController extends WebTestCase {
   }
 
   function testGetLanguage() {
-    $this->oIndex->getLanguage();
+    $this->assertTrue($this->oIndex->getLanguage());
   }
 
   function testSetuser() {
-    $this->assertFalse($this->oIndex->setUser());
+    $this->assertFalse($this->oIndex->setUser(true));
   }
 
   function testSetTemplate() {
