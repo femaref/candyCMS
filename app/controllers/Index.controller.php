@@ -69,6 +69,7 @@ class Index {
 	 * @param array $aSession alias for $_SESSION
 	 * @param array $aFile alias for $_FILE
 	 * @param array $aCookie alias for $_COOKIE
+   * @todo remove $_SESSION
 	 *
 	 */
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
@@ -198,7 +199,7 @@ class Index {
       if (Cronjob::getNextUpdate() === true) {
         Cronjob::cleanup();
         Cronjob::optimize();
-        Cronjob::backup(USER_ID);
+        Cronjob::backup($this->_aSession['userdata']['id']);
       }
     }
   }
@@ -290,7 +291,7 @@ class Index {
    *
    */
   private function checkForNewVersion() {
-    if (USER_RIGHT == 4 && ALLOW_VERSION_CHECK == true) {
+    if ($this->_aSession['userdata']['user_right'] == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
@@ -316,32 +317,56 @@ class Index {
    *
    * @access public
    * @see index.php
-   * @return array|boolean array of userdata or boolean false
+   * @return array $this->_aSession['userdata']
    *
    */
-	public function setUser($bDefineConstants = true) {
-    $_SESSION['userdata'] = Model_Session::getSessionData();
+	public function setUser() {
+    $this->_aSession['userdata'] = & Model_Session::getSessionData();
 
-    define('USER_ID', (int) $_SESSION['userdata']['id']);
-    define('USER_PASSWORD', isset($_SESSION['userdata']['password']) ? $_SESSION['userdata']['password'] : '');
+    # Set standard variables
+    if (empty($this->_aSession['userdata'])) {
+      $this->_aSession['userdata'] = array(
+          'email' => '',
+          'facebook_id' => '',
+          'id' => 0,
+          'name' => '',
+          'surname' => '',
+          'password' => '',
+          'user_right' => 0
+      );
+    }
 
     # Try to get facebook data
-    if (USER_ID == 0) {
+    if ($this->_aSession['userdata']['id'] == 0) {
       $oFacebook = $this->getFacebookExtension();
+
       if ($oFacebook == true)
-        $aFacebookData = $oFacebook->getUserData();
+        $aFacebookData = & $oFacebook->getUserData();
+
+      # Override empty data with facebook data
+      if (isset($aFacebookData)) {
+        $this->_aSession['userdata']['facebook_id'] = isset($aFacebookData[0]['uid']) ?
+                $aFacebookData[0]['uid'] :
+                '';
+        $this->_aSession['userdata']['email'] = isset($aFacebookData[0]['email']) ?
+                $aFacebookData[0]['email'] :
+                $this->_aSession['userdata']['email'];
+        $this->_aSession['userdata']['name'] = isset($aFacebookData[0]['first_name']) ?
+                $aFacebookData[0]['first_name'] :
+                $this->_aSession['userdata']['name'];
+        $this->_aSession['userdata']['surname'] = isset($aFacebookData[0]['last_name']) ?
+                $aFacebookData[0]['last_name'] :
+                $this->_aSession['userdata']['surname'];
+        $this->_aSession['userdata']['user_right'] = isset($aFacebookData[0]['uid']) ?
+                2 :
+                (int) $this->_aSession['userdata']['user_right'];
+      }
     }
 
-    if($bDefineConstants === true) {
-      define('USER_RIGHT', isset($aFacebookData[0]['uid']) ? 2 : (int) $_SESSION['userdata']['user_right']);
-      define('USER_FACEBOOK_ID', isset($aFacebookData[0]['uid']) ? $aFacebookData[0]['uid'] : '');
-      define('USER_EMAIL', isset($aFacebookData[0]['email']) ? $aFacebookData[0]['email'] : $_SESSION['userdata']['email']);
-      define('USER_NAME', isset($aFacebookData[0]['first_name']) ? $aFacebookData[0]['first_name'] : $_SESSION['userdata']['name']);
-      define('USER_SURNAME', isset($aFacebookData[0]['last_name']) ? $aFacebookData[0]['last_name'] : $_SESSION['userdata']['surname']);
-      define('USER_FULL_NAME', USER_NAME . ' ' . USER_SURNAME);
-    }
+    # Set up full name finally
+    $this->_aSession['userdata']['full_name'] = $this->_aSession['userdata']['name'] . ' ' . $this->_aSession['userdata']['surname'];
 
-    return $_SESSION['userdata'];
+    return $this->_aSession['userdata'];
   }
 
   /**

@@ -270,24 +270,24 @@ class User extends Main {
 	 */
 	public function update($iId) {
 		$iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
-		$iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
+    $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
-		# Set other peoples user right
-		if (($iId !== USER_ID) && USER_RIGHT === 4)
-			$iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
-							(int) $this->_aRequest['user_right'] :
-							1;
-		else
-			$iUserRight = USER_RIGHT;
+    # Set other peoples user right
+    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['user_right'] === 4)
+      $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
+              (int) $this->_aRequest['user_right'] :
+              1;
+    else
+      $iUserRight = $this->_aSession['userdata']['user_right'];
 
-		# Get my active password
-		$sPassword = $this->_getPassword($iId);
+    # Get my active password
+    $sPassword = $this->_getPassword($iId);
 
-		# Change my password
-		if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
-						isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
-						USER_ID === $iId)
-			$sPassword = md5(RANDOM_HASH . $this->_aRequest['password_new']);
+    # Change my password
+    if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
+            isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
+            $this->_aSession['userdata']['id'] === $iId)
+      $sPassword = md5(RANDOM_HASH . $this->_aRequest['password_new']);
 
 		try {
 			$oQuery = $this->_oDb->prepare("UPDATE

@@ -143,14 +143,14 @@ class Comment extends Main {
    */
   public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
-      if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
+      if ($this->_aSession['userdata']['user_right'] == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
         return $this->_checkCaptcha();
 
       else
         return $this->_create(false);
     }
     else {
-      $bShowCaptcha = ( USER_RIGHT == 0 ) ? true : false;
+      $bShowCaptcha = $this->_aSession['userdata']['user_right'] == 0 ? true : false;
       return $this->_showFormTemplate($bShowCaptcha);
     }
   }
@@ -170,7 +170,7 @@ class Comment extends Main {
     $this->_setError('parent_id', $this->oI18n->get('error.missing.id'));
     $this->_setError('content');
 
-    if (USER_ID < 1)
+    if ($this->_aSession['userdata']['id'] < 1)
       $this->_setError('name');
 
     if (isset($this->_aError))

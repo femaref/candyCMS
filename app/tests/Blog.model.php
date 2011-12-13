@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Blog.model.php');
 
@@ -21,17 +20,31 @@ class TestOfBlogModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('title' => 'Title',
-                      'tags' => 'Tags',
-                      'teaser' => 'Teaser',
-                      'content' => 'Blog',
-                      'keywords' => 'Keywords',
-                      'published' => 0,
-                      'author_id' => 0);
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'title' => 'Title',
+        'tags' => 'Tags',
+        'teaser' => 'Teaser',
+        'content' => 'Blog',
+        'keywords' => 'Keywords',
+        'published' => 0,
+        'author_id' => 0,
+        'section' => 'blog');
 
-    $this->oBlog = new Blog($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oBlog = new Blog($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -51,6 +64,6 @@ class TestOfBlogModel extends UnitTestCase {
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oBlog->destroy($this->iLastInsertId), 'Blog #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oBlog->destroy($this->iLastInsertId), 'Blog #' . $this->iLastInsertId . ' destroyed.');
   }
 }

@@ -119,7 +119,7 @@ class Download extends Main {
 
     else {
       # Set up upload helper and rename file to title
-      $oUploadFile = new Upload($this->_aRequest, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
+      $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFile('download') == true) {

@@ -140,8 +140,7 @@ class Content extends Main {
                                           :content,
                                           :date )");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
@@ -181,8 +180,7 @@ class Content extends Main {
                                       WHERE
                                         id = :where");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('user_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);

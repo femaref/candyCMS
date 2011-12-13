@@ -21,11 +21,23 @@ class TestOfLogModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array();
-    $aSession = array();
+    $aRequest = array('section' => 'log');
+
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
     $aCookie  = array();
 
-    $this->oLog = new Log($aRequest, $aSession, $aCookie, '');
+    $this->oLog = new Log($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {

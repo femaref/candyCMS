@@ -31,7 +31,7 @@ class Media extends Main {
    *
    */
   public function create() {
-    if (USER_RIGHT < 3)
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
@@ -68,7 +68,7 @@ class Media extends Main {
    *
    */
   private function _proceedUpload() {
-    $oUpload = new Upload($this->_aRequest, $this->_aFile, $this->_aRequest['rename']);
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
     return $oUpload->uploadFile('media');
   }
 
@@ -80,7 +80,7 @@ class Media extends Main {
    *
    */
   public function show() {
-    if (USER_RIGHT < 3)
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
@@ -140,7 +140,7 @@ class Media extends Main {
    *
    */
   public function destroy() {
-    if (USER_RIGHT < 3)
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {

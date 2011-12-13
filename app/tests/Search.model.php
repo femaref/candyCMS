@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Search.model.php');
 
@@ -21,11 +20,23 @@ class TestOfSearchModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array();
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array('section' => 'search');
 
-    $this->oSearch = new Search($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oSearch = new Search($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testGetData() {

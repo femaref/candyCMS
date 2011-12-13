@@ -82,13 +82,13 @@ class Mail extends Main {
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if (USER_RIGHT == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
+			if ($this->_aSession['userdata']['user_right'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
 				return $this->_checkCaptcha();
 			else
 				return $this->_create(false);
 		}
 		else
-			return $this->_showCreateMailTemplate(( USER_RIGHT == 0 ) ? true : false);
+			return $this->_showCreateMailTemplate($this->_aSession['userdata']['user_right'] == 0 ? true : false);
 	}
 
 	/**
@@ -108,11 +108,8 @@ class Mail extends Main {
     if( isset($this->_aRequest['email']))
       $sEmail = (string)$this->_aRequest['email'];
 
-    elseif( isset($this->_aSession['userdata']['email']) )
-      $sEmail = $this->_aSession['userdata']['email'];
-
     else
-      $sEmail = USER_EMAIL;
+      $sEmail = $this->_aSession['userdata']['email'];
 
     $sSubject = isset($this->_aRequest['subject']) ?
             (string)$this->_aRequest['subject']:

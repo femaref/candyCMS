@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Calendar.model.php');
 
@@ -21,14 +20,28 @@ class TestOfCalendarModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('title' => 'Title',
-                      'content' => 'Content',
-                      'start_date' => '0000-00-00',
-                      'end_date' => '0000-00-00');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'title' => 'Title',
+        'content' => 'Content',
+        'start_date' => '0000-00-00',
+        'end_date' => '0000-00-00',
+        'section' => 'calendar');
 
-    $this->oCalendar = new Calendar($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oCalendar = new Calendar($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -48,6 +61,6 @@ class TestOfCalendarModel extends UnitTestCase {
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oCalendar->destroy($this->iLastInsertId), 'Calendar #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oCalendar->destroy($this->iLastInsertId), 'Calendar #' . $this->iLastInsertId . ' destroyed.');
   }
 }

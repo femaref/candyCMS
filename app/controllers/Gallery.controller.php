@@ -260,7 +260,7 @@ class Gallery extends Main {
    *
    */
   public function createFile() {
-    if (USER_RIGHT < 3)
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'));
 
     else {
@@ -295,9 +295,9 @@ class Gallery extends Main {
         $aFile['error']     = $this->_aFile['file']['error'][$iI];
         $aFile['size']      = $this->_aFile['file']['size'][$iI];
 
-        $oUploadFile = new Upload ($this->_aRequest, $aFile);
+        $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $aFile);
 
-        if ($oUploadFile->uploadGalleryFile () == true)
+        if ($oUploadFile->uploadGalleryFile() == true)
           $this->_oModel->createFile($oUploadFile->getId(), $oUploadFile->getExtension());
       }
 
@@ -319,12 +319,12 @@ class Gallery extends Main {
    *
    */
   public function updateFile() {
-    if( USER_RIGHT < 3 )
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {
-      if( isset($this->_aRequest['updatefile_gallery']) ) {
-        if( $this->_oModel->updateFile($this->_iId) === true) {
+      if (isset($this->_aRequest['updatefile_gallery'])) {
+        if ($this->_oModel->updateFile($this->_iId) === true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
           return Helper::successMessage($this->oI18n->get('success.update'), '/gallery');
         }
@@ -344,7 +344,7 @@ class Gallery extends Main {
    *
    */
   public function destroyFile() {
-    if( USER_RIGHT < 3 )
+    if ($this->_aSession['userdata']['user_right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {

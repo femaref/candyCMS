@@ -31,7 +31,7 @@ abstract class Main {
 	 * @var array
 	 * @access protected
 	 */
-	protected $_aRequest;
+	protected $_aRequest = array();
 
 	/**
 	 * Alias for $_SESSION
@@ -39,7 +39,7 @@ abstract class Main {
 	 * @var array
 	 * @access protected
 	 */
-	protected $_aSession;
+	protected $_aSession = array();
 
 	/**
 	 * Alias for $_FILE
@@ -239,19 +239,19 @@ abstract class Main {
       $this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
     }
 
-		# Define constants
+		# Define smarty constants
 		$this->oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
 		$this->oSmarty->assign('MOBILE', MOBILE);
 		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
 		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
-		$this->oSmarty->assign('USER_EMAIL', USER_EMAIL);
-		$this->oSmarty->assign('USER_FACEBOOK_ID', USER_FACEBOOK_ID);
-		$this->oSmarty->assign('USER_FULL_NAME', USER_FULL_NAME);
-		$this->oSmarty->assign('USER_ID', USER_ID);
-		$this->oSmarty->assign('USER_NAME', USER_NAME);
-		$this->oSmarty->assign('USER_RIGHT', USER_RIGHT);
-		$this->oSmarty->assign('USER_SURNAME', USER_SURNAME);
+		$this->oSmarty->assign('USER_EMAIL', $this->_aSession['userdata']['email']);
+		$this->oSmarty->assign('USER_FACEBOOK_ID', $this->_aSession['userdata']['facebook_id']);
+		$this->oSmarty->assign('USER_FULL_NAME', $this->_aSession['userdata']['full_name']);
+		$this->oSmarty->assign('USER_ID', $this->_aSession['userdata']['id']);
+		$this->oSmarty->assign('USER_NAME', $this->_aSession['userdata']['name']);
+		$this->oSmarty->assign('USER_RIGHT', $this->_aSession['userdata']['user_right']);
+		$this->oSmarty->assign('USER_SURNAME', $this->_aSession['userdata']['surname']);
 		$this->oSmarty->assign('VERSION', VERSION);
 		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
@@ -448,7 +448,7 @@ abstract class Main {
 	 *
 	 */
 	public function create($sInputName, $iUserRight = 3) {
-		if (USER_RIGHT < $iUserRight)
+		if ($this->_aSession['userdata']['user_right'] < $iUserRight)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -469,7 +469,7 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRight = 3) {
-		if (USER_RIGHT < $iUserRight)
+		if ($this->_aSession['userdata']['user_right'] < $iUserRight)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -490,7 +490,9 @@ abstract class Main {
 	 */
 	public function destroy($iUserRight = 3) {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
-		return (USER_RIGHT < $iUserRight) ? Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') : $this->_destroy();
+		return ($this->_aSession['userdata']['user_right'] < $iUserRight) ?
+            Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
+            $this->_destroy();
 	}
 
 	/**

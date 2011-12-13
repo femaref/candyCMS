@@ -70,8 +70,9 @@ class Upload {
 	 * @param string $sRename new file name
 	 *
 	 */
-  public function __construct($aRequest, $aFile, $sRename = '') {
+  public function __construct($aRequest, $aSession, $aFile, $sRename = '') {
     $this->_aRequest  = & $aRequest;
+    $this->_aSession	= empty($aSession) ? die('NO SESSION ARRAY FOR HELPERS.') : $aSession;
     $this->_aFile     = & $aFile;
     $this->_sRename   = & $sRename;
   }
@@ -152,7 +153,9 @@ class Upload {
 	 */
   public function uploadAvatarFile($bReturnPath = true) {
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['image']['name'], '.'), 1));
-    $this->_sFileName = isset($this->_aRequest['id']) && USER_RIGHT == 4 ? (int)$this->_aRequest['id'] : USER_ID;
+    $this->_sFileName = isset($this->_aRequest['id']) && $this->_aSession['userdata']['user_right'] == 4 ?
+            (int) $this->_aRequest['id'] :
+            $this->_aSession['userdata']['id'];
     $this->_sUploadFolder = 'user';
     $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName;
 

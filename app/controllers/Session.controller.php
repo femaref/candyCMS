@@ -191,7 +191,7 @@ class Session extends Main {
 	 *
 	 */
   public function destroy() {
-		if (USER_RIGHT == 2) {
+		if ($this->_aSession['userdata']['user_right'] == 2) {
 			$oFacebook = new FacebookCMS(array(
 									'appId' => FACEBOOK_APP_ID,
 									'secret' => FACEBOOK_SECRET,
@@ -203,7 +203,7 @@ class Session extends Main {
 			return Helper::successMessage($this->oI18n->get('success.session.create'), '/');
 		}
 		elseif ($this->_oModel->destroy() === true) {
-			unset($_SESSION);
+			unset($_SESSION, $this->_aSession);
 			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
 		}
 		else

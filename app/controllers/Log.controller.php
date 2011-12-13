@@ -37,7 +37,7 @@ class Log extends Main {
    *
    */
   public function show() {
-    if (USER_RIGHT < 4)
+    if ($this->_aSession['userdata']['user_right'] < 4)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
@@ -66,7 +66,7 @@ class Log extends Main {
    * @return boolean status of query
    *
    */
-  public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = USER_ID, $iTimeStart = '', $iTimeEnd = '') {
+  public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
     return Model::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
 
@@ -80,7 +80,9 @@ class Log extends Main {
    *
    */
   public function destroy() {
-    return (USER_RIGHT < 4) ? Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') : $this->_destroy();
+    return $this->_aSession['userdata']['user_right'] < 4 ?
+            Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
+            $this->_destroy();
   }
 
   /**

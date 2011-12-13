@@ -21,10 +21,20 @@ class TestOfGalleryController extends UnitTestCase {
   function testConstructor() {
 
     $aRequest = array('section' => 'gallery');
-    $aSession = array();
+    $aFile    = array();
     $aCookie  = array();
+    $aSession['userdata'] = array(
+      'email' => '',
+      'facebook_id' => '',
+      'id' => 0,
+      'name' => '',
+      'surname' => '',
+      'password' => '',
+      'user_right' => 0,
+      'full_name' => ''
+    );
 
-    $this->oGallery = new Gallery($aRequest, $aSession, $aCookie, '');
+    $this->oGallery = new Gallery($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testDirIsWritable() {

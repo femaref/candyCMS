@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Session.model.php');
 
@@ -21,12 +20,26 @@ class TestOfSessionModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('email' => 'email@example.com',
-                      'password' => 'Password');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'email' => 'email@example.com',
+        'password' => 'Password',
+        'section' => 'search');
 
-    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oSession = new Session($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -51,6 +64,6 @@ class TestOfSessionModel extends UnitTestCase {
 
   function testDestroy() {
     # User doesn't exist, but query run through
-    $this->assertTrue($this->oSession->destroy($this->iLastInsertId), 'Session #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oSession->destroy($this->iLastInsertId), 'Session #' . $this->iLastInsertId . ' destroyed.');
   }
 }

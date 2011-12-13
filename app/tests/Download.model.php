@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Download.model.php');
 
@@ -21,14 +20,28 @@ class TestOfDownloadModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('title' => 'Title',
-                      'content' => 'Content',
-                      'category' => 'Category',
-                      'downloads' => 0);
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'title' => 'Title',
+        'content' => 'Content',
+        'category' => 'Category',
+        'downloads' => 0,
+        'section' => 'download');
 
-    $this->oDownload = new Download($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oDownload = new Download($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -52,6 +65,6 @@ class TestOfDownloadModel extends UnitTestCase {
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oDownload->destroy($this->iLastInsertId), 'Download #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oDownload->destroy($this->iLastInsertId), 'Download #' . $this->iLastInsertId . ' destroyed.');
   }
 }

@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Content.model.php');
 
@@ -21,14 +20,28 @@ class TestOfContentModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('title' => 'Title',
-                      'teaser' => 'Teaser',
-                      'content' => 'Content',
-                      'keywords' => 'Keywords');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'title' => 'Title',
+        'teaser' => 'Teaser',
+        'content' => 'Content',
+        'keywords' => 'Keywords',
+        'section' => 'content');
 
-    $this->oContent = new Content($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oContent = new Content($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -48,6 +61,6 @@ class TestOfContentModel extends UnitTestCase {
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oContent->destroy($this->iLastInsertId), 'Content #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oContent->destroy($this->iLastInsertId), 'Content #' . $this->iLastInsertId . ' destroyed.');
   }
 }

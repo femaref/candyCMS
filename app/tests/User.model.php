@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Session.model.php');
 require_once('app/models/User.model.php');
@@ -23,18 +22,32 @@ class TestOfUserModel extends TestOfSessionModel {
 
   function testConstructor() {
 
-    $aRequest = array('email' => 'email@example.com',
-                      'password' => 'Password',
-                      'name' => 'Name',
-                      'content' => 'Content',
-                      'surname' => 'Surname',
-                      'receive_newsltter' => 0,
-                      'user_right' => 0,
-                      'use_gravatar' => 0);
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'email' => 'email@example.com',
+        'password' => 'Password',
+        'name' => 'Name',
+        'content' => 'Content',
+        'surname' => 'Surname',
+        'receive_newsltter' => 0,
+        'user_right' => 0,
+        'use_gravatar' => 0,
+        'section' => 'user');
 
-    $this->oUser = new User($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oUser = new User($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -48,7 +61,6 @@ class TestOfUserModel extends TestOfSessionModel {
     $this->assertIsA($this->oUser->getData(0), 'array');
     $this->assertIsA($this->oUser->getData(), 'array');
   }
-
   # Private method
   #function testGetPassword() {
   #  $this->assertIsA($this->oUser->_getPassword($this->iLastInsertId), 'string');
@@ -86,30 +98,66 @@ class TestOfUserModel extends TestOfSessionModel {
    * Start of session tests
    */
   function testSessionCreate() {
-    $aRequest = array('email' => 'email@example.com',
-                      'password' => 'Password');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'email' => 'email@example.com',
+        'password' => 'Password');
+
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aCookie = array();
 
     $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
     $this->assertTrue($this->oSession->create(), 'Session created.');
   }
 
   function testCreateResendActionsPW() {
-    $aRequest = array('email' => 'email@example.com',
-                      'action' => 'resendpassword');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'email' => 'email@example.com',
+        'action' => 'resendpassword');
+
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aCookie = array();
 
     $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
     $this->assertTrue($this->oSession->createResendActions(), 'Resend password.');
   }
 
   function testCreateResendActionsVC() {
-    $aRequest = array('email' => 'email@example.com',
-                      'action' => 'verification');
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'email' => 'email@example.com',
+        'action' => 'verification');
+
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aCookie = array();
 
     $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
     $this->assertFalse($this->oSession->createResendActions(), 'Resend verification.');
@@ -118,10 +166,8 @@ class TestOfUserModel extends TestOfSessionModel {
   /**
    * End of session tests
    */
-
   function testDestroy() {
-    $this->assertTrue($this->oUser->destroy($this->iLastInsertId), 'User #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oUser->destroy($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' destroyed.');
   }
-
   /* Now the same stuff but with login */
 }

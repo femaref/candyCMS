@@ -21,10 +21,20 @@ class TestOfDownloadController extends WebTestCase {
 
   function testConstructor() {
     $aRequest = array('section' => 'download');
-    $aSession = array();
+    $aFile    = array();
     $aCookie  = array();
+    $aSession['userdata'] = array(
+      'email' => '',
+      'facebook_id' => '',
+      'id' => 0,
+      'name' => '',
+      'surname' => '',
+      'password' => '',
+      'user_right' => 0,
+      'full_name' => ''
+    );
 
-    $this->oDownload = new Download($aRequest, $aSession, $aCookie, '');
+    $this->oDownload = new Download($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testShow() {

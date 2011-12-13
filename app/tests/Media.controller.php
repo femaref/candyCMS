@@ -22,10 +22,20 @@ class TestOfMediaController extends WebTestCase {
   function testConstructor() {
 
     $aRequest = array('section' => 'media');
-    $aSession = array();
+    $aFile    = array();
     $aCookie  = array();
+    $aSession['userdata'] = array(
+      'email' => '',
+      'facebook_id' => '',
+      'id' => 0,
+      'name' => '',
+      'surname' => '',
+      'password' => '',
+      'user_right' => 0,
+      'full_name' => ''
+    );
 
-    $this->oMedia = new Media($aRequest, $aSession, $aCookie, '');
+    $this->oMedia = new Media($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testShow() {

@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Gallery.model.php');
 
@@ -21,13 +20,27 @@ class TestOfGalleryModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('title' => 'Title',
-                      'content' => 'Content',
-                      'id' => 0);
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'title' => 'Title',
+        'content' => 'Content',
+        'id' => 0,
+        'section' => 'gallery');
 
-    $this->oGallery = new Gallery($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oGallery = new Gallery($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -59,7 +72,7 @@ class TestOfGalleryModel extends UnitTestCase {
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oGallery->destroy($this->iLastInsertId), 'Gallery album #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oGallery->destroy($this->iLastInsertId), 'Gallery album #' . $this->iLastInsertId . ' destroyed.');
   }
 
   function testCreateFile() {
@@ -86,6 +99,6 @@ class TestOfGalleryModel extends UnitTestCase {
   }
 
   function testDestroyFile() {
-    $this->assertTrue($this->oGallery->destroyFile($this->iLastInsertId), 'Gallery file #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oGallery->destroyFile($this->iLastInsertId), 'Gallery file #' . $this->iLastInsertId . ' destroyed.');
   }
 }

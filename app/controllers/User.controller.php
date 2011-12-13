@@ -42,13 +42,15 @@ class User extends Main {
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
-		if ($this->_iId !== USER_ID && USER_RIGHT < 4) {
+		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['user_right'] < 4) {
 			Helper::redirectTo('/user/update');
 			exit();
 		}
 
 		# Set user id of person to update
-		$iId = ($this->_iId !== USER_ID && USER_RIGHT == 4) ? $this->_iId : USER_ID;
+		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['user_right'] == 4 ?
+            $this->_iId :
+            $this->_aSession['userdata']['id'];
 
 		# Fetch data from database
 		$this->_aData = $this->_oModel->getData($iId, false, true);
@@ -80,22 +82,22 @@ class User extends Main {
 	 *
 	 */
 	private function _createAvatar() {
-		$oUpload = new Upload($this->_aRequest, $this->_aFile);
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
 
-		$this->_setError('terms', $this->oI18n->get('error.file.upload'));
+    $this->_setError('terms', $this->oI18n->get('error.file.upload'));
 
-		if(!isset($this->_aFile['image']))
-			$this->_aError['image'] = $this->oI18n->get('error.form.missing.file');
+    if (!isset($this->_aFile['image']))
+      $this->_aError['image'] = $this->oI18n->get('error.form.missing.file');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
+    if (isset($this->_aError))
+      return $this->_showFormTemplate();
 
-		elseif ($oUpload->uploadAvatarFile(false) === true)
-			return Helper::successMessage($this->oI18n->get('success.upload'), '/user/' . $this->_iId);
+    elseif ($oUpload->uploadAvatarFile(false) === true)
+      return Helper::successMessage($this->oI18n->get('success.upload'), '/user/' . $this->_iId);
 
-		else
-			return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/user/' . $this->_iId);
-	}
+    else
+      return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/user/' . $this->_iId);
+  }
 
 	/**
 	 * Show user or user overview (depends on a given ID or not and user right).
@@ -117,7 +119,7 @@ class User extends Main {
 			$this->_setTitle($this->oI18n->get('user.title.overview'));
 			$this->_setDescription($this->oI18n->get('user.title.overview'));
 
-			if (USER_RIGHT < 3)
+			if ($this->_aSession['userdata']['user_right'] < 3)
 				return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 			else {
@@ -172,7 +174,7 @@ class User extends Main {
 			$this->_aError['password'] = $this->oI18n->get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
-		if (USER_RIGHT < 4) {
+		if ($this->_aSession['userdata']['user_right'] < 4) {
 			if (!isset($this->_aRequest['disclaimer']))
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
@@ -240,20 +242,20 @@ class User extends Main {
 	 */
 	public function update() {
     if (empty($this->_iId))
-      $this->_iId = USER_ID;
+      $this->_iId = $this->_aSession['userdata']['id'];
 
-    if (USER_ID == 0)
+    if ($this->_aSession['userdata']['id'] == 0)
       return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
 
     else {
       if (isset($this->_aRequest['create_avatar']))
-				return $this->_createAvatar($this->_iId);
+        return $this->_createAvatar($this->_iId);
 
-			elseif (isset($this->_aRequest['update_user']))
-				return $this->_update();
+      elseif (isset($this->_aRequest['update_user']))
+        return $this->_update();
 
-			else
-				return $this->_showFormTemplate();
+      else
+        return $this->_showFormTemplate();
     }
   }
 
@@ -305,9 +307,9 @@ class User extends Main {
 			else
 				$this->_subscribeToNewsletter($this->_aRequest);
 
-			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== USER_ID ?
-							(int) $this->_aRequest['id'] :
-							USER_ID;
+			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['userdata']['id'] ?
+              (int) $this->_aRequest['id'] :
+              $this->_aSession['userdata']['id'];
 
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
 			return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
@@ -344,10 +346,10 @@ class User extends Main {
     $aUser = MODEL::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
-    if (isset($this->_aRequest['destroy_user']) && USER_ID === $this->_iId) {
+    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['userdata']['id'] === $this->_iId) {
 
       # Password matches with user password
-      if (md5(RANDOM_HASH . $this->_aRequest['password']) === USER_PASSWORD) {
+      if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['userdata']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
 
           # Unsubscribe from newsletter
@@ -363,7 +365,7 @@ class User extends Main {
         return Helper::errorMessage('error.user.destroy.password', '/user/update');
 
       # We are admin and can delete users
-    } elseif (USER_RIGHT == 4) {
+    } elseif ($this->_aSession['userdata']['user_right'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
 
         # Unsubscribe from newsletter

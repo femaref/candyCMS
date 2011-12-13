@@ -22,10 +22,20 @@ class TestOfIndexController extends WebTestCase {
 
   function testConstructor() {
     $aRequest = array();
-    $aSession = array();
+    $aFile    = array();
     $aCookie  = array();
+    $aSession['userdata'] = array(
+      'email' => '',
+      'facebook_id' => '',
+      'id' => 0,
+      'name' => '',
+      'surname' => '',
+      'password' => '',
+      'user_right' => 0,
+      'full_name' => ''
+    );
 
-    $this->oIndex = new Index($aRequest, $aSession, $aCookie, '');
+    $this->oIndex = new Index($aRequest, $aSession, $aFile, $aCookie);
 
     $this->get(WEBSITE_URL);
     $this->assertResponse('200');
@@ -45,8 +55,10 @@ class TestOfIndexController extends WebTestCase {
     $this->assertTrue($this->oIndex->getLanguage());
   }
 
-  function testSetuser() {
-    $this->assertFalse($this->oIndex->setUser(true));
+  function testSetUser() {
+    $this->oIndex->setUser();
+    #$this->assert
+    #$this->assert($this->oIndex->setUser(), 'array');
   }
 
   function testSetTemplate() {

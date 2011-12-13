@@ -22,7 +22,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-  protected $_aRequest;
+  protected $_aRequest = array();
 
   /**
    * Alias for $_SESSION
@@ -30,7 +30,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-  protected $_aSession;
+  protected $_aSession = array();
 
   /**
    * Returned data from models.
@@ -91,9 +91,9 @@ abstract class Main {
 	 * @param array $aFile alias for $_FILE
    *
    */
-  public function __construct($aRequest = '', $aSession = '', $aFile = '') {
-    $this->_aRequest  = & $aRequest;
-    $this->_aSession  = & $aSession;
+  public function __construct($aRequest, $aSession, $aFile = '') {
+		$this->_aRequest	= empty($aRequest) ? die('NO REQUEST ARRAY FOR MODELS.') : $aRequest;
+		$this->_aSession	= empty($aSession) ? die('NO SESSION ARRAY FOR MODELS.') : $aSession;
     $this->_aFile     = & $aFile;
 
     # Set ID if needed (fix for detailed user view)

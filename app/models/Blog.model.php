@@ -32,7 +32,7 @@ class Blog extends Main {
   private function _setData($bUpdate, $iLimit) {
     if (empty($this->_iId)) {
       # Show unpublished items to moderators or administrators only
-      $sWhere = USER_RIGHT < 3 ? "WHERE published = '1'" : '';
+      $sWhere = $this->_aSession['userdata']['user_right'] < 3 ? "WHERE published = '1'" : '';
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
@@ -99,7 +99,7 @@ class Blog extends Main {
     }
     else {
       # Show unpublished items to moderators or administrators only
-      $sWhere = USER_RIGHT < 3 ? "AND published = '1'" : '';
+      $sWhere = $this->_aSession['userdata']['user_right'] < 3 ? "AND published = '1'" : '';
 
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -198,8 +198,7 @@ class Blog extends Main {
                                           :date,
                                           :published )");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);

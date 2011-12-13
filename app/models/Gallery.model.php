@@ -353,8 +353,7 @@ class Gallery extends Main {
                                           :content,
                                           :date )");
 
-      $iUserId = USER_ID;
-      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
@@ -501,9 +500,8 @@ class Gallery extends Main {
                                           :content,
                                           :date )");
 
-      $iUserId = USER_ID;
       $oQuery->bindParam('album_id', $this->_aRequest['id'], PDO::PARAM_INT);
-      $oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('file', $sFile, PDO::PARAM_STR);
       $oQuery->bindParam('extension', $sExtension, PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);

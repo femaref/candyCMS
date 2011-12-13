@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  */
-
 require_once('lib/simpletest/autorun.php');
 require_once('app/models/Comment.model.php');
 
@@ -21,14 +20,27 @@ class TestOfCommentModel extends UnitTestCase {
 
   function testConstructor() {
 
-    $aRequest = array('name' => 'Name',
-                      'email' => 'email@example.com',
-                      'content' => 'Content',
-                      'parent_id' => 0);
-    $aSession = array();
-    $aCookie  = array();
+    $aRequest = array(
+        'name' => 'Name',
+        'email' => 'email@example.com',
+        'content' => 'Content',
+        'parent_id' => 0);
 
-    $this->oComment = new Comment($aRequest, $aSession, $aCookie, '');
+    $aSession['userdata'] = array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0,
+        'full_name' => ''
+    );
+
+    $aFile = array();
+    $aCookie = array();
+
+    $this->oComment = new Comment($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testCreate() {
@@ -39,10 +51,10 @@ class TestOfCommentModel extends UnitTestCase {
   }
 
   function testGetData() {
-    $this->assertIsA($this->oComment->getData(0, 1 ,1), 'array');
+    $this->assertIsA($this->oComment->getData(0, 1, 1), 'array');
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oComment->destroy($this->iLastInsertId), 'Comment #' .$this->iLastInsertId. ' destroyed.');
+    $this->assertTrue($this->oComment->destroy($this->iLastInsertId), 'Comment #' . $this->iLastInsertId . ' destroyed.');
   }
 }

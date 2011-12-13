@@ -158,9 +158,15 @@ class Comment extends Main {
    *
    */
   public function create() {
-    $sAuthorName  = isset($this->_aRequest['name']) ? Helper::formatInput($this->_aRequest['name']) : '';
-    $sAuthorEmail = isset($this->_aRequest['email']) ? Helper::formatInput($this->_aRequest['email']) : USER_EMAIL;
-    $iFacebookId  = isset($this->_aRequest['facebook_id']) ? Helper::formatInput($this->_aRequest['facebook_id']) : '';
+    $sAuthorName = isset($this->_aRequest['name']) ?
+            Helper::formatInput($this->_aRequest['name']) :
+            '';
+    $sAuthorEmail = isset($this->_aRequest['email']) ?
+            Helper::formatInput($this->_aRequest['email']) :
+            $this->_aSession['userdata']['email'];
+    $iFacebookId = isset($this->_aRequest['facebook_id']) ?
+            Helper::formatInput($this->_aRequest['facebook_id']) :
+            '';
 
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
@@ -183,8 +189,7 @@ class Comment extends Main {
                                           :date,
                                           :parent_id )");
 
-      $iAuthorId = USER_ID;
-      $oQuery->bindParam('author_id', $iAuthorId, PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('author_facebook_id', $iFacebookId, PDO::PARAM_INT);
       $oQuery->bindParam('author_name', $sAuthorName, PDO::PARAM_STR);
       $oQuery->bindParam('author_email', $sAuthorEmail, PDO::PARAM_STR);

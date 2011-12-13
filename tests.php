@@ -42,7 +42,7 @@ class AllTests extends TestSuite {
     $this->addFile('app/tests/Session.controller.php');
     $this->addFile('app/tests/User.controller.php');
 
-    /*$this->addFile('app/tests/Blog.model.php');
+    $this->addFile('app/tests/Blog.model.php');
     $this->addFile('app/tests/Calendar.model.php');
     $this->addFile('app/tests/Comment.model.php');
     $this->addFile('app/tests/Content.model.php');
@@ -51,7 +51,7 @@ class AllTests extends TestSuite {
     $this->addFile('app/tests/Log.model.php');
     $this->addFile('app/tests/Search.model.php');
     $this->addFile('app/tests/Session.model.php');
-    $this->addFile('app/tests/User.model.php');*/
+    $this->addFile('app/tests/User.model.php');
   }
 }
 ?>

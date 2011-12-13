@@ -170,8 +170,7 @@ class Calendar extends Main {
 																					:start_date,
 																					:end_date)");
 
-			$iUserId = USER_ID;
-			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+			$oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
 			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
 			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
@@ -209,8 +208,7 @@ class Calendar extends Main {
                                       WHERE
                                         id = :id");
 
-			$iUserId = USER_ID;
-			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+			$oQuery->bindParam('id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
 			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
 			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
