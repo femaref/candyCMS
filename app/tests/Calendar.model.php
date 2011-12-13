@@ -8,7 +8,7 @@
  * @license MIT
  * @since 2.0
  */
-require_once('lib/simpletest/autorun.php');
+
 require_once('app/models/Calendar.model.php');
 
 use \CandyCMS\Model\Calendar as Calendar;

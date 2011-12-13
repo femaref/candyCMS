@@ -181,8 +181,11 @@ class Index {
         break;
     }
 
-		define('WEBSITE_LANGUAGE', $this->_sLanguage);
-		define('WEBSITE_LOCALE', $sLocale);
+    if (!defined('WEBSITE_LANGUAGE'))
+      define('WEBSITE_LANGUAGE', $this->_sLanguage);
+
+    if (!defined('WEBSITE_LOCALE'))
+      define('WEBSITE_LOCALE', $sLocale);
 
     return WEBSITE_LOCALE;
 	}

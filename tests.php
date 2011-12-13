@@ -8,8 +8,7 @@
  * @version 2.0
  * @since 2.0
  */
-
-require_once('lib/simpletest/autorun.php');
+require_once 'lib/simpletest/autorun.php';
 
 require_once 'app/models/Main.model.php';
 require_once 'app/controllers/Main.controller.php';
@@ -30,18 +29,18 @@ define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
 define('MOBILE', false);
 define('MOBILE_DEVICE', false);
+#define('WEBSITE_LOCALE', 'en-US');
+#define('WEBSITE_LANGUAGE', 'en');
 
 class AllTests extends TestSuite {
 
   function AllTests() {
     $this->TestSuite('All tests');
-    $this->addFile('app/tests/Index.controller.php');
-    $this->addFile('app/tests/Download.controller.php');
-    $this->addFile('app/tests/Gallery.controller.php');
-    $this->addFile('app/tests/Media.controller.php');
-    $this->addFile('app/tests/Session.controller.php');
-    $this->addFile('app/tests/User.controller.php');
 
+    # Init tests
+    $this->addFile('app/tests/Index.controller.php');
+
+    # SQL unit tests
     $this->addFile('app/tests/Blog.model.php');
     $this->addFile('app/tests/Calendar.model.php');
     $this->addFile('app/tests/Comment.model.php');
@@ -52,6 +51,13 @@ class AllTests extends TestSuite {
     $this->addFile('app/tests/Search.model.php');
     $this->addFile('app/tests/Session.model.php');
     $this->addFile('app/tests/User.model.php');
+
+    # Web tests
+    $this->addFile('app/tests/Download.controller.php');
+    $this->addFile('app/tests/Gallery.controller.php');
+    $this->addFile('app/tests/Media.controller.php');
+    $this->addFile('app/tests/Session.controller.php');
+    $this->addFile('app/tests/User.controller.php');
   }
 }
 ?>
