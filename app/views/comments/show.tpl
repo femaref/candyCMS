@@ -39,9 +39,10 @@
                  title='{$lang.global.quote.quote}' />
           </a>
           {if $USER_RIGHT >= 3}
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.comment.title.destroy}'
-                 onclick="candy.system.confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')" width="16" height="16"
-                 title='{$lang.global.destroy.destroy}' />
+            <a href="#" onclick="candy.system.confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.comment.title.destroy}'
+                   width="16" height="16" title='{$lang.global.destroy.destroy}' />
+            </a>
           {/if}
         </footer>
       </article>

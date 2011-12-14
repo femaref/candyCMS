@@ -144,7 +144,7 @@ class Index {
     }
 
     # There is no request, but there might be a cookie instead
-    elseif (!isset($this->_aRequest['language'])) {
+    else {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
@@ -265,7 +265,7 @@ class Index {
     }
 
     # There is no request, but there might be a cookie instead
-    elseif (!isset($this->_aRequest['template'])) {
+    else {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
       $this->_sTemplate = isset($aRequest['default_template']) &&
               is_dir(WEBSITE_CDN . '/templates/' . $aRequest['default_template']) ?
