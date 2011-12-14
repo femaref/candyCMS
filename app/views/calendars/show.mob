@@ -6,11 +6,11 @@
   </p>
 {/if}
 {if isset($smarty.get.page) && $smarty.get.page > 1}
-	<p class="center">
+  <p class="center">
     <a href="{$smarty.get.page - 1}" rel="prev">&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
     <strong>{$smarty.get.page}</strong>
     &nbsp;&nbsp;<a href="{$smarty.get.page + 1}" rel="next">{$smarty.get.page + 1} &raquo;</a>
-	</p>
+  </p>
 {/if}
 {if !$calendar}
   <div class='error' title='{$lang.error.missing.entries}'>
@@ -49,6 +49,6 @@
 {/if}
 {if !isset($smarty.get.action)}
   <p class="center">
-    <a href="/calendar/archive/2011">{$lang.global.archive}</a>
+    <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}">{$lang.global.archive}</a>
   </p>
 {/if}

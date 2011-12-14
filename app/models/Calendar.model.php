@@ -30,11 +30,17 @@ class Calendar extends Main {
 	 *
 	 */
 	private function _setData($bUpdate) {
+
+		# Unset ID because if we got an archive action, there also must exists an ID and
+		# this causes a bug
+		if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive')
+			unset($this->_iId);
+
 		if (empty($this->_iId)) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
-					$iYear = isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) ?
-									(int) $this->_aRequest['page'] :
+					$iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
+									(int) $this->_aRequest['id'] :
 									date('Y');
 
 					$oQuery = $this->_oDb->prepare("SELECT
@@ -208,8 +214,8 @@ class Calendar extends Main {
                                       WHERE
                                         id = :id");
 
-			$oQuery->bindParam('id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
-			$oQuery->bindParam('author_id', $iUserId, PDO::PARAM_INT);
+			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+			$oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
 			$oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title']), PDO::PARAM_STR);
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
 			$oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
