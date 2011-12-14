@@ -197,7 +197,11 @@ class User extends Main {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-			return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
+      if ($this->_aSession['userdata']['user_right'] == 4)
+        return Helper::successMessage($this->oI18n->get('success.create'), '/user');
+
+      else
+        return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
 		}
 		else
 			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');

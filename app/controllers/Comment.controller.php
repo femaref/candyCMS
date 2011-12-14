@@ -230,7 +230,7 @@ class Comment extends Main {
 
       else {
         $this->_aError['captcha'] = $this->oI18n->get('error.captcha.incorrect');
-        return $this->_showFormTemplate(true);
+        return Helper::errorMessage($this->oI18n->get('error.captcha.incorrect')) . $this->_showFormTemplate(true);
       }
     }
     else

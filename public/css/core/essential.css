@@ -86,7 +86,6 @@ p.right {
   text-align: right;
 }
 
-img.pointer,
 span.js-toggle-headline:hover,
 input.copybox:hover {
   cursor: pointer;

@@ -34,7 +34,7 @@
     <ul class="js-caption">
       {foreach $files as $f}
         <li>
-          <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title=''>
+          <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
             <img src='/{$f.url_thumb}'
                  alt='{$f.content}'
                  title='{$f.content}'

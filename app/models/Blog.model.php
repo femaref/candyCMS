@@ -236,7 +236,7 @@ class Blog extends Main {
             '0';
 
     $iUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
-            USER_ID :
+            $this->_aSession['userdata']['id'] :
             (int) $this->_aRequest['author_id'];
 
     try {

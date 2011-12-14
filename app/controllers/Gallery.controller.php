@@ -12,9 +12,11 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Gallery as Model;
 
 require_once 'app/models/Gallery.model.php';
+require_once 'app/helpers/Upload.helper.php';
 
 class Gallery extends Main {
 

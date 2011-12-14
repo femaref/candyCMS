@@ -13,7 +13,8 @@ require_once('lib/simpletest/web_tester.php');
 require_once('lib/simpletest/reporter.php');
 require_once('app/controllers/Session.controller.php');
 
-use \CandyCMS\Controller\Session as Session;
+use CandyCMS\Controller\Session as Session;
+use CandyCMS\Helper\I18n as I18n;
 
 class TestOfSessionController extends WebTestCase {
 
@@ -39,7 +40,7 @@ class TestOfSessionController extends WebTestCase {
 
   function testShow() {
     $this->assertTrue($this->get(WEBSITE_URL . '/session'));
-    $this->assertNoText('error');
+    $this->assertNoText(I18n::get('lang.error.standard'));
     $this->assertResponse('200');
   }
 
@@ -47,18 +48,17 @@ class TestOfSessionController extends WebTestCase {
     $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/create');
     #$this->assertFieldById('input-email');
-    #$this->assertFieldById('input-password');
-    #$this->showSource();
+    $this->assertFieldById('input-password');
 
-    $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_create');
+    $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_session');
     $this->assertTrue($this->post(WEBSITE_URL . '/session/create', $aParams));
-    $this->assertNoText('error');
+    $this->assertResponse('200');
+    $this->assertNoText(I18n::get('lang.error.standard'));
   }
 
   function testDestroy() {
     $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/destroy');
     $this->assertResponse('302');
-    $this->assertNoText('error');
   }
 }

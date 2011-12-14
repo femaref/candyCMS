@@ -299,15 +299,9 @@ class Section extends Main {
 
       case 'search':
 
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->_oObject->create());
-          parent::_setTitle($this->oI18n->get('search.title.create'));
-        }
-        else {
-          parent::_setContent($this->_oObject->show());
-          parent::_setDescription($this->_oObject->getDescription());
-          parent::_setTitle($this->_oObject->getTitle());
-        }
+        parent::_setContent($this->_oObject->show());
+        parent::_setDescription($this->_oObject->getDescription());
+        parent::_setTitle($this->_oObject->getTitle());
 
         break;
 

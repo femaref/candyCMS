@@ -344,6 +344,6 @@ table th {
   padding-bottom: 5px;
 }
 
-table .left, #user table td, #calendar table td {
+table .left, #user table.user td, #calendar table td {
   text-align:left;
 }

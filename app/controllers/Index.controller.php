@@ -137,18 +137,14 @@ class Index {
    */
   public function getLanguage($sPath = '') {
     # We got a language request? Let's change it!
-    if (isset($this->_aRequest['language'])) {
-      if (is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
-        $this->_sLanguage = (string) $this->_aRequest['language'];
-        setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-        Helper::redirectTo('/');
-      }
-
-      else
-        $this->_sLanguage = '';
+    if (isset($this->_aRequest['language']) && is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
+      $this->_sLanguage = (string) $this->_aRequest['language'];
+      setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
+      Helper::redirectTo('/');
     }
+
     # There is no request, but there might be a cookie instead
-    else {
+    elseif (!isset($this->_aRequest['language'])) {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
@@ -262,20 +258,14 @@ class Index {
    */
   public function setTemplate() {
     # We got a template request? Let's change it!
-    if (isset($this->_aRequest['template'])) {
-
-      if (is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template'])) {
-        $this->_sTemplate = (string) $this->_aRequest['template'];
-        setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
-        Helper::redirectTo('/');
-      }
-
-      else
-        $this->_sTemplate = '';
+    if (isset($this->_aRequest['template']) && is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template'])) {
+      $this->_sTemplate = (string) $this->_aRequest['template'];
+      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
+      Helper::redirectTo('/');
     }
 
     # There is no request, but there might be a cookie instead
-    else {
+    elseif (!isset($this->_aRequest['template'])) {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
       $this->_sTemplate = isset($aRequest['default_template']) &&
               is_dir(WEBSITE_CDN . '/templates/' . $aRequest['default_template']) ?
@@ -305,6 +295,7 @@ class Index {
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
             str_replace('%v', $sVersionContent, $this->oI18n->get('global.update.avaiable')) :
             '';
+
     return str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
   }
 
@@ -324,20 +315,20 @@ class Index {
    *
    */
 	public function setUser() {
-    $this->_aSession['userdata'] = & Model_Session::getSessionData();
-
     # Set standard variables
-    if (empty($this->_aSession['userdata'])) {
       $this->_aSession['userdata'] = array(
-          'email' => '',
-          'facebook_id' => '',
-          'id' => 0,
-          'name' => '',
-          'surname' => '',
-          'password' => '',
-          'user_right' => 0
-      );
-    }
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'user_right' => 0
+    );
+
+    # Override them with user data
+    $aUserData = & Model_Session::getSessionData();
+    $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], is_array($aUserData) ? $aUserData : array());
 
     # Try to get facebook data
     if ($this->_aSession['userdata']['id'] == 0) {

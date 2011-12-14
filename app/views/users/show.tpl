@@ -7,7 +7,7 @@
       </a>
     {/if}
   </h1>
-  <table>
+  <table class="user">
     <tr>
       <td>
         {$lang.user.label.registered_since}

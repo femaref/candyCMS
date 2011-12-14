@@ -32,7 +32,7 @@
         <ul>
           <li><a href='/blog' {if $smarty.get.section == 'blog'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
           <li><a href='/gallery' {if $smarty.get.section == 'gallery'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
-          <li><a href='/search' {if $smarty.get.section == 'search'}class="ui-btn-active"{/if}>{$lang.global.search}</a></li>
+          <li><a href='/search' {if $smarty.get.section == 'search'}class="ui-btn-active" data-ajax="false"{/if}>{$lang.global.search}</a></li>
           <li><a href='/calendar' {if $smarty.get.section == 'calendar'}class="ui-btn-active"{/if}>{$lang.global.calendar}</a></li>
         </ul>
       </div><!-- /navbar -->

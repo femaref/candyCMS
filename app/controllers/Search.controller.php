@@ -54,11 +54,11 @@ class Search extends Main {
 	 *
 	 */
   public function show() {
-    if (!isset($this->_aRequest['id']) || empty($this->_aRequest['id']))
+    if (!isset($this->_aRequest['search']) || empty($this->_aRequest['search']))
       return $this->showFormTemplate();
 
     else {
-      $sString = Helper::formatInput($this->_aRequest['id']);
+      $sString = Helper::formatInput($this->_aRequest['search']);
 
       $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
       $this->_sHeadline = str_replace('%s', $sString, $this->oI18n->get('search.title.show'));

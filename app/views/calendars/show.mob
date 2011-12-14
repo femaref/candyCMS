@@ -5,7 +5,6 @@
     </a>
   </p>
 {/if}
-
 {if isset($smarty.get.page) && $smarty.get.page > 1}
 	<p class="center">
     <a href="{$smarty.get.page - 1}" rel="prev">&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
@@ -28,21 +27,21 @@
           {if $USER_RIGHT >= 3}
             <a href='/calendar/{$d.id}/update'>
 					{/if}
-            <h3>{$d.title}</h3>
-            <p>
-              <strong>{$d.start_date}
-                {if $d.end_date > 1}
-                -
-                {$d.end_date}
-                {/if}
-              </strong>
-            </p>
-            {if $d.content !== ''}
-            	<p>{$d.content}</p>
-            {/if}
-            {if $USER_RIGHT >= 3}
-              </a>
-  					{/if}
+          <h3>{$d.title}</h3>
+          <p>
+            <strong>{$d.start_date}
+              {if $d.end_date > 1}
+              -
+              {$d.end_date}
+              {/if}
+            </strong>
+          </p>
+          {if $d.content !== ''}
+            <p>{$d.content}</p>
+          {/if}
+          {if $USER_RIGHT >= 3}
+            </a>
+          {/if}
         </li>
       {/foreach}
     </ul>
