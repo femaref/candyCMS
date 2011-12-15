@@ -2,7 +2,7 @@
   <h1>{$lang.media.title.create}</h1>
   <p>
     <label for='input-file'>{$lang.media.label.choose} <span title="{$lang.global.required}">*</span></label>
-    <input type='file' name='file[]' id="input-file" multiple />
+    <input type='file' name='file[]' id="input-file" multiple required />
     <span class='description'>{$lang.media.info.upload}</span>
   </p>
   <p>
