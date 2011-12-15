@@ -84,20 +84,21 @@ define('AJAX_REQUEST', (int) $iAjax);
 # Clear cache if needed
 define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
 
-# Define current url
-define('CURRENT_URL', $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-
 @session_start();
 
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
-$oIndex->getConfigFiles(array('Candy', 'Plugins'));
+$oIndex->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
 $oIndex->getPlugins(ALLOW_PLUGINS);
 $oIndex->getLanguage();
 $oIndex->getCronjob();
+$oIndex->getFacebookExtension();
 $oIndex->setUser();
 $oIndex->setTemplate();
+
+# Define current url
+define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************

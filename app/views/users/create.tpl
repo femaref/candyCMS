@@ -1,5 +1,10 @@
 <form method='post'>
-  <h1>{$lang.global.registration}</h1>
+  <h1>
+    {$lang.global.registration}
+    {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
+      <fb:login-button scope="email" onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
+    {/if}
+  </h1>
   <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>
     <label for='input-name'>{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
     <input name='name' value='{$name}' type='name' id="input-name" autofocus required />

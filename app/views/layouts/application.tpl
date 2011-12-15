@@ -37,7 +37,7 @@
   <!--[if gt IE 8]><!--> <body><!--<![endif]-->
     <nav>
       <ul>
-        {if $USER_RIGHT > 0}
+        {if $USER_ID > 0}
           <li><strong>{$lang.global.welcome} <a href='/user/{$USER_ID}'>{$USER_NAME}</a>!</strong></li>
         {/if}
         <li><a href='/blog'>{$lang.global.blog}</a></li>
@@ -45,13 +45,11 @@
         <li><a href='/calendar'>{$lang.global.calendar}</a></li>
         <li><a href='/download'>{$lang.global.download}</a></li>
         <li><a href='/search'>{$lang.global.search}</a></li>
-        {if $USER_RIGHT == 0}
+        {if $USER_ID == 0}
           <li class="right"><a href='/user/create'>{$lang.global.register}</a></li>
           <li class="right"><a href='/session/create'>{$lang.global.login}</a></li>
-        {else}
-          {if $USER_ID > 0}
-            <li><a href='/user/update'>{$lang.global.settings}</a></li>
-          {/if}
+        {elseif $USER_ID > 0}
+          <li><a href='/user/update'>{$lang.global.settings}</a></li>
           <li class="right"><a href='/session/destroy'>{$lang.global.logout}</a></li>
         {/if}
       </ul>

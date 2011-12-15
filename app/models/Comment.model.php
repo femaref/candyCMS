@@ -14,6 +14,7 @@ namespace CandyCMS\Model;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Page as Page;
+use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use PDO;
 
 class Comment extends Main {
@@ -65,21 +66,22 @@ class Comment extends Main {
       $oDb->rollBack();
     }
 
-    # Count the loops to display comment number
-    $iLoop = 1;
     foreach ($aResult as $aRow) {
-      # We use the date as identifier to give plugins the possibility to patch into the system.
-      $iDate = $aRow['date'];
-
-      $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');
-      $this->_aData[$iDate]['loop'] = $iLoop;
-
-      $iLoop++;
+      $iId = $aRow['id'];
+      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
     }
 
     # We crawl the facebook avatars
     if (class_exists('\CandyCMS\Plugin\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
+
+    # Get comment number
+    $iLoop = 1;
+    foreach ($this->_aData as $aData) {
+      $iId = $aData['id'];
+      $this->_aData[$iId]['loop'] = $iLoop;
+      $iLoop++;
+    }
 
     return $this->_aData;
   }
@@ -92,11 +94,6 @@ class Comment extends Main {
    *
    */
   private function _getFacebookAvatars($aResult) {
-    $oFacebook = new FacebookCMS(array(
-                'appId' => FACEBOOK_APP_ID,
-                'secret' => FACEBOOK_SECRET,
-            ));
-
     # We go through our data and get all facebook posts
     $sFacebookUids = '';
     foreach ($aResult as $aRow) {
@@ -111,7 +108,7 @@ class Comment extends Main {
 
     # Create a new facebook array with avatar urls
     $aFacebookAvatarCache = array();
-    $aFacebookAvatars = $oFacebook->getUserAvatar($sFacebookUids);
+    $aFacebookAvatars = $this->_aSession['facebook']->getUserAvatar($sFacebookUids);
 
     foreach ($aFacebookAvatars as $aFacebookAvatar) {
       $iUid = $aFacebookAvatar['uid'];
@@ -121,7 +118,6 @@ class Comment extends Main {
 
     # Finally, we need to rebuild avatar data in main data array
     foreach ($aResult as $aRow) {
-
       # Skip unnecessary data
       if (empty($aRow['author_facebook_id']))
         continue;
@@ -129,6 +125,8 @@ class Comment extends Main {
       else {
         $iId = $aRow['id'];
         $iAuthorFacebookId = $aRow['author_facebook_id'];
+
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
         $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
         $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
       }

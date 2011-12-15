@@ -2,7 +2,7 @@
 <form method="post" data-ajax="false">
   {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
     <p>
-      <fb:login-button perms="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
+      <fb:login-button scope="email" onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
     </p>
   {/if}
   <p {if isset($error.name)}class="error" title="{$error.name}"{/if}>

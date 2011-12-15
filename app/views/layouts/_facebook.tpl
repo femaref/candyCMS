@@ -2,17 +2,15 @@
   <div id="fb-root"></div>
   <script type="text/javascript">
     var sFacebookAppId = '{$FACEBOOK_APP_ID}';
-    {literal}
       window.fbAsyncInit = function() {
-              FB.init({appId: sFacebookAppId, status: true, cookie: true,
-                xfbml: true});
-            };
-    {/literal}
-    (function() {
-      var e = document.createElement('script'); e.async = true;
-      e.src = document.location.protocol +
-        '//connect.facebook.net/{$WEBSITE_LOCALE}/all.js';
-      document.getElementById('fb-root').appendChild(e);
-    }());
+        FB.init({ appId: sFacebookAppId, status: true, cookie: true,
+          xfbml: true, oauth: true });
+      };
+    (function(d){
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/{$WEBSITE_LOCALE}/all.js";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
   </script>
 {/if}

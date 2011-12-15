@@ -83,6 +83,15 @@ class Index {
 	}
 
   /**
+   * Reset all data
+   *
+   * @access public
+   */
+  public function __destruct() {
+    unset($this->_aRequest, $this->_aSession);
+  }
+
+  /**
    * Load all config files.
    *
    * @access public
@@ -123,6 +132,9 @@ class Index {
     foreach ($aPlugins as $sPluginName) {
       if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
         require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+
+      else
+        die('Missing plugin: ' . $sPluginName);
     }
 
     return true;
@@ -194,7 +206,7 @@ class Index {
    *
    */
   public function getCronjob() {
-    if (class_exists('Cronjob')) {
+    if (class_exists('\CandyCMS\Plugin\Cronjob')) {
       if (Cronjob::getNextUpdate() === true) {
         Cronjob::cleanup();
         Cronjob::optimize();
@@ -213,12 +225,14 @@ class Index {
    *
    */
   public function getFacebookExtension() {
-    if (class_exists('FacebookCMS')) {
-      return new FacebookCMS(array(
+    if (class_exists('\CandyCMS\Plugin\FacebookCMS')) {
+      $this->_aSession['facebook'] = new FacebookCMS(array(
                   'appId' => FACEBOOK_APP_ID,
                   'secret' => FACEBOOK_SECRET,
-                  'cookie' => true,
+                  'cookie' => true
               ));
+
+      return $this->_aSession['facebook'];
     }
   }
 

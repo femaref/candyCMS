@@ -217,15 +217,15 @@ class User extends Main {
 	protected function _showCreateUserTemplate() {
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
-										'');
+										$this->_aSession['userdata']['name']);
 
 		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
 										Helper::formatInput($this->_aRequest['surname']) :
-										'');
+										$this->_aSession['userdata']['surname']);
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
 										Helper::formatInput($this->_aRequest['email']) :
-										'');
+										$this->_aSession['userdata']['email']);
 
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);

@@ -5,9 +5,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
- * 
+ *
  */
-
 # This plugin gives users the opportunity to comment without registration.
 # NOTE: This plugin slows down your page rapidly by sending a request to facebook each load!
 # If you don't need it, keep it disabled.
@@ -15,28 +14,12 @@
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
+use Facebook;
 use Smarty;
 
 require_once 'lib/facebook/facebook.php';
 
 final class FacebookCMS extends Facebook {
-
-  # @Override because of OAUTH - Bug
-  protected function _restserver($params) {
-    // generic application level parameters
-    $params['api_key'] = $this->getAppId();
-    $params['format'] = 'json-strings';
-
-    $result = json_decode($this->_oauthRequest(
-                    $this->getApiUrl($params['method']), $params
-            ), true);
-
-    // results are returned, errors are thrown
-    if (is_array($result) && isset($result['error_code'])) {
-      #throw new FacebookApiException($result);
-    }
-    return $result;
-  }
 
   public function getUserData($sKey = '') {
     if ($this->getAccessToken()) {
@@ -49,7 +32,7 @@ final class FacebookCMS extends Facebook {
         );
 
         $aData = $this->api($aApiCall);
-        return !empty($sKey) ? $aData[$sKey] : $aData;
+        return!empty($sKey) ? $aData[$sKey] : $aData;
       }
       catch (AdvancedException $e) {
         die($e->getMessage());

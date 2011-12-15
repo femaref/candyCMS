@@ -232,7 +232,7 @@ abstract class Main {
     if (CLEAR_CACHE == true)
       $this->oSmarty->clearAllCache();
 
-    $bUseFacebook = class_exists('FacebookCMS') ? true : false;
+    $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;
 
     if($bUseFacebook == true) {
       $this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only

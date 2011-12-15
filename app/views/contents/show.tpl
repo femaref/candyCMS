@@ -55,7 +55,7 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
           </a>
         </div>
-        {if $FACEBOOK_APP_ID && $_facebook_plugin_ == true}
+        {if $_facebook_plugin_ == true}
           <div class="facebook_like">
             <fb:like href="{$c.url_clean}" ref="{$c.id}" width="674" show_faces="false" send="true"></fb:like>
           </div>

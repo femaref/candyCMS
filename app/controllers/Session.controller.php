@@ -191,22 +191,17 @@ class Session extends Main {
 	 *
 	 */
   public function destroy() {
-		if ($this->_aSession['userdata']['user_right'] == 2) {
-			$oFacebook = new FacebookCMS(array(
-									'appId' => FACEBOOK_APP_ID,
-									'secret' => FACEBOOK_SECRET,
-									'cookie' => true,
-							));
+    session_destroy();
+    unset($_SESSION);
 
-			# Redirect user to start page. Success message is not be displayed.
-			Header('Location:' . $oFacebook->getLogoutUrl());
-			return Helper::successMessage($this->oI18n->get('success.session.create'), '/');
-		}
-		elseif ($this->_oModel->destroy() === true) {
-			unset($_SESSION, $this->_aSession);
-			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
-		}
-		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
-	}
+    if ($this->_aSession['userdata']['user_right'] == 2) {
+      $this->_aSession['facebook']->getLogoutUrl();
+      return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+    }
+    elseif ($this->_oModel->destroy() === true)
+      return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+
+    else
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+  }
 }
