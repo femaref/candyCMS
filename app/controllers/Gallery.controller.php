@@ -165,7 +165,7 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'));
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('gallery_albums'), $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.create'), '/gallery');
     }
 
@@ -191,7 +191,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.update'), $sRedirect);
     }
 
@@ -210,7 +210,7 @@ class Gallery extends Main {
    */
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
     }
 
@@ -269,7 +269,7 @@ class Gallery extends Main {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
           # Log uploaded image. Request ID = album id
-          Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id']);
+          Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
           return Helper::successMessage($this->oI18n->get('success.file.upload'), '/gallery/' . $this->_iId);
         }
         else
@@ -327,7 +327,7 @@ class Gallery extends Main {
     else {
       if (isset($this->_aRequest['updatefile_gallery'])) {
         if ($this->_oModel->updateFile($this->_iId) === true) {
-          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
           return Helper::successMessage($this->oI18n->get('success.update'), '/gallery');
         }
         else
@@ -351,7 +351,7 @@ class Gallery extends Main {
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
-        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         unset($this->_iId);
         return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
       }

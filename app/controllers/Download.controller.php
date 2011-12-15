@@ -125,7 +125,7 @@ class Download extends Main {
       if ($oUploadFile->uploadFile('download') == true) {
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
-          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'));
+          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'), $this->_aSession['userdata']['id']);
           return Helper::successMessage($this->oI18n->get('success.create'), '/download');
         }
         else
@@ -152,7 +152,7 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.update'), '/download');
     }
     else
@@ -170,7 +170,7 @@ class Download extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.destroy'), '/download');
     }
     else

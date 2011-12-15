@@ -181,7 +181,7 @@ class Comment extends Main {
       $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
       if ($this->_oModel->create() === true) {
-        Log::insert('comment', 'create', $iLastComment);
+        Log::insert('comment', 'create', $iLastComment, $this->_aSession['userdata']['id']);
         return Helper::successMessage($this->oI18n->get('success.create'), $sRedirect);
       }
       else
@@ -202,7 +202,7 @@ class Comment extends Main {
     $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert('comment', 'destroy', (int) $this->_aRequest['id']);
+      Log::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.destroy'), $sRedirect);
     }
     else

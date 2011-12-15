@@ -194,7 +194,7 @@ class User extends Main {
       $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
 
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId, $this->_aSession['userdata']['id']);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
       if ($this->_aSession['userdata']['user_right'] == 4)
@@ -315,7 +315,7 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['userdata']['id'];
 
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
 			return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
 		}
 		else
@@ -378,7 +378,7 @@ class User extends Main {
         # Destroy profile image
         $this->_destroyUserAvatars($this->_iId);
 
-        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId);
+        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         return Helper::successMessage($this->oI18n->get('success.destroy'), '/user');
       }
       else

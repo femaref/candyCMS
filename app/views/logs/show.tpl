@@ -1,7 +1,15 @@
 <h1>{$lang.global.logs}</h1>
 <table id="js-logs">
   {foreach $logs as $l}
-    <tr>
+    {if $l.action_name == 'create'}
+      <tr style="color:green">
+    {elseif $l.action_name == 'update'}
+      <tr style="color:blue">
+    {elseif $l.action_name == 'destroy'}
+      <tr style="color:red">
+    {else}
+      <tr>
+    {/if}
       <td style='width:25%' class="left">
         <a href='/user/{$l.uid}'>{$l.full_name}</a>
       </td>

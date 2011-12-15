@@ -452,7 +452,7 @@ abstract class Main {
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
 			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
 		}
 	}
@@ -473,7 +473,7 @@ abstract class Main {
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
 			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
 		}
 	}
@@ -489,7 +489,7 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRight = 3) {
-		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
 		return ($this->_aSession['userdata']['user_right'] < $iUserRight) ?
             Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
             $this->_destroy();

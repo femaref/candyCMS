@@ -94,7 +94,7 @@ class Log extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.destroy'), '/log');
     }
     else {

@@ -189,7 +189,7 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'));
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'), $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.create'), '/blog');
     }
     else
@@ -212,7 +212,7 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
     }
     else
@@ -230,7 +230,7 @@ class Blog extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.destroy'), '/blog');
     }
     else

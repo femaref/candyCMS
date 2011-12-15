@@ -56,9 +56,10 @@
             {$f.cdate}
           </td>
           <td style='width:5%'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
-                 title='{$lang.global.destroy.destroy}' width="16" height="16"
-                 onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')" />
+            <a href="#" onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')">
+              <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
+                   title='{$lang.global.destroy.destroy}' width="16" height="16" />
+            </a>
           </td>
         </tr>
       {/foreach}
@@ -67,7 +68,7 @@
   <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      $(".js-fancybox").fancybox();
+      $(".js-fancybox").fancybox({ nextEffect : 'fade', prevEffect : 'fade' });
     });
   </script>
 {/if}
