@@ -64,13 +64,13 @@ class Sitemap extends Main {
 	 *
 	 */
 	private function _getSitemap() {
-		$oBlog = new Model_Blog();
+		$oBlog = new Model_Blog($this->_aRequest, $this->_aSession);
 		$aBlog = $oBlog->getData('', false, 1000);
 
-		$oContent = new Model_Content();
+		$oContent = new Model_Content($this->_aRequest, $this->_aSession);
 		$aContent = $oContent->getData('', false, 1000);
 
-		$oGallery = new Model_Gallery();
+		$oGallery = new Model_Gallery($this->_aRequest, $this->_aSession);
 		$aGallery = $oGallery->getData('', false, false, 1000);
 
 		$this->oSmarty->assign('blog', $aBlog);
