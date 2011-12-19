@@ -273,7 +273,7 @@ class User extends Main {
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user right
-    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['user_right'] === 4)
+    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['user_right'] == 4)
       $iUserRight = isset($this->_aRequest['user_right']) && !empty($this->_aRequest['user_right']) ?
               (int) $this->_aRequest['user_right'] :
               1;

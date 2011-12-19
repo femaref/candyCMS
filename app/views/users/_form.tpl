@@ -28,7 +28,7 @@
       <input name='receive_newsletter' id="input-receive_newsletter" value='1'
              type='checkbox' {if $receive_newsletter == 1}checked{/if} />
     </p>
-    {if $USER_RIGHT === 4 && $USER_ID !== $uid}
+    {if $USER_RIGHT == 4 && $USER_ID !== $uid}
       <p>
         <label for='input-user_right'>{$lang.global.user.right}</label>
         <select name='user_right' id="input-user_right">
