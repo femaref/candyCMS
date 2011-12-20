@@ -9,7 +9,8 @@ var candy = candy || {};
     quote: quote,
     stripNoAlphaChars: stripNoAlphaChars,
     stripSlash: stripSlash,
-    confirmDestroy: confirmDestroy
+    confirmDestroy: confirmDestroy,
+    countCharLength : countCharLength
   }
 
   function show(sDivId) {
@@ -55,6 +56,11 @@ var candy = candy || {};
   function confirmDestroy(sUrl) {
     if( confirm(lang.confirm_destroy) )
       parent.location.href = sUrl;
+  }
+
+  function countCharLength(sDiv) {
+    var iLength = 160 - $(sDiv).val().length;
+    $('#js-count_chars').html(iLength);
   }
 
 })(jQuery, window);

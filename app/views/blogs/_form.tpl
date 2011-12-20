@@ -66,10 +66,11 @@
       content_css : "%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css"
     });
 
-    $('#js-count_chars').bind('keyup', function() {
-      var iLength = 160 - $(this).val().length;
-      this.html(iLength);
-    });
+    candy.system.countCharLength('#input-teaser');
+  });
+
+  $('#input-teaser').bind('keyup', function() {
+    candy.system.countCharLength(this);
   });
 
   $('p.error').tipTip({ maxWidth: "auto" });
