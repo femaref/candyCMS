@@ -99,31 +99,36 @@ class Blog extends Main {
     }
     else {
       # Show unpublished items to moderators or administrators only
-      $sWhere = $this->_aSession['userdata']['user_right'] < 3 ? "AND published = '1'" : '';
+      $iPublished = $this->_aSession['userdata']['user_right'] > 3 ? 0 : 1;
 
       try {
-        $oQuery = $this->_oDb->query("SELECT
-                                        b.*,
-                                        u.id AS uid,
-                                        u.name,
-                                        u.surname,
-                                        u.email,
-                                        u.use_gravatar,
-                                        COUNT(c.id) AS comment_sum
-                                      FROM
-                                        " . SQL_PREFIX . "blogs b
-                                      LEFT JOIN
-                                        " . SQL_PREFIX . "users u
-                                      ON
-                                        b.author_id=u.id
-                                      LEFT JOIN
-                                        " . SQL_PREFIX . "comments c
-                                      ON
-                                        c.parent_id=b.id
-                                      WHERE
-                                        b.id = '" . Helper::formatInput($this->_iId) . "'
-                                      " . $sWhere . "
-                                      LIMIT 1");
+        $oQuery = $this->_oDb->prepare("SELECT
+                                          b.*,
+                                          u.id AS uid,
+                                          u.name,
+                                          u.surname,
+                                          u.email,
+                                          u.use_gravatar,
+                                          COUNT(c.id) AS comment_sum
+                                        FROM
+                                          " . SQL_PREFIX . "blogs b
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "users u
+                                        ON
+                                          b.author_id=u.id
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "comments c
+                                        ON
+                                          c.parent_id=b.id
+                                        WHERE
+                                          b.id = :id
+                                        AND
+                                          b.published >= :published
+                                        LIMIT 1");
+
+        $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
+        $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
+        $oQuery->execute();
 
         $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }

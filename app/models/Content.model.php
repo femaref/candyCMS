@@ -28,24 +28,30 @@ class Content extends Main {
    *
    */
   private final function _setData($bUpdate, $iLimit) {
+    $iPublished = $this->_aSession['userdata']['user_right'] > 3 ? 0 : 1;
 
     # Show overview
     if (empty($this->_iId)) {
       try {
-        $oQuery = $this->_oDb->query("SELECT
-                                        c.*,
-                                        u.id AS uid,
-                                        u.name,
-                                        u.surname
-                                      FROM
-                                        " . SQL_PREFIX . "contents c
-                                      LEFT JOIN
-                                        " . SQL_PREFIX . "users u
-                                      ON
-                                        c.author_id=u.id
-                                      ORDER BY
-                                        c.title ASC
-                                      LIMIT " . $iLimit);
+        $oQuery = $this->_oDb->prepare("SELECT
+                                          c.*,
+                                          u.id AS uid,
+                                          u.name,
+                                          u.surname
+                                        FROM
+                                          " . SQL_PREFIX . "contents c
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "users u
+                                        ON
+                                          c.author_id=u.id
+                                        WHERE
+                                          published >= :published
+                                        ORDER BY
+                                          c.title ASC
+                                        LIMIT " . $iLimit);
+
+        $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
+        $oQuery->execute();
 
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
@@ -70,10 +76,13 @@ class Content extends Main {
                                           c.author_id=u.id
                                         WHERE
                                           c.id = :id
+                                        AND
+                                          published >= :published
                                         LIMIT
                                           1");
 
         $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
+        $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
         $oQuery->execute();
 
         # Fix for using it in the same template as overview
@@ -131,14 +140,16 @@ class Content extends Main {
                                           teaser,
                                           keywords,
                                           content,
-                                          date)
+                                          date,
+                                          published)
                                       VALUES
                                         ( :author_id,
                                           :title,
                                           :teaser,
                                           :keywords,
                                           :content,
-                                          :date )");
+                                          :date,
+                                          :published)");
 
       $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
@@ -146,6 +157,7 @@ class Content extends Main {
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
       parent::$iLastInsertId = Helper::getLastEntry('contents');
@@ -176,16 +188,18 @@ class Content extends Main {
                                         keywords = :keywords,
                                         content = :content,
                                         date = :date,
-                                        author_id = :user_id
+                                        author_id = :author_id,
+                                        published = :published
                                       WHERE
                                         id = :where");
 
-      $oQuery->bindParam('user_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
       $oQuery->bindParam('where', $iId, PDO::PARAM_INT);
 
       return $oQuery->execute();

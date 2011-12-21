@@ -1,0 +1,1 @@
+ALTER TABLE `contents` ADD `published` TINYINT(1)  NOT NULL  DEFAULT '0'  AFTER `date`;
