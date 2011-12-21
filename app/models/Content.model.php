@@ -132,6 +132,10 @@ class Content extends Main {
    *
    */
   public function create() {
+    $this->_aRequest['published'] = isset($this->_aRequest['published']) ?
+            (int) $this->_aRequest['published'] :
+            0;
+
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "contents

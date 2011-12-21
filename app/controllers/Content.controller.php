@@ -109,7 +109,7 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->oModel->getLastInsertId('contents'), $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('contents'), $this->_aSession['userdata']['id']);
       return Helper::successMessage($this->oI18n->get('success.create'), '/content');
     }
     else
