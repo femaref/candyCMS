@@ -27,10 +27,10 @@
           {$c.content}
         </div>
         <footer>
-          {if $USER_RIGHT >= 3 && $c.author_email}
+          {if $USER_ROLE >= 3 && $c.author_email}
             <a href="mailto:{$c.author_email}">{$c.author_email}</a>
           {/if}
-          {if $USER_RIGHT >= 3 && $c.author_ip}
+          {if $USER_ROLE >= 3 && $c.author_ip}
             <span>{$c.author_ip}</span>
           {/if}
           <a href='#create'
@@ -38,7 +38,7 @@
             <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                  title='{$lang.global.quote.quote}' />
           </a>
-          {if $USER_RIGHT >= 3}
+          {if $USER_ROLE >= 3}
             <a href="#" onclick="candy.system.confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.comment.title.destroy}'
                    width="16" height="16" title='{$lang.global.destroy.destroy}' />

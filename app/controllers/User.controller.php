@@ -42,13 +42,13 @@ class User extends Main {
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
-		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['right'] < 4) {
+		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] < 4) {
 			Helper::redirectTo('/user/update');
 			exit();
 		}
 
 		# Set user id of person to update
-		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['right'] == 4 ?
+		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4 ?
             $this->_iId :
             $this->_aSession['userdata']['id'];
 
@@ -100,7 +100,7 @@ class User extends Main {
   }
 
 	/**
-	 * Show user or user overview (depends on a given ID or not and user right).
+	 * Show user or user overview (depends on a given ID or not and user role).
 	 *
 	 * @access public
 	 * @param integer $iUserId user to show
@@ -119,7 +119,7 @@ class User extends Main {
 			$this->_setTitle($this->oI18n->get('user.title.overview'));
 			$this->_setDescription($this->oI18n->get('user.title.overview'));
 
-			if ($this->_aSession['userdata']['right'] < 3)
+			if ($this->_aSession['userdata']['role'] < 3)
 				return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 			else {
@@ -174,7 +174,7 @@ class User extends Main {
 			$this->_aError['password'] = $this->oI18n->get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
-		if ($this->_aSession['userdata']['right'] < 4) {
+		if ($this->_aSession['userdata']['role'] < 4) {
 			if (!isset($this->_aRequest['disclaimer']))
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
@@ -197,7 +197,7 @@ class User extends Main {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId, $this->_aSession['userdata']['id']);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-      if ($this->_aSession['userdata']['right'] == 4)
+      if ($this->_aSession['userdata']['role'] == 4)
         return Helper::successMessage($this->oI18n->get('success.create'), '/user');
 
       else
@@ -245,7 +245,7 @@ class User extends Main {
 	 *
 	 */
 	public function update() {
-		if ($this->_aSession['userdata']['id'] == $this->_iId)
+		if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId)
 			Helper::redirectTo('/user/update');
 
 		if (empty($this->_iId))
@@ -372,7 +372,7 @@ class User extends Main {
         return Helper::errorMessage('error.user.destroy.password', '/user/update');
 
       # We are admin and can delete users
-    } elseif ($this->_aSession['userdata']['right'] == 4) {
+    } elseif ($this->_aSession['userdata']['role'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
 
         # Unsubscribe from newsletter

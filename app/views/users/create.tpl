@@ -26,7 +26,7 @@
     <input name='password2' type='password' id="input-password2" required />
     <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
   </p>
-  {if $USER_RIGHT < 4}
+  {if $USER_ROLE < 4}
     <p {if isset($error.disclaimer)}class="error" title="{$error.disclaimer}"{/if}>
       <label>
         {* Absolute URL due to fancybox bug *}

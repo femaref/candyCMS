@@ -1,4 +1,4 @@
-{if $USER_RIGHT >= 3}
+{if $USER_ROLE >= 3}
   <p class="create">
     <a href='/calendar/create' data-role="button" data-theme="b" data-icon="plus">
       {$lang.global.create.entry}
@@ -18,13 +18,13 @@
   </div>
 {else}
   {foreach $calendar as $c}
-    <ul data-role="listview" data-inset="true" {if $USER_RIGHT >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
+    <ul data-role="listview" data-inset="true" {if $USER_ROLE >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
       <li data-role="list-divider">
       	{$c.month} {$c.year}
       </li>
       {foreach $c.dates as $d}
         <li>
-          {if $USER_RIGHT >= 3}
+          {if $USER_ROLE >= 3}
             <a href='/calendar/{$d.id}/update'>
 					{/if}
           <h3>{$d.title}</h3>
@@ -39,7 +39,7 @@
           {if $d.content !== ''}
             <p>{$d.content}</p>
           {/if}
-          {if $USER_RIGHT >= 3}
+          {if $USER_ROLE >= 3}
             </a>
           {/if}
         </li>

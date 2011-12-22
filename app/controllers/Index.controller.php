@@ -295,7 +295,7 @@ class Index {
    *
    */
   private function checkForNewVersion() {
-    if ($this->_aSession['userdata']['right'] == 4 && ALLOW_VERSION_CHECK == true) {
+    if ($this->_aSession['userdata']['role'] == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
@@ -313,7 +313,7 @@ class Index {
   /**
    * Define user constants for global use.
    *
-   * List of user rights:
+   * List of user roles:
    * 0 = Guests / unregistered users
    * 1 = Members
    * 2 = Facebook users
@@ -334,7 +334,7 @@ class Index {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0
+        'role' => 0
     );
 
     # Override them with user data
@@ -362,9 +362,9 @@ class Index {
         $this->_aSession['userdata']['surname'] = isset($aFacebookData[0]['last_name']) ?
                 $aFacebookData[0]['last_name'] :
                 $this->_aSession['userdata']['surname'];
-        $this->_aSession['userdata']['right'] = isset($aFacebookData[0]['uid']) ?
+        $this->_aSession['userdata']['role'] = isset($aFacebookData[0]['uid']) ?
                 2 :
-                (int) $this->_aSession['userdata']['right'];
+                (int) $this->_aSession['userdata']['role'];
       }
     }
 

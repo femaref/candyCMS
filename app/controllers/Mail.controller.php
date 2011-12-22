@@ -72,7 +72,7 @@ class Mail extends Main {
 	 *
 	 * Create entry or show form template if we have enough rights. Due to spam bots we provide
 	 * a captcha and need to override the original method.
-	 * We must override the main method due to a diffent required user right and a captcha.
+	 * We must override the main method due to a diffent required user role and a captcha.
 	 *
 	 * @access public
 	 * @return string HTML content
@@ -82,13 +82,13 @@ class Mail extends Main {
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if ($this->_aSession['userdata']['right'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
+			if ($this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
 				return $this->_checkCaptcha();
 			else
 				return $this->_create(false);
 		}
 		else
-			return $this->_showCreateMailTemplate($this->_aSession['userdata']['right'] == 0 ? true : false);
+			return $this->_showCreateMailTemplate($this->_aSession['userdata']['role'] == 0 ? true : false);
 	}
 
 	/**

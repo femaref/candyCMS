@@ -29,7 +29,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'content' => 'Content',
         'surname' => 'Surname',
         'receive_newsltter' => 0,
-        'right' => 0,
+        'role' => 0,
         'use_gravatar' => 0,
         'section' => 'user');
 
@@ -40,7 +40,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0,
+        'role' => 0,
         'full_name' => ''
     );
 
@@ -109,7 +109,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0,
+        'role' => 0,
         'full_name' => ''
     );
 
@@ -131,7 +131,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0,
+        'role' => 0,
         'full_name' => ''
     );
 
@@ -153,7 +153,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0,
+        'role' => 0,
         'full_name' => ''
     );
 

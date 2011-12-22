@@ -32,7 +32,7 @@ class Blog extends Main {
   private function _setData($bUpdate, $iLimit) {
     if (empty($this->_iId)) {
       # Show unpublished items to moderators or administrators only
-      $sWhere = $this->_aSession['userdata']['right'] < 3 ? "WHERE published = '1'" : '';
+      $sWhere = $this->_aSession['userdata']['role'] < 3 ? "WHERE published = '1'" : '';
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
@@ -99,7 +99,7 @@ class Blog extends Main {
     }
     else {
       # Show unpublished items to moderators or administrators only
-      $iPublished = $this->_aSession['userdata']['right'] > 3 ? 0 : 1;
+      $iPublished = $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
 
       try {
         $oQuery = $this->_oDb->prepare("SELECT

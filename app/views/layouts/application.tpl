@@ -88,7 +88,7 @@
       <section id="settings">
         <h3>{$lang.global.settings}</h3>
         <ul>
-          {if $USER_RIGHT >= 3}
+          {if $USER_ROLE >= 3}
             <li>
               <a href='/media' title='{$lang.global.manager.media}'>
                 {$lang.global.manager.media}
@@ -99,7 +99,7 @@
                 {$lang.global.manager.content}
               </a>
             </li>
-            {if $USER_RIGHT == 4}
+            {if $USER_ROLE == 4}
               <li>
                 <a href='/log' title='{$lang.global.logs}'>
                   {$lang.global.logs}

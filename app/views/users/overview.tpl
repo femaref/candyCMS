@@ -1,4 +1,4 @@
-{if $USER_RIGHT == 4}
+{if $USER_ROLE == 4}
   <p class="center">
     <a href='/user/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
@@ -24,12 +24,12 @@
       <td style='width:30%' class="left">
         <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
         <br />
-        {if $u.user_right == 2}
-          ({$lang.global.user.rights.2})
-        {elseif $u.user_right == 3}
-          ({$lang.global.user.rights.3})
-        {elseif $u.user_right == 4}
-          ({$lang.global.user.rights.4})
+        {if $u.user_role == 2}
+          ({$lang.global.user.roles.2})
+        {elseif $u.user_role == 3}
+          ({$lang.global.user.roles.3})
+        {elseif $u.user_role == 4}
+          ({$lang.global.user.roles.4})
         {/if}
       </td>
       <td style='width:25%'>
@@ -48,7 +48,7 @@
              alt='{$u.receive_newsletter}' title="" width="16" height="16" />
       </td>
       <td style='width:10%'>
-        {if $USER_RIGHT == 4}
+        {if $USER_ROLE == 4}
           <a href='/user/{$u.id}/update'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
                  title='{$lang.global.update.update}' width="16" height="16" />

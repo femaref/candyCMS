@@ -1,4 +1,4 @@
-{if $USER_RIGHT >= 3}
+{if $USER_ROLE >= 3}
   <p class="center">
     <a href='/download/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
@@ -35,13 +35,13 @@
           <td>{$f.date}</td>
           <td>
             {$f.size}
-            {if $USER_RIGHT >= 3}
+            {if $USER_ROLE >= 3}
               <br />
               {$f.downloads} {$lang.global.downloads}
             {/if}
           </td>
           <td>
-            {if $USER_RIGHT >= 3}
+            {if $USER_ROLE >= 3}
               <a href='/download/{$f.id}/update'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
                   title='{$lang.global.update.update}' width="16" height="16" />

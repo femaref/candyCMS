@@ -31,7 +31,7 @@ class TestOfSessionController extends WebTestCase {
       'name' => '',
       'surname' => '',
       'password' => '',
-      'right' => 0,
+      'role' => 0,
       'full_name' => ''
     );
 

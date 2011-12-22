@@ -106,7 +106,7 @@ class User extends Main {
                                           use_gravatar,
 																					receive_newsletter,
                                           verification_code,
-                                          right
+                                          role
                                         FROM
                                           " . SQL_PREFIX . "users
                                         ORDER BY
@@ -272,13 +272,13 @@ class User extends Main {
 		$iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
-    # Set other peoples user right
-    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['right'] == 4)
-      $iUserRight = isset($this->_aRequest['right']) && !empty($this->_aRequest['right']) ?
-              (int) $this->_aRequest['right'] :
+    # Set other peoples user roles
+    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['role'] == 4)
+      $iUserRole = isset($this->_aRequest['role']) && !empty($this->_aRequest['role']) ?
+              (int) $this->_aRequest['role'] :
               1;
     else
-      $iUserRight = $this->_aSession['userdata']['right'];
+      $iUserRole = $this->_aSession['userdata']['role'];
 
     # Get my active password
     $sPassword = $this->_getPassword($iId);
@@ -300,7 +300,7 @@ class User extends Main {
 																				receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
                                         password = :password,
-                                        right = :right
+                                        role = :role
                                       WHERE
                                         id = :id");
 
@@ -311,7 +311,7 @@ class User extends Main {
 			$oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
 			$oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
 			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
-			$oQuery->bindParam('right', $iUserRight, PDO::PARAM_INT);
+			$oQuery->bindParam('role', $iUserRole, PDO::PARAM_INT);
 			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
 			return $oQuery->execute();

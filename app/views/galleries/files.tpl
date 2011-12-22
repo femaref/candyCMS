@@ -1,4 +1,4 @@
-{if $USER_RIGHT >= 3}
+{if $USER_ROLE >= 3}
   <p class="center">
     <a href='/gallery/{$_request_id_}/createfile'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
@@ -16,7 +16,7 @@
     <a href='/rss/gallery/{$_request_id_}'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
     </a>
-    {if $USER_RIGHT >= 3}
+    {if $USER_ROLE >= 3}
       <a href='/gallery/{$_request_id_}/update'>
         <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
              width="16" height="16" title='{$lang.global.update.update}' />
@@ -40,7 +40,7 @@
                  title='{$f.content}'
                  class="js-image" />
           </a>
-          {if $USER_RIGHT >= 3}
+          {if $USER_ROLE >= 3}
             <div>
               <a href="/gallery/{$f.id}/updatefile">
                 <img src="%PATH_IMAGES%/spacer.png" class="icon-update"

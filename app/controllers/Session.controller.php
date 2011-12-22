@@ -191,17 +191,19 @@ class Session extends Main {
 	 *
 	 */
   public function destroy() {
-    session_destroy();
-    unset($_SESSION);
+		if ($this->_aSession['userdata']['role'] == 2) {
+			$this->_aSession['facebook']->getLogoutUrl();
+			session_destroy();
+			unset($_SESSION);
+			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+		}
+		elseif ($this->_oModel->destroy() === true) {
+			session_destroy();
+			unset($_SESSION);
+			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+		}
 
-    if ($this->_aSession['userdata']['right'] == 2) {
-      $this->_aSession['facebook']->getLogoutUrl();
-      return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
-    }
-    elseif ($this->_oModel->destroy() === true)
-      return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
-
-    else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
-  }
+		else
+			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+	}
 }

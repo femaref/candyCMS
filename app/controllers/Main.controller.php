@@ -439,12 +439,12 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sInputName sent input name to verify action
-	 * @param integer $iUserRight required user right
+	 * @param integer $iUserRole required user right
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function create($sInputName, $iUserRight = 3) {
-		if ($this->_aSession['userdata']['right'] < $iUserRight)
+	public function create($sInputName, $iUserRole = 3) {
+		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -460,12 +460,12 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sInputName sent input name to verify action
-	 * @param integer $iUserRight required user right
+	 * @param integer $iUserRole required user right
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function update($sInputName, $iUserRight = 3) {
-		if ($this->_aSession['userdata']['right'] < $iUserRight)
+	public function update($sInputName, $iUserRole = 3) {
+		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -480,13 +480,13 @@ abstract class Main {
 	 * Delete entry if we have enough rights.
 	 *
 	 * @access public
-	 * @param integer $iUserRight required user right
+	 * @param integer $iUserRole required user right
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	public function destroy($iUserRight = 3) {
+	public function destroy($iUserRole = 3) {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
-		return ($this->_aSession['userdata']['right'] < $iUserRight) ?
+		return ($this->_aSession['userdata']['role'] < $iUserRole) ?
             Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
             $this->_destroy();
 	}

@@ -1,4 +1,4 @@
-{if $USER_RIGHT >= 3}
+{if $USER_ROLE >= 3}
   <p class="center">
     <a href='/gallery/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
@@ -18,7 +18,7 @@
         <header>
           <h2>
             <a href='{$a.url}'>{$a.title}</a>
-            {if $USER_RIGHT >= 3}
+            {if $USER_ROLE >= 3}
               <a href='/gallery/{$a.id}/createfile'>
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt="{$lang.gallery.files.title.create}"
                      title="{$lang.gallery.files.title.create}" width="16" height="16" />
@@ -37,7 +37,7 @@
                height='32' width='32' />
         {/foreach}
       {* Show gallery albums without uploaded images *}
-      {elseif $USER_RIGHT >= 3}
+      {elseif $USER_ROLE >= 3}
         <header>
           <h2>
             <a href='{$a.url}'>{$a.title}</a>

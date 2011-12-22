@@ -29,7 +29,7 @@ class TestOfSearchModel extends UnitTestCase {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'right' => 0,
+        'role' => 0,
         'full_name' => ''
     );
 

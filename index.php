@@ -140,7 +140,7 @@ else
 
 # Spread this information.
 define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
-define('MOBILE_DEVICE', true);
+define('MOBILE_DEVICE', $bMobile);
 
 # Print out HTML
 echo $oIndex->show();

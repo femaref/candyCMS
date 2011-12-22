@@ -1,4 +1,4 @@
-{if $USER_RIGHT >= 3}
+{if $USER_ROLE >= 3}
   <p class="center">
     <a href='/content/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
@@ -20,7 +20,7 @@
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>
-        {if $USER_RIGHT >= 3 && $c.published == 0}
+        {if $USER_ROLE >= 3 && $c.published == 0}
           <em>({$lang.global.not_published})</em>
         {/if}
       </td>
@@ -30,7 +30,7 @@
           {$c.name} {$c.surname}
         </a>
       </td>
-      {if $USER_RIGHT >= 3}
+      {if $USER_ROLE >= 3}
         <td>
           <a href='/content/{$c.id}/update'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'

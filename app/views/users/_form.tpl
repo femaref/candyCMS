@@ -28,14 +28,14 @@
       <input name='receive_newsletter' id="input-receive_newsletter" value='1'
              type='checkbox' {if $receive_newsletter == 1}checked{/if} />
     </p>
-    {if $USER_RIGHT == 4 && $USER_ID !== $uid}
+    {if $USER_ROLE == 4 && $USER_ID !== $uid}
       <p>
-        <label for='input-user_right'>{$lang.global.user.right}</label>
-        <select name='user_right' id="input-user_right">
-          <option value='1' {if $user_right == 1}selected{/if}>{$lang.global.user.rights.1}</option>
-          <option value='2' {if $user_right == 2}selected{/if}>{$lang.global.user.rights.2}</option>
-          <option value='3' {if $user_right == 3}selected{/if}>{$lang.global.user.rights.3}</option>
-          <option value='4' {if $user_right == 4}selected{/if}>{$lang.global.user.rights.4}</option>
+        <label for='input-user_role'>{$lang.global.user.role}</label>
+        <select name='user_role' id="input-user_role">
+          <option value='1' {if $user_role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
+          <option value='2' {if $user_role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
+          <option value='3' {if $user_role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
+          <option value='4' {if $user_role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
         </select>
       </p>
     {/if}
@@ -84,7 +84,7 @@
     </p>
   </div>
 </form>
-{if $USER_RIGHT < 4}
+{if $USER_ROLE < 4}
   <form enctype='multipart/form-data' method='post' action='/user/{$uid}/destroy'>
     <h2><a href="#">{$lang.user.title.account}</a></h2>
     <div>
