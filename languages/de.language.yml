@@ -76,6 +76,7 @@ global:
     12: Dezember
   name: Vorname
   newsletter: Newsletter
+  not_published: Nicht veröffentlicht
   optional: optional
   overview: Übersicht
   page: Seite
@@ -204,7 +205,6 @@ error:
     permission: Sie haben keine Berechtigung diese Aktion auszuführen!
     template: Es wurde keine passendes Template gefunden!
   passwords: Bitte geben Sie zwei identische Passwörter an!
-  published: "Nicht veröffentlicht:"
   session:
     create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls Sie Ihre E-Mail-Adresse noch nicht bestätigt haben, machen Sie dies bitte vor dem Login.
     create_first: Bitte loggen Sie sich zuerst ein!

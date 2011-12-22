@@ -75,6 +75,7 @@ global:
     12: December
   name: Name
   newsletter: Newsletter
+  not_published: Not published
   optional: Optional
   overview: Overview
   page: Page
@@ -203,7 +204,6 @@ error:
     permission: You do not have permission to proceed!
     template: This template is not avaiable!
   passwords: Passwords do not match, please retype.
-  published: "Not published:"
   session:
     create: Please check your Email and password. Also, is your Email verified?
     create_first: Please login first!

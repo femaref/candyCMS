@@ -20,6 +20,9 @@
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>
+        {if $USER_RIGHT >= 3 && $c.published == 0}
+          <em>({$lang.global.not_published})</em>
+        {/if}
       </td>
       <td>{$c.datetime}</td>
       <td>
