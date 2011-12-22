@@ -82,13 +82,13 @@ class Mail extends Main {
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if ($this->_aSession['userdata']['user_right'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
+			if ($this->_aSession['userdata']['right'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
 				return $this->_checkCaptcha();
 			else
 				return $this->_create(false);
 		}
 		else
-			return $this->_showCreateMailTemplate($this->_aSession['userdata']['user_right'] == 0 ? true : false);
+			return $this->_showCreateMailTemplate($this->_aSession['userdata']['right'] == 0 ? true : false);
 	}
 
 	/**

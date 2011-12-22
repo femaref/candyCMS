@@ -245,13 +245,6 @@ abstract class Main {
 		$this->oSmarty->assign('MOBILE', MOBILE);
 		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
 		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
-		$this->oSmarty->assign('USER_EMAIL', $this->_aSession['userdata']['email']);
-		$this->oSmarty->assign('USER_FACEBOOK_ID', $this->_aSession['userdata']['facebook_id']);
-		$this->oSmarty->assign('USER_FULL_NAME', $this->_aSession['userdata']['full_name']);
-		$this->oSmarty->assign('USER_ID', $this->_aSession['userdata']['id']);
-		$this->oSmarty->assign('USER_NAME', $this->_aSession['userdata']['name']);
-		$this->oSmarty->assign('USER_RIGHT', $this->_aSession['userdata']['user_right']);
-		$this->oSmarty->assign('USER_SURNAME', $this->_aSession['userdata']['surname']);
 		$this->oSmarty->assign('VERSION', VERSION);
 		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
@@ -259,6 +252,9 @@ abstract class Main {
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
+
+		foreach ($this->_aSession['userdata'] as $sKey => $sData)
+			$this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
 		# Define system variables
 		$this->oSmarty->assign('_date_', date('Y-m-d'));
@@ -448,7 +444,7 @@ abstract class Main {
 	 *
 	 */
 	public function create($sInputName, $iUserRight = 3) {
-		if ($this->_aSession['userdata']['user_right'] < $iUserRight)
+		if ($this->_aSession['userdata']['right'] < $iUserRight)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -469,7 +465,7 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRight = 3) {
-		if ($this->_aSession['userdata']['user_right'] < $iUserRight)
+		if ($this->_aSession['userdata']['right'] < $iUserRight)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 		else {
@@ -490,7 +486,7 @@ abstract class Main {
 	 */
 	public function destroy($iUserRight = 3) {
 		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
-		return ($this->_aSession['userdata']['user_right'] < $iUserRight) ?
+		return ($this->_aSession['userdata']['right'] < $iUserRight) ?
             Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
             $this->_destroy();
 	}

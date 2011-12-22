@@ -77,9 +77,6 @@ class Index {
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
-
-    # Does the user want to view the normal website instead of the mobile one?
-    $_SESSION['webview'] = isset($this->_aRequest['mobile']) && $this->_aRequest['mobile'] == false ? true : false;
 	}
 
   /**
@@ -298,7 +295,7 @@ class Index {
    *
    */
   private function checkForNewVersion() {
-    if ($this->_aSession['userdata']['user_right'] == 4 && ALLOW_VERSION_CHECK == true) {
+    if ($this->_aSession['userdata']['right'] == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
@@ -337,7 +334,7 @@ class Index {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'user_right' => 0
+        'right' => 0
     );
 
     # Override them with user data
@@ -365,9 +362,9 @@ class Index {
         $this->_aSession['userdata']['surname'] = isset($aFacebookData[0]['last_name']) ?
                 $aFacebookData[0]['last_name'] :
                 $this->_aSession['userdata']['surname'];
-        $this->_aSession['userdata']['user_right'] = isset($aFacebookData[0]['uid']) ?
+        $this->_aSession['userdata']['right'] = isset($aFacebookData[0]['uid']) ?
                 2 :
-                (int) $this->_aSession['userdata']['user_right'];
+                (int) $this->_aSession['userdata']['right'];
       }
     }
 

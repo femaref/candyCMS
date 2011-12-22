@@ -194,7 +194,7 @@ class Session extends Main {
     session_destroy();
     unset($_SESSION);
 
-    if ($this->_aSession['userdata']['user_right'] == 2) {
+    if ($this->_aSession['userdata']['right'] == 2) {
       $this->_aSession['facebook']->getLogoutUrl();
       return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
     }

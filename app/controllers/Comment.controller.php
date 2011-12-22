@@ -143,14 +143,14 @@ class Comment extends Main {
    */
   public function create($sInputName) {
     if (isset($this->_aRequest[$sInputName])) {
-      if ($this->_aSession['userdata']['user_right'] == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
+      if ($this->_aSession['userdata']['right'] == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
         return $this->_checkCaptcha();
 
       else
         return $this->_create(false);
     }
     else {
-      $bShowCaptcha = $this->_aSession['userdata']['user_right'] == 0 ? true : false;
+      $bShowCaptcha = $this->_aSession['userdata']['right'] == 0 ? true : false;
       return $this->_showFormTemplate($bShowCaptcha);
     }
   }

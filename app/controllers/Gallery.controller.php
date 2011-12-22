@@ -262,7 +262,7 @@ class Gallery extends Main {
    *
    */
   public function createFile() {
-    if ($this->_aSession['userdata']['user_right'] < 3)
+    if ($this->_aSession['userdata']['right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'));
 
     else {
@@ -321,7 +321,7 @@ class Gallery extends Main {
    *
    */
   public function updateFile() {
-    if ($this->_aSession['userdata']['user_right'] < 3)
+    if ($this->_aSession['userdata']['right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {
@@ -346,7 +346,7 @@ class Gallery extends Main {
    *
    */
   public function destroyFile() {
-    if ($this->_aSession['userdata']['user_right'] < 3)
+    if ($this->_aSession['userdata']['right'] < 3)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
 
     else {

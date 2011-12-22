@@ -42,13 +42,13 @@ class User extends Main {
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
-		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['user_right'] < 4) {
+		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['right'] < 4) {
 			Helper::redirectTo('/user/update');
 			exit();
 		}
 
 		# Set user id of person to update
-		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['user_right'] == 4 ?
+		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['right'] == 4 ?
             $this->_iId :
             $this->_aSession['userdata']['id'];
 
@@ -119,7 +119,7 @@ class User extends Main {
 			$this->_setTitle($this->oI18n->get('user.title.overview'));
 			$this->_setDescription($this->oI18n->get('user.title.overview'));
 
-			if ($this->_aSession['userdata']['user_right'] < 3)
+			if ($this->_aSession['userdata']['right'] < 3)
 				return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
 			else {
@@ -174,12 +174,12 @@ class User extends Main {
 			$this->_aError['password'] = $this->oI18n->get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
-		if ($this->_aSession['userdata']['user_right'] < 4) {
+		if ($this->_aSession['userdata']['right'] < 4) {
 			if (!isset($this->_aRequest['disclaimer']))
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
-      # Generate verification code for users (double-opt-in)
+     # Generate verification code for users (double-opt-in)
     $iVerificationCode = Helper::createRandomChar(12);
 
 		if (isset($this->_aError))
@@ -197,7 +197,7 @@ class User extends Main {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId, $this->_aSession['userdata']['id']);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-      if ($this->_aSession['userdata']['user_right'] == 4)
+      if ($this->_aSession['userdata']['right'] == 4)
         return Helper::successMessage($this->oI18n->get('success.create'), '/user');
 
       else
@@ -245,23 +245,26 @@ class User extends Main {
 	 *
 	 */
 	public function update() {
-    if (empty($this->_iId))
-      $this->_iId = $this->_aSession['userdata']['id'];
+		if ($this->_aSession['userdata']['id'] == $this->_iId)
+			Helper::redirectTo('/user/update');
 
-    if ($this->_aSession['userdata']['id'] == 0)
-      return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
+		if (empty($this->_iId))
+			$this->_iId = $this->_aSession['userdata']['id'];
 
-    else {
-      if (isset($this->_aRequest['create_avatar']))
-        return $this->_createAvatar($this->_iId);
+		if ($this->_aSession['userdata']['id'] == 0)
+			return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
 
-      elseif (isset($this->_aRequest['update_user']))
-        return $this->_update();
+		else {
+			if (isset($this->_aRequest['create_avatar']))
+				return $this->_createAvatar($this->_iId);
 
-      else
-        return $this->_showFormTemplate();
-    }
-  }
+			elseif (isset($this->_aRequest['update_user']))
+				return $this->_update();
+
+			else
+				return $this->_showFormTemplate();
+		}
+	}
 
 	/**
 	 * Update a user.
@@ -277,24 +280,24 @@ class User extends Main {
 		$this->_setError('email');
 
 		# Check if old password is set
-    if (empty($this->_aRequest['password_old']) &&
-            !empty($this->_aRequest['password_new']) &&
-            !empty($this->_aRequest['password_new2']))
-      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
+		if (empty($this->_aRequest['password_old']) &&
+						!empty($this->_aRequest['password_new']) &&
+						!empty($this->_aRequest['password_new2']))
+			$this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
 
-    # Check if old password is correct
-    if (!empty($this->_aRequest['password_old']) &&
-            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-            $this->_aSession['userdata']['password'])
-      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
+		# Check if old password is correct
+		if (!empty($this->_aRequest['password_old']) &&
+						md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
+						$this->_aSession['userdata']['password'])
+			$this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
 
-    # Check if new password fields aren't empty
-    if (!empty($this->_aRequest['password_old']) && (
-            empty($this->_aRequest['password_new']) ||
-            empty($this->_aRequest['password_new2']) ))
-      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
+		# Check if new password fields aren't empty
+		if (!empty($this->_aRequest['password_old']) && (
+						empty($this->_aRequest['password_new']) ||
+						empty($this->_aRequest['password_new2']) ))
+			$this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
 
-    # Check if new password fields match
+		# Check if new password fields match
     if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
             $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
       $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
@@ -330,12 +333,12 @@ class User extends Main {
 	 *
 	 */
 	private function _destroyUserAvatars($iId) {
-    @unlink(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
-    @unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
+		@unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
 	}
 
 	/**
@@ -369,7 +372,7 @@ class User extends Main {
         return Helper::errorMessage('error.user.destroy.password', '/user/update');
 
       # We are admin and can delete users
-    } elseif ($this->_aSession['userdata']['user_right'] == 4) {
+    } elseif ($this->_aSession['userdata']['right'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
 
         # Unsubscribe from newsletter

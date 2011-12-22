@@ -37,7 +37,7 @@ class Log extends Main {
    *
    */
   public function show() {
-    if ($this->_aSession['userdata']['user_right'] < 4)
+    if ($this->_aSession['userdata']['right'] < 4)
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
@@ -80,7 +80,7 @@ class Log extends Main {
    *
    */
   public function destroy() {
-    return $this->_aSession['userdata']['user_right'] < 4 ?
+    return $this->_aSession['userdata']['right'] < 4 ?
             Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
             $this->_destroy();
   }
