@@ -387,7 +387,10 @@ class User extends Main {
 				$oQuery->bindParam('id', $this->_aData['id'], PDO::PARAM_INT);
 				$oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-				Session::update($this->_aData['id']);
+				# Prepare for first login
+				$this->_aData['verification_code'] = '';
+				Session::create($this->_aData);
+
 				return $oQuery->execute();
 			}
 			catch (AdvancedException $e) {
@@ -404,5 +407,37 @@ class User extends Main {
 	 */
 	public function getVerificationData() {
 		return $this->_aData;
+	}
+
+	/**
+	 * Return an array of user data if user exists.
+	 *
+	 * @access public
+	 * @return array user data of login user
+	 *
+	 */
+	public function getLoginData() {
+		try {
+			$oQuery = $this->_oDb->prepare("SELECT
+                                        id, verification_code
+                                      FROM
+                                        " . SQL_PREFIX . "users
+                                      WHERE
+                                        email = :email
+                                      AND
+                                        password = :password
+                                      LIMIT
+                                        1");
+
+			$sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
+			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+			$oQuery->execute();
+
+			return $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
 	}
 }

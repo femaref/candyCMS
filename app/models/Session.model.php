@@ -19,26 +19,30 @@ use PDO;
 class Session extends Main {
 
   /**
-   * Fetch all user data of active session
+   * Fetch all user data of active session.
    *
    * @static
    * @access public
    * @return array $aResult user data
    * @see app/controllers/Index.controller.php
    */
-  public static function getSessionData() {
+  public static function getUserDataBySession() {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
-                                                *
+                                                u.*
                                               FROM
-                                                " . SQL_PREFIX . "users
+                                                " . SQL_PREFIX . "users AS u
+																							LEFT JOIN
+																								" . SQL_PREFIX . "sessions AS s
+																							ON
+																								u.id = s.user_id
                                               WHERE
-                                                session = :session_id
+                                                s.session = :session_id
                                               AND
-                                                ip = :ip
+                                                s.ip = :ip
                                               LIMIT
                                                 1");
 
@@ -56,39 +60,8 @@ class Session extends Main {
     }
   }
 
-  /**
-   * Update session for current user.
-   *
-   * @static
-   * @access public
-   * @param integer $iId ID of user
-   * @return boolean $bResult status of query
-   */
-  public static function update($iId) {
-    try {
-      $oQuery = parent::$_oDbStatic->prepare("UPDATE
-                                                " . SQL_PREFIX . "users
-                                              SET
-                                                session = :session,
-                                                ip = :ip,
-                                                last_login = :last_login
-                                              WHERE
-                                                id = :id");
-
-      $oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
-      $oQuery->bindParam('last_login', time(), PDO::PARAM_INT);
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-
-      return $oQuery->execute();
-    }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
-    }
-  }
-
 	/**
-	 * Return aggregated data
+	 * Return aggregated data.
 	 *
 	 * @access public
 	 * @return array $this->_aData
@@ -101,37 +74,44 @@ class Session extends Main {
    * Create a user session.
    *
    * @access public
+	 * @param array $aUser optional user data.
    * @return boolean status of query
-   *
    */
-  public function create() {
-    try {
-      $oQuery = $this->_oDb->prepare("SELECT
-                                        id, verification_code
-                                      FROM
-                                        " . SQL_PREFIX . "users
-                                      WHERE
-                                        email = :email
-                                      AND
-                                        password = :password
-                                      LIMIT
-                                        1");
+  public function create($aUser = '') {
+		require_once 'app/models/User.model.php';
 
-      $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
-      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
-      $oQuery->execute();
+		if (empty($aUser)) {
+			$oModel = new User($this->_aRequest, $this->_aSession);
+			$aUser	= $oModel->getLoginData();
+		}
 
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-    }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
-    }
+    # User did verify and has id, so log in!
+    if (isset($aUser['id']) && !empty($aUser['id']) && empty($aUser['verification_code'])) {
+			try {
+				$oQuery = $this->_oDb->prepare("INSERT INTO
+																					" . SQL_PREFIX . "sessions
+																					(	user_id,
+																						session,
+																						ip,
+																						date)
+																				VALUES
+																					( :user_id,
+																						:session,
+																						:ip,
+																						:date)");
 
-    # User did verify his and has id, so log in!
-    if (isset($aResult['id']) && !empty($aResult['id']) && empty($aResult['verification_code']))
-      return Session::update($aResult['id']);
-  }
+				$oQuery->bindParam('user_id', $aUser['id'], PDO::PARAM_INT);
+				$oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
+				$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+				$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+
+				return $oQuery->execute();
+			}
+			catch (AdvancedException $e) {
+				$this->_oDb->rollBack();
+			}
+		}
+	}
 
   /**
    * Resend password of verification code.
@@ -139,6 +119,7 @@ class Session extends Main {
    * @access public
    * @param string $sNewPasswordSecure
    * @return boolean status of query
+	 * @todo move to user model
    */
   public function createResendActions($sNewPasswordSecure = '') {
     require_once 'app/controllers/Mail.controller.php';
@@ -199,12 +180,11 @@ class Session extends Main {
    *
    * @access public
    * @return boolean status of query
-   *
    */
   public function destroy() {
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
-                                        " . SQL_PREFIX . "users
+                                        " . SQL_PREFIX . "sessions
                                       SET
                                         session = :session_null
                                       WHERE

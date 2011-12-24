@@ -57,10 +57,10 @@ class TestOfSessionModel extends UnitTestCase {
     $this->assertIsA($this->oSession->getData(), 'array');
   }
 
-  function testUpdate() {
+  /*function testUpdate() {
     # User doesn't exist, but query run through
     $this->assertTrue($this->oSession->update(0), 'Session updated.');
-  }
+  }*/
 
   function testDestroy() {
     # User doesn't exist, but query run through

@@ -132,7 +132,7 @@ CREATE TABLE `users` (
   `receive_newsletter` tinyint(1) NOT NULL DEFAULT '1',
   `use_gravatar` tinyint(1) DEFAULT '0',
   `session` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `user_right` tinyint(1) NOT NULL DEFAULT '1',
+  `role` tinyint(1) NOT NULL DEFAULT '1',
   `date` int(11) DEFAULT NULL,
   `verification_code` varchar(12) COLLATE latin1_general_ci DEFAULT NULL,
   `last_login` int(11) DEFAULT NULL,

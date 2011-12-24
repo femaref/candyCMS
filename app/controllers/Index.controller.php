@@ -338,7 +338,7 @@ class Index {
     );
 
     # Override them with user data
-    $aUserData = & Model_Session::getSessionData();
+    $aUserData = & Model_Session::getUserDataBySession();
     $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], is_array($aUserData) ? $aUserData : array());
 
     # Try to get facebook data
