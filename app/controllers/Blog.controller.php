@@ -46,27 +46,33 @@ class Blog extends Main {
     $this->__autoload('Comment');
     $this->_aData = $this->_oModel->getData($this->_iId);
 
-    # Load comments
-    if (!empty($this->_iId)) {
-      $oComments = new Comment($this->_aRequest, $this->_aSession);
-      $oComments->__init($this->_aData);
+		# If data is not found, redirect to 404
+		if (empty($this->_aData[1]['id']) && !empty($this->_iId))
+			Helper::redirectTo('/error/404');
 
-      $this->oSmarty->assign('_blog_footer_', $oComments->show());
+		else {
+			# Load comments
+			if (!empty($this->_iId)) {
+				$oComments = new Comment($this->_aRequest, $this->_aSession);
+				$oComments->__init($this->_aData);
 
-    # Load blog pages
-    } else
-      $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('blog'));
+				$this->oSmarty->assign('_blog_footer_', $oComments->show());
 
-    # Create page title and description
-    $this->_setDescription($this->_setBlogDescription());
-    $this->_setKeywords($this->_setBlogKeywords());
-    $this->_setTitle($this->_setBlogTitle());
+			# Load blog pages
+			} else
+				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('blog'));
 
-    $this->oSmarty->assign('blog', $this->_aData);
+			# Create page title and description
+			$this->_setDescription($this->_setBlogDescription());
+			$this->_setKeywords($this->_setBlogKeywords());
+			$this->_setTitle($this->_setBlogTitle());
 
-    $sTemplateDir = Helper::getTemplateDir('blogs', 'show');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+			$this->oSmarty->assign('blog', $this->_aData);
+
+			$sTemplateDir = Helper::getTemplateDir('blogs', 'show');
+			$this->oSmarty->template_dir = $sTemplateDir;
+			return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+		}
   }
 
   /**
@@ -150,6 +156,7 @@ class Blog extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
     }
+
     # Create
     else {
       $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';

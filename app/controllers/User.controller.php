@@ -406,7 +406,7 @@ class User extends Main {
 
 		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
 			# Get data from activating user
-			$aUserData = $this->_oModel->getVerificationData();
+			$aUserData = $this->_oModel->getActivationData();
 
 			# Subscribe to MailChimp after email adress is confirmed
 			$this->_subscribeToNewsletter($aUserData);

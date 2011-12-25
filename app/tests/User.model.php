@@ -78,8 +78,8 @@ class TestOfUserModel extends TestOfSessionModel {
     $this->assertIsA($this->oUser->getUserNamesAndEmail($this->iLastInsertId), 'array');
   }
 
-  function testVerificationData() {
-    $this->assertIsA($this->oUser->getVerificationData(), 'array');
+  function testGetActivationData() {
+    $this->assertIsA($this->oUser->getActivationData(), 'array');
   }
 
   function testVerifyEmail() {

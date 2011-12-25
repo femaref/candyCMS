@@ -40,24 +40,30 @@ class Content extends Main {
     $this->_aData = $this->_oModel->getData($this->_iId);
     $this->oSmarty->assign('content', $this->_aData);
 
-    if (empty($this->_iId)) {
-      $this->_setTitle($this->oI18n->get('global.manager.content'));
+		# If data is not found, redirect to 404
+		if (empty($this->_aData[$this->_iId]['id']) && !empty($this->_iId))
+			Helper::redirectTo('/error/404');
 
-      $sTemplateDir = Helper::getTemplateDir('contents', 'overview');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
-    }
-    else {
-      if(!empty($this->_aData)) {
-        $this->_setDescription($this->_aData[$this->_iId]['teaser']);
-        $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
-        $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
-      }
+		else {
+			if (empty($this->_iId)) {
+				$this->_setTitle($this->oI18n->get('global.manager.content'));
 
-      $sTemplateDir = Helper::getTemplateDir('contents', 'show');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
-    }
+				$sTemplateDir = Helper::getTemplateDir('contents', 'overview');
+				$this->oSmarty->template_dir = $sTemplateDir;
+				return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
+			}
+			else {
+				if (!empty($this->_aData)) {
+					$this->_setDescription($this->_aData[$this->_iId]['teaser']);
+					$this->_setKeywords($this->_aData[$this->_iId]['keywords']);
+					$this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
+				}
+
+				$sTemplateDir = Helper::getTemplateDir('contents', 'show');
+				$this->oSmarty->template_dir = $sTemplateDir;
+				return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+			}
+		}
   }
 
   /**

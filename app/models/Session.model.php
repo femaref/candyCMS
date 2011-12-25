@@ -14,7 +14,10 @@ namespace CandyCMS\Model;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Page as Page;
+use CandyCMS\Model\User as User;
 use PDO;
+
+require_once 'app/models/User.model.php';
 
 class Session extends Main {
 
@@ -25,6 +28,7 @@ class Session extends Main {
    * @access public
    * @return array $aResult user data
    * @see app/controllers/Index.controller.php
+	 *
    */
   public static function getUserDataBySession() {
     if (empty(parent::$_oDbStatic))
@@ -50,7 +54,7 @@ class Session extends Main {
       $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
       $bReturn = $oQuery->execute();
 
-      if ($bReturn === false)
+      if ($bReturn == false)
         $this->destroy();
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -63,8 +67,11 @@ class Session extends Main {
 	/**
 	 * Return aggregated data.
 	 *
+	 * Needed for parent::createResendActions()
+	 *
 	 * @access public
 	 * @return array $this->_aData
+	 *
 	 */
   public function getData() {
     return $this->_aData;
@@ -76,10 +83,9 @@ class Session extends Main {
    * @access public
 	 * @param array $aUser optional user data.
    * @return boolean status of query
+	 *
    */
   public function create($aUser = '') {
-		require_once 'app/models/User.model.php';
-
 		if (empty($aUser)) {
 			$oModel = new User($this->_aRequest, $this->_aSession);
 			$aUser	= $oModel->getLoginData();
@@ -117,69 +123,29 @@ class Session extends Main {
    * Resend password of verification code.
    *
    * @access public
-   * @param string $sNewPasswordSecure
-   * @return boolean status of query
-	 * @todo move to user model
+   * @param string $sPassword new password if we want to resend it
+   * @return boolean|array status of query or user array
+	 *
    */
-  public function createResendActions($sNewPasswordSecure = '') {
-    require_once 'app/controllers/Mail.controller.php';
-    $bResult = false;
+  public function createResendActions($sPassword = '') {
+		$aData = User::getVerificationData($this->_aRequest['email']);
 
-    if ($this->_aRequest['action'] == 'resendpassword') {
-      try {
-        $oQuery = $this->_oDb->prepare("SELECT name FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-        $bResult = $oQuery->execute();
+		if ($this->_aRequest['action'] == 'resendpassword')
+			return empty($aData['name']) ? false : User::setPassword($this->_aRequest['email'], $sPassword);
 
-        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
+		elseif ($this->_aRequest['action'] == 'resendverification')
+			return empty($aData['verification_code']) ? false : $aData;
 
-      if (empty($this->_aData['name']) || $bResult == false)
-        return false;
-
-      else {
-        # Set new password
-        try {
-          $oQuery = $this->_oDb->prepare("UPDATE " . SQL_PREFIX . "users SET password = :password WHERE email = :email");
-          $oQuery->bindParam(':password', $sNewPasswordSecure, PDO::PARAM_STR);
-          $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-
-          return $oQuery->execute();
-        }
-        catch (AdvancedException $e) {
-          $this->_oDb->rollBack();
-        }
-      }
-    }
-    elseif ($this->_aRequest['action'] == 'resendverification') {
-      try {
-        $oQuery = $this->_oDb->prepare("SELECT name, verification_code FROM " . SQL_PREFIX . "users WHERE email = :email");
-        $oQuery->bindParam(':email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-        $bResult = $oQuery->execute();
-
-        $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
-
-        if (empty($this->_aData['verification_code']) || $bResult == false)
-          return false;
-        else
-          return $bResult;
-      }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
-      }
-    }
-    else
-      return false;
-  }
+		else
+			return false;
+	}
 
   /**
    * Destroy a user session and logout.
    *
    * @access public
    * @return boolean status of query
+	 *
    */
   public function destroy() {
     try {

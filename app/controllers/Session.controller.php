@@ -97,6 +97,8 @@ class Session extends Main {
 	 *
 	 */
   public function createResendActions() {
+		$this->__autoload('Mail');
+
 		# If there is no email request then show form template
 		if (!isset($this->_aRequest['email']))
 			return $this->_showCreateResendActionsTemplate();
@@ -109,13 +111,12 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
+			# Resend password to user
 			if ($this->_aRequest['action'] == 'resendpassword') {
 				$sNewPasswordClean	= Helper::createRandomChar(10);
 				$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
 
 				if ($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
-					$aData = $this->_oModel->getData();
-
 					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.password.mail.body'));
 					$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
@@ -124,17 +125,20 @@ class Session extends Main {
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
-					return ($bStatus === true) ?
+					return	$bStatus === true ?
 									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
 									Helper::errorMessage($this->oI18n->get('error.mail.create')) . $this->showCreateSessionTemplate();
 				}
 				else
+					# Replace error message with message, that email could not be found
 					return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
 			}
-			elseif ($this->_aRequest['action'] == 'resendverification') {
-				if ($this->_oModel->createResendActions() === true) {
-					$aData = $this->_oModel->getData();
 
+			# Resend verification code
+			elseif ($this->_aRequest['action'] == 'resendverification') {
+				$aData = $this->_oModel->createResendActions();
+
+				if (is_array($aData)) {
 					$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
 
 					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
@@ -145,12 +149,13 @@ class Session extends Main {
 																$sContent,
 																WEBSITE_MAIL_NOREPLY);
 
-					return ($bStatus === true) ?
+					return	$bStatus === true ?
 									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
 									$this->showCreateSessionTemplate();
 				}
 				else
-					return Helper::errorMessage($this->oI18n->get('error.sql'), '/'); # TODO: Replace error message
+					# Replace error message with message, that email could not be found
+					return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
 			}
 			else
 				return Helper::errorMessage($this->oI18n->get('error.missing.action'), '/');

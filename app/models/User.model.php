@@ -29,7 +29,7 @@ class User extends Main {
    * @return array data with user information
    *
    */
-  public static final function getUserNamesAndEmail($iId) {
+  public static function getUserNamesAndEmail($iId) {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
@@ -62,6 +62,9 @@ class User extends Main {
    *
    */
   public static function getExistingUser($sEmail) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
                                                 email
@@ -83,6 +86,60 @@ class User extends Main {
       parent::$_oDbStatic->rollBack();
     }
   }
+
+	/**
+	 * Get the verification data from an users email address.
+	 *
+	 * @access public
+	 * @param string $sEmail email address to search user from.
+	 * @return array user data.
+	 * @see app/models/Session.model.php
+	 *
+	 */
+	public static function getVerificationData($sEmail) {
+		if (empty(parent::$_oDbStatic))
+			parent::_connectToDatabase();
+
+		try {
+			$oQuery = parent::$_oDbStatic->prepare("SELECT
+																								name,
+																								verification_code
+																							FROM
+																								" . SQL_PREFIX . "users
+																							WHERE
+																								email = :email");
+
+			$oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
+			$oQuery->execute();
+
+			return $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			parent::$_oDbStatic->rollBack();
+		}
+	}
+
+	public static function setPassword($sEmail, $sPassword) {
+		if (empty(parent::$_oDbStatic))
+			parent::_connectToDatabase();
+
+		try {
+			$oQuery = parent::$_oDbStatic->prepare("UPDATE
+																				" . SQL_PREFIX . "users
+																			SET
+																				password = :password
+																			WHERE
+																				email = :email");
+
+			$oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
+			$oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
+
+			return $oQuery->execute();
+		}
+		catch (AdvancedException $e) {
+			parent::$_oDbStatic->rollBack();
+		}
+	}
 
   /**
    * Set user entry or user overview data.
@@ -322,7 +379,7 @@ class User extends Main {
 	}
 
   /**
-   * Destroy a user and his avatar images.
+   * Destroy a user.
    *
    * @access public
    * @param integer $iId ID to update
@@ -352,7 +409,6 @@ class User extends Main {
    * @access public
    * @param string $sVerificationCode Code to remove.
    * @return boolean status of query
-   *
    */
   public function verifyEmail($sVerificationCode) {
 		try {
@@ -400,12 +456,12 @@ class User extends Main {
 	}
 
 	/**
-	 * Return data from verification.
+	 * Return data from verification / activation.
 	 *
 	 * @access public
 	 * @return array $this->_aData
 	 */
-	public function getVerificationData() {
+	public function getActivationData() {
 		return $this->_aData;
 	}
 
