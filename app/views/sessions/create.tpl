@@ -9,9 +9,9 @@
     <input name='password' type='password' id="input-password" required />
   </p>
   <p class="center">
-    <a href='/session/resendpassword'>{$lang.session.password.title}</a>
+    <a href='/session/password'>{$lang.session.password.title}</a>
     |
-    <a href='/session/resendverification'>{$lang.session.verification.title}</a>
+    <a href='/session/verification'>{$lang.session.verification.title}</a>
   </p>
   <p class="center">
     <input type='submit' value='{$lang.global.login}' data-theme="b" />

@@ -325,12 +325,16 @@ class Section extends Main {
           parent::_setDescription($this->oI18n->get('global.login'));
           parent::_setTitle($this->oI18n->get('global.login'));
         }
-        elseif (isset($this->_aRequest['action']) && ($this->_aRequest['action'] == 'resendpassword' ||
-                $this->_aRequest['action'] == 'resendverification')) {
-          parent::_setContent($this->_oObject->createResendActions());
-          parent::_setDescription($this->_oObject->getDescription());
-          parent::_setTitle($this->_oObject->getTitle());
-        }
+        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
+					parent::_setContent($this->_oObject->resendPassword());
+					parent::_setDescription($this->_oObject->getDescription());
+					parent::_setTitle($this->_oObject->getTitle());
+				}
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification') {
+					parent::_setContent($this->_oObject->resendVerification());
+					parent::_setDescription($this->_oObject->getDescription());
+					parent::_setTitle($this->_oObject->getTitle());
+				}
         else {
           parent::_setContent($this->_oObject->destroy());
           parent::_setDescription($this->oI18n->get('global.logout'));

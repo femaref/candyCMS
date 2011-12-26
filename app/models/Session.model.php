@@ -119,28 +119,32 @@ class Session extends Main {
 		}
 	}
 
-  /**
-   * Resend password of verification code.
-   *
-   * @access public
-   * @param string $sPassword new password if we want to resend it
-   * @return boolean|array status of query or user array
+	/**
+	 * Resend password.
 	 *
-   */
-  public function createResendActions($sPassword = '') {
+	 * @access public
+	 * @param string $sPassword new password if we want to resend it
+	 * @return boolean|array status of query or user array
+	 *
+	 */
+	public function resendPassword($sPassword = '') {
 		$aData = User::getVerificationData($this->_aRequest['email']);
-
-		if ($this->_aRequest['action'] == 'resendpassword')
-			return empty($aData['name']) ? false : User::setPassword($this->_aRequest['email'], $sPassword);
-
-		elseif ($this->_aRequest['action'] == 'resendverification')
-			return empty($aData['verification_code']) ? false : $aData;
-
-		else
-			return false;
+		return empty($aData['name']) ? false : User::setPassword($this->_aRequest['email'], $sPassword);
 	}
 
-  /**
+	/**
+	 * Resend verification.
+	 *
+	 * @access public
+	 * @return boolean|array status of query or user array
+	 *
+	 */
+	public function resendVerification() {
+		$aData = User::getVerificationData($this->_aRequest['email']);
+		return empty($aData['verification_code']) ? false : $aData;
+	}
+
+	/**
    * Destroy a user session and logout.
    *
    * @access public

@@ -86,17 +86,14 @@ class Session extends Main {
 	}
 
 	/**
-	 * Resend user verification or resend lost password to user.
+	 * Resend password.
 	 *
 	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 * @todo this must be rewritten
-	 * @todo replace error message with wrong password information
-	 * @todo error message when email is wrong
-	 * @todo success messages
+	 * @return string HTML
+	 * @todo better error messages
 	 *
 	 */
-  public function createResendActions() {
+	public function resendPassword() {
 		$this->__autoload('Mail');
 
 		# If there is no email request then show form template
@@ -111,54 +108,71 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
-			# Resend password to user
-			if ($this->_aRequest['action'] == 'resendpassword') {
-				$sNewPasswordClean	= Helper::createRandomChar(10);
-				$sNewPasswordSecure = md5(RANDOM_HASH . $sNewPasswordClean);
+			$sNewPasswordClean = Helper::createRandomChar(10);
+			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
-				if ($this->_oModel->createResendActions($sNewPasswordSecure) === true) {
-					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.password.mail.body'));
-					$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+			if ($aData == true) {
+				$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.password.mail.body'));
+				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																$this->oI18n->get('session.password.mail.subject'),
-																$sContent,
-																WEBSITE_MAIL_NOREPLY);
+				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+																									$this->oI18n->get('session.password.mail.subject'),
+																									$sContent,
+																									WEBSITE_MAIL_NOREPLY);
 
-					return	$bStatus === true ?
-									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
-									Helper::errorMessage($this->oI18n->get('error.mail.create')) . $this->showCreateSessionTemplate();
-				}
-				else
-					# Replace error message with message, that email could not be found
-					return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
-			}
-
-			# Resend verification code
-			elseif ($this->_aRequest['action'] == 'resendverification') {
-				$aData = $this->_oModel->createResendActions();
-
-				if (is_array($aData)) {
-					$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
-
-					$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
-					$sContent = str_replace('%v', $sVerificationUrl, $sContent);
-
-					$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																$this->oI18n->get('session.verification.mail.subject'),
-																$sContent,
-																WEBSITE_MAIL_NOREPLY);
-
-					return	$bStatus === true ?
-									Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
-									$this->showCreateSessionTemplate();
-				}
-				else
-					# Replace error message with message, that email could not be found
-					return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+				return $bStatus === true ?
+								Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
+								Helper::errorMessage($this->oI18n->get('error.mail.create')) . $this->showCreateSessionTemplate();
 			}
 			else
-				return Helper::errorMessage($this->oI18n->get('error.missing.action'), '/');
+				# Replace error message with message, that email could not be found
+				return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+		}
+	}
+
+	/**
+	 * Resend verification.
+	 *
+	 * @access public
+	 * @return string HTML
+	 * @todo better error messages
+	 *
+	 */
+	public function resendVerification() {
+		$this->__autoload('Mail');
+
+		# If there is no email request then show form template
+		if (!isset($this->_aRequest['email']))
+			return $this->_showCreateResendActionsTemplate();
+
+		# Check format of email
+		else
+			$this->_setError('email');
+
+		if (isset($this->_aError))
+			return $this->_showCreateResendActionsTemplate();
+
+		else {
+			$aData = $this->_oModel->resendVerification();
+
+			if (is_array($aData)) {
+				$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
+
+				$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
+				$sContent = str_replace('%v', $sVerificationUrl, $sContent);
+
+				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+																									$this->oI18n->get('session.verification.mail.subject'),
+																									$sContent,
+																									WEBSITE_MAIL_NOREPLY);
+
+				return $bStatus === true ?
+								Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
+								$this->showCreateSessionTemplate();
+			}
+			else
+				# Replace error message with message, that email could not be found
+				return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
 		}
 	}
 
@@ -167,10 +181,11 @@ class Session extends Main {
 	 *
 	 * @access private
 	 * @return string HTML content
+	 * @todo put into two methods
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-		if ($this->_aRequest['action'] == 'resendpassword') {
+		if ($this->_aRequest['action'] == 'password') {
 			$this->_setTitle($this->oI18n->get('session.password.title'));
 			$this->_setDescription($this->oI18n->get('session.password.info'));
 		}
@@ -179,7 +194,7 @@ class Session extends Main {
 			$this->_setDescription($this->oI18n->get('session.verification.info'));
 		}
 
-    if (!empty($this->_aError))
+		if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir = Helper::getTemplateDir('sessions', 'resend');
