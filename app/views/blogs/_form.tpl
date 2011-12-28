@@ -1,4 +1,4 @@
-<form method='post' action='/blog/{$smarty.get.action}' enctype="multipart/form-data">
+<form method='post' action='/blog/{$smarty.get.action}'>
   <h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update|replace:'%p':$title}{/if}</h1>
   <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
@@ -35,7 +35,9 @@
     </p>
   {/if}
   <p class="center">
-    <input type='hidden' value='{$author_id}' name='author_id' />
+    {if isset($author_id)}
+      <input type='hidden' value='{$author_id}' name='author_id' />
+    {/if}
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
     <input type='submit' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     {if $smarty.get.action == 'update'}

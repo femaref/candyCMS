@@ -69,7 +69,8 @@ class Media extends Main {
    */
   private function _proceedUpload() {
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
-    return $oUpload->uploadFile('media');
+    $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
+    return $oUpload->uploadFile($sFolder);
   }
 
   /**

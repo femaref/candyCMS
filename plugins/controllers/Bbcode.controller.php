@@ -63,7 +63,6 @@ final class Bbcode {
 
       # We do not have a preview
       else {
-
         if (!file_exists($sTempFilePath)) {
           $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
