@@ -41,6 +41,7 @@ CREATE TABLE `contents` (
   `teaser` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `keywords` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `date` int(11) NOT NULL,
+  `contents` ADD `published` TINYINT(1)  NOT NULL  DEFAULT '0',
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -120,6 +121,17 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `sessions`;
+
+CREATE TABLE `sessions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `session` varchar(32) DEFAULT NULL,
+  `ip` varchar(15) DEFAULT NULL,
+  `date` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
@@ -135,8 +147,7 @@ CREATE TABLE `users` (
   `role` tinyint(1) NOT NULL DEFAULT '1',
   `date` int(11) DEFAULT NULL,
   `verification_code` varchar(12) COLLATE latin1_general_ci DEFAULT NULL,
-  `last_login` int(11) DEFAULT NULL,
-  `ip` varchar(15) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `api_token` VARCHAR(32)  NOT NULL  DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `name` (`name`),

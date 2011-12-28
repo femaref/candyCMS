@@ -1,1 +1,1 @@
-ALTER TABLE `test_downloads` DROP INDEX `title`;
+ALTER TABLE `downloads` DROP INDEX `title`;
