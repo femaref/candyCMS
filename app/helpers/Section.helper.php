@@ -379,6 +379,11 @@ class Section extends Main {
           parent::_setDescription($this->oI18n->get('global.email.verification'));
           parent::_setTitle($this->oI18n->get('global.email.verification'));
         }
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'token') {
+					parent::_setContent($this->_oObject->getToken());
+					parent::_setDescription($this->oI18n->get('global.api_token'));
+					parent::_setTitle($this->oI18n->get('global.api_token'));
+				}
         else {
           parent::_setContent($this->_oObject->show());
           parent::_setDescription($this->_oObject->getDescription());

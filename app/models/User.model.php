@@ -261,21 +261,25 @@ class User extends Main {
 																					password,
 																					email,
 																					date,
-																					verification_code)
+																					verification_code,
+                                          api_token)
                                       VALUES
                                         ( :name,
 																					:surname,
 																					:password,
 																					:email,
 																					:date,
-																					:verification_code)");
+																					:verification_code,
+                                          :api_token)");
 
+      $sApiToken = md5(RANDOM_HASH . $this->_aRequest['email']);
 			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
 			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
 			$oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']), PDO::PARAM_STR);
 			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
 			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
 			$oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
+			$oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
 
       $bReturn = $oQuery->execute();
       parent::$iLastInsertId = Helper::getLastEntry('users');
@@ -352,7 +356,6 @@ class User extends Main {
                                       SET
                                         name = :name,
                                         surname = :surname,
-                                        email = :email,
                                         content = :content,
 																				receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
@@ -363,7 +366,6 @@ class User extends Main {
 
 			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
 			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
-			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
 			$oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
 			$oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
@@ -491,6 +493,39 @@ class User extends Main {
 			$oQuery->execute();
 
 			return $oQuery->fetch(PDO::FETCH_ASSOC);
+		}
+		catch (AdvancedException $e) {
+			$this->_oDb->rollBack();
+		}
+	}
+
+  /**
+   * Get the API token of a user.
+   *
+   * @access public
+   * @return string token or null
+   *
+   */
+	public function getToken() {
+		try {
+			$oQuery = $this->_oDb->prepare("SELECT
+                                        api_token
+                                      FROM
+                                        " . SQL_PREFIX . "users
+                                      WHERE
+                                        email = :email
+                                      AND
+                                        password = :password
+                                      LIMIT
+                                        1");
+
+			$sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
+			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+			$oQuery->execute();
+      $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+			return $aData['api_token'];
 		}
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();

@@ -277,7 +277,6 @@ class User extends Main {
 	 */
 	protected function _update() {
 		$this->_setError('name');
-		$this->_setError('email');
 
 		# Check if old password is set
 		if (empty($this->_aRequest['password_old']) &&
@@ -417,4 +416,19 @@ class User extends Main {
 		else
 			return Helper::errorMessage($this->oI18n->get('error.user.verification'), '/');
 	}
+
+  /**
+   * Get the API token of a user.
+   *
+   * @access public
+   * @return string token or null
+   *
+   */
+  public function getToken() {
+    $this->_setError('email');
+    $this->_setError('password');
+
+    if (!isset($this->_aError))
+      return $this->_oModel->getToken();
+  }
 }

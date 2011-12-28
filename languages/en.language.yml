@@ -6,6 +6,7 @@ website:
 global:
   about: About
   album: Album
+  api_token: API-Token
   author: Author
   backup: Backup
   bbcode:

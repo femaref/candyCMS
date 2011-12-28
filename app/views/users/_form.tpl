@@ -9,9 +9,9 @@
       <label for='input-surname'>{$lang.global.surname}</label>
       <input name='surname' value='{$surname}' type='text' id="input-surname" />
     </p>
-    <p {if isset($error.email)}class="error" title="{$error.email}"{/if}>
-      <label for='input-email'>{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
-      <input name='email' value='{$email}' type='email' id="input-email" required />
+    <p>
+      <label for='input-api_token'>{$lang.global.api_token}</label>
+      {$api_token}
     </p>
     <p>
       <label for='input-use_gravatar'>{$lang.user.label.gravatar}</label>
@@ -40,6 +40,7 @@
       </p>
     {/if}
     <p class="center">
+      <input type='hidden' value='{$email}' name='email' />
       <input type='hidden' value='formdata' name='update_user' />
       <input type='submit' value='{$lang.user.label.update}' />
     </p>

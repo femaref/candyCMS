@@ -6,6 +6,7 @@ website:
 global:
   about: Über
   album: Album
+  api_token: API-Token
   archive: Archiv
   author: Autor
   backup: Backup
