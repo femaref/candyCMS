@@ -531,4 +531,41 @@ class User extends Main {
 			$this->_oDb->rollBack();
 		}
 	}
+
+  /**
+   * Fetch all user data of active token.
+   *
+   * @static
+   * @access public
+   * @param string $sApiToken API token
+   * @return array $aResult user data
+   * @see app/controllers/Index.controller.php
+	 *
+   */
+  public static function getUserDataByToken($sApiToken) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                *
+                                              FROM
+                                                " . SQL_PREFIX . "users
+                                              WHERE
+                                                api_token = :api_token
+                                              LIMIT
+                                                1");
+
+      $oQuery->bindParam('api_token', Helper::formatInput($sApiToken), PDO::PARAM_STR);
+      $bReturn = $oQuery->execute();
+
+      if ($bReturn == false)
+        $this->destroy();
+
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
+    }
+    catch (AdvancedException $e) {
+      parent::$_oDbStatic->rollBack();
+    }
+  }
 }

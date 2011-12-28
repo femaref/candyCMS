@@ -16,6 +16,7 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Section as Section;
 use CandyCMS\Model\Session as Model_Session;
+use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
@@ -338,7 +339,14 @@ class Index {
     );
 
     # Override them with user data
-    $aUserData = & Model_Session::getUserDataBySession();
+    # Get user data by token
+    if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
+      $aUserData = & Model_User::getUserDataByToken($this->_aRequest['api_token']);
+
+    # Get user data by session
+    else
+      $aUserData = & Model_Session::getUserDataBySession();
+
     $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], is_array($aUserData) ? $aUserData : array());
 
     # Try to get facebook data
