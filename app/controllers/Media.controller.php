@@ -70,6 +70,10 @@ class Media extends Main {
   private function _proceedUpload() {
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
     $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
+
+    if (!is_dir($sFolder))
+      mkdir(PATH_UPLOAD . $sFolder, 0777);
+
     return $oUpload->uploadFile($sFolder);
   }
 
