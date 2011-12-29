@@ -13,6 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Download as Model;
 
 require_once 'app/models/Download.model.php';
