@@ -43,7 +43,9 @@ class Blog extends Main {
    *
    */
   public function show() {
-    if (isset($this->_aRequest['page']))
+		# We got a page request, so tell the model that we don't want to see an entry
+    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
+						isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'])
       $this->_iId = '';
 
     $this->__autoload('Comment');
