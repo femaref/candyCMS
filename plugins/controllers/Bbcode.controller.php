@@ -51,6 +51,7 @@ final class Bbcode {
 
     # Replace images with image tag (every location allowed, but external is very slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
+			$sUrl[1] = substr($sUrl[1], 0, 1) == '/' ? substr($sUrl[1], 1) : $sUrl[1];
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
       $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
       $sTempFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension;
@@ -68,7 +69,7 @@ final class Bbcode {
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
 
-        $sTempFilePath = '/' . $sTempFilePath;
+        #$sTempFilePath = '/' . $sTempFilePath;
         $aNewInfo = @getimagesize($sTempFilePath);
 
         # Language
@@ -76,8 +77,8 @@ final class Bbcode {
         $sText = str_replace('%h', $aInfo[1], $sText);
 
         $sHTML = '<div class="image">';
-        $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';
-        $sHTML .= '<img class="js-image" alt="' . $sText . '" src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
+        $sHTML .= '<a class="js-fancybox" rel="images" href="/' . $sUrl[1] . '">';
+        $sHTML .= '<img class="js-image" alt="' . $sText . '" src="/' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
         $sHTML .= '</a>';
         $sHTML .= '</div>';
       }
