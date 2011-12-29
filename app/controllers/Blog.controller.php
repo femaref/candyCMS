@@ -43,6 +43,9 @@ class Blog extends Main {
    *
    */
   public function show() {
+    if (isset($this->_aRequest['page']))
+      $this->_iId = '';
+
     $this->__autoload('Comment');
     $this->_aData = $this->_oModel->getData($this->_iId);
 

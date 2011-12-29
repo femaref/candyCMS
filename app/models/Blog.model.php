@@ -35,7 +35,7 @@ class Blog extends Main {
       $sWhere = $this->_aSession['userdata']['role'] < 3 ? "WHERE published = '1'" : '';
 
       # Search blog for tags
-      if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
+      if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search']) && empty($this->_aRequest['page'])) {
         $sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
         $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }
@@ -163,9 +163,7 @@ class Blog extends Main {
    *
    */
   public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
-    if (!empty($iId))
-      $this->_iId = (int) $iId;
-
+    $this->_iId = & $iId;
     return $this->_setData($bUpdate, $iLimit);
   }
 

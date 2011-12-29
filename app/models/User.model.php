@@ -231,8 +231,7 @@ class User extends Main {
    *
    */
   public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
-		if (!empty($iId))
-			$this->_iId = (int) $iId;
+    $this->_iId = & $iId;
 
 		if ($bForceNoId == true)
 			$this->_iId = '';

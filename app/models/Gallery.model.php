@@ -117,9 +117,7 @@ class Gallery extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
-    if (!empty($iId))
-      $this->_iId = (int) $iId;
-
+    $this->_iId = & $iId;
     return $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
   }
 
