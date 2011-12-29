@@ -556,7 +556,7 @@ class User extends Main {
                                               LIMIT
                                                 1");
 
-      $oQuery->bindParam('api_token', Helper::formatInput($sApiToken), PDO::PARAM_STR);
+      $oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
       $bReturn = $oQuery->execute();
 
       if ($bReturn == false)

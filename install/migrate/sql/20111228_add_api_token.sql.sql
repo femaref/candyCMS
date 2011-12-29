@@ -1,1 +1,1 @@
-ALTER TABLE `users` ADD `api_token` VARCHAR(32)  NOT NULL  DEFAULT ''  AFTER `last_login`;
+ALTER TABLE `users` ADD `api_token` VARCHAR(32)  NOT NULL  DEFAULT '';

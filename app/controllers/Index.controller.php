@@ -205,10 +205,10 @@ class Index {
    */
   public function getCronjob() {
     if (class_exists('\CandyCMS\Plugin\Cronjob')) {
-      if (Cronjob::getNextUpdate() === true) {
-        Cronjob::cleanup();
-        Cronjob::optimize();
-        Cronjob::backup($this->_aSession['userdata']['id']);
+      if (Cronjob::getNextUpdate() == true) {
+					Cronjob::cleanup();
+					Cronjob::optimize();
+					Cronjob::backup($this->_aSession['userdata']['id']);
       }
     }
   }
@@ -341,7 +341,7 @@ class Index {
     # Override them with user data
     # Get user data by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
-      $aUserData = & Model_User::getUserDataByToken($this->_aRequest['api_token']);
+      $aUserData = & Model_User::getUserDataByToken(Helper::formatInput($this->_aRequest['api_token']));
 
     # Get user data by session
     else

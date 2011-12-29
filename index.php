@@ -60,7 +60,7 @@ try {
       !file_exists('app/helpers/I18n.helper.php') ||
       !file_exists('lib/smarty/Smarty.class.php')
   )
-    throw new Exception('Could not load required classes.');
+    throw new \Exception('Could not load required classes.');
   else {
     require_once 'app/models/Main.model.php';
     require_once 'app/controllers/Main.controller.php';
