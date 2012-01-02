@@ -76,7 +76,7 @@ final class Bbcode {
         $sText = str_replace('%w', $aInfo[0], I18n::get('global.image.click_to_enlarge'));
         $sText = str_replace('%h', $aInfo[1], $sText);
 
-        # we have to make sure, that this is absolute URL won't begin with a slash
+        # we have to make sure, that this absolute URL won't begin with a slash
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
         $sTempFilePath = '/' . $sTempFilePath;
 

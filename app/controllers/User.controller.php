@@ -428,7 +428,6 @@ class User extends Main {
     $this->_setError('email');
     $this->_setError('password');
 
-    if (!isset($this->_aError))
-      return $this->_oModel->getToken();
+    return !isset($this->_aError) ? $this->_oModel->getToken() : json_encode(array('success', false));
   }
 }

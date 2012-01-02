@@ -524,7 +524,9 @@ class User extends Main {
 			$oQuery->execute();
       $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
-			return $aData['api_token'];
+      return  !empty($aData['api_token']) ?
+              json_encode(array('success' => true, 'token' => $aData['api_token'])) :
+              json_decode(array('success' => false));
 		}
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
