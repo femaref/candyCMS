@@ -14,10 +14,12 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Blog as Model_Blog;
 use CandyCMS\Model\Content as Model_Content;
+use CandyCMS\Model\Download as Model_Download;
 use CandyCMS\Model\Gallery as Model_Gallery;
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
+require_once 'app/models/Download.model.php';
 require_once 'app/models/Gallery.model.php';
 
 class Sitemap extends Main {
@@ -33,7 +35,6 @@ class Sitemap extends Main {
 		Header('Content-Type: text/xml');
 
 		$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-		$this->oSmarty->assign('_website_url_', WEBSITE_URL);
 
 		$this->_getSitemap();
 
@@ -72,6 +73,9 @@ class Sitemap extends Main {
 
 		$oGallery = new Model_Gallery($this->_aRequest, $this->_aSession);
 		$aGallery = $oGallery->getData('', false, false, 1000);
+
+		#$oDownload = new Model_Download($this->_aRequest, $this->_aSession);
+		#$aDownload = $oDownload->getData('', false);
 
 		$this->oSmarty->assign('blog', $aBlog);
 		$this->oSmarty->assign('content', $aContent);
