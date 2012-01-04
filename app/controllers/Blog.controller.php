@@ -88,8 +88,11 @@ class Blog extends Main {
    *
    */
   private function _setBlogDescription() {
-    if (isset($this->_aRequest['search']))
+    if (isset($this->_aRequest['search']) && isset($this->_aRequest['page']) && empty($this->_aRequest['page']))
       return Helper::removeSlahes($this->_aRequest['search']); # Term that is being searched
+
+    elseif (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']))
+      return $this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
