@@ -479,24 +479,41 @@ class Index {
 
 		# Check for template files
     # *********************************************
-    if (!empty($this->_sTemplate)) {
-      $sPath = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
+    $sCachedCss     = WEBSITE_CDN . '/css';
+    $sCachedImages  = WEBSITE_CDN . '/images';
+    $sCachedJs      = WEBSITE_CDN . '/js';
 
-      $sCachedCss     = !@is_dir($sPath . '/css') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/css' : $sPath . '/css';
-      $sCachedImages  = !@is_dir($sPath . '/images') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/images' : $sPath . '/images';
-      $sCachedJs      = !@is_dir($sPath . '/js') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/js' : $sPath . '/js';
+    if (!empty($this->_sTemplate)) {
+      $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
+      $iPathLen = strlen($sPath);
+
+      $sCachedCss = !@is_dir(substr($sPath, 1, $iPathLen) . '/css') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/css' :
+              $sPath . '/css';
+
+      $sCachedImages = !@is_dir(substr($sPath, 1, $iPathLen) . '/images') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/images' :
+              $sPath . '/images';
+
+      $sCachedJs = !@is_dir(substr($sPath, 1, $iPathLen) . '/js') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/js' :
+              $sPath . '/js';
     }
     elseif (PATH_TEMPLATE !== '') {
-      $sPath = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
+      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
+      $iPathLen = strlen($sPath);
 
-      $sCachedCss     = !@is_dir($sPath . '/css') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/css' : $sPath . '/css';
-      $sCachedImages  = !@is_dir($sPath . '/images') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/images' : $sPath . '/images';
-      $sCachedJs      = !@is_dir($sPath . '/js') || substr(WEBSITE_CDN, 0, 7) == 'http://' ? WEBSITE_CDN . '/js' : $sPath . '/js';
-    }
-    else {
-      $sCachedCss     = WEBSITE_CDN . '/css';
-      $sCachedImages  = WEBSITE_CDN . '/images';
-      $sCachedJs      = WEBSITE_CDN . '/js';
+      $sCachedCss = !@is_dir(substr($sPath, 1, $iPathLen) . '/css') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/css' :
+              $sPath . '/css';
+
+      $sCachedImages = !@is_dir(substr($sPath, 1, $iPathLen) . '/images') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/images' :
+              $sPath . '/images';
+
+      $sCachedJs = !@is_dir(substr($sPath, 1, $iPathLen) . '/js') || substr(WEBSITE_CDN, 0, 7) == 'http://' ?
+              WEBSITE_CDN . '/js' :
+              $sPath . '/js';
     }
 
     $sCachedHTML = & str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);

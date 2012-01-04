@@ -45,8 +45,11 @@ class Blog extends Main {
   public function show() {
 		# We got a page request, so tell the model that we don't want to see an entry
     if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
-						isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'])
+            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
+            !isset($this->_aRequest['parent_id']))
       $this->_iId = '';
+
+    #die(print_r($this->_aRequest));
 
     $this->__autoload('Comment');
     $this->_aData = $this->_oModel->getData($this->_iId);
