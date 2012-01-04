@@ -158,7 +158,6 @@ class User extends Main {
                                           name,
                                           email,
                                           surname,
-                                          last_login,
                                           date,
                                           use_gravatar,
 																					receive_newsletter,
