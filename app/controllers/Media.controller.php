@@ -72,7 +72,7 @@ class Media extends Main {
     $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
 
     if (!is_dir($sFolder))
-      mkdir(PATH_UPLOAD . $sFolder, 0777);
+      mkdir(PATH_UPLOAD . '/' . $sFolder, 0777);
 
     return $oUpload->uploadFile($sFolder);
   }
