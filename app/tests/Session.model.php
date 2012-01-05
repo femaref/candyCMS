@@ -36,34 +36,34 @@ class TestOfSessionModel extends UnitTestCase {
         'full_name' => ''
     );
 
-    $aFile = array();
-    $aCookie = array();
+    $aFile    = array();
+    $aCookie  = array();
 
     $this->oSession = new Session($aRequest, $aSession, $aFile, $aCookie);
   }
 
+  # Create a new session.
   function testCreate() {
-    # Can not login with that data
     $this->assertFalse($this->oSession->create(), 'Session created.');
   }
 
-  function testCreateResendActions() {
-    # Can not login with that data
-    # False, because user doesn't exist
-    #$this->assertFalse($this->oSession->createResendActions('new_password'), 'Resend actions.');
+  # Session will not be found, so we expect no return.
+  function testGetUserDataBySession() {
+    $this->assertFalse(Session::getUserDataBySession());
   }
 
-  function testGetData() {
-    $this->assertIsA($this->oSession->getData(), 'array');
+  # We try to resend the password. Email address will not be found, so we expect a false.
+  function testResendPassword() {
+    $this->assertFalse($this->oSession->resendPassword());
   }
 
-  /*function testUpdate() {
-    # User doesn't exist, but query run through
-    $this->assertTrue($this->oSession->update(0), 'Session updated.');
-  }*/
+  # We try to resend the verification. Email address will not be found, so we expect a false.
+  function testResendVerification() {
+    $this->assertFalse($this->oSession->resendVerification());
+  }
 
+  # User doesn't exist, but query run through.
   function testDestroy() {
-    # User doesn't exist, but query run through
-    $this->assertTrue($this->oSession->destroy($this->iLastInsertId), 'Session #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oSession->destroy(), 'Session destroyed.');
   }
 }

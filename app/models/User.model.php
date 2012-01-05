@@ -119,17 +119,29 @@ class User extends Main {
 		}
 	}
 
-	public static function setPassword($sEmail, $sPassword) {
+  /**
+   * Sets a users password.
+   *
+   * @access public
+   * @param string $sEmail
+   * @param string $sPassword
+   * @param boolean $bEncrypt
+   * @return boolean status of query
+   *
+   */
+	public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
 		if (empty(parent::$_oDbStatic))
 			parent::_connectToDatabase();
 
+    $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
+
 		try {
 			$oQuery = parent::$_oDbStatic->prepare("UPDATE
-																				" . SQL_PREFIX . "users
-																			SET
-																				password = :password
-																			WHERE
-																				email = :email");
+                                                " . SQL_PREFIX . "users
+                                              SET
+                                                password = :password
+                                              WHERE
+                                                email = :email");
 
 			$oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
 			$oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
@@ -522,7 +534,7 @@ class User extends Main {
 
       return  !empty($aData['api_token']) ?
               json_encode(array('success' => true, 'token' => $aData['api_token'])) :
-              json_decode(array('success' => false));
+              json_encode(array('success' => false));
 		}
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();

@@ -28,7 +28,7 @@ class Content extends Main {
    *
    */
   private final function _setData($bUpdate, $iLimit) {
-    $iPublished = $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
+    $iPublished = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
 
     # Show overview
     if (empty($this->_iId)) {

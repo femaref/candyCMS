@@ -37,8 +37,8 @@ class TestOfGalleryModel extends UnitTestCase {
         'full_name' => ''
     );
 
-    $aFile = array();
-    $aCookie = array();
+    $aFile    = array();
+    $aCookie  = array();
 
     $this->oGallery = new Gallery($aRequest, $aSession, $aFile, $aCookie);
   }
@@ -61,10 +61,6 @@ class TestOfGalleryModel extends UnitTestCase {
 
   function testGetAlbumContent() {
     $this->assertIsA($this->oGallery->getAlbumContent($this->iLastInsertId), 'string');
-  }
-
-  function testGetId() {
-    $this->assertIsA($this->oGallery->getId(), 'integer');
   }
 
   function testUpdate() {

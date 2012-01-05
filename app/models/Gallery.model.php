@@ -122,16 +122,6 @@ class Gallery extends Main {
   }
 
   /**
-   * Simply return ID to work with.
-   *
-   * @access public
-   * @return string $this->_iId ID to handle.
-   */
-  public function getId() {
-    return $this->_iId;
-  }
-
-  /**
    * Fetch all thubms and put them into an array.
    *
    * @access private

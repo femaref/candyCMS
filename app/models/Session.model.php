@@ -64,25 +64,12 @@ class Session extends Main {
     }
   }
 
-	/**
-	 * Return aggregated data.
-	 *
-	 * Needed for parent::createResendActions()
-	 *
-	 * @access public
-	 * @return array $this->_aData
-	 *
-	 */
-  public function getData() {
-    return $this->_aData;
-  }
-
   /**
    * Create a user session.
    *
    * @access public
 	 * @param array $aUser optional user data.
-   * @return boolean status of query
+   * @return boolean status of login
 	 *
    */
   public function create($aUser = '') {
@@ -117,6 +104,8 @@ class Session extends Main {
 				$this->_oDb->rollBack();
 			}
 		}
+    else
+      return false;
 	}
 
 	/**

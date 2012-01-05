@@ -19,6 +19,8 @@ class TestOfUserModel extends TestOfSessionModel {
 
   public $oUser;
   public $iLastInsertId;
+  public $aRequest;
+  public $aSession;
 
   function testConstructor() {
 
@@ -47,6 +49,9 @@ class TestOfUserModel extends TestOfSessionModel {
     $aFile = array();
     $aCookie = array();
 
+    $this->aRequest = $aRequest;
+    $this->aSession = $aSession;
+
     $this->oUser = new User($aRequest, $aSession, $aFile, $aCookie);
   }
 
@@ -55,22 +60,16 @@ class TestOfUserModel extends TestOfSessionModel {
 
     $this->iLastInsertId = (int) User::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer', 'User #' . $this->iLastInsertId . ' created.');
+    $this->aRequest['id'] = $this->iLastInsertId;
   }
 
   function testGetData() {
     $this->assertIsA($this->oUser->getData(0), 'array');
     $this->assertIsA($this->oUser->getData(), 'array');
   }
-  # Private method
-  #function testGetPassword() {
-  #  $this->assertIsA($this->oUser->_getPassword($this->iLastInsertId), 'string');
-  #}
 
   function testGetExistingUser() {
-    # Email exists
-    $this->assertTrue($this->oUser->getExistingUser('email@example.com'));
-
-    # Email doesn't exist
+    $this->assertTrue($this->oUser->getExistingUser($this->aRequest['email']));
     $this->assertFalse($this->oUser->getExistingUser('adsfadsfsda@fghfghfgfg.com'));
   }
 
@@ -78,96 +77,95 @@ class TestOfUserModel extends TestOfSessionModel {
     $this->assertIsA($this->oUser->getUserNamesAndEmail($this->iLastInsertId), 'array');
   }
 
+  # Get the verification data.
+  function testGetVerificationData() {
+    $this->assertIsA($this->oUser->getVerificationData($this->aRequest['email']), 'array');
+  }
+
+  # Set to default password.
+  function testSetPassword() {
+    $this->assertTrue($this->oUser->setPassword($this->aRequest['email'], $this->aRequest['password'], true), 'array');
+  }
+
+  # Fetch the login data.
+  function testGetLoginData() {
+    $this->assertIsA($this->oUser->getLoginData(), 'array');
+  }
+
+  # Get user token.
+  function testGetToken() {
+    $this->assertIsA($this->oUser->getToken(), 'string');
+  }
+
+  /*******************************************************
+   * Session verification test start
+   ******************************************************/
+
+  # Try to login, but there's still the verification code.
+  function testSessionCreate1() {
+    $this->oSession = new Session($this->aRequest, $this->aSession, array(), '');
+    $this->assertFalse($this->oSession->create(), 'Session created.');
+  }
+
+  # Resend verification data. Works, because it's not empty.
+  function testResendVerification1() {
+    $this->oSession = new Session($this->aRequest, $this->aSession, array(), '');
+    $this->assertIsA($this->oSession->resendVerification(), 'array');
+  }
+
+  /*******************************************************
+   * Session verification test end
+   ******************************************************/
+
+  # Try to verify the verification_code.
+  function testVerifyEmail() {
+    $this->assertFalse($this->oUser->verifyEmail('000100010001'));
+    $this->assertTrue($this->oUser->verifyEmail('000000000000'));
+  }
+
+  # Return the user data from activation.
   function testGetActivationData() {
     $this->assertIsA($this->oUser->getActivationData(), 'array');
   }
 
-  function testVerifyEmail() {
-    # Code doesn't exist
-    $this->assertFalse($this->oUser->verifyEmail('000100010001'));
-
-    # Code exists
-    $this->assertTrue($this->oUser->verifyEmail('000000000000'));
-  }
-
+  # Update user.
   function testUpdate() {
     $this->assertTrue($this->oUser->update($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' updated.');
   }
 
-  /**
-   * Start of session tests
-   */
-  function testSessionCreate() {
-    $aRequest = array(
-        'email' => 'email@example.com',
-        'password' => 'Password');
+  /*******************************************************
+   * Session verification test start
+   ******************************************************/
 
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-
-    $aCookie = array();
-
-    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
-    $this->assertTrue($this->oSession->create(), 'Session created.');
+  # Create a session with existing user data.
+  function testSessionCreate2() {
+    $this->oSession = new Session($this->aRequest, $this->aSession, array(), '');
+    $this->assertTrue($this->oSession->create($this->aRequest));
   }
 
-  function testCreateResendActionsPW() {
-    $aRequest = array(
-        'email' => 'email@example.com',
-        'action' => 'resendpassword');
-
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-
-    $aCookie = array();
-
-    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
-    $this->assertTrue($this->oSession->createResendActions(), 'Resend password.');
+  # We try to resend the password.
+  function testResendPassword() {
+    $this->oSession = new Session($this->aRequest, $this->aSession, array(), '');
+    $this->assertTrue($this->oSession->resendPassword());
   }
 
-  function testCreateResendActionsVC() {
-    $aRequest = array(
-        'email' => 'email@example.com',
-        'action' => 'verification');
-
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-
-    $aCookie = array();
-
-    $this->oSession = new Session($aRequest, $aSession, $aCookie, '');
-    $this->assertFalse($this->oSession->createResendActions(), 'Resend verification.');
+  # We try to resend the verification. Verification code is already empty.
+  function testResendVerification2() {
+    $this->oSession = new Session($this->aRequest, $this->aSession, array(), '');
+    $this->assertFalse($this->oSession->resendVerification());
   }
 
-  /**
-   * End of session tests
-   */
+  # Destroy active session.
+  function testSessionDestory() {
+    $this->assertTrue($this->oSession->destroy(), 'Session destroyed.');
+  }
+
+  /*******************************************************
+   * Session verification test end
+   ******************************************************/
+
+  # Destory our built user.
   function testDestroy() {
     $this->assertTrue($this->oUser->destroy($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' destroyed.');
   }
-  /* Now the same stuff but with login */
 }
