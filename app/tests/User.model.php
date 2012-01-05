@@ -21,10 +21,11 @@ class TestOfUserModel extends TestOfSessionModel {
   public $iLastInsertId;
   public $aRequest;
   public $aSession;
+  public $sToken;
 
   function testConstructor() {
 
-    $aRequest = array(
+    $this->aRequest = array(
         'email' => 'email@example.com',
         'password' => 'Password',
         'name' => 'Name',
@@ -35,7 +36,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'use_gravatar' => 0,
         'section' => 'user');
 
-    $aSession['userdata'] = array(
+    $this->aSession['userdata'] = array(
         'email' => '',
         'facebook_id' => '',
         'id' => 0,
@@ -46,13 +47,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'full_name' => ''
     );
 
-    $aFile = array();
-    $aCookie = array();
-
-    $this->aRequest = $aRequest;
-    $this->aSession = $aSession;
-
-    $this->oUser = new User($aRequest, $aSession, $aFile, $aCookie);
+    $this->oUser = new User($this->aRequest, $this->aSession, array(), array());
   }
 
   function testCreate() {
@@ -94,7 +89,12 @@ class TestOfUserModel extends TestOfSessionModel {
 
   # Get user token.
   function testGetToken() {
-    $this->assertIsA($this->oUser->getToken(), 'string');
+    $this->sToken = $this->oUser->getToken(false);
+    $this->assertIsA($this->sToken, 'string');
+  }
+
+  function testGetUserDataByToken() {
+    $this->assertIsA($this->oUser->getUserDataByToken($this->sToken), 'array');
   }
 
   /*******************************************************

@@ -41,10 +41,7 @@ class TestOfBlogModel extends UnitTestCase {
         'full_name' => ''
     );
 
-    $aFile    = array();
-    $aCookie  = array();
-
-    $this->oBlog = new Blog($aRequest, $aSession, $aFile, $aCookie);
+    $this->oBlog = new Blog($aRequest, $aSession, array(), array());
   }
 
   function testCreate() {

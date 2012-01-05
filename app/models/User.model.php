@@ -513,7 +513,7 @@ class User extends Main {
    * @return string token or null
    *
    */
-	public function getToken() {
+	public function getToken($bReturnJSON = true) {
 		try {
 			$oQuery = $this->_oDb->prepare("SELECT
                                         api_token
@@ -532,9 +532,14 @@ class User extends Main {
 			$oQuery->execute();
       $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
-      return  !empty($aData['api_token']) ?
-              json_encode(array('success' => true, 'token' => $aData['api_token'])) :
-              json_encode(array('success' => false));
+      if($bReturnJSON == true) {
+        return  !empty($aData['api_token']) ?
+                json_encode(array('success' => true, 'token' => $aData['api_token'])) :
+                json_encode(array('success' => false));
+      }
+
+      else
+        return $aData['api_token'];
 		}
 		catch (AdvancedException $e) {
 			$this->_oDb->rollBack();
