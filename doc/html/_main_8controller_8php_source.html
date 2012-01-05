@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="namespaces.html"><span>Packages</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -116,9 +116,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00025"></a>00025 
 <a name="l00026"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">00026</a> <span class="keyword">abstract</span> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">Main</a> {
 <a name="l00027"></a>00027 
-<a name="l00034"></a>00034         <span class="keyword">protected</span> $_aRequest;
+<a name="l00034"></a>00034         <span class="keyword">protected</span> $_aRequest = array();
 <a name="l00035"></a>00035 
-<a name="l00042"></a>00042         <span class="keyword">protected</span> $_aSession;
+<a name="l00042"></a>00042         <span class="keyword">protected</span> $_aSession = array();
 <a name="l00043"></a>00043 
 <a name="l00050"></a>00050         <span class="keyword">protected</span> $_aFile;
 <a name="l00051"></a>00051 
@@ -144,211 +144,217 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00131"></a>00131 
 <a name="l00138"></a>00138         <span class="keyword">public</span> $oSmarty;
 <a name="l00139"></a>00139 
-<a name="l00150"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a77c957b8e88ef8ec0fd6e524ead8bf0a">00150</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a77c957b8e88ef8ec0fd6e524ead8bf0a">__construct</a>($aRequest, $aSession, $aFile = <span class="stringliteral">&#39;&#39;</span>, $aCookie = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00150"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2da77500c55a95dd520f654c4ece1ead">00150</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2da77500c55a95dd520f654c4ece1ead">__construct</a>($aRequest, $aSession, $aFile = <span class="stringliteral">&#39;&#39;</span>, $aCookie = <span class="stringliteral">&#39;&#39;</span>) {
 <a name="l00151"></a>00151                 $this-&gt;_aRequest        = &amp; $aRequest;
 <a name="l00152"></a>00152                 $this-&gt;_aSession        = &amp; $aSession;
 <a name="l00153"></a>00153                 $this-&gt;_aFile                   = &amp; $aFile;
 <a name="l00154"></a>00154                 $this-&gt;_aCookie         = &amp; $aCookie;
 <a name="l00155"></a>00155 
-<a name="l00156"></a>00156     <span class="keywordflow">if</span> (!isset($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>])) {
-<a name="l00157"></a>00157       Helper::redirectTo(<span class="charliteral">&#39;/&#39;</span> . WEBSITE_LANDING_PAGE);
-<a name="l00158"></a>00158       exit();
-<a name="l00159"></a>00159     }
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161                 $this-&gt;_iId = isset($this-&gt;_aRequest[<span class="stringliteral">&#39;id&#39;</span>]) ? (int) $this-&gt;_aRequest[<span class="stringliteral">&#39;id&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>;
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163     $this-&gt;_setI18n();
-<a name="l00164"></a>00164     $this-&gt;_setSmarty();
-<a name="l00165"></a>00165         }
-<a name="l00166"></a>00166 
-<a name="l00173"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a421831a265621325e1fdd19aace0c758">00173</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a421831a265621325e1fdd19aace0c758">__destruct</a>() {
-<a name="l00174"></a>00174   }
-<a name="l00175"></a>00175 
-<a name="l00182"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a4b7754eea96dc4dbe23fe9081994ded3">00182</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a4b7754eea96dc4dbe23fe9081994ded3">__autoload</a>($sClassName) {
-<a name="l00183"></a>00183     require_once <span class="stringliteral">&#39;app/controllers/&#39;</span> .$sClassName. <span class="stringliteral">&#39;.controller.php&#39;</span>;
-<a name="l00184"></a>00184   }
-<a name="l00185"></a>00185 
-<a name="l00192"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a500847c43f5178b8ea1f329b3eb5cf46">00192</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a500847c43f5178b8ea1f329b3eb5cf46">__init</a>() {
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194   }
-<a name="l00195"></a>00195 
-<a name="l00200"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a3cfe65a47fdfc2c4ce93c0946660cd5f">00200</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a3cfe65a47fdfc2c4ce93c0946660cd5f">__call</a>($sMethod, $Args) {
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202   }
-<a name="l00203"></a>00203 
-<a name="l00211"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a29b2c182411307072cb70f0dc527189e">00211</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a29b2c182411307072cb70f0dc527189e">_setI18n</a>() {
-<a name="l00212"></a>00212     $this-&gt;oI18n = <span class="keyword">new</span> I18n(WEBSITE_LANGUAGE);
-<a name="l00213"></a>00213     <span class="keywordflow">return</span> $this-&gt;oI18n;
-<a name="l00214"></a>00214   }
-<a name="l00215"></a>00215 
-<a name="l00223"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a36ce2b923638c977f7221a47eef8a821">00223</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a36ce2b923638c977f7221a47eef8a821">_setSmarty</a>() {
-<a name="l00224"></a>00224 <span class="preprocessor">                # Initialize smarty</span>
-<a name="l00225"></a>00225 <span class="preprocessor"></span>                $this-&gt;oSmarty = <span class="keyword">new</span> Smarty();
-<a name="l00226"></a>00226                 $this-&gt;oSmarty-&gt;cache_dir = CACHE_DIR;
-<a name="l00227"></a>00227                 $this-&gt;oSmarty-&gt;compile_dir = COMPILE_DIR;
-<a name="l00228"></a>00228 
-<a name="l00229"></a>00229     <span class="keywordflow">if</span> (CLEAR_CACHE == <span class="keyword">true</span>)
-<a name="l00230"></a>00230       $this-&gt;oSmarty-&gt;clearAllCache();
+<a name="l00156"></a>00156 <span class="preprocessor">    # Load config files if not already done (important for unit testing)</span>
+<a name="l00157"></a>00157 <span class="preprocessor"></span>    require_once <span class="stringliteral">&#39;config/Candy.inc.php&#39;</span>;
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159     <span class="keywordflow">if</span> (!isset($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>])) {
+<a name="l00160"></a>00160       Helper::redirectTo(<span class="charliteral">&#39;/&#39;</span> . WEBSITE_LANDING_PAGE);
+<a name="l00161"></a>00161       exit();
+<a name="l00162"></a>00162     }
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164                 $this-&gt;_iId = isset($this-&gt;_aRequest[<span class="stringliteral">&#39;id&#39;</span>]) ? (int) $this-&gt;_aRequest[<span class="stringliteral">&#39;id&#39;</span>] : <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166     $this-&gt;_setI18n();
+<a name="l00167"></a>00167     $this-&gt;_setSmarty();
+<a name="l00168"></a>00168         }
+<a name="l00169"></a>00169 
+<a name="l00176"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a5f6c5741a4c6e337d9852b8bf33964ee">00176</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a5f6c5741a4c6e337d9852b8bf33964ee">__destruct</a>() {
+<a name="l00177"></a>00177   }
+<a name="l00178"></a>00178 
+<a name="l00185"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a4bbe28537887bc38863b92bacd619860">00185</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a4bbe28537887bc38863b92bacd619860">__autoload</a>($sClassName) {
+<a name="l00186"></a>00186     require_once <span class="stringliteral">&#39;app/controllers/&#39;</span> .$sClassName. <span class="stringliteral">&#39;.controller.php&#39;</span>;
+<a name="l00187"></a>00187   }
+<a name="l00188"></a>00188 
+<a name="l00195"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ad1277e752745decb2f46348a463cfb74">00195</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ad1277e752745decb2f46348a463cfb74">__init</a>() {
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197   }
+<a name="l00198"></a>00198 
+<a name="l00203"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aa0371535f4dbae84bb164af45eb4c3a4">00203</a>   <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aa0371535f4dbae84bb164af45eb4c3a4">__call</a>($sMethod, $Args) {
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205   }
+<a name="l00206"></a>00206 
+<a name="l00214"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aaa4f325ee100b5bd6d229be40814a32c">00214</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aaa4f325ee100b5bd6d229be40814a32c">_setI18n</a>() {
+<a name="l00215"></a>00215     $this-&gt;oI18n = <span class="keyword">new</span> I18n(WEBSITE_LANGUAGE);
+<a name="l00216"></a>00216     <span class="keywordflow">return</span> $this-&gt;oI18n;
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218 
+<a name="l00226"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a6ea0d806a4cc9fc2582b1fd7dc7d8d51">00226</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a6ea0d806a4cc9fc2582b1fd7dc7d8d51">_setSmarty</a>() {
+<a name="l00227"></a>00227 <span class="preprocessor">                # Initialize smarty</span>
+<a name="l00228"></a>00228 <span class="preprocessor"></span>                $this-&gt;oSmarty = <span class="keyword">new</span> Smarty();
+<a name="l00229"></a>00229                 $this-&gt;oSmarty-&gt;cache_dir   = CACHE_DIR;
+<a name="l00230"></a>00230                 $this-&gt;oSmarty-&gt;compile_dir = COMPILE_DIR;
 <a name="l00231"></a>00231 
-<a name="l00232"></a>00232 <span class="preprocessor">                # Define constants</span>
-<a name="l00233"></a>00233 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;AJAX_REQUEST&#39;</span>, AJAX_REQUEST);
-<a name="l00234"></a>00234                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;CURRENT_URL&#39;</span>, CURRENT_URL);
-<a name="l00235"></a>00235                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;FACEBOOK_ADMIN_ID&#39;</span>, FACEBOOK_ADMIN_ID); # required <span class="keywordflow">for</span> meta only
-<a name="l00236"></a>00236                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;FACEBOOK_APP_ID&#39;</span>, FACEBOOK_APP_ID); # required <span class="keywordflow">for</span> facebook actions
-<a name="l00237"></a>00237                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;MOBILE&#39;</span>, MOBILE);
-<a name="l00238"></a>00238                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;MOBILE_DEVICE&#39;</span>, MOBILE_DEVICE);
-<a name="l00239"></a>00239                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;THUMB_DEFAULT_X&#39;</span>, THUMB_DEFAULT_X);
-<a name="l00240"></a>00240                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_EMAIL&#39;</span>, USER_EMAIL);
-<a name="l00241"></a>00241                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_FACEBOOK_ID&#39;</span>, USER_FACEBOOK_ID);
-<a name="l00242"></a>00242                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_FULL_NAME&#39;</span>, USER_FULL_NAME);
-<a name="l00243"></a>00243                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_ID&#39;</span>, USER_ID);
-<a name="l00244"></a>00244                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_NAME&#39;</span>, USER_NAME);
-<a name="l00245"></a>00245                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_RIGHT&#39;</span>, USER_RIGHT);
-<a name="l00246"></a>00246                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_SURNAME&#39;</span>, USER_SURNAME);
-<a name="l00247"></a>00247                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;VERSION&#39;</span>, VERSION);
-<a name="l00248"></a>00248                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_COMPRESS_FILES&#39;</span>, WEBSITE_COMPRESS_FILES);
-<a name="l00249"></a>00249                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_LANGUAGE&#39;</span>, WEBSITE_LANGUAGE);
-<a name="l00250"></a>00250                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_LOCALE&#39;</span>, WEBSITE_LOCALE);
-<a name="l00251"></a>00251                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_NAME&#39;</span>, WEBSITE_NAME);
-<a name="l00252"></a>00252                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_URL&#39;</span>, WEBSITE_URL);
-<a name="l00253"></a>00253                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_TRACKING_CODE&#39;</span>, WEBSITE_TRACKING_CODE);
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255 <span class="preprocessor">                # Define system variables</span>
-<a name="l00256"></a>00256 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_date_&#39;</span>, date(<span class="stringliteral">&#39;Y-m-d&#39;</span>));
-<a name="l00257"></a>00257                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_compress_files_suffix_&#39;</span>, WEBSITE_COMPRESS_FILES == <span class="keyword">true</span> ? <span class="stringliteral">&#39;.min&#39;</span> : <span class="stringliteral">&#39;&#39;</span>);
-<a name="l00258"></a>00258                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_facebook_plugin_&#39;</span>, class_exists(<span class="stringliteral">&#39;FacebookCMS&#39;</span>) ? <span class="keyword">true</span> : <span class="keyword">false</span>);
-<a name="l00259"></a>00259                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_json_language_&#39;</span>, $this-&gt;oI18n-&gt;getJson());
-<a name="l00260"></a>00260                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_pubdate_&#39;</span>, date(<span class="charliteral">&#39;r&#39;</span>));
-<a name="l00261"></a>00261                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_request_id_&#39;</span>, $this-&gt;_iId);
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263 <span class="preprocessor">                # Include Google Adsense</span>
-<a name="l00264"></a>00264 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Adsense&#39;</span>)) {
-<a name="l00265"></a>00265                         $oAdsense = <span class="keyword">new</span> Adsense();
-<a name="l00266"></a>00266                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_adsense_&#39;</span>, $oAdsense-&gt;show());
-<a name="l00267"></a>00267                 }
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269 <span class="preprocessor">                # Include news archive</span>
-<a name="l00270"></a>00270 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Archive&#39;</span>)) {
-<a name="l00271"></a>00271                         $oArchive = <span class="keyword">new</span> Archive($this-&gt;_aRequest, $this-&gt;_aSession);
-<a name="l00272"></a>00272                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_archive_&#39;</span>, $oArchive-&gt;show());
-<a name="l00273"></a>00273                 }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275 <span class="preprocessor">                # Include latest headlines</span>
-<a name="l00276"></a>00276 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Headlines&#39;</span>)) {
-<a name="l00277"></a>00277                         $oHeadlines = <span class="keyword">new</span> Headlines($this-&gt;_aRequest, $this-&gt;_aSession);
-<a name="l00278"></a>00278                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_headlines_&#39;</span>, $oHeadlines-&gt;show());
-<a name="l00279"></a>00279                 }
-<a name="l00280"></a>00280 
-<a name="l00281"></a>00281 <span class="preprocessor">                # Include latest teaser</span>
-<a name="l00282"></a>00282 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Teaser&#39;</span>)) {
-<a name="l00283"></a>00283                         $oTeaser = <span class="keyword">new</span> Teaser($this-&gt;_aRequest, $this-&gt;_aSession);
-<a name="l00284"></a>00284                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_teaser_&#39;</span>, $oTeaser-&gt;show());
-<a name="l00285"></a>00285                 }
-<a name="l00286"></a>00286 
-<a name="l00287"></a>00287 <span class="preprocessor">                # Set up language</span>
-<a name="l00288"></a>00288 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;lang&#39;</span>, $this-&gt;oI18n-&gt;getArray());
-<a name="l00289"></a>00289 
-<a name="l00290"></a>00290                 <span class="keywordflow">return</span> $this-&gt;oSmarty;
-<a name="l00291"></a>00291         }
-<a name="l00292"></a>00292 
-<a name="l00300"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a024771cbf46d32e900bcb1fedebc907a">00300</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a024771cbf46d32e900bcb1fedebc907a">_setDescription</a>($sDescription = <span class="stringliteral">&#39;&#39;</span>) {
-<a name="l00301"></a>00301                 $this-&gt;_sDescription = &amp; $sDescription;
-<a name="l00302"></a>00302         }
-<a name="l00303"></a>00303 
-<a name="l00311"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2e7bb35c71bf1824456ceb944cb7a845">00311</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2e7bb35c71bf1824456ceb944cb7a845">getDescription</a>() {
-<a name="l00312"></a>00312 <span class="preprocessor">                # Show default description if this is our landing page or we got no descrption.</span>
-<a name="l00313"></a>00313 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (WEBSITE_LANDING_PAGE == substr($_SERVER[<span class="stringliteral">&#39;REQUEST_URI&#39;</span>], 1, strlen($_SERVER[<span class="stringliteral">&#39;REQUEST_URI&#39;</span>])) || empty($this-&gt;_sDescription))
-<a name="l00314"></a>00314                         <span class="keywordflow">return</span> $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;website.description&#39;</span>);
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316 <span class="preprocessor">                # We got no description. Fall back to default description.</span>
-<a name="l00317"></a>00317 <span class="preprocessor"></span>                <span class="keywordflow">else</span>
-<a name="l00318"></a>00318                         <span class="keywordflow">return</span> $this-&gt;_sDescription;
-<a name="l00319"></a>00319         }
-<a name="l00320"></a>00320 
-<a name="l00328"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac1ac747d401690594a5115e8e0fcb87f">00328</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac1ac747d401690594a5115e8e0fcb87f">_setKeywords</a>($sKeywords = <span class="stringliteral">&#39;&#39;</span>) {
-<a name="l00329"></a>00329                 $this-&gt;_sKeywords = &amp; $sKeywords;
-<a name="l00330"></a>00330         }
-<a name="l00331"></a>00331 
-<a name="l00339"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a6f99615aae20ffeb2cc8c384a2ec353a">00339</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a6f99615aae20ffeb2cc8c384a2ec353a">getKeywords</a>() {
-<a name="l00340"></a>00340                 <span class="keywordflow">return</span> !empty($this-&gt;_sKeywords) ? Helper::removeSlahes($this-&gt;_sKeywords) : $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;website.keywords&#39;</span>);
-<a name="l00341"></a>00341         }
-<a name="l00342"></a>00342 
-<a name="l00350"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ae29f8ed7eee194d0654134f80e181462">00350</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ae29f8ed7eee194d0654134f80e181462">_setTitle</a>($sTitle = <span class="stringliteral">&#39;&#39;</span>) {
-<a name="l00351"></a>00351                 $this-&gt;_sTitle = &amp; $sTitle;
-<a name="l00352"></a>00352         }
-<a name="l00353"></a>00353 
-<a name="l00361"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a95e859a4588a39a1824b717378a84c29">00361</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a95e859a4588a39a1824b717378a84c29">getTitle</a>() {
-<a name="l00362"></a>00362                 <span class="keywordflow">return</span> !empty($this-&gt;_sTitle) ? Helper::removeSlahes($this-&gt;_sTitle) : $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.404.title&#39;</span>);
-<a name="l00363"></a>00363         }
-<a name="l00364"></a>00364 
-<a name="l00373"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ae229cca5a278edca4da8db0def396c4b">00373</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ae229cca5a278edca4da8db0def396c4b">_setContent</a>($sContent) {
-<a name="l00374"></a>00374                 $this-&gt;_sContent = &amp; $sContent;
-<a name="l00375"></a>00375         }
-<a name="l00376"></a>00376 
-<a name="l00384"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a58e43f09a06ce4e29b192c4e17ce7915">00384</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a58e43f09a06ce4e29b192c4e17ce7915">getContent</a>() {
-<a name="l00385"></a>00385                 <span class="keywordflow">return</span> $this-&gt;_sContent;
-<a name="l00386"></a>00386         }
-<a name="l00387"></a>00387 
-<a name="l00395"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a12251d0c022e9e21c137a105ff683f13">00395</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a12251d0c022e9e21c137a105ff683f13">getId</a>() {
-<a name="l00396"></a>00396                 <span class="keywordflow">return</span> !empty($this-&gt;_iId) ? $this-&gt;_iId : <span class="stringliteral">&#39;&#39;</span>;
-<a name="l00397"></a>00397         }
-<a name="l00398"></a>00398 
-<a name="l00407"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac55f12d54caf5dc6f76109fa76bc5aca">00407</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac55f12d54caf5dc6f76109fa76bc5aca">_removeHighlight</a>($sTitle) {
-<a name="l00408"></a>00408                 $sTitle = Helper::removeSlahes($sTitle);
-<a name="l00409"></a>00409                 $sTitle = str_replace(<span class="stringliteral">&#39;&lt;mark&gt;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sTitle);
-<a name="l00410"></a>00410                 $sTitle = str_replace(<span class="stringliteral">&#39;&lt;/mark&gt;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sTitle);
-<a name="l00411"></a>00411                 <span class="keywordflow">return</span> $sTitle;
-<a name="l00412"></a>00412         }
-<a name="l00413"></a>00413 
-<a name="l00422"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a1ee89b76ac02dbada2e54bc44a1dcf4d">00422</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a1ee89b76ac02dbada2e54bc44a1dcf4d">_setError</a>($sField, $sMessage = <span class="stringliteral">&#39;&#39;</span>) {
-<a name="l00423"></a>00423                 <span class="keywordflow">if</span> (!isset($this-&gt;_aRequest[$sField]) || empty($this-&gt;_aRequest[$sField]))
-<a name="l00424"></a>00424                         $this-&gt;_aError[<span class="stringliteral">&#39;error&#39;</span>][$sField] = empty($sMessage) ? $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.form.missing.&#39;</span> . strtoupper($sField)) : $sMessage;
-<a name="l00425"></a>00425 
-<a name="l00426"></a>00426                 <span class="keywordflow">if</span> (isset($this-&gt;_aRequest[<span class="stringliteral">&#39;email&#39;</span>]) &amp;&amp; ( Helper::checkEmailAddress($this-&gt;_aRequest[<span class="stringliteral">&#39;email&#39;</span>]) == <span class="keyword">false</span> ) &amp;&amp;
-<a name="l00427"></a>00427                                                 <span class="stringliteral">&#39;blog&#39;</span> !== $this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>])
-<a name="l00428"></a>00428                         $this-&gt;_aError[<span class="stringliteral">&#39;error&#39;</span>][<span class="stringliteral">&#39;email&#39;</span>] = $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.form.missing.email&#39;</span>);
-<a name="l00429"></a>00429         }
-<a name="l00430"></a>00430 
-<a name="l00442"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2cabbb0249ef7f4dc863a41f4f780602">00442</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a2cabbb0249ef7f4dc863a41f4f780602">create</a>($sInputName, $iUserRight = 3) {
-<a name="l00443"></a>00443                 <span class="keywordflow">if</span> (USER_RIGHT &lt; $iUserRight)
-<a name="l00444"></a>00444                         <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>);
-<a name="l00445"></a>00445 
-<a name="l00446"></a>00446                 <span class="keywordflow">else</span> {
-<a name="l00447"></a>00447                         Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId);
-<a name="l00448"></a>00448                         <span class="keywordflow">return</span> isset($this-&gt;_aRequest[$sInputName]) ? $this-&gt;_create() : $this-&gt;_showFormTemplate();
-<a name="l00449"></a>00449                 }
-<a name="l00450"></a>00450         }
-<a name="l00451"></a>00451 
-<a name="l00463"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#af2ae2849d10b72083652675c83a86bba">00463</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#af2ae2849d10b72083652675c83a86bba">update</a>($sInputName, $iUserRight = 3) {
-<a name="l00464"></a>00464                 <span class="keywordflow">if</span> (USER_RIGHT &lt; $iUserRight)
-<a name="l00465"></a>00465                         <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>);
-<a name="l00466"></a>00466 
-<a name="l00467"></a>00467                 <span class="keywordflow">else</span> {
-<a name="l00468"></a>00468                         Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId);
-<a name="l00469"></a>00469                         <span class="keywordflow">return</span> isset($this-&gt;_aRequest[$sInputName]) ? $this-&gt;_update() : $this-&gt;_showFormTemplate();
-<a name="l00470"></a>00470                 }
-<a name="l00471"></a>00471         }
-<a name="l00472"></a>00472 
-<a name="l00483"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a06f3121f00596563e49803010d9c4e16">00483</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a06f3121f00596563e49803010d9c4e16">destroy</a>($iUserRight = 3) {
-<a name="l00484"></a>00484                 Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId);
-<a name="l00485"></a>00485                 <span class="keywordflow">return</span> (USER_RIGHT &lt; $iUserRight) ? Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>) : $this-&gt;_destroy();
-<a name="l00486"></a>00486         }
-<a name="l00487"></a>00487 
-<a name="l00495"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aa9dd196bd5540f23989550522d1c8a4b">00495</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aa9dd196bd5540f23989550522d1c8a4b">_subscribeToNewsletter</a>($aData, $bDoubleOptIn = <span class="keyword">false</span>) {
-<a name="l00496"></a>00496                 require_once <span class="stringliteral">&#39;config/Mailchimp.inc.php&#39;</span>;
-<a name="l00497"></a>00497                 $aVars = array(<span class="stringliteral">&#39;FNAME&#39;</span> =&gt; $aData[<span class="stringliteral">&#39;name&#39;</span>], <span class="stringliteral">&#39;LNAME&#39;</span> =&gt; $aData[<span class="stringliteral">&#39;surname&#39;</span>]);
-<a name="l00498"></a>00498 
-<a name="l00499"></a>00499                 $oMCAPI = <span class="keyword">new</span> MCAPI(MAILCHIMP_API_KEY);
-<a name="l00500"></a>00500                 <span class="keywordflow">return</span> $oMCAPI-&gt;listSubscribe(MAILCHIMP_LIST_ID, $aData[<span class="stringliteral">&#39;email&#39;</span>], $aVars, <span class="stringliteral">&#39;&#39;</span>, $bDoubleOptIn);
-<a name="l00501"></a>00501         }
-<a name="l00502"></a>00502 
-<a name="l00511"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a34ad9f94e9f87083ffcd6fa9d83a1a87">00511</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a34ad9f94e9f87083ffcd6fa9d83a1a87">_unsubscribeFromNewsletter</a>($sEmail) {
-<a name="l00512"></a>00512       require_once <span class="stringliteral">&#39;config/Mailchimp.inc.php&#39;</span>;
-<a name="l00513"></a>00513 
-<a name="l00514"></a>00514     $oMCAPI = <span class="keyword">new</span> MCAPI(MAILCHIMP_API_KEY);
-<a name="l00515"></a>00515     <span class="keywordflow">return</span> $oMCAPI-&gt;listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, <span class="stringliteral">&#39;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);
-<a name="l00516"></a>00516   }
-<a name="l00517"></a>00517 }
+<a name="l00232"></a>00232     <span class="keywordflow">if</span> (CLEAR_CACHE == <span class="keyword">true</span>)
+<a name="l00233"></a>00233       $this-&gt;oSmarty-&gt;clearAllCache();
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235     $bUseFacebook = class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\FacebookCMS&#39;</span>) ? <span class="keyword">true</span> : <span class="keyword">false</span>;
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237     <span class="keywordflow">if</span>($bUseFacebook == <span class="keyword">true</span>) {
+<a name="l00238"></a>00238       $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;FACEBOOK_ADMIN_ID&#39;</span>, FACEBOOK_ADMIN_ID); # required <span class="keywordflow">for</span> meta only
+<a name="l00239"></a>00239       $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;FACEBOOK_APP_ID&#39;</span>, FACEBOOK_APP_ID); # required <span class="keywordflow">for</span> facebook actions
+<a name="l00240"></a>00240     }
+<a name="l00241"></a>00241 
+<a name="l00242"></a>00242 <span class="preprocessor">                # Define smarty constants</span>
+<a name="l00243"></a>00243 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;AJAX_REQUEST&#39;</span>, AJAX_REQUEST);
+<a name="l00244"></a>00244                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;CURRENT_URL&#39;</span>, CURRENT_URL);
+<a name="l00245"></a>00245                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;MOBILE&#39;</span>, MOBILE);
+<a name="l00246"></a>00246                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;MOBILE_DEVICE&#39;</span>, MOBILE_DEVICE);
+<a name="l00247"></a>00247                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;THUMB_DEFAULT_X&#39;</span>, THUMB_DEFAULT_X);
+<a name="l00248"></a>00248                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;VERSION&#39;</span>, VERSION);
+<a name="l00249"></a>00249                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_COMPRESS_FILES&#39;</span>, WEBSITE_COMPRESS_FILES);
+<a name="l00250"></a>00250                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_LANGUAGE&#39;</span>, WEBSITE_LANGUAGE);
+<a name="l00251"></a>00251                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_LOCALE&#39;</span>, WEBSITE_LOCALE);
+<a name="l00252"></a>00252                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_NAME&#39;</span>, WEBSITE_NAME);
+<a name="l00253"></a>00253                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_URL&#39;</span>, WEBSITE_URL);
+<a name="l00254"></a>00254                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;WEBSITE_TRACKING_CODE&#39;</span>, WEBSITE_TRACKING_CODE);
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256                 <span class="keywordflow">foreach</span> ($this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>] as $sKey =&gt; $sData)
+<a name="l00257"></a>00257                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;USER_&#39;</span> . strtoupper($sKey), $sData);
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259 <span class="preprocessor">                # Define system variables</span>
+<a name="l00260"></a>00260 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_date_&#39;</span>, date(<span class="stringliteral">&#39;Y-m-d&#39;</span>));
+<a name="l00261"></a>00261                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_compress_files_suffix_&#39;</span>, WEBSITE_COMPRESS_FILES == <span class="keyword">true</span> ? <span class="stringliteral">&#39;.min&#39;</span> : <span class="stringliteral">&#39;&#39;</span>);
+<a name="l00262"></a>00262                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_facebook_plugin_&#39;</span>, $bUseFacebook);
+<a name="l00263"></a>00263                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_json_language_&#39;</span>, $this-&gt;oI18n-&gt;getJson());
+<a name="l00264"></a>00264                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_pubdate_&#39;</span>, date(<span class="charliteral">&#39;r&#39;</span>));
+<a name="l00265"></a>00265                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_request_id_&#39;</span>, $this-&gt;_iId);
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267 <span class="preprocessor">                # Include Google Adsense</span>
+<a name="l00268"></a>00268 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Adsense&#39;</span>)) {
+<a name="l00269"></a>00269                         $oAdsense = <span class="keyword">new</span> Adsense();
+<a name="l00270"></a>00270                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_adsense_&#39;</span>, $oAdsense-&gt;show());
+<a name="l00271"></a>00271                 }
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273 <span class="preprocessor">                # Include news archive</span>
+<a name="l00274"></a>00274 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Archive&#39;</span>)) {
+<a name="l00275"></a>00275                         $oArchive = <span class="keyword">new</span> Archive($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00276"></a>00276                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_archive_&#39;</span>, $oArchive-&gt;show());
+<a name="l00277"></a>00277                 }
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279 <span class="preprocessor">                # Include latest headlines</span>
+<a name="l00280"></a>00280 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Headlines&#39;</span>)) {
+<a name="l00281"></a>00281                         $oHeadlines = <span class="keyword">new</span> Headlines($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00282"></a>00282                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_headlines_&#39;</span>, $oHeadlines-&gt;show());
+<a name="l00283"></a>00283                 }
+<a name="l00284"></a>00284 
+<a name="l00285"></a>00285 <span class="preprocessor">                # Include latest teaser</span>
+<a name="l00286"></a>00286 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (class_exists(<span class="stringliteral">&#39;\CandyCMS\Plugin\Teaser&#39;</span>)) {
+<a name="l00287"></a>00287                         $oTeaser = <span class="keyword">new</span> Teaser($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00288"></a>00288                         $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_plugin_teaser_&#39;</span>, $oTeaser-&gt;show());
+<a name="l00289"></a>00289                 }
+<a name="l00290"></a>00290 
+<a name="l00291"></a>00291 <span class="preprocessor">                # Set up language</span>
+<a name="l00292"></a>00292 <span class="preprocessor"></span>                $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;lang&#39;</span>, $this-&gt;oI18n-&gt;getArray());
+<a name="l00293"></a>00293 
+<a name="l00294"></a>00294                 <span class="keywordflow">return</span> $this-&gt;oSmarty;
+<a name="l00295"></a>00295         }
+<a name="l00296"></a>00296 
+<a name="l00304"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a0453b98f1810298002fd860b05676f64">00304</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a0453b98f1810298002fd860b05676f64">_setDescription</a>($sDescription = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00305"></a>00305                 $this-&gt;_sDescription = &amp; $sDescription;
+<a name="l00306"></a>00306         }
+<a name="l00307"></a>00307 
+<a name="l00315"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a7cd8f3a1d77d5b3379fbca72951a72e9">00315</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a7cd8f3a1d77d5b3379fbca72951a72e9">getDescription</a>() {
+<a name="l00316"></a>00316 <span class="preprocessor">                # Show default description if this is our landing page or we got no descrption.</span>
+<a name="l00317"></a>00317 <span class="preprocessor"></span>                <span class="keywordflow">if</span> (WEBSITE_LANDING_PAGE == substr($_SERVER[<span class="stringliteral">&#39;REQUEST_URI&#39;</span>], 1, strlen($_SERVER[<span class="stringliteral">&#39;REQUEST_URI&#39;</span>])) || empty($this-&gt;_sDescription))
+<a name="l00318"></a>00318                         <span class="keywordflow">return</span> $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;website.description&#39;</span>);
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320 <span class="preprocessor">                # We got no description. Fall back to default description.</span>
+<a name="l00321"></a>00321 <span class="preprocessor"></span>                <span class="keywordflow">else</span>
+<a name="l00322"></a>00322                         <span class="keywordflow">return</span> $this-&gt;_sDescription;
+<a name="l00323"></a>00323         }
+<a name="l00324"></a>00324 
+<a name="l00332"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a3a498108dd3421d341b3a31470924c36">00332</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a3a498108dd3421d341b3a31470924c36">_setKeywords</a>($sKeywords = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00333"></a>00333                 $this-&gt;_sKeywords = &amp; $sKeywords;
+<a name="l00334"></a>00334         }
+<a name="l00335"></a>00335 
+<a name="l00343"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a87f0346d480d527c0b1a0c9c0777b565">00343</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a87f0346d480d527c0b1a0c9c0777b565">getKeywords</a>() {
+<a name="l00344"></a>00344                 <span class="keywordflow">return</span> !empty($this-&gt;_sKeywords) ? Helper::removeSlahes($this-&gt;_sKeywords) : $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;website.keywords&#39;</span>);
+<a name="l00345"></a>00345         }
+<a name="l00346"></a>00346 
+<a name="l00354"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac8012f147c86cbf0295ad6c6b3788378">00354</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac8012f147c86cbf0295ad6c6b3788378">_setTitle</a>($sTitle = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00355"></a>00355                 $this-&gt;_sTitle = &amp; $sTitle;
+<a name="l00356"></a>00356         }
+<a name="l00357"></a>00357 
+<a name="l00365"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a166f5f4010186fe46663f14ab61594b1">00365</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a166f5f4010186fe46663f14ab61594b1">getTitle</a>() {
+<a name="l00366"></a>00366                 <span class="keywordflow">return</span> !empty($this-&gt;_sTitle) ? Helper::removeSlahes($this-&gt;_sTitle) : $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.404.title&#39;</span>);
+<a name="l00367"></a>00367         }
+<a name="l00368"></a>00368 
+<a name="l00377"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a328e7f593e678d450ba26acde29e23a2">00377</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a328e7f593e678d450ba26acde29e23a2">_setContent</a>($sContent) {
+<a name="l00378"></a>00378                 $this-&gt;_sContent = &amp; $sContent;
+<a name="l00379"></a>00379         }
+<a name="l00380"></a>00380 
+<a name="l00388"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac9f34047f2fb5135dad69bad9ccb234b">00388</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac9f34047f2fb5135dad69bad9ccb234b">getContent</a>() {
+<a name="l00389"></a>00389                 <span class="keywordflow">return</span> $this-&gt;_sContent;
+<a name="l00390"></a>00390         }
+<a name="l00391"></a>00391 
+<a name="l00399"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac63855f98681577302003d3b39bf4ace">00399</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#ac63855f98681577302003d3b39bf4ace">getId</a>() {
+<a name="l00400"></a>00400                 <span class="keywordflow">return</span> !empty($this-&gt;_iId) ? $this-&gt;_iId : <span class="stringliteral">&#39;&#39;</span>;
+<a name="l00401"></a>00401         }
+<a name="l00402"></a>00402 
+<a name="l00411"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a942ea70ecd7021e6228164019e0add1e">00411</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a942ea70ecd7021e6228164019e0add1e">_removeHighlight</a>($sTitle) {
+<a name="l00412"></a>00412                 $sTitle = Helper::removeSlahes($sTitle);
+<a name="l00413"></a>00413                 $sTitle = str_replace(<span class="stringliteral">&#39;&lt;mark&gt;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sTitle);
+<a name="l00414"></a>00414                 $sTitle = str_replace(<span class="stringliteral">&#39;&lt;/mark&gt;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, $sTitle);
+<a name="l00415"></a>00415                 <span class="keywordflow">return</span> $sTitle;
+<a name="l00416"></a>00416         }
+<a name="l00417"></a>00417 
+<a name="l00426"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a447b426e90e93ea956d9af6bd54d3451">00426</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a447b426e90e93ea956d9af6bd54d3451">_setError</a>($sField, $sMessage = <span class="stringliteral">&#39;&#39;</span>) {
+<a name="l00427"></a>00427                 <span class="keywordflow">if</span> (!isset($this-&gt;_aRequest[$sField]) || empty($this-&gt;_aRequest[$sField]))
+<a name="l00428"></a>00428                         $this-&gt;_aError[<span class="stringliteral">&#39;error&#39;</span>][$sField] = empty($sMessage) ? $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.form.missing.&#39;</span> . strtoupper($sField)) : $sMessage;
+<a name="l00429"></a>00429 
+<a name="l00430"></a>00430                 <span class="keywordflow">if</span> (isset($this-&gt;_aRequest[<span class="stringliteral">&#39;email&#39;</span>]) &amp;&amp; ( Helper::checkEmailAddress($this-&gt;_aRequest[<span class="stringliteral">&#39;email&#39;</span>]) == <span class="keyword">false</span> ) &amp;&amp;
+<a name="l00431"></a>00431                                                 <span class="stringliteral">&#39;blog&#39;</span> !== $this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>])
+<a name="l00432"></a>00432                         $this-&gt;_aError[<span class="stringliteral">&#39;error&#39;</span>][<span class="stringliteral">&#39;email&#39;</span>] = $this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.form.missing.email&#39;</span>);
+<a name="l00433"></a>00433         }
+<a name="l00434"></a>00434 
+<a name="l00446"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a18c92b9d18bf2fa74c639248238615ee">00446</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a18c92b9d18bf2fa74c639248238615ee">create</a>($sInputName, $iUserRole = 3) {
+<a name="l00447"></a>00447                 <span class="keywordflow">if</span> ($this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;role&#39;</span>] &lt; $iUserRole)
+<a name="l00448"></a>00448                         <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>);
+<a name="l00449"></a>00449 
+<a name="l00450"></a>00450                 <span class="keywordflow">else</span> {
+<a name="l00451"></a>00451                         Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId, $this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>]);
+<a name="l00452"></a>00452                         <span class="keywordflow">return</span> isset($this-&gt;_aRequest[$sInputName]) ? $this-&gt;_create() : $this-&gt;_showFormTemplate();
+<a name="l00453"></a>00453                 }
+<a name="l00454"></a>00454         }
+<a name="l00455"></a>00455 
+<a name="l00467"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#adafa84f4e72bb497078e8fc32f4117d9">00467</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#adafa84f4e72bb497078e8fc32f4117d9">update</a>($sInputName, $iUserRole = 3) {
+<a name="l00468"></a>00468                 <span class="keywordflow">if</span> ($this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;role&#39;</span>] &lt; $iUserRole)
+<a name="l00469"></a>00469                         <span class="keywordflow">return</span> Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>);
+<a name="l00470"></a>00470 
+<a name="l00471"></a>00471                 <span class="keywordflow">else</span> {
+<a name="l00472"></a>00472                         Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId, $this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>]);
+<a name="l00473"></a>00473                         <span class="keywordflow">return</span> isset($this-&gt;_aRequest[$sInputName]) ? $this-&gt;_update() : $this-&gt;_showFormTemplate();
+<a name="l00474"></a>00474                 }
+<a name="l00475"></a>00475         }
+<a name="l00476"></a>00476 
+<a name="l00487"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#af0d851e5ccf17cb91ce6792ba659172a">00487</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#af0d851e5ccf17cb91ce6792ba659172a">destroy</a>($iUserRole = 3) {
+<a name="l00488"></a>00488                 Log::insert($this-&gt;_aRequest[<span class="stringliteral">&#39;section&#39;</span>], $this-&gt;_aRequest[<span class="stringliteral">&#39;action&#39;</span>], $this-&gt;_iId, $this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;id&#39;</span>]);
+<a name="l00489"></a>00489                 <span class="keywordflow">return</span> ($this-&gt;_aSession[<span class="stringliteral">&#39;userdata&#39;</span>][<span class="stringliteral">&#39;role&#39;</span>] &lt; $iUserRole) ?
+<a name="l00490"></a>00490             Helper::errorMessage($this-&gt;oI18n-&gt;get(<span class="stringliteral">&#39;error.missing.permission&#39;</span>), <span class="charliteral">&#39;/&#39;</span>) :
+<a name="l00491"></a>00491             $this-&gt;_destroy();
+<a name="l00492"></a>00492         }
+<a name="l00493"></a>00493 
+<a name="l00501"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aed0ae5669f189bda101766882601c08a">00501</a>         <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#aed0ae5669f189bda101766882601c08a">_subscribeToNewsletter</a>($aData, $bDoubleOptIn = <span class="keyword">false</span>) {
+<a name="l00502"></a>00502                 require_once <span class="stringliteral">&#39;config/Mailchimp.inc.php&#39;</span>;
+<a name="l00503"></a>00503                 $aVars = array(<span class="stringliteral">&#39;FNAME&#39;</span> =&gt; $aData[<span class="stringliteral">&#39;name&#39;</span>], <span class="stringliteral">&#39;LNAME&#39;</span> =&gt; $aData[<span class="stringliteral">&#39;surname&#39;</span>]);
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505                 $oMCAPI = <span class="keyword">new</span> MCAPI(MAILCHIMP_API_KEY);
+<a name="l00506"></a>00506                 <span class="keywordflow">return</span> $oMCAPI-&gt;listSubscribe(MAILCHIMP_LIST_ID, $aData[<span class="stringliteral">&#39;email&#39;</span>], $aVars, <span class="stringliteral">&#39;&#39;</span>, $bDoubleOptIn);
+<a name="l00507"></a>00507         }
+<a name="l00508"></a>00508 
+<a name="l00517"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a9a587b6e069c1e4da927ae9cbd04e87e">00517</a>   <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html#a9a587b6e069c1e4da927ae9cbd04e87e">_unsubscribeFromNewsletter</a>($sEmail) {
+<a name="l00518"></a>00518       require_once <span class="stringliteral">&#39;config/Mailchimp.inc.php&#39;</span>;
+<a name="l00519"></a>00519 
+<a name="l00520"></a>00520     $oMCAPI = <span class="keyword">new</span> MCAPI(MAILCHIMP_API_KEY);
+<a name="l00521"></a>00521     <span class="keywordflow">return</span> $oMCAPI-&gt;listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, <span class="stringliteral">&#39;&#39;</span>, <span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>);
+<a name="l00522"></a>00522   }
+<a name="l00523"></a>00523 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -356,7 +362,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -369,7 +375,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Main.controller.php</b>      </li>
 
-    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
+    <li class="footer">Generated on Thu Jan 5 2012 13:53:45 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>

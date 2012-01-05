@@ -226,7 +226,7 @@ abstract class Main {
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->oSmarty = new Smarty();
-		$this->oSmarty->cache_dir = CACHE_DIR;
+		$this->oSmarty->cache_dir   = CACHE_DIR;
 		$this->oSmarty->compile_dir = COMPILE_DIR;
 
     if (CLEAR_CACHE == true)

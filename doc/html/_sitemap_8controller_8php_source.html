@@ -53,8 +53,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="namespaces.html"><span>Packages</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -105,50 +105,54 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00014"></a>00014 use CandyCMS\Helper\Helper as Helper;
 <a name="l00015"></a>00015 use CandyCMS\Model\Blog as Model_Blog;
 <a name="l00016"></a>00016 use CandyCMS\Model\Content as Model_Content;
-<a name="l00017"></a>00017 use CandyCMS\Model\Gallery as Model_Gallery;
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 require_once <span class="stringliteral">&#39;app/models/Blog.model.php&#39;</span>;
-<a name="l00020"></a>00020 require_once <span class="stringliteral">&#39;app/models/Content.model.php&#39;</span>;
-<a name="l00021"></a>00021 require_once <span class="stringliteral">&#39;app/models/Gallery.model.php&#39;</span>;
-<a name="l00022"></a>00022 
-<a name="l00023"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">00023</a> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">Sitemap</a> <span class="keyword">extends</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">Main</a> {
+<a name="l00017"></a>00017 use CandyCMS\Model\Download as Model_Download;
+<a name="l00018"></a>00018 use CandyCMS\Model\Gallery as Model_Gallery;
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 require_once <span class="stringliteral">&#39;app/models/Blog.model.php&#39;</span>;
+<a name="l00021"></a>00021 require_once <span class="stringliteral">&#39;app/models/Content.model.php&#39;</span>;
+<a name="l00022"></a>00022 require_once <span class="stringliteral">&#39;app/models/Download.model.php&#39;</span>;
+<a name="l00023"></a>00023 require_once <span class="stringliteral">&#39;app/models/Gallery.model.php&#39;</span>;
 <a name="l00024"></a>00024 
-<a name="l00032"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#aaff754d9bd1dfde1df22945743970c95">00032</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#aaff754d9bd1dfde1df22945743970c95">showXML</a>() {
-<a name="l00033"></a>00033                 Header(<span class="stringliteral">&#39;Content-Type: text/xml&#39;</span>);
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_website_landing_page_&#39;</span>, WEBSITE_URL . <span class="charliteral">&#39;/&#39;</span> . WEBSITE_LANDING_PAGE);
-<a name="l00036"></a>00036                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_website_url_&#39;</span>, WEBSITE_URL);
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038                 $this-&gt;_getSitemap();
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040     $sTemplateDir = Helper::getTemplateDir(<span class="stringliteral">&#39;sitemaps&#39;</span>, <span class="stringliteral">&#39;xml&#39;</span>);
-<a name="l00041"></a>00041     $this-&gt;oSmarty-&gt;template_dir = $sTemplateDir;
-<a name="l00042"></a>00042     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;xml&#39;</span>));
-<a name="l00043"></a>00043         }
-<a name="l00044"></a>00044 
-<a name="l00052"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#a2b8e3779f5bd8c38f70307574859bd36">00052</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#a2b8e3779f5bd8c38f70307574859bd36">show</a>() {
-<a name="l00053"></a>00053                 $this-&gt;_getSitemap();
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055     $sTemplateDir = Helper::getTemplateDir(<span class="stringliteral">&#39;sitemaps&#39;</span>, <span class="stringliteral">&#39;show&#39;</span>);
-<a name="l00056"></a>00056     $this-&gt;oSmarty-&gt;template_dir = $sTemplateDir;
-<a name="l00057"></a>00057     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;show&#39;</span>));
-<a name="l00058"></a>00058         }
-<a name="l00059"></a>00059 
-<a name="l00066"></a>00066         <span class="keyword">private</span> <span class="keyword">function</span> _getSitemap() {
-<a name="l00067"></a>00067                 $oBlog = <span class="keyword">new</span> Model_Blog();
-<a name="l00068"></a>00068                 $aBlog = $oBlog-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, 1000);
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070                 $oContent = <span class="keyword">new</span> Model_Content();
-<a name="l00071"></a>00071                 $aContent = $oContent-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, 1000);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073                 $oGallery = <span class="keyword">new</span> Model_Gallery();
-<a name="l00074"></a>00074                 $aGallery = $oGallery-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, 1000);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;blog&#39;</span>, $aBlog);
-<a name="l00077"></a>00077                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;content&#39;</span>, $aContent);
-<a name="l00078"></a>00078                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;gallery&#39;</span>, $aGallery);
-<a name="l00079"></a>00079         }
-<a name="l00080"></a>00080 }
+<a name="l00025"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">00025</a> <span class="keyword">class </span><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html">Sitemap</a> <span class="keyword">extends</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_main.html">Main</a> {
+<a name="l00026"></a>00026 
+<a name="l00034"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#ad5c382585829d3391bf1d9eba8de880f">00034</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#ad5c382585829d3391bf1d9eba8de880f">showXML</a>() {
+<a name="l00035"></a>00035                 Header(<span class="stringliteral">&#39;Content-Type: text/xml&#39;</span>);
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;_website_landing_page_&#39;</span>, WEBSITE_URL . <span class="charliteral">&#39;/&#39;</span> . WEBSITE_LANDING_PAGE);
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039                 $this-&gt;_getSitemap();
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041     $sTemplateDir = Helper::getTemplateDir(<span class="stringliteral">&#39;sitemaps&#39;</span>, <span class="stringliteral">&#39;xml&#39;</span>);
+<a name="l00042"></a>00042     $this-&gt;oSmarty-&gt;template_dir = $sTemplateDir;
+<a name="l00043"></a>00043     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;xml&#39;</span>));
+<a name="l00044"></a>00044         }
+<a name="l00045"></a>00045 
+<a name="l00053"></a><a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#affc6021db3d643097692a19d8e642d09">00053</a>         <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_candy_c_m_s_1_1_controller_1_1_sitemap.html#affc6021db3d643097692a19d8e642d09">show</a>() {
+<a name="l00054"></a>00054                 $this-&gt;_getSitemap();
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056     $sTemplateDir = Helper::getTemplateDir(<span class="stringliteral">&#39;sitemaps&#39;</span>, <span class="stringliteral">&#39;show&#39;</span>);
+<a name="l00057"></a>00057     $this-&gt;oSmarty-&gt;template_dir = $sTemplateDir;
+<a name="l00058"></a>00058     <span class="keywordflow">return</span> $this-&gt;oSmarty-&gt;fetch(Helper::getTemplateType($sTemplateDir, <span class="stringliteral">&#39;show&#39;</span>));
+<a name="l00059"></a>00059         }
+<a name="l00060"></a>00060 
+<a name="l00067"></a>00067         <span class="keyword">private</span> <span class="keyword">function</span> _getSitemap() {
+<a name="l00068"></a>00068                 $oBlog = <span class="keyword">new</span> Model_Blog($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00069"></a>00069                 $aBlog = $oBlog-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, 1000);
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071                 $oContent = <span class="keyword">new</span> Model_Content($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00072"></a>00072                 $aContent = $oContent-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, 1000);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074                 $oGallery = <span class="keyword">new</span> Model_Gallery($this-&gt;_aRequest, $this-&gt;_aSession);
+<a name="l00075"></a>00075                 $aGallery = $oGallery-&gt;getData(<span class="stringliteral">&#39;&#39;</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, 1000);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077 <span class="preprocessor">                #$oDownload = new Model_Download($this-&gt;_aRequest, $this-&gt;_aSession);</span>
+<a name="l00078"></a>00078 <span class="preprocessor"></span><span class="preprocessor">                #$aDownload = $oDownload-&gt;getData(&#39;&#39;, false);</span>
+<a name="l00079"></a>00079 <span class="preprocessor"></span>
+<a name="l00080"></a>00080                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;blog&#39;</span>, $aBlog);
+<a name="l00081"></a>00081                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;content&#39;</span>, $aContent);
+<a name="l00082"></a>00082                 $this-&gt;oSmarty-&gt;assign(<span class="stringliteral">&#39;gallery&#39;</span>, $aGallery);
+<a name="l00083"></a>00083         }
+<a name="l00084"></a>00084 }
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -156,7 +160,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -169,7 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul>
       <li class="navelem"><b>Sitemap.controller.php</b>      </li>
 
-    <li class="footer">Generated on Wed Dec 7 2011 17:46:19 for CandyCMS by
+    <li class="footer">Generated on Thu Jan 5 2012 13:53:45 for CandyCMS by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.6 </li>
    </ul>

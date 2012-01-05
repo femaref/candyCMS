@@ -204,11 +204,13 @@ class Index {
    *
    */
   public function getCronjob() {
+    $iId = isset($this->_aSession['userdata']['id']) ? (int) $this->_aSession['userdata']['id'] : 0;
+
     if (class_exists('\CandyCMS\Plugin\Cronjob')) {
       if (Cronjob::getNextUpdate() == true) {
 					Cronjob::cleanup();
 					Cronjob::optimize();
-					Cronjob::backup($this->_aSession['userdata']['id']);
+					Cronjob::backup($iId);
       }
     }
   }

@@ -10,3 +10,7 @@
   <h2>This is a teaser</h2>
   {$_plugin_teaser_}
 {/if}
+{if isset($_plugin_adsense_)}
+  <h2>This is a adsense</h2>
+  {$_plugin_adsense_}
+{/if}

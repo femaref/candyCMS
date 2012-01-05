@@ -183,7 +183,6 @@ class User extends Main {
         $iId = $aRow['id'];
 
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
-        $this->_aData[$iId]['last_login'] = $aRow['last_login'] > 0 ? Helper::formatTimestamp($aRow['last_login'], 1) : '-';
       }
 
     }
@@ -209,10 +208,8 @@ class User extends Main {
 			if ($bUpdate == true)
 				$this->_aData = $this->_formatForUpdate($aRow);
 
-			else {
+			else
 				$this->_aData[1] = $this->_formatForOutput($aRow, 'user');
-				$this->_aData[1]['last_login'] = Helper::formatTimestamp($aRow['last_login'], true);
-			}
     }
 
     return $this->_aData;

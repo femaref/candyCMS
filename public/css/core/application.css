@@ -347,3 +347,7 @@ table th {
 table .left, #user table.user td, #calendar table td {
   text-align:left;
 }
+
+#archive ul, #headlines ul {
+  margin:15px;
+}

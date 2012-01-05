@@ -58,7 +58,7 @@ function search($sPath, $sType) {
 }
 
 function compress($sType, $sFileUrl, $sFileUrlMin) {
-  $sCmd = 'java -jar ' . __DIR__ . '/build/yuicompressor-2.4.6.jar --type ' . $sType . ' --charset UTF-8 ' . $sFileUrl . ' -o ' . $sFileUrlMin;
+  $sCmd = 'java -jar ' . __DIR__ . '/build/yuicompressor-2.4.7.jar --type ' . $sType . ' --charset UTF-8 ' . $sFileUrl . ' -o ' . $sFileUrlMin;
   exec($sCmd);
   return $sCmd . '<br />';
 }

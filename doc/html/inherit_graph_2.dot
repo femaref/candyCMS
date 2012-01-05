@@ -1,7 +1,0 @@
-digraph G
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="I18n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_candy_c_m_s_1_1_helper_1_1_i18n.html"];
-}

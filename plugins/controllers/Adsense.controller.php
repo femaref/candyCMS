@@ -18,7 +18,7 @@ final class Adsense {
 
   public final function show() {
     $oSmarty = new \Smarty();
-    $oSmarty->cache_dir = CACHE_DIR;
+    $oSmarty->cache_dir   = CACHE_DIR;
     $oSmarty->compile_dir = COMPILE_DIR;
 
     $oSmarty->template_dir = Helper::getPluginTemplateDir('adsense', 'show');
