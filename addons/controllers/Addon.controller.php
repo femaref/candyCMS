@@ -9,14 +9,16 @@
  * @since 1.5
  */
 
-namespace CandyCMS\Addon;
+namespace CandyCMS\Addon\Controller;
 
-if (!class_exists('\CandyCMS\Controller\Section'))
+use CandyCMS\Helper\Helper as Helper;
+
+if (!class_exists('\CandyCMS\Helper\Section'))
   require_once 'app/helpers/Section.helper.php';
 
-final class Addon extends \CandyCMS\Helper\Section {
+class Addon extends \CandyCMS\Helper\Section {
 
-  public final function getSection() {
+  public function getSection() {
 
     switch (strtolower($this->_aRequest['section'])) {
       default:

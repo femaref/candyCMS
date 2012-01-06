@@ -49,8 +49,6 @@ class Blog extends Main {
             !isset($this->_aRequest['parent_id']))
       $this->_iId = '';
 
-    #die(print_r($this->_aRequest));
-
     $this->__autoload('Comment');
     $this->_aData = $this->_oModel->getData($this->_iId);
 

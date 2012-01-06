@@ -84,6 +84,7 @@ class Content extends Main {
       $this->_aData['teaser']   = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
       $this->_aData['keywords'] = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
       $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $this->_aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
     }
 
     foreach($this->_aData as $sColumn => $sData)

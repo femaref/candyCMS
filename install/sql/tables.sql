@@ -41,8 +41,8 @@ CREATE TABLE `contents` (
   `teaser` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `keywords` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `date` int(11) NOT NULL,
-  `contents` ADD `published` TINYINT(1)  NOT NULL  DEFAULT '0',
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -143,13 +143,11 @@ CREATE TABLE `users` (
   `content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `receive_newsletter` tinyint(1) NOT NULL DEFAULT '1',
   `use_gravatar` tinyint(1) DEFAULT '0',
-  `session` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` tinyint(1) NOT NULL DEFAULT '1',
   `date` int(11) DEFAULT NULL,
-  `verification_code` varchar(12) COLLATE latin1_general_ci DEFAULT NULL,
+  `verification_code` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   `api_token` VARCHAR(32)  NOT NULL  DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  KEY `name` (`name`),
-  KEY `user_right` (`user_right`)
+  KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
