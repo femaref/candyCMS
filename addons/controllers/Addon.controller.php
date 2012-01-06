@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.5
+ * @see app/helpers/Section.helper.php
  */
 
 namespace CandyCMS\Addon\Controller;
@@ -31,13 +32,15 @@ class Addon extends \CandyCMS\Helper\Section {
 
         break;
 
-      # This is a sample addon to manage a downloads section
+      # This is an example of how to create a addon.
+      # For more information take a look at "app/helpers/Section.helper.php"
       case 'sample':
 
         require_once 'addons/controllers/Sample.controller.php';
-        $oSample = new Addon_Sample($this->_aRequest, $this->_aSession, $this->_aFile);
+        $this->_oObject = new Addon_Sample($this->_aRequest, $this->_aSession, $this->_aFile);
+        $this->_oObject->__init();
 
-        parent::_setContent($oSample->show());
+        parent::_setContent($this->_oObject->show());
         parent::_setDescription('My description');
         parent::_setKeywords('Keyword,Keyword,Keyword');
         parent::_setTitle('Sample');

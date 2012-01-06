@@ -8,7 +8,7 @@
           <a href="/{$table.section}/{$data.id}/highlight/{$string}">
             {$data.title}
           </a>,
-          {$data.date}
+          {$data.datetime}
         </li>
       {/if}
     {/foreach}
