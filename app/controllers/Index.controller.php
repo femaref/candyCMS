@@ -11,7 +11,7 @@
 
 namespace CandyCMS\Controller;
 
-use CandyCMS\Addon\Addon as Addon;
+use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Section as Section;

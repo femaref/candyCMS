@@ -163,7 +163,7 @@ class Blog extends Main {
    * @return array data from _setData
    *
    */
-  public final function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     $this->_iId = & $iId;
     return $this->_setData($bUpdate, $iLimit);
   }

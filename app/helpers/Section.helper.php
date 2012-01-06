@@ -11,7 +11,7 @@
 
 namespace CandyCMS\Helper;
 
-use CandyCMS\Addon\Addon as Addon;
+use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Controller\Main as Main;
 use Smarty;
 

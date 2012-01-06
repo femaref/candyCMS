@@ -111,7 +111,7 @@
                 </a>
               </li>
             {/if}
-          {else}
+          {elseif $USER_ROLE < 1}
             <li>
               <a href='/newsletter' title='{$lang.newsletter.title.subscribe}'>
                 {$lang.newsletter.title.subscribe}

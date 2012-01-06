@@ -27,7 +27,7 @@ class Content extends Main {
    * @return array data
    *
    */
-  private final function _setData($bUpdate, $iLimit) {
+  private function _setData($bUpdate, $iLimit) {
     $iPublished = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
 
     # Show overview
@@ -116,7 +116,7 @@ class Content extends Main {
    * @return array data from _setData
    *
    */
-  public final function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
     $this->_iId = & $iId;
     return $this->_setData($bUpdate, $iLimit);
   }

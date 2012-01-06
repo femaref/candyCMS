@@ -123,9 +123,9 @@ switch ($_REQUEST['step']) {
 
     try {
       $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "users ( id, name, surname, password, email, ip, user_right, date )
+                                  " . SQL_PREFIX . "users ( id, name, surname, password, email, role, date )
                                 VALUES
-                                  ( :id, :name, :surname, :password, :email, :ip, :user_right, :date )");
+                                  ( :id, :name, :surname, :password, :email, :role, :date )");
 
       $iId = 1;
       $iUserRight = 4;
@@ -134,8 +134,7 @@ switch ($_REQUEST['step']) {
       $oQuery->bindParam('surname', $_SESSION['install']['surname']);
       $oQuery->bindParam('password', $sPassword);
       $oQuery->bindParam('email', $_SESSION['install']['email']);
-      $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR']);
-      $oQuery->bindParam('user_right', $iUserRight, PDO::PARAM_INT);
+      $oQuery->bindParam('role', $iUserRight, PDO::PARAM_INT);
       $oQuery->bindParam('date', time());
       $bResult = $oQuery->execute();
 
@@ -165,7 +164,7 @@ switch ($_REQUEST['step']) {
     break;
   case '4':
 
-    header('Location:../Session/create');
+    header('Location:../session/create');
 
     break;
 }
