@@ -30,12 +30,12 @@
     </p>
     {if $USER_ROLE == 4 && $USER_ID !== $uid}
       <p>
-        <label for='input-user_role'>{$lang.global.user.role}</label>
-        <select name='user_role' id="input-user_role">
-          <option value='1' {if $user_role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
-          <option value='2' {if $user_role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
-          <option value='3' {if $user_role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
-          <option value='4' {if $user_role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
+        <label for='input-role'>{$lang.global.user.role}</label>
+        <select name='role' id="input-role">
+          <option value='1' {if $role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
+          <option value='2' {if $role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
+          <option value='3' {if $role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
+          <option value='4' {if $role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
         </select>
       </p>
     {/if}

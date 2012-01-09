@@ -179,8 +179,8 @@ class User extends Main {
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
-     # Generate verification code for users (double-opt-in)
-    $iVerificationCode = Helper::createRandomChar(12);
+     # Generate verification code for users (double-opt-in) when not created by admin.
+    $iVerificationCode = $this->_aSession['userdata']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
@@ -245,8 +245,8 @@ class User extends Main {
 	 *
 	 */
 	public function update() {
-		if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId)
-			Helper::redirectTo('/user/update');
+		if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
+      Helper::redirectTo('/user/update');
 
 		if (empty($this->_iId))
 			$this->_iId = $this->_aSession['userdata']['id'];

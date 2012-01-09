@@ -117,7 +117,7 @@ class Content extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-    $this->_iId = & $iId;
+    $this->_iId = !empty($iId) ? $iId : $this->_iId;
     return $this->_setData($bUpdate, $iLimit);
   }
 

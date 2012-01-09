@@ -145,7 +145,7 @@ class Calendar extends Main {
 	 *
 	 */
 	public function getData($iId = '', $bUpdate = false) {
-    $this->_iId = & $iId;
+    $this->_iId = !empty($iId) ? $iId : $this->_iId;
 		return $this->_setData($bUpdate);
 	}
 

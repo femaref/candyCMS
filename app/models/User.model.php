@@ -166,19 +166,24 @@ class User extends Main {
     if (empty($this->_iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
-                                          id,
-                                          name,
-                                          email,
-                                          surname,
-                                          date,
-                                          use_gravatar,
-																					receive_newsletter,
-                                          verification_code,
-                                          role
+                                          u.id,
+                                          u.name,
+                                          u.email,
+                                          u.surname,
+                                          u.date,
+                                          u.use_gravatar,
+																					u.receive_newsletter,
+                                          u.verification_code,
+                                          u.role,
+                                          s.date as last_login
                                         FROM
-                                          " . SQL_PREFIX . "users
+                                          " . SQL_PREFIX . "users as u
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "sessions as s
+                                        ON
+                                          s.user_id = u.id
                                         ORDER BY
-                                          id ASC
+                                          u.id ASC
                                         LIMIT
                                           :limit");
 
@@ -195,17 +200,23 @@ class User extends Main {
         $iId = $aRow['id'];
 
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }
 
     }
     else {
       try {
 				$oQuery = $this->_oDb->prepare("SELECT
-                                          *
+                                          u.*,
+                                          s.date as last_login
                                         FROM
-                                          " . SQL_PREFIX . "users
+                                          " . SQL_PREFIX . "users as u
+                                        LEFT JOIN
+                                          " . SQL_PREFIX . "sessions as s
+                                        ON
+                                          s.user_id = u.id
                                         WHERE
-                                          id = :id
+                                          u.id = :id
                                         LIMIT 1");
 
 				$oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
@@ -220,8 +231,10 @@ class User extends Main {
 			if ($bUpdate == true)
 				$this->_aData = $this->_formatForUpdate($aRow);
 
-			else
+			else {
 				$this->_aData[1] = $this->_formatForOutput($aRow, 'user');
+        $this->_aData[1]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
+      }
     }
 
     return $this->_aData;
@@ -239,7 +252,7 @@ class User extends Main {
    *
    */
   public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
-    $this->_iId = & $iId;
+    $this->_iId = !empty($iId) ? $iId : $this->_iId;
 
 		if ($bForceNoId == true)
 			$this->_iId = '';
@@ -256,10 +269,7 @@ class User extends Main {
    * @override app/models/Main.model.php
    *
    */
-  public function create($iVerificationCode) {
-    if (empty($iVerificationCode))
-      die('No verification code given.');
-
+  public function create($iVerificationCode = '') {
 		try {
 			$oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
@@ -341,12 +351,15 @@ class User extends Main {
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user roles
-    if (($iId !== $this->_aSession['userdata']['id']) && $this->_aSession['userdata']['role'] == 4)
+    # There was a bug with "$iId !== $this->_aSession['userdata']['id']". Why didn't it work?
+    if ($iId <> $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4)
       $iUserRole = isset($this->_aRequest['role']) && !empty($this->_aRequest['role']) ?
               (int) $this->_aRequest['role'] :
               1;
     else
-      $iUserRole = $this->_aSession['userdata']['role'];
+      $iUserRole = & $this->_aSession['userdata']['role'];
+
+    #die(print_r($this->_aRequest));
 
     # Get my active password
     $sPassword = $this->_getPassword($iId);

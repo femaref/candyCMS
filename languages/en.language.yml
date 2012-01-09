@@ -127,8 +127,8 @@ global:
     at: Uploaded at
     upload: Upload
   user:
-    right: Userright
-    rights:
+    role: Userright
+    roles:
       0: Guest
       1: Member
       2: special Member

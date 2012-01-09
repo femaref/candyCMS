@@ -128,8 +128,8 @@ global:
     at: Datum des Hochladens
     upload: Upload
   user:
-    right: Userrecht
-    rights:
+    role: Userrecht
+    roles:
       0: Gast
       1: Mitglied
       2: Facebook-Nutzer

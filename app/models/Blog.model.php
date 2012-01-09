@@ -164,7 +164,7 @@ class Blog extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
-    $this->_iId = & $iId;
+    $this->_iId = !empty($iId) ? $iId : $this->_iId;
     return $this->_setData($bUpdate, $iLimit);
   }
 
