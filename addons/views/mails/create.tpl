@@ -3,7 +3,7 @@
     <tr>
       <th colspan='2'>{$lang.global.email.send} {$contact.name} {$contact.surname}</th>
     </tr>
-    <tr class='row1{if $error_content} error{/if}'>
+    <tr class='row1{if isset($error_content)} error{/if}'>
       <td class='td_left'>
         <label for='content'>Ihre Nachricht</label>
       </td>
@@ -11,20 +11,20 @@
         <div class="textarea">
           <textarea name='content' id='content'
                     rows='12' cols='50'>{$content}</textarea>
-          {if $error_content}
+          {if isset($error_content)}
             <div class="description">{$error_content}</div>
           {/if}
         </div>
       </td>
     </tr>
-    <tr class='row2{if $error_name} error{/if}'>
+    <tr class='row2{if isset($error_name)} error{/if}'>
       <td class='td_left'>
         <label for='name'>Wer sind Sie?</label>
       </td>
       <td class='td_right'>
         <div class="input">
-          <input name='name' id='name' value='{$name}' type='text' />
-          {if $error_name}
+          <input name='name' id='name' value='' type='text' />
+          {if isset($error_name)}
             <div class="description">{$error_name}</div>
           {/if}
         </div>

@@ -31,7 +31,7 @@
   {if $smarty.get.action === 'update'}
     <p>
       <label for='input-show_update'>{$lang.global.update.show}</label>
-      <input type='checkbox' name='show_update' value='1' id="input-show_update" />
+      <input type='checkbox' name='show_update' value='1' id="input-show_update" {if $date_modified == true}checked{/if}/>
     </p>
   {/if}
   <p class="center">

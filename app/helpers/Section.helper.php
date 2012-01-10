@@ -387,14 +387,13 @@ class Section extends Main {
         # TODO
 				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
 					parent::_setContent($this->_oObject->updatePassword());
-					parent::_setDescription($this->oI18n->get('global.api_token'));
-					parent::_setTitle($this->oI18n->get('global.api_token'));
+					parent::_setDescription($this->oI18n->get('user.title.password'));
+					parent::_setTitle($this->oI18n->get('user.title.password'));
 				}
-        # TODO
 				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'avatar') {
-					parent::_setContent($this->_oObject->getToken());
-					parent::_setDescription($this->oI18n->get('global.api_token'));
-					parent::_setTitle($this->oI18n->get('global.api_token'));
+					parent::_setContent($this->_oObject->updateAvatar());
+					parent::_setDescription($this->oI18n->get('user.title.avatar'));
+					parent::_setTitle($this->oI18n->get('user.title.avatar'));
 				}
         else {
           parent::_setContent($this->_oObject->show());

@@ -36,13 +36,12 @@ h1, h2, h3,
 h1 a:link, h2 a:link, h3 a:link,
 h1 a:visited, h2 a:visited, h3 a:visited {
   font-size: 24px;
-  margin: 10px 0px 0px;
+  margin: 10px 0px;
   color: #000;
 }
 
-#download h1, #download h2,
-#calendar h1, #calendar h2 {
-  margin:10px 0px;
+#blog h1, #blog h2 {
+  margin: 10px 0px 0px;
 }
 
 h3, #comments blockquote h3 {
@@ -371,6 +370,12 @@ form input[type="reset"]:hover {
 /* Mostly delete button */
 form input[type="button"] {
   color:red;
+}
+
+form input[type="checkbox"] {
+  float: left;
+  display: block;
+  margin: 3px 10px 0px 0px;
 }
 
 table {

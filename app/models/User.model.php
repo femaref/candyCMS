@@ -429,6 +429,15 @@ class User extends Main {
 	}
 
   /**
+   *
+   * @todo
+   *
+   */
+  public function updatePassword() {
+
+  }
+
+  /**
    * Destroy a user.
    *
    * @access public
