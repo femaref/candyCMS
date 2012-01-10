@@ -51,8 +51,9 @@ class Download extends Main {
         $oQuery->execute();
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0032 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       foreach ($aResult as $aRow) {
@@ -77,8 +78,9 @@ class Download extends Main {
         $oQuery->execute();
         $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0033 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       $this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
@@ -143,8 +145,16 @@ class Download extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0034 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0035 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -178,8 +188,16 @@ class Download extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0036 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0037 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -203,8 +221,16 @@ class Download extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bReturn = $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0038 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0039 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     # Get file name
@@ -238,8 +264,16 @@ class Download extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      try {
+        parent::rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0040 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0041 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }

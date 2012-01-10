@@ -47,8 +47,9 @@ class Gallery extends Main {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0042 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
 
@@ -85,8 +86,9 @@ class Gallery extends Main {
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0044 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     # Update a single entry. Fix it with 0 o
@@ -156,8 +158,9 @@ class Gallery extends Main {
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0045 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     $iLoop = 0;
@@ -230,8 +233,9 @@ class Gallery extends Main {
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0046 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     # Do we need to highlight text?
@@ -260,8 +264,9 @@ class Gallery extends Main {
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0047 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     # Do we need to highlight text?
@@ -279,23 +284,24 @@ class Gallery extends Main {
    * @static
    * @access public
    * @param integer $iId album ID
-   * @return string content (description)
+   * @return array
    *
    */
-  public static function getFileContent($iId) {
+  public static function getFileDetails($iId) {
     try {
-      $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT album_id, content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0048 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     if ($bReturn === true)
-      return Helper::formatOutput($aResult['content']);
+      return $aResult;
   }
 
   /**
@@ -315,8 +321,9 @@ class Gallery extends Main {
       $bReturn = $oQuery->execute();
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0049 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -351,8 +358,16 @@ class Gallery extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0050 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0051 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -380,8 +395,16 @@ class Gallery extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0052 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0053 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -410,8 +433,9 @@ class Gallery extends Main {
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0054 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     if ($bReturn === true) {
@@ -439,8 +463,16 @@ class Gallery extends Main {
         $oQuery->bindParam('album_id', $iId);
         $bResult = $oQuery->execute();
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        try {
+          $this->_oDb->rollBack();
+        }
+        catch (\Exception $e) {
+          AdvancedException::reportBoth('0055 - ' . $e->getMessage());
+        }
+
+        AdvancedException::reportBoth('0056 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       # Destroy albums from database
@@ -455,8 +487,16 @@ class Gallery extends Main {
         $oQuery->bindParam('album_id', $iId);
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        try {
+          $this->_oDb->rollBack();
+        }
+        catch (\Exception $e) {
+          AdvancedException::reportBoth('0057 - ' . $e->getMessage());
+        }
+
+        AdvancedException::reportBoth('0058 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
   }
@@ -500,8 +540,16 @@ class Gallery extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0059 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0060 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -527,8 +575,16 @@ class Gallery extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0061 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0062 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -555,8 +611,9 @@ class Gallery extends Main {
       $bReturn = $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0063 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     if ($bReturn === true) {
@@ -579,8 +636,16 @@ class Gallery extends Main {
         $oQuery->bindParam('id', $iId);
         return $oQuery->execute();
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        try {
+          $this->_oDb->rollBack();
+        }
+        catch (\Exception $e) {
+          AdvancedException::reportBoth('0064 - ' . $e->getMessage());
+        }
+
+        AdvancedException::reportBoth('0065 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
   }

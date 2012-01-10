@@ -427,10 +427,6 @@ class Index {
       $oSection->getSection();
     }
 
-    # Redirect to start page
-    elseif (strtolower($this->_aRequest['section']) == 'start')
-      Helper::redirectTo('/');
-
     # There's no request on a core module and addons are disabled. */
     else {
       header('Status: 404 Not Found');

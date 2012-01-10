@@ -230,9 +230,11 @@ class Gallery extends Main {
    */
   protected function _showFormFileTemplate() {
     # Update
-    if ($this->_aRequest['action'] == 'updatefile')
-      $this->oSmarty->assign('content', Model::getFileContent($this->_iId));
-
+    if ($this->_aRequest['action'] == 'updatefile') {
+      $aDetails = Model::getFileDetails($this->_iId);
+      $this->oSmarty->assign('content', Helper::formatOutput($aDetails['content']));
+      $this->oSmarty->assign('album_id', Helper::formatOutput($aDetails['album_id']));
+    }
     # Create
     else {
       # See helper/Image.helper.php for details!
@@ -347,16 +349,16 @@ class Gallery extends Main {
    */
   public function destroyFile() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         unset($this->_iId);
-        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
+        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery/' . (int) $this->_aRequest['album_id']);
     }
   }
 }

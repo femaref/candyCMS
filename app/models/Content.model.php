@@ -55,8 +55,9 @@ class Content extends Main {
 
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0024 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
     # Show ID
@@ -88,8 +89,9 @@ class Content extends Main {
         # Fix for using it in the same template as overview
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0025 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
 
@@ -166,8 +168,16 @@ class Content extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0026 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0027 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -206,8 +216,16 @@ class Content extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0028 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0029 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -233,8 +251,16 @@ class Content extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0030 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0031 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }

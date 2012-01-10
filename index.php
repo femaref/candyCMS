@@ -15,11 +15,6 @@ namespace CandyCMS;
 use CandyCMS\Controller\Index as Index;
 
 /**
- * Set how to handle PHP error messages.
- */
-error_reporting(E_ALL);
-
-/**
  * Override separator due to W3C compatibility.
  */
 ini_set('arg_separator.output', '&amp;');
@@ -39,11 +34,6 @@ date_default_timezone_set('Europe/Berlin');
  * Current version we are working with.
  */
 define('VERSION', '20111114');
-
-/**
- * Display error messages when in development mode.
- */
-ini_set('display_errors', 1);
 
 /*
  * Load main classes.
@@ -100,6 +90,12 @@ $oIndex->setTemplate();
 
 # Define current url
 define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
+
+# Override the system variables in development mode.
+if (WEBSITE_DEV == true) {
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+}
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************

@@ -32,7 +32,7 @@ class Newsletter extends Main {
 
     else {
       if ($this->_subscribeToNewsletter($this->_aRequest, true) == true)
-        return Helper::successMessage($this->oI18n->get('success.newsletter.create'), '/newsletter');
+        return Helper::successMessage($this->oI18n->get('success.newsletter.create'), '/');
 
       else
         return Helper::errorMessage($this->oI18n->get('error.standard'), '/newsletter');

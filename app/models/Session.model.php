@@ -59,8 +59,9 @@ class Session extends Main {
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0072 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -100,9 +101,17 @@ class Session extends Main {
 
 				return $oQuery->execute();
 			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      catch (\PDOException $p) {
+        try {
+          $this->_oDb->rollBack();
+        }
+        catch (\Exception $e) {
+          AdvancedException::reportBoth('0073 - ' . $e->getMessage());
+        }
+
+        AdvancedException::reportBoth('0074 - ' . $p->getMessage());
+        exit('SQL error.');
+      }
 		}
     else
       return false;
@@ -156,8 +165,16 @@ class Session extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0075 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0076 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }
