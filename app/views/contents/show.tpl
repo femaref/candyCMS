@@ -15,7 +15,7 @@
           {$lang.global.last_update}: {$c.datetime}
         </time>
         {$lang.global.by}
-        <a href='/user/{$c.author_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
+        <a href='/user/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
       </p>
     </header>
     {if $c.teaser !== ''}

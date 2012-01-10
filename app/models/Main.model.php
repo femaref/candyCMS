@@ -122,11 +122,17 @@ abstract class Main {
    */
   protected function _connectToDatabase() {
     if (empty(self::$_oDbStatic)) {
-      self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB,
-                                  SQL_USER,
-                                  SQL_PASSWORD,
-                                  array(PDO::ATTR_PERSISTENT => true));
-      self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      try {
+        self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB,
+                        SQL_USER,
+                        SQL_PASSWORD,
+                        array(PDO::ATTR_PERSISTENT => true));
+
+        self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      }
+      catch (PDOException $e) {
+        die('Connection failed: ' . $e->getMessage());
+      }
     }
 
     return self::$_oDbStatic;

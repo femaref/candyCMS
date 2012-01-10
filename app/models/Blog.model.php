@@ -46,8 +46,9 @@ class Blog extends Main {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0043 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       $this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
@@ -82,8 +83,9 @@ class Blog extends Main {
 
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0001 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       foreach ($aResult as $aRow) {
@@ -133,8 +135,9 @@ class Blog extends Main {
 
         $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0002 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       if ($bUpdate == true)
@@ -216,8 +219,16 @@ class Blog extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0003 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0004 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -270,8 +281,16 @@ class Blog extends Main {
 
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0005 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0006 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -296,8 +315,16 @@ class Blog extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0007 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0008 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     try {
@@ -309,8 +336,16 @@ class Blog extends Main {
       $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
       $bResult = $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0009 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0010 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     return $bResult;

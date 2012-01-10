@@ -92,9 +92,10 @@ class Calendar extends Main {
 				$oQuery->execute();
 				$aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0011 - ' . $p->getMessage());
+        exit('SQL error.');
+      }
 
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
@@ -125,9 +126,10 @@ class Calendar extends Main {
 				$oQuery->execute();
 				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
 			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0012 - ' . $p->getMessage());
+        exit('SQL error.');
+      }
 
 			$this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
 		}
@@ -186,9 +188,17 @@ class Calendar extends Main {
 
       return $bReturn;
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0013 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0014 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
 	/**
@@ -221,9 +231,17 @@ class Calendar extends Main {
 
 			return $oQuery->execute();
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0015 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0016 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
 	/**
@@ -246,8 +264,16 @@ class Calendar extends Main {
 			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 			return $oQuery->execute();
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0017 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0018 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
   }
 }

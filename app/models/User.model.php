@@ -47,8 +47,9 @@ class User extends Main {
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0077 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -82,8 +83,9 @@ class User extends Main {
       if (isset($aResult['email']) && !empty($aResult['email']))
         return true;
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0078 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -114,9 +116,10 @@ class User extends Main {
 
 			return $oQuery->fetch(PDO::FETCH_ASSOC);
 		}
-		catch (AdvancedException $e) {
-			parent::$_oDbStatic->rollBack();
-		}
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0079 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -148,9 +151,17 @@ class User extends Main {
 
 			return $oQuery->execute();
 		}
-		catch (AdvancedException $e) {
-			parent::$_oDbStatic->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        parent::rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0080 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0081 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -192,8 +203,9 @@ class User extends Main {
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
-      catch (AdvancedException $e) {
-        $this->_oDb->rollBack();
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0082 - ' . $p->getMessage());
+        exit('SQL error.');
       }
 
       foreach ($aResult as $aRow) {
@@ -224,9 +236,10 @@ class User extends Main {
 
 				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
 			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      catch (\PDOException $p) {
+        AdvancedException::reportBoth('0083 - ' . $p->getMessage());
+        exit('SQL error.');
+      }
 
 			if ($bUpdate == true)
 				$this->_aData = $this->_formatForUpdate($aRow);
@@ -303,9 +316,17 @@ class User extends Main {
 
       return $bReturn;
     }
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0084 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0085 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -333,9 +354,10 @@ class User extends Main {
 			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
 			return $aResult['password'];
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0086 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -358,8 +380,6 @@ class User extends Main {
               1;
     else
       $iUserRole = & $this->_aSession['userdata']['role'];
-
-    #die(print_r($this->_aRequest));
 
     # Get my active password
     $sPassword = $this->_getPassword($iId);
@@ -395,9 +415,17 @@ class User extends Main {
 
 			return $oQuery->execute();
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0087 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0088 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -420,9 +448,17 @@ class User extends Main {
 			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 			return $oQuery->execute();
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0089 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0090 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -447,9 +483,10 @@ class User extends Main {
 
 			$this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0091 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 
 		if (!empty($this->_aData['id'])) {
 			try {
@@ -471,9 +508,17 @@ class User extends Main {
 
 				return $oQuery->execute();
 			}
-			catch (AdvancedException $e) {
-				$this->_oDb->rollBack();
-			}
+      catch (\PDOException $p) {
+        try {
+          $this->_oDb->rollBack();
+        }
+        catch (\Exception $e) {
+          AdvancedException::reportBoth('0092 - ' . $e->getMessage());
+        }
+
+        AdvancedException::reportBoth('0093 - ' . $p->getMessage());
+        exit('SQL error.');
+      }
 		}
 	}
 
@@ -514,9 +559,10 @@ class User extends Main {
 
 			return $oQuery->fetch(PDO::FETCH_ASSOC);
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0094 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -554,9 +600,10 @@ class User extends Main {
       else
         return $aData['api_token'];
 		}
-		catch (AdvancedException $e) {
-			$this->_oDb->rollBack();
-		}
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0095 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
 	}
 
   /**
@@ -591,8 +638,9 @@ class User extends Main {
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0096 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }

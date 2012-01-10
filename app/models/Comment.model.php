@@ -62,8 +62,9 @@ class Comment extends Main {
 
       $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0019 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     foreach ($aResult as $aRow) {
@@ -201,8 +202,16 @@ class Comment extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0020 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0021 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -227,8 +236,16 @@ class Comment extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0022 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0023 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }

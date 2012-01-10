@@ -19,6 +19,9 @@ switch ($_REQUEST['step']) {
     if (!is_dir('../compile'))
       @mkdir('../compile', '0777', true);
 
+    if (!is_dir('../logs'))
+      @mkdir('../logs', '0777', true);
+
     if (!is_dir('../upload'))
       @mkdir('../upload', '0777', true);
 
@@ -71,6 +74,11 @@ switch ($_REQUEST['step']) {
     $sColor = substr(decoct(fileperms("../compile")), 2) == '777' ? 'green' : 'red';
     $sPermissions .= "<li style='color:" . $sColor . "'>";
     $sPermissions .= "compile/*";
+    $sPermissions .= "</li>";
+
+    $sColor = substr(decoct(fileperms("../logs")), 2) == '777' ? 'green' : 'red';
+    $sPermissions .= "<li style='color:" . $sColor . "'>";
+    $sPermissions .= "logs/*";
     $sPermissions .= "</li>";
 
     $sColor = substr(decoct(fileperms("../upload")), 2) == '777' ? 'green' : 'red';
