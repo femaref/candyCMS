@@ -2,7 +2,7 @@
   <p class="center">
     <a href='/user/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-      {$lang.global.create.entry}
+      {$lang.user.title.create}
     </a>
   </p>
 {/if}

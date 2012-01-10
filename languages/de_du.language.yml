@@ -5,6 +5,7 @@ website:
 
 global:
   about: Über
+  action: Aktion
   album: Album
   api_token: API-Token
   archive: Archiv
@@ -48,6 +49,7 @@ global:
   file: Datei
   files: Dateien
   gallery: Galerie
+  id: Id
   image:
     click_to_enlarge: "Klicke auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
     image: Bild
@@ -98,6 +100,7 @@ global:
   required: benötigt
   rss: RSS-Feed
   search: Suche
+  section: Bereich
   settings: Einstellungen
   share: Teilen
   sitemap: Sitemap
@@ -376,6 +379,7 @@ user:
     subject: Deine Registrierung auf %WEBSITE_NAME.
   title:
     account: Account löschen
+    create: Benutzer hinzufügen
     image: Profilbild ändern
     overview: Übersicht
     password: Passwort ändern

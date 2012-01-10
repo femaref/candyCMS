@@ -75,8 +75,10 @@
       <span class="description">{$lang.user.info.image}</span>
     </p>
     <p {if isset($error.terms)}class="error" title="{$error.terms}"{/if}>
-      <label for='input-terms'>{$lang.user.label.image.terms}</label>
+      <label for='input-terms'>{$lang.global.terms.terms}</label>
       <input type='checkbox' name='terms' id="input-terms" value='1' />
+      <span class="description">{$lang.user.label.image.terms}</span>
+
     </p>
     <p class="center">
       <input type='submit' value='{$lang.user.label.image.create}' />
