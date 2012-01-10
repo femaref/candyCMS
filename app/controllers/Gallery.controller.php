@@ -111,7 +111,7 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
     else {
-      $this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
 
@@ -143,7 +143,8 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      $sPath = PATH_UPLOAD . '/gallery/' . $this->_oModel->getLastInsertId('blogs');
+      $iId    = $this->_oModel->getLastInsertId('gallery_albums');
+      $sPath  = PATH_UPLOAD . '/gallery/' . $iId;
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
@@ -165,8 +166,8 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('gallery_albums'), $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
+      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery/' . $iId);
     }
 
     else

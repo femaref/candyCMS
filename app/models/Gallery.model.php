@@ -39,8 +39,8 @@ class Gallery extends Main {
    *
    */
   private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
-    $sWhere = '';
-    $iResult = 1;
+    $sWhere   = '';
+    $iResult  = 1;
 
     if (empty($this->_iId)) {
       try {
@@ -51,6 +51,9 @@ class Gallery extends Main {
         AdvancedException::reportBoth('0042 - ' . $p->getMessage());
         exit('SQL error.');
       }
+
+      # Set update to false when creating an entry to avoid offset warnings.
+      $bUpdate = false;
     }
 
     else

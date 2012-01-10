@@ -98,69 +98,6 @@ input.copybox {
   width:100%;
 }
 
-form {
-  width: 100%;
-  margin: 15px auto;
-}
-
-form p {
-  display: table;
-  margin:5px 0px;
-  width: 100%;
-}
-
-/* Display icons correctly */
-form p img {
-  margin: 5px;
-  vertical-align: bottom;
-}
-
-form label {
-  display: table-cell;
-  width: 25%;
-  padding-right: 20px;
-  text-align: right;
-  font-weight: bold;
-  vertical-align: middle;
-}
-
-form span.description {
-  font-size: 90%;
-  display: block;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="url"],
-form input[type="password"],
-form input[type="search"],
-form input[type="name"],
-form input[type="tel"],
-form input[type="date"],
-form input[type="datetime"],
-form input[type="datetime-local"],
-form textarea
-{
-  display: table-cell;
-  width: 75%;
-  height: 20px;
-  padding:2px;
-}
-
-form textarea {
-  width: 98%;
-  height: 100px;
-}
-
-form div#recaptcha_widget_div {
-  margin-left:25%;
-}
-
-form input[type="reset"],
-form input[type="button"] {
-  margin-left: 5px;
-}
-
 /********************************************************************************/
 /* TipTip */
 /********************************************************************************/

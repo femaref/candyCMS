@@ -265,9 +265,70 @@ div.video, div.audio {
   border-bottom: 1px solid #CCCCCC;
 }
 
+
+form {
+  width: 100%;
+  margin: 15px auto;
+}
+
+form p {
+  display: table;
+  margin:5px 0px;
+  width: 100%;
+}
+
+/* Display icons correctly */
+form p img {
+  margin: 5px;
+  vertical-align: bottom;
+}
+
 form label {
+  display: table-cell;
+  width: 25%;
+  padding-right: 20px;
+  text-align: right;
+  vertical-align: middle;
   color:#000;
   font: bold 12px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+}
+
+form span.description {
+  font-size: 90%;
+  display: block;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="url"],
+form input[type="password"],
+form input[type="search"],
+form input[type="name"],
+form input[type="tel"],
+form input[type="date"],
+form input[type="datetime"],
+form input[type="datetime-local"],
+form textarea
+{
+  display: table-cell;
+  width: 75%;
+  height: 20px;
+  padding:2px;
+  border: 1px solid #d7d7d7;
+}
+
+form textarea {
+  width: 98%;
+  height: 100px;
+}
+
+form div#recaptcha_widget_div {
+  margin-left:25%;
+}
+
+form input[type="reset"],
+form input[type="button"] {
+  margin-left: 5px;
 }
 
 form#create_mail {
@@ -278,19 +339,6 @@ form h4 {
   font-weight:normal;
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="url"],
-form input[type="password"],
-form input[type="name"],
-form input[type="search"],
-form input[type="tel"],
-form input[type="date"],
-form input[type="datetime"],
-form input[type="datetime-local"],
-form textarea {
-  border: 1px solid #d7d7d7;
-}
 
 form input[type="submit"],
 form input[type="button"],

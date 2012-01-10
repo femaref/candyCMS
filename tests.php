@@ -23,14 +23,15 @@ require_once 'lib/smarty/Smarty.class.php';
 
 require_once 'config/Candy.inc.php';
 
+if(WEBSITE_DEV == false)
+  die('No tests in production mode.');
+
 define('VERSION', '0');
 define('AJAX_REQUEST', false);
 define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
 define('MOBILE', false);
 define('MOBILE_DEVICE', false);
-#define('WEBSITE_LOCALE', 'en-US');
-#define('WEBSITE_LANGUAGE', 'en');
 
 class AllTests extends TestSuite {
 

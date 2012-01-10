@@ -33,7 +33,10 @@ class Blog extends Main {
     if (empty($this->_iId)) {
 
       # Show unpublished items to moderators or administrators only
-      $sWhere = !isset($this->_aSession['userdata']['role']) || $this->_aSession['userdata']['role'] < 3 ? "WHERE published = '1'" : '';
+      $sWhere = !isset($this->_aSession['userdata']['role']) ||
+              isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
+              "WHERE published = '1'" :
+              '';
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search']) && empty($this->_aRequest['page'])) {
