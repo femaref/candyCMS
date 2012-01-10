@@ -77,13 +77,12 @@ class User extends Main {
 	/**
 	 * Upload user profile image.
 	 *
-	 * @access private
+	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	private function _createAvatar() {
+	public function updateAvatar() {
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
-
     $this->_setError('terms', $this->oI18n->get('error.file.upload'));
 
     if (!isset($this->_aFile['image']))
@@ -97,6 +96,52 @@ class User extends Main {
 
     else
       return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/user/' . $this->_iId);
+  }
+
+	/**
+	 * Update a users password.
+	 *
+	 * @access public
+	 * @return string HTML content
+	 *
+	 */
+  public function updatePassword() {
+    # Check if old password is set
+    if (empty($this->_aRequest['password_old']) &&
+            !empty($this->_aRequest['password_new']) &&
+            !empty($this->_aRequest['password_new2']))
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
+
+    # Check if old password is correct
+    if (!empty($this->_aRequest['password_old']) &&
+            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
+            $this->_aSession['userdata']['password'])
+      $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
+
+    # Check if new password fields aren't empty
+    if (!empty($this->_aRequest['password_old']) && (
+            empty($this->_aRequest['password_new']) ||
+            empty($this->_aRequest['password_new2']) ))
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
+
+    # Check if new password fields match
+    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
+            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
+
+    if (isset($this->_aError))
+      return $this->_showFormTemplate();
+
+    elseif ($this->_oModel->updatePassword((int) $this->_iId) === true) {
+      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['userdata']['id'] ?
+              (int) $this->_aRequest['id'] :
+              $this->_aSession['userdata']['id'];
+
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+      return Helper::successMessage($this->oI18n->get('success.update'), '/user/' . $this->_iId);
+    }
+    else
+      return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/' . $this->_iId);
   }
 
 	/**
@@ -179,8 +224,8 @@ class User extends Main {
 				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 		}
 
-     # Generate verification code for users (double-opt-in)
-    $iVerificationCode = Helper::createRandomChar(12);
+     # Generate verification code for users (double-opt-in) when not created by admin.
+    $iVerificationCode = $this->_aSession['userdata']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
@@ -189,7 +234,7 @@ class User extends Main {
       $this->__autoload('Mail');
 
       $iUserId = $this->_oModel->getLastInsertId('users');
-      $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification/' . $iUserId);
+      $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
 
       $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
 			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
@@ -217,15 +262,15 @@ class User extends Main {
 	protected function _showCreateUserTemplate() {
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
-										$this->_aSession['userdata']['name']);
+										'');
 
 		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
 										Helper::formatInput($this->_aRequest['surname']) :
-										$this->_aSession['userdata']['surname']);
+										'');
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
 										Helper::formatInput($this->_aRequest['email']) :
-										$this->_aSession['userdata']['email']);
+										'');
 
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
@@ -241,30 +286,22 @@ class User extends Main {
 	 * Update entry or show form template if we have enough rights.
 	 *
 	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @return string HTML content
 	 *
 	 */
 	public function update() {
-		if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId)
-			Helper::redirectTo('/user/update');
+    if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
+      Helper::redirectTo('/user/update');
 
-		if (empty($this->_iId))
-			$this->_iId = $this->_aSession['userdata']['id'];
+    if (empty($this->_iId))
+      $this->_iId = $this->_aSession['userdata']['id'];
 
-		if ($this->_aSession['userdata']['id'] == 0)
-			return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
+    if ($this->_aSession['userdata']['id'] == 0)
+      return Helper::errorMessage($this->oI18n->get('error.session.create_first'), '/');
 
-		else {
-			if (isset($this->_aRequest['create_avatar']))
-				return $this->_createAvatar($this->_iId);
-
-			elseif (isset($this->_aRequest['update_user']))
-				return $this->_update();
-
-			else
-				return $this->_showFormTemplate();
-		}
-	}
+    else
+      return isset($this->_aRequest['update_user']) ? $this->_update() : $this->_showFormTemplate();
+  }
 
 	/**
 	 * Update a user.
@@ -272,40 +309,16 @@ class User extends Main {
 	 * Activate model, insert data into the database and redirect afterwards.
 	 *
 	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @return string HTML content
 	 *
 	 */
 	protected function _update() {
 		$this->_setError('name');
 
-		# Check if old password is set
-		if (empty($this->_aRequest['password_old']) &&
-						!empty($this->_aRequest['password_new']) &&
-						!empty($this->_aRequest['password_new2']))
-			$this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
-
-		# Check if old password is correct
-		if (!empty($this->_aRequest['password_old']) &&
-						md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-						$this->_aSession['userdata']['password'])
-			$this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
-
-		# Check if new password fields aren't empty
-		if (!empty($this->_aRequest['password_old']) && (
-						empty($this->_aRequest['password_new']) ||
-						empty($this->_aRequest['password_new2']) ))
-			$this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
-
-		# Check if new password fields match
-    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
-            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
-      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
-
 		if (isset($this->_aError))
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_iId) === true) {
-
       # Check if user wants to unsubscribe from mailchimp
 			if (!isset($this->_aRequest['receive_newsletter']))
 				$this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));

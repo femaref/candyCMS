@@ -5,6 +5,7 @@ website:
 
 global:
   about: About
+  action: Action
   album: Album
   api_token: API-Token
   author: Author
@@ -47,6 +48,7 @@ global:
   file: File
   files: Files
   gallery: Gallery
+  id: Id
   image:
     click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
     image: Image
@@ -97,6 +99,7 @@ global:
   required: Required
   rss: RSS-Feed
   search: Search
+  section: Section
   settings: Settings
   share: Share
   sitemap: Sitemap
@@ -127,8 +130,8 @@ global:
     at: Uploaded at
     upload: Upload
   user:
-    right: Userright
-    rights:
+    role: Userright
+    roles:
       0: Guest
       1: Member
       2: special Member
@@ -373,6 +376,7 @@ user:
     subject: Your registration at %WEBSITE_NAME.
   title:
     account: Delete account
+    create: Create User
     image: Change Avatar
     overview: User Overview
     password: Change Password

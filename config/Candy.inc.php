@@ -54,7 +54,7 @@ define('WEBSITE_NAME', 'CandyCMS');
 # ------------------------------------------------------------------------------
 
 # Define an admin email for system responses
-define('WEBSITE_MAIL', 'marco@candycms.com');
+define('WEBSITE_MAIL', 'marco@empuxa.com');
 
 # ------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ define('CRONJOB_SEND_PER_MAIL', false);
 
 # If you want to override existing classes (placed in "addons/controllers/"), turn true
 # DEFAULT: false
-define('ALLOW_ADDONS', true);
+define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 

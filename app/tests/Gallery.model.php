@@ -82,8 +82,8 @@ class TestOfGalleryModel extends UnitTestCase {
     $this->assertIsA($this->oGallery->getThumbs(0), 'array');
   }
 
-  function testGetFileContent() {
-    $this->assertIsA($this->oGallery->getFileContent($this->iLastInsertId), 'string');
+  function testGetFileDetails() {
+    $this->assertIsA($this->oGallery->getFileDetails($this->iLastInsertId), 'array');
   }
 
   function testGetFileData() {

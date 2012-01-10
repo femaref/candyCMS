@@ -30,12 +30,12 @@
     </p>
     {if $USER_ROLE == 4 && $USER_ID !== $uid}
       <p>
-        <label for='input-user_role'>{$lang.global.user.role}</label>
-        <select name='user_role' id="input-user_role">
-          <option value='1' {if $user_role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
-          <option value='2' {if $user_role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
-          <option value='3' {if $user_role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
-          <option value='4' {if $user_role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
+        <label for='input-role'>{$lang.global.user.role}</label>
+        <select name='role' id="input-role">
+          <option value='1' {if $role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
+          <option value='2' {if $role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
+          <option value='3' {if $role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
+          <option value='4' {if $role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
         </select>
       </p>
     {/if}
@@ -45,28 +45,30 @@
       <input type='submit' value='{$lang.user.label.update}' />
     </p>
   </div>
-  {if $USER_ID === $uid}
+</form>
+{if $USER_ID === $uid}
+  <form method='post' action='/user/{$uid}/password'>
     <h2><a href="#">{$lang.user.title.password}</a></h2>
       <div>
       <p {if isset($error.password_old)}class="error" title="{$error.password_old}"{/if}>
-        <label for='input-password_old'>{$lang.user.label.password.old}</label>
-        <input name='password_old' id="input-password_old" type='password' />
+        <label for='input-password_old'>{$lang.user.label.password.old} <span title="{$lang.global.required}">*</span></label>
+        <input name='password_old' id="input-password_old" type='password' required />
       </p>
       <p {if isset($error.password_new)}class="error" title="{$error.password_new}"{/if}>
-        <label for='input-password_new'>{$lang.user.label.password.new}</label>
-        <input name='password_new' id="input-password_new" type='password' />
+        <label for='input-password_new'>{$lang.user.label.password.new} <span title="{$lang.global.required}">*</span></label>
+        <input name='password_new' id="input-password_new" type='password' required />
       </p>
       <p>
-        <label for='input-password_new2'>{$lang.global.password.repeat}</label>
-        <input name='password_new2' id="input-password_new2" type='password' />
+        <label for='input-password_new2'>{$lang.global.password.repeat} <span title="{$lang.global.required}">*</span></label>
+        <input name='password_new2' id="input-password_new2" type='password' required />
       </p>
       <p class="center">
         <input type='submit' value='{$lang.user.label.password.create}' />
       </p>
     </div>
-  {/if}
-</form>
-<form enctype='multipart/form-data' method='post' action='/user/{$uid}/update'>
+  </form>
+{/if}
+<form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'>
   <h2><a href="#">{$lang.user.title.image}</a></h2>
   <div>
     <p {if isset($error.image)}class="error" title="{$error.image}"{/if}>
@@ -75,8 +77,10 @@
       <span class="description">{$lang.user.info.image}</span>
     </p>
     <p {if isset($error.terms)}class="error" title="{$error.terms}"{/if}>
-      <label for='input-terms'>{$lang.user.label.image.terms}</label>
+      <label for='input-terms'>{$lang.global.terms.terms}</label>
       <input type='checkbox' name='terms' id="input-terms" value='1' />
+      <span class="description">{$lang.user.label.image.terms}</span>
+
     </p>
     <p class="center">
       <input type='submit' value='{$lang.user.label.image.create}' />

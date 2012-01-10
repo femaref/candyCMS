@@ -40,7 +40,7 @@ class Section extends Main {
       require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
       $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
 
-      $sClassName = '\CandyCMS\Addon\Addon_' . (string) ucfirst($this->_aRequest['section']);
+      $sClassName = '\CandyCMS\Addon\Controller\Addon_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
 
@@ -383,6 +383,17 @@ class Section extends Main {
 					parent::_setContent($this->_oObject->getToken());
 					parent::_setDescription($this->oI18n->get('global.api_token'));
 					parent::_setTitle($this->oI18n->get('global.api_token'));
+				}
+        # TODO
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
+					parent::_setContent($this->_oObject->updatePassword());
+					parent::_setDescription($this->oI18n->get('user.title.password'));
+					parent::_setTitle($this->oI18n->get('user.title.password'));
+				}
+				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'avatar') {
+					parent::_setContent($this->_oObject->updateAvatar());
+					parent::_setDescription($this->oI18n->get('user.title.avatar'));
+					parent::_setTitle($this->oI18n->get('user.title.avatar'));
 				}
         else {
           parent::_setContent($this->_oObject->show());

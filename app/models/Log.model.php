@@ -63,8 +63,9 @@ class Log extends Main {
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0066 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     foreach ($aResult as $aRow) {
@@ -140,8 +141,16 @@ class Log extends Main {
 
       return $bReturn;
     }
-    catch (AdvancedException $e) {
-      parent::$_oDbStatic->rollBack();
+    catch (\PDOException $p) {
+      try {
+        parent::rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0067 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0068 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 
@@ -166,8 +175,16 @@ class Log extends Main {
       $oQuery->bindParam('id', $iId);
       return $oQuery->execute();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0069 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0070 - ' . $p->getMessage());
+      exit('SQL error.');
     }
   }
 }

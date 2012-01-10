@@ -11,6 +11,8 @@
       <meta property="og:site_name" content="{$meta_og_site_name}"/>
       <meta property="og:title" content="{$meta_og_title}"/>
       <meta property="og:url" content="{$meta_og_url}"/>
+      <meta itemprop="name" content="{$meta_og_title}">
+      <meta itemprop="description" content="{$meta_og_description}">
     {/if}
     {if $_facebook_plugin_ == true}
       <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>

@@ -65,9 +65,10 @@ class Search extends Main {
           $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTableSingular);
         }
       }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0071 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
     }
 
     return $this->_aData;

@@ -2,7 +2,7 @@
   <p class="center">
     <a href='/user/create'>
       <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
-      {$lang.global.create.entry}
+      {$lang.user.title.create}
     </a>
   </p>
 {/if}
@@ -24,11 +24,11 @@
       <td style='width:30%' class="left">
         <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
         <br />
-        {if $u.user_role == 2}
+        {if $u.role == 2}
           ({$lang.global.user.roles.2})
-        {elseif $u.user_role == 3}
+        {elseif $u.role == 3}
           ({$lang.global.user.roles.3})
-        {elseif $u.user_role == 4}
+        {elseif $u.role == 4}
           ({$lang.global.user.roles.4})
         {/if}
       </td>

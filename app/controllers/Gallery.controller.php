@@ -111,7 +111,7 @@ class Gallery extends Main {
       $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
 
     else {
-      $this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
 
@@ -143,7 +143,8 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      $sPath = PATH_UPLOAD . '/gallery/' . $this->_oModel->getLastInsertId('blogs');
+      $iId    = $this->_oModel->getLastInsertId('gallery_albums');
+      $sPath  = PATH_UPLOAD . '/gallery/' . $iId;
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
@@ -165,8 +166,8 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('gallery_albums'), $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery');
+      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
+      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery/' . $iId);
     }
 
     else
@@ -230,9 +231,11 @@ class Gallery extends Main {
    */
   protected function _showFormFileTemplate() {
     # Update
-    if ($this->_aRequest['action'] == 'updatefile')
-      $this->oSmarty->assign('content', Model::getFileContent($this->_iId));
-
+    if ($this->_aRequest['action'] == 'updatefile') {
+      $aDetails = Model::getFileDetails($this->_iId);
+      $this->oSmarty->assign('content', Helper::formatOutput($aDetails['content']));
+      $this->oSmarty->assign('album_id', Helper::formatOutput($aDetails['album_id']));
+    }
     # Create
     else {
       # See helper/Image.helper.php for details!
@@ -347,16 +350,16 @@ class Gallery extends Main {
    */
   public function destroyFile() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
+      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         unset($this->_iId);
-        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
+        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
+        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery/' . (int) $this->_aRequest['album_id']);
     }
   }
 }

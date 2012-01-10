@@ -1,5 +1,26 @@
 <h1>{$lang.global.logs}</h1>
 <table id="js-logs">
+  <thead>
+    <tr>
+      <th>
+        {$lang.global.author}
+      </th>
+      <th>
+        {$lang.global.section}
+      </th>
+      <th>
+        {$lang.global.action}
+      </th>
+      <th>
+        {$lang.global.id}
+      </th>
+      <th>
+        {$lang.global.date.date}
+      </th>
+      <th>
+      </th>
+    </tr>
+  </thead>
   {foreach $logs as $l}
     {if $l.action_name == 'create'}
       <tr style="color:green">
@@ -47,7 +68,7 @@
     $('table').infinitescroll({
       navSelector  : "div.pages",
       nextSelector : "div.pages a:first",
-      itemSelector : "table tr",
+      itemSelector : "table tbody tr",
       loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
     });
   });

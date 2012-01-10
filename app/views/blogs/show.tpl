@@ -34,7 +34,7 @@
             {/if}
           </time>
           {$lang.global.by}
-          <a href='/user/{$b.author_id}/{$b.encoded_full_name}'>{$b.full_name}</a>
+          <a href='/user/{$b.author_id}/{$b.encoded_full_name}' rel='author'>{$b.full_name}</a>
         </p>
       </header>
       {if $b.teaser !== ''}
