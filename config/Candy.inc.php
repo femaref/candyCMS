@@ -54,7 +54,7 @@ define('WEBSITE_NAME', 'CandyCMS');
 # ------------------------------------------------------------------------------
 
 # Define an admin email for system responses
-define('WEBSITE_MAIL', 'marco@candycms.com');
+define('WEBSITE_MAIL', 'marco@empuxa.com');
 
 # ------------------------------------------------------------------------------
 
