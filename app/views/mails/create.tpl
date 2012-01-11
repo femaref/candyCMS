@@ -19,7 +19,7 @@
     <label for='content'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' cols="30" required>{$content}</textarea>
   </p>
-  {if isset($_captcha_) && $MOBILE === false}
+  {if isset($_captcha_) && $MOBILE == false}
     {include file='../layouts/_recaptcha.tpl'}
   {/if}
   <p class="center">

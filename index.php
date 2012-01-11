@@ -96,8 +96,10 @@ if (WEBSITE_DEV == true) {
   ini_set('display_errors', 1);
   error_reporting(E_ALL);
 }
-else
+else {
   ini_set('display_errors', 0);
+  error_reporting(E_NONE);
+}
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************

@@ -106,11 +106,14 @@ class User extends Main {
 	 *
 	 */
   public function updatePassword() {
+    #die(print_R($this->_aRequest));
     # Check if old password is set
-    if (empty($this->_aRequest['password_old']) &&
-            !empty($this->_aRequest['password_new']) &&
-            !empty($this->_aRequest['password_new2']))
+    if (empty($this->_aRequest['password_old']))
       $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');
+
+    # Check if new password fields aren't empty
+    if (empty($this->_aRequest['password_new']) || empty($this->_aRequest['password_new2']))
+      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
 
     # Check if old password is correct
     if (!empty($this->_aRequest['password_old']) &&
@@ -118,15 +121,8 @@ class User extends Main {
             $this->_aSession['userdata']['password'])
       $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.wrong');
 
-    # Check if new password fields aren't empty
-    if (!empty($this->_aRequest['password_old']) && (
-            empty($this->_aRequest['password_new']) ||
-            empty($this->_aRequest['password_new2']) ))
-      $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.empty');
-
     # Check if new password fields match
-    if (isset($this->_aRequest['password_new']) && isset($this->_aRequest['password_new2']) &&
-            $this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
+    if ($this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
       $this->_aError['password_new'] = $this->oI18n->get('error.user.update.password.new.match');
 
     if (isset($this->_aError))

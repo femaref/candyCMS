@@ -35,7 +35,7 @@
     <label for='js-create_commment_text'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
     <textarea name='content' id='js-create_commment_text' rows='10' cols='50' required>{if isset($content)}{$content}{/if}</textarea>
   </p>
-  {if isset($_captcha_) && $MOBILE === false}
+  {if isset($_captcha_) && $MOBILE == false}
     {include file='../layouts/_recaptcha.tpl'}
   {/if}
   <p class="center">

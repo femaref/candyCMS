@@ -49,7 +49,7 @@
     $("#js-fancybox").fancybox();
 
     $("input[name='password2']").keyup(function(){
-      if ($("input[name='password']").val() === $("input[name='password2']").val()){
+      if ($("input[name='password']").val() == $("input[name='password2']").val()){
         $('#js-icon').attr('class', 'icon-success');
       } else {
         $('#js-icon').attr('class', 'icon-close');
