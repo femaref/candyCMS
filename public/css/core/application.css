@@ -40,7 +40,13 @@ h1 a:visited, h2 a:visited, h3 a:visited {
   color: #000;
 }
 
-#blog h1, #blog h2 {
+h1 {
+  margin-bottom: 20px;
+}
+
+#blog h1, #blog h2,
+#content h1, #content h2
+#gallery h1, #gallery h2 {
   margin: 10px 0px 0px;
 }
 
@@ -330,8 +336,8 @@ form input[type="button"] {
   margin-left: 5px;
 }
 
-form#create_mail {
-  width:600px;
+form#create_mail textarea {
+  width: 75%;
 }
 
 form h4 {
