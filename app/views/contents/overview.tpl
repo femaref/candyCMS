@@ -12,6 +12,7 @@
     <th class="left">{$lang.global.title}</th>
     <th>{$lang.global.date.date}</th>
     <th>{$lang.global.author}</th>
+    <th>{$lang.global.published}</th>
     <th></th>
   </tr>
   {foreach $content as $c}
@@ -20,15 +21,17 @@
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>
-        {if $USER_ROLE >= 3 && $c.published == 0}
-          <em>({$lang.global.not_published})</em>
-        {/if}
       </td>
       <td>{$c.datetime}</td>
       <td>
         <a href='/user/{$c.author_id}'>
           {$c.name} {$c.surname}
         </a>
+      </td>
+      <td>
+        <img src='%PATH_IMAGES%/spacer.png'
+             class="icon-{if $c.published == true}success{else}close{/if}"
+             alt='{$lang.global.published}' title="" width="16" height="16" />
       </td>
       {if $USER_ROLE >= 3}
         <td>

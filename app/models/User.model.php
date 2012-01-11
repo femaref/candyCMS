@@ -381,15 +381,6 @@ class User extends Main {
     else
       $iUserRole = & $this->_aSession['userdata']['role'];
 
-    # Get my active password
-    $sPassword = $this->_getPassword($iId);
-
-    # Change my password
-    if (isset($this->_aRequest['password_new']) && !empty($this->_aRequest['password_new']) &&
-            isset($this->_aRequest['password_old']) && !empty($this->_aRequest['password_old']) &&
-            $this->_aSession['userdata']['id'] === $iId)
-      $sPassword = md5(RANDOM_HASH . $this->_aRequest['password_new']);
-
 		try {
 			$oQuery = $this->_oDb->prepare("UPDATE
                                         " . SQL_PREFIX . "users
@@ -399,7 +390,6 @@ class User extends Main {
                                         content = :content,
 																				receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
-                                        password = :password,
                                         role = :role
                                       WHERE
                                         id = :id");
@@ -409,7 +399,6 @@ class User extends Main {
 			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
 			$oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
 			$oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
-			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
 			$oQuery->bindParam('role', $iUserRole, PDO::PARAM_INT);
 			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
@@ -429,12 +418,39 @@ class User extends Main {
 	}
 
   /**
+   * Update an users password.
    *
-   * @todo
+   * @access public
+   * @param integer $iId
+   * @return boolean status of query
    *
    */
-  public function updatePassword() {
+  public function updatePassword($iId) {
+    try {
+      $oQuery = $this->_oDb->prepare("UPDATE
+                                        " . SQL_PREFIX . "users
+                                      SET
+                                        password = :password
+                                      WHERE
+                                        id = :id");
 
+      $sPassword = md5(RANDOM_HASH . $this->_aRequest['password_new']);
+      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+
+      return $oQuery->execute();
+    }
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0097 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0098 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
   }
 
   /**

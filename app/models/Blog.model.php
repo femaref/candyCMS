@@ -33,8 +33,7 @@ class Blog extends Main {
     if (empty($this->_iId)) {
 
       # Show unpublished items to moderators or administrators only
-      $sWhere = !isset($this->_aSession['userdata']['role']) ||
-              isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
+      $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
               "WHERE published = '1'" :
               '';
 
@@ -171,6 +170,13 @@ class Blog extends Main {
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     $this->_iId = !empty($iId) ? $iId : $this->_iId;
+
+    # Small fix for pagination
+    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
+            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
+            !isset($this->_aRequest['parent_id']))
+      $this->_iId = '';
+
     return $this->_setData($bUpdate, $iLimit);
   }
 

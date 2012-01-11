@@ -43,7 +43,7 @@
       </td>
       <td>
         {* Absolute URL due to fancybox bug *}
-        <a href='{$WEBSITE_URL}/mail/{$_request_id_}/ajax' class="js-fancybox">
+        <a href='{$WEBSITE_URL}/mail/{$_request_id_}/ajax' class="js-fancybox fancybox.ajax">
           {$lang.user.contact_via_email|replace:'%u':$u.name}
         </a>
       </td>

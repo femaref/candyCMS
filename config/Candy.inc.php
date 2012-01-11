@@ -30,7 +30,7 @@ define('SMTP_PORT', '');
 
 # Define the ABSOLUTE path of your website.
 # EXAMPLE: http://www.google.com
-define('WEBSITE_URL', 'http://phpcms.localhost');
+define('WEBSITE_URL', 'http://192.168.178.24');
 
 # ------------------------------------------------------------------------------
 
@@ -207,7 +207,7 @@ define('COMPILE_DIR', 'compile');
 
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 8);
+define('LIMIT_BLOG', 2);
 
 # Limit of comments per page
 # DEFAULT: 10

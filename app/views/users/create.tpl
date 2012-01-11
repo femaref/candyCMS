@@ -30,7 +30,7 @@
     <p {if isset($error.disclaimer)}class="error" title="{$error.disclaimer}"{/if}>
       <label>
         {* Absolute URL due to fancybox bug *}
-        <a href='{$WEBSITE_URL}/content/2/ajax' id="js-fancybox">
+        <a href='{$WEBSITE_URL}/content/2/ajax' id="js-fancybox" class='fancybox.ajax'>
           {$lang.global.terms.read} <span title="{$lang.global.required}">*</span>
         </a>
       </label>
@@ -49,7 +49,7 @@
     $("#js-fancybox").fancybox();
 
     $("input[name='password2']").keyup(function(){
-      if ($("input[name='password']").val() === $("input[name='password2']").val()){
+      if ($("input[name='password']").val() == $("input[name='password2']").val()){
         $('#js-icon').attr('class', 'icon-success');
       } else {
         $('#js-icon').attr('class', 'icon-close');

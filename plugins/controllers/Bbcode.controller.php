@@ -78,7 +78,7 @@ final class Bbcode {
 
         # we have to make sure, that this absolute URL won't begin with a slash
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
-        $sTempFilePath = '/' . $sTempFilePath;
+        $sTempFilePath = substr($sTempFilePath, 0, 1) == '/' ? $sTempFilePath : '/' . $sTempFilePath;
 
         $sHTML = '<div class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';

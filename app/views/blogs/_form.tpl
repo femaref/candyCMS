@@ -28,7 +28,7 @@
     <label for='input-published'>{$lang.global.published}</label>
     <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked{/if} />
   </p>
-  {if $smarty.get.action === 'update'}
+  {if $smarty.get.action == 'update'}
     <p>
       <label for='input-show_update'>{$lang.global.update.show}</label>
       <input type='checkbox' name='show_update' value='1' id="input-show_update" {if $date_modified == true}checked{/if}/>

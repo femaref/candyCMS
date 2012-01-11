@@ -112,15 +112,15 @@ class Image {
     imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, $sPath, 75);
+      ImageJPEG($oNewImg, substr($sPath, 0, 1) == '/' ? substr($sPath, 1, strlen($sPath)) : $sPath, 75);
 
     elseif ($this->_sImgType == 'png') {
       imagealphablending($oNewImg, false);
       imagesavealpha($oNewImg, true);
-      ImagePNG($oNewImg, $sPath, 9);
+      ImagePNG($oNewImg, substr($sPath, 0, 1) == '/' ? substr($sPath, 1, strlen($sPath)) : $sPath, 9);
     }
     elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, $sPath);
+      ImageGIF($oNewImg, substr($sPath, 0, 1) == '/' ? substr($sPath, 1, strlen($sPath)) : $sPath);
 
     imagedestroy($oNewImg);
 

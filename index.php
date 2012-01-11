@@ -96,8 +96,10 @@ if (WEBSITE_DEV == true) {
   ini_set('display_errors', 1);
   error_reporting(E_ALL);
 }
-else
+else {
   ini_set('display_errors', 0);
+  error_reporting(E_NONE);
+}
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************
@@ -122,7 +124,7 @@ $bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
               preg_match('/Windows CE/i', $sUserAgent) ||
               preg_match('/IEMobile/i', $sUserAgent) ||
               preg_match('/iPhone/i', $sUserAgent) ||
-              preg_match('/iPad/i', $sUserAgent) ||
+              #preg_match('/iPad/i', $sUserAgent) ||
               preg_match('/iPod/i', $sUserAgent) ||
               preg_match('/Blackberry/i', $sUserAgent) ||
               preg_match('/Android/i', $sUserAgent) ?
