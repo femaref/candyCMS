@@ -1,3 +1,4 @@
+{* Account data *}
 <form method='post' action='/user/{$uid}/update'>
   <h2><a href="#">{$lang.user.title.personal_data}</a></h2>
   <div>
@@ -46,21 +47,23 @@
     </p>
   </div>
 </form>
+
+{* Password *}
 {if $USER_ID === $uid}
   <form method='post' action='/user/{$uid}/password'>
     <h2><a href="#">{$lang.user.title.password}</a></h2>
       <div>
       <p {if isset($error.password_old)}class="error" title="{$error.password_old}"{/if}>
         <label for='input-password_old'>{$lang.user.label.password.old} <span title="{$lang.global.required}">*</span></label>
-        <input name='password_old' id="input-password_old" type='password' required />
+        <input name='password_old' id="input-password_old" type='password' />
       </p>
       <p {if isset($error.password_new)}class="error" title="{$error.password_new}"{/if}>
         <label for='input-password_new'>{$lang.user.label.password.new} <span title="{$lang.global.required}">*</span></label>
-        <input name='password_new' id="input-password_new" type='password' required />
+        <input name='password_new' id="input-password_new" type='password' />
       </p>
       <p>
         <label for='input-password_new2'>{$lang.global.password.repeat} <span title="{$lang.global.required}">*</span></label>
-        <input name='password_new2' id="input-password_new2" type='password' required />
+        <input name='password_new2' id="input-password_new2" type='password' />
       </p>
       <p class="center">
         <input type='submit' value='{$lang.user.label.password.create}' />
@@ -68,6 +71,8 @@
     </div>
   </form>
 {/if}
+
+{* Avatar *}
 <form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'>
   <h2><a href="#">{$lang.user.title.image}</a></h2>
   <div>
@@ -89,6 +94,8 @@
     </p>
   </div>
 </form>
+
+{* Destroy account *}
 {if $USER_ROLE < 4}
   <form enctype='multipart/form-data' method='post' action='/user/{$uid}/destroy'>
     <h2><a href="#">{$lang.user.title.account}</a></h2>
@@ -107,7 +114,7 @@
     </div>
   </form>
 {/if}
-<script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $(document).ready(function(){

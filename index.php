@@ -122,7 +122,7 @@ $bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
               preg_match('/Windows CE/i', $sUserAgent) ||
               preg_match('/IEMobile/i', $sUserAgent) ||
               preg_match('/iPhone/i', $sUserAgent) ||
-              preg_match('/iPad/i', $sUserAgent) ||
+              #preg_match('/iPad/i', $sUserAgent) ||
               preg_match('/iPod/i', $sUserAgent) ||
               preg_match('/Blackberry/i', $sUserAgent) ||
               preg_match('/Android/i', $sUserAgent) ?
