@@ -2,7 +2,7 @@
   <h1>{$lang.global.calendar}</h1>
   <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
-    <input type='text' name='title' id="input-title" value='{$title}' required />
+    <input type='text' name='title' id="input-title" value='{$title}' required autofocus/>
   </p>
   <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
     <label for='input-content'>{$lang.global.description}</label>
