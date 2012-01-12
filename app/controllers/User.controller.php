@@ -106,7 +106,6 @@ class User extends Main {
 	 *
 	 */
   public function updatePassword() {
-    #die(print_R($this->_aRequest));
     # Check if old password is set
     if (empty($this->_aRequest['password_old']))
       $this->_aError['password_old'] = $this->oI18n->get('error.user.update.password.old.empty');

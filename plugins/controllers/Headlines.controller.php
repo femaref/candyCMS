@@ -8,24 +8,23 @@
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Model\Blog as Model;
+use CandyCMS\Helper\I18n as I18n;
+use Smarty;
 
-require_once 'app/models/Blog.model.php';
+require_once 'app/controllers/Blog.controller.php';
 
 # Show the last six headlines of your blog entries.
-final class Headlines {
+final class Headlines extends \CandyCMS\Controller\Blog {
 
   public final function show() {
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(300);
+    $this->oSmarty->setCompileCheck(false);
+    $this->oSmarty->template_dir = Helper::getPluginTemplateDir('headlines', 'show');
 
-    $oModel = new Model();
-    $aData = $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT);
+    if (!$this->oSmarty->isCached('show.tpl'))
+      $this->oSmarty->assign('data', $this->_oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
 
-    $oSmarty = new \Smarty();
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-
-    $oSmarty->assign('data', $aData);
-    $oSmarty->template_dir = Helper::getPluginTemplateDir('headlines', 'show');
-    return $oSmarty->fetch('show.tpl');
+    return $this->oSmarty->fetch('show.tpl');
   }
 }
