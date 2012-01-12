@@ -5,10 +5,10 @@
       <th class='left'>
         {$lang.global.author}
       </th>
-      <th class='left'>
+      <th>
         {$lang.global.section}
       </th>
-      <th class='left'>
+      <th>
         {$lang.global.action}
       </th>
       <th>
@@ -34,10 +34,10 @@
       <td class="left">
         <a href='/user/{$l.uid}'>{$l.full_name}</a>
       </td>
-      <td class="left">
+      <td>
         {$l.section_name}
       </td>
-      <td class="left">
+      <td>
         {$l.action_name}
       </td>
       <td>
