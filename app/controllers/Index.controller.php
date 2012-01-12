@@ -314,6 +314,25 @@ class Index {
   }
 
   /**
+   * Return default user data.
+   *
+   * @access protected
+   * @return array default user data
+   *
+   */
+  protected function _resetUser() {
+    return array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'role' => 0
+    );
+  }
+
+  /**
    * Define user constants for global use.
    *
    * List of user roles:
@@ -330,15 +349,7 @@ class Index {
    */
 	public function setUser() {
     # Set standard variables
-      $this->_aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0
-    );
+    $this->_aSession['userdata'] = $this->_resetUser();
 
     # Override them with user data
     # Get user data by token
@@ -551,7 +562,8 @@ class Index {
    */
   private function _showPlugins($sCachedHTML) {
     # Fix search bug
-    $this->_aRequest['search'] = '';
+    unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
+    $this->_aSession['userdata'] = $this->_resetUser();
 
     if (preg_match('/<!-- plugin:adsense -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Adsense')) {
       $oAdsense = new \CandyCMS\Plugin\Adsense();

@@ -88,7 +88,6 @@ $oIndex->getFacebookExtension();
 $oIndex->setUser();
 $oIndex->setTemplate();
 
-die($_SERVER['REQUEST_URI']);
 # Define current url
 if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_DEV == false && $_SERVER['REQUEST_URI'] == '/')
   \CandyCMS\Helper\Helper::redirectTo(WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
