@@ -171,7 +171,7 @@ success:
 
 error:
   404:
-    info: The requested file was not found. Either you clicked on a faulty link, the page has been deleted or the URL has been entered incorrectly.
+    info: The requested URL was not found. Either you clicked on a faulty link, the page has been deleted or the URL has been entered incorrectly.
     title: Error 404
   audio: Your browser does not support playback of this audio file. Please click <a href="%u">here</a> to download this file.
   captcha:
@@ -234,6 +234,8 @@ blog:
     keywords: Please enter the most relevant keywords.
     tag: Seperate tags by comma and space, i.e. "tag1, tag2"
     teaser: Write a short teaser!
+  label:
+    date: Update date?
   title:
     create: Create blog entry
     destroy: Delete blog entry

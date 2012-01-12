@@ -11,35 +11,36 @@ namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Blog as Model;
 use Smarty;
 
-require_once 'app/models/Blog.model.php';
+require_once 'app/controllers/Blog.controller.php';
 
-final class Archive {
+final class Archive extends \CandyCMS\Controller\Blog {
 
   public final function show() {
-    $oModel = new Model();
-    $aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(300);
+    $this->oSmarty->setCompileCheck(false);
+    $this->oSmarty->template_dir = Helper::getPluginTemplateDir('archive', 'show');
 
-    foreach ($aData as $aRow) {
-			# Date format the month
-			$sMonth = strftime('%m', $aRow['date_raw']);
-			$sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
-      $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
+    if (!$this->oSmarty->isCached('show.tpl')) {
+      $aData = $this->_oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
-			# Prepare array
-			$iId = $aRow['id'];
-      $aMonth[$sMonth][$iId] = $aRow;
+      $aMonth = array();
+      foreach ($aData as $aRow) {
+        # Date format the month
+        $sMonth = strftime('%m', $aRow['date_raw']);
+        $sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
+        $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
+
+        # Prepare array
+        $iId = $aRow['id'];
+        $aMonth[$sMonth][$iId] = $aRow;
+      }
+
+      $this->oSmarty->assign('data', $aMonth);
     }
 
-    $oSmarty = new Smarty();
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-
-    $oSmarty->assign('data', $aMonth);
-
-    $oSmarty->template_dir = Helper::getPluginTemplateDir('archive', 'show');
-    return $oSmarty->fetch('show.tpl');
+    return $this->oSmarty->fetch('show.tpl');
   }
 }

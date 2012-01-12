@@ -89,6 +89,9 @@ $oIndex->setUser();
 $oIndex->setTemplate();
 
 # Define current url
+if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_DEV == false && $_SERVER['REQUEST_URI'] == '/')
+  \CandyCMS\Helper\Helper::redirectTo(WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+
 define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 # Override the system variables in development mode.

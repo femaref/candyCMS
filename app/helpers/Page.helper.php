@@ -107,8 +107,8 @@ class Page {
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
 
     $this->_oSmarty = new \Smarty();
-    $this->_oSmarty->cache_dir = CACHE_DIR;
-    $this->_oSmarty->compile_dir = COMPILE_DIR;
+    $this->_oSmarty->cache_dir    = CACHE_DIR;
+    $this->_oSmarty->compile_dir  = COMPILE_DIR;
   }
 
 	/**

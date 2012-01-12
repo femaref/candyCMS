@@ -77,7 +77,7 @@ global:
     10: Oktober
     11: November
     12: Dezember
-  name: Vorname
+  name: Name
   newsletter: Newsletter
   not_published: Nicht veröffentlicht
   optional: optional
@@ -172,7 +172,7 @@ success:
 
 error:
   404:
-    info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
+    info: Die angeforderte URL wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
     title: Error 404
   audio: Ihr Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicken Sie auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
   captcha:
@@ -235,6 +235,8 @@ blog:
     keywords: Geben Sie die wichtigsten Schlagworte dieses Eintrags an.
     tag: Trennen Sie die Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
     teaser: Schreiben Sie einen Teaser um den Blogeintrag interessanter zu machen!
+  label:
+    date: Datum aktualisieren?
   title:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen
