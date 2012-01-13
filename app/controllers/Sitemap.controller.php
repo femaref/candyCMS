@@ -16,6 +16,7 @@ use CandyCMS\Model\Blog as Model_Blog;
 use CandyCMS\Model\Content as Model_Content;
 use CandyCMS\Model\Download as Model_Download;
 use CandyCMS\Model\Gallery as Model_Gallery;
+use Smarty;
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Content.model.php';
@@ -25,7 +26,7 @@ require_once 'app/models/Gallery.model.php';
 class Sitemap extends Main {
 
 	/**
-	 * Show the sitemap as XML.
+	 * Show the sitemap as XML. Site is cached for one hour.
 	 *
 	 * @access public
 	 * @return string XML content
@@ -34,28 +35,36 @@ class Sitemap extends Main {
 	public function showXML() {
 		Header('Content-Type: text/xml');
 
-		$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'xml');
+		$this->oSmarty->template_dir = $sTemplateDir;
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
-		$this->_getSitemap();
+		if (!$this->oSmarty->isCached('show')) {
+			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+			$this->_getSitemap();
+		}
 
-    $sTemplateDir = Helper::getTemplateDir('sitemaps', 'xml');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'));
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'));
 	}
 
 	/**
-	 * Show the sitemap as HTML.
+	 * Show the sitemap as HTML. Site is cached for one minute.
 	 *
 	 * @access public
 	 * @return string HTML content
 	 *
 	 */
 	public function show() {
-		$this->_getSitemap();
+		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'show');
+		$this->oSmarty->template_dir = $sTemplateDir;
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCacheLifetime(60);
 
-    $sTemplateDir = Helper::getTemplateDir('sitemaps', 'show');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+		if (!$this->oSmarty->isCached('show'))
+			$this->_getSitemap();
+
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
 	}
 
 	/**

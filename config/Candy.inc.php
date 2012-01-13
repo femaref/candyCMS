@@ -30,7 +30,7 @@ define('SMTP_PORT', '');
 
 # Define the ABSOLUTE path of your website.
 # EXAMPLE: http://www.google.com
-define('WEBSITE_URL', 'http://192.168.178.24');
+define('WEBSITE_URL', 'http://phpcms.localhost');
 
 # ------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use templates, enter name of template-folder here
 # They are placed at templates/<SkinName>/...
 # DEFAULT: ''
-define('PATH_TEMPLATE', 'v2');
+define('PATH_TEMPLATE', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
