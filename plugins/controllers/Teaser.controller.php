@@ -13,7 +13,6 @@ use CandyCMS\Helper\I18n as I18n;
 
 require_once 'app/controllers/Blog.controller.php';
 
-
 # Show the last blog entry with teaser text
 final class Teaser extends \CandyCMS\Controller\Blog {
 

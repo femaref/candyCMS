@@ -414,3 +414,7 @@ table .left, #user table.user td, #calendar table td {
 ol {
   margin:5px 18px;
 }
+
+#create_mail {
+  min-width:600px;
+}

@@ -37,7 +37,7 @@ class Sitemap extends Main {
 
 		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'xml');
 		$this->oSmarty->template_dir = $sTemplateDir;
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
 		if (!$this->oSmarty->isCached('show')) {
@@ -45,7 +45,7 @@ class Sitemap extends Main {
 			$this->_getSitemap();
 		}
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'));
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'), WEBSITE_LANGUAGE);
 	}
 
 	/**
@@ -58,13 +58,13 @@ class Sitemap extends Main {
 	public function show() {
 		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'show');
 		$this->oSmarty->template_dir = $sTemplateDir;
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-		$this->oSmarty->setCacheLifetime(60);
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+		$this->oSmarty->setCacheLifetime(180);
 
 		if (!$this->oSmarty->isCached('show'))
 			$this->_getSitemap();
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'), WEBSITE_LANGUAGE);
 	}
 
 	/**

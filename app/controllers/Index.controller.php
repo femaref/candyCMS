@@ -70,7 +70,6 @@ class Index {
 	 * @param array $aSession alias for $_SESSION
 	 * @param array $aFile alias for $_FILE
 	 * @param array $aCookie alias for $_COOKIE
-   * @todo remove $_SESSION and replace with cookie
 	 *
 	 */
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
@@ -84,6 +83,7 @@ class Index {
    * Reset all data
    *
    * @access public
+   * 
    */
   public function __destruct() {
     unset($this->_aRequest, $this->_aSession);

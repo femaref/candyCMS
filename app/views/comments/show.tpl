@@ -12,7 +12,7 @@
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
           {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
-            <a href='{$c.author_website}'>
+            <a href='{$c.author_website}' rel='nofollow'>
               {$c.author_name}
             </a>
           {elseif $c.author_name}
@@ -33,7 +33,7 @@
           {if $USER_ROLE >= 3 && $c.author_ip}
             <span>{$c.author_ip}</span>
           {/if}
-          <a href='#create'
+          <a href='#create' rel='nofollow'
              onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
             <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                  title='{$lang.global.quote.quote}' />

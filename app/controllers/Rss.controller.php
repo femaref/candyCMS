@@ -79,7 +79,7 @@ class Rss extends Main {
   private function _showDefault() {
 		$sTemplateDir = Helper::getTemplateDir('rss', 'default');
 		$this->oSmarty->template_dir = $sTemplateDir;
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(60);
 
 		if (!$this->oSmarty->isCached('default')) {
@@ -88,7 +88,7 @@ class Rss extends Main {
 			$this->oSmarty->assign('_title_', $this->getTitle());
 		}
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'));
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'), WEBSITE_LANGUAGE);
 	}
 
   /**
@@ -96,24 +96,30 @@ class Rss extends Main {
    *
    * @access private
    * @return string HTML content
+   * @todo gallery and media rss differences
    *
    */
   private function _showMedia() {
-    $aData = $this->_aData[$this->_iId]['files'];
-    rsort($aData);
-
-    $this->oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
-    $this->oSmarty->assign('_content_', $this->_aData[$this->_iId]['content']);
-    $this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
-    $this->oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
-    $this->oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
-    $this->oSmarty->assign('_section_', $this->_sSection);
-    $this->oSmarty->assign('_title_', $this->getTitle());
-
-    $this->oSmarty->assign('data', $aData);
-
     $sTemplateDir = Helper::getTemplateDir('rss', 'media');
     $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'));
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(60);
+
+    if (!$this->oSmarty->isCached('media')) {
+      $aData = $this->_aData[$this->_iId]['files'];
+      rsort($aData);
+
+      $this->oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);
+      $this->oSmarty->assign('_content_', $this->_aData[$this->_iId]['content']);
+      $this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
+      $this->oSmarty->assign('_link_', $this->_aData[$this->_iId]['url']);
+      $this->oSmarty->assign('_pubdate_', $this->_aData[$this->_iId]['date_rss']);
+      $this->oSmarty->assign('_section_', $this->_sSection);
+      $this->oSmarty->assign('_title_', $this->getTitle());
+
+      $this->oSmarty->assign('data', $aData);
+    }
+
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'), WEBSITE_LANGUAGE . '|' . $this->_iId);
   }
 }

@@ -127,11 +127,9 @@ class Helper {
    *
    */
   public static function createLinkTo($sUrl, $bExternal = false) {
-		if ($bExternal == true)
-			return '<a href="' . $sUrl . '">' . $sUrl . '</a>';
-		else
-			return '<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
-	}
+    return $bExternal == true ? '<a href="' . $sUrl . '">' . $sUrl . '</a>' :
+            '<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
+  }
 
   /**
 	 * Return the URL of the user avatar.
@@ -147,6 +145,7 @@ class Helper {
 	 */
   public static function getAvatar($sSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
 		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
+    $sFilePath = substr($sFilePath, 0, 1) == '/' ? substr($sFilePath, 1) : $sFilePath;
 
 		if (is_file($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
@@ -161,9 +160,8 @@ class Helper {
       if (!is_int($sSize))
         $sSize = POPUP_DEFAULT_X;
 
-      $sMail = isset($sEmail) ? md5($sEmail) : WEBSITE_MAIL;
-      return 'http://www.gravatar.com/avatar/' . $sMail . '.jpg?s=' . $sSize .
-        '&d=mm';
+      $sMail = isset($sEmail) ? $sEmail : WEBSITE_MAIL;
+      return 'http://www.gravatar.com/avatar/' . md5($sMail) . '.jpg?s=' . $sSize . '&d=mm';
 		}
   }
 
