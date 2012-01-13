@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Blog as Model_Blog;
 use CandyCMS\Model\Gallery as Model_Gallery;
+use Smarty;
 
 require_once 'app/models/Blog.model.php';
 require_once 'app/models/Gallery.model.php';
@@ -69,21 +70,26 @@ class Rss extends Main {
   }
 
   /**
-   * Show default RSS template
+   * Show default RSS template. Save in cache for one minute.
    *
    * @access private
    * @return string HTML content
    *
    */
   private function _showDefault() {
-    $this->oSmarty->assign('data', $this->_aData);
-    $this->oSmarty->assign('_section_', $this->_sSection);
-    $this->oSmarty->assign('_title_', $this->getTitle());
+		$sTemplateDir = Helper::getTemplateDir('rss', 'default');
+		$this->oSmarty->template_dir = $sTemplateDir;
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCacheLifetime(60);
 
-    $sTemplateDir = Helper::getTemplateDir('rss', 'default');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'));
-  }
+		if (!$this->oSmarty->isCached('default')) {
+			$this->oSmarty->assign('data', $this->_aData);
+			$this->oSmarty->assign('_section_', $this->_sSection);
+			$this->oSmarty->assign('_title_', $this->getTitle());
+		}
+
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'));
+	}
 
   /**
    * Show media RSS template
