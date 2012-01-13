@@ -83,7 +83,7 @@ class Index {
    * Reset all data
    *
    * @access public
-   * 
+   *
    */
   public function __destruct() {
     unset($this->_aRequest, $this->_aSession);
@@ -560,31 +560,31 @@ class Index {
    * @return string HTML content
    *
    */
-  private function _showPlugins($sCachedHTML) {
+  private function _showPlugins(&$sCachedHTML) {
     # Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['userdata'] = $this->_resetUser();
 
     if (preg_match('/<!-- plugin:adsense -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Adsense')) {
       $oAdsense = new \CandyCMS\Plugin\Adsense();
-      $sCachedHTML = str_replace('<!-- plugin:adsense -->', $oAdsense->show(), $sCachedHTML);
+      $sCachedHTML = & str_replace('<!-- plugin:adsense -->', $oAdsense->show(), $sCachedHTML);
     }
 
     if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Archive')) {
       $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
       $oArchive->__init();
-      $sCachedHTML = str_replace('<!-- plugin:archive -->', $oArchive->show(), $sCachedHTML);
+      $sCachedHTML = & str_replace('<!-- plugin:archive -->', $oArchive->show(), $sCachedHTML);
     }
 
     if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Headlines')) {
       $oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
       $oHeadlines->__init();
-      $sCachedHTML = str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
+      $sCachedHTML = & str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
     }
 
     if (preg_match('/<!-- plugin:teaser -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Teaser')) {
       $oTeaser = new \CandyCMS\Plugin\Teaser();
-      $sCachedHTML = str_replace('<!-- plugin:teaser -->', $oTeaser->show(), $sCachedHTML);
+      $sCachedHTML = & str_replace('<!-- plugin:teaser -->', $oTeaser->show(), $sCachedHTML);
     }
 
     return $sCachedHTML;

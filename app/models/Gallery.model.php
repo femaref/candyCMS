@@ -200,7 +200,7 @@ class Gallery extends Main {
         $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
       }
 
-      $iLoop++;
+      ++$iLoop;
     }
 
     return $this->_aThumbs;

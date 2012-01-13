@@ -52,16 +52,16 @@ try {
   )
     throw new \Exception('Could not load required classes.');
   else {
-    require_once 'app/models/Main.model.php';
-    require_once 'app/controllers/Main.controller.php';
-    require_once 'app/controllers/Session.controller.php';
-    require_once 'app/controllers/Index.controller.php';
-    require_once 'app/controllers/Log.controller.php';
-    require_once 'app/helpers/AdvancedException.helper.php';
-    require_once 'app/helpers/Section.helper.php';
-    require_once 'app/helpers/Helper.helper.php';
-    require_once 'app/helpers/I18n.helper.php';
-    require_once 'lib/smarty/Smarty.class.php';
+    require 'app/models/Main.model.php';
+    require 'app/controllers/Main.controller.php';
+    require 'app/controllers/Session.controller.php';
+    require 'app/controllers/Index.controller.php';
+    require 'app/controllers/Log.controller.php';
+    require 'app/helpers/AdvancedException.helper.php';
+    require 'app/helpers/Section.helper.php';
+    require 'app/helpers/Helper.helper.php';
+    require 'app/helpers/I18n.helper.php';
+    require 'lib/smarty/Smarty.class.php';
   }
 }
 catch (\CandyCMS\Helper\AdvancedException $e) {
@@ -78,7 +78,7 @@ define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
 @session_start();
 
 # Initialize software
-$oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = & new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
 $oIndex->getPlugins(ALLOW_PLUGINS);
@@ -127,7 +127,6 @@ $bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
               preg_match('/Windows CE/i', $sUserAgent) ||
               preg_match('/IEMobile/i', $sUserAgent) ||
               preg_match('/iPhone/i', $sUserAgent) ||
-              #preg_match('/iPad/i', $sUserAgent) ||
               preg_match('/iPod/i', $sUserAgent) ||
               preg_match('/Blackberry/i', $sUserAgent) ||
               preg_match('/Android/i', $sUserAgent) ?

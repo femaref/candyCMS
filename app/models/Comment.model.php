@@ -81,7 +81,7 @@ class Comment extends Main {
     foreach ($this->_aData as $aData) {
       $iId = $aData['id'];
       $this->_aData[$iId]['loop'] = $iLoop;
-      $iLoop++;
+      ++$iLoop;
     }
 
     return $this->_aData;
