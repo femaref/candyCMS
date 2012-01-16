@@ -96,7 +96,7 @@ class Image {
    *
    */
   private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
-    $sPath = PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType;
+    $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
@@ -114,15 +114,15 @@ class Image {
     imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, Helper::removeSlash($sPath), 75);
+      ImageJPEG($oNewImg, $sPath, 75);
 
     elseif ($this->_sImgType == 'png') {
       imagealphablending($oNewImg, false);
       imagesavealpha($oNewImg, true);
-      ImagePNG($oNewImg, Helper::removeSlash($sPath), 9);
+      ImagePNG($oNewImg, $sPath, 9);
     }
     elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, Helper::removeSlash($sPath));
+      ImageGIF($oNewImg, $sPath);
 
     imagedestroy($oNewImg);
 

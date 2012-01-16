@@ -340,12 +340,12 @@ class User extends Main {
 	 *
 	 */
 	private function _destroyUserAvatars($iId) {
-		@unlink(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg');
-		@unlink(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg');
-		@unlink(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg');
-		@unlink(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg');
-		@unlink(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg');
-		@unlink(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg');
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg'));
 	}
 
 	/**

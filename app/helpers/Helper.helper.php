@@ -448,10 +448,13 @@ class Helper {
    * @static
    * @access public
    * @param string $sStr
+   * @param boolean $bReverse
    * @return string without slash
    *
    */
-  public static function removeSlash($sStr) {
-    return substr($sStr, 0, 1) == '/' ? substr($sStr, 1, strlen($sStr)) : $sStr;
+  public static function removeSlash($sStr, $bReverse = false) {
+    return $bReverse == false ?
+            substr($sStr, 0, 1) == '/' ? substr($sStr, 1) : $sStr  :
+            substr($sStr, 0, 1) == '/' ? $sStr : '/' . $sStr;
   }
 }

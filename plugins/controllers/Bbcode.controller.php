@@ -56,7 +56,7 @@ final class Bbcode {
 			$sUrl[1] = Helper::removeSlash($sUrl[1]);
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
       $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
-      $sTempFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension;
+      $sTempFilePath = Helper::removeSlash(PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension);
 
       $aInfo = @getimagesize($sUrl[1]);
 

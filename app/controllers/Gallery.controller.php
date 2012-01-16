@@ -149,7 +149,7 @@ class Gallery extends Main {
 
     elseif ($this->_oModel->create() === true) {
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
-      $sPath  = PATH_UPLOAD . '/gallery/' . $iId;
+      $sPath  = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $iId);
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
