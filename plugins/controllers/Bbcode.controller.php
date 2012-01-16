@@ -14,9 +14,11 @@
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 
 require_once 'app/helpers/I18n.helper.php';
+require_once 'app/helpers/Helper.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
@@ -51,7 +53,7 @@ final class Bbcode {
 
     # Replace images with image tag (every location allowed, but external is very slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
-			$sUrl[1] = substr($sUrl[1], 0, 1) == '/' ? substr($sUrl[1], 1) : $sUrl[1];
+			$sUrl[1] = Helper::removeSlash($sUrl[1]);
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
       $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
       $sTempFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension;
@@ -82,7 +84,7 @@ final class Bbcode {
 
         # we have to make sure, that this absolute URL won't begin with a slash
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
-        $sTempFilePath = substr($sTempFilePath, 0, 1) == '/' ? $sTempFilePath : '/' . $sTempFilePath;
+        $sTempFilePath = Helper::removeSlash($sTempFilePath);
 
         $sHTML = '<div class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';

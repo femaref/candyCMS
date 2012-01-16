@@ -145,7 +145,7 @@ class Helper {
 	 */
   public static function getAvatar($sSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
 		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
-    $sFilePath = substr($sFilePath, 0, 1) == '/' ? substr($sFilePath, 1) : $sFilePath;
+    $sFilePath = Helper::removeSlash($sFilePath);
 
 		if (is_file($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
@@ -440,5 +440,18 @@ class Helper {
     $sStr = str_replace(' ', '_', $sStr);
     $sStr = strtolower($sStr);
     return $sStr;
+  }
+
+  /**
+   * Removes first slash at dirs.
+   *
+   * @static
+   * @access public
+   * @param string $sStr
+   * @return string without slash
+   *
+   */
+  public static function removeSlash($sStr) {
+    return substr($sStr, 0, 1) == '/' ? substr($sStr, 1, strlen($sStr)) : $sStr;
   }
 }

@@ -89,7 +89,7 @@ class Media extends Main {
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
-      $sOriginalPath = PATH_UPLOAD . '/media';
+      $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/media');
       $oDir = opendir($sOriginalPath);
 
       $aFiles = array();

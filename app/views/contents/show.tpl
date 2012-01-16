@@ -50,7 +50,7 @@
           <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
         </a>
       </div>
-      {if $_request_id_}
+      {if $_request_id_ && $smarty.get.page == 1}
         <div id="socialshareprivacy"></div>
         <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
       {/if}
@@ -77,7 +77,8 @@
               'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_gplus.png',
               'display_name' : 'Google Plus'
             }
-          }
+          },
+          css_path : ''
         });
       };
     });
