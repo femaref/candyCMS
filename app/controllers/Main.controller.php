@@ -227,7 +227,7 @@ abstract class Main {
     $this->oSmarty->merge_compiled_includes = true;
     $this->oSmarty->use_sub_dirs = true;
 
-    #if (WEBSITE_DEV == false)
+    if (WEBSITE_DEV == false)
       $this->oSmarty->compile_check = false;
 
     if (CLEAR_CACHE == true)

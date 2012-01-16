@@ -156,12 +156,6 @@ article footer div.comments {
   float: right;
 }
 
-/* Facebook iframe */
-article iframe {
-  display:block;
-  margin-top: 10px;
-}
-
 #gallery article p {
   margin:0px;
 }

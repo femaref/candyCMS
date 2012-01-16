@@ -6,6 +6,7 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
     <meta name='description' content="{$meta_description}"/>
     <meta name='keywords' content="{$meta_keywords}"/>
+    <meta name='dc.title' content="{$_title_}"/>
     {if $_request_id_}
       <meta property="og:description" content="{$meta_og_description}"/>
       <meta property="og:site_name" content="{$meta_og_site_name}"/>
