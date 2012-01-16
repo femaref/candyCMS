@@ -448,13 +448,23 @@ class Helper {
    * @static
    * @access public
    * @param string $sStr
-   * @param boolean $bReverse
    * @return string without slash
    *
    */
   public static function removeSlash($sStr, $bReverse = false) {
-    return $bReverse == false ?
-            substr($sStr, 0, 1) == '/' ? substr($sStr, 1) : $sStr  :
-            substr($sStr, 0, 1) == '/' ? $sStr : '/' . $sStr;
+    return substr($sStr, 0, 1) == '/' ? substr($sStr, 1) : $sStr;
+  }
+
+  /**
+   * Adds slash for dirs.
+   *
+   * @static
+   * @access public
+   * @param string $sStr
+   * @return string with slash
+   *
+   */
+  public static function addSlash($sStr) {
+    return substr($sStr, 0, 1) == '/' ? $sStr : '/' . $sStr;
   }
 }

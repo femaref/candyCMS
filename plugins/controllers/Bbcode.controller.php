@@ -63,7 +63,7 @@ final class Bbcode {
       # Image is small and on our website, so we don't need a preview
       if ($aInfo[0] <= MEDIA_DEFAULT_X) {
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
-        $sHTML  = '<div class=\'image\'>';
+        $sHTML  = '<div class=\'image\' rel="images">';
         $sHTML .= '<img src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" />';
         $sHTML .= '</div>';
       }
@@ -84,7 +84,7 @@ final class Bbcode {
 
         # we have to make sure, that this absolute URL won't begin with a slash
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
-        $sTempFilePath = Helper::removeSlash($sTempFilePath);
+        $sTempFilePath = Helper::addSlash($sTempFilePath);
 
         $sHTML = '<div class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';
