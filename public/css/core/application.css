@@ -1,6 +1,6 @@
 html {
   text-align: center;
-  font: 13px/1.6em 'Droid Sans',Arial,sans-serif;
+  font: 13px/1.6em 'Droid Sans','Arial',sans-serif;
   color: #333;
   background: #272930;
 }
@@ -154,12 +154,6 @@ article footer div.comments img {
 
 article footer div.comments {
   float: right;
-}
-
-/* Facebook iframe */
-article iframe {
-  display:block;
-  margin-top: 10px;
 }
 
 #gallery article p {

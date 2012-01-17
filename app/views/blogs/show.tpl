@@ -83,10 +83,9 @@
             {$b.comment_sum} {$lang.global.comments}
           </a>
         </div>
-        {if $_facebook_plugin_ == true}
-          <div class="facebook_like">
-            <fb:like href="{$b.url_clean}" ref="{$b.id}" width="674" show_faces="false" send="true"></fb:like>
-          </div>
+        {if $_request_id_ && $smarty.get.page == 1}
+          <div id="socialshareprivacy"></div>
+          <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
         {/if}
       </footer>
     </article>
@@ -102,6 +101,25 @@
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
     $('.js-image').capty({ height: 35 });
+
+    if($('#socialshareprivacy').length > 0){
+      $('#socialshareprivacy').socialSharePrivacy({
+        services : {
+          facebook : {
+            'language' : '{$WEBSITE_LOCALE}',
+            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_facebook.png'
+          },
+          twitter : {
+            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_twitter.png'
+          },
+          gplus : {
+            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_gplus.png',
+            'display_name' : 'Google Plus'
+          }
+        },
+        css_path : ''
+      });
+    };
   });
 
   $('.js-media').each(function(e) {

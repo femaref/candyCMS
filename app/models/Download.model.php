@@ -237,8 +237,8 @@ class Download extends Main {
     $aFile = $this->getData($iId);
     $sFile = $aFile['file'];
 
-    if (is_file(PATH_UPLOAD . '/download/' . $sFile))
-      unlink(PATH_UPLOAD . '/download/' . $sFile);
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile)))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
 
     return $bReturn;
   }

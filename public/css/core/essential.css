@@ -489,3 +489,232 @@ div.capty-caption {
 .icon-upload{ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIuSURBVBgZpcHNi01hAMfx73PmzHWUO0QmbiOhyQyZMYWGRhbYSfkLpKwYpSRTSikLxE7IxsrGSmJBGtSQnXfJ5CUvg+G699x5u/ec53l+zilFNtR8PkYS0xEwTQHTFJJ5dX3to6hlxQpjAn4TjbHXH5ytrgca/MmQm1i+7akNyRgFHYv6LjYbY0BkBMZg69+Xfn109INA/NJUaJFcOjr+efAgcDkkZ1XHJzMaX87hkiYIWjCmSFTaTGndiQIS4EEeECaYtWD4at8R4HJILjWBfIJLCsgLP/WedOIr46N3aI4WglLwCZIFLMWOQwXkF5MJyRlF3k6RTIKSCdKxGsWOnUTzOgEDCPAgAcKEc8AFIZmQXBoQzmxlTuduwIOE8PjkE7Z6C7kY2RjZGnLjRG2HoSFyIblUkqvjJ58gFyM3hmwVn1aQi8FWGRyucPedI56aIrX76Qlc2A6E5BpI3uLTb8jGyMXIVpGNkatw42WFp/UimzauoW1uO7efX+Hes5HwUn/pVEAukQwO2R/IllH6HdkysmVkK1x7UWV1RzcucHQv3IozKb2rNpDZG5BR4it2shyn4wVvJ4vYxnxc0oZ3y/BuJaO1Ms1mFts795E7sPkCy1q7yEQhGdUbJ9+c37EOsQVDkb/UapXo+ch9Ho8MMbD1Isdv7iJqmkGmbiTxL739pWNtS2Yf3tDVR/uCHoa/POT+kyE+vo1PG0n8j97+0nFgD1AExoCzD86MDPwE/3Mt+7fw600AAAAASUVORK5CYII%3D);}
 .icon-user{ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ3SURBVDjLpZNtSNNRFIcNKunF1rZWBMJqKaSiX9RP1dClsjldA42slW0q5oxZiuHrlqllLayoaJa2jbm1Lc3QUZpKFmmaTMsaRp+kMgjBheSmTL2//kqMBJlFHx44XM7vOfdyuH4A/P6HFQ9zo7cpa/mM6RvCrVDzaVDy6C5JJKv6rwSnIhlFd0R0Up/GwF2KWyl01CTSkM/dQoQRzAurCjRCGnRUUE2FaoSL0HExiYVzsQwcj6RNrSqo4W5Gh6Yc4+1qDDTkIy+GhYK4nTgdz0H2PrrHUJzs71NQn86enPn+CVN9GnzruoYR63mMPbkC59gQzDl7pt7rc9f7FNyUhPY6Bx9gwt4E9zszhWWpdg6ZcS8j3O7zCTuEpnXB+3MNZkUUZu0NmHE8XsL91oSWwiiEc3MeseLrN6woYCWa/Zl8ozyQ3w3Hl2lYy0SwlCUvsVi/Gv2JwITnYPDun2Hy6jYuEzAF1jUBCVYpO6kXo+NuGMeBAgcgfwNkvgBOPgUqXgKvP7rBFvRhE1crp8Vq1noFYSlacVyqGk0D86gbART9BDk9BFnPCNJbCY5aCFL1Cyhtp0RWAp74MsKSrkq9guHyvfMTtmLc1togpZoyqYmyNoITzVTYRJCiXYBIQ3CwFqi83o3JDhX6C0M8XsGIMoQ4OyuRlq1DdZcLkmbgGDX1iIEKNxAcbgTEOqC4ZRaJ6Ub86K7CYFEo8Qo+GBQlQyXBczLZpbloaQ9k1NUz/kD2myBBKxRZpa5hVcQslalatoUxizxAVVrN3CW21bFj9F858Q9dnIRmDyeuybM71uxmH9BNBB1q6zybV7H9s1Ue4PM3/gu/AEbfqfWy2twsAAAAAElFTkSuQmCC);}
 .icon-zoom{ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJGSURBVDjLjdJLSNRBHMDx78yqLZaKS75DPdgDDaFDbdJmde5QlhCJGxgpRJfqEEKnIsJLB7skQYQKZaSmdLaopPCgEvSCShCMzR5a7oq7/3l12RVtjfzBMA/4fWZ+MyOccwBM3g8HEbIdfCEhfAFnLVapOa28Uevpjrqz/WOsERJgsu9Uq5CZQzgqrJfo9BajNd5irEYn4p3OUiFExtCLmw2tawFi4l5zUMjMIau9u7K+qxeoAcoAA0wDb2OPwmfA16LiiaOHLj1edRLpkO3WmIis7+oBDgJbgQ2AH6gC6jY19N62RkcctKeVIJAhp9QgUA3kJXdONZVcq9JxPSgQoXRAyIDRth8oAXQyKdWnoCKrTD9CBv4GMqx1WGNZkeRWJKbG2hiD1Cb9FbTnzWFdY/LCdLKlgNQ84gyNKqHm0gDjqVHnxDHgA/B9RQkpaB6YklkZl62np9KBhOqwjpKFgeY2YAz4BESBWHI8Hhs6PVVSvc3v98ye4fP7T676B845nt040ip98qpWJmI9PWiU6bfWgXGN2YHcKwU7tsuc4kpUPMbU0+f8+vKt+Pitl7PLAMDI9cNBoB0hQwICzjqUp6MZvsy8yvp95BRuQUjJ75mPvH4wYo1NlJ64Mza7DPwrhi8cCOeXl/aUB4P4c/NJxKLMvpngycCrzxVFG2v/CwAMnguF80oLe8p27cQh+fnpPV/fTc95S6piXQDAw7a9YbWkezZXFbAwMx/xPFXb1D3+Y90AQF/L7kAsri9mZ4lrTd0TcYA/Kakr+x2JSPUAAAAASUVORK5CYII%3D);}
+
+/********************************************************************************/
+/* 2-click */
+/********************************************************************************/
+.social_share_privacy_area {
+  clear: both;
+  list-style-type: none;
+  padding: 20px 0 0 !important;
+  width: auto;
+  height: 25px;
+  display: block;
+}
+
+.social_share_privacy_area li {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 21px;
+  float: left;
+}
+.social_share_privacy_area li .dummy_btn {
+  float: left;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+  padding: 0;
+  height: inherit;
+}
+.social_share_privacy_area li div iframe {
+  overflow: hidden;
+  height: inherit;
+  width: inherit;
+}
+/* Facebook begin */
+.social_share_privacy_area .facebook {
+  width: 180px;
+  display: inline-block;
+}
+.social_share_privacy_area .facebook .fb_like iframe {
+  width: 145px;
+}
+/* Facebook end */
+/* Twitter begin */
+.social_share_privacy_area .twitter {
+  width: 148px;
+}
+.social_share_privacy_area li div.tweet {
+  width: 115px;
+}
+/* Twitter end */
+/* Google+ begin */
+.social_share_privacy_area .gplus {
+  width: 123px;
+}
+.social_share_privacy_area li div.gplusone {
+  width: 90px;
+}
+/* Google+ end */
+/* Switch begin */
+.social_share_privacy_area li .switch {
+  display: inline-block;
+  text-indent: -9999em;
+  background: transparent url(../../images/js-socialshareprivacy/socialshareprivacy_on_off.png) no-repeat 0 0 scroll;
+  width: 23px;
+  height: 12px;
+  overflow: hidden;
+  float: left;
+  margin: 4px 0 0;
+  padding: 0;
+  cursor: pointer;
+}
+.social_share_privacy_area li .switch.on {
+  background-position: 0 -12px;
+}
+/* Switch end */
+/* Tooltips begin */
+.social_share_privacy_area li.help_info {
+  position: relative;
+}
+.social_share_privacy_area li.help_info .info,
+.social_share_privacy_area li .help_info.icon .info {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 290px;
+  padding: 10px 15px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: 0 3px 4px #999;
+  -webkit-box-shadow: 0 3px 4px #999;
+  box-shadow: 0 3px 4px #999;
+  background-color: #fdfbec;
+  color: #000;
+  z-index: 500;
+}
+.social_share_privacy_area li.gplus.help_info .info {
+  left: -60px;
+}
+.social_share_privacy_area li .help_info.icon .info {
+  left: -243px;
+  width: 350px;
+}
+.social_share_privacy_area li.help_info.display .info,
+.social_share_privacy_area li .help_info.icon.display .info {
+  display: block;
+}
+.social_share_privacy_area li.help_info.info_off.display .info {
+  display: none;
+}
+.social_share_privacy_area li .help_info.icon {
+  background: #fff url(../../images/js-socialshareprivacy/socialshareprivacy_info.png) no-repeat center center scroll;
+  width: 25px;
+  height: 20px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border: 2px solid #e7e3e3;
+  border-right-width: 0;
+  -moz-border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
+  margin: 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu.on .help_info.icon {
+  border-top-width: 0;
+  border-left-width: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu.perma_option_off .help_info.icon {
+  border-right-width: 2px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+/* Tooltips end */
+/* Settings/Info begin */
+.social_share_privacy_area li.settings_info {
+  position: relative;
+  top: -2px;
+}
+.social_share_privacy_area li.settings_info a {
+  text-decoration: none;
+  margin: 0 !important;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu {
+  background-color: #f3f4f5;
+  border: 2px solid #e7e3e3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 2px 2px 3px #c1c1c1;
+  -webkit-box-shadow: 2px 2px 3px #c1c1c1;
+  box-shadow: 3px 3px 3px #c1c1c1;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 135px;
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu.off {
+  border-width: 0;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu.off form {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu .settings {
+  text-indent: -9999em;
+  display: inline-block;
+  background: #fff url(../../images/js-socialshareprivacy/settings.png) no-repeat center center scroll;
+  width: 25px;
+  height: 20px;
+  border: 2px solid #e7e3e3;
+  -moz-border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;
+  border-left: 1px solid #ddd;
+  margin: 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu.on .settings {
+  border-top-width: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu form fieldset {
+  border-width: 0;
+  margin: 0;
+  padding: 0 10px 10px;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu form fieldset legend {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 14px;
+  margin: 0;
+  padding: 10px 0;
+  width: 115px;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu form fieldset input {
+  clear: both;
+  float: left;
+  margin: 4px 10px 4px 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu form fieldset label {
+  display: inline-block;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 24px;
+  -moz-transition: color .5s ease-in;
+  -webkit-transition: color .5s ease-in;
+  transition: color .5s ease-in;
+  margin: 0;
+  padding: 0;
+}
+.social_share_privacy_area li.settings_info .settings_info_menu form fieldset label.checked {
+  color: #090;
+}
