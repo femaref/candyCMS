@@ -77,9 +77,6 @@
         <h3>{$lang.global.overview}</h3>
         <ul>
           <li>
-            <a href='/About'>{$lang.global.about} {$WEBSITE_NAME}</a>
-          </li>
-          <li>
             <a href='/Disclaimer'>{$lang.global.disclaimer}</a>
           </li>
           <li>
