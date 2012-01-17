@@ -332,13 +332,15 @@ search:
   title:
     create: Suche
     show: Suchergebnisse für "%s"
+  info:
+    fail: Es wurden keine Einträge zu dem Begriff: "<strong>%b</strong>" gefunden.<br /> <a href="/search" title="Suche">Erneut suchen.</a>
 
 session:
   password:
     info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
     mail:
-      body: "Hallo %u!\r\n\r\Sie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      body: "Hallo %u!\r\n\r\nSie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
       subject: Ihr neues Passwort
     title: Passwort vergessen?
   verification:

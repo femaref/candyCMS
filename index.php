@@ -78,7 +78,7 @@ define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
 @session_start();
 
 # Initialize software
-$oIndex = & new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 $oIndex->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
 $oIndex->getPlugins(ALLOW_PLUGINS);
