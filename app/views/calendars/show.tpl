@@ -28,14 +28,14 @@
       </tr>
       {foreach $c.dates as $d}
         <tr class='{cycle values="row1,row2"}'>
-          <td style="width:30%">
+          <td style="width:25%">
             {$d.start_date}
             {if $d.end_date > 1}
               -
               {$d.end_date}
             {/if}
           </td>
-          <td style="width:60%">
+          <td style="width:65%">
             <h3>
               {$d.title}
             </h3>

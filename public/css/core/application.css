@@ -180,7 +180,6 @@ article iframe {
 #comments article {
   display: table;
   padding: 25px;
-  width: 650px;
   margin-bottom:30px;
   text-align:left;
 }
@@ -336,7 +335,8 @@ form input[type="button"] {
   margin-left: 5px;
 }
 
-form#create_mail textarea {
+form#create_mail textarea,
+#js-create_commment_text {
   width: 75%;
 }
 
