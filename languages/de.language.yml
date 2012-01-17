@@ -340,7 +340,7 @@ session:
     info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
     mail:
-      body: "Hallo %u!\r\n\r\Sie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      body: "Hallo %u!\r\n\rSie können sich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
       subject: Ihr neues Passwort
     title: Passwort vergessen?
   verification:
