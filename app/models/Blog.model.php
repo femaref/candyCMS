@@ -33,8 +33,7 @@ class Blog extends Main {
     if (empty($this->_iId)) {
 
       # Show unpublished items to moderators or administrators only
-      $sWhere = !isset($this->_aSession['userdata']['role']) ||
-              isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
+      $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
               "WHERE published = '1'" :
               '';
 
@@ -171,6 +170,13 @@ class Blog extends Main {
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     $this->_iId = !empty($iId) ? $iId : $this->_iId;
+
+    # Small fix for pagination
+    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
+            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
+            !isset($this->_aRequest['parent_id']))
+      $this->_iId = '';
+
     return $this->_setData($bUpdate, $iLimit);
   }
 
@@ -245,17 +251,21 @@ class Blog extends Main {
    *
    */
   public function update($iId) {
-    $iDateModified = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
+    $iDateModified = isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true ?
             time() :
-            '';
+            0;
 
-    $iPublished = (isset($this->_aRequest['published']) && $this->_aRequest['published'] == true) ?
+    $iPublished = isset($this->_aRequest['published']) && $this->_aRequest['published'] == true ?
             '1' :
             '0';
 
-    $iUpdateAuthor = (isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true) ?
+    $iUpdateAuthor = isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true ?
             $this->_aSession['userdata']['id'] :
             (int) $this->_aRequest['author_id'];
+
+    $iDate = isset($this->_aRequest['update_date']) && $this->_aRequest['update_date'] == true ?
+            time() :
+            (int) $this->_aRequest['date'];
 
     try {
       $oQuery = $this->_oDb->prepare("UPDATE
@@ -267,6 +277,7 @@ class Blog extends Main {
                                         teaser = :teaser,
                                         keywords = :keywords,
                                         content = :content,
+                                        date = :date,
                                         date_modified = :date_modified,
                                         published = :published
                                       WHERE
@@ -278,6 +289,7 @@ class Blog extends Main {
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('date', $iDate, PDO::PARAM_INT);
       $oQuery->bindParam('date_modified', $iDateModified, PDO::PARAM_INT);
       $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);

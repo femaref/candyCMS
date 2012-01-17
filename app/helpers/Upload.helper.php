@@ -98,7 +98,7 @@ class Upload {
         elseif (!empty($this->_sRename) && $iI > 0)
           $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '_' . $iI . '.' . $this->_sFileExtension;
 
-        $this->sFilePath = PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName;
+        $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);
         $bReturn = & move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
       }
 
@@ -120,8 +120,8 @@ class Upload {
 		$this->_sFileExtension	= strtolower(substr(strrchr($this->_aFile['name'], '.'), 1));
 		$this->_sFileName				= md5($this->_sFileName . rand(000, 999));
 		$this->_sUploadFolder		= 'gallery/' . (int) $this->_aRequest['id'];
-		$this->sFilePath				= PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' .
-						$this->_sFileName . '.' . $this->_sFileExtension;
+		$this->sFilePath				= Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' .
+						$this->_sFileName . '.' . $this->_sFileExtension);
 
 		$bReturn = move_uploaded_file($this->_aFile['tmp_name'], $this->sFilePath);
 
@@ -156,7 +156,7 @@ class Upload {
             (int) $this->_aRequest['id'] :
             $this->_aSession['userdata']['id'];
     $this->_sUploadFolder = 'user';
-    $this->_sFilePath = PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName;
+    $this->_sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName);
 
     if ($this->_aFile['image']['size'] > 409600)
       return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
@@ -180,59 +180,59 @@ class Upload {
   }
 
   private function _deleteAvatarFiles() {
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.jpg'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.jpg');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.jpg')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.jpg'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.png'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.png');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.png')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.png'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.gif'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/popup/' . $this->_sFileName . '.gif'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . THUMB_DEFAULT_X . '/' . $this->_sFileName . '.gif'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/100/' . $this->_sFileName . '.gif'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/64/' . $this->_sFileName . '.gif'));
 
-    if (is_file(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.gif'))
-      unlink(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.gif');
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.gif')))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.gif'));
   }
 
   public function getExtension() {

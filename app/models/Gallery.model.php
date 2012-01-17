@@ -200,7 +200,7 @@ class Gallery extends Main {
         $this->_aThumbs[$iId]['thumb_height'] = $aThumbSize[1];
       }
 
-      $iLoop++;
+      ++$iLoop;
     }
 
     return $this->_aThumbs;
@@ -420,7 +420,7 @@ class Gallery extends Main {
    *
    */
   public function destroy($iId) {
-    $sPath = PATH_UPLOAD . '/gallery/' . (int) $iId;
+    $sPath = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . (int) $iId);
 
     # Fetch all images
     try {

@@ -1,3 +1,4 @@
+{* Account data *}
 <form method='post' action='/user/{$uid}/update'>
   <h2><a href="#">{$lang.user.title.personal_data}</a></h2>
   <div>
@@ -46,7 +47,9 @@
     </p>
   </div>
 </form>
-{if $USER_ID === $uid}
+
+{* Password *}
+{if $USER_ID == $uid}
   <form method='post' action='/user/{$uid}/password'>
     <h2><a href="#">{$lang.user.title.password}</a></h2>
       <div>
@@ -68,6 +71,8 @@
     </div>
   </form>
 {/if}
+
+{* Avatar *}
 <form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'>
   <h2><a href="#">{$lang.user.title.image}</a></h2>
   <div>
@@ -89,6 +94,8 @@
     </p>
   </div>
 </form>
+
+{* Destroy account *}
 {if $USER_ROLE < 4}
   <form enctype='multipart/form-data' method='post' action='/user/{$uid}/destroy'>
     <h2><a href="#">{$lang.user.title.account}</a></h2>
@@ -107,7 +114,7 @@
     </div>
   </form>
 {/if}
-<script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $(document).ready(function(){

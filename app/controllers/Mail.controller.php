@@ -82,7 +82,7 @@ class Mail extends Main {
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if ($this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false)
+			if ($this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false && MOBILE == false)
 				return $this->_checkCaptcha();
 			else
 				return $this->_create(false);

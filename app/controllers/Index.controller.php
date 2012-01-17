@@ -70,7 +70,6 @@ class Index {
 	 * @param array $aSession alias for $_SESSION
 	 * @param array $aFile alias for $_FILE
 	 * @param array $aCookie alias for $_COOKIE
-   * @todo remove $_SESSION and replace with cookie
 	 *
 	 */
 	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
@@ -84,6 +83,7 @@ class Index {
    * Reset all data
    *
    * @access public
+   *
    */
   public function __destruct() {
     unset($this->_aRequest, $this->_aSession);
@@ -314,6 +314,25 @@ class Index {
   }
 
   /**
+   * Return default user data.
+   *
+   * @access protected
+   * @return array default user data
+   *
+   */
+  protected function _resetUser() {
+    return array(
+        'email' => '',
+        'facebook_id' => '',
+        'id' => 0,
+        'name' => '',
+        'surname' => '',
+        'password' => '',
+        'role' => 0
+    );
+  }
+
+  /**
    * Define user constants for global use.
    *
    * List of user roles:
@@ -330,15 +349,7 @@ class Index {
    */
 	public function setUser() {
     # Set standard variables
-      $this->_aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0
-    );
+    $this->_aSession['userdata'] = $this->_resetUser();
 
     # Override them with user data
     # Get user data by token
@@ -477,44 +488,47 @@ class Index {
 
 		# Check for template files
     # *********************************************
-    $sCachedCss     = WEBSITE_CDN . '/css';
-    $sCachedImages  = WEBSITE_CDN . '/images';
-    $sCachedJs      = WEBSITE_CDN . '/js';
-
     # We use templates via template request.
-    if (!empty($this->_sTemplate)) {
+    if (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
       $iPathLen = strlen($sPath);
 
-      $sCachedCss = @is_dir(substr($sPath, 1, $iPathLen) . '/css') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/css' :
-              WEBSITE_CDN . '/css';
+      $sCachedCss     = $sPath . '/css';
+      $sCachedImages  = $sPath . '/images';
+      $sCachedJs      = $sPath . '/js';
+    }
 
-      $sCachedImages = @is_dir(substr($sPath, 1, $iPathLen) . '/images') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/images' :
-              WEBSITE_CDN . '/images';
+    # Intern use with template request
+    elseif (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) !== 'http') {
+      $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
+      $iPathLen = strlen($sPath);
 
-      $sCachedJs = @is_dir(substr($sPath, 1, $iPathLen) . '/js') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/js' :
-              WEBSITE_CDN . '/js';
+      $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
+      $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
 
     # We use templates defined in our Candy.inc.php
-    elseif (PATH_TEMPLATE !== '') {
+    elseif (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
       $iPathLen = strlen($sPath);
 
-      $sCachedCss = @is_dir(substr($sPath, 1, $iPathLen) . '/css') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/css' :
-              WEBSITE_CDN . '/css';
+      $sCachedCss     = $sPath . '/css';
+      $sCachedImages  = $sPath . '/images';
+      $sCachedJs      = $sPath . '/js';
+    }
+    elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
+      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
+      $iPathLen = strlen($sPath);
 
-      $sCachedImages = @is_dir(substr($sPath, 1, $iPathLen) . '/images') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/images' :
-              WEBSITE_CDN . '/images';
-
-      $sCachedJs = @is_dir(substr($sPath, 1, $iPathLen) . '/js') || substr(WEBSITE_CDN, 0, 4) == 'http' ?
-              $sPath . '/js' :
-              WEBSITE_CDN . '/js';
+      $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
+      $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
+    }
+    else {
+      $sCachedCss     = WEBSITE_CDN . '/css';
+      $sCachedImages  = WEBSITE_CDN . '/images';
+      $sCachedJs      = WEBSITE_CDN . '/js';
     }
 
     $sCachedHTML = & str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
@@ -526,9 +540,53 @@ class Index {
 		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
 		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
 
+
+		# Load plugins
+    # *********************************************
+    if (ALLOW_PLUGINS !== '')
+      $sCachedHTML = $this->_showPlugins($sCachedHTML);
+
 		$oSection->oI18n->unsetLanguage();
 
     header("Content-Type: text/html; charset=utf-8");
 		return $sCachedHTML;
 	}
+
+  /**
+   * Get and replace plugin placeholders. This is done at the end of execution for performance reasons.
+   *
+   * @access private
+   * @param string $sCachedHTML
+   * @return string HTML content
+   *
+   */
+  private function _showPlugins(&$sCachedHTML) {
+    # Fix search bug
+    unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
+    $this->_aSession['userdata'] = $this->_resetUser();
+
+    if (preg_match('/<!-- plugin:adsense -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Adsense')) {
+      $oAdsense = new \CandyCMS\Plugin\Adsense();
+      $sCachedHTML = & str_replace('<!-- plugin:adsense -->', $oAdsense->show(), $sCachedHTML);
+    }
+
+    if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Archive')) {
+      $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
+      $oArchive->__init();
+      $sCachedHTML = & str_replace('<!-- plugin:archive -->', $oArchive->show(), $sCachedHTML);
+    }
+
+    if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Headlines')) {
+      $oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
+      $oHeadlines->__init();
+      $sCachedHTML = & str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
+    }
+
+    if (preg_match('/<!-- plugin:teaser -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Teaser')) {
+      $oTeaser = new \CandyCMS\Plugin\Teaser();
+      $sCachedHTML = & str_replace('<!-- plugin:teaser -->', $oTeaser->show(), $sCachedHTML);
+    }
+
+    return $sCachedHTML;
+  }
 }

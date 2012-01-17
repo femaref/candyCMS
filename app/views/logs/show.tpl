@@ -2,7 +2,7 @@
 <table id="js-logs">
   <thead>
     <tr>
-      <th>
+      <th class='left'>
         {$lang.global.author}
       </th>
       <th>
@@ -31,19 +31,19 @@
     {else}
       <tr>
     {/if}
-      <td style='width:25%' class="left">
+      <td class="left">
         <a href='/user/{$l.uid}'>{$l.full_name}</a>
       </td>
-      <td style='width:10%' class="left">
+      <td>
         {$l.section_name}
       </td>
-      <td style='width:10%' class="left">
+      <td>
         {$l.action_name}
       </td>
-      <td style='width:5%'>
+      <td>
         {$l.action_id}
       </td>
-      <td style='width:40%'>
+      <td>
         {$l.time_start}
         {if $l.time_start !== $l.time_end}
           -

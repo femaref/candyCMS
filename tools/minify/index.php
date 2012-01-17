@@ -11,13 +11,12 @@
 
 #require_once '../../config/Candy.inc.php';
 
-function search($sPath, $sType) {
+function search($sPath, $sType, $bCombine = false) {
   $sHtml = '';
   $sPath = $sPath . '/' . $sType;
   $sFileContent = '';
 
   if (is_dir($sPath)) {
-
     # Get subfolders
     $oPathDir = opendir($sPath);
     while ($sDir = readdir($oPathDir)) {
@@ -36,8 +35,8 @@ function search($sPath, $sType) {
         if (substr($sFile, 0, 1) == '.' || preg_match('/min/', $sFile))
           continue;
 
-        $sFileUrl = $sPathFile . '/' . $sFile;
-        $sFileUrlMin = $sPathFile . '/' . substr($sFile, 0, strlen($sFile) - (strlen($sType) + 1)) . '.min.' . $sType;
+        $sFileUrl     = $sPathFile . '/' . $sFile;
+        $sFileUrlMin  = $sPathFile . '/' . substr($sFile, 0, strlen($sFile) - (strlen($sType) + 1)) . '.min.' . $sType;
 
         # Delete existing minified files
         if (file_exists($sFileUrlMin))
@@ -65,7 +64,7 @@ function compress($sType, $sFileUrl, $sFileUrlMin) {
 
 # Standard paths
 search($_SERVER['DOCUMENT_ROOT'] . '/public', 'js');
-search($_SERVER['DOCUMENT_ROOT'] . '/public', 'css');
+search($_SERVER['DOCUMENT_ROOT'] . '/public', 'css', true);
 
 # Templates
 $sPath = $_SERVER['DOCUMENT_ROOT'] . '/public/templates';

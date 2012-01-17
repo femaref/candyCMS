@@ -11,6 +11,8 @@
 
 namespace CandyCMS\Helper;
 
+use CandyCMS\Helper\Helper as Helper;
+
 class Image {
 
   /**
@@ -94,7 +96,7 @@ class Image {
    *
    */
   private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
-    $sPath = PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType;
+    $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);

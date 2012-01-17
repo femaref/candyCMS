@@ -111,7 +111,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser, Facebook
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
 
 # ------------------------------------------------------------------------------
 
@@ -207,7 +207,7 @@ define('COMPILE_DIR', 'compile');
 
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 8);
+define('LIMIT_BLOG', 2);
 
 # Limit of comments per page
 # DEFAULT: 10

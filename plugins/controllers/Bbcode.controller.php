@@ -14,9 +14,11 @@
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 
 require_once 'app/helpers/I18n.helper.php';
+require_once 'app/helpers/Helper.helper.php';
 require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
@@ -51,16 +53,20 @@ final class Bbcode {
 
     # Replace images with image tag (every location allowed, but external is very slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
-			$sUrl[1] = substr($sUrl[1], 0, 1) == '/' ? substr($sUrl[1], 1) : $sUrl[1];
+			$sUrl[1] = Helper::removeSlash($sUrl[1]);
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
       $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
-      $sTempFilePath = PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension;
+      $sTempFilePath = Helper::removeSlash(PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension);
 
       $aInfo = @getimagesize($sUrl[1]);
 
       # Image is small and on our website, so we don't need a preview
-      if ($aInfo[0] <= MEDIA_DEFAULT_X)
-        $sHTML = '<div class=\'image\'><img src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" /></div>';
+      if ($aInfo[0] <= MEDIA_DEFAULT_X) {
+        $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
+        $sHTML  = '<div class=\'image\' rel="images">';
+        $sHTML .= '<img src="' . $sUrl[1] . '" width="' . $aInfo[0] . '" height="' . $aInfo[1] . '" alt="' . $sUrl[1] . '" />';
+        $sHTML .= '</div>';
+      }
 
       # We do not have a preview
       else {
@@ -78,7 +84,7 @@ final class Bbcode {
 
         # we have to make sure, that this absolute URL won't begin with a slash
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
-        $sTempFilePath = '/' . $sTempFilePath;
+        $sTempFilePath = Helper::addSlash($sTempFilePath);
 
         $sHTML = '<div class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';

@@ -72,7 +72,7 @@ class Media extends Main {
     $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
 
     if (!is_dir($sFolder))
-      mkdir(PATH_UPLOAD . '/' . $sFolder, 0777);
+      mkdir(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder, 0777));
 
     return $oUpload->uploadFile($sFolder);
   }
@@ -89,7 +89,7 @@ class Media extends Main {
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
-      $sOriginalPath = PATH_UPLOAD . '/media';
+      $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/media');
       $oDir = opendir($sOriginalPath);
 
       $aFiles = array();
@@ -149,8 +149,8 @@ class Media extends Main {
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
-      if (is_file(PATH_UPLOAD . '/media/' . $this->_aRequest['id'])) {
-        unlink(PATH_UPLOAD . '/media/' . $this->_aRequest['id']);
+      if (is_file(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']))) {
+        unlink(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']));
         return Helper::successMessage($this->oI18n->get('success.file.destroy'), '/media');
       }
       else

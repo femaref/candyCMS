@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Gallery as Model;
+use Smarty;
 
 require_once 'app/models/Gallery.model.php';
 require_once 'app/helpers/Upload.helper.php';
@@ -61,27 +62,31 @@ class Gallery extends Main {
       return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'files'));
     }
     # Specific image
-    elseif(!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
-      $this->_aData = Model::getFileData($this->_iId);
-
-      # Absolute URL for image information
-      $sUrl = PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file'];
-
-      # Get image information
-      $aImageInfo = getimagesize($sUrl);
-
-      $this->_aData['url']    = $sUrl;
-      $this->_aData['width']  = $aImageInfo[0];
-      $this->_aData['height'] = $aImageInfo[1];
-
-      $this->_setDescription($this->_aData['content']);
-      $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
-
-      $this->oSmarty->assign('i', $this->_aData);
-
+    elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
       $sTemplateDir = Helper::getTemplateDir('galleries', 'image');
       $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'));
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+
+      if (!$this->oSmarty->isCached('image')) {
+        $this->_aData = Model::getFileData($this->_iId);
+
+        # Absolute URL for image information
+        $sUrl = PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file'];
+
+        # Get image information
+        $aImageInfo = getimagesize($sUrl);
+
+        $this->_aData['url'] = $sUrl;
+        $this->_aData['width'] = $aImageInfo[0];
+        $this->_aData['height'] = $aImageInfo[1];
+
+        $this->_setDescription($this->_aData['content']);
+        $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
+
+        $this->oSmarty->assign('i', $this->_aData);
+      }
+
+      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'), WEBSITE_LANGUAGE);
     }
     # Album overview
     else {
@@ -144,7 +149,7 @@ class Gallery extends Main {
 
     elseif ($this->_oModel->create() === true) {
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
-      $sPath  = PATH_UPLOAD . '/gallery/' . $iId;
+      $sPath  = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $iId);
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;

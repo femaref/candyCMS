@@ -13,6 +13,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Controller\Search as Search;
 use CandyCMS\Helper\Helper as Helper;
+use Smarty;
 
 class Error extends Main {
 
@@ -24,16 +25,17 @@ class Error extends Main {
 	 *
 	 */
 	public function show404() {
-		if (isset($this->_aRequest['seo_title'])) {
+		/*if (isset($this->_aRequest['seo_title'])) {
       $this->__autoload('Search');
 
 			$oSearch = new Search($this->_aRequest, $this->_aSession);
 			$oSearch->__init();
 			$this->oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));
-		}
+		}*/
 
     $sTemplateDir = Helper::getTemplateDir('errors', '404');
     $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '404'));
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '404'), WEBSITE_LANGUAGE);
 	}
 }

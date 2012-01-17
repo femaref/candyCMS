@@ -172,7 +172,7 @@ success:
 
 error:
   404:
-    info: Die angeforderte Datei wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
+    info: Die angeforderte URL wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
     title: Error 404
   audio: Dein Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicke auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
   captcha:
@@ -235,6 +235,8 @@ blog:
     keywords: Gib die wichtigsten Schlagworte dieses Eintrags an.
     tag: Trenne Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
     teaser: Schreib einen Teaser um den Blogeintrag interessanter zu machen!
+  label:
+    date: Datum aktualisieren?
   title:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen

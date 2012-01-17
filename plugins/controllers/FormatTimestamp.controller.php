@@ -29,7 +29,9 @@ final class FormatTimestamp {
       $sDay = strftime(DEFAULT_DATE_FORMAT, $iTime);
 
     $sTime = str_replace('am', I18n::get('global.time.am'), $sTime);
+    $sTime = str_replace('AM', I18n::get('global.time.am'), $sTime);
     $sTime = str_replace('pm', I18n::get('global.time.pm'), $sTime);
+    $sTime = str_replace('PM', I18n::get('global.time.pm'), $sTime);
 
 		if($iOptions == 1)
 			return $sDay;

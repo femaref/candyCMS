@@ -3,28 +3,24 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @todo fix redirection bug
  */
 
 namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Model\Blog as Model;
+use CandyCMS\Helper\I18n as I18n;
 
-require_once 'app/models/Blog.model.php';
+require_once 'app/controllers/Blog.controller.php';
 
 # Show the last blog entry with teaser text
-final class Teaser {
+final class Teaser extends \CandyCMS\Controller\Blog {
 
   public final function show() {
-    $oModel = new Model();
-    $aData = $oModel->getData('', false, 1);
+    $aData = $this->_oModel->getData('', false, 1);
 
-    $oSmarty = new \Smarty();
-    $oSmarty->cache_dir = CACHE_DIR;
-    $oSmarty->compile_dir = COMPILE_DIR;
-
-    $oSmarty->assign('data', $aData);
-    $oSmarty->template_dir = Helper::getPluginTemplateDir('teaser', 'show');
-    return $oSmarty->fetch('show.tpl');
+    $this->oSmarty->assign('data', $aData);
+    $this->oSmarty->template_dir = Helper::getPluginTemplateDir('teaser', 'show');
+    return $this->oSmarty->fetch('show.tpl');
   }
 }

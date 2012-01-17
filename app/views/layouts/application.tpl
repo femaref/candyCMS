@@ -6,6 +6,7 @@
     <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
     <meta name='description' content="{$meta_description}"/>
     <meta name='keywords' content="{$meta_keywords}"/>
+    <meta name='dc.title' content="{$_title_}"/>
     {if $_request_id_}
       <meta property="og:description" content="{$meta_og_description}"/>
       <meta property="og:site_name" content="{$meta_og_site_name}"/>
@@ -20,7 +21,6 @@
     {/if}
     <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
     <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700&v2' rel='stylesheet' type='text/css'>
     <link href='%PATH_CSS%/core/essential{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1{$_compress_files_suffix_}.js"></script>
@@ -121,7 +121,7 @@
             </li>
           {/if}
           {if $MOBILE_DEVICE == true}
-            <a href="/?mobile=1">{$lang.global.view.mobile}</a>
+            <a href='/?mobile=1' ref='nofollow'>{$lang.global.view.mobile}</a>
           {/if}
         </ul>
       </section>
