@@ -11,7 +11,7 @@
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
-define('SQL_DB', 'candyCMS');
+define('SQL_DB', 'cms_new');
 define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
@@ -80,7 +80,7 @@ define('WEBSITE_TRACKING_CODE', '');
 # "Static/nameofyourpage" and place it at
 # "public/skins/_static/nameofyourpage.tpl"
 # DEFAULT: Blog
-define('WEBSITE_LANDING_PAGE', 'content/2');
+define('WEBSITE_LANDING_PAGE', 'blog');
 
 # ------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use templates, enter name of template-folder here
 # They are placed at templates/<SkinName>/...
 # DEFAULT: ''
-define('PATH_TEMPLATE', 'blue');
+define('PATH_TEMPLATE', '');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
