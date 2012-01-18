@@ -32,9 +32,11 @@
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
         {foreach $a.files as $f}
-          <img src='/{$f.url_32}'
-               alt='{$f.file}' title='{$f.content}'
-               height='32' width='32' />
+          <a href='{$a.url}'>
+            <img src='/{$f.url_32}'
+                 alt='{$f.file}' title='{$f.content}'
+                 height='32' width='32' />
+          </a>
         {/foreach}
       {* Show gallery albums without uploaded images *}
       {elseif $USER_ROLE >= 3}
