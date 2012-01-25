@@ -3,10 +3,12 @@
 /**
  * Parent class for most other controllers and provides most language variables.
  *
+ * @abstract
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -227,10 +229,12 @@ abstract class Main {
     $this->oSmarty->merge_compiled_includes = true;
     $this->oSmarty->use_sub_dirs = true;
 
+    # Only compile our templates on production mode.
     if (WEBSITE_DEV == false)
       $this->oSmarty->compile_check = false;
 
-    if (CLEAR_CACHE == true)
+    # Clear cache on development mode or when we force it via a request.
+    if (CLEAR_CACHE == true || WEBSITE_DEV == true)
       $this->oSmarty->clearAllCache();
 
     $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;

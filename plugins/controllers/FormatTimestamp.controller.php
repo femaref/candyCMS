@@ -1,12 +1,15 @@
 <?php
 
-/*
+/**
+ * This plugin rewrites the standard date into a nicer "today" / "yesterday" format.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
-*/
-
-# This plugin rewrites the standard date into a nicer "today" / "yesterday"
-# format.
+ * @license MIT
+ * @since 1.0
+ *
+ *
+ */
 
 namespace CandyCMS\Plugin;
 
@@ -16,6 +19,12 @@ require_once 'app/helpers/I18n.helper.php';
 
 final class FormatTimestamp {
 
+  /**
+   *
+   * @param type $iTime
+   * @param type $iOptions
+   * @return type
+   */
   private final function _setDate($iTime, $iOptions) {
 		$sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
 

@@ -181,6 +181,8 @@ class User extends Main {
 
 	/**
 	 * Create user or show form template.
+   *
+   * This method must override the parent one because of another showTemplate method.
 	 *
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -199,6 +201,7 @@ class User extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo When an admin creates an user, there must be a diffent success email.
 	 *
 	 */
 	protected function _create() {
@@ -214,12 +217,10 @@ class User extends Main {
 			$this->_aError['password'] = $this->oI18n->get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
-		if ($this->_aSession['userdata']['role'] < 4) {
-			if (!isset($this->_aRequest['disclaimer']))
-				$this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
-		}
+		if ($this->_aSession['userdata']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
+      $this->_aError['disclaimer'] = $this->oI18n->get('error.form.missing.terms');
 
-     # Generate verification code for users (double-opt-in) when not created by admin.
+    # Generate verification code for users (double-opt-in) when not created by admin.
     $iVerificationCode = $this->_aSession['userdata']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
 		if (isset($this->_aError))
@@ -229,19 +230,24 @@ class User extends Main {
       $this->__autoload('Mail');
 
       $iUserId = $this->_oModel->getLastInsertId('users');
-      $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
 
-      $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
-			$sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
+      # Send email if user has registered and creator is not an admin.
+      if ($this->_aSession['userdata']['role'] == 4) {
+        $sMailMessage = '';
+      }
+      else {
+        $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
+
+        $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), $this->oI18n->get('user.mail.body'));
+        $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
+      }
 
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId, $this->_aSession['userdata']['id']);
 			Mail::send(Helper::formatInput($this->_aRequest['email']), $this->oI18n->get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
 
-      if ($this->_aSession['userdata']['role'] == 4)
-        return Helper::successMessage($this->oI18n->get('success.create'), '/user');
-
-      else
-        return Helper::successMessage($this->oI18n->get('success.user.create'), '/');
+      return $this->_aSession['userdata']['role'] == 4 ?
+              Helper::successMessage($this->oI18n->get('success.create'), '/user') :
+              Helper::successMessage($this->oI18n->get('success.user.create'), '/');
 		}
 		else
 			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
@@ -276,7 +282,7 @@ class User extends Main {
 	}
 
 	/**
-	 * Update a user.
+	 * Update an user.
 	 *
 	 * Update entry or show form template if we have enough rights.
 	 *
