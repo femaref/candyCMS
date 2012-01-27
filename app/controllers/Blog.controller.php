@@ -44,13 +44,15 @@ class Blog extends Main {
    *
    */
   public function show() {
-		# We got a page request, so tell the model that we don't want to see an entry
+    $this->__autoload('Comment');
+
+		# Bugfix: We got a page request, so tell the model that we don't want to see an entry.
     if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
             isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
             !isset($this->_aRequest['parent_id']))
       $this->_iId = '';
 
-    $this->__autoload('Comment');
+    # Collect data
     $this->_aData = $this->_oModel->getData($this->_iId);
 
 		# If data is not found, redirect to 404

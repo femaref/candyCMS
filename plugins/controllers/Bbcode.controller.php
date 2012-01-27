@@ -1,15 +1,21 @@
 <?php
 
-/*
+/**
+ * Handle BB code.
+ *
+ * This plugin is the most powerful plugin, if you don't want to write every
+ * text in HTML. It also enables users that are not allowed to post HTML to
+ * format their text.
+ *
+ * A detailed documentation of how to use the tags can be found at
+ * http://github.com/marcoraddatz/candyCMS/wiki/BBCode
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 1.0
+ *
  */
-
-# This plugin is the most powerful plugin, if you don't want to write every
-# text in HTML. It also enables users that are not allowed to post HTML to
-# format their text.
-# A detailed documentation of how to use the tags can be found at
-# http://github.com/marcoraddatz/candyCMS/wiki/BBCode
 
 namespace CandyCMS\Plugin;
 
@@ -23,11 +29,15 @@ require_once 'app/helpers/Image.helper.php';
 
 final class Bbcode {
 
+  /**
+   * Search and replace BB code.
+   *
+   * @access public
+   * @param string $sStr HTML to replace
+   * @return string $sStr replaced HTML
+   *
+   */
   private final function _setFormatedText($sStr) {
-
-		# Set up language
-		$oI18n = new I18n(WEBSITE_LANGUAGE);
-
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);

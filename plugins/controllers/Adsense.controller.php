@@ -24,9 +24,11 @@ final class Adsense {
   /**
    * Show template.
    *
+   * We set up a new Smarty, because it's faster than to extend the class.
+   *
    * @access public
    * @return string HTML
-   * 
+   *
    */
   public final function show() {
     $oSmarty = new \Smarty();
