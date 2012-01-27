@@ -385,7 +385,7 @@ user:
     account: Account löschen
     create: Benutzer hinzufügen
     image: Profilbild ändern
-    overview: Übersicht
+    overview: Benutzerübersicht
     password: Passwort ändern
     personal_data: Persönliche Daten
     update: Einstellungen bearbeiten
