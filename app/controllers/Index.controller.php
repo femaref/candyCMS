@@ -582,11 +582,6 @@ class Index {
       $sCachedHTML = & str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
     }
 
-    if (preg_match('/<!-- plugin:teaser -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Teaser')) {
-      $oTeaser = new \CandyCMS\Plugin\Teaser();
-      $sCachedHTML = & str_replace('<!-- plugin:teaser -->', $oTeaser->show(), $sCachedHTML);
-    }
-
     return $sCachedHTML;
   }
 }

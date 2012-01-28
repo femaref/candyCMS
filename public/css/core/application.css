@@ -367,7 +367,7 @@ form input[type="reset"]:hover {
   text-shadow: 0 1px 0 #DDDDDD;
 }
 
-/* Mostly delete button */
+/* Mark out the delete button */
 form input[type="button"] {
   color:red;
 }
@@ -378,6 +378,7 @@ form input[type="checkbox"] {
   margin: 3px 10px 0px 0px;
 }
 
+/* Put the tables into a smooth design */
 table {
   width:100%;
   display: table;
@@ -401,7 +402,12 @@ table .left, #user table.user td, #calendar table td {
   text-align:left;
 }
 
-#archive ul, #headlines ul {
+/* Some ul and ol fixes to display them correctly at content entries */
+#archive ul,
+#headlines ul,
+#sitemap ul,
+#content ul,
+#blog ul {
   margin:15px;
 }
 
@@ -409,6 +415,7 @@ ol {
   margin:5px 18px;
 }
 
+/* This is needed for AJAX mail popups */
 #create_mail {
   min-width:600px;
 }
