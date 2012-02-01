@@ -11,7 +11,7 @@
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
-define('SQL_DB', 'cms_new');
+define('SQL_DB', 'candyCMS');
 define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
@@ -30,7 +30,7 @@ define('SMTP_PORT', '');
 
 # Define the ABSOLUTE path of your website.
 # EXAMPLE: http://www.google.com
-define('WEBSITE_URL', 'http://phpcms.localhost');
+define('WEBSITE_URL', 'http://candy.localhost');
 
 # ------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ define('POPUP_DEFAULT_Y', '640');
 # If you want to use templates, enter name of template-folder here
 # They are placed at templates/<SkinName>/...
 # DEFAULT: ''
-define('PATH_TEMPLATE', '');
+define('PATH_TEMPLATE', 'bootstrap');
 
 # Define, where to find static HTML-Templates
 # DEFAULT: 'public/skins/_static'
