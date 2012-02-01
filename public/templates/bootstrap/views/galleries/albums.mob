@@ -1,0 +1,31 @@
+{if !$albums}
+  <div class='error' title='{$lang.error.missing.entries}'>
+    <p>{$lang.error.missing.entries}</p>
+  </div>
+{else}
+  {foreach $albums as $a}
+  <ul data-role="listview" data-inset="true" data-split-theme="c">
+    {* Show gallery albums with uploaded images *}
+    {if $a.files_sum > 0}
+      <li data-role="list-divider">
+        <h3>
+          {$a.title} - {$a.date}
+        </h3>
+      </li>
+      <li>
+          <a href='{$a.url}'>
+            <div>
+              {foreach $a.files as $f}
+                <img src='/{$f.url_32}'
+                     alt='{$f.file}' title='{$f.content}'
+                     height='32' width='32' />
+              {/foreach}
+            </div>
+          </a>
+        <a href='{$a.url}'></a>
+      </li>
+    {/if}
+  </ul>
+  {/foreach}
+  {$_pages_}
+{/if}

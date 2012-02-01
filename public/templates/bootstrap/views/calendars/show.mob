@@ -1,0 +1,54 @@
+{if $USER_ROLE >= 3}
+  <p class="create">
+    <a href='/calendar/create' data-role="button" data-theme="b" data-icon="plus">
+      {$lang.global.create.entry}
+    </a>
+  </p>
+{/if}
+{if isset($smarty.get.page) && $smarty.get.page > 1}
+  <p class="center">
+    <a href="{$smarty.get.page - 1}" rel="prev">&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
+    <strong>{$smarty.get.page}</strong>
+    &nbsp;&nbsp;<a href="{$smarty.get.page + 1}" rel="next">{$smarty.get.page + 1} &raquo;</a>
+  </p>
+{/if}
+{if !$calendar}
+  <div class='error' title='{$lang.error.missing.entries}'>
+    <h4>{$lang.error.missing.entries}</h4>
+  </div>
+{else}
+  {foreach $calendar as $c}
+    <ul data-role="listview" data-inset="true" {if $USER_ROLE >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
+      <li data-role="list-divider">
+      	{$c.month} {$c.year}
+      </li>
+      {foreach $c.dates as $d}
+        <li>
+          {if $USER_ROLE >= 3}
+            <a href='/calendar/{$d.id}/update'>
+					{/if}
+          <h3>{$d.title}</h3>
+          <p>
+            <strong>{$d.start_date}
+              {if $d.end_date > 1}
+              -
+              {$d.end_date}
+              {/if}
+            </strong>
+          </p>
+          {if $d.content !== ''}
+            <p>{$d.content}</p>
+          {/if}
+          {if $USER_ROLE >= 3}
+            </a>
+          {/if}
+        </li>
+      {/foreach}
+    </ul>
+  {/foreach}
+{/if}
+{if !isset($smarty.get.action)}
+  <p class="center">
+    <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}">{$lang.global.archive}</a>
+  </p>
+{/if}

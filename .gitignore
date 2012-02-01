@@ -14,4 +14,4 @@ install/sql/data.sql
 logs/*
 version.txt
 public/skins/*
-public/templates/*
+
