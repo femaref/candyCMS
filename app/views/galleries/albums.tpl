@@ -34,7 +34,7 @@
         <ul class="media-grid">
           {foreach $a.files as $f}
             <li>
-              <a href='{$a.url}'>
+              <a href='{$a.url}' class='thumbnail'>
                 <img src='/{$f.url_32}'
                      alt='{$f.file}' title='{$f.content}'
                      height='32' width='32' />

@@ -80,3 +80,4 @@ $('#js-flash_error').click(function() {
 
 /* Show tooltips */
 $('.js-tooltip').tooltip();
+$('p.error').tooltip();

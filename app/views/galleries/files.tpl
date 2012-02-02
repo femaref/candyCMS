@@ -36,7 +36,7 @@
     <ul class="media-grid js-caption">
       {foreach $files as $f}
         <li>
-          <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
+          <a href='/{$f.url_popup}' class="js-fancybox thumbnail" rel="images" title='{$f.content}'>
             <img src='/{$f.url_thumb}'
                  alt='{$f.content}'
                  title='{$f.content}'

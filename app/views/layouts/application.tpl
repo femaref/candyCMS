@@ -39,7 +39,7 @@
     </script>
 
     {* Use LESS to minimize CSS *}
-    <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/bootstrap.less"/>
+    <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
     <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
 
     {* Add bootstrap support *}
@@ -55,9 +55,11 @@
   <!--[if IE 7]><body class="ie7"><![endif]-->
   <!--[if IE 8]><body class="ie8"><![endif]-->
   <!--[if gt IE 8]><!--><body><!--<![endif]-->
-    <div class="topbar" data-dropdown="dropdown">
-      <div class="fill">
-        <nav class="container">
+
+    {* Top navigation *}
+    <nav class="navbar navbar-fixed-top">
+      <div class='navbar-inner'>
+        <div class='container'>
           <a href="/" class="brand" title="{$WEBSITE_NAME}">
             {$WEBSITE_NAME}
           </a>
@@ -74,23 +76,24 @@
             <li{if $smarty.get.section == 'download'} class='active'{/if}>
               <a href='/download'>{$lang.global.download}</a>
             </li>
+            <li{if $smarty.get.section == 'search'} class='active'{/if}>
+              <a href='/search'>{$lang.global.search}</a>
+            </li>
           </ul>
-          <form method='post' action="/search">
-            <input type="text" name="search" placeholder="{$lang.global.search}"/>
-          </form>
-          <ul class="nav secondary-nav">
-            <li class="menu">
-              <a href="#" class="menu">
+          <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle='dropdown'>
                 {if $USER_ID == 0}
                   {$lang.global.login}
                 {elseif $USER_ID > 0}
                   <strong>{$lang.global.welcome} {$USER_NAME}!</strong>
                 {/if}
+                <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
                 {if $USER_ID == 0}
-                  <li><a href='/user/create'>{$lang.global.register}</a></li>
                   <li><a href='/session/create'>{$lang.global.login}</a></li>
+                  <li><a href='/user/create'>{$lang.global.register}</a></li>
                 {elseif $USER_ID > 0}
                   <li><a href='/user/update'>{$lang.global.settings}</a></li>
                   <li><a href='/session/destroy'>{$lang.global.logout}</a></li>
@@ -123,9 +126,11 @@
               </ul>
             </li>
           </ul>
-        </nav>
+        </div>
       </div>
-    </div>
+    </nav>
+
+    {* Main container *}
     <div class="container">
       {if $_flash_type_}
         <div id='js-flash_message'>
@@ -144,6 +149,7 @@
       <section id="{$smarty.get.section}">
         {$_content_}
       </section>
+      <!--
       <footer id="footer" class="row">
         <section id="about" class="span8">
           <ul>
@@ -170,6 +176,7 @@
           </ul>
         </section>
       </footer>
+      -->
     </div>
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
     {include file="_facebook.tpl"}

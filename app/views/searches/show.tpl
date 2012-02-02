@@ -1,6 +1,5 @@
 <h1>{$lang.global.search}</h1>
-
-{if $tables.blogs|@count > 2 or $tables.contents|@count > 2 or $tables.downloads|@count > 2 or $tables.gallery_albums|@count > 2}
+{if $tables.blogs|@count > 2 || $tables.contents|@count > 2 || $tables.downloads|@count > 2 || $tables.gallery_albums|@count > 2}
   {foreach $tables as $table}
     {if $table|@count > 2}
     <h3>{$table.title}</h3>
