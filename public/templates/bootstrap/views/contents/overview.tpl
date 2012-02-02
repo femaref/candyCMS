@@ -52,3 +52,6 @@
     </tr>
   {/foreach}
 </table>
+<script type='text/javascript'>
+  $(".sortTable").tablesorter();
+</script>

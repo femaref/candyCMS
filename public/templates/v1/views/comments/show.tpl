@@ -1,0 +1,61 @@
+<section id="comments">
+  <div id="js-commments">
+    {foreach $comments as $c}
+      <article class='{if $author_id == $c.author_id}from_author{/if}'>
+        <header>
+          <a href='#{$c.id}' name='{$c.id}' class="count">{$c.loop+$comment_number}</a>
+          <img class="avatar" src="{$c.avatar_64}" width="32" height="32" alt="" />
+          {if $c.user_id > 0}
+            <a href='/user/{$c.user_id}/{$c.encoded_full_name}'>{$c.full_name}</a>
+            {if $author_id == $c.author_id}
+              <span class="from_author">Autor</span>
+            {/if}
+          {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
+            <a href='{$c.author_website}'>
+              {$c.author_name}
+            </a>
+          {elseif $c.author_name}
+            {$c.author_name}
+          {else}
+            <em style="text-decoration:line-through">{$lang_deleted_user}</em>
+          {/if}
+          <br />
+          <time datetime="{$c.date_w3c}">{$c.datetime}</time>
+        </header>
+        <details id="js-comment_{$c.id}" open="open">
+          {$c.content}
+        </details>
+        <footer>
+          {if $USER_RIGHT >= 3 && $c.author_email}
+            <a href="mailto:{$c.author_email}">{$c.author_email}</a>
+          {/if}
+          {if $USER_RIGHT >= 3 && $c.author_ip}
+            <span>{$c.author_ip}</span>
+          {/if}
+          <a href='#add'
+             onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang_quote}' width="16" height="16"
+                 title='{$lang_quote}' />
+          </a>
+          {if $USER_RIGHT >= 3}
+            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang_destroy}'
+                 onclick="confirmDelete('/comment/{$c.id}/destroy/{$c.parent_id}')" width="16" height="16"
+                 title='{$lang_destroy}' />
+          {/if}
+        </footer>
+      </article>
+    {/foreach}
+  </div>
+</section>
+{$_pages_}
+<script src='%PATH_PUBLIC%/js/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#js-commments').infinitescroll({
+      navSelector  : "section.pages",
+      nextSelector : "section.pages a:first",
+      itemSelector : "#js-commments article",
+      loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
+    });
+  });
+</script>

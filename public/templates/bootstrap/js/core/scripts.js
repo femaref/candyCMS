@@ -77,3 +77,6 @@ $('#js-flash_success').click(function() {
 $('#js-flash_error').click(function() {
   candy.system.hide(this, 0);
 });
+
+/* Show tooltips */
+$('.js-tooltip').tooltip();
