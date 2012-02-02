@@ -1,6 +1,6 @@
+<h1>{$lang.global.calendar}</h1>
 <form action='/calendar/{$smarty.get.action}' method='post'>
-  <h1>{$lang.global.calendar}</h1>
-  <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
+  <div class="clearfix{if isset($error.title)} error{/if}">
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
     <input type='text' name='title' id="input-title" value='{$title}' required autofocus/>
   </p>

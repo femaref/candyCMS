@@ -11,18 +11,20 @@
     <h4>{$lang.error.missing.entry}</h4>
   </div>
 {else}
-  <h1>
-    {$gallery_name} ({$file_no} {$lang.global.files})
-    <a href='/rss/gallery/{$_request_id_}'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
-    </a>
-    {if $USER_ROLE >= 3}
-      <a href='/gallery/{$_request_id_}/update'>
-        <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
-             width="16" height="16" title='{$lang.global.update.update}' />
+  <div class="page-header">
+    <h1>
+      {$gallery_name} <small>({$file_no} {$lang.global.files})</small>
+      <a href='/rss/gallery/{$_request_id_}'>
+        <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
       </a>
-    {/if}
-  </h1>
+      {if $USER_ROLE >= 3}
+        <a href='/gallery/{$_request_id_}/update'>
+          <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
+               width="16" height="16" title='{$lang.global.update.update}' />
+        </a>
+      {/if}
+    </h1>
+  </div>
   {if $gallery_content}
     <h3>{$gallery_content}</h3>
   {/if}
@@ -31,14 +33,14 @@
       <h4>{$lang.error.missing.files}</h4>
     </div>
   {else}
-    <ul class="js-caption">
+    <ul class="media-grid js-caption">
       {foreach $files as $f}
         <li>
           <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
             <img src='/{$f.url_thumb}'
                  alt='{$f.content}'
                  title='{$f.content}'
-                 class="js-image" />
+                 class="js-image span3" />
           </a>
           {if $USER_ROLE >= 3}
             <div>

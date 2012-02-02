@@ -495,6 +495,7 @@ class Index {
 
       $sCachedCss     = $sPath . '/css';
       $sCachedImages  = $sPath . '/images';
+      $sCachedLess    = $sPath . '/less';
       $sCachedJs      = $sPath . '/js';
     }
 
@@ -505,6 +506,7 @@ class Index {
 
       $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
       $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedLess    = @is_dir(substr($sPath, 1, $iPathLen) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
       $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
 
@@ -515,6 +517,7 @@ class Index {
 
       $sCachedCss     = $sPath . '/css';
       $sCachedImages  = $sPath . '/images';
+      $sCachedLess    = $sPath . '/less';
       $sCachedJs      = $sPath . '/js';
     }
     elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
@@ -523,16 +526,19 @@ class Index {
 
       $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
       $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedLess    = @is_dir(substr($sPath, 1, $iPathLen) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
       $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
     else {
       $sCachedCss     = WEBSITE_CDN . '/css';
       $sCachedImages  = WEBSITE_CDN . '/images';
+      $sCachedLess    = WEBSITE_CDN . '/less';
       $sCachedJs      = WEBSITE_CDN . '/js';
     }
 
     $sCachedHTML = & str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
     $sCachedHTML = & str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
+    $sCachedHTML = & str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
     $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
 		# Cut spaces to minimize filesize

@@ -1,38 +1,50 @@
+<h1>{$lang.global.download}</h1>
 <form action='/download/{$smarty.get.action}' method='post' enctype='multipart/form-data'>
-  <h1>{$lang.global.download}</h1>
+  <fieldset>
   {if $smarty.get.action == 'create'}
-    <p {if isset($error.file)}class="error" title="{$error.file}"{/if}>
+    <div class='clearfix{if isset($error.file)} error{/if}'>
       <label for='input-file'>{$lang.download.label.choose} <span title="{$lang.global.required}">*</span></label>
-      <input type='file' name='file[]' id="input-file" required />
-    </p>
+      <div class='input'>
+        <input type='file' name='file[]' id="input-file" required />
+      </div>
+    </div>
   {/if}
-  <p {if isset($error.title)}class="error" title="{$error.title}"{/if}>
+  <div class='clearfix{if isset($error.title)} error{/if}'>
     <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
-    <input type='text' name='title' id="input-title" value='{$title}' required />
-  </p>
-  <p {if isset($error.category)}class="error" title="{$error.category}"{/if}>
+    <div class='input'>
+      <input type='text' name='title' id="input-title" value='{$title}' required />
+    </div>
+  </div>
+  <div class='clearfix{if isset($error.category)} error{/if}'>
     <label for='input-category'>{$lang.global.category} <span title="{$lang.global.required}">*</span></label>
-    <input type='text' name='category' id="input-category" placeholder="" value='{$category}' required />
-  </p>
-  <p {if isset($error.content)}class="error" title="{$error.content}"{/if}>
+    <div class='input'>
+      <input type='text' name='category' id="input-category" placeholder="" value='{$category}' required />
+    </div>
+  </div>
+  <div class='clearfix{if isset($error.content)} error{/if}'>
     <label for='input-content'>{$lang.global.description}</label>
-    <input type='text' name='content' id="input-content" value='{$content}' />
-  </p>
+    <div class='input'>
+      <input type='text' name='content' id="input-content" value='{$content}' />
+    </div>
+  </div>
   {if $smarty.get.action == 'update'}
-    <p>
+    <div class='clearfix'>
       <label for='input-downloads'>{$lang.global.downloads}</label>
-      <input type='text' name='downloads' id="input-downloads" value='{$downloads}' />
-    </p>
+      <div class='input'>
+        <input type='text' name='downloads' id="input-downloads" value='{$downloads}' />
+      </div>
+    </div>
   {/if}
-  <p class="center">
+  <div class="actions">
     <input type='hidden' value='formdata' name='{$smarty.get.action}_download' />
-    <input type='submit' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
+    <input type='submit' class='btn primary' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
     {if $smarty.get.action == 'update'}
-      <input type='button' value='{$lang.global.destroy.destroy}' onclick="candy.system.confirmDestroy('/download/{$_request_id_}/destroy')" />
+      <input type='button' class='btn' value='{$lang.global.destroy.destroy}' onclick="candy.system.confirmDestroy('/download/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
-      <input type='reset' value='{$lang.global.reset}' />
+      <input type='reset' class='btn' value='{$lang.global.reset}' />
     {/if}
   </p>
+  </fieldset>
 </form>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">

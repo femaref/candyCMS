@@ -5,24 +5,28 @@
       {$lang.global.create.entry}
     </a>
   </p>
+
   <h1>{$lang.global.manager.media}</h1>
-  <table>
-    {if !$files}
-      <tr>
-        <td colspan="5">
-          <div class='error' title='{$lang.error.missing.files}'>
-            <h4>{$lang.error.missing.files}</h4>
-          </div>
-        </td>
-      </tr>
-    {else}
+  {if !$files}
+    <tr>
+      <td colspan="5">
+        <div class='error' title='{$lang.error.missing.files}'>
+          <h4>{$lang.error.missing.files}</h4>
+        </div>
+      </td>
+    </tr>
+  {/if}
+  <table class="sortTable tablesorter zebra-striped">
+    <thead>
       <tr>
         <th></th>
-        <th class="left">{$lang.global.file}</th>
+        <th class="headerSortDown">{$lang.global.file}</th>
         <th>{$lang.global.size}</th>
         <th>{$lang.global.upload.at}</th>
         <th></th>
       </tr>
+    <thead>
+    <tbody>
       {foreach $files as $f}
         <tr class='{cycle values="row1,row2"}'>
           <td style='width:5%'>
@@ -63,7 +67,7 @@
           </td>
         </tr>
       {/foreach}
-    {/if}
+    </tbody>
   </table>
   <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">

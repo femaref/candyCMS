@@ -12,13 +12,19 @@
     <h4>{$lang.error.missing.entries}</h4>
   </div>
 {else}
-  <table>
-    {foreach $download as $d}
-      <tr>
-        <th colspan="5" class="left">
-          <h2>{$d.category}</h2>
-        </th>
-      </tr>
+  {foreach $download as $d}
+    <h2>{$d.category}</h2>
+    <table class="sortTable tablesorter zebra-striped">
+      <thead>
+        <tr>
+          <th width='10%'></th>
+          <th width='40%' class="headerSortDown">{$lang.global.title}</th>
+          <th width='20%'>{$lang.global.date.date}</th>
+          <th width='20%'>{$lang.global.size}</th>
+          <th width='10%'></th>
+        </tr>
+      </thead>
+      <tbody>
       {foreach $d.files as $f}
         <tr class='{cycle values="row1,row2"}'>
           <td>
@@ -59,6 +65,7 @@
           </td>
         </tr>
       {/foreach}
-    {/foreach}
-  </table>
+      </tbody>
+    </table>
+  {/foreach}
 {/if}

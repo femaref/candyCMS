@@ -31,13 +31,17 @@
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
-        {foreach $a.files as $f}
-          <a href='{$a.url}'>
-            <img src='/{$f.url_32}'
-                 alt='{$f.file}' title='{$f.content}'
-                 height='32' width='32' />
-          </a>
-        {/foreach}
+        <ul class="media-grid">
+          {foreach $a.files as $f}
+            <li>
+              <a href='{$a.url}'>
+                <img src='/{$f.url_32}'
+                     alt='{$f.file}' title='{$f.content}'
+                     height='32' width='32' />
+              </a>
+            </li>
+          {/foreach}
+        </ul>
       {* Show gallery albums without uploaded images *}
       {elseif $USER_ROLE >= 3}
         <header>

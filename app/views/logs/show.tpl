@@ -1,24 +1,13 @@
 <h1>{$lang.global.logs}</h1>
-<table id="js-logs">
+<table class="sortTable tablesorter zebra-striped">
   <thead>
     <tr>
-      <th class='left'>
-        {$lang.global.author}
-      </th>
-      <th>
-        {$lang.global.section}
-      </th>
-      <th>
-        {$lang.global.action}
-      </th>
-      <th>
-        {$lang.global.id}
-      </th>
-      <th>
-        {$lang.global.date.date}
-      </th>
-      <th>
-      </th>
+      <th>{$lang.global.author}</th>
+      <th>{$lang.global.section}</th>
+      <th>{$lang.global.action}</th>
+      <th>{$lang.global.id}</th>
+      <th class="headerSortDown">{$lang.global.date.date}</th>
+      <th></th>
     </tr>
   </thead>
   {foreach $logs as $l}

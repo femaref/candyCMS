@@ -7,16 +7,20 @@
   </p>
 {/if}
 <h1>{$lang.global.contents}</h1>
-<table>
-  <tr>
-    <th class="left">{$lang.global.title}</th>
-    <th>{$lang.global.date.date}</th>
-    <th>{$lang.global.author}</th>
-    <th>{$lang.global.published}</th>
-    <th></th>
-  </tr>
+<table class="sortTable tablesorter zebra-striped">
+  <thead>
+    <tr>
+      <th class="headerSortDown">#</th>
+      <th>{$lang.global.title}</th>
+      <th>{$lang.global.date.date}</th>
+      <th>{$lang.global.author}</th>
+      <th>{$lang.global.published}</th>
+      <th></th>
+    </tr>
+  </thead>
   {foreach $content as $c}
     <tr class='{cycle values="row1,row2"}'>
+      <td>{$c.id}</td>
       <td class="left">
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
@@ -48,3 +52,6 @@
     </tr>
   {/foreach}
 </table>
+<script type='text/javascript'>
+  $(".sortTable").tablesorter();
+</script>

@@ -1,11 +1,11 @@
-<div id="comments">
+<div id="comments" class="span11">
   <header>
     <a name='comments'></a>
     <h3>{$lang.global.comments}</h3>
   </header>
   <div id="js-commments">
     {foreach $comments as $c}
-      <article {if $author_id == $c.author_id}class='from_author'{/if}>
+      <article class="well">
         <header>
           <a href='#{$c.id}' name='{$c.id}' class="count">{$c.loop+$comment_number}</a>
           <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
