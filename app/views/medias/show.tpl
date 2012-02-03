@@ -1,7 +1,7 @@
 {if $USER_ROLE >= 3}
   <p class="center">
     <a href='/media/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-upload" alt='' width="16" height="16" />
+      <i class="icon-plus-sign"></i>
       {$lang.global.create.entry}
     </a>
   </p>
@@ -61,8 +61,7 @@
           </td>
           <td style='width:5%'>
             <a href="#" onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')">
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
-                   title='{$lang.global.destroy.destroy}' width="16" height="16" />
+              <i class="icon-remove-sign"></i>
             </a>
           </td>
         </tr>
