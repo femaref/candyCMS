@@ -13,10 +13,10 @@ namespace CandyCMS\Model;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-require_once 'app/helpers/Page.helper.php';
+require_once 'app/helpers/Pagination.helper.php';
 
 class Blog extends Main {
 
@@ -53,7 +53,7 @@ class Blog extends Main {
         exit('SQL error.');
       }
 
-      $this->oPage = new Page($this->_aRequest, (int)$iResult, $iLimit);
+      $this->oPagination = new Pagination($this->_aRequest, (int)$iResult, $iLimit);
 
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -80,8 +80,8 @@ class Blog extends Main {
                                       ORDER BY
                                         b.date DESC
                                       LIMIT
-                                        " . $this->oPage->getOffset() . ",
-                                        " . $this->oPage->getLimit());
+                                        " . $this->oPagination->getOffset() . ",
+                                        " . $this->oPagination->getLimit());
 
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }

@@ -3,6 +3,10 @@
       xmlns:og="http://opengraphprotocol.org/schema/"
       xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
+    {* Use LESS to minimize CSS. Load first to render the CSS *}
+    <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
+    <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
+
     <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
     <meta name='description' content="{$meta_description}"/>
     <meta name='keywords' content="{$meta_keywords}"/>
@@ -38,17 +42,6 @@
       var lang = {$_json_language_};
     </script>
 
-    {* Use LESS to minimize CSS *}
-    <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
-    <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
-
-    {* Add bootstrap support *}
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.buttons{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.dropdown{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.modal{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
     <title>{$_title_}</title>
   </head>
   <!--[if lt IE 7]><body class="ie6"><![endif]-->
@@ -132,23 +125,31 @@
 
     {* Main container *}
     <div class="container">
-      {if $_flash_type_}
-        <div id='js-flash_message'>
-          <div class='alert-message {$_flash_type_}' id='js-flash_{$_flash_type_}'>
-            <a class="close" href="#">×</a>
-            <h4>{$_flash_headline_}</h4>
-            <p>{$_flash_message_}</p>
-          </div>
+      <div class='row'>
+        <div class='span8'>
+          {if $_flash_type_}
+            <div id='js-flash_message'>
+              <div class='alert-message {$_flash_type_}' id='js-flash_{$_flash_type_}'>
+                <a class="close" href="#">×</a>
+                <h4>{$_flash_headline_}</h4>
+                <p>{$_flash_message_}</p>
+              </div>
+            </div>
+          {/if}
+          {if $_update_avaiable_}
+            <div class="notice">
+              {$_update_avaiable_}
+            </div>
+          {/if}
+          <section id="{$smarty.get.section}">
+            {$_content_}
+          </section>
         </div>
-      {/if}
-      {if $_update_avaiable_}
-        <div class="notice">
-          {$_update_avaiable_}
+        <div class='span4'>
+          <!-- plugin:archive -->
+          <!-- plugin:headlines -->
         </div>
-      {/if}
-      <section id="{$smarty.get.section}">
-        {$_content_}
-      </section>
+      </div>
       <!--
       <footer id="footer" class="row">
         <section id="about" class="span8">
@@ -178,6 +179,15 @@
       </footer>
       -->
     </div>
+
+    {* Add bootstrap support *}
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.buttons{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.dropdown{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.modal{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
+    <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
     {include file="_facebook.tpl"}
     {include file="_google.tpl"}

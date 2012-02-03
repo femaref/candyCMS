@@ -14,7 +14,7 @@ namespace CandyCMS\Helper;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-class Page {
+class Pagination {
 
 	/**
 	 * Alias for $_REQUEST

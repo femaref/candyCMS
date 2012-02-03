@@ -94,7 +94,7 @@ class Gallery extends Main {
       $this->_setTitle($this->oI18n->get('global.gallery'));
 
       $this->oSmarty->assign('albums', $this->_oModel->getData());
-      $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages());
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 
       $sTemplateDir = Helper::getTemplateDir('galleries', 'albums');
       $this->oSmarty->template_dir = $sTemplateDir;

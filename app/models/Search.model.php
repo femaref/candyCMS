@@ -14,7 +14,7 @@ namespace CandyCMS\Model;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
 class Search extends Main {

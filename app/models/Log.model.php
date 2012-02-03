@@ -13,10 +13,10 @@ namespace CandyCMS\Model;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-require_once 'app/helpers/Page.helper.php';
+require_once 'app/helpers/Pagination.helper.php';
 
 class Log extends Main {
 
@@ -37,7 +37,7 @@ class Log extends Main {
       $this->_oDb->rollBack();
     }
 
-    $this->oPage = new Page($this->_aRequest, $iResult, $iLimit);
+    $this->oPagination = new Pagination($this->_aRequest, $iResult, $iLimit);
 
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -57,8 +57,8 @@ class Log extends Main {
                                         :offset,
                                         :limit");
 
-      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
-      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);

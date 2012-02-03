@@ -23,7 +23,7 @@ class Blog extends Main {
    * @var object
    * @access public
    */
-  public $oPage;
+  public $oPagination;
 
   /**
    * Include the blog model.
@@ -69,7 +69,7 @@ class Blog extends Main {
 
 			# Load blog pages
 			} else
-				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPage->showSurrounding('blog'));
+				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
 
 			# Create page title and description
 			$this->_setDescription($this->_setBlogDescription());

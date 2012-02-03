@@ -13,11 +13,11 @@ namespace CandyCMS\Model;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
-require_once 'app/helpers/Page.helper.php';
+require_once 'app/helpers/Pagination.helper.php';
 require_once 'app/helpers/Upload.helper.php';
 
 class Gallery extends Main {
@@ -59,7 +59,7 @@ class Gallery extends Main {
     else
       $sWhere = "WHERE a.id = '" . $this->_iId . "'";
 
-    $this->oPage = new Page($this->_aRequest, (int) $iResult, $iLimit);
+    $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
 
     try {
       $oQuery = $this->_oDb->query("SELECT
@@ -84,8 +84,8 @@ class Gallery extends Main {
                                     ORDER BY
                                       a.id DESC
                                     LIMIT
-                                      " . $this->oPage->getOffset() . ",
-                                      " . $this->oPage->getLimit());
+                                      " . $this->oPagination->getOffset() . ",
+                                      " . $this->oPagination->getLimit());
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }

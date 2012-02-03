@@ -62,7 +62,7 @@ abstract class Main {
    * @var object
    * @access public
    */
-  public $oPage;
+  public $oPagination;
 
   /**
    * Database connection.

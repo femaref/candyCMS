@@ -92,10 +92,10 @@ class Comment extends Main {
       # For correct information, do some math to display entries.
       # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
       # when other people don't see it
-      $this->oSmarty->assign('comment_number', ($this->_oModel->oPage->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
+      $this->oSmarty->assign('comment_number', ($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
       # Do we need pages?
-      $this->oSmarty->assign('_pages_', $this->_oModel->oPage->showPages('/blog/' . $this->_iId));
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
 
       $sTemplateDir = Helper::getTemplateDir('comments', 'show');
       $this->oSmarty->template_dir = $sTemplateDir;

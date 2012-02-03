@@ -13,7 +13,7 @@ namespace CandyCMS\Model;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use PDO;
 
@@ -30,7 +30,7 @@ class Comment extends Main {
    *
    */
   private function _setData($iId, $iEntries, $iLimit) {
-    $this->oPage = new Page($this->_aRequest, $iEntries, $iLimit);
+    $this->oPagination = new Pagination($this->_aRequest, $iEntries, $iLimit);
 
     try {
       $oQuery = $this->_oDb->prepare("SELECT
@@ -56,8 +56,8 @@ class Comment extends Main {
                                         :limit");
 
       $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
-      $oQuery->bindParam('limit', $this->oPage->getLimit(), PDO::PARAM_INT);
-      $oQuery->bindParam('offset', $this->oPage->getOffset(), PDO::PARAM_INT);
+      $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
