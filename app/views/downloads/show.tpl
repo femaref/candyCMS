@@ -6,7 +6,9 @@
     </a>
   </p>
 {/if}
-<h1>{$lang.global.downloads}</h1>
+<div class='page-header'>
+  <h1>{$lang.global.downloads}</h1>
+</div>
 {if !$download}
   <div class='error' title='{$lang.error.missing.entries}'>
     <h4>{$lang.error.missing.entries}</h4>
@@ -14,7 +16,7 @@
 {else}
   {foreach $download as $d}
     <h2>{$d.category}</h2>
-    <table class="sortTable tablesorter zebra-striped">
+    <table class="table tablesorter">
       <thead>
         <tr>
           <th width='10%'></th>
@@ -26,7 +28,7 @@
       </thead>
       <tbody>
       {foreach $d.files as $f}
-        <tr class='{cycle values="row1,row2"}'>
+        <tr>
           <td>
             <img src='%PATH_IMAGES%/files/{$f.extension}.png'
                  width='32' height='32' alt='{$f.extension}' />
@@ -69,3 +71,7 @@
     </table>
   {/foreach}
 {/if}
+<script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+<script type='text/javascript'>
+  $('table').tablesorter();
+</script>

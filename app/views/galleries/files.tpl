@@ -33,14 +33,14 @@
       <h4>{$lang.error.missing.files}</h4>
     </div>
   {else}
-    <ul class="media-grid js-caption">
+    <ul class="thumbnails">
       {foreach $files as $f}
         <li>
           <a href='/{$f.url_popup}' class="js-fancybox thumbnail" rel="images" title='{$f.content}'>
             <img src='/{$f.url_thumb}'
                  alt='{$f.content}'
                  title='{$f.content}'
-                 class="js-image span3" />
+                 class="js-image" />
           </a>
           {if $USER_ROLE >= 3}
             <div>

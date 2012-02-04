@@ -74,50 +74,55 @@
             </li>
           </ul>
           <ul class="nav pull-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle='dropdown'>
-                {if $USER_ID == 0}
-                  {$lang.global.login}
-                {elseif $USER_ID > 0}
+            {if $USER_ID == 0}
+              <li{if $smarty.get.section == 'session' && $smarty.get.action == 'create'} class='active'{/if}>
+                <a href='/session/create'>{$lang.global.login}</a>
+              </li>
+              <li class="divider-vertical"/>
+              <li{if $smarty.get.section == 'user' && $smarty.get.action == 'create'} class='active'{/if}>
+                <a href='/user/create'>{$lang.global.register}</a>
+              </li>
+            {else}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle='dropdown'>
                   <strong>{$lang.global.welcome} {$USER_NAME}!</strong>
-                {/if}
-                <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                {if $USER_ID == 0}
-                  <li><a href='/session/create'>{$lang.global.login}</a></li>
-                  <li><a href='/user/create'>{$lang.global.register}</a></li>
-                {elseif $USER_ID > 0}
-                  <li><a href='/user/update'>{$lang.global.settings}</a></li>
-                  <li><a href='/session/destroy'>{$lang.global.logout}</a></li>
-                {/if}
-                {if $USER_ROLE >= 3}
-                  <li class="divider"></li>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
                   <li>
-                    <a href='/media' title='{$lang.global.manager.media}'>
-                      {$lang.global.manager.media}
-                    </a>
+                    <a href='/user/update'>{$lang.global.settings}</a>
                   </li>
                   <li>
-                    <a href='/content' title='{$lang.global.manager.content}'>
-                      {$lang.global.manager.content}
-                    </a>
+                    <a href='/session/destroy'>{$lang.global.logout}</a>
                   </li>
-                  {if $USER_ROLE == 4}
+                  {if $USER_ROLE >= 3}
+                    <li class="divider"></li>
                     <li>
-                      <a href='/log' title='{$lang.global.logs}'>
-                        {$lang.global.logs}
+                      <a href='/media' title='{$lang.global.manager.media}'>
+                        {$lang.global.manager.media}
                       </a>
                     </li>
                     <li>
-                      <a href='/user' title='{$lang.global.manager.user}'>
-                        {$lang.global.manager.user}
+                      <a href='/content' title='{$lang.global.manager.content}'>
+                        {$lang.global.manager.content}
                       </a>
                     </li>
+                    {if $USER_ROLE == 4}
+                      <li>
+                        <a href='/log' title='{$lang.global.logs}'>
+                          {$lang.global.logs}
+                        </a>
+                      </li>
+                      <li>
+                        <a href='/user' title='{$lang.global.manager.user}'>
+                          {$lang.global.manager.user}
+                        </a>
+                      </li>
+                    {/if}
                   {/if}
-                {/if}
-              </ul>
-            </li>
+                </ul>
+              </li>
+            {/if}
           </ul>
         </div>
       </div>
@@ -129,7 +134,7 @@
         <div class='span8'>
           {if $_flash_type_}
             <div id='js-flash_message'>
-              <div class='alert-message {$_flash_type_}' id='js-flash_{$_flash_type_}'>
+              <div class='alert {$_flash_type_}' id='js-flash_{$_flash_type_}'>
                 <a class="close" href="#">×</a>
                 <h4>{$_flash_headline_}</h4>
                 <p>{$_flash_message_}</p>
@@ -146,8 +151,8 @@
           </section>
         </div>
         <div class='span4'>
-          <!-- plugin:archive -->
           <!-- plugin:headlines -->
+          <!-- plugin:archive -->
         </div>
       </div>
       <!--
@@ -186,7 +191,6 @@
     <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.modal{$_compress_files_suffix_}.js'></script>
     <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
     <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
-    <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
 
     <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
     {include file="_facebook.tpl"}

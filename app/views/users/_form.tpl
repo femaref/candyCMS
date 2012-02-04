@@ -17,7 +17,6 @@
   {/if}
 </ul>
 
-
 <div class='pill-content'>
 {* Account data *}
   <div class='active row' id='personal'>
@@ -42,7 +41,7 @@
         <div class='clearfix'>
           <label for='input-api_token'>{$lang.global.api_token}</label>
           <div class='input'>
-            <span>  
+            <span>
               {$api_token}
             </span>
           </div>
@@ -100,7 +99,7 @@
       </fieldset>
     </form>
   </div>
-  
+
 {* Password *}
 {if $USER_ID == $uid}
   <div class='row' id='password'>
@@ -174,7 +173,7 @@
       </fieldset>
     </form>
   </div>
-  
+
 {* Destroy account *}
 {if $USER_ROLE < 4}
   <div class='row' id='destroy'>
@@ -202,11 +201,9 @@
 {/if}
 
 <script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
-<script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
     $('.tabs').tabs();
-    $('p.error').tipTip({ maxWidth: "auto" });
   });
 </script>

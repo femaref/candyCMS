@@ -56,7 +56,6 @@
   </fieldset>
 </form>
 <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
-<script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript'>
   $(document).ready(function(){
     $('textarea.js-tinymce').tinymce({
@@ -82,6 +81,4 @@
   $('#input-teaser').bind('keyup', function() {
     candy.system.countCharLength(this);
   });
-
-  $('p.error').tipTip({ maxWidth: "auto" });
 </script>

@@ -1,7 +1,7 @@
 /* System functions */
 var candy = candy || {};
 
-(function($, window, undefined){
+(function($, window, undefined) {
 
   candy.system = {
     show: show,

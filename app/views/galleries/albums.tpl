@@ -6,9 +6,12 @@
     </a>
   </p>
 {/if}
+<div class='page-header'>
+  <h1>{$lang.global.gallery}</h1>
+</div>
 {if !$albums}
   <div class='error' title='{$lang.error.missing.entries}'>
-    <h4>{$lang.error.missing.entries}<h4>
+    <h4>{$lang.error.missing.entries}</h4>
   </div>
 {else}
   {foreach $albums as $a}
@@ -31,7 +34,7 @@
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
-        <ul class="media-grid">
+        <ul class="thumbnails">
           {foreach $a.files as $f}
             <li>
               <a href='{$a.url}' class='thumbnail'>

@@ -54,8 +54,8 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $('#js-commments').infinitescroll({
-      navSelector  : "div.pages",
-      nextSelector : "div.pages a:first",
+      navSelector  : "div.pagination",
+      nextSelector : "div.pagination a:first",
       itemSelector : "#js-commments article",
       loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
     });

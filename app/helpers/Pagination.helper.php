@@ -160,17 +160,19 @@ class Pagination {
    *
    * @access public
    * @param string $sUrl section to show.
-   * @return string HTML content
+   * @return string HTML content if there are more than one pages
    *
    */
   public function showPages($sUrl = '') {
-    $this->_oSmarty->assign('page_current', $this->_iCurrentPage);
-    $this->_oSmarty->assign('page_last', $this->_iPages);
-    $this->_oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
-    $this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
+		if($this->_iPages > 1) {
+			$this->_oSmarty->assign('page_current', $this->_iCurrentPage);
+			$this->_oSmarty->assign('page_last', $this->_iPages);
+			$this->_oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
+			$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'show');
-    return $this->_oSmarty->fetch('show.tpl');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'show');
+			return $this->_oSmarty->fetch('show.tpl');
+		}
   }
 
 	/**
@@ -178,30 +180,32 @@ class Pagination {
    *
    * @access public
    * @param string $sRssAction section to show for RSS
-   * @return string HTML content
+   * @return string HTML content if there are more than one pages
    *
    */
   public function showSurrounding($sRssAction = '') {
-    $iNext = '';
-    $iPrevious = '';
+		if($this->_iPages > 1) {
+			$iNext = '';
+			$iPrevious = '';
 
-    if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
-      $iNext = $this->_iCurrentPage + 1;
+			if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
+				$iNext = $this->_iCurrentPage + 1;
 
-    if ($this->_iCurrentPage > 1)
-      $iPrevious = $this->_iCurrentPage - 1;
+			if ($this->_iCurrentPage > 1)
+				$iPrevious = $this->_iCurrentPage - 1;
 
-		# Set up language
-		$oI18n = new I18n(WEBSITE_LANGUAGE);
-		$this->_oSmarty->assign('lang', $oI18n->getArray());
+			# Set up language
+			$oI18n = new I18n(WEBSITE_LANGUAGE);
+			$this->_oSmarty->assign('lang', $oI18n->getArray());
 
-    $this->_oSmarty->assign('_page_entries_', $this->_iEntries);
-    $this->_oSmarty->assign('_page_limit_', $this->_iLimit);
-    $this->_oSmarty->assign('_page_next_', $iNext);
-    $this->_oSmarty->assign('_page_previous_', $iPrevious);
-    $this->_oSmarty->assign('_rss_section_', $sRssAction);
+			$this->_oSmarty->assign('_page_entries_', $this->_iEntries);
+			$this->_oSmarty->assign('_page_limit_', $this->_iLimit);
+			$this->_oSmarty->assign('_page_next_', $iNext);
+			$this->_oSmarty->assign('_page_previous_', $iPrevious);
+			$this->_oSmarty->assign('_rss_section_', $sRssAction);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'surrounding');
-    return $this->_oSmarty->fetch('surrounding.tpl');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'surrounding');
+			return $this->_oSmarty->fetch('surrounding.tpl');
+		}
   }
 }

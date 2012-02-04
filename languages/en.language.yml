@@ -16,6 +16,7 @@ global:
   by: by
   category: Category
   calendar: Calender
+  captcha: Captcha
   close: Close
   comments: Comments
   contact: Contact
@@ -331,7 +332,7 @@ search:
     show: Search results for "%s"
   info:
     fail: There are no results for the term: "<strong>%b</strong>".<br /> <a href="/search" title="Search">Search again.</a>
-      
+
 session:
   password:
     info: Enter your Email and we will send you a new password within a few minutes.
