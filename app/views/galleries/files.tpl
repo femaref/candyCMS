@@ -7,7 +7,7 @@
   </p>
 {/if}
 {if !$gallery_name}
-  <div class='error' title="{$lang.error.missing.entry}">
+  <div class='alert alert-warning'>
     <h4>{$lang.error.missing.entry}</h4>
   </div>
 {else}
@@ -29,7 +29,7 @@
     <p>{$gallery_content}</p>
   {/if}
   {if !$files}
-    <div class='error' title="{$lang.error.missing.files}">
+    <div class='alert alert-warning'>
       <h4>{$lang.error.missing.files}</h4>
     </div>
   {else}

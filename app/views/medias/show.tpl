@@ -10,7 +10,7 @@
   {if !$files}
     <tr>
       <td colspan="5">
-        <div class='error' title='{$lang.error.missing.files}'>
+        <div class='alert alert-warning'>
           <h4>{$lang.error.missing.files}</h4>
         </div>
       </td>

@@ -1,5 +1,5 @@
 {if !$i}
-  <div class='error' title='{$lang.error.missing.entry}'>
+  <div class='alert alert-warning'>
     <h4>{$lang.error.missing.entry}</h4>
   </div>
 {else}

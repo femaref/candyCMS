@@ -10,7 +10,7 @@
   <h1>{$lang.global.downloads}</h1>
 </div>
 {if !$download}
-  <div class='error' title='{$lang.error.missing.entries}'>
+  <div class='alert alert-warning'>
     <h4>{$lang.error.missing.entries}</h4>
   </div>
 {else}

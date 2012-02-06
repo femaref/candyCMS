@@ -7,7 +7,7 @@
   </p>
 {/if}
 {if !$blog}
-  <div class='error' title='{$lang.error.missing.entries}'>
+  <div class='alert alert-warning'>
     <h4>{$lang.error.missing.entries}</h4>
   </div>
 {else}

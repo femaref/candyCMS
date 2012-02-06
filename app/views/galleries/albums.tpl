@@ -10,7 +10,7 @@
   <h1>{$lang.global.gallery}</h1>
 </div>
 {if !$albums}
-  <div class='error' title='{$lang.error.missing.entries}'>
+  <div class='alert alert-warning'>
     <h4>{$lang.error.missing.entries}</h4>
   </div>
 {else}
@@ -61,9 +61,11 @@
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
-        <h4 class="error">
-          {$lang.error.missing.files}
-        </h4>
+        <div class='alert alert-warning'>
+          <h4>
+            {$lang.error.missing.files}
+          </h4>
+        </div>
       {/if}
     </article>
   {/foreach}

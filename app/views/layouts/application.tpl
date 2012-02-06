@@ -140,10 +140,10 @@
         <div class='span8'>
           {if $_flash_type_}
             <div id='js-flash_message'>
-              <div class='alert {$_flash_type_}' id='js-flash_{$_flash_type_}'>
+              <div class='alert alert-{$_flash_type_}' id='js-flash_{$_flash_type_}'>
                 <a class="close" href="#">×</a>
-                <h4>{$_flash_headline_}</h4>
-                <p>{$_flash_message_}</p>
+                <h4 class="alert-heading">{$_flash_headline_}</h4>
+                {$_flash_message_}
               </div>
             </div>
           {/if}
