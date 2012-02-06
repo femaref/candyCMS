@@ -20,7 +20,7 @@ define('SQL_PORT', '3306');
 # Do you want to use SMTP to send your mails instead of mail()?
 # DEFAULT: false
 
-define('SMTP_ON', false);
+define('SMTP_ENABLE', false);
 define('SMTP_HOST', '');
 define('SMTP_USER', '');
 define('SMTP_PASSWORD', '');
@@ -65,8 +65,9 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # ------------------------------------------------------------------------------
 
 # Is the website in development mode?
-# DEFAULT: false
-define('WEBSITE_DEV', true);
+# OPTIONS: production OR staging OR test OR development
+# DEFAULT: staging
+define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 

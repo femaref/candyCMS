@@ -1,3 +1,12 @@
-/* CMS */
+/* CandyCMS */
 Name: CandyCMS
+Author: Marco Raddatz
 URL: http://www.candycms.com
+
+/* THANKS */
+Name: name or url
+
+/* SITE */
+Last update:
+Standards: HTML5, CSS3,..
+Components: Modernizr, jQuery, etc.

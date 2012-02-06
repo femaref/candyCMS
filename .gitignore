@@ -6,12 +6,7 @@ backup/*
 compile/*
 cache/*
 config/*
-upload/user/*
-upload/temp/*
-upload/media/*
-upload/gallery/*
-upload/download/*
-install/sql/data.sql
+upload/*
 logs/*
 version.txt
 public/templates/*

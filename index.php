@@ -89,13 +89,13 @@ $oIndex->setUser();
 $oIndex->setTemplate();
 
 # Define current url
-if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_DEV == false && $_SERVER['REQUEST_URI'] == '/')
+if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_MODE == 'production' && $_SERVER['REQUEST_URI'] == '/')
   \CandyCMS\Helper\Helper::redirectTo(WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
 
 define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 # Override the system variables in development mode.
-if (WEBSITE_DEV == true) {
+if (WEBSITE_MODE == 'development') {
   ini_set('display_errors', 1);
   error_reporting(E_ALL);
 }
@@ -106,17 +106,17 @@ else {
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************
-if (is_dir('install') && WEBSITE_DEV == false)
+if (is_dir('install') && WEBSITE_MODE == 'production')
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
 
 # Also disable tools to avoid system crashes.
 # *********************************************
-if (is_dir('tools') && WEBSITE_DEV == false)
+if (is_dir('tools') && WEBSITE_MODE == 'production')
   exit('Please delete the tools folder.');
 
 # Disable tests on productive system.
 # *********************************************
-if (is_file('tests.php') && WEBSITE_DEV == false)
+if (is_file('tests.php') && WEBSITE_MODE == 'production')
   exit('Please delete the tests enviroment (tests.php).');
 
 # Do we have a mobile device?

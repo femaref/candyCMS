@@ -238,21 +238,21 @@ class Mail extends Main {
 
     $oMail = new \PHPMailer(true);
 
-    if (SMTP_ON == true)
+    if (SMTP_ENABLE == true)
       $oMail->IsSMTP();
     else
       $oMail->IsMail();
 
     try {
       if (SMTP_ON == true) {
-        if (WEBSITE_DEV == true) {
+        if (WEBSITE_MODE == 'development') {
           $oMail->SMTPDebug = 1;
-          $oMail->SMTPAuth = false;
+          $oMail->SMTPAuth  = false;
         }
         else {
-          # enables SMTP debug information (for testing)
+          # disables SMTP debug information (for testing)
           $oMail->SMTPDebug = 0;
-          $oMail->SMTPAuth = true;
+          $oMail->SMTPAuth  = true;
         }
 
         $oMail->Host = SMTP_HOST;

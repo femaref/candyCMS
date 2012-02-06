@@ -230,11 +230,11 @@ abstract class Main {
     $this->oSmarty->use_sub_dirs = true;
 
     # Only compile our templates on production mode.
-    if (WEBSITE_DEV == false)
+    if (WEBSITE_MODE == 'production')
       $this->oSmarty->compile_check = false;
 
     # Clear cache on development mode or when we force it via a request.
-    if (CLEAR_CACHE == true || WEBSITE_DEV == true)
+    if (CLEAR_CACHE == true || WEBSITE_MODE == 'development')
       $this->oSmarty->clearAllCache();
 
     $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;
@@ -254,6 +254,7 @@ abstract class Main {
 		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
 		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
+		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);

@@ -29,7 +29,7 @@ class AdvancedException extends \Exception {
    *
    */
   public static function sendAdminMail($sMessage) {
-    if(WEBSITE_DEV == false) {
+    if(WEBSITE_MODE == 'production') {
       if (!class_exists('\CandyCMS\Controller\Mail'))
         require_once 'app/controllers/Mail.controller.php';
 

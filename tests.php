@@ -23,7 +23,7 @@ require_once 'lib/smarty/Smarty.class.php';
 
 require_once 'config/Candy.inc.php';
 
-if(WEBSITE_DEV == false)
+if(WEBSITE_MODE == 'production')
   die('No tests in production mode.');
 
 define('VERSION', '0');
