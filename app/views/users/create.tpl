@@ -1,78 +1,94 @@
-<h1>
-  {$lang.global.registration}
-  {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
-    <fb:login-button scope="email" onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
-  {/if}
-</h1>
-<form method='post'>
-  <fieldset>
-    <div class="clearfix{if isset($error.name)} alert-message block-message error{/if}">
-      <label for='input-name'>{$lang.global.name} <span title="{$lang.global.required}">*</span></label>
-      <div class="input">
-        <input name='name' value='{$name}' type='name' id="input-name" autofocus required />
-        <span class="help-inline">{if isset($error.name)}{$error.name}{/if}</span>
-      </div>
-    </div>
-    <div class="clearfix">
-      <label for='input-surname'>{$lang.global.surname} <span title="{$lang.global.required}">*</span></label>
-      <div class="input">
-        <input name='surname' value='{$surname}' id="input-surname" type='text' />
-      </div>
-    </div>
-    <div class="clearfix {if isset($error.email)} error{/if}">
-      <label for='input-email'>{$lang.global.email.email} <span title="{$lang.global.required}">*</span></label>
-      <div class="input">
-        <input name='email' value='{$email}' type='email' id="input-email" required />
-        <span class="help-inline">{if isset($error.email)}{$error.email}{/if}</span>
-      </div>
-    </div>
-    <div class="clearfix{if isset($error.password)} error{/if}">
-      <label for='input-password'>{$lang.global.password.password} <span title="{$lang.global.required}">*</span></label>
-      <div class="input">
-        <input name='password' type='password' id="input-password" required />
-        <span class="help-inline">{if isset($error.password)}{$error.password}{/if}</span>
-      </div>
-    </div>
-    <div class="clearfix">
-      <label for='input-password2'>{$lang.global.password.repeat} <span title="{$lang.global.required}">*</span></label>
-      <div class="input">
-        <input name='password2' type='password' id="input-password2" required />
-        <img id="js-icon" src='%PATH_IMAGES%/spacer.png' class="icon-close" alt="" width="16" height="16" />
-      </div>
-    </div>
-    {if $USER_ROLE < 4}
-      <div class="clearfix{if isset($error.disclaimer)} error{/if}">
-        <label>
-          {* Absolute URL due to fancybox bug *}
-          <a href='{$WEBSITE_URL}/content/2/ajax' id="js-fancybox" class='fancybox.ajax'>
-            {$lang.global.terms.read} <span title="{$lang.global.required}">*</span>
-          </a>
-        </label>
-        <div class="input">
-          <input name='disclaimer' value='' type='checkbox' required />
-        </div>
-      </div>
+<div class='page-header'>
+  <h1>
+    {$lang.global.registration}
+    {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
+      <fb:login-button scope="email" onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
     {/if}
-    <div class="actions">
-      <input type='submit' class="btn primary" value='{$lang.global.register}' />
-      <input type='hidden' value='formdata' name='create_user' />
+  </h1>
+</div>
+<form method='post' class='form-horizontal'>
+  <div class="control-group {if isset($error.name)}error{/if}">
+    <label for='input-name' class='control-label'>
+      {$lang.global.name} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class='controls'>
+      <input class='focused span4' name='name' value='{$name}' type='name' id="input-name" autofocus required />
+      {if isset($error.name)}<span class="help-inline">{$error.name}</span>{/if}
     </div>
-  </fieldset>
+  </div>
+  <div class="control-group{if isset($error.surname)} error{/if}">
+    <label for='input-surname' class='control-label'>
+      {$lang.global.surname}</span>
+    </label>
+    <div class="controls">
+      <input class='span4' name='surname' value='{$surname}' id="input-surname" type='text' />
+    </div>
+  </div>
+  <div class="control-group{if isset($error.email)} error{/if}">
+    <label for='input-email' class='control-label'>
+      {$lang.global.email.email} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class="controls">
+      <input class='span4' name='email' value='{$email}' type='email' id="input-email" required />
+      {if isset($error.email)}<span class="help-inline">{$error.email}</span>{/if}
+    </div>
+  </div>
+  <div class="control-group{if isset($error.password)} error{/if}">
+    <label for='input-password' class='control-label'>
+      {$lang.global.password.password} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class="controls">
+      <input class='span4' name='password' type='password' id="input-password" required />
+      {if isset($error.password)}<span class="help-inline">{$error.password}</span>{/if}
+    </div>
+  </div>
+  <div class="control-group" id='js-password'>
+    <label for='input-password2' class='control-label'>
+      {$lang.global.password.repeat} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class="controls">
+      <input class='span4' name='password2' type='password' id="input-password2" required />
+    </div>
+  </div>
+  {if $USER_ROLE < 4}
+    <div id='js-modal' class='modal hide fade'>
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>{$lang.global.terms.terms}</h3>
+      </div>
+      <div class="modal-body">
+        <p>{$lang.user.info.terms}</p>
+      </div>
+    </div>
+    <div class="control-group{if isset($error.disclaimer)} error{/if}">
+      <label for='input-terms'>{$lang.global.terms.terms} <span title="{$lang.global.required}">*</span></label>
+        {* Absolute URL due to fancybox bug *}
+        <div class='controls'>
+          <label class='checkbox'>
+            <input name='disclaimer' value='' type='checkbox' id='input-terms' required />
+            <a href='#js-modal' data-toggle="modal">
+              {$lang.global.terms.read}
+            </a>
+          </label>
+        </div>
+    </div>
+  {/if}
+  <div class="form-actions">
+    <input type='submit' class="btn btn-primary" value='{$lang.global.register}' />
+    <input type='reset' class='btn' />
+    <input type='hidden' value='formdata' name='create_user' />
+  </div>
 </form>
 <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $("#js-fancybox").fancybox();
-
     $("input[name='password2']").keyup(function(){
-      if ($("input[name='password']").val() == $("input[name='password2']").val()){
-        $('#js-icon').attr('class', 'icon-success');
+      if ($("input[name='password']").val() == $("input[name='password2']").val()) {
+        $('#js-password').removeClass('error');
       } else {
-        $('#js-icon').attr('class', 'icon-close');
+        $('#js-password').addClass('error');
       }
     });
   });
-
-  $('p.error').tipTip({ maxWidth: "auto" });
 </script>

@@ -8,6 +8,7 @@ global:
   action: Action
   album: Album
   api_token: API-Token
+  archive: Archive
   author: Author
   backup: Backup
   bbcode:
@@ -246,6 +247,8 @@ calendar:
     date_format: 'Date format: "YYYY-MM-DD"'
   title:
     create: Add appointment
+    update: Update appointment
+    destroy: Delete appointment
 
 comment:
   info:
@@ -264,6 +267,11 @@ content:
     destroy: Delete content
     update: Update
 
+cronjob:
+  mail:
+    body: Your backup has successfully been created and is avaiable as attachment.\r\n
+    subject: Backup from %d
+
 download:
   label:
     choose: Select file
@@ -271,11 +279,6 @@ download:
     create: Add download
     destroy: Delete download
     update: Update download
-
-cronjob:
-  mail:
-    body: Your backup has successfully been created and is avaiable as attachment.\r\n
-    subject: Backup from %d
 
 gallery:
   albums:
@@ -331,7 +334,7 @@ search:
     show: Search results for "%s"
   info:
     fail: There are no results for the term: "<strong>%b</strong>".<br /> <a href="/search" title="Search">Search again.</a>
-      
+
 session:
   password:
     info: Enter your Email and we will send you a new password within a few minutes.
@@ -355,6 +358,7 @@ user:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
     gravatar: If checked, we will automatically search <a href="http://gravatar.com" target="_blank">Gravatar.com</a> for an avatar of you.
     image: You are only allowed images less than 400KB.
+    terms: Terms... TODO
   label:
     account:
       destroy: Delete account
