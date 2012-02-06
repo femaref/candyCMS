@@ -19,12 +19,9 @@
     <input type='submit' class='btn primary' value='{$lang.media.title.create}' />
   </p>
 </form>
-<script type='text/javascript' src='%PATH_JS%/core/jquery.tiptip{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $("input[type='submit']").click(function() {
     $(this).val(lang.loading);
     $('#js-loading').html("<img src='%PATH_IMAGES%/loading.gif' alt='" + lang.loading + "' widht='32' height='32 />");
   });
-
-  $('p.error').tipTip({ maxWidth: "auto" });
 </script>

@@ -1,13 +1,15 @@
 {foreach $user as $u}
-  <h1>
-    {$u.full_name}
-    {if $USER_ROLE == 4 || $u.id == $USER_ID}
-      <a href='/user/{$_request_id_}/update'>
-        <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang.global.update}' width="16" height="16" />
-      </a>
-    {/if}
-  </h1>
-  <table class="user">
+  <div class='page-header'>
+    <h1>
+      {$u.full_name}
+      {if $USER_ROLE == 4 || $u.id == $USER_ID}
+        <a href='/user/{$_request_id_}/update'>
+          <img src="%PATH_IMAGES%/spacer.png" class="icon-update" alt='{$lang.global.update}' width="16" height="16" />
+        </a>
+      {/if}
+    </h1>
+  </div>
+  <table class="table unstyled">
     <tr>
       <td>
         {$lang.user.label.registered_since}
@@ -15,10 +17,14 @@
       <td>
         {$u.date}
       </td>
-      <td rowspan='4' style='vertical-align:top'>
-        <a href='{$u.avatar_popup}' class="js-fancybox" title='{$u.full_name}'>
-          <img alt='{$u.full_name}' src="{$u.avatar_100}" />
-        </a>
+      <td rowspan='4'>
+        <ul class='thumbnails'>
+          <li>
+            <a href='{$u.avatar_popup}' class="thumbnail js-fancybox" title='{$u.full_name}'>
+              <img alt='{$u.full_name}' src="{$u.avatar_100}" />
+            </a>
+          </li>
+        </ul>
       </td>
     </tr>
     <tr>

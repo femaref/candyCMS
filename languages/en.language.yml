@@ -17,6 +17,7 @@ global:
   by: by
   category: Category
   calendar: Calender
+  captcha: Captcha
   close: Close
   comments: Comments
   contact: Contact

@@ -16,3 +16,34 @@ body {
   text-align:left;
   max-width:300px;
 }
+
+.center {
+  text-align:center;
+}
+
+.clearfix {
+  clear:both;
+}
+
+th.headerSortUp, th.headerSortDown {
+  background-color: @grayLighter;
+}
+
+th:hover, th:hover {
+  cursor:pointer;
+}
+
+// Remove border at user details view
+#user table.table.unstyled th, #user table.table.unstyled td {
+  border:none;
+}
+
+// Mark first field at user details table
+#user table td:first-child {
+  font-weight:bold;
+}
+
+// Mail popup
+#create_mail {
+  min-width:600px;
+}
