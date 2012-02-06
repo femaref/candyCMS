@@ -1,0 +1,1 @@
+ALTER TABLE `gallery_albums` CHANGE `content` `content` VARCHAR(160)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
