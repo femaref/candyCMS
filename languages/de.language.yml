@@ -50,6 +50,7 @@ global:
   file: Datei
   files: Dateien
   gallery: Galerie
+  headlines: Überschriften
   id: Id
   image:
     click_to_enlarge: "Klicken Sie auf das Bild, um es auf %w x %h Pixel zu vergrößern!"

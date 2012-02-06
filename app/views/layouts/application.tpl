@@ -151,7 +151,9 @@
           </section>
         </div>
         <div class='span4'>
+          <h3>{$lang.global.headlines}</h3>
           <!-- plugin:headlines -->
+          <h3>{$lang.global.archive}</h3>
           <!-- plugin:archive -->
         </div>
       </div>

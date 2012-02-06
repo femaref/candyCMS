@@ -108,13 +108,13 @@
         services : {
           facebook : {
             'language' : '{$WEBSITE_LOCALE}',
-            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_facebook.png'
+            'dummy_img' : '%PATH_IMAGES%/jquery.socialshareprivacy/dummy_facebook.png'
           },
           twitter : {
-            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_twitter.png'
+            'dummy_img' : '%PATH_IMAGES%/jquery.socialshareprivacy/dummy_twitter.png'
           },
           gplus : {
-            'dummy_img' : '%PATH_IMAGES%/js-socialshareprivacy/dummy_gplus.png',
+            'dummy_img' : '%PATH_IMAGES%/jquery.socialshareprivacy/dummy_gplus.png',
             'display_name' : 'Google Plus'
           }
         },
