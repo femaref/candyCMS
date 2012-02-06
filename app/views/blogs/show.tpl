@@ -83,7 +83,7 @@
             {$b.comment_sum} {$lang.global.comments}
           </a>
         </div>
-        {if $_request_id_ && $smarty.get.page == 1}
+        {if $_request_id_ && $smarty.get.action !== 'page'}
           <div id="socialshareprivacy"></div>
           <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
         {/if}

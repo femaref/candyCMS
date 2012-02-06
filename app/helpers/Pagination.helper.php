@@ -170,7 +170,7 @@ class Pagination {
 			$this->_oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
 			$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'show');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
 			return $this->_oSmarty->fetch('show.tpl');
 		}
   }
@@ -204,7 +204,7 @@ class Pagination {
 			$this->_oSmarty->assign('_page_previous_', $iPrevious);
 			$this->_oSmarty->assign('_rss_section_', $sRssAction);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('pages', 'surrounding');
+			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
 			return $this->_oSmarty->fetch('surrounding.tpl');
 		}
   }

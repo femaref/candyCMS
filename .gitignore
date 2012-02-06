@@ -10,8 +10,8 @@ upload/user/*
 upload/temp/*
 upload/media/*
 upload/gallery/*
+upload/download/*
 install/sql/data.sql
 logs/*
 version.txt
-public/skins/*
-
+public/templates/*

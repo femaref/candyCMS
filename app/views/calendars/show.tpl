@@ -7,7 +7,13 @@
   </p>
 {/if}
 <div class='page-header'>
-  <h1>{$lang.global.calendar}</h1>
+  <h1>
+    {$lang.global.calendar}
+    {if isset($smarty.get.action) && $smarty.get.action == 'archive'}
+      -
+      {$lang.global.archive}
+    {/if}
+  </h1>
 </div>
 <p class="center">
   {if isset($smarty.get.page) && $smarty.get.page > 1}

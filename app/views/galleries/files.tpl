@@ -11,12 +11,12 @@
     <h4>{$lang.error.missing.entry}</h4>
   </div>
 {else}
-  <div class="page-header">
+  <header class="page-header">
     <h1>
-      {$gallery_name} <small>({$file_no} {$lang.global.files})</small>
-      <a href='/rss/gallery/{$_request_id_}'>
-        <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
-      </a>
+      {$gallery_name}
+      <small>
+        ({$file_no} {$lang.global.files})
+      </small>
       {if $USER_ROLE >= 3}
         <a href='/gallery/{$_request_id_}/update'>
           <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
@@ -24,9 +24,9 @@
         </a>
       {/if}
     </h1>
-  </div>
+  </header>
   {if $gallery_content}
-    <h3>{$gallery_content}</h3>
+    <p>{$gallery_content}</p>
   {/if}
   {if !$files}
     <div class='error' title="{$lang.error.missing.files}">
@@ -57,6 +57,11 @@
         </li>
       {/foreach}
     </ul>
+  <p class='center'>
+    <a href='/rss/gallery/{$_request_id_}'>
+      <img src='%PATH_IMAGES%/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
+    </a>
+  </p>
   {/if}
 {/if}
 <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>

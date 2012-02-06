@@ -96,11 +96,11 @@ final class Bbcode {
         $sUrl[1] = substr($sUrl[1], 0, 7) !== 'http://' ? '/' . $sUrl[1] : $sUrl[1];
         $sTempFilePath = Helper::addSlash($sTempFilePath);
 
-        $sHTML = '<div class="image">';
+        $sHTML = '<figure class="image">';
         $sHTML .= '<a class="js-fancybox" rel="images" href="' . $sUrl[1] . '">';
         $sHTML .= '<img class="js-image" alt="' . $sText . '" src="' . $sTempFilePath . '" width="' . $aNewInfo[0] . '" height="' . $aNewInfo[1] . '" />';
         $sHTML .= '</a>';
-        $sHTML .= '</div>';
+        $sHTML .= '</figure>';
       }
 
       $sStr = preg_replace('=\[img\](.*)\[\/img\]=isU', $sHTML, $sStr, 1);

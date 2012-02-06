@@ -3,9 +3,14 @@
       xmlns:og="http://opengraphprotocol.org/schema/"
       xmlns:fb="http://www.facebook.com/2008/fbml">
   <head>
-    {* Use LESS to minimize CSS. Load first to render the CSS *}
-    <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
-    <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
+    {if $WEBSITE_DEV == true}
+      {* Development mode: Use LESS to minimize CSS. Load first to render the CSS *}
+      <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
+      <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
+    {else}
+      {* Production mode: Use compiled CSS *}
+      
+    {/if}
 
     <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
     <meta name='description' content="{$meta_description}"/>
