@@ -26,7 +26,9 @@
   <div class="clearfix">
     <label for='input-keywords'>{$lang.global.keywords}</label>
     <div class="input">
-      <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.blog.info.keywords}' title='{$lang.blog.info.keywords}' id="input-keywords" />
+      <input name='keywords' value='{$keywords}' type='text'
+             placeholder='{$lang.blog.info.keywords}' title='{$lang.blog.info.keywords}'
+             id="input-keywords" />
     </div>
   </div>
   <div class="clearfix{if isset($error.content)} error{/if}">
@@ -42,7 +44,8 @@
       <ul class='inputs-list'>
         <li>
           <label>
-            <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked{/if} />
+            <input name='published' value='1' type='checkbox'
+                   id="input-published" {if $published == true}checked{/if} />
           </label>
         </li>
       </ul>
