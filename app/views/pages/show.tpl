@@ -1,4 +1,3 @@
-{}
 <div class='pagination pagination-centered clearfix'>
   <a href="{$_action_url_}/page/{$smarty.get.page + 1}" style='display:none'></a>
   <ul>

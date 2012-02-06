@@ -74,3 +74,6 @@
   </p>
 {/if}
 <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+<script type='text/javascript'>
+  $('table').tablesorter();
+</script>
