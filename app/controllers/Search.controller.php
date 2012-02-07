@@ -89,7 +89,7 @@ class Search extends Main {
 
     $sTemplateDir = Helper::getTemplateDir('searches', '_form');
     $this->oSmarty->template_dir = $sTemplateDir;
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
   }
 }

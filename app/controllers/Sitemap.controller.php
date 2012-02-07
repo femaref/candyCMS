@@ -40,7 +40,7 @@ class Sitemap extends Main {
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
-		if (!$this->oSmarty->isCached('show')) {
+		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'xml', false))) {
 			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
 			$this->_getSitemap();
 		}
@@ -61,7 +61,7 @@ class Sitemap extends Main {
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(180);
 
-		if (!$this->oSmarty->isCached('show'))
+		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'show', false)))
 			$this->_getSitemap();
 
 		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'), WEBSITE_LANGUAGE);

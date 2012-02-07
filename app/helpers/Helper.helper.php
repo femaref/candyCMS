@@ -234,23 +234,26 @@ class Helper {
 	 * @access public
 	 * @param string $sDir dir of the templates
 	 * @param string $sFile file name of the template
+	 * @param boolea $bPath show the path
 	 * @return string path of the chosen template
 	 *
 	 */
-  public static function getTemplateType($sDir, $sFile) {
-    try {
-      # Mobile device.
-      if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
-        return $sDir . '/' . $sFile . '.mob';
+  public static function getTemplateType($sDir, $sFile, $bPath = true) {
+		$sDir = $bPath == true ? $sDir . '/' : '';
 
-      # Standard template
-      else
-        return $sDir . '/' . $sFile . '.tpl';
-    }
-    catch (Exception $e) {
-      $e->getMessage();
-    }
-  }
+		try {
+			# Mobile device.
+			if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
+				return $sDir . $sFile . '.mob';
+
+			# Standard template
+			else
+				return $sDir . $sFile . '.tpl';
+		}
+		catch (Exception $e) {
+			$e->getMessage();
+		}
+	}
 
 	/**
 	 * Get the template file. Check if there is a mobile device.

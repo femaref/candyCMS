@@ -67,7 +67,7 @@ class Gallery extends Main {
       $this->oSmarty->template_dir = $sTemplateDir;
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
 
-      if (!$this->oSmarty->isCached('image')) {
+      if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'image', false))) {
         $this->_aData = Model::getFileData($this->_iId);
 
         # Absolute URL for image information

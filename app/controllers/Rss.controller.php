@@ -82,7 +82,7 @@ class Rss extends Main {
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(60);
 
-		if (!$this->oSmarty->isCached('default')) {
+		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'default', false))) {
 			$this->oSmarty->assign('data', $this->_aData);
 			$this->oSmarty->assign('_section_', $this->_sSection);
 			$this->oSmarty->assign('_title_', $this->getTitle());
@@ -105,7 +105,7 @@ class Rss extends Main {
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(60);
 
-    if (!$this->oSmarty->isCached('media')) {
+    if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'media', false))) {
       $aData = $this->_aData[$this->_iId]['files'];
       rsort($aData);
 

@@ -1,4 +1,6 @@
-<h1>{$lang.global.sitemap}</h1>
+<div class='page-header'>
+  <h1>{$lang.global.sitemap}</h1>
+</div>
 <h2>{$lang.global.blog}</h2>
 <ol>
   {foreach $blog as $b}

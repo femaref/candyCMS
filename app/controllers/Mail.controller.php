@@ -220,7 +220,7 @@ class Mail extends Main {
 
     $sTemplateDir = Helper::getTemplateDir('mails', 'success');
     $this->oSmarty->template_dir = $sTemplateDir;
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'success'));
   }
 
