@@ -36,26 +36,24 @@
     <ul class="thumbnails">
       {foreach $files as $f}
         <li>
-          <div class='thumbnail'>
-            <a href='/{$f.url_popup}' class="js-fancybox" rel="images" title='{$f.content}'>
-              <img src='/{$f.url_thumb}'
-                   alt='{$f.content}'
-                   title='{$f.content}'
-                   class="js-image" />
-            </a>
-            {if $USER_ROLE >= 3}
-              <div class='caption center'>
-                <a href="/gallery/{$f.id}/updatefile">
-                  <img src="%PATH_IMAGES%/spacer.png" class="icon-update"
-                       alt="{$lang.global.update.update}" title="{$lang.global.update.update}" width="16" height="16" />
-                </a>
-                <a href="#" onclick="candy.system.confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
-                  <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy"
-                       alt="{$lang.global.destroy.destroy}" title="{$lang.global.destroy.destroy}" width="16" height="16" />
-                </a>
-              </div>
-            {/if}
-          </div>
+          <a href='/{$f.url_popup}' class=" thumbnail js-fancybox" rel="images" title='{$f.content}'>
+            <img src='/{$f.url_thumb}'
+                 alt='{$f.content}'
+                 title='{$f.content}'
+                 class="js-image" />
+          </a>
+          {if $USER_ROLE >= 3}
+            <div class='center'>
+              <a href="/gallery/{$f.id}/updatefile">
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-update"
+                     alt="{$lang.global.update.update}" title="{$lang.global.update.update}" width="16" height="16" />
+              </a>
+              <a href="#" onclick="candy.system.confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
+                <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy"
+                     alt="{$lang.global.destroy.destroy}" title="{$lang.global.destroy.destroy}" width="16" height="16" />
+              </a>
+            </div>
+          {/if}
         </li>
       {/foreach}
     </ul>

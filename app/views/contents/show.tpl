@@ -50,7 +50,7 @@
           <img src='%PATH_IMAGES%/spacer.png' class="icon-mrwong" alt='MrWong' width='16' height='16' />
         </a>
       </div>
-      {if $_request_id_ && $smarty.get.action !== 'page'}
+      {if $_request_id_ && (!isset($smarty.get.action) || $smarty.get.action !== 'page')}
         <div id="socialshareprivacy"></div>
         <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
       {/if}

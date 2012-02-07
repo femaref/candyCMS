@@ -1,93 +1,109 @@
-<h1>{if $smarty.get.action == 'create'}{$lang.blog.title.create}{else}{$lang.blog.title.update|replace:'%p':$title}{/if}</h1>
-<form method='post' action='/blog/{$smarty.get.action}'>
-  <div class="clearfix {if isset($error.title)} error{/if}">
-    <label for='input-title'>{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
-    <div class="input">
-      <input name='title' value='{$title}' type='text' id="input-title" required />
+<div class='page-header'>
+  <h1>
+    {if $smarty.get.action == 'create'}
+      {$lang.blog.title.create}
+    {else}
+      {$lang.blog.title.update|replace:'%p':$title}
+    {/if}
+  </h1>
+</div>
+<form method='post' action='/blog/{$smarty.get.action}' class='form-horizontal'>
+  <div class="control-group{if isset($error.title)} error{/if}">
+    <label for='input-title' class='control-label'>
+      {$lang.global.title} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class="controls">
+      <input name='title' value='{$title}' type='text' id="input-title"
+             class='span4 required' required />
       {if isset($error.title)}<span class="help-inline">{$error.title}</span>{/if}
     </div>
   </div>
-  <div class="clearfix">
-    <label for='input-teaser'>
+  <div class="control-group">
+    <label for='input-teaser' class='control-label'>
       {$lang.global.teaser}
     </label>
-    <div class="input">
-      <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.blog.info.teaser}'
-             title='{$lang.blog.info.teaser}' id="input-teaser" />
-      <span id="js-count_chars">160</span>
+    <div class="controls">
+      <input name='teaser' value='{$teaser}' type='text' class='span4'
+             id="input-teaser" />
+      <span class='help-inline' id="js-count_chars">160</span>
+      <p class='help-block'>
+        {$lang.blog.info.teaser}
+      </p>
     </div>
   </div>
-  <div class="clearfix">
-    <label for='input-tags'>{$lang.global.tags.tags}</label>
-    <div class="input">
-      <input type='text' name='tags' id="input-tags" placeholder="{$lang.blog.info.tag}"
+  <div class="control-group">
+    <label for='input-tags' class='control-label'>
+      {$lang.global.tags.tags}
+    </label>
+    <div class="controls">
+      <input type='text' name='tags' id="input-tags"
              data-provide="typeahead" value='{$tags}'
              data-source='{$_tags_}' data-items="8"
              class='span4 required' autocomplete="off" required />
+      <p class='help-block'>
+        {$lang.blog.info.tag}
+      </p>
     </div>
   </div>
-  <div class="clearfix">
-    <label for='input-keywords'>{$lang.global.keywords}</label>
-    <div class="input">
-      <input name='keywords' value='{$keywords}' type='text'
-             placeholder='{$lang.blog.info.keywords}' title='{$lang.blog.info.keywords}'
-             id="input-keywords" />
+  <div class="control-group">
+    <label for='input-keywords' class='control-label'>
+      {$lang.global.keywords}
+    </label>
+    <div class="controls">
+      <input name='keywords' value='{$keywords}' type='text' id="input-keywords"
+             title='{$lang.blog.info.keywords}' class='span4' />
+      <p class='help-block'>
+        {$lang.blog.info.keywords}
+      </p>
     </div>
   </div>
-  <div class="clearfix{if isset($error.content)} error{/if}">
-    <label for='input-content'>{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
-    <div class="input">
-      <textarea name='content' class="js-tinymce" rows='16' cols='50' id="input-content">{$content}</textarea>
+  <div class="control-group{if isset($error.content)} error{/if}">
+    <label for='input-content' class='control-label'>
+      {$lang.global.content} <span title="{$lang.global.required}">*</span>
+    </label>
+    <div class="controls">
+      <textarea name='content' class="js-tinymce required"
+                id="input-content" required>{$content}</textarea>
       {if isset($error.content)}<span class="help-inline">{$error.content}</span>{/if}
     </div>
   </div>
-  <div class="clearfix">
-    <label for='input-published'>{$lang.global.published}</label>
-    <div class="input">
-      <ul class='inputs-list'>
-        <li>
-          <label>
-            <input name='published' value='1' type='checkbox'
-                   id="input-published" {if $published == true}checked{/if} />
-          </label>
-        </li>
-      </ul>
+  <div class="control-group">
+    <label for='input-published' class='control-label'>
+      {$lang.global.published}
+    </label>
+    <div class="controls">
+      <input name='published' value='1' type='checkbox' class='checkbox'
+             id="input-published" {if $published == true}checked{/if} />
     </div>
   </div>
   {if $smarty.get.action == 'update'}
-    <div class="clearfix">
-      <label for='input-update_date'>{$lang.blog.label.date}</label>
-      <div class="input">
-        <ul class='inputs-list'>
-          <li>
-            <label>
-              <input name='update_date' value='1' type='checkbox' id="input-update_date" />
-            </label>
-          </li>
-        </ul>
+    <div class="control-group">
+      <label for='input-update_date' class='control-label'>
+        {$lang.blog.label.date}
+      </label>
+      <div class="controls">
+          <input name='update_date' value='1' type='checkbox'
+                 id="input-update_date" class='checkbox' />
       </div>
     </div>
-    <div class="clearfix">
-      <label for='input-show_update'>{$lang.global.update.show}</label>
-      <div class="input">
-        <ul class='inputs-list'>
-          <li>
-            <label>
-              <input type='checkbox' name='show_update' value='1' id="input-show_update" {if $date_modified > 0}checked{/if} />
-            </label>
-          </li>
-        </ul>
+    <div class="control-group">
+      <label for='input-show_update' class='control-label'>
+        {$lang.global.update.show}
+      </label>
+      <div class="controls">
+          <input type='checkbox' class='checkbox' name='show_update' value='1'
+                 id="input-show_update" {if $date_modified > 0}checked{/if} />
       </div>
     </div>
   {/if}
-  <div class="actions">
+  <div class="form-actions">
     {if isset($author_id)}
       <input type='hidden' value='{$author_id}' name='author_id' />
     {/if}
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-    <input type='submit' class='btn primary' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
+    <input type='submit' class='btn btn-primary' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     {if $smarty.get.action == 'update'}
-      <input type='button' class='btn' value='{$lang.blog.title.destroy}' onclick="candy.system.confirmDestroy('/blog/{$_request_id_}/destroy')" />
+      <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}' onclick="candy.system.confirmDestroy('/blog/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='hidden' value='{$date}' name='date' />
       <input type='reset' class='btn' value='{$lang.global.reset}' />
