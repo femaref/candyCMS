@@ -20,7 +20,10 @@
   <div class="clearfix">
     <label for='input-tags'>{$lang.global.tags.tags}</label>
     <div class="input">
-      <input name='tags' value='{$tags}' type='text' placeholder='{$lang.blog.info.tag}' title='{$lang.blog.info.tag}' id="input-tags" />
+      <input type='text' name='tags' id="input-tags" placeholder="{$lang.blog.info.tag}"
+             data-provide="typeahead" value='{$tags}'
+             data-source='{$_tags_}' data-items="8"
+             class='span4 required' autocomplete="off" required />
     </div>
   </div>
   <div class="clearfix">
@@ -91,6 +94,7 @@
     {/if}
   </div>
 </form>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.typeahead{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
 <script type='text/javascript'>
   $(document).ready(function(){

@@ -179,6 +179,9 @@ class Blog extends Main {
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
+    $sTags = $this->_oModel->getTypeaheadData('blogs', 'tags', true);
+    $this->oSmarty->assign('_tags_', $sTags);
+
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 

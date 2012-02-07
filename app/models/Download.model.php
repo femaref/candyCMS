@@ -276,45 +276,4 @@ class Download extends Main {
       exit('SQL error.');
     }
   }
-
-  /**
-   * Return all categories for autocompletion.
-   *
-   * @static
-   * @access public
-   * @return string formatted categories
-   *
-   */
-  public static function getCategories() {
-    try {
-      $oQuery = parent::$_oDbStatic->query("SELECT
-                                              category
-                                            FROM
-                                              " . SQL_PREFIX . "downloads
-                                            GROUP BY
-                                              category");
-
-      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
-
-      $sString = '';
-      foreach ($aResult as $aRow) {
-        #$aItems = preg_split("/[\s]*[ ][\s]*/", $aRow['category']);
-        #foreach ($aItems as $sItem)
-          $sString .= '"' . $aRow['category'] . '",';
-      }
-
-      return '[' . substr($sString, 0, -1) . ']';
-    }
-    catch (\PDOException $p) {
-      try {
-        parent::rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0099 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0100 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-  }
 }

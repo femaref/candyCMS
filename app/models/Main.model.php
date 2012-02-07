@@ -278,4 +278,54 @@ abstract class Main {
   public function getLastInsertId() {
     return self::$iLastInsertId;
   }
+
+  /**
+   * Return data for autocompletion.
+   *
+   * @static
+   * @access public
+   * @param string $sTable table to get data from
+   * @param string $sColumn column to get data from
+   * @param boolean $bSplit split data by comma
+   * @return string formatted data
+   *
+   */
+  public static function getTypeaheadData($sTable, $sColumn, $bSplit = false) {
+    try {
+      $oQuery = self::$_oDbStatic->query("SELECT
+                                              " . $sColumn . "
+                                            FROM
+                                              " . SQL_PREFIX . $sTable . "
+                                            GROUP BY
+                                              " . $sColumn);
+
+      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+      $sString = '';
+      foreach ($aResult as $aRow) {
+        if ($bSplit == true) {
+          $aItems = preg_split("/[\s]*[,][\s]*/", $aRow[$sColumn]);
+
+          foreach ($aItems as $sItem)
+            $sString .= '"' . $sItem . '",';
+        }
+
+        else
+          $sString .= '"' . $aRow[$sColumn] . '",';
+      }
+
+      return '[' . substr($sString, 0, -1) . ']';
+    }
+    catch (\PDOException $p) {
+      try {
+        parent::rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0099 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0100 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
+  }
 }
