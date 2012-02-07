@@ -91,6 +91,9 @@ class Download extends Main {
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
+    $sCategories = $this->_oModel->getCategories();
+    $this->oSmarty->assign('_categories_', $sCategories);
+
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 

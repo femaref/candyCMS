@@ -491,7 +491,6 @@ class Index {
     # We use templates via template request.
     if (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
-      $iPathLen = strlen($sPath);
 
       $sCachedCss     = $sPath . '/css';
       $sCachedImages  = $sPath . '/images';
@@ -502,18 +501,16 @@ class Index {
     # Intern use with template request
     elseif (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) !== 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
-      $iPathLen = strlen($sPath);
 
-      $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
-      $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
-      $sCachedLess    = @is_dir(substr($sPath, 1, $iPathLen) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
-      $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
+      $sCachedCss     = @is_dir(substr($sPath, 1) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
+      $sCachedImages  = @is_dir(substr($sPath, 1) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedLess    = @is_dir(substr($sPath, 1) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
+      $sCachedJs      = @is_dir(substr($sPath, 1) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
 
     # We use templates defined in our Candy.inc.php
     elseif (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
-      $iPathLen = strlen($sPath);
 
       $sCachedCss     = $sPath . '/css';
       $sCachedImages  = $sPath . '/images';
@@ -522,12 +519,11 @@ class Index {
     }
     elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
-      $iPathLen = strlen($sPath);
 
-      $sCachedCss     = @is_dir(substr($sPath, 1, $iPathLen) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
-      $sCachedImages  = @is_dir(substr($sPath, 1, $iPathLen) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
-      $sCachedLess    = @is_dir(substr($sPath, 1, $iPathLen) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
-      $sCachedJs      = @is_dir(substr($sPath, 1, $iPathLen) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
+      $sCachedCss     = @is_dir(substr($sPath, 1) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
+      $sCachedImages  = @is_dir(substr($sPath, 1) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
+      $sCachedLess    = @is_dir(substr($sPath, 1) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
+      $sCachedJs      = @is_dir(substr($sPath, 1) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
     else {
       $sCachedCss     = WEBSITE_CDN . '/css';
