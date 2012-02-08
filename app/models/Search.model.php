@@ -57,18 +57,22 @@ class Search extends Main {
           $this->_aData[$sTable]['title'] = I18n::get('global.' . strtolower($sTableSingular));
         }
 
+				$iEntries = 0;
         foreach ($aResult as $aRow) {
           if (isset($aRow['published']) && $aRow['published'] == 0)
             continue;
 
           $iDate = $aRow['date'];
           $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTableSingular);
+					++$iEntries;
         }
+
+				$this->_aData[$sTable]['entries'] = $iEntries;
       }
-    catch (\PDOException $p) {
-      AdvancedException::reportBoth('0071 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
+			catch (\PDOException $p) {
+				AdvancedException::reportBoth('0071 - ' . $p->getMessage());
+				exit('SQL error.');
+			}
     }
 
     return $this->_aData;

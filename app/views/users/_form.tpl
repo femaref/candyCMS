@@ -192,7 +192,7 @@
           </div>
         </div>
         <div class='actions'>
-          <input type='submit' class='btn primary' value='{$lang.user.label.account.destroy}' />
+          <input type='submit' class='btn btn-primary' value='{$lang.user.label.account.destroy}' />
           <input type='hidden' value='formdata' name='destroy_user' />
         </div>
       </fieldset>
@@ -200,10 +200,10 @@
   </div>
 {/if}
 
+<script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
 <script type="text/javascript">
   $(document).ready(function(){
     $(".js-fancybox").fancybox();
-    $('.tabs').tabs();
   });
 </script>

@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.5
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -65,6 +66,8 @@ class Search extends Main {
 
       $this->oSmarty->assign('string', $sString);
       $this->oSmarty->assign('tables', $this->_oModel->getData($sString, $aTables));
+
+			#die(print_r($this->_oModel->getData($sString, $aTables)));
 
       # Create page title and description
       $this->_setDescription($this->_sHeadline);
