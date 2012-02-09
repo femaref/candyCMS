@@ -16,19 +16,19 @@
       <input name='title' value='{$title}' id="input-title" class='required span4'
              type='text' autofocus required />
     </div>
-  </p>
+  </div>
   <div class='control-group'>
     <label for='input-content' class='control-label'>
       {$lang.global.description}
     </label>
     <div class='controls'>
       <input name='content' value='{$content}' id="input-content" type='text' class='span4' />
-      <span class='help-inline' id="js-count_chars">160</span>
+      <span class='help-inline' id="js-count_chars"></span>
     </div>
   </div>
   <div class="form-actions">
     <input type='submit' class='btn btn-primary'
-           value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
+           value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     <input type='hidden' value='formdata' name='{$smarty.get.action}_gallery' />
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />

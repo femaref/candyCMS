@@ -6,7 +6,11 @@
     </a>
   </p>
 
-  <h1>{$lang.global.manager.media}</h1>
+  <div class='page-header'>
+    <h1>
+      {$lang.global.manager.media}
+    </h1>
+  </div>
   {if !$files}
     <tr>
       <td colspan="5">

@@ -25,7 +25,7 @@
     <div class="controls">
       <input name='teaser' value='{$teaser}' type='text' class='span4'
              id="input-teaser" />
-      <span class='help-inline' id="js-count_chars">160</span>
+      <span class='help-inline' id="js-count_chars"></span>
       <p class='help-block'>
         {$lang.blog.info.teaser}
       </p>

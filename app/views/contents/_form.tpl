@@ -15,7 +15,7 @@
       <div class='input'>
         <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.content.info.teaser}'
                title='{$lang.content.info.teaser}' id="input-teaser" />
-        <span id="js-count_chars">160</span>
+        <span id="js-count_chars"></span>
       </div>
     </div>
     <div class='clearfix'>

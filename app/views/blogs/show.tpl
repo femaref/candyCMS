@@ -100,7 +100,7 @@
 <script src='%PATH_JS%/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".js-fancybox").fancybox();
+    $('.js-fancybox').fancybox();
     $('.js-image').capty({ height: 35 });
 
     if($('#socialshareprivacy').length > 0){
