@@ -1,34 +1,50 @@
-<h1>{if $smarty.get.action == 'create'}{$lang.content.title.create}{else}{$lang.content.title.update|replace:'%p':$title}{/if}</h1>
-<form method='post' action='/content/{$smarty.get.action}'>
+<div class='page-header'>
+  <h1>
+    {if $smarty.get.action == 'create'}
+      {$lang.content.title.create}
+    {else}
+      {$lang.content.title.update|replace:'%p':$title}
+    {/if}
+  </h1>
+</div>
+<form method='post' action='/content/{$smarty.get.action}' class='form-horizontal'>
   <fieldset>
-    <div class='clearfix{if isset($error.title)} error{/if}'>
-      <label for="input-title">{$lang.global.title} <span title="{$lang.global.required}">*</span></label>
-      <div class='input'>
-        <input type='text' name='title' title='{$lang.global.title}' value='{$title}' id="input-title" autofocus required />
-        {if isset($error.title)}<span class="help-inline">{$error.title}</span>{/if}
+    <div class='control-group{if isset($error.title)} error{/if}'>
+      <label for='input-title' class='control-label'>
+        {$lang.global.title} <span title='{$lang.global.required}'>*</span>
+      </label>
+      <div class='controls'>
+        <input type='text' name='title' class='span4 required'
+               title='{$lang.global.title}' value='{$title}' id='input-title' autofocus required />
+        {if isset($error.title)}
+          <span class='help-inline'>{$error.title}</span>
+        {/if}
       </div>
     </div>
-    <div class='clearfix'>
+    <div class='control-group'>
       <label for='input-teaser'>
         {$lang.global.teaser}
       </label>
-      <div class='input'>
+      <div class='controls'>
         <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.content.info.teaser}'
-               title='{$lang.content.info.teaser}' id="input-teaser" />
-        <span id="js-count_chars"></span>
+               title='{$lang.content.info.teaser}' id='input-teaser' />
+        <span id='js-count_chars'></span>
+        <p class='help-block'>
+          {$lang.blog.info.teaser}
+        </p>
       </div>
     </div>
     <div class='clearfix'>
       <label for='input-keywords'>{$lang.global.keywords}</label>
       <div class='input'>
-        <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.content.info.keywords}' title='{$lang.content.info.keywords}' id="input-keywords" />
+        <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.content.info.keywords}' title='{$lang.content.info.keywords}' id='input-keywords' />
       </div>
     </div>
     <div class='clearfix{if isset($error.content)} error{/if}'>
-      <label for="input-content">{$lang.global.content} <span title="{$lang.global.required}">*</span></label>
+      <label for='input-content'>{$lang.global.content} <span title='{$lang.global.required}'>*</span></label>
       <div class='input'>
-        <textarea name='content' title='{$lang.global.content}' class="js-tinymce" id="input-content">{$content}</textarea>
-        {if isset($error.content)}<span class="help-inline">{$error.content}</span>{/if}
+        <textarea name='content' title='{$lang.global.content}' class='js-tinymce' id='input-content'>{$content}</textarea>
+        {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
       </div>
     </div>
     <div class='clearfix'>
@@ -37,13 +53,13 @@
         <ul class='inputs-list'>
           <li>
             <label>
-              <input name='published' value='1' type='checkbox' id="input-published" {if $published == true}checked{/if} />
+              <input name='published' value='1' type='checkbox' id='input-published' {if $published == true}checked{/if} />
             </label>
           </li>
         </ul>
       </div>
     </div>
-    <div class="actions">
+    <div class='actions'>
       <input type='submit' class='btn primary' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
       <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
       {if $smarty.get.action == 'update'}

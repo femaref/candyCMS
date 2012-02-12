@@ -8,38 +8,38 @@
   </h1>
 </div>
 <form method='post' action='/blog/{$smarty.get.action}' class='form-horizontal'>
-  <div class="control-group{if isset($error.title)} error{/if}">
+  <div class='control-group{if isset($error.title)} error{/if}'>
     <label for='input-title' class='control-label'>
-      {$lang.global.title} <span title="{$lang.global.required}">*</span>
+      {$lang.global.title} <span title='{$lang.global.required}'>*</span>
     </label>
-    <div class="controls">
-      <input name='title' value='{$title}' type='text' id="input-title"
+    <div class='controls'>
+      <input name='title' value='{$title}' type='text' id='input-title'
              class='span4 required' required />
-      {if isset($error.title)}<span class="help-inline">{$error.title}</span>{/if}
+      {if isset($error.title)}<span class='help-inline'>{$error.title}</span>{/if}
     </div>
   </div>
-  <div class="control-group">
+  <div class='control-group'>
     <label for='input-teaser' class='control-label'>
       {$lang.global.teaser}
     </label>
-    <div class="controls">
+    <div class='controls'>
       <input name='teaser' value='{$teaser}' type='text' class='span4'
-             id="input-teaser" />
-      <span class='help-inline' id="js-count_chars"></span>
+             id='input-teaser' />
+      <span class='help-inline' id='js-count_chars'></span>
       <p class='help-block'>
         {$lang.blog.info.teaser}
       </p>
     </div>
   </div>
-  <div class="control-group">
+  <div class='control-group'>
     <label for='input-tags' class='control-label'>
       {$lang.global.tags.tags}
     </label>
-    <div class="controls">
-      <input type='text' name='tags' id="input-tags"
-             data-provide="typeahead" value='{$tags}'
-             data-source='{$_tags_}' data-items="8"
-             class='span4 required' autocomplete="off" required />
+    <div class='controls'>
+      <input type='text' name='tags' id='input-tags'
+             data-provide='typeahead' value='{$tags}'
+             data-source='{$_tags_}' data-items='8'
+             class='span4 required' autocomplete='off' required />
       <p class='help-block'>
         {$lang.blog.info.tag}
       </p>

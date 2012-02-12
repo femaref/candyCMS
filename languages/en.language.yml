@@ -32,9 +32,9 @@ global:
   currently: currently
   cut: Cut
   date:
-    date: date
-    end: end date
-    start: start date
+    date: Date
+    end: End date
+    start: Start date
   deleted_user: Deleted User
   description: Description
   destroy:

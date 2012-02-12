@@ -1,12 +1,12 @@
-<section id="archive">
+<section id='archive'>
   <ul>
     {foreach from=$data item=d key=month}
       <li>
-        <a href="#{$month}" name="archive-{$month}" class="js-archive_month">{$month} ({$d|@count})</a>
-        <ul style="display:none">
+        <a href='#{$month}' name='archive-{$month}' class='js-archive_month'>{$month} ({$d|@count})</a>
+        <ul style='display:none'>
         {foreach from=$d item=entry}
           <li>
-            <a href="/blog/{$entry.id}/{$entry.encoded_title}" title="{$entry.date}" class='js-tooltip'>
+            <a href='/blog/{$entry.id}/{$entry.encoded_title}' title='{$entry.date}' class='js-tooltip'>
               {$entry.title}
             </a>
           </li>
@@ -16,7 +16,7 @@
     {/foreach}
   </ul>
 </section>
-<script type="text/javascript">
+<script type='text/javascript'>
   if($('.js-archive_month')) {
     $('.js-archive_month').click(function(){
       $(this).next().toggle();

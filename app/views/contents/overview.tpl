@@ -1,27 +1,29 @@
 {if $USER_ROLE >= 3}
-  <p class="center">
+  <p class='center'>
     <a href='/content/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
+      <img src='%PATH_IMAGES%/spacer.png' class='icon-create' alt='' width='16' height='16' />
       {$lang.content.title.create}
     </a>
   </p>
 {/if}
-<h1>{$lang.global.contents}</h1>
-<table class="sortTable tablesorter zebra-striped">
+<div class='page-header'>
+  <h1>{$lang.global.contents}</h1>
+</div>
+<table class='table tablesorter'>
   <thead>
     <tr>
-      <th class="headerSortDown">#</th>
+      <th class='headerSortDown'>#</th>
       <th>{$lang.global.title}</th>
       <th>{$lang.global.date.date}</th>
       <th>{$lang.global.author}</th>
-      <th>{$lang.global.published}</th>
+      <th class='center'>{$lang.global.published}</th>
       <th></th>
     </tr>
   </thead>
   {foreach $content as $c}
-    <tr class='{cycle values="row1,row2"}'>
+    <tr>
       <td>{$c.id}</td>
-      <td class="left">
+      <td>
         <a href='/content/{$c.id}/{$c.encoded_title}'>
           {$c.title}
         </a>
@@ -32,10 +34,11 @@
           {$c.name} {$c.surname}
         </a>
       </td>
-      <td>
+      <td class='center'>
         <img src='%PATH_IMAGES%/spacer.png'
-             class="icon-{if $c.published == true}success{else}close{/if}"
-             alt='{$lang.global.published}' title="" width="16" height="16" />
+             class='icon-{if $c.published == true}success{else}close{/if}'
+             alt='{if $c.published == true}✔{else}✖{/if}'
+             title='' width='16' height='16' />
       </td>
       {if $USER_ROLE >= 3}
         <td>
@@ -52,6 +55,7 @@
     </tr>
   {/foreach}
 </table>
+<script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript'>
-  $(".sortTable").tablesorter();
+  $('table').tablesorter();
 </script>
