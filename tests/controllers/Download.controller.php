@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ * 
  */
 
 require_once('lib/simpletest/web_tester.php');

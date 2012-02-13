@@ -39,26 +39,26 @@ class AllTests extends TestSuite {
     $this->TestSuite('All tests');
 
     # Init tests
-    $this->addFile('app/tests/Index.controller.php');
+    $this->addFile('tests/controllers/Index.controller.php');
 
     # SQL unit tests
-    $this->addFile('app/tests/Blog.model.php');
-    $this->addFile('app/tests/Calendar.model.php');
-    $this->addFile('app/tests/Comment.model.php');
-    $this->addFile('app/tests/Content.model.php');
-    $this->addFile('app/tests/Download.model.php');
-    $this->addFile('app/tests/Gallery.model.php');
-    $this->addFile('app/tests/Log.model.php');
-    $this->addFile('app/tests/Search.model.php');
-    $this->addFile('app/tests/Session.model.php');
-    $this->addFile('app/tests/User.model.php');
+    $this->addFile('tests/models/Blog.model.php');
+    $this->addFile('tests/models/Calendar.model.php');
+    $this->addFile('tests/models/Comment.model.php');
+    $this->addFile('tests/models/Content.model.php');
+    $this->addFile('tests/models/Download.model.php');
+    $this->addFile('tests/models/Gallery.model.php');
+    $this->addFile('tests/models/Log.model.php');
+    $this->addFile('tests/models/Search.model.php');
+    $this->addFile('tests/models/Session.model.php');
+    $this->addFile('tests/models/User.model.php');
 
     # Web tests
-    $this->addFile('app/tests/Download.controller.php');
-    $this->addFile('app/tests/Gallery.controller.php');
-    $this->addFile('app/tests/Media.controller.php');
-    $this->addFile('app/tests/Session.controller.php');
-    $this->addFile('app/tests/User.controller.php');
+    $this->addFile('tests/controllers/Download.controller.php');
+    $this->addFile('tests/controllers/Gallery.controller.php');
+    $this->addFile('tests/controllers/Media.controller.php');
+    $this->addFile('tests/controllers/Session.controller.php');
+    $this->addFile('tests/controllers/User.controller.php');
   }
 }
 ?>

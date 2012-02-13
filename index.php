@@ -9,7 +9,6 @@
  * @since 1.0
  */
 
-
 namespace CandyCMS;
 
 use CandyCMS\Controller\Index as Index;
