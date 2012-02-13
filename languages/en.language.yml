@@ -51,7 +51,7 @@ global:
   files: Files
   gallery: Gallery
   headlines: Headlines
-  id: Id
+  id: ID
   image:
     click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
     image: Image

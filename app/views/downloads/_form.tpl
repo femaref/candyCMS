@@ -3,7 +3,6 @@
 </div>
 <form action='/download/{$smarty.get.action}' method='post'
       enctype='multipart/form-data' class='form-horizontal'>
-  <fieldset>
   {if $smarty.get.action == 'create'}
     <div class='control-group{if isset($error.file)} error{/if}'>
       <label for='input-file' class='control-label'>
@@ -67,6 +66,5 @@
       <input type='reset' class='btn' value='{$lang.global.reset}' />
     {/if}
   </p>
-  </fieldset>
 </form>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.typeahead{$_compress_files_suffix_}.js'></script>

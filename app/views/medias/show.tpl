@@ -1,52 +1,49 @@
 {if $USER_ROLE >= 3}
-  <p class="center">
+  <p class='center'>
     <a href='/media/create'>
-      <i class="icon-plus-sign"></i>
+      <img src='%PATH_IMAGES%/spacer.png' class='icon-create'
+           alt='{$lang.global.create.entry}' width='16' height='16'
+           title='{$lang.global.create.entry}' />
       {$lang.global.create.entry}
     </a>
   </p>
-
   <div class='page-header'>
     <h1>
       {$lang.global.manager.media}
     </h1>
   </div>
   {if !$files}
-    <tr>
-      <td colspan="5">
-        <div class='alert alert-warning'>
-          <h4>{$lang.error.missing.files}</h4>
-        </div>
-      </td>
-    </tr>
+    <div class='alert alert-warning'>
+      <h4>{$lang.error.missing.files}</h4>
+    </div>
   {/if}
-  <table class="sortTable tablesorter zebra-striped">
+  <table class='table'>
     <thead>
       <tr>
         <th></th>
-        <th class="headerSortDown">{$lang.global.file}</th>
+        <th class='headerSortDown'>{$lang.global.file}</th>
         <th>{$lang.global.size}</th>
-        <th>{$lang.global.upload.at}</th>
+        <th class='center'>{$lang.global.upload.at}</th>
         <th></th>
       </tr>
-    <thead>
+    </thead>
     <tbody>
       {foreach $files as $f}
-        <tr class='{cycle values="row1,row2"}'>
-          <td style='width:5%'>
+        <tr>
+          <td>
             {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
-              <img src='%PATH_UPLOAD%/temp/media/{$f.name}'
+              <img src='%PATH_UPLOAD%/temp/media/{$f.name}' class='thumbnail'
                    width='32' height='32' alt='{$f.type}' />
             {else}
-              <img src='%PATH_IMAGES%/files/{$f.type}.png'
+              <img src='%PATH_IMAGES%/files/{$f.type}.png' class='thumbnail'
                    width='32' height='32' alt='{$f.type}' />
             {/if}
           </td>
-          <td style='width:60%' class="left">
+          <td>
             {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
               <a href='%PATH_UPLOAD%/media/{$f.name}'
-                 class="js-fancybox"
-                 rel="image"
+                 class='js-fancybox'
+                 rel='image'
                  title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
                 {$f.name}
               </a> ({$f.dim[0]} x {$f.dim[1]} px)
@@ -55,17 +52,20 @@
                 {$f.name}
               </a>
             {/if}
-            <input type='text' class="copybox" value='%PATH_UPLOAD%/media/{$f.name}' onclick="this.focus();this.select();" />
+            <input type='text' class='copybox' value='%PATH_UPLOAD%/media/{$f.name}'
+                   onclick='this.focus();this.select();' />
           </td>
-          <td style='width:15%'>
+          <td>
             {$f.size}
           </td>
-          <td style='width:15%'>
+          <td class='center'>
             {$f.cdate}
           </td>
-          <td style='width:5%'>
+          <td>
             <a href="#" onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')">
-              <i class="icon-remove-sign"></i>
+              <img src='%PATH_IMAGES%/spacer.png' class='icon-destroy'
+                   alt='{$lang.global.destroy.destroy}'
+                   title='{$lang.global.destroy.destroy}' width='16' height='16' />
             </a>
           </td>
         </tr>
@@ -73,9 +73,12 @@
     </tbody>
   </table>
   <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $(".js-fancybox").fancybox({ nextEffect : 'fade', prevEffect : 'fade' });
     });
+
+    $('table').tablesorter();
   </script>
 {/if}

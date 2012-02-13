@@ -1,7 +1,7 @@
 {if $USER_ROLE >= 3}
-  <p class="center">
+  <p class='center'>
     <a href='/download/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
+      <img src='%PATH_IMAGES%/spacer.png' class='icon-create' alt='' width='16' height='16' />
       {$lang.global.create.entry}
     </a>
   </p>
@@ -16,14 +16,14 @@
 {else}
   {foreach $download as $d}
     <h2>{$d.category}</h2>
-    <table class="table tablesorter">
+    <table class='table tablesorter'>
       <thead>
         <tr>
-          <th width='10%'></th>
-          <th width='40%' class="headerSortDown">{$lang.global.title}</th>
-          <th width='20%'>{$lang.global.date.date}</th>
-          <th width='20%'>{$lang.global.size}</th>
-          <th width='10%'></th>
+          <th></th>
+          <th class='headerSortDown'>{$lang.global.title}</th>
+          <th>{$lang.global.date.date}</th>
+          <th>{$lang.global.size}</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -33,8 +33,8 @@
             <img src='%PATH_IMAGES%/files/{$f.extension}.png'
                  width='32' height='32' alt='{$f.extension}' />
           </td>
-          <td class="left">
-            <a href="{$f.url}" target="_blank">{$f.title}</a>
+          <td class='left'>
+            <a href='{$f.url}' target='_blank'>{$f.title}</a>
             {if $f.content !== ''}
               <br />
               {$f.content}

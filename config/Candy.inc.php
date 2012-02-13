@@ -198,7 +198,7 @@ define('PATH_STATIC_TEMPLATES', 'public/_static');
 
 # Define, where files are uploaded to
 # DEFAULT: upload
-define('PATH_UPLOAD', 'upload');
+define('PATH_UPLOAD', '/upload');
 
 # Some SMARTY settings
 define('CACHE_DIR', 'cache');

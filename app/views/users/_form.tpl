@@ -1,108 +1,116 @@
-<ul class='tabs' data-tabs='tabs'>
-  <li class='active'>
-    <a href='#personal'>{$lang.user.title.personal_data}</a>
-  </li>
-  {if $USER_ID == $uid}
-    <li>
-      <a href='#password'>{$lang.user.title.password}</a>
+<div class='page-header'>
+  <h1>{$lang.user.title.update}</h1>
+</div>
+<div class='tabbable'>
+  <ul class='nav nav-tabs'>
+    <li class='active'>
+      <a href='#user-personal' data-toggle='tab'>{$lang.user.title.personal_data}</a>
     </li>
-  {/if}
-  <li>
-    <a href='#image'>{$lang.user.title.image}</a>
-  </li>
-  {if $USER_ROLE < 4}
+    {if $USER_ID == $uid}
+      <li>
+        <a href='#user-password' data-toggle='tab'>{$lang.user.title.password}</a>
+      </li>
+    {/if}
     <li>
-      <a href='#destroy'>{$lang.user.title.account}</a>
+      <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
     </li>
-  {/if}
-</ul>
-
-<div class='pill-content'>
+    {if $USER_ROLE < 4}
+      <li>
+        <a href='#user-destroy' data-toggle='tab'>{$lang.user.title.account}</a>
+      </li>
+    {/if}
+  </ul>
+</div>
+<div class='tab-content'>
 {* Account data *}
-  <div class='active row' id='personal'>
-    <div class='span4'>
-      <h2>{$lang.user.title.personal_data}</h2>
-    </div>
-    <form method='post' action='/user/{$uid}/update' class='span12'>
-      <fieldset>
-        <div class='clearfix{if isset($error.name)} error{/if}'>
-          <label for='input-name'>{$lang.global.name} <span title='{$lang.global.required}'>*</span></label>
-          <div class='input'>
-            <input name='name' value='{$name}' type='name' id='input-name' required />
-            {if isset($error.name)}<span class='help-inline'>{$error.name}</span>{/if}
-          </div>
+  <div class='tab-pane active' id='user-personal'>
+    <form method='post' action='/user/{$uid}/update' class='form-horizontal'>
+      <div class='control-group{if isset($error.name)} error{/if}'>
+        <label for='input-name' class='control-label'>
+          {$lang.global.name} <span title='{$lang.global.required}'>*</span>
+        </label>
+        <div class='controls'>
+          <input class='span4 required' name='name' value='{$name}' type='name'
+                 id='input-name' required />
+          {if isset($error.name)}<span class='help-inline'>{$error.name}</span>{/if}
         </div>
+      </div>
+      <div class='control-group'>
+        <label for='input-surname' class='control-label'>
+          {$lang.global.surname}
+        </label>
+        <div class='controls'>
+          <input class='span4' name='surname' value='{$surname}' type='text'
+                 id='input-surname' />
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label'>
+          {$lang.global.api_token}
+        </label>
+        <div class='controls'>
+          <p class='help-block'>
+            {$api_token}
+          </p>
+        </div>
+      </div>
+      <div class='clearfix'>
+        <label for='input-use_gravatar'>{$lang.user.label.gravatar}</label>
+        <div class='input'>
+          <ul class='inputs-list'>
+            <li>
+              <label>
+                <input type='checkbox' name='use_gravatar' id='input-use_gravatar' {if $use_gravatar == 1}checked{/if} />
+                <span class='description'>{$lang.user.info.gravatar}</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class='clearfix'>
+        <label for='input-content'>{$lang.user.label.content.update}</label>
+        <div class='input'>
+          <textarea name='content' rows='6' class='xxlarge' id='input-content'>{$content}</textarea>
+        </div>
+      </div>
+      <div class='clearfix'>
+        <label for='input-receive_newsletter'>{$lang.user.label.newsletter}</label>
+        <div class='input'>
+          <ul class='inputs-list'>
+            <li>
+              <label>
+                <input name='receive_newsletter' id='input-receive_newsletter' value='1'
+                        type='checkbox' {if $receive_newsletter == 1}checked{/if} />
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {if $USER_ROLE == 4 && $USER_ID !== $uid}
         <div class='clearfix'>
-          <label for='input-surname'>{$lang.global.surname}</label>
+          <label for='input-role'>{$lang.global.user.role}</label>
           <div class='input'>
-            <input name='surname' value='{$surname}' type='text' id='input-surname' />
+            <select name='role' id='input-role'>
+              <option value='1' {if $role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
+              <option value='2' {if $role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
+              <option value='3' {if $role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
+              <option value='4' {if $role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
+            </select>
           </div>
         </div>
-        <div class='clearfix'>
-          <label for='input-api_token'>{$lang.global.api_token}</label>
-          <div class='input'>
-            <span>
-              {$api_token}
-            </span>
-          </div>
-        </div>
-        <div class='clearfix'>
-          <label for='input-use_gravatar'>{$lang.user.label.gravatar}</label>
-          <div class='input'>
-            <ul class='inputs-list'>
-              <li>
-                <label>
-                  <input type='checkbox' name='use_gravatar' id='input-use_gravatar' {if $use_gravatar == 1}checked{/if} />
-                  <span class='description'>{$lang.user.info.gravatar}</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class='clearfix'>
-          <label for='input-content'>{$lang.user.label.content.update}</label>
-          <div class='input'>
-            <textarea name='content' rows='6' class='xxlarge' id='input-content'>{$content}</textarea>
-          </div>
-        </div>
-        <div class='clearfix'>
-          <label for='input-receive_newsletter'>{$lang.user.label.newsletter}</label>
-          <div class='input'>
-            <ul class='inputs-list'>
-              <li>
-                <label>
-                  <input name='receive_newsletter' id='input-receive_newsletter' value='1'
-                         type='checkbox' {if $receive_newsletter == 1}checked{/if} />
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        {if $USER_ROLE == 4 && $USER_ID !== $uid}
-          <div class='clearfix'>
-            <label for='input-role'>{$lang.global.user.role}</label>
-            <div class='input'>
-              <select name='role' id='input-role'>
-                <option value='1' {if $role == 1}selected{/if}>{$lang.global.user.roles.1}</option>
-                <option value='2' {if $role == 2}selected{/if}>{$lang.global.user.roles.2}</option>
-                <option value='3' {if $role == 3}selected{/if}>{$lang.global.user.roles.3}</option>
-                <option value='4' {if $role == 4}selected{/if}>{$lang.global.user.roles.4}</option>
-              </select>
-            </div>
-          </div>
-        {/if}
-        <div class='actions'>
-          <input type='hidden' value='{$email}' name='email' />
-          <input type='hidden' value='formdata' name='update_user' />
-          <input type='submit' class='btn primary' value='{$lang.user.label.update}' />
-        </div>
-      </fieldset>
+      {/if}
+      <div class='form-actions'>
+        <input type='submit' class='btn btn-primary' value='{$lang.user.label.update}' />
+        <input type='reset' class='btn' value='{$lang.global.reset}' />
+        <input type='hidden' value='{$email}' name='email' />
+        <input type='hidden' value='formdata' name='update_user' />
+      </div>
     </form>
   </div>
 
 {* Password *}
 {if $USER_ID == $uid}
-  <div class='row' id='password'>
+  <div class='tab-pane' id='user-password'>
     <div class='span4'>
       <h2>{$lang.user.title.password}</h2>
     </div>
@@ -137,7 +145,7 @@
 {/if}
 
 {* Avatar *}
-  <div class='row' id='image'>
+  <div class='tab-pane' id='user-image'>
     <div class='span4'>
       <h2>{$lang.user.title.image}</h2>
     </div>
@@ -176,7 +184,7 @@
 
 {* Destroy account *}
 {if $USER_ROLE < 4}
-  <div class='row' id='destroy'>
+  <div class='tab-pane' id='user-destroy'>
     <div class='span4'>
       <h2>{$lang.user.title.account}</h2>
     </div>

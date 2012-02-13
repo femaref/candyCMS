@@ -1,7 +1,9 @@
 {if $USER_ROLE >= 3}
-  <p class="center">
+  <p class='center'>
     <a href='/calendar/create'>
-      <i class="icon icon-create"></i>
+      <img src='%PATH_IMAGES%/spacer.png' class='icon-create'
+           alt='{$lang.global.create.entry}' width='16' height='16'
+           title='{$lang.global.create.entry}' />
       {$lang.global.create.entry}
     </a>
   </p>
@@ -15,11 +17,11 @@
     {/if}
   </h1>
 </div>
-<p class="center">
+<p class='center'>
   {if isset($smarty.get.page) && $smarty.get.page > 1}
-    <a href="{$smarty.get.page - 1}" rel="prev">&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
+    <a href='{$smarty.get.page - 1}' rel='prev'>&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
     <strong>{$smarty.get.page}</strong>
-    &nbsp;&nbsp;<a href="{$smarty.get.page + 1}" rel="next">{$smarty.get.page + 1} &raquo;</a>
+    &nbsp;&nbsp;<a href='{$smarty.get.page + 1}' rel='next'>{$smarty.get.page + 1} &raquo;</a>
   {/if}
 </p>
 {if !$calendar}
@@ -29,25 +31,27 @@
 {else}
   {foreach $calendar as $c}
     <h2>{$c.month} {$c.year}</h2>
-    <table class="table tablesorter">
+    <table class='table tablesorter'>
       <thead>
         <tr>
-          <th width="20%" class="headerSortDown">{$lang.global.date.date}</th>
-          <th width="70%">{$lang.global.description}</th>
-          <th width="10%"></th>
+          <th class='headerSortDown'>{$lang.global.date.date}</th>
+          <th>{$lang.global.description}</th>
+          {if $USER_ROLE >= 3}
+            <th></th>
+          {/if}
         </tr>
       </thead>
       <tbody>
         {foreach $c.dates as $d}
           <tr>
-            <td style="width:25%">
+            <td>
               {$d.start_date}
               {if $d.end_date > 1}
                 -
                 {$d.end_date}
               {/if}
             </td>
-            <td style="width:65%">
+            <td>
               <strong>
                 {$d.title}
               </strong>
@@ -56,16 +60,16 @@
                 {$d.content}
               {/if}
             </td>
-            <td style="width:10%">
-              {if $USER_ROLE >= 3}
+            {if $USER_ROLE >= 3}
+              <td>
                 <a href='/calendar/{$d.id}/update'>
-                  <i class="icon icon-update"></i>
+                  <i class='icon icon-update'></i>
                 </a>
                 <a href="#" onclick="candy.system.confirmDestroy('/calendar/{$d.id}/destroy')">
                   <i class="icon icon-destroy"></i>
                 </a>
-              {/if}
-            </td>
+              </td>
+            {/if}
           </tr>
         {/foreach}
       </tbody>
@@ -73,8 +77,8 @@
   {/foreach}
 {/if}
 {if !isset($smarty.get.action)}
-  <p class="center">
-    <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}" class='btn'>
+  <p class='center'>
+    <a href='/calendar/archive/{$smarty.now|date_format:'%Y'}' class='btn'>
       {$lang.global.archive}
     </a>
   </p>

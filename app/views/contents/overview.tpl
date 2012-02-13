@@ -1,7 +1,9 @@
 {if $USER_ROLE >= 3}
   <p class='center'>
     <a href='/content/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class='icon-create' alt='' width='16' height='16' />
+      <img src='%PATH_IMAGES%/spacer.png' class='icon-create'
+           alt='{$lang.global.create.entry}' width='16' height='16'
+           title='{$lang.global.create.entry}' />
       {$lang.content.title.create}
     </a>
   </p>
@@ -9,7 +11,7 @@
 <div class='page-header'>
   <h1>{$lang.global.contents}</h1>
 </div>
-<table class='table tablesorter'>
+<table class='table'>
   <thead>
     <tr>
       <th class='headerSortDown'>#</th>
@@ -40,17 +42,17 @@
         <td class='center'>
           <img src='%PATH_IMAGES%/spacer.png'
               class='icon-{if $c.published == true}success{else}close{/if}'
-              alt='{if $c.published == true}✔{else}✖{/if}'
-              title='' width='16' height='16' />
+              alt='{if $c.published == true}✔{else}✖{/if}' height='16'
+              title='{if $c.published == true}✔{else}✖{/if}' width='16' />
         </td>
         <td>
           <a href='/content/{$c.id}/update'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
-              title='{$lang.global.update.update}' width="16" height="16" />
+            <img src='%PATH_IMAGES%/spacer.png' class='icon-update' alt='{$lang.global.update.update}'
+              title='{$lang.global.update.update}' width='16' height='16' />
           </a>
           <a href='#' onclick="candy.system.confirmDestroy('/content/{$c.id}/destroy')">
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
-              title='{$lang.global.destroy.destroy}' width="16" height="16" />
+            <img src='%PATH_IMAGES%/spacer.png' class='icon-destroy' alt='{$lang.global.destroy.destroy}'
+              title='{$lang.global.destroy.destroy}' width='16' height='16' />
           </a>
         </td>
       {/if}
