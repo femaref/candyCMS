@@ -403,6 +403,9 @@ class Index {
   *
   */
   public function show() {
+    # Set a caching / compile ID
+    define('UNIQUE_ID', md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE));
+
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
@@ -477,7 +480,8 @@ class Index {
 
       $sTemplateDir = Helper::getTemplateDir('layouts', 'application');
       $oSection->oSmarty->template_dir = $sTemplateDir;
-      $sCachedHTML = $oSection->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'application'));
+      $sCachedHTML = $oSection->oSmarty->fetch(
+              Helper::getTemplateType($sTemplateDir, 'application'), UNIQUE_ID, UNIQUE_ID);
 		}
 
 		# Build absolute URLs

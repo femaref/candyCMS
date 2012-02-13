@@ -234,8 +234,10 @@ abstract class Main {
       $this->oSmarty->compile_check = false;
 
     # Clear cache on development mode or when we force it via a request.
-    if (CLEAR_CACHE == true || WEBSITE_MODE == 'development')
+    if (CLEAR_CACHE == true || WEBSITE_MODE == 'development') {
       $this->oSmarty->clearAllCache();
+      $this->oSmarty->clearCompiledTemplate();
+    }
 
     $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;
 

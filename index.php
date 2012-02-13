@@ -72,7 +72,7 @@ $iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
 define('AJAX_REQUEST', (int) $iAjax);
 
 # Clear cache if needed
-define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
+define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
 
 @session_start();
 
