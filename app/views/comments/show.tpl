@@ -1,14 +1,14 @@
-<div id="comments" class="span11">
-  <header>
+<div id='comments'>
+  <div class='page-header'>
     <a name='comments'></a>
-    <h3>{$lang.global.comments}</h3>
-  </header>
-  <div id="js-commments">
+    <h2>{$lang.global.comments}</h2>
+  </div>
+  <div id='js-commments'>
     {foreach $comments as $c}
-      <article class="well">
+      <article>
         <header>
-          <a href='#{$c.id}' name='{$c.id}' class="count">{$c.loop+$comment_number}</a>
-          <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
+          <a href='#{$c.id}' name='{$c.id}' class='count'>{$c.loop+$comment_number}</a>
+          <img class='thumbnail' src='{$c.avatar_64}' width='40' height='40' alt='' />
           {if $c.user_id > 0}
             <a href='/user/{$c.user_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
           {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
@@ -18,17 +18,17 @@
           {elseif $c.author_name}
             {$c.author_name}
           {else}
-            <em style="text-decoration:line-through">{$lang.global.deleted_user}</em>
+            <em style='text-decoration:line-through'>{$lang.global.deleted_user}</em>
           {/if}
           <br />
-          <time datetime="{$c.date_w3c}">{$c.datetime}</time>
+          <time datetime='{$c.date_w3c}'>{$c.datetime}</time>
         </header>
-        <div id="js-comment_{$c.id}">
+        <div id='js-comment_{$c.id}'>
           {$c.content}
         </div>
         <footer>
           {if $USER_ROLE >= 3 && $c.author_email}
-            <a href="mailto:{$c.author_email}">{$c.author_email}</a>
+            <a href='mailto:{$c.author_email}'>{$c.author_email}</a>
           {/if}
           {if $USER_ROLE >= 3 && $c.author_ip}
             <span>{$c.author_ip}</span>

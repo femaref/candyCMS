@@ -16,8 +16,10 @@
       <th>{$lang.global.title}</th>
       <th>{$lang.global.date.date}</th>
       <th>{$lang.global.author}</th>
-      <th class='center'>{$lang.global.published}</th>
-      <th></th>
+      {if $USER_ROLE >= 3}
+        <th class='center'>{$lang.global.published}</th>
+        <th></th>
+      {/if}
     </tr>
   </thead>
   {foreach $content as $c}
@@ -34,13 +36,13 @@
           {$c.name} {$c.surname}
         </a>
       </td>
-      <td class='center'>
-        <img src='%PATH_IMAGES%/spacer.png'
-             class='icon-{if $c.published == true}success{else}close{/if}'
-             alt='{if $c.published == true}✔{else}✖{/if}'
-             title='' width='16' height='16' />
-      </td>
       {if $USER_ROLE >= 3}
+        <td class='center'>
+          <img src='%PATH_IMAGES%/spacer.png'
+              class='icon-{if $c.published == true}success{else}close{/if}'
+              alt='{if $c.published == true}✔{else}✖{/if}'
+              title='' width='16' height='16' />
+        </td>
         <td>
           <a href='/content/{$c.id}/update'>
             <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'

@@ -32,17 +32,9 @@ body {
   max-width:300px;
 }
 
-.center {
-  text-align:center !important;
-}
-
 // Action icon get a margin to top
 .thumbnails .center {
   margin-top:10px;
-}
-
-.clearfix {
-  clear:both;
 }
 
 
@@ -68,4 +60,67 @@ th:hover, th:hover {
 // Mail popup
 #create_mail {
   min-width:600px;
+}
+
+// Center loading image
+#infscr-loading {
+  text-align:center;
+}
+
+// Blogs header
+.blogs h2 {
+  font-size:30px;
+}
+
+.blogs {
+  margin-bottom:50px;
+}
+
+.summary {
+  font-weight:bold;
+}
+
+/* Comments */
+#comments {
+  clear:both;
+  padding:10px 0px;
+}
+
+#comments a {
+  font-weight: bold;
+}
+
+#comments article {
+  display: table;
+  margin-bottom:50px;
+  text-align:left;
+  width:100%;
+}
+
+#comments article.from_author {
+  background: @grayDark;
+  border: 1px solid @grayLighter;
+  .border-radius(10px);
+}
+
+#comments article header {
+  display: table-cell;
+  width: 50%;
+}
+
+#comments article header img {
+  float:left;
+  margin: 3px 10px 0px 0px;
+}
+
+#comments article header a.count {
+  font-size: 24px;
+  color: #CCCCCC;
+  width: 50px;
+  float:left;
+  margin-top: 10px;
+}
+
+#comments article footer {
+  text-align: right;
 }

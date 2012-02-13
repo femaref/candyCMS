@@ -39,7 +39,7 @@
       </header>
       {if $b.teaser !== ''}
         <p class='summary'>
-          <strong>{$b.teaser}</strong>
+          {$b.teaser}
         </p>
       {/if}
       {$b.content}
@@ -47,7 +47,9 @@
         <div class='span4 tags'>
           {if $b.tags[0] !== ''}
             {foreach from=$b.tags item=t name=tags}
-              <a title='{$lang.global.tags.info}: {$t}' href='/blog/{$t}'>{$t}</a>{if !$t@last}, {/if}
+              <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/blog/{$t}'>
+                {$t}
+              </a>{if !$t@last}, {/if}
             {/foreach}
           {/if}
         </div>
@@ -58,13 +60,13 @@
         </div>
         {if $_request_id_ && (!isset($smarty.get.action) || $smarty.get.action !== 'page')}
           <div class='span8'>
+            <hr />
             <div id='socialshareprivacy'></div>
             <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
           </div>
         {/if}
       </footer>
     </article>
-    <hr />
   {/foreach}
   {* Show comments only if we got a entry *}
   {if isset($b.id)}

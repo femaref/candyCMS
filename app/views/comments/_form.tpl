@@ -1,8 +1,8 @@
 <a name='create'></a>
 <div class='page-header'>
-  <h1>
-    {$lang.global.comments}
-  </h1>
+  <h2>
+    {$lang.comment.title.create}
+  </h2>
 </div>
 <form method="post" data-ajax="false" class='form-horizontal'>
   {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}

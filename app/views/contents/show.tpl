@@ -1,30 +1,33 @@
 {foreach $content as $c}
-  <article class="contents">
+  <article class='contents'>
     <header class='page-header'>
       <h1>
         {$c.title}
         {if $USER_ROLE >= 3}
           <a href='/content/{$c.id}/update'>
-            <img src='%PATH_IMAGES%/spacer.png' class="icon-update"
-                 alt='{$lang.global.update.update}' width="16" height="16" title='{$lang.global.update.update}' />
+            <img src='%PATH_IMAGES%/spacer.png' class='icon-update'
+                 alt='{$lang.global.update.update}' width='16' height='16'
+                 title='{$lang.global.update.update}' />
           </a>
         {/if}
       </h1>
       <p>
-        <time datetime="{$c.date_w3c}">
-          {$lang.global.last_update}: {$c.datetime}
+        {$lang.global.last_update}:
+        <time datetime='{$c.date_w3c}'>
+          {$c.datetime}
         </time>
         {$lang.global.by}
         <a href='/user/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
       </p>
     </header>
     {if $c.teaser !== ''}
-      <p class="summary">{$c.teaser}</p>
+      <p class='summary'>{$c.teaser}</p>
     {/if}
     {$c.content}
     <footer>
       {if $_request_id_ && (!isset($smarty.get.action) || $smarty.get.action !== 'page')}
-        <div id="socialshareprivacy"></div>
+        <hr />
+        <div id='socialshareprivacy'></div>
         <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
       {/if}
     </footer>
