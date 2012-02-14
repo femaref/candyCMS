@@ -357,7 +357,7 @@ session:
 user:
   contact_via_email: "Klicke hier, um %u eine E-Mail zu schicken!"
   info:
-    destroy_account: Bitte gib zur eigenen Sicherheit dein aktuelles Passwort ein. Sobald du auf "Account löschen" klickst, wird dein Zugang gelöscht und ist nicht wiederherstellbar!
+    destroy_account: Bitte gib zur eigenen Sicherheit dein aktuelles Passwort ein. Sobald du auf "Account löschen" klickst wird dein Zugang gelöscht und ist nicht wiederherstellbar!
     gravatar: Aktivierst du dieses Kästchen, wird automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild gesucht. Alternativ kannst du aber auch direkt ein Bild hochladen.
     image: Bitte nur Bilder mit einer Größe von bis zu 400KB hochladen!
     terms: Nutzungsbedingungen... TODO

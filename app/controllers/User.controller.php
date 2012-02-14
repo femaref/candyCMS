@@ -366,8 +366,7 @@ class User extends Main {
     $aUser = MODEL::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
-    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['userdata']['id'] === $this->_iId) {
-
+    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['userdata']['id'] == $this->_iId) {
       # Password matches with user password
       if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['userdata']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
@@ -382,7 +381,7 @@ class User extends Main {
         else
           return Helper::errorMessage($this->oI18n->get('error.sql'), '/user/update');
       } else
-        return Helper::errorMessage('error.user.destroy.password', '/user/update');
+        return Helper::errorMessage($this->oI18n->get('error.user.destroy.password'), '/user/update#user-destroy');
 
       # We are admin and can delete users
     } elseif ($this->_aSession['userdata']['role'] == 4) {
