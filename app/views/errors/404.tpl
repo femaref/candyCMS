@@ -1,6 +1,6 @@
-<div class='alert-message block-message error'>
+<div class='page-header'>
   <h1>{$lang.error.404.title}</h1>
-  <p class='error'>
-    {$lang.error.404.info}
-  </p>
+</div>
+<div class='alert alert-warning'>
+  {$lang.error.404.info}
 </div>

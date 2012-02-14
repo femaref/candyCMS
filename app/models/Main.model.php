@@ -157,8 +157,10 @@ abstract class Main {
    *
    */
   protected function _formatForUpdate($aRow) {
+    $aData = array();
+
     foreach ($aRow as $sColumn => $sData)
-      $aData[$sColumn] = Helper::removeSlahes($sData);
+      $aData[$sColumn] = $sData;
 
     return $aData;
   }
@@ -174,8 +176,8 @@ abstract class Main {
    *
    */
   protected function _formatForOutput($aRow, $sSection, $bNl2br = false) {
-    foreach ($aRow as $sColumn => $sData)
-      $aData[$sColumn] = is_int($sData) ? (int) $sData : Helper::formatOutput($sData);
+    foreach ($aRow as $sColumn => $mData)
+      $aData[$sColumn] = is_int($mData) ? (int) $mData : $mData;
 
     # Format data
     if (isset($aRow['date'])) {
@@ -258,8 +260,8 @@ abstract class Main {
 
     # Highlight text for search results
     if(!empty($sHighlight)) {
-      $aData['title'] = isset($aData['title']) ? Helper::formatOutput($aData['title'], $sHighlight) : '';
-      $aData['teaser'] = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
+      $aData['title']   = isset($aData['title']) ? Helper::formatOutput($aData['title'], $sHighlight) : '';
+      $aData['teaser']  = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
       $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
     }
 

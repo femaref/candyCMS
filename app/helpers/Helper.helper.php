@@ -147,13 +147,13 @@ class Helper {
 		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
     $sFilePath = Helper::removeSlash($sFilePath);
 
-		if (is_file($sFilePath . '.jpg') && $bUseGravatar == false)
+		if (file_exists($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
 
-		elseif (is_file($sFilePath . '.png') && $bUseGravatar == false)
+		elseif (file_exists($sFilePath . '.png') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.png';
 
-		elseif (is_file($sFilePath . '.gif') && $bUseGravatar == false)
+		elseif (file_exists($sFilePath . '.gif') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.gif';
 
 		else {
@@ -175,22 +175,22 @@ class Helper {
 	 *
 	 */
   public static function getFileSize($sPath) {
-		$iSize = @filesize($sPath);
+    $iSize = Helper::removeSlash(@filesize(Helper::removeSlash($sPath)));
 
-		if ($iSize > 1024 && $iSize < 1048576)
-			$sReturn = round(($iSize / 1024), 2) . ' KB';
+    if ($iSize > 1024 && $iSize < 1048576)
+      $sReturn = round(($iSize / 1024), 2) . ' KB';
 
-		elseif ($iSize >= 1048576 && $iSize < 1073741824)
-			$sReturn = round(($iSize / 1048576), 2) . ' MB';
+    elseif ($iSize >= 1048576 && $iSize < 1073741824)
+      $sReturn = round(($iSize / 1048576), 2) . ' MB';
 
-		elseif ($iSize >= 1073741824)
-			$sReturn = round(($iSize / 1073741824), 2) . ' GB';
+    elseif ($iSize >= 1073741824)
+      $sReturn = round(($iSize / 1073741824), 2) . ' GB';
 
-		else
-			$sReturn = round($iSize, 2) . ' Byte';
+    else
+      $sReturn = round($iSize, 2) . ' Byte';
 
-		return $sReturn;
-	}
+    return $sReturn;
+  }
 
 	/**
 	 * Get the template dir. Check if there are addon files and use them if avaiable.
@@ -286,22 +286,6 @@ class Helper {
 	}
 
 	/**
-	 * Remove slashes of provided string.
-	 *
-	 * @static
-	 * @access public
-	 * @param string $sStr string to remove slashes from
-	 * @return string string without slashes
-	 *
-	 */
-  public static function removeSlahes($sStr) {
-		$sStr = str_replace('\&quot;', '"', $sStr);
-		$sStr = str_replace('\"', '"', $sStr);
-		$sStr = str_replace("\'", "'", $sStr);
-		return $sStr;
-	}
-
-	/**
 	 * Check the input to avoid XSS and SQL injections.
 	 *
 	 * @static
@@ -320,7 +304,7 @@ class Helper {
         $sStr = htmlspecialchars($sStr);
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      AdvancedException::reportBoth($e->getMessage());
     }
 
     return trim($sStr);
@@ -384,9 +368,6 @@ class Helper {
   public static function formatOutput($sStr, $sHighlight = false) {
     $sStr = trim($sStr);
     $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
-
-    # Remove Slashes
-    $sStr = Helper::removeSlahes($sStr);
 
     # Highlight string
     if ($sHighlight == true)
@@ -454,7 +435,7 @@ class Helper {
    * @return string without slash
    *
    */
-  public static function removeSlash($sStr, $bReverse = false) {
+  public static function removeSlash($sStr) {
     return substr($sStr, 0, 1) == '/' ? substr($sStr, 1) : $sStr;
   }
 

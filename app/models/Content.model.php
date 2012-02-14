@@ -209,7 +209,7 @@ class Content extends Main {
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
-      $oQuery->bindParam('content', Helper::removeSlahes($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
       $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
       $oQuery->bindParam('where', $iId, PDO::PARAM_INT);

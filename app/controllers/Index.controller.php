@@ -147,7 +147,7 @@ class Index {
    */
   public function getLanguage($sPath = '') {
     # We got a language request? Let's change it!
-    if (isset($this->_aRequest['language']) && is_file('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
+    if (isset($this->_aRequest['language']) && file_exists('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
       $this->_sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
@@ -158,7 +158,7 @@ class Index {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
-              is_file('languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
+              file_exists('languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
     }

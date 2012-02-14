@@ -1,7 +1,11 @@
 {if $USER_ROLE >= 3}
-  <p class="center">
+  <p class='center'>
     <a href='/gallery/create'>
-      <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt='' width="16" height="16" />
+      <img src='%PATH_IMAGES%/spacer.png'
+           class='icon-create'
+           alt='{$lang.global.create.entry}'
+           title='{$lang.global.create.entry}'
+           width='16' height='16' />
       {$lang.gallery.albums.title.create}
     </a>
   </p>
@@ -23,22 +27,28 @@
             <a href='{$a.url}'>{$a.title}</a>
             {if $USER_ROLE >= 3}
               <a href='/gallery/{$a.id}/createfile'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-create" alt="{$lang.gallery.files.title.create}"
-                     title="{$lang.gallery.files.title.create}" width="16" height="16" />
+                <img src='%PATH_IMAGES%/spacer.png'
+                     class='icon-create js-tooltip'
+                     alt='{$lang.gallery.files.title.create}'
+                     title='{$lang.gallery.files.title.create}'
+                     width='16' height='16' />
               </a>
               <a href='/gallery/{$a.id}/update'>
-                <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt="{$lang.global.update.update}"
-                     title="{$lang.global.update.update}" width="16" height="16" />
+                <img src='%PATH_IMAGES%/spacer.png'
+                     class='icon-update js-tooltip'
+                     alt='{$lang.global.update.update}'
+                     title='{$lang.global.update.update}'
+                     width='16' height='16' />
               </a>
             {/if}
           </h2>
           <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
         </header>
-        <ul class="thumbnails">
+        <ul class='thumbnails'>
           {foreach $a.files as $f}
             <li>
               <a href='{$a.url}' class='thumbnail'>
-                <img src='/{$f.url_32}'
+                <img src='{$f.url_32}'
                      alt='{$f.file}' title='{$f.content}'
                      height='32' width='32' />
               </a>

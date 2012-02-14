@@ -43,6 +43,10 @@ class Blog extends Main {
         $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }
 
+      # Some extra security
+      $sWhere = str_replace('"', '', $sWhere);
+      $sWhere = str_replace("'", '', $sWhere);
+
       # Count entries for pagination
       try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
@@ -104,7 +108,7 @@ class Blog extends Main {
     }
     else {
       # Show unpublished items to moderators or administrators only
-      $iPublished = $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
+      $iPublished = $this->_aSession['userdata']['role'] >= 3 ? 0 : 1;
 
       try {
         $oQuery = $this->_oDb->prepare("SELECT

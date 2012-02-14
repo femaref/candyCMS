@@ -5,8 +5,10 @@
 {else}
   <div class='center'>
     {if isset($i.content)}
-      <h1>{$i.content}</h1>
+      <div class='page-header'>
+        <h1>{$i.content}</h1>
+      </div>
     {/if}
-    <img src="/{$i.url}" alt="{$i.file}" width="{$i.width}" height="{$i.height}" />
+    <img src='{$i.url}' alt='{$i.file}' width='{$i.width}' height='{$i.height}' />
   </div>
 {/if}

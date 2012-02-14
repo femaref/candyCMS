@@ -325,7 +325,7 @@ abstract class Main {
 	 *
 	 */
 	public function getKeywords() {
-		return !empty($this->_sKeywords) ? Helper::removeSlahes($this->_sKeywords) : $this->oI18n->get('website.keywords');
+		return !empty($this->_sKeywords) ? $this->_sKeywords : $this->oI18n->get('website.keywords');
 	}
 
 	/**
@@ -347,7 +347,7 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		return !empty($this->_sTitle) ? Helper::removeSlahes($this->_sTitle) : $this->oI18n->get('error.404.title');
+		return !empty($this->_sTitle) ? $this->_sTitle : $this->oI18n->get('error.404.title');
 	}
 
 	/**
@@ -393,7 +393,6 @@ abstract class Main {
 	 *
 	 */
 	protected function _removeHighlight($sTitle) {
-		$sTitle = Helper::removeSlahes($sTitle);
 		$sTitle = str_replace('<mark>', '', $sTitle);
 		$sTitle = str_replace('</mark>', '', $sTitle);
 		return $sTitle;

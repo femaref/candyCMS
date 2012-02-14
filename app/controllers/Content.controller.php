@@ -77,7 +77,7 @@ class Content extends Main {
   protected function _showFormTemplate() {
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle($this->_aData['title']);
     }
     else {
       $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

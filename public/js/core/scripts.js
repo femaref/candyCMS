@@ -8,7 +8,7 @@ var candy = candy || {};
     hide: hide,
     quote: quote,
     stripNoAlphaChars: stripNoAlphaChars,
-    stripSlash: stripSlash,
+    stripQuote: stripQuote,
     confirmDestroy: confirmDestroy,
     countCharLength : countCharLength
   }
@@ -45,11 +45,6 @@ var candy = candy || {};
     sValue = sValue.replace(/ü/g, "ue");
     sValue = sValue.replace(/ß/g, "ss");
     sValue = sValue.replace(/\W/g, "_");
-    return sValue;
-  }
-
-  function stripSlash(sValue) {
-    sValue = sValue.replace(/\//g, "&frasl;");
     return sValue;
   }
 

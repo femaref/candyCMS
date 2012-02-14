@@ -63,30 +63,30 @@ class Gallery extends Main {
     }
     # Specific image
     elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
-      $sTemplateDir = Helper::getTemplateDir('galleries', 'image');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+      $this->_aData = Model::getFileData($this->_iId);
 
-      if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'image', false))) {
-        $this->_aData = Model::getFileData($this->_iId);
+      # Absolute URL for image information
+      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file']);
 
-        # Absolute URL for image information
-        $sUrl = PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file'];
-
+      if (file_exists($sUrl)) {
         # Get image information
         $aImageInfo = getimagesize($sUrl);
 
-        $this->_aData['url'] = $sUrl;
-        $this->_aData['width'] = $aImageInfo[0];
+        $this->_aData['url']    = Helper::addSlash($sUrl);
+        $this->_aData['width']  = $aImageInfo[0];
         $this->_aData['height'] = $aImageInfo[1];
 
         $this->_setDescription($this->_aData['content']);
         $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
 
         $this->oSmarty->assign('i', $this->_aData);
-      }
 
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'), WEBSITE_LANGUAGE);
+        $sTemplateDir = Helper::getTemplateDir('galleries', 'image');
+        $this->oSmarty->template_dir = $sTemplateDir;
+        return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'), $this->_iId);
+      }
+      else
+        Helper::redirectTo('/error/404');
     }
     # Album overview
     else {
@@ -113,7 +113,7 @@ class Gallery extends Main {
     $this->_aData = $this->_oModel->getData($this->_iId, true);
 
     if (!empty($this->_iId))
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle($this->_aData['title']);
 
     else {
       $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

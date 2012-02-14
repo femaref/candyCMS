@@ -93,7 +93,7 @@ class Blog extends Main {
    */
   private function _setBlogDescription() {
     if (isset($this->_aRequest['search']) && isset($this->_aRequest['page']) && empty($this->_aRequest['page']))
-      return Helper::removeSlahes($this->_aRequest['search']); # Term that is being searched
+      return $this->_aRequest['search']; # Term that is being searched
 
     elseif (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']))
       return $this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . (int) $this->_aRequest['page'];
@@ -136,11 +136,11 @@ class Blog extends Main {
     if (isset($this->_aRequest['action']) &&
             'create' == $this->_aRequest['action'] &&
             'blog' == $this->_aRequest['section'])
-      return Helper::removeSlahes($this->_aRequest['title']);
+      return $this->_aRequest['title'];
 
     # Show overview by blog tag
     elseif (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
-      return Helper::removeSlahes($this->_aRequest['id']);
+      return $this->_aRequest['id'];
 
     # default blog entry
     elseif (!empty($this->_iId))
@@ -166,7 +166,7 @@ class Blog extends Main {
     # Update
     if (!empty($this->_iId)) {
       $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle(Helper::removeSlahes($this->_aData['title']));
+      $this->_setTitle($this->_aData['title']);
     }
 
     # Create

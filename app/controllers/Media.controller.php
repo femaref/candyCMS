@@ -149,7 +149,7 @@ class Media extends Main {
       return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
     else {
-      if (is_file(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']))) {
+      if (file_exists(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']))) {
         unlink(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']));
         return Helper::successMessage($this->oI18n->get('success.file.destroy'), '/media');
       }
