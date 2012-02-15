@@ -128,8 +128,8 @@ class Index {
     $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
 
     foreach ($aPlugins as $sPluginName) {
-      if (file_exists('plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
-        require_once 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+      if (file_exists($sPath . 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+        require_once $sPath . 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
 
       else
         die('Missing plugin: ' . $sPluginName);
@@ -158,7 +158,7 @@ class Index {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
-              file_exists('languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
+              file_exists($sPath . 'languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               substr(DEFAULT_LANGUAGE, 0, 2);
     }

@@ -177,7 +177,7 @@ abstract class Main {
    */
   protected function _formatForOutput($aRow, $sSection, $bNl2br = false) {
     foreach ($aRow as $sColumn => $mData)
-      $aData[$sColumn] = is_int($mData) ? (int) $mData : $mData;
+      $aData[$sColumn] = is_int($mData) ? (int) $mData : Helper::formatOutput($mData);
 
     # Format data
     if (isset($aRow['date'])) {

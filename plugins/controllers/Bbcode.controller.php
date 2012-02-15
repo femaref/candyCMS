@@ -145,7 +145,7 @@ final class Bbcode {
     while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
     preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<blockquote>\\1</blockquote>", $sStr);
-      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h3>" . I18n::get('global.quote.by') . " \\1</h3>\\2</blockquote>", $sStr);
+      $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h4>" . I18n::get('global.quote.by') . " \\1</h4>\\2</blockquote>", $sStr);
     }
 
     while (preg_match("/\[toggle\=/isU", $sStr) && preg_match("/\[\/toggle]/isU", $sStr)) {
@@ -155,8 +155,8 @@ final class Bbcode {
     # Fix quote bug and allow these tags only
     $sStr = str_replace("&lt;blockquote&gt;", "<blockquote>", $sStr);
     $sStr = str_replace("&lt;/blockquote&gt;", "</blockquote>", $sStr);
-    $sStr = str_replace("&lt;h3&gt;", "<h3>", $sStr);
-    $sStr = str_replace("&lt;/h3&gt;", "</h3>", $sStr);
+    $sStr = str_replace("&lt;h4&gt;", "<h4>", $sStr);
+    $sStr = str_replace("&lt;/h4&gt;", "</h4>", $sStr);
 
     return $sStr;
   }
