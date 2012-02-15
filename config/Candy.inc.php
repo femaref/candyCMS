@@ -64,7 +64,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 
 # ------------------------------------------------------------------------------
 
-# Is the website in development mode?
+# What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
 define('WEBSITE_MODE', 'development');

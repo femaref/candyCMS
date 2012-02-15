@@ -541,11 +541,6 @@ class Index {
     $sCachedHTML = & str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
     $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
-		# Cut spaces to minimize filesize
-    # *********************************************
-		$sCachedHTML = str_replace('	', '', $sCachedHTML); # Normal tab
-		$sCachedHTML = str_replace('  ', '', $sCachedHTML); # Tab as two spaces
-
 
 		# Load plugins
     # *********************************************
