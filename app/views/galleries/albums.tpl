@@ -49,7 +49,9 @@
             <li>
               <a href='{$a.url}' class='thumbnail'>
                 <img src='{$f.url_32}'
-                     alt='{$f.file}' title='{$f.content}'
+                     alt='{$f.file}'
+                     title='{$f.content}'
+                     class='js-tooltip'
                      height='32' width='32' />
               </a>
             </li>
