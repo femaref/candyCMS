@@ -37,7 +37,7 @@
       {$lang.global.description}
     </label>
     <div class='controls'>
-      <input class='span4' type='text' name='content' id="input-content" value='{$content}' />
+      <input class='span4' type='text' name='content' id="input-content" value="{$content}" />
       <span class='help-inline'></span>
     </div>
   </div>

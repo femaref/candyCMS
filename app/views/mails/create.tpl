@@ -7,14 +7,15 @@
       {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
     </label>
     <div class='controls'>
-      <input id='input-email' class='required span4' name='email' value='{$email}' type='email' required />
+      <input id='input-email' class='required span4' name='email'
+             value="{$email}" type='email' required />
       {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
     </div>
   </div>
   <div class='control-group'>
     <label for='input-subject' class='control-label'>{$lang.global.subject}</label>
     <div class='controls'>
-      <input id='input-subject' class='span4' name='subject' value='{$subject}' type='text' />
+      <input id='input-subject' class='span4' name='subject' value="{$subject}" type='text' />
     </div>
   </div>
   <div class='control-group{if isset($error.content)} error{/if}'>

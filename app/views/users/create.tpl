@@ -2,7 +2,7 @@
   <h1>
     {$lang.global.registration}
     {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
-      <fb:login-button scope="email" onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
+      <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
     {/if}
   </h1>
 </div>
@@ -12,7 +12,7 @@
       {$lang.global.name} <span title="{$lang.global.required}">*</span>
     </label>
     <div class='controls'>
-      <input class='focused span4' name='name' value='{$name}' type='name' id="input-name" autofocus required />
+      <input class='focused span4' name='name' value="{$name}" type='name' id="input-name" autofocus required />
       {if isset($error.name)}<span class="help-inline">{$error.name}</span>{/if}
     </div>
   </div>
@@ -21,7 +21,7 @@
       {$lang.global.surname}</span>
     </label>
     <div class="controls">
-      <input class='span4' name='surname' value='{$surname}' id="input-surname" type='text' />
+      <input class='span4' name='surname' value="{$surname}" id="input-surname" type='text' />
     </div>
   </div>
   <div class="control-group{if isset($error.email)} error{/if}">
@@ -29,7 +29,7 @@
       {$lang.global.email.email} <span title="{$lang.global.required}">*</span>
     </label>
     <div class="controls">
-      <input class='span4' name='email' value='{$email}' type='email' id="input-email" required />
+      <input class='span4' name='email' value="{$email}" type='email' id="input-email" required />
       {if isset($error.email)}<span class="help-inline">{$error.email}</span>{/if}
     </div>
   </div>

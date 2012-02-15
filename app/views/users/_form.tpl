@@ -30,7 +30,7 @@
           {$lang.global.name} <span title='{$lang.global.required}'>*</span>
         </label>
         <div class='controls'>
-          <input class='span4 required' name='name' value='{$name}' type='name'
+          <input class='span4 required' name='name' value="{$name}" type='name'
                  id='input-name' required />
           {if isset($error.name)}<span class='help-inline'>{$error.name}</span>{/if}
         </div>
@@ -40,7 +40,7 @@
           {$lang.global.surname}
         </label>
         <div class='controls'>
-          <input class='span4' name='surname' value='{$surname}' type='text'
+          <input class='span4' name='surname' value="{$surname}" type='text'
                  id='input-surname' />
         </div>
       </div>
@@ -104,7 +104,7 @@
       <div class='form-actions'>
         <input type='submit' class='btn btn-primary' value='{$lang.user.label.update}' />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
-        <input type='hidden' value='{$email}' name='email' />
+        <input type='hidden' value="{$email}" name='email' />
         <input type='hidden' value='formdata' name='update_user' />
       </div>
     </form>
