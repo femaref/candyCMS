@@ -74,6 +74,7 @@
           <textarea name='content' rows='6' class='span4' id='input-content'>
             {$content}
           </textarea>
+          <span class='help-inline'></span>
         </div>
       </div>
       <div class='control-group'>
@@ -216,7 +217,8 @@
   </div>
 {/if}
 <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
-<!--<script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.scrollspy{$_compress_files_suffix_}.js'></script>
 <script type='text/javascript'>
-  $('.tab-content').scrollspy();
-</script>-->
+  $('#input-content').bind('keyup', function() {
+    countCharLength(this, 1000);
+  });
+</script>

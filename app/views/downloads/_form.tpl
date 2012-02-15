@@ -20,7 +20,12 @@
     </label>
     <div class='controls'>
       <input class='span4 required' type='text' name='title' id="input-title"
-             value='{$title}' required />
+             value="{$title}" required />
+      <span class='help-inline'>
+        {if isset($error.title)}
+          {$error.title}
+        {/if}
+      </span>
     </div>
   </div>
   <div class='control-group{if isset($error.category)} error{/if}'>
@@ -29,9 +34,10 @@
     </label>
     <div class='controls'>
       <input type='text' name='category' id="input-category" placeholder=""
-             data-provide="typeahead" value='{$category}'
+             data-provide="typeahead" value="{$category}"
              data-source='{$_categories_}' data-items="8"
              class='span4 required' autocomplete="off" required />
+      {if isset($error.category)}<span class='help-inline'>{$error.category}</span>{/if}
     </div>
   </div>
   <div class='control-group{if isset($error.content)} error{/if}'>
@@ -40,7 +46,8 @@
     </label>
     <div class='controls'>
       <input class='span4' type='text' name='content' id="input-content"
-             value='{$content}' />
+             value="{$content}" />
+      {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
     </div>
   </div>
   {if $smarty.get.action == 'update'}
@@ -61,10 +68,15 @@
     {if $smarty.get.action == 'update'}
       <input type='button' class='btn btn-danger'
              value='{$lang.global.destroy.destroy}'
-             onclick="candy.system.confirmDestroy('/download/{$_request_id_}/destroy')" />
+             onclick="confirmDestroy('/download/{$_request_id_}/destroy')" />
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='reset' class='btn' value='{$lang.global.reset}' />
     {/if}
   </p>
 </form>
 <script type='text/javascript' src='%PATH_JS%/core/jquery.typeahead{$_compress_files_suffix_}.js'></script>
+<script type='text/javascript'>
+  $('#input-title').bind('keyup', function() {
+    countCharLength(this, 128);
+  });
+</script>

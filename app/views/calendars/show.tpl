@@ -69,7 +69,7 @@
                       title='{$lang.global.update.update}'
                       width='16' height='16' />
                 </a>
-                <a href="#" onclick="candy.system.confirmDestroy('/calendar/{$d.id}/destroy')">
+                <a href="#" onclick="confirmDestroy('/calendar/{$d.id}/destroy')">
                   <img src='%PATH_IMAGES%/spacer.png'
                       class='icon-destroy'
                       alt='{$lang.global.destroy.destroy}'

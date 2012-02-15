@@ -54,7 +54,7 @@
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-update" alt='{$lang.global.update.update}'
                   title='{$lang.global.update.update}' width="16" height="16" />
               </a>
-              <a href="#" onclick="candy.system.confirmDestroy('/download/{$f.id}/destroy')">
+              <a href="#" onclick="confirmDestroy('/download/{$f.id}/destroy')">
                 <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.global.destroy.destroy}'
                   title='{$lang.global.destroy.destroy}' width="16" height="16" />
               </a>

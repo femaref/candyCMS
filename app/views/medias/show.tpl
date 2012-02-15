@@ -62,7 +62,7 @@
             {$f.cdate}
           </td>
           <td>
-            <a href="#" onclick="candy.system.confirmDestroy('/media/{$f.name}/destroy')">
+            <a href="#" onclick="confirmDestroy('/media/{$f.name}/destroy')">
               <img src='%PATH_IMAGES%/spacer.png' class='icon-destroy'
                    alt='{$lang.global.destroy.destroy}'
                    title='{$lang.global.destroy.destroy}' width='16' height='16' />

@@ -13,8 +13,13 @@
       {$lang.global.title} <span title="{$lang.global.required}">*</span>
     </label>
     <div class='controls'>
-      <input name='title' value='{$title}' id="input-title" class='required span4'
+      <input name='title' value="{$title}" id="input-title" class='required span4'
              type='text' autofocus required />
+      <span class='help-inline'>
+        {if isset($error.title)}
+          {$error.title}
+        {/if}
+      </span>
     </div>
   </div>
   <div class='control-group'>
@@ -22,8 +27,8 @@
       {$lang.global.description}
     </label>
     <div class='controls'>
-      <input name='content' value='{$content}' id="input-content" type='text' class='span4' />
-      <span class='help-inline' id="js-count_chars"></span>
+      <input name='content' value="{$content}" id="input-content" type='text' class='span4' />
+      <span class='help-inline'></span>
     </div>
   </div>
   <div class="form-actions">
@@ -33,13 +38,16 @@
     {if $smarty.get.action == 'update'}
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='button' value='{$lang.gallery.albums.title.destroy}' class='btn btn-danger'
-        onclick="candy.system.confirmDestroy('/gallery/{$_request_id_}/destroy')" />
+        onclick="confirmDestroy('/gallery/{$_request_id_}/destroy')" />
       <input type='reset' value='{$lang.global.reset}' class='btn' />
     {/if}
   </div>
 </form>
 <script type='text/javascript'>
+  $('#input-title').bind('keyup', function() {
+    countCharLength(this, 50);
+  });
   $('#input-content').bind('keyup', function() {
-    candy.system.countCharLength(this);
+    countCharLength(this, 160);
   });
 </script>

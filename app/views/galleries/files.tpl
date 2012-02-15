@@ -48,7 +48,7 @@
                      title="{$lang.global.update.update}"
                      width="16" height="16" />
               </a>
-              <a href="#" onclick="candy.system.confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
+              <a href="#" onclick="confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
                 <img src="%PATH_IMAGES%/spacer.png" class="icon-destroy"
                      alt="{$lang.global.destroy.destroy}"
                      title="{$lang.global.destroy.destroy}"

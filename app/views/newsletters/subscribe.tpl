@@ -1,29 +1,37 @@
-<h1>{$lang.newsletter.title.subscribe}</h1>
+<div class='page-header'>
+  <h1>{$lang.newsletter.title.subscribe}</h1>
+</div>
 <p>
   {$lang.newsletter.info.subscribe}
 </p>
-<form method='post'>
-  <fieldset>
-    <div class='clearfix'>
-      <label for='input-name'>{$lang.global.name}</label>
-      <div class='input'>
-        <input name='name' type='name' id='input-name' autofocus />
-      </div>
+<form method='post' class='form-horizontal'>
+  <div class='control-group'>
+    <label for='input-name' class='control-label'>
+      {$lang.global.name}
+    </label>
+    <div class='controls'>
+      <input name='name' type='name' id='input-name' class='span4' autofocus />
     </div>
-    <div class='clearfix'>
-      <label for='input-surname'>{$lang.global.surname}</label>
-      <div class='input'>
-        <input name='surname' id='input-surname' type='text' />
-      </div>
+  </div>
+  <div class='control-group'>
+    <label for='input-surname' class='control-label'>
+      {$lang.global.surname}
+    </label>
+    <div class='controls'>
+      <input name='surname' id='input-surname' type='text' class='span4' />
     </div>
-    <div class='clearfix{if isset($error.email)} error{/if}'>
-      <label for='input-email'>{$lang.global.email.email} <span title='{$lang.global.required}'>*</span></label>
-      <div class='input'>
-        <input type='email' name='email' id='input-email' autofocus required />
-      </div>
+  </div>
+  <div class='control-group{if isset($error.email)} error{/if}'>
+    <label for='input-email' class='control-label'>
+      {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
+    </label>
+    <div class='controls'>
+      <input type='email' name='email' id='input-email'
+             class='span4 required'autofocus required />
+      {if isset($error.email)}<span class="help-inline">{$error.email}</span>{/if}
     </div>
-    <div class='actions'>
-      <input type='submit' class='btn primary' value='{$lang.newsletter.title.subscribe}' />
-    </div>
-  </fieldset>
+  </div>
+  <div class='form-actions'>
+    <input type='submit' class='btn btn-primary' value='{$lang.newsletter.title.subscribe}' />
+  </div>
 </form>

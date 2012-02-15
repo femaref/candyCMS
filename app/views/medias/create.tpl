@@ -20,7 +20,7 @@
     </label>
     <div class='controls'>
       <input type='text' name='rename' id='input-rename' class='span4'
-             onkeyup='this.value = candy.system.stripNoAlphaChars(this.value)' />
+             onkeyup='this.value = stripNoAlphaChars(this.value)' />
     </div>
   </div>
   <div id='js-loading' class='center'></div>

@@ -15,7 +15,11 @@
     <div class='controls'>
       <input name='title' value="{$title}" type='text' id='input-title'
              class='span4 required' required />
-      {if isset($error.title)}<span class='help-inline'>{$error.title}</span>{/if}
+      <span class='help-inline'>
+        {if isset($error.title)}
+          {$error.title}
+        {/if}
+      </span>
     </div>
   </div>
   <div class='control-group'>
@@ -25,7 +29,7 @@
     <div class='controls'>
       <input name='teaser' value="{$teaser}" type='text' class='span4'
              id='input-teaser' />
-      <span class='help-inline' id='js-count_chars'></span>
+      <span class='help-inline'></span>
       <p class='help-block'>
         {$lang.blog.info.teaser}
       </p>
@@ -103,10 +107,10 @@
     <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
     <input type='submit' class='btn btn-primary' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
     {if $smarty.get.action == 'update'}
-      <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}' onclick='candy.system.confirmDestroy('/blog/{$_request_id_}/destroy')' />
+      <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}' onclick='confirmDestroy('/blog/{$_request_id_}/destroy')' />
+      <input type='reset' class='btn' value='{$lang.global.reset}' />
       <input type='hidden' value='{$_request_id_}' name='id' />
       <input type='hidden' value='{$date}' name='date' />
-      <input type='reset' class='btn' value='{$lang.global.reset}' />
     {/if}
   </div>
 </form>
@@ -130,11 +134,13 @@
       height : '300px',
       content_css : '%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css'
     });
+  });
 
-    candy.system.countCharLength('#input-teaser');
+  $('#input-title').bind('keyup', function() {
+    countCharLength(this, 128);
   });
 
   $('#input-teaser').bind('keyup', function() {
-    candy.system.countCharLength(this);
+    countCharLength(this, 180);
   });
 </script>

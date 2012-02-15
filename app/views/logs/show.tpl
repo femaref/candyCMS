@@ -42,7 +42,7 @@
         {/if}
       </td>
       <td class='center'>
-        <a href="#" onclick="candy.system.confirmDestroy('/log/{$l.id}/destroy')">
+        <a href="#" onclick="confirmDestroy('/log/{$l.id}/destroy')">
           <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy" alt='{$lang.global.destroy.destroy}'
                 title='{$lang.global.destroy.destroy}' width="16" height="16" />
         </a>

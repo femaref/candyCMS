@@ -34,12 +34,12 @@
             <span>{$c.author_ip}</span>
           {/if}
           <a href='#create' rel='nofollow'
-             onclick="candy.system.quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
+             onclick="quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
             <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                  title='{$lang.global.quote.quote}' />
           </a>
           {if $USER_ROLE >= 3}
-            <a href="#" onclick="candy.system.confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
+            <a href="#" onclick="confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
               <img src='%PATH_IMAGES%/spacer.png' class="icon-destroy pointer" alt='{$lang.comment.title.destroy}'
                    width="16" height="16" title='{$lang.global.destroy.destroy}' />
             </a>

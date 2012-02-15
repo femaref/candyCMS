@@ -15,10 +15,12 @@
       </label>
       <div class='controls'>
         <input type='text' name='title' class='span4 required'
-               title='{$lang.global.title}' value='{$title}' id='input-title' autofocus required />
-        {if isset($error.title)}
-          <span class='help-inline'>{$error.title}</span>
-        {/if}
+               value="{$title}" id='input-title' autofocus required />
+        <span class='help-inline'>
+          {if isset($error.title)}
+            {$error.title}
+          {/if}
+        </span>
       </div>
     </div>
     <div class='control-group'>
@@ -26,47 +28,59 @@
         {$lang.global.teaser}
       </label>
       <div class='controls'>
-        <input name='teaser' value='{$teaser}' type='text' placeholder='{$lang.content.info.teaser}'
-               title='{$lang.content.info.teaser}' id='input-teaser' />
-        <span id='js-count_chars'></span>
+        <input name='teaser' value="{$teaser}" type='text' class='span4'
+               id='input-teaser' />
+        <span class='help-inline'></span>
         <p class='help-block'>
           {$lang.blog.info.teaser}
         </p>
       </div>
     </div>
-    <div class='clearfix'>
-      <label for='input-keywords'>{$lang.global.keywords}</label>
-      <div class='input'>
-        <input name='keywords' value='{$keywords}' type='text' placeholder='{$lang.content.info.keywords}' title='{$lang.content.info.keywords}' id='input-keywords' />
+    <div class='control-group'>
+      <label for='input-keywords' class='control-label'>
+        {$lang.global.keywords}
+      </label>
+      <div class='controls'>
+        <input name='keywords' value="{$keywords}" type='text'
+               class='span4' id='input-keywords' />
+        <p class='help-block'>
+          {$lang.content.info.keywords}
+        </p>
       </div>
     </div>
-    <div class='clearfix{if isset($error.content)} error{/if}'>
-      <label for='input-content'>{$lang.global.content} <span title='{$lang.global.required}'>*</span></label>
-      <div class='input'>
-        <textarea name='content' title='{$lang.global.content}' class='js-tinymce' id='input-content'>{$content}</textarea>
-        {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
+    <div class='control-group{if isset($error.content)} error{/if}'>
+      <label for='input-content' class='control-group'>
+        {$lang.global.content} <span title='{$lang.global.required}'>*</span>
+      </label>
+      <div class='controls'>
+        <textarea name='content' class='js-tinymce required span4' id='input-content'>
+          {$content}
+        </textarea>
+        {if isset($error.content)}
+          <span class='help-inline'>
+            {$error.content}
+          </span>
+        {/if}
       </div>
     </div>
-    <div class='clearfix'>
-      <label for='input-published'>{$lang.global.published}</label>
-      <div class='input'>
-        <ul class='inputs-list'>
-          <li>
-            <label>
-              <input name='published' value='1' type='checkbox' id='input-published' {if $published == true}checked{/if} />
-            </label>
-          </li>
-        </ul>
+    <div class='control-group'>
+      <label for='input-published' class='control-label'>
+        {$lang.global.published}
+      </label>
+      <div class='controls'>
+        <input name='published' value='1' type='checkbox' class='checkbox'
+               id='input-published' {if $published == true}checked{/if} />
       </div>
     </div>
-    <div class='actions'>
-      <input type='submit' class='btn primary' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
+    <div class='form-actions'>
+      <input type='submit' class='btn btn-primary'
+             value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
       <input type='hidden' value='formdata' name='{$smarty.get.action}_content' />
       {if $smarty.get.action == 'update'}
-        <input type='hidden' value='{$_request_id_}' name='id' />
+        <input type='button' class='btn btn-danger' value='{$lang.content.title.destroy}'
+               onclick="confirmDestroy('/content/{$_request_id_}/destroy')" />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
-        <input type='button' class='btn' value='{$lang.content.title.destroy}'
-               onclick="candy.system.confirmDestroy('/content/{$_request_id_}/destroy')" />
+        <input type='hidden' value='{$_request_id_}' name='id' />
       {/if}
     </div>
   </fieldset>
@@ -90,11 +104,13 @@
       height : "300px",
       content_css : "%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css"
     });
+  });
 
-    candy.system.countCharLength('#input-teaser');
+  $('#input-title').bind('keyup', function() {
+    countCharLength(this, 128);
   });
 
   $('#input-teaser').bind('keyup', function() {
-    candy.system.countCharLength(this);
+    countCharLength(this, 180);
   });
 </script>

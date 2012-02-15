@@ -307,7 +307,8 @@ class Helper {
       AdvancedException::reportBoth($e->getMessage());
     }
 
-    return trim($sStr);
+    # Fix quotes to avoid problems with inputs
+    return trim(str_replace('"', "&quot;", $sStr));
   }
 
 	/**

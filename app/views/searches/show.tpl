@@ -36,8 +36,8 @@
     {/foreach}
   </div>
 {else}
-  <p>
+  <div class='alert alert-warning'>
     {$lang.search.info.fail|replace:'%b':$string}
-  </p>
+  </div>
 {/if}
 <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>

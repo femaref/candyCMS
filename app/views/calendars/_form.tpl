@@ -9,7 +9,11 @@
     <div class='controls'>
       <input class='span4 required' type='text' name='title' id='input-title'
              value="{$title}" required autofocus />
-      {if isset($error.title)}<span class='help-inline'>{$error.title}</span>{/if}
+      <span class='help-inline'>
+        {if isset($error.title)}
+          {$error.title}
+        {/if}
+      </span>
     </div>
   </div>
   <div class='control-group{if isset($error.content)} error{/if}'>
@@ -54,10 +58,15 @@
     <input class='btn btn-primary' type='submit' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
     {if $smarty.get.action == 'update'}
       <input class='btn btn-danger' type='button' value='{$lang.global.destroy.destroy}'
-             onclick="candy.system.confirmDestroy('/calendar/{$_request_id_}/destroy')" />
+             onclick="confirmDestroy('/calendar/{$_request_id_}/destroy')" />
       <input class='btn' type='reset' value='{$lang.global.reset}' />
       <input type='hidden' value="{$_request_id_}" name='id' />
     {/if}
     <input type='hidden' value='formdata' name='{$smarty.get.action}_calendar' />
   </div>
 </form>
+<script type='text/javascript'>
+  $('#input-title').bind('keyup', function() {
+    countCharLength(this, 128);
+  });
+</script>
