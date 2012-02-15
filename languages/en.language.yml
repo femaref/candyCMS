@@ -111,6 +111,7 @@ global:
   subject: Subject
   surname: Surname
   system: System
+  tag: Tag
   tags:
     info: Search for more entries with this tag.
     tags: Tags

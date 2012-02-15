@@ -111,6 +111,7 @@ global:
   subject: Betreff
   surname: Nachname
   system: System
+  tag: Tag
   tags:
     info: Suche nach ähnlichen Einträgen
     tags: Tags

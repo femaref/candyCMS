@@ -92,10 +92,7 @@ class Blog extends Main {
    *
    */
   private function _setBlogDescription() {
-    if (isset($this->_aRequest['search']) && isset($this->_aRequest['page']) && empty($this->_aRequest['page']))
-      return $this->_aRequest['search']; # Term that is being searched
-
-    elseif (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']))
+    if (isset($this->_aRequest['page']) && $this->_aRequest['page'] > 1)
       return $this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
     elseif (!empty($this->_iId)) {
@@ -108,7 +105,8 @@ class Blog extends Main {
       else
         return $this->_setBlogTitle();
 
-    } else
+    }
+    else
       return $this->oI18n->get('global.blog');
   }
 
@@ -133,14 +131,12 @@ class Blog extends Main {
    */
   private function _setBlogTitle() {
     # Create blog entry.
-    if (isset($this->_aRequest['action']) &&
-            'create' == $this->_aRequest['action'] &&
-            'blog' == $this->_aRequest['section'])
+    if (isset($this->_aRequest['action']) && 'create' == $this->_aRequest['action'])
       return $this->_aRequest['title'];
 
     # Show overview by blog tag
-    elseif (isset($this->_aRequest['action']) && 'search' == $this->_aRequest['action'])
-      return $this->_aRequest['id'];
+    elseif (isset($this->_aRequest['search']) && $this->_aRequest['search'] !== 'page')
+      return $this->oI18n->get('global.tag') . ': ' . $this->_aRequest['search'];
 
     # default blog entry
     elseif (!empty($this->_iId))

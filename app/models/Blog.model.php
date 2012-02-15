@@ -43,10 +43,6 @@ class Blog extends Main {
         $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }
 
-      # Some extra security
-      $sWhere = str_replace('"', '', $sWhere);
-      $sWhere = str_replace("'", '', $sWhere);
-
       # Count entries for pagination
       try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
