@@ -27,6 +27,7 @@
                     <a href="/{$table.section}/{$data.id}/highlight/{$string}">
                       {$data.title}
                     </a>,
+                    &nbsp;
                     {$data.datetime}
                   </li>
                 {/if}
