@@ -124,8 +124,8 @@ define('ALLOW_VERSION_CHECK', true);
 
 # Set the standard language (file must be placed in "languages")
 # NOTE: lower cases required!
-# DEFAULT: 'de'
-define('DEFAULT_LANGUAGE', 'de');
+# DEFAULT: 'en'
+define('DEFAULT_LANGUAGE', 'en');
 
 # ------------------------------------------------------------------------------
 

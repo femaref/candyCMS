@@ -11,7 +11,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
-require_once 'app/controllers/Blog.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 
 # Show the last six headlines of your blog entries.
 final class Headlines extends \CandyCMS\Controller\Blog {

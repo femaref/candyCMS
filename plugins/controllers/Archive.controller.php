@@ -13,7 +13,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
-require_once 'app/controllers/Blog.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 
 final class Archive extends \CandyCMS\Controller\Blog {
 

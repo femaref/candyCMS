@@ -16,9 +16,6 @@ use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
 use Smarty;
 
-require_once 'app/helpers/Image.helper.php';
-require_once 'app/helpers/Upload.helper.php';
-
 class Media extends Main {
 
   /**
@@ -68,6 +65,8 @@ class Media extends Main {
    *
    */
   private function _proceedUpload() {
+    require PATH_STANDARD . '/app/helpers/Upload.helper.php';
+
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
     $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
 

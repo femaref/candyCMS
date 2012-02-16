@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-require_once 'app/helpers/Pagination.helper.php';
+require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
 class Blog extends Main {
 

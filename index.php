@@ -13,85 +13,34 @@ namespace CandyCMS;
 
 use CandyCMS\Controller\Index as Index;
 
-/**
- * Override separator due to W3C compatibility.
- */
+# Override separator due to W3C compatibility.
 ini_set('arg_separator.output', '&amp;');
 
-/**
- * Compress output.
- */
+# Compress output.
 ini_set('zlib.output_compression', "On");
 ini_set('zlib.output_compression_level', 9);
 
-/**
- * Set standard timezone for PHP5.
- */
+# Set standard timezone for PHP5.
 date_default_timezone_set('Europe/Berlin');
 
-/**
- * Current version we are working with.
- */
+# Current version we are working with.
 define('VERSION', '20111114');
 
-/*
- * Load main classes.
- */
-try {
-  if (!file_exists('app/models/Main.model.php') ||
-      !file_exists('app/controllers/Main.controller.php') ||
-      !file_exists('app/controllers/Session.controller.php') ||
-      !file_exists('app/controllers/Index.controller.php') ||
-      !file_exists('app/controllers/Log.controller.php') ||
-      !file_exists('app/helpers/AdvancedException.helper.php') ||
-      !file_exists('app/helpers/Section.helper.php') ||
-      !file_exists('app/helpers/Helper.helper.php') ||
-      !file_exists('app/helpers/I18n.helper.php') ||
-      !file_exists('lib/smarty/Smarty.class.php')
-  )
-    throw new \Exception('Could not load required classes.');
-  else {
-    require 'app/models/Main.model.php';
-    require 'app/controllers/Main.controller.php';
-    require 'app/controllers/Session.controller.php';
-    require 'app/controllers/Index.controller.php';
-    require 'app/controllers/Log.controller.php';
-    require 'app/helpers/AdvancedException.helper.php';
-    require 'app/helpers/Section.helper.php';
-    require 'app/helpers/Helper.helper.php';
-    require 'app/helpers/I18n.helper.php';
-    require 'lib/smarty/Smarty.class.php';
-  }
-}
-catch (\CandyCMS\Helper\AdvancedException $e) {
-  die($e->getMessage());
-}
-
-# If this is an ajax request, no layout is loaded
-$iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
-define('AJAX_REQUEST', (int) $iAjax);
-
-# Clear cache if needed
-define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
-
+# Start user session.
 @session_start();
+
+# Define a standard path
+define('PATH_STANDARD', dirname(__FILE__));
+
+# Initialize software by its controllers.
+require PATH_STANDARD . '/app/controllers/Index.controller.php';
 
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
-$oIndex->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
-$oIndex->getPlugins(ALLOW_PLUGINS);
-$oIndex->getLanguage();
-$oIndex->getCronjob();
-$oIndex->getFacebookExtension();
-$oIndex->setUser();
-$oIndex->setTemplate();
-
-# Define current url
+# Redirect to landing page if we got no valid request.
 if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_MODE == 'production' && $_SERVER['REQUEST_URI'] == '/')
   \CandyCMS\Helper\Helper::redirectTo(WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-
-define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 
 # Override the system variables in development mode.
 if (WEBSITE_MODE == 'development') {

@@ -17,8 +17,7 @@ use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
-require_once 'app/helpers/Pagination.helper.php';
-require_once 'app/helpers/Upload.helper.php';
+require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
 class Gallery extends Main {
   /**

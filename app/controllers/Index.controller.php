@@ -20,6 +20,17 @@ use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
+require PATH_STANDARD . '/app/models/Main.model.php';
+require PATH_STANDARD . '/app/models/Session.model.php';
+require PATH_STANDARD . '/app/controllers/Main.controller.php';
+require PATH_STANDARD . '/app/controllers/Session.controller.php';
+require PATH_STANDARD . '/app/controllers/Log.controller.php';
+require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
+require PATH_STANDARD . '/app/helpers/Section.helper.php';
+require PATH_STANDARD . '/app/helpers/Helper.helper.php';
+require PATH_STANDARD . '/app/helpers/I18n.helper.php';
+require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
+
 class Index {
 
   /**
@@ -77,6 +88,24 @@ class Index {
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
+
+    # If this is an ajax request, no layout will be loaded.
+    define('AJAX_REQUEST', isset($_REQUEST['ajax']) ? true : false);
+
+    # Clear cache if needed.
+    define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
+
+    # Load actions.
+    $this->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
+    $this->getPlugins(ALLOW_PLUGINS);
+    $this->getLanguage();
+    $this->getCronjob();
+    $this->getFacebookExtension();
+    $this->setUser();
+    $this->setTemplate();
+
+    # Define current url
+    define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 	}
 
   /**
@@ -92,19 +121,19 @@ class Index {
   /**
    * Load all config files.
    *
+   * @static
    * @access public
    * @param array $aConfigs array of config files
-   * @param string $sPath Path prefix. Needed when not in root path
    * @return boolean true if no errors occurred.
    *
    */
-  public function getConfigFiles($aConfigs, $sPath = '') {
+  public static function getConfigFiles($aConfigs) {
     foreach ($aConfigs as $sConfig) {
       try {
-        if (!file_exists($sPath . 'config/' . ucfirst($sConfig) . '.inc.php'))
+        if (!file_exists(dirname(__FILE__) . '/../../config/' . ucfirst($sConfig) . '.inc.php'))
           throw new AdvancedException('Missing ' . ucfirst($sConfig) . ' config file.');
         else
-          require_once $sPath . 'config/' . ucfirst($sConfig) . '.inc.php';
+          require_once dirname(__FILE__) . '/../../config/' . ucfirst($sConfig) . '.inc.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());
@@ -117,6 +146,7 @@ class Index {
   /**
    * Load all defined plugins.
    *
+   * @static
    * @access public
    * @param string $sAllowedPlugins comma separated plugin names
    * @param string $sPath Path prefix. Needed when not in root path
@@ -124,15 +154,19 @@ class Index {
    * @return boolean true if no errors occurred.
    *
    */
-  public function getPlugins($sAllowedPlugins, $sPath = '') {
+  public static function getPlugins($sAllowedPlugins) {
     $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
 
     foreach ($aPlugins as $sPluginName) {
-      if (file_exists($sPath . 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
-        require_once $sPath . 'plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
-
-      else
-        die('Missing plugin: ' . $sPluginName);
+      try {
+        if (!file_exists(dirname(__FILE__) . '/../../plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+          throw new AdvancedException('Missing plugin: ' . ucfirst($sConfig));
+        else
+          require_once dirname(__FILE__) . '/../../plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+      }
+      catch (AdvancedException $e) {
+        die($e->getMessage());
+      }
     }
 
     return true;
@@ -146,6 +180,9 @@ class Index {
    *
    */
   public function getLanguage($sPath = '') {
+    if (!defined('DEFAULT_LANGUAGE'))
+      define('DEFAULT_LANGUAGE', 'en');
+
     # We got a language request? Let's change it!
     if (isset($this->_aRequest['language']) && file_exists('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
       $this->_sLanguage = (string) $this->_aRequest['language'];
@@ -160,7 +197,7 @@ class Index {
       $this->_sLanguage = isset($aRequest['default_language']) &&
               file_exists($sPath . 'languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
-              substr(DEFAULT_LANGUAGE, 0, 2);
+              strtolower(substr(DEFAULT_LANGUAGE, 0, 2));
     }
 
     # Set iso language codes
@@ -169,7 +206,6 @@ class Index {
         $sLocale = 'de_DE';
         break;
 
-      default:
       case 'en':
         $sLocale = 'en_US';
         break;
@@ -316,11 +352,12 @@ class Index {
   /**
    * Return default user data.
    *
+   * @static
    * @access protected
    * @return array default user data
    *
    */
-  protected function _resetUser() {
+  protected static function _resetUser() {
     return array(
         'email' => '',
         'facebook_id' => '',
@@ -328,7 +365,8 @@ class Index {
         'name' => '',
         'surname' => '',
         'password' => '',
-        'role' => 0
+        'role' => 0,
+        'full_name' => ''
     );
   }
 
@@ -349,7 +387,7 @@ class Index {
    */
 	public function setUser() {
     # Set standard variables
-    $this->_aSession['userdata'] = $this->_resetUser();
+    $this->_aSession['userdata'] = self::_resetUser();
 
     # Override them with user data
     # Get user data by token

@@ -16,9 +16,6 @@ use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Gallery as Model;
 use Smarty;
 
-require_once 'app/models/Gallery.model.php';
-require_once 'app/helpers/Upload.helper.php';
-
 class Gallery extends Main {
 
   /**
@@ -29,6 +26,7 @@ class Gallery extends Main {
    *
    */
   public function __init() {
+    require PATH_STANDARD . '/app/models/Gallery.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
@@ -42,7 +40,8 @@ class Gallery extends Main {
   public function show() {
     # Album images
     if (!empty($this->_iId) && !isset($this->_aRequest['album_id'])) {
-      # collect data array
+
+      # Collect data array
       $sAlbumName = Model::getAlbumName($this->_iId);
       $sAlbumDescription = Model::getAlbumContent($this->_iId);
 
@@ -296,6 +295,8 @@ class Gallery extends Main {
    *
    */
   private function _createFile() {
+    require PATH_STANDARD . '/app/helpers/Upload.helper.php';
+
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
 
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {

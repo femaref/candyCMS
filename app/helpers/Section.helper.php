@@ -15,8 +15,6 @@ use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Controller\Main as Main;
 use Smarty;
 
-require_once 'addons/controllers/Addon.controller.php';
-
 class Section extends Main {
 
 	/**
@@ -32,21 +30,26 @@ class Section extends Main {
    *
    * @access public
    * @return object created object
+   * @todo path
    *
    */
   private function _getController() {
+    require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
+
     # Are addons for existing controllers avaiable? If yes, use them
-    if (file_exists('addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php') && ALLOW_ADDONS === true) {
-      require_once 'addons/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php';
-      $oAddon = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+    if (file_exists(PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
+                    '.controller.php') && ALLOW_ADDONS === true) {
+      require_once PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
+              '.controller.php';
 
       $sClassName = '\CandyCMS\Addon\Controller\Addon_' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
     }
 
     # There are no addons, so we use the default controllers
-    elseif (file_exists('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
-      require_once('app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+    elseif (file_exists(PATH_STANDARD . '/app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
+      require_once PATH_STANDARD . '/app/controllers/' .
+              (string) ucfirst($this->_aRequest['section']) . '.controller.php';
 
       $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['section']);
       $this->_oObject = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);

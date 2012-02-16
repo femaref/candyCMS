@@ -14,8 +14,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Content as Model;
 
-require_once 'app/models/Content.model.php';
-
 class Content extends Main {
 
   /**
@@ -26,6 +24,7 @@ class Content extends Main {
    *
    */
   public function __init() {
+    require PATH_STANDARD . '/app/models/Content.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 

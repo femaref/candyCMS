@@ -11,11 +11,10 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Controller\Main as Main;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Session as Model;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
-
-require_once 'app/models/Session.model.php';
 
 class Session extends Main {
 

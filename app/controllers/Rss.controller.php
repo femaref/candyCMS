@@ -16,9 +16,6 @@ use CandyCMS\Model\Blog as Model_Blog;
 use CandyCMS\Model\Gallery as Model_Gallery;
 use Smarty;
 
-require_once 'app/models/Blog.model.php';
-require_once 'app/models/Gallery.model.php';
-
 class Rss extends Main {
 
   /**
@@ -36,6 +33,9 @@ class Rss extends Main {
 
     # Empty page and search to avoid news filters.
     unset($this->_aRequest['page'], $this->_aRequest['search']);
+
+    require PATH_STANDARD . '/app/models/Blog.model.php';
+    require PATH_STANDARD . '/app/models/Gallery.model.php';
   }
 
   /**

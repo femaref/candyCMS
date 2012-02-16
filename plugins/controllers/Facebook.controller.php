@@ -19,7 +19,7 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use Facebook;
 use Smarty;
 
-require_once 'lib/facebook/facebook.php';
+require_once PATH_STANDARD . '/lib/facebook/facebook.php';
 
 final class FacebookCMS extends Facebook {
 
@@ -27,7 +27,7 @@ final class FacebookCMS extends Facebook {
    *
    * @param type $sKey
    * @return type
-   * 
+   *
    */
   public function getUserData($sKey = '') {
     if ($this->getAccessToken()) {

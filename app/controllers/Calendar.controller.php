@@ -7,15 +7,13 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
- * 
+ *
  */
 
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Calendar as Model;
-
-require_once 'app/models/Calendar.model.php';
 
 class Calendar extends Main {
 
@@ -27,6 +25,7 @@ class Calendar extends Main {
 	 *
 	 */
 	public function __init() {
+    require PATH_STANDARD . '/app/models/Calendar.model.php';
 		$this->_oModel = new Model($this->_aRequest, $this->_aSession);
 	}
 

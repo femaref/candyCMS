@@ -16,8 +16,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-require_once 'app/controllers/Session.controller.php';
-
 class User extends Main {
 
   /**

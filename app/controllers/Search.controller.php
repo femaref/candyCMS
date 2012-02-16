@@ -16,8 +16,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Search as Model;
 use Smarty;
 
-require_once 'app/models/Search.model.php';
-
 class Search extends Main {
 
 	/**
@@ -44,6 +42,7 @@ class Search extends Main {
 	 *
 	 */
   public function __init() {
+    require PATH_STANDARD . '/app/models/Search.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 

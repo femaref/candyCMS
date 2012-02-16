@@ -16,10 +16,6 @@ use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\User as Model;
 use MCAPI;
 
-require_once 'app/models/User.model.php';
-require_once 'app/helpers/Upload.helper.php';
-require_once 'lib/mailchimp/MCAPI.class.php';
-
 class User extends Main {
 
 	/**
@@ -30,6 +26,7 @@ class User extends Main {
 	 *
 	 */
 	public function __init() {
+    require_once PATH_STANDARD . '/app/models/User.model.php';
 		$this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
 
@@ -82,6 +79,8 @@ class User extends Main {
 	 *
 	 */
 	public function updateAvatar() {
+    require PATH_STANDARD . '/app/helpers/Upload.helper.php';
+
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $this->_setError('terms', $this->oI18n->get('error.file.upload'));
 

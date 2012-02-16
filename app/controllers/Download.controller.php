@@ -16,8 +16,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Download as Model;
 
-require_once 'app/models/Download.model.php';
-
 class Download extends Main {
 
   /**
@@ -28,6 +26,7 @@ class Download extends Main {
    *
    */
   public function __init() {
+    require PATH_STANDARD . '/app/models/Download.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 

@@ -17,7 +17,7 @@ use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Model\User as User;
 use PDO;
 
-require_once 'app/models/User.model.php';
+require_once PATH_STANDARD . '/app/models/User.model.php';
 
 class Session extends Main {
 

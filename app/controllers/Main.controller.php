@@ -152,7 +152,8 @@ abstract class Main {
 		$this->_aCookie		= & $aCookie;
 
     # Load config files if not already done (important for unit testing)
-    require_once 'config/Candy.inc.php';
+    if (!defined('WEBSITE_URL'))
+      require PATH_STANDARD . '/config/Candy.inc.php';
 
     if (!isset($this->_aRequest['section'])) {
       Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
@@ -430,10 +431,8 @@ abstract class Main {
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
-		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
+		else
 			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
-		}
 	}
 
 	/**
@@ -451,10 +450,8 @@ abstract class Main {
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
 
-		else {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
+		else
 			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
-		}
 	}
 
 	/**
@@ -468,7 +465,6 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRole = 3) {
-		Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
 		return ($this->_aSession['userdata']['role'] < $iUserRole) ?
             Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
             $this->_destroy();
@@ -482,7 +478,9 @@ abstract class Main {
 	 * @return boolean status of subscription
 	 */
 	protected function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
-		require_once 'config/Mailchimp.inc.php';
+		require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
+    require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
+
 		$aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
 
 		$oMCAPI = new MCAPI(MAILCHIMP_API_KEY);

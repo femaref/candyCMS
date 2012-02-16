@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Log as Model;
 
-require_once 'app/models/Log.model.php';
+require_once PATH_STANDARD . '/app/models/Log.model.php';
 
 class Log extends Main {
 

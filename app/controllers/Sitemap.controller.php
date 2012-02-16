@@ -18,11 +18,6 @@ use CandyCMS\Model\Download as Model_Download;
 use CandyCMS\Model\Gallery as Model_Gallery;
 use Smarty;
 
-require_once 'app/models/Blog.model.php';
-require_once 'app/models/Content.model.php';
-require_once 'app/models/Download.model.php';
-require_once 'app/models/Gallery.model.php';
-
 class Sitemap extends Main {
 
 	/**
@@ -71,9 +66,15 @@ class Sitemap extends Main {
 	 * Generate the sitemap. Query tables and build structure.
 	 *
 	 * @access private
+   * @todo create __init() method
 	 *
 	 */
 	private function _getSitemap() {
+    require PATH_STANDARD . '/app/models/Blog.model.php';
+    require PATH_STANDARD . '/app/models/Content.model.php';
+    require PATH_STANDARD . '/app/models/Download.model.php';
+    require PATH_STANDARD . '/app/models/Gallery.model.php';
+
 		$oBlog = new Model_Blog($this->_aRequest, $this->_aSession);
 		$aBlog = $oBlog->getData('', false, 1000);
 

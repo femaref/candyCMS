@@ -15,7 +15,7 @@ namespace CandyCMS\Helper;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use sfYaml;
 
-require_once 'lib/symfony_yaml/sfYaml.php';
+require PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
 
 class I18n {
 
@@ -37,6 +37,8 @@ class I18n {
 			try {
 				if (!isset($_SESSION['lang']) || empty($_SESSION['lang']))
 					$_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
+        else
+          throw new AdvancedException;
 			}
 			catch (AdvancedException $e) {
 				die('Unable to load language file.');

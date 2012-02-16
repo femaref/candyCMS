@@ -13,8 +13,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 
-require_once 'lib/mailchimp/MCAPI.class.php';
-
 class Newsletter extends Main {
 
   /**

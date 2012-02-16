@@ -2,7 +2,7 @@
 
 namespace CandyCMS\Controller;
 
-require_once dirname(__FILE__) . '/../../../app/controllers/Index.controller.php';
+require_once PATH_STANDARD . '/../../../app/controllers/Index.controller.php';
 
 /**
  * Test class for Index.
@@ -56,14 +56,14 @@ class IndexTest extends \PHPUnit_Framework_TestCase {
   public function testGetConfigFiles() {
     $this->assertFileExists(dirname(__FILE__) . '/../../../config/Candy.inc.php');
     $this->assertFileExists(dirname(__FILE__) . '/../../../config/Plugins.inc.php');
-    #$this->assertTrue($this->object->getConfigFiles(array('Candy', 'Plugins')));
+    $this->assertTrue($this->object->getConfigFiles(array('Candy', 'Plugins'), dirname(__FILE__) . '/../../../'));
   }
 
   /**
    * @covers CandyCMS\Controller\Index::getPlugins
    */
   public function testGetPlugins() {
-    #$this->assertTrue($this->object->getPlugins('Bbcode,FormatTimestamp'));
+    $this->assertTrue($this->object->getPlugins('Bbcode,FormatTimestamp', dirname(__FILE__) . '/../../../'));
   }
 
   /**
@@ -71,41 +71,30 @@ class IndexTest extends \PHPUnit_Framework_TestCase {
    * @todo Implement testGetLanguage().
    */
   public function testGetLanguage() {
-  }
-
-  /**
-   * @covers CandyCMS\Controller\Index::getCronjob
-   * @todo Implement testGetCronjob().
-   */
-  public function testGetCronjob() {
-  }
-
-  /**
-   * @covers CandyCMS\Controller\Index::getFacebookExtension
-   * @todo Implement testGetFacebookExtension().
-   */
-  public function testGetFacebookExtension() {
+    $this->assertStringMatchesFormat('en_US', $this->object->getLanguage(dirname(__FILE__) . '/../../../'));
   }
 
   /**
    * @covers CandyCMS\Controller\Index::setTemplate
    * @todo Implement testSetTemplate().
    */
-  public function testSetTemplate() {
-  }
+  #public function testSetTemplate() {
+  #}
 
   /**
    * @covers CandyCMS\Controller\Index::setUser
    * @todo Implement testSetUser().
    */
   public function testSetUser() {
+    $this->assertEquals(8, sizeof($this->object->setUser()));
   }
 
   /**
    * @covers CandyCMS\Controller\Index::show
    * @todo Implement testShow().
    */
-  public function testShow() {
-  }
+  #public function testShow() {
+  #  $this->assertContains('HTML', $this->object->show());
+  #}
 }
 ?>

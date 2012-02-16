@@ -15,8 +15,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Blog as Model;
 
-require_once 'app/models/Blog.model.php';
-
 class Blog extends Main {
 
   /**
@@ -33,6 +31,8 @@ class Blog extends Main {
    *
    */
   public function __init() {
+    # Require_once because blog elements can be used on different parts of the website.
+    require_once PATH_STANDARD . '/app/models/Blog.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 

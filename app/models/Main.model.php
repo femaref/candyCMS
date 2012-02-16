@@ -116,11 +116,12 @@ abstract class Main {
   /**
    * Connect to database.
    *
+   * @static
    * @access protected
    * @return object PDO
    *
    */
-  protected function _connectToDatabase() {
+  protected static function _connectToDatabase() {
     if (empty(self::$_oDbStatic)) {
       try {
         self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB,
@@ -141,22 +142,24 @@ abstract class Main {
   /**
    * Disconnect from database.
    *
+   * @static
    * @return boolean
    *
    */
-  protected function _disconnectFromDatabase() {
+  protected static function _disconnectFromDatabase() {
     return self::$_oDbStatic = null;
   }
 
   /**
    * Remove slashes from content for update purposes.
    *
+   * @static
    * @access protected
    * @param array $aRow array with data to update
    * @return array $aData data witout slashes
    *
    */
-  protected function _formatForUpdate($aRow) {
+  protected static function _formatForUpdate($aRow) {
     $aData = array();
 
     foreach ($aRow as $sColumn => $sData)
@@ -274,10 +277,11 @@ abstract class Main {
   /**
    * Return last inserted ID.
    *
+   * @static
    * @access public
    * @return integer last inserted ID.
    */
-  public function getLastInsertId() {
+  public static function getLastInsertId() {
     return self::$iLastInsertId;
   }
 

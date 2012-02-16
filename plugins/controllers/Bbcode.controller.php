@@ -23,9 +23,7 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 
-require_once 'app/helpers/I18n.helper.php';
-require_once 'app/helpers/Helper.helper.php';
-require_once 'app/helpers/Image.helper.php';
+require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
 
 final class Bbcode {
 

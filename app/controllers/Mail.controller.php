@@ -16,8 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\User as Model;
 use Smarty;
 
-require_once 'app/models/Blog.model.php';
-require_once 'lib/recaptcha/recaptchalib.php';
+require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
 class Mail extends Main {
 

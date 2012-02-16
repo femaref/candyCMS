@@ -17,8 +17,6 @@ use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
-require_once 'app/helpers/Upload.helper.php';
-
 class Download extends Main {
 
   /**

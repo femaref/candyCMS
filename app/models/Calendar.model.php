@@ -17,8 +17,6 @@ use CandyCMS\Helper\I18n as I18n;
 use DateTime;
 use PDO;
 
-require_once 'app/helpers/Upload.helper.php';
-
 class Calendar extends Main {
 
 	/**

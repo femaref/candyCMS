@@ -15,8 +15,6 @@ namespace CandyCMS\Plugin;
 
 use CandyCMS\Helper\I18n as I18n;
 
-require_once 'app/helpers/I18n.helper.php';
-
 final class FormatTimestamp {
 
   /**
