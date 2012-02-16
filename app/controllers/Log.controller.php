@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Log as Model;
 
 require_once PATH_STANDARD . '/app/models/Log.model.php';
@@ -38,7 +39,7 @@ class Log extends Main {
    */
   public function show() {
     if ($this->_aSession['userdata']['role'] < 4)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
       $this->oSmarty->assign('logs', $this->_oModel->getData());
@@ -81,7 +82,7 @@ class Log extends Main {
    */
   public function destroy() {
     return $this->_aSession['userdata']['role'] < 4 ?
-            Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
+            Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
   }
 
@@ -95,11 +96,11 @@ class Log extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), '/log');
+      return Helper::successMessage(I18n::get('success.destroy'), '/log');
     }
     else {
       unset($this->_iId);
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/log');
+      return Helper::errorMessage(I18n::get('error.sql'), '/log');
     }
   }
 }

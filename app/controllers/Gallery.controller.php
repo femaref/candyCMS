@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Gallery as Model;
 use Smarty;
@@ -54,7 +55,7 @@ class Gallery extends Main {
       $this->oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight($this->oI18n->get('global.gallery') . ': ' . $sAlbumName));
+      $this->_setTitle($this->_removeHighlight(I18n::get('global.gallery') . ': ' . $sAlbumName));
 
       $sTemplateDir = Helper::getTemplateDir('galleries', 'files');
       $this->oSmarty->template_dir = $sTemplateDir;
@@ -76,7 +77,7 @@ class Gallery extends Main {
         $this->_aData['height'] = $aImageInfo[1];
 
         $this->_setDescription($this->_aData['content']);
-        $this->_setTitle($this->oI18n->get('global.image.image') . ': ' . $this->_aData['file']);
+        $this->_setTitle(I18n::get('global.image.image') . ': ' . $this->_aData['file']);
 
         $this->oSmarty->assign('i', $this->_aData);
 
@@ -89,8 +90,8 @@ class Gallery extends Main {
     }
     # Album overview
     else {
-      $this->_setDescription($this->oI18n->get('global.gallery'));
-      $this->_setTitle($this->oI18n->get('global.gallery'));
+      $this->_setDescription(I18n::get('global.gallery'));
+      $this->_setTitle(I18n::get('global.gallery'));
 
       $this->oSmarty->assign('albums', $this->_oModel->getData());
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
@@ -171,11 +172,11 @@ class Gallery extends Main {
         mkdir($sPathThumbO, 0755);
 
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.create'), '/gallery/' . $iId);
+      return Helper::successMessage(I18n::get('success.create'), '/gallery/' . $iId);
     }
 
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
+      return Helper::errorMessage(I18n::get('error.sql'), '/gallery');
   }
 
   /**
@@ -197,11 +198,11 @@ class Gallery extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.update'), $sRedirect);
+      return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
 
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
   }
 
   /**
@@ -216,12 +217,12 @@ class Gallery extends Main {
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery');
+      return Helper::successMessage(I18n::get('success.destroy'), '/gallery');
     }
 
     else {
       unset($this->_iId);
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
+      return Helper::errorMessage(I18n::get('error.sql'), '/gallery');
     }
   }
 
@@ -270,17 +271,17 @@ class Gallery extends Main {
    */
   public function createFile() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'));
+      return Helper::errorMessage(I18n::get('error.missing.permission'));
 
     else {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
           # Log uploaded image. Request ID = album id
           Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-          return Helper::successMessage($this->oI18n->get('success.file.upload'), '/gallery/' . $this->_iId);
+          return Helper::successMessage(I18n::get('success.file.upload'), '/gallery/' . $this->_iId);
         }
         else
-          return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/gallery/' . $this->_iId . '/createfile');
+          return Helper::errorMessage(I18n::get('error.file.upload'), '/gallery/' . $this->_iId . '/createfile');
       }
       else
         return $this->_showFormFileTemplate();
@@ -315,7 +316,7 @@ class Gallery extends Main {
       return true;
     }
     else {
-      $this->_aError['file'] = $this->oI18n->get('error.form.missing.file');
+      $this->_aError['file'] = I18n::get('error.form.missing.file');
       return $this->_showFormFileTemplate();
     }
   }
@@ -331,16 +332,16 @@ class Gallery extends Main {
    */
   public function updateFile() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery');
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/gallery');
 
     else {
       if (isset($this->_aRequest['updatefile_gallery'])) {
         if ($this->_oModel->updateFile($this->_iId) === true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
-          return Helper::successMessage($this->oI18n->get('success.update'), '/gallery');
+          return Helper::successMessage(I18n::get('success.update'), '/gallery');
         }
         else
-          return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery');
+          return Helper::errorMessage(I18n::get('error.sql'), '/gallery');
       }
       else
         return $this->_showFormFileTemplate();
@@ -356,16 +357,16 @@ class Gallery extends Main {
    */
   public function destroyFile() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
         Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         unset($this->_iId);
-        return Helper::successMessage($this->oI18n->get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);
+        return Helper::successMessage(I18n::get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.sql'), '/gallery/' . (int) $this->_aRequest['album_id']);
+        return Helper::errorMessage(I18n::get('error.sql'), '/gallery/' . (int) $this->_aRequest['album_id']);
     }
   }
 }

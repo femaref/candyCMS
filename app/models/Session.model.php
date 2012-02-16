@@ -55,7 +55,7 @@ class Session extends Main {
       $bReturn = $oQuery->execute();
 
       if ($bReturn == false)
-        $this->destroy();
+        self::destroy();
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }

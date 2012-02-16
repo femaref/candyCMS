@@ -16,6 +16,10 @@ use CandyCMS\Controller\Mail as Mail;
 
 class AdvancedException extends \Exception {
 
+  /**
+   * @todo document
+   * @param type $sMessage
+   */
   public static function reportBoth($sMessage) {
     AdvancedException::sendAdminMail($sMessage);
     AdvancedException::writeLog($sMessage);
@@ -24,6 +28,7 @@ class AdvancedException extends \Exception {
   /**
    * Send an email to an administrator when an error occurs.
    *
+   * @static
    * @access public
    * @return boolean mail status
    *
@@ -41,6 +46,7 @@ class AdvancedException extends \Exception {
   /**
    * Write error message to own log.
    *
+   * @static
    * @access public
    *
    */

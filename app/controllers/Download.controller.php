@@ -13,6 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Download as Model;
 
@@ -129,13 +130,13 @@ class Download extends Main {
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
           Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'), $this->_aSession['userdata']['id']);
-          return Helper::successMessage($this->oI18n->get('success.create'), '/download');
+          return Helper::successMessage(I18n::get('success.create'), '/download');
         }
         else
-          return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
+          return Helper::errorMessage(I18n::get('error.sql'), '/download');
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.missing.file'), '/download');
+        return Helper::errorMessage(I18n::get('error.missing.file'), '/download');
     }
   }
 
@@ -156,10 +157,10 @@ class Download extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.update'), '/download');
+      return Helper::successMessage(I18n::get('success.update'), '/download');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
+      return Helper::errorMessage(I18n::get('error.sql'), '/download');
   }
 
   /**
@@ -174,9 +175,9 @@ class Download extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), '/download');
+      return Helper::successMessage(I18n::get('success.destroy'), '/download');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/download');
+      return Helper::errorMessage(I18n::get('error.sql'), '/download');
   }
 }

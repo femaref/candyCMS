@@ -24,6 +24,7 @@ class I18n {
    *
    * @access public
    * @param string $sLanguage language to load
+   * @todo Exception
    *
    */
   public function __construct($sLanguage) {
@@ -49,12 +50,13 @@ class I18n {
   /**
 	 * Return the language array.
 	 *
+   * @static
 	 * @access public
 	 * @param string $sPart main part of the array to return string from
 	 * @return array $_SESSION['lang'] session array with language data
 	 *
 	 */
-	public function getArray($sPart = '') {
+	public static function getArray($sPart = '') {
 		return empty($sPart) ? $_SESSION['lang'] : $_SESSION['lang'][$sPart];
 	}
 
@@ -72,12 +74,14 @@ class I18n {
   /**
    * Get a specific string.
    *
+   * @static
    * @access public
    * @param string $sLanguagePart language part we want to load. Separated by dots.
    * @return string $mTemp
+   * @todo Exception
    *
    */
-  public function get($sLanguagePart) {
+  public static function get($sLanguagePart) {
     $aLang = preg_split("/[\s]*[.][\s]*/", $sLanguagePart);
 
 		if(isset($_SESSION['lang'])) {

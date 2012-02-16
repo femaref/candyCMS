@@ -13,6 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Calendar as Model;
 
 class Calendar extends Main {
@@ -95,10 +96,10 @@ class Calendar extends Main {
 
 		elseif ($this->_oModel->create() === true) {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('calendars'), $this->_aSession['userdata']['id']);
-			return Helper::successMessage($this->oI18n->get('success.create'), '/calendar');
+			return Helper::successMessage(I18n::get('success.create'), '/calendar');
 		}
 		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
 	}
 
 	/**
@@ -119,10 +120,10 @@ class Calendar extends Main {
 
 		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-			return Helper::successMessage($this->oI18n->get('success.update'), '/calendar');
+			return Helper::successMessage(I18n::get('success.update'), '/calendar');
 		}
 		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
 	}
 
 	/**
@@ -137,9 +138,9 @@ class Calendar extends Main {
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
 			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-			return Helper::successMessage($this->oI18n->get('success.destroy'), '/calendar');
+			return Helper::successMessage(I18n::get('success.destroy'), '/calendar');
 		}
 		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/calendar');
+			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
 	}
 }

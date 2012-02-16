@@ -13,6 +13,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Controller\Main as Main;
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Session as Model;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
@@ -60,10 +61,10 @@ class Session extends Main {
 			return $this->showCreateSessionTemplate();
 
 		elseif ($this->_oModel->create() === true)
-			return Helper::successMessage($this->oI18n->get('success.session.create'), '/');
+			return Helper::successMessage(I18n::get('success.session.create'), '/');
 
 		else
-			return Helper::errorMessage($this->oI18n->get('error.session.create'), '/session/create');
+			return Helper::errorMessage(I18n::get('error.session.create'), '/session/create');
 	}
 
 	/**
@@ -111,21 +112,21 @@ class Session extends Main {
 			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
 			if ($aData == true) {
-				$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.password.mail.body'));
+				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));
 				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
 				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																									$this->oI18n->get('session.password.mail.subject'),
+																									I18n::get('session.password.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);
 
 				return $bStatus === true ?
-								Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
-								Helper::errorMessage($this->oI18n->get('error.mail.create')) . $this->showCreateSessionTemplate();
+								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
+								Helper::errorMessage(I18n::get('error.mail.create')) . $this->showCreateSessionTemplate();
 			}
 			else
 				# Replace error message with message, that email could not be found
-				return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+				return Helper::errorMessage(I18n::get('error.sql'), '/');
 		}
 	}
 
@@ -157,21 +158,21 @@ class Session extends Main {
 			if (is_array($aData)) {
 				$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
 
-				$sContent = str_replace('%u', $aData['name'], $this->oI18n->get('session.verification.mail.body'));
+				$sContent = str_replace('%u', $aData['name'], I18n::get('session.verification.mail.body'));
 				$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
 				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
-																									$this->oI18n->get('session.verification.mail.subject'),
+																									I18n::get('session.verification.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);
 
 				return $bStatus === true ?
-								Helper::successMessage($this->oI18n->get('success.mail.create'), '/session/create') :
+								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
 								$this->showCreateSessionTemplate();
 			}
 			else
 				# Replace error message with message, that email could not be found
-				return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+				return Helper::errorMessage(I18n::get('error.sql'), '/');
 		}
 	}
 
@@ -185,12 +186,12 @@ class Session extends Main {
 	 */
   private function _showCreateResendActionsTemplate() {
 		if ($this->_aRequest['action'] == 'password') {
-			$this->_setTitle($this->oI18n->get('session.password.title'));
-			$this->_setDescription($this->oI18n->get('session.password.info'));
+			$this->_setTitle(I18n::get('session.password.title'));
+			$this->_setDescription(I18n::get('session.password.info'));
 		}
 		else {
-			$this->_setTitle($this->oI18n->get('session.verification.title'));
-			$this->_setDescription($this->oI18n->get('session.verification.info'));
+			$this->_setTitle(I18n::get('session.verification.title'));
+			$this->_setDescription(I18n::get('session.verification.info'));
 		}
 
 		if (!empty($this->_aError))
@@ -214,15 +215,15 @@ class Session extends Main {
 			$this->_aSession['facebook']->getLogoutUrl();
 			session_destroy();
 			unset($_SESSION);
-			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
 		}
 		elseif ($this->_oModel->destroy() === true) {
 			session_destroy();
 			unset($_SESSION);
-			return Helper::successMessage($this->oI18n->get('success.session.destroy'), '/');
+			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
 		}
 
 		else
-			return Helper::errorMessage($this->oI18n->get('error.sql'), '/');
+			return Helper::errorMessage(I18n::get('error.sql'), '/');
 	}
 }

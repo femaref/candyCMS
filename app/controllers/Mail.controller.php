@@ -11,8 +11,8 @@
 
 namespace CandyCMS\Controller;
 
-use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\User as Model;
 use Smarty;
 
@@ -130,8 +130,8 @@ class Mail extends Main {
       $this->oSmarty->assign('error', $this->_aError);
 
     # Create page title and description
-    $this->_setDescription($this->oI18n->get('global.contact'));
-    $this->_setTitle($this->oI18n->get('global.contact'));
+    $this->_setDescription(I18n::get('global.contact'));
+    $this->_setTitle(I18n::get('global.contact'));
 
     $sTemplateDir = Helper::getTemplateDir('mails', 'create');
     $this->oSmarty->template_dir = $sTemplateDir;
@@ -157,12 +157,12 @@ class Mail extends Main {
         return $this->_create(true);
 
       else {
-        $this->_aError['captcha'] = $this->oI18n->get('error.captcha.incorrect');
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
         return $this->_showCreateMailTemplate(true);
       }
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/mail/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/mail/' . $this->_iId);
   }
 
 	/**
@@ -194,11 +194,11 @@ class Mail extends Main {
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
-              $this->oI18n->get('global.system');
+              I18n::get('global.system');
 
       $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
               Helper::formatInput($this->_aRequest['subject']) :
-              str_replace('%u', $sSendersName, $this->oI18n->get('mail.subject.by'));
+              str_replace('%u', $sSendersName, I18n::get('mail.subject.by'));
 
       $sMessage = Helper::formatInput($this->_aRequest['content']);
 
@@ -210,12 +210,12 @@ class Mail extends Main {
 				return $this->_showSuccessMessage();
       }
 			else
-				Helper::errorMessage($this->oI18n->get('error.mail.create'), '/');
+				Helper::errorMessage(I18n::get('error.mail.create'), '/');
     }
   }
 
   private function _showSuccessMessage() {
-    $this->_setTitle($this->oI18n->get('mail.info.redirect'));
+    $this->_setTitle(I18n::get('mail.info.redirect'));
 
     $sTemplateDir = Helper::getTemplateDir('mails', 'success');
     $this->oSmarty->template_dir = $sTemplateDir;

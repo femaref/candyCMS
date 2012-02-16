@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 
 class Newsletter extends Main {
 
@@ -30,10 +31,10 @@ class Newsletter extends Main {
 
     else {
       if ($this->_subscribeToNewsletter($this->_aRequest, true) == true)
-        return Helper::successMessage($this->oI18n->get('success.newsletter.create'), '/');
+        return Helper::successMessage(I18n::get('success.newsletter.create'), '/');
 
       else
-        return Helper::errorMessage($this->oI18n->get('error.standard'), '/newsletter');
+        return Helper::errorMessage(I18n::get('error.standard'), '/newsletter');
     }
   }
 

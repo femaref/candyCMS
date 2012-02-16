@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
 use Smarty;
@@ -29,14 +30,14 @@ class Media extends Main {
    */
   public function create() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
       if (isset($this->_aRequest['create_file'])) {
         if ($this->_proceedUpload() == true)
-          return Helper::successMessage($this->oI18n->get('success.file.upload'), '/media');
+          return Helper::successMessage(I18n::get('success.file.upload'), '/media');
         else
-          return Helper::errorMessage($this->oI18n->get('error.file.upload'), '/media');
+          return Helper::errorMessage(I18n::get('error.file.upload'), '/media');
       }
       else
         return $this->_showUploadFileTemplate();
@@ -85,7 +86,7 @@ class Media extends Main {
    */
   public function show() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
       $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/media');
@@ -145,15 +146,15 @@ class Media extends Main {
    */
   public function destroy() {
     if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
       if (file_exists(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']))) {
         unlink(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']));
-        return Helper::successMessage($this->oI18n->get('success.file.destroy'), '/media');
+        return Helper::successMessage(I18n::get('success.file.destroy'), '/media');
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.missing.file'), '/media');
+        return Helper::errorMessage(I18n::get('error.missing.file'), '/media');
     }
   }
 }

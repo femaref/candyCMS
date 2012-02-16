@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Blog as Model_Blog;
 use CandyCMS\Model\Gallery as Model_Gallery;
 use Smarty;
@@ -51,7 +52,7 @@ class Rss extends Main {
       $this->_oModel  = new Model_Blog($this->_aRequest, $this->_aSession);
       $this->_aData   = $this->_oModel->getData();
 
-      $this->_setTitle($this->oI18n->get('global.blog') . ' - ' . WEBSITE_NAME);
+      $this->_setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
 
       return $this->_showDefault();
     }
@@ -60,7 +61,7 @@ class Rss extends Main {
       $this->_oModel  = new Model_Gallery($this->_aRequest, $this->_aSession);
       $this->_aData   = $this->_oModel->getData($this->_iId, false, true);
 
-      $this->_setTitle($this->oI18n->get('global.gallery') . ': ' .
+      $this->_setTitle(I18n::get('global.gallery') . ': ' .
                       $this->_aData[$this->_iId]['title']);
 
       return $this->_showMedia();
@@ -88,7 +89,7 @@ class Rss extends Main {
 			$this->oSmarty->assign('_title_', $this->getTitle());
 		}
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'), WEBSITE_LANGUAGE);
+		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'), UNIQUE_ID);
 	}
 
   /**
@@ -120,6 +121,6 @@ class Rss extends Main {
       $this->oSmarty->assign('data', $aData);
     }
 
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'), WEBSITE_LANGUAGE . '|' . $this->_iId);
+    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'), UNIQUE_ID);
   }
 }

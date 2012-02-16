@@ -90,6 +90,7 @@ class User extends Main {
 	/**
 	 * Get the verification data from an users email address.
 	 *
+   * @static
 	 * @access public
 	 * @param string $sEmail email address to search user from.
 	 * @return array user data.
@@ -123,6 +124,7 @@ class User extends Main {
   /**
    * Sets a users password.
    *
+   * @static
    * @access public
    * @param string $sEmail
    * @param string $sPassword
@@ -323,37 +325,6 @@ class User extends Main {
       }
 
       AdvancedException::reportBoth('0085 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-	}
-
-  /**
-   * Get the encrypted password of a user. This is required for user update actions.
-   *
-   * @access public
-   * @param integer $iId ID to get password from
-   * @return string encrypted password
-   *
-   */
-  private function _getPassword($iId) {
-		try {
-			$oQuery = $this->_oDb->prepare("SELECT
-																				password
-																			FROM
-																				" . SQL_PREFIX . "users
-																			WHERE
-																				id = :id
-																			LIMIT
-																				1");
-
-			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-			$oQuery->execute();
-
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-			return $aResult['password'];
-		}
-    catch (\PDOException $p) {
-      AdvancedException::reportBoth('0086 - ' . $p->getMessage());
       exit('SQL error.');
     }
 	}
@@ -655,9 +626,6 @@ class User extends Main {
 
       $oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
       $bReturn = $oQuery->execute();
-
-      if ($bReturn == false)
-        $this->destroy();
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }

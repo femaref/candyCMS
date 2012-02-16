@@ -178,10 +178,11 @@ abstract class Main {
   /**
    * Dynamically load classes.
    *
+   * @static
    * @param string $sClassName name of class to load
    *
    */
-  public function __autoload($sClassName) {
+  public static function __autoload($sClassName) {
     require_once 'app/controllers/' .$sClassName. '.controller.php';
   }
 
@@ -269,12 +270,12 @@ abstract class Main {
 		$this->oSmarty->assign('_date_', date('Y-m-d'));
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES == true ? '.min' : '');
 		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
-		$this->oSmarty->assign('_json_language_', $this->oI18n->getJson());
+		$this->oSmarty->assign('_json_language_', I18n::getJson());
 		$this->oSmarty->assign('_pubdate_', date('r'));
 		$this->oSmarty->assign('_request_id_', $this->_iId);
 
 		# Set up language
-		$this->oSmarty->assign('lang', $this->oI18n->getArray());
+		$this->oSmarty->assign('lang', I18n::getArray());
 
 		return $this->oSmarty;
 	}
@@ -300,7 +301,7 @@ abstract class Main {
 	public function getDescription() {
 		# Show default description if this is our landing page or we got no descrption.
 		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || empty($this->_sDescription))
-			return $this->oI18n->get('website.description');
+			return I18n::get('website.description');
 
 		# We got no description. Fall back to default description.
 		else
@@ -326,7 +327,7 @@ abstract class Main {
 	 *
 	 */
 	public function getKeywords() {
-		return !empty($this->_sKeywords) ? $this->_sKeywords : $this->oI18n->get('website.keywords');
+		return !empty($this->_sKeywords) ? $this->_sKeywords : I18n::get('website.keywords');
 	}
 
 	/**
@@ -348,7 +349,7 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		return !empty($this->_sTitle) ? $this->_sTitle : $this->oI18n->get('error.404.title');
+		return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
 	}
 
 	/**
@@ -388,12 +389,13 @@ abstract class Main {
 	/**
 	 * Quick hack for displaying title without html tags.
 	 *
+   * @static
 	 * @access protected
 	 * @param string $sTitle title to modifiy
 	 * @return string modified title
 	 *
 	 */
-	protected function _removeHighlight($sTitle) {
+	protected static function _removeHighlight($sTitle) {
 		$sTitle = str_replace('<mark>', '', $sTitle);
 		$sTitle = str_replace('</mark>', '', $sTitle);
 		return $sTitle;
@@ -409,11 +411,11 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError['error'][$sField] = empty($sMessage) ? $this->oI18n->get('error.form.missing.' . strtoupper($sField)) : $sMessage;
+			$this->_aError['error'][$sField] = empty($sMessage) ? I18n::get('error.form.missing.' . strtoupper($sField)) : $sMessage;
 
 		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ) &&
 						'blog' !== $this->_aRequest['section'])
-			$this->_aError['error']['email'] = $this->oI18n->get('error.form.missing.email');
+			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
 	}
 
 	/**
@@ -429,7 +431,7 @@ abstract class Main {
 	 */
 	public function create($sInputName, $iUserRole = 3) {
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
-			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else
 			return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
@@ -448,7 +450,7 @@ abstract class Main {
 	 */
 	public function update($sInputName, $iUserRole = 3) {
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
-			return Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/');
+			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else
 			return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
@@ -466,37 +468,39 @@ abstract class Main {
 	 */
 	public function destroy($iUserRole = 3) {
 		return ($this->_aSession['userdata']['role'] < $iUserRole) ?
-            Helper::errorMessage($this->oI18n->get('error.missing.permission'), '/') :
+            Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
 	}
 
 	/**
-	 * Subscribe to newsletter list.
-	 *
-	 * @access protected
-	 * @param array $aData user data
-	 * @return boolean status of subscription
-	 */
-	protected function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
-		require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
+   * Subscribe to newsletter list.
+   *
+   * @static
+   * @access protected
+   * @param array $aData user data
+   * @return boolean status of subscription
+   */
+  protected static function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
+    require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
-		$aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
+    $aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
 
-		$oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-		return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', $bDoubleOptIn);
-	}
+    $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
+    return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', $bDoubleOptIn);
+  }
 
   /**
    * Remove from newsletter list
    *
+   * @static
    * @access private
    * @param string $sEmail
    * @return boolean status of action
    *
    */
-  protected function _unsubscribeFromNewsletter($sEmail) {
-      require_once 'config/Mailchimp.inc.php';
+  protected static function _unsubscribeFromNewsletter($sEmail) {
+    require_once 'config/Mailchimp.inc.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);

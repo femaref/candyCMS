@@ -23,19 +23,26 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 
-require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
-
 final class Bbcode {
+
+  /**
+   * @todo
+   */
+  public function __constructor() {
+    require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
+  }
 
   /**
    * Search and replace BB code.
    *
+   * @static
    * @access public
    * @param string $sStr HTML to replace
    * @return string $sStr replaced HTML
    *
    */
-  private final function _setFormatedText($sStr) {
+  private final static function _setFormatedText($sStr) {
+
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);
@@ -159,7 +166,14 @@ final class Bbcode {
     return $sStr;
   }
 
+  /**
+   * @static
+   * @param type $sStr
+   * @return type
+   * @todo
+   *
+   */
   public final function getFormatedText($sStr) {
-    return $this->_setFormatedText($sStr);
+    return self::_setFormatedText($sStr);
   }
 }

@@ -7,6 +7,8 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ * @todo I18n
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -36,12 +38,14 @@ class Index {
   /**
 	 * @var array
 	 * @access protected
+   *
 	 */
 	protected $_aRequest;
 
 	/**
 	 * @var array
 	 * @access protected
+   *
 	 */
 	protected $_aSession;
 
@@ -54,6 +58,7 @@ class Index {
 	/**
 	 * @var array
 	 * @access protected
+   *
 	 */
 	protected $_aCookie;
 
@@ -62,6 +67,7 @@ class Index {
 	 *
 	 * @var string
 	 * @access private
+   *
 	 */
 	private $_sTemplate;
 
@@ -70,6 +76,7 @@ class Index {
 	 *
 	 * @var string
 	 * @access private
+   *
 	 */
 	private $_sLanguage;
 
@@ -92,12 +99,12 @@ class Index {
     # If this is an ajax request, no layout will be loaded.
     define('AJAX_REQUEST', isset($_REQUEST['ajax']) ? true : false);
 
-    # Clear cache if needed.
+    # Clear cache if wanted.
     define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
 
     # Load actions.
-    $this->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
-    $this->getPlugins(ALLOW_PLUGINS);
+    self::getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
+    self::getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
     $this->getFacebookExtension();
@@ -115,7 +122,7 @@ class Index {
    *
    */
   public function __destruct() {
-    unset($this->_aRequest, $this->_aSession);
+    unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
   }
 
   /**
@@ -130,10 +137,10 @@ class Index {
   public static function getConfigFiles($aConfigs) {
     foreach ($aConfigs as $sConfig) {
       try {
-        if (!file_exists(dirname(__FILE__) . '/../../config/' . ucfirst($sConfig) . '.inc.php'))
+        if (!file_exists(PATH_STANDARD . '/config/' . ucfirst($sConfig) . '.inc.php'))
           throw new AdvancedException('Missing ' . ucfirst($sConfig) . ' config file.');
         else
-          require_once dirname(__FILE__) . '/../../config/' . ucfirst($sConfig) . '.inc.php';
+          require PATH_STANDARD . '/config/' . ucfirst($sConfig) . '.inc.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());
@@ -149,7 +156,6 @@ class Index {
    * @static
    * @access public
    * @param string $sAllowedPlugins comma separated plugin names
-   * @param string $sPath Path prefix. Needed when not in root path
    * @see config/Candy.inc.php
    * @return boolean true if no errors occurred.
    *
@@ -159,10 +165,10 @@ class Index {
 
     foreach ($aPlugins as $sPluginName) {
       try {
-        if (!file_exists(dirname(__FILE__) . '/../../plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+        if (!file_exists(PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
           throw new AdvancedException('Missing plugin: ' . ucfirst($sConfig));
         else
-          require_once dirname(__FILE__) . '/../../plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+          require PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());
@@ -183,14 +189,14 @@ class Index {
     if (!defined('DEFAULT_LANGUAGE'))
       define('DEFAULT_LANGUAGE', 'en');
 
-    # We got a language request? Let's change it!
+    # We got a language request? Let's switch the language!
     if (isset($this->_aRequest['language']) && file_exists('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
       $this->_sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
     }
 
-    # There is no request, but there might be a cookie instead
+    # There is no request, but there might be a cookie instead.
     else {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
@@ -281,6 +287,7 @@ class Index {
    *
    */
   protected function _getFlashMessage() {
+    $aFlashMessage = '';
     $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) &&
             !empty($this->_aSession['flash_message']['type']) ?
             $this->_aSession['flash_message']['type'] :
@@ -343,7 +350,7 @@ class Index {
     }
 
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, $this->oI18n->get('global.update.avaiable')) :
+            str_replace('%v', $sVersionContent, I18n::get('global.update.avaiable')) :
             '';
 
     return str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
@@ -520,8 +527,7 @@ class Index {
 
       $sTemplateDir = Helper::getTemplateDir('layouts', 'application');
       $oSection->oSmarty->template_dir = $sTemplateDir;
-      $sCachedHTML = $oSection->oSmarty->fetch(
-              Helper::getTemplateType($sTemplateDir, 'application'), UNIQUE_ID, UNIQUE_ID);
+      $sCachedHTML = $oSection->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'application'));
 		}
 
 		# Build absolute URLs
@@ -601,10 +607,10 @@ class Index {
    * @return string HTML content
    *
    */
-  private function _showPlugins(&$sCachedHTML) {
+  private function _showPlugins($sCachedHTML) {
     # Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
-    $this->_aSession['userdata'] = $this->_resetUser();
+    $this->_aSession['userdata'] = self::_resetUser();
 
     if (preg_match('/<!-- plugin:adsense -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Adsense')) {
       $oAdsense = new \CandyCMS\Plugin\Adsense();

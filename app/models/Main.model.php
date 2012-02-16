@@ -179,6 +179,8 @@ abstract class Main {
    *
    */
   protected function _formatForOutput($aRow, $sSection, $bNl2br = false) {
+    $aData = '';
+
     foreach ($aRow as $sColumn => $mData)
       $aData[$sColumn] = is_int($mData) ? (int) $mData : Helper::formatOutput($mData);
 

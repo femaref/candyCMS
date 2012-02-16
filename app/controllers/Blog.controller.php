@@ -13,6 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Blog as Model;
 
 class Blog extends Main {
@@ -20,6 +21,7 @@ class Blog extends Main {
   /**
    * @var object
    * @access public
+   *
    */
   public $oPagination;
 
@@ -53,7 +55,7 @@ class Blog extends Main {
       $this->_iId = '';
 
     # Collect data
-    $this->_aData = $this->_oModel->getData($this->_iId);
+    $this->_aData = & $this->_oModel->getData($this->_iId);
 
 		# If data is not found, redirect to 404
 		if (empty($this->_aData[1]['id']) && !empty($this->_iId))
@@ -68,7 +70,9 @@ class Blog extends Main {
 				$this->oSmarty->assign('_blog_footer_', $oComments->show());
 
 			# Load blog pages
-			} else
+			}
+
+      else
 				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
 
 			# Create page title and description
@@ -93,7 +97,7 @@ class Blog extends Main {
    */
   private function _setBlogDescription() {
     if (isset($this->_aRequest['page']) && $this->_aRequest['page'] > 1)
-      return $this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . (int) $this->_aRequest['page'];
+      return I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
     elseif (!empty($this->_iId)) {
       if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
@@ -107,7 +111,7 @@ class Blog extends Main {
 
     }
     else
-      return $this->oI18n->get('global.blog');
+      return I18n::get('global.blog');
   }
 
   /**
@@ -136,7 +140,7 @@ class Blog extends Main {
 
     # Show overview by blog tag
     elseif (isset($this->_aRequest['search']) && $this->_aRequest['search'] !== 'page')
-      return $this->oI18n->get('global.tag') . ': ' . $this->_aRequest['search'];
+      return I18n::get('global.tag') . ': ' . $this->_aRequest['search'];
 
     # default blog entry
     elseif (!empty($this->_iId))
@@ -146,8 +150,8 @@ class Blog extends Main {
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
 			return $iPage > 1 ?
-							$this->oI18n->get('global.blog') . ' - ' . $this->oI18n->get('global.page') . ' ' . $iPage :
-							$this->oI18n->get('global.blog');
+							I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
+							I18n::get('global.blog');
     }
   }
 
@@ -208,10 +212,10 @@ class Blog extends Main {
 
     elseif ($this->_oModel->create() === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'), $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.create'), '/blog');
+      return Helper::successMessage(I18n::get('success.create'), '/blog');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
+      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
   }
 
   /**
@@ -231,10 +235,10 @@ class Blog extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
+      return Helper::successMessage(I18n::get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
+      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
   }
 
   /**
@@ -249,9 +253,9 @@ class Blog extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), '/blog');
+      return Helper::successMessage(I18n::get('success.destroy'), '/blog');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql.query'), '/blog');
+      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
   }
 }

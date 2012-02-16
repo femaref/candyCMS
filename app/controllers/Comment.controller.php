@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Comment as Model;
 
 require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
@@ -167,7 +168,7 @@ class Comment extends Main {
    *
    */
   protected function _create($bShowCaptcha = true) {
-    $this->_setError('parent_id', $this->oI18n->get('error.missing.id'));
+    $this->_setError('parent_id', I18n::get('error.missing.id'));
     $this->_setError('content');
 
     if ($this->_aSession['userdata']['id'] < 1)
@@ -182,10 +183,10 @@ class Comment extends Main {
 
       if ($this->_oModel->create() === true) {
         Log::insert('comment', 'create', $iLastComment, $this->_aSession['userdata']['id']);
-        return Helper::successMessage($this->oI18n->get('success.create'), $sRedirect);
+        return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else
-        return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
+        return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
     }
   }
 
@@ -203,10 +204,10 @@ class Comment extends Main {
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), $sRedirect);
+      return Helper::successMessage(I18n::get('success.destroy'), $sRedirect);
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
   }
 
   /**
@@ -229,11 +230,11 @@ class Comment extends Main {
         return $this->_create(true);
 
       else {
-        $this->_aError['captcha'] = $this->oI18n->get('error.captcha.incorrect');
-        return Helper::errorMessage($this->oI18n->get('error.captcha.incorrect')) . $this->_showFormTemplate(true);
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
+        return Helper::errorMessage(I18n::get('error.captcha.incorrect')) . $this->_showFormTemplate(true);
       }
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.captcha.loading'), '/blog/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/blog/' . $this->_iId);
   }
 }

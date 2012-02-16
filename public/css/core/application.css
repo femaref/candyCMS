@@ -12,7 +12,6 @@
  * @since 2.0
  *
  */
-
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
     display: block;
 }
@@ -2501,6 +2500,12 @@ th:hover, th:hover {
 .summary {
     font-weight: bold;
 }
+.tags a:first-child, h1 small, h1 img, h2 img, #search .btn {
+    margin-left: 5px;
+}
+p.center img, .btn {
+    margin-right: 5px;
+}
 .copybox {
     display: block;
     font-size: 80%;
@@ -2511,7 +2516,7 @@ th:hover, th:hover {
 figure.image {
     margin: 0;
 }
-p img {
+p img, footer img {
     vertical-align: bottom;
 }
 .help-block {

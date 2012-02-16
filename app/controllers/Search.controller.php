@@ -13,6 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Search as Model;
 use Smarty;
 
@@ -61,7 +62,7 @@ class Search extends Main {
       $sString = Helper::formatInput($this->_aRequest['search']);
 
       $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
-      $this->_sHeadline = str_replace('%s', $sString, $this->oI18n->get('search.title.show'));
+      $this->_sHeadline = str_replace('%s', $sString, I18n::get('search.title.show'));
 
       $this->oSmarty->assign('string', $sString);
       $this->oSmarty->assign('tables', $this->_oModel->getData($sString, $aTables));
@@ -86,8 +87,8 @@ class Search extends Main {
 	 *
 	 */
   public function showFormTemplate() {
-    $this->_setDescription($this->oI18n->get('global.search'));
-    $this->_setTitle($this->oI18n->get('global.search'));
+    $this->_setDescription(I18n::get('global.search'));
+    $this->_setTitle(I18n::get('global.search'));
 
     $sTemplateDir = Helper::getTemplateDir('searches', '_form');
     $this->oSmarty->template_dir = $sTemplateDir;

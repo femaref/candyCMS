@@ -12,6 +12,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Content as Model;
 
 class Content extends Main {
@@ -45,18 +46,18 @@ class Content extends Main {
 
 		else {
 			if (empty($this->_iId)) {
-				$this->_setTitle($this->oI18n->get('global.manager.content'));
+				$this->_setTitle(I18n::get('global.manager.content'));
 
 				$sTemplateDir = Helper::getTemplateDir('contents', 'overview');
 				$this->oSmarty->template_dir = $sTemplateDir;
 				return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
 			}
 			else {
-				if (!empty($this->_aData)) {
+				/*if (!empty($this->_aData)) {
 					$this->_setDescription($this->_aData[$this->_iId]['teaser']);
 					$this->_setKeywords($this->_aData[$this->_iId]['keywords']);
 					$this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
-				}
+				}*/
 
 				$sTemplateDir = Helper::getTemplateDir('contents', 'show');
 				$this->oSmarty->template_dir = $sTemplateDir;
@@ -116,10 +117,10 @@ class Content extends Main {
 
     elseif ($this->_oModel->create() === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('contents'), $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.create'), '/content');
+      return Helper::successMessage(I18n::get('success.create'), '/content');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/content');
+      return Helper::errorMessage(I18n::get('error.sql'), '/content');
   }
 
   /**
@@ -140,10 +141,10 @@ class Content extends Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.update'), $sRedirect);
+      return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), $sRedirect);
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
   }
 
   /**
@@ -156,9 +157,9 @@ class Content extends Main {
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage($this->oI18n->get('success.destroy'), '/content');
+      return Helper::successMessage(I18n::get('success.destroy'), '/content');
     }
     else
-      return Helper::errorMessage($this->oI18n->get('error.sql'), '/content');
+      return Helper::errorMessage(I18n::get('error.sql'), '/content');
   }
 }
