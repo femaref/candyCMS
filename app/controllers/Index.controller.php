@@ -339,7 +339,7 @@ class Index {
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
 
-      $sVersionContent &= $sVersionContent > VERSION ? (int) $sVersionContent : '';
+      $sVersionContent = $sVersionContent > VERSION ? (int) $sVersionContent : '';
     }
 
     $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
@@ -387,7 +387,7 @@ class Index {
    */
 	public function setUser() {
     # Set standard variables
-    $this->_aSession['userdata'] = self::_resetUser();
+    $this->_aSession['userdata'] = & self::_resetUser();
 
     # Override them with user data
     # Get user data by token
@@ -424,11 +424,13 @@ class Index {
         $this->_aSession['userdata']['role'] = isset($aFacebookData[0]['uid']) ?
                 2 :
                 (int) $this->_aSession['userdata']['role'];
+
+        unset($aFacebookData);
       }
     }
 
     # Set up full name finally
-    $this->_aSession['userdata']['full_name'] = $this->_aSession['userdata']['name'] . ' ' . $this->_aSession['userdata']['surname'];
+    $this->_aSession['userdata']['full_name'] = & $this->_aSession['userdata']['name'] . ' ' . $this->_aSession['userdata']['surname'];
 
     return $this->_aSession['userdata'];
   }
