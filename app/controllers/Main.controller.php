@@ -241,6 +241,9 @@ abstract class Main {
 		$this->oSmarty = new Smarty();
 		$this->oSmarty->cache_dir = CACHE_DIR;
 		$this->oSmarty->compile_dir = COMPILE_DIR;
+		$this->oSmarty->plugins_dir = PATH_STANDARD . '/lib/smarty/plugins';
+		$this->oSmarty->template_dir = PATH_STANDARD . '/app/views';
+
     $this->oSmarty->merge_compiled_includes = true;
     $this->oSmarty->use_sub_dirs = true;
 
