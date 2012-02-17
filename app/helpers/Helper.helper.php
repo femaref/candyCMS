@@ -238,8 +238,8 @@ class Helper {
 	 * @return string path of the chosen template
 	 *
 	 */
-  public static function getTemplateType($sDir, $sFile, $bPath = true) {
-		$sDir = $bPath == true ? $sDir . '/' : '';
+  public static function getTemplateType($sDir, $sFile, $bPath = false) {
+		$sDir = $bPath == false ? '' : $sDir . '/';
 
 		try {
 			# Mobile device.

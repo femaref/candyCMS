@@ -451,7 +451,7 @@ class Index {
   */
   public function show() {
     # Set a caching / compile ID
-    define('UNIQUE_ID', md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE));
+    define('UNIQUE_ID', substr(md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10));
 
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||

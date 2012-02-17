@@ -22,9 +22,9 @@ final class Headlines extends \CandyCMS\Controller\Blog {
     $this->oSmarty->setCompileCheck(false);
     $this->oSmarty->template_dir = Helper::getPluginTemplateDir('headlines', 'show');
 
-    if (!$this->oSmarty->isCached('show.tpl'))
+    if (!$this->oSmarty->isCached('show.tpl', UNIQUE_ID))
       $this->oSmarty->assign('data', $this->_oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
 
-    return $this->oSmarty->fetch('show.tpl');
+    return $this->oSmarty->fetch('show.tpl', UNIQUE_ID);
   }
 }

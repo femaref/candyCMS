@@ -23,7 +23,7 @@ final class Archive extends \CandyCMS\Controller\Blog {
     $this->oSmarty->setCompileCheck(false);
     $this->oSmarty->template_dir = Helper::getPluginTemplateDir('archive', 'show');
 
-    if (!$this->oSmarty->isCached('show.tpl')) {
+    if (!$this->oSmarty->isCached('show.tpl', UNIQUE_ID)) {
       $aData = $this->_oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
       $aMonth = array();
@@ -41,6 +41,6 @@ final class Archive extends \CandyCMS\Controller\Blog {
       $this->oSmarty->assign('data', $aMonth);
     }
 
-    return $this->oSmarty->fetch('show.tpl');
+    return $this->oSmarty->fetch('show.tpl', UNIQUE_ID);
   }
 }

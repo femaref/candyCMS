@@ -36,14 +36,13 @@ class Download extends Main {
    *
    * @access public
    * @return string HTML content
+	 * @todo fix caching
    *
    */
   public function show() {
-    $this->_aData = $this->_oModel->getData($this->_iId);
-
     # Direct download for this id
     if (!empty($this->_iId)) {
-      $sFile = $this->_aData['file'];
+      $sFile = Model::getFileName();
 
       # Update download count
       Model::updateDownloadCount($this->_iId);
@@ -51,25 +50,31 @@ class Download extends Main {
       # Get mime type
       if(function_exists('finfo_open')) {
         $oInfo = finfo_open(FILEINFO_MIME_TYPE);
-        $sMimeType = finfo_file($oInfo, PATH_UPLOAD . '/download/' . $sFile);
+        $sMimeType = finfo_file($oInfo, Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
         header('Content-type: ' . $sMimeType);
       }
 
       # Send file directly
       header('Content-Disposition: attachment; filename="' . $sFile . '"');
-      readfile(PATH_UPLOAD . '/download/' . $sFile);
+      readfile(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
 
       # No more actions down here
       exit();
     }
     # Overview
     else {
-      $this->oSmarty->assign('download', $this->_aData);
+			$sTemplateDir		= Helper::getTemplateDir('downloads', 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-      $sTemplateDir = Helper::getTemplateDir('downloads', 'show');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
-    }
+			#$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			#$this->oSmarty->setCacheLifetime(60);
+
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+				$this->oSmarty->assign('download', $this->_oModel->getData($this->_iId));
+
+			$this->oSmarty->setTemplateDir($sTemplateDir);
+			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		}
   }
 
   /**

@@ -82,9 +82,11 @@ class Blog extends Main {
 
 			$this->oSmarty->assign('blog', $this->_aData);
 
-			$sTemplateDir = Helper::getTemplateDir('blogs', 'show');
-			$this->oSmarty->template_dir = $sTemplateDir;
-			return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+			$sTemplateDir		= Helper::getTemplateDir('blogs', 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+			$this->oSmarty->setTemplateDir($sTemplateDir);
+			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
   }
 

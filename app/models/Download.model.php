@@ -101,6 +101,38 @@ class Download extends Main {
     return $this->_setData($bUpdate);
   }
 
+	/**
+	 *
+	 * @param type $iId
+	 * @return type
+	 * @todo
+	 *
+	 */
+	public static function getFileName($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                file
+                                              FROM
+                                                " . SQL_PREFIX . "downloads
+                                              WHERE
+                                                id = :id
+                                              LIMIT 1");
+
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->execute();
+
+			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $aResult['file'];
+    }
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0101 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
+	}
+
   /**
    * Create new download.
    *

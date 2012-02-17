@@ -67,8 +67,6 @@ class Search extends Main {
       $this->oSmarty->assign('string', $sString);
       $this->oSmarty->assign('tables', $this->_oModel->getData($sString, $aTables));
 
-			#die(print_r($this->_oModel->getData($sString, $aTables)));
-
       # Create page title and description
       $this->_setDescription($this->_sHeadline);
       $this->_setTitle($this->_sHeadline);
@@ -80,7 +78,7 @@ class Search extends Main {
   }
 
 	/**
-	 * Provide form template
+	 * Provide a search form template.
 	 *
 	 * @access public
 	 * @return string HTML content

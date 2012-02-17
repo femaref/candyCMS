@@ -233,7 +233,7 @@ abstract class Main {
 
     # Only compile our templates on production mode.
     if (WEBSITE_MODE == 'production')
-      $this->oSmarty->compile_check = false;
+			$this->oSmarty->setCompileCheck(false);
 
     # Clear cache on development mode or when we force it via a request.
     if (CLEAR_CACHE == true || WEBSITE_MODE == 'development') {
