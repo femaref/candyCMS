@@ -16,6 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\Download as Model;
+use Smarty;
 
 class Download extends Main {
 
@@ -66,8 +67,8 @@ class Download extends Main {
 			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			#$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			#$this->oSmarty->setCacheLifetime(60);
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCacheLifetime(60);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('download', $this->_oModel->getData($this->_iId));

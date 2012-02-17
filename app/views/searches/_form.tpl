@@ -3,7 +3,7 @@
     <div class='page-header'>
       <h1>{$lang.global.search}</h1>
     </div>
-    <div class='control-group {if isset($error.search)}error{/if}'>
+    <div class='control-group'>
       <label for='input-search' class='control-label'>
         {$lang.search.label.terms} <span title='{$lang.global.required}'>*</span>
       </label>

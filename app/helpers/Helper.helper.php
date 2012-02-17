@@ -197,29 +197,28 @@ class Helper {
 	 *
 	 * @static
 	 * @access public
-	 * @param string $sDir dir of the templates
+	 * @param string $sFolder dir of the templates
 	 * @param string $sFile file name of the template
 	 * @return string path of the chosen template
 	 *
 	 */
-  public static function getTemplateDir($sDir, $sFile) {
+  public static function getTemplateDir($sFolder, $sFile) {
 		try {
 			# Addons
-			if (file_exists('addons/views/' . $sDir . '/' . $sFile . '.tpl') && ALLOW_ADDONS == true)
-				return 'addons/views/' . $sDir;
+			if (file_exists('addons/views/' . $sFolder . '/' . $sFile . '.tpl') && ALLOW_ADDONS == true)
+				return 'addons/views/' . $sFolder;
 
 			# Template use
-			elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
+			elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
 
 			# Standard views
 			else {
-
-				if (!file_exists('app/views/' . $sDir . '/' . $sFile . '.tpl'))
+				if (!file_exists('app/views/' . $sFolder . '/' . $sFile . '.tpl'))
 					throw new AdvancedException('This template does not exist.');
 
 				else
-					return 'app/views/' . $sDir;
+					return 'app/views/' . $sFolder;
 			}
 		}
 		catch (Exception $e) {

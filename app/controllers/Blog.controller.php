@@ -68,10 +68,9 @@ class Blog extends Main {
 				$oComments->__init($this->_aData);
 
 				$this->oSmarty->assign('_blog_footer_', $oComments->show());
-
-			# Load blog pages
 			}
 
+			# Load blog pages
       else
 				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
 

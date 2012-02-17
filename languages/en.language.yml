@@ -360,7 +360,7 @@ user:
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
     gravatar: If checked, we will automatically search <a href="http://gravatar.com" target="_blank">Gravatar.com</a> for an avatar of you.
-    image: You are only allowed images less than 400KB.
+    image: You are only allowed to upload images less than 400KB.
     terms: Terms... TODO
   label:
     account:

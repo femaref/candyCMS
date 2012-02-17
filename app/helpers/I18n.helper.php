@@ -28,23 +28,15 @@ class I18n {
    *
    */
   public function __construct($sLanguage) {
-    if (empty($_SESSION['lang'])) {
-			$sLanguageFile = 'languages/' . $sLanguage . '.language.yml';
+    if (!isset($_SESSION['lang'])) {
+      $sLanguageFile = PATH_STANDARD . '/languages/' . $sLanguage . '.language.yml';
 
       # Remove mistakenly set cookie to avoid exceptions.
-      if(!file_exists($sLanguageFile))
+      if (!file_exists($sLanguageFile))
         $_COOKIE['default_language'] = 'en';
 
-			try {
-				if (!isset($_SESSION['lang']) || empty($_SESSION['lang']))
-					$_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
-        else
-          throw new AdvancedException;
-			}
-			catch (AdvancedException $e) {
-				die('Unable to load language file.');
-			}
-		}
+      $_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
+    }
   }
 
   /**

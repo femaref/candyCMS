@@ -45,11 +45,11 @@ if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_MODE == 'production' && $_SE
 # Override the system variables in development mode.
 if (WEBSITE_MODE == 'development') {
   ini_set('display_errors', 1);
-  error_reporting('E_ALL');
+  error_reporting(E_ALL);
 }
 else {
   ini_set('display_errors', 0);
-  error_reporting('E_NONE');
+  error_reporting(E_NONE);
 }
 
 # If we are on a productive enviroment, make sure that we can't override the system.
@@ -95,6 +95,5 @@ define('MOBILE_DEVICE', $bMobile);
 
 # Print out HTML
 echo $oIndex->show();
-unset($_SESSION)
 
 ?>

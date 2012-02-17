@@ -98,11 +98,11 @@ class Comment extends Main {
       # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir		= Helper::getTemplateDir('comments', 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comment');
     }
   }
 
@@ -129,7 +129,7 @@ class Comment extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateDir		= Helper::getTemplateDir('comments', '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

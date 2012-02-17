@@ -18,11 +18,11 @@ require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 final class Archive extends \CandyCMS\Controller\Blog {
 
   public final function show() {
-    $sTemplateDir		= Helper::getTemplateDir('archives', 'show');
+    $sTemplateDir		= Helper::getPluginTemplateDir('archives', 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-    #$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    #$this->oSmarty->setCacheLifetime(300);
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(300);
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = $this->_oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
