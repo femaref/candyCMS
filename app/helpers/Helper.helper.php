@@ -238,17 +238,15 @@ class Helper {
 	 * @return string path of the chosen template
 	 *
 	 */
-  public static function getTemplateType($sDir, $sFile, $bPath = false) {
-		$sDir = $bPath == false ? '' : $sDir . '/';
-
+  public static function getTemplateType($sDir, $sFile) {
 		try {
 			# Mobile device.
 			if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
-				return $sDir . $sFile . '.mob';
+				return $sFile . '.mob';
 
 			# Standard template
 			else
-				return $sDir . $sFile . '.tpl';
+				return $sFile . '.tpl';
 		}
 		catch (Exception $e) {
 			$e->getMessage();

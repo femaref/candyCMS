@@ -80,9 +80,11 @@ class Session extends Main {
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
-    $sTemplateDir = Helper::getTemplateDir('sessions', 'create');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**
@@ -181,7 +183,6 @@ class Session extends Main {
 	 *
 	 * @access private
 	 * @return string HTML content
-	 * @todo put into two methods
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
@@ -197,9 +198,11 @@ class Session extends Main {
 		if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('sessions', 'resend');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'resend'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'resend');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'resend');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**

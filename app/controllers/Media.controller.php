@@ -52,10 +52,12 @@ class Media extends Main {
    *
    */
   private function _showUploadFileTemplate() {
-    $sTemplateDir = Helper::getTemplateDir('medias', 'create');
-    $this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**
@@ -130,9 +132,11 @@ class Media extends Main {
 
       $this->oSmarty->assign('files', $aFiles);
 
-    $sTemplateDir = Helper::getTemplateDir('medias', 'show');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
 

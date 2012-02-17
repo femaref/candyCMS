@@ -47,9 +47,11 @@ class Log extends Main {
       # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 
-      $sTemplateDir = Helper::getTemplateDir('logs', 'show');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
 

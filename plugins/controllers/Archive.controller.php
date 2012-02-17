@@ -18,12 +18,13 @@ require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 final class Archive extends \CandyCMS\Controller\Blog {
 
   public final function show() {
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(300);
-    $this->oSmarty->setCompileCheck(false);
-    $this->oSmarty->template_dir = Helper::getPluginTemplateDir('archive', 'show');
+    $sTemplateDir		= Helper::getTemplateDir('archives', 'show');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-    if (!$this->oSmarty->isCached('show.tpl', UNIQUE_ID)) {
+    #$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    #$this->oSmarty->setCacheLifetime(300);
+
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = $this->_oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
       $aMonth = array();
@@ -41,6 +42,7 @@ final class Archive extends \CandyCMS\Controller\Blog {
       $this->oSmarty->assign('data', $aMonth);
     }
 
-    return $this->oSmarty->fetch('show.tpl', UNIQUE_ID);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 }

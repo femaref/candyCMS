@@ -119,6 +119,15 @@ abstract class Main {
 	 */
 	private $_sTitle;
 
+  /**
+   * Name of the templates folder.
+   *
+   * @var string
+   * @access protected
+   *
+   */
+  protected $_sTemplateFolder;
+
 	/**
 	 * i18n object.
 	 *
@@ -160,7 +169,11 @@ abstract class Main {
       exit();
     }
 
+    # Set the ID we want to work with.
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
+
+    # Set our default template folder.
+    $this->_sTemplateFolder = isset($this->_aRequest['section']) ? (string)$this->_aRequest['section'] . 's' : '';
 
     $this->_setI18n();
     $this->_setSmarty();

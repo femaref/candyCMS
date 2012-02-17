@@ -133,9 +133,11 @@ class Mail extends Main {
     $this->_setDescription(I18n::get('global.contact'));
     $this->_setTitle(I18n::get('global.contact'));
 
-    $sTemplateDir = Helper::getTemplateDir('mails', 'create');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
 	/**
@@ -214,15 +216,30 @@ class Mail extends Main {
     }
   }
 
+  /**
+   * @todo
+   * @return type
+   */
   private function _showSuccessMessage() {
     $this->_setTitle(I18n::get('mail.info.redirect'));
 
-    $sTemplateDir = Helper::getTemplateDir('mails', 'success');
-    $this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'success');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
+
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'success'));
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
+  /**
+   * @todo
+   * @param type $sTo
+   * @param type $sSubject
+   * @param type $sMessage
+   * @param type $sReplyTo
+   * @param type $sAttachment
+   * @return type
+   */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     require_once 'lib/phpmailer/class.phpmailer.php';
 

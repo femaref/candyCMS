@@ -67,9 +67,11 @@ class User extends Main {
 
 		$this->oSmarty->assign('uid', $iId);
 
-    $sTemplateDir = Helper::getTemplateDir('users', '_form');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**
@@ -163,9 +165,11 @@ class User extends Main {
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 			else {
-        $sTemplateDir = Helper::getTemplateDir('users', 'overview');
-        $this->oSmarty->template_dir = $sTemplateDir;
-        return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'overview'));
+        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
+        $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
+
+        $this->oSmarty->setTemplateDir($sTemplateDir);
+        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
 		}
 		else {
@@ -173,9 +177,11 @@ class User extends Main {
 			$this->_setTitle($this->_aData[1]['full_name']);
 			$this->_setDescription($this->_aData[1]['full_name']);
 
-      $sTemplateDir = Helper::getTemplateDir('users', 'show');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'));
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 	}
 
@@ -276,9 +282,11 @@ class User extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('users', 'create');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'create'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**

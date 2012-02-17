@@ -82,7 +82,7 @@ class Blog extends Main {
 
 			$this->oSmarty->assign('blog', $this->_aData);
 
-			$sTemplateDir		= Helper::getTemplateDir('blogs', 'show');
+			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			$this->oSmarty->setTemplateDir($sTemplateDir);
@@ -190,9 +190,11 @@ class Blog extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('blogs', '_form');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

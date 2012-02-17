@@ -49,8 +49,10 @@ class Newsletter extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('newsletters', 'subscribe');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'subscribe'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'subscribe');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'subscribe');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 }

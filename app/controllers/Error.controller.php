@@ -33,9 +33,11 @@ class Error extends Main {
 			$this->oSmarty->assign('_search_', $oSearch->getSearch(urldecode($this->_aRequest['seo_title'])));
 		}*/
 
-    $sTemplateDir = Helper::getTemplateDir('errors', '404');
-    $this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '404');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '404');
+
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '404'), WEBSITE_LANGUAGE);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 }

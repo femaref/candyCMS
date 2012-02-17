@@ -525,9 +525,11 @@ class Index {
 			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . $oSection->oI18n->get('website.title'));
       $oSection->oSmarty->assign('_update_avaiable_', $this->checkForNewVersion());
 
-      $sTemplateDir = Helper::getTemplateDir('layouts', 'application');
-      $oSection->oSmarty->template_dir = $sTemplateDir;
-      $sCachedHTML = $oSection->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'application'));
+      $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
+
+      $oSection->oSmarty->setTemplateDir($sTemplateDir);
+      $sCachedHTML = $oSection->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 
 		# Build absolute URLs

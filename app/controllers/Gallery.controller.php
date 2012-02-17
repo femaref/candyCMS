@@ -27,6 +27,9 @@ class Gallery extends Main {
    *
    */
   public function __init() {
+    # Override template folder.
+    $this->_sTemplateFolder = 'galleries';
+
     require PATH_STANDARD . '/app/models/Gallery.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
@@ -57,9 +60,11 @@ class Gallery extends Main {
       $this->_setDescription($sAlbumDescription);
       $this->_setTitle($this->_removeHighlight(I18n::get('global.gallery') . ': ' . $sAlbumName));
 
-      $sTemplateDir = Helper::getTemplateDir('galleries', 'files');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'files'));
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     # Specific image
     elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
@@ -81,9 +86,11 @@ class Gallery extends Main {
 
         $this->oSmarty->assign('i', $this->_aData);
 
-        $sTemplateDir = Helper::getTemplateDir('galleries', 'image');
-        $this->oSmarty->template_dir = $sTemplateDir;
-        return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'image'), $this->_iId);
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
       else
         Helper::redirectTo('/error/404');
@@ -96,9 +103,11 @@ class Gallery extends Main {
       $this->oSmarty->assign('albums', $this->_oModel->getData());
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 
-      $sTemplateDir = Helper::getTemplateDir('galleries', 'albums');
-      $this->oSmarty->template_dir = $sTemplateDir;
-      return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'albums'));
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'albums');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
 
@@ -126,9 +135,11 @@ class Gallery extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('galleries', '_form_album');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form_album'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form_album');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**
@@ -254,9 +265,11 @@ class Gallery extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir = Helper::getTemplateDir('galleries', '_form_file');
-    $this->oSmarty->template_dir = $sTemplateDir;
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, '_form_file'));
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form_file');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_file');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

@@ -78,18 +78,20 @@ class Rss extends Main {
    *
    */
   private function _showDefault() {
-		$sTemplateDir = Helper::getTemplateDir('rss', 'default');
-		$this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'default');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
+
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(60);
 
-		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'default', false), UNIQUE_ID)) {
+		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('data', $this->_aData);
 			$this->oSmarty->assign('_section_', $this->_sSection);
 			$this->oSmarty->assign('_title_', $this->getTitle());
 		}
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'default'), UNIQUE_ID);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
   /**
@@ -101,12 +103,13 @@ class Rss extends Main {
    *
    */
   private function _showMedia() {
-    $sTemplateDir = Helper::getTemplateDir('rss', 'media');
-    $this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'media');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
+
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(60);
 
-    if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'media', false), UNIQUE_ID)) {
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = $this->_aData[$this->_iId]['files'];
       rsort($aData);
 
@@ -121,6 +124,7 @@ class Rss extends Main {
       $this->oSmarty->assign('data', $aData);
     }
 
-    return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'media'), UNIQUE_ID);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 }

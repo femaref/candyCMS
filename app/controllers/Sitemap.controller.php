@@ -30,17 +30,19 @@ class Sitemap extends Main {
 	public function showXML() {
 		Header('Content-Type: text/xml');
 
-		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'xml');
-		$this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'xml');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
+
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
-		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'xml', false))) {
+		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
 			$this->_getSitemap();
 		}
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'xml'), WEBSITE_LANGUAGE);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**
@@ -51,15 +53,17 @@ class Sitemap extends Main {
 	 *
 	 */
 	public function show() {
-		$sTemplateDir = Helper::getTemplateDir('sitemaps', 'show');
-		$this->oSmarty->template_dir = $sTemplateDir;
+    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 		$this->oSmarty->setCacheLifetime(180);
 
-		if (!$this->oSmarty->isCached(Helper::getTemplateType($sTemplateDir, 'show', false)))
+		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 			$this->_getSitemap();
 
-		return $this->oSmarty->fetch(Helper::getTemplateType($sTemplateDir, 'show'), WEBSITE_LANGUAGE);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
 
 	/**
