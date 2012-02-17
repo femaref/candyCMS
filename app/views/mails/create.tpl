@@ -3,7 +3,7 @@
     <h1>{$lang.global.contact} {$contact.name} {$contact.surname}</h1>
   </div>
   <form method='post' action='/mail/{$_request_id_}' id='create_mail' class='form-horizontal'>
-    <div class='control-group{if isset($error.email)} error{/if}'>
+    <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -19,7 +19,7 @@
         <input id='input-subject' class='span4' name='subject' value="{$subject}" type='text' />
       </div>
     </div>
-    <div class='control-group{if isset($error.content)} error{/if}'>
+    <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
       <label for='input-content' class='control-label'>
         {$lang.global.content} <span title='{$lang.global.required}'>*</span>
       </label>

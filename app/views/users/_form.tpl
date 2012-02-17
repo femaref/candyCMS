@@ -26,7 +26,7 @@
     {* Account data *}
     <div class='tab-pane active' id='user-personal'>
       <form method='post' action='/user/{$uid}/update' class='form-horizontal'>
-        <div class='control-group{if isset($error.name)} error{/if}'>
+        <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
           <label for='input-name' class='control-label'>
             {$lang.global.name} <span title='{$lang.global.required}'>*</span>
           </label>
@@ -115,7 +115,7 @@
   {if $USER_ID == $uid}
     <div class='tab-pane' id='user-password'>
       <form method='post' action='/user/{$uid}/password' class='form-horizontal'>
-        <div class='control-group{if isset($error.password_old)} error{/if}'>
+        <div class='control-group{if isset($error.password_old)} alert alert-error{/if}'>
           <label for='input-password_old' class='control-label'>
             {$lang.user.label.password.old} <span title='{$lang.global.required}'>*</span>
           </label>
@@ -125,7 +125,7 @@
             {if isset($error.password_old)}<span class='help-inline'>{$error.password_old}</span>{/if}
           </div>
         </div>
-        <div class='control-group{if isset($error.password_new)} error{/if}'>
+        <div class='control-group{if isset($error.password_new)} alert alert-error{/if}'>
           <label for='input-password_new' class='control-label'>
             {$lang.user.label.password.new} <span title='{$lang.global.required}'>*</span>
           </label>
@@ -156,7 +156,7 @@
     <div class='tab-pane' id='user-image'>
       <form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'
             class='form-horizontal'>
-        <div class='control-group{if isset($error.image)} error{/if}'>
+        <div class='control-group{if isset($error.image)} alert alert-error{/if}'>
           <label for='input-image' class='control-label'>
             {$lang.user.label.image.choose}
           </label>
@@ -171,7 +171,7 @@
             </span>
           </div>
         </div>
-        <div class='control-group{if isset($error.terms)} error{/if}'>
+        <div class='control-group{if isset($error.terms)} alert alert-error{/if}'>
           <label for='input-terms' class='control-label'>
             {$lang.global.terms.terms}
           </label>

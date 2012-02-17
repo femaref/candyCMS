@@ -9,7 +9,7 @@
         {/if}
       </h1>
     </div>
-    <div class='control-group{if isset($error.title)} error{/if}'>
+    <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title' class='control-label'>
         {$lang.global.title} <span title="{$lang.global.required}">*</span>
       </label>

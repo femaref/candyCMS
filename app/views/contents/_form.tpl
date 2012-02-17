@@ -10,7 +10,7 @@
   </div>
   <form method='post' action='/content/{$smarty.get.action}' class='form-horizontal'>
     <fieldset>
-      <div class='control-group{if isset($error.title)} error{/if}'>
+      <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
         <label for='input-title' class='control-label'>
           {$lang.global.title} <span title='{$lang.global.required}'>*</span>
         </label>
@@ -49,7 +49,7 @@
           </p>
         </div>
       </div>
-      <div class='control-group{if isset($error.content)} error{/if}'>
+      <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
         <label for='input-content' class='control-group'>
           {$lang.global.content} <span title='{$lang.global.required}'>*</span>
         </label>

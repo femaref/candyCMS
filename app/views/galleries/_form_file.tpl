@@ -11,7 +11,7 @@
       </h1>
     </div>
     {if $smarty.get.action == 'createfile'}
-      <div class='control-group{if isset($error.file)} error{/if}'>
+      <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
           {$lang.gallery.files.label.choose} <span title="{$lang.global.required}">*</span>
         </label>

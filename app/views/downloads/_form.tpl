@@ -5,7 +5,7 @@
   <form action='/download/{$smarty.get.action}' method='post'
         enctype='multipart/form-data' class='form-horizontal'>
     {if $smarty.get.action == 'create'}
-      <div class='control-group{if isset($error.file)} error{/if}'>
+      <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
           {$lang.download.label.choose} <span title="{$lang.global.required}">*</span>
         </label>
@@ -15,7 +15,7 @@
         </div>
       </div>
     {/if}
-    <div class='control-group{if isset($error.title)} error{/if}'>
+    <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title' class='control-label'>
         {$lang.global.title} <span title="{$lang.global.required}">*</span>
       </label>
@@ -29,7 +29,7 @@
         </span>
       </div>
     </div>
-    <div class='control-group{if isset($error.category)} error{/if}'>
+    <div class='control-group{if isset($error.category)} alert alert-error{/if}'>
       <label for='input-category' class='control-label'>
         {$lang.global.category} <span title="{$lang.global.required}">*</span>
       </label>
@@ -41,7 +41,7 @@
         {if isset($error.category)}<span class='help-inline'>{$error.category}</span>{/if}
       </div>
     </div>
-    <div class='control-group{if isset($error.content)} error{/if}'>
+    <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
       <label for='input-content' class='control-label'>
         {$lang.global.description}
       </label>

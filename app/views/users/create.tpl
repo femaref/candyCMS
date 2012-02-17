@@ -17,7 +17,7 @@
         {if isset($error.name)}<span class="help-inline">{$error.name}</span>{/if}
       </div>
     </div>
-    <div class="control-group{if isset($error.surname)} error{/if}">
+    <div class="control-group{if isset($error.surname)} alert alert-error{/if}">
       <label for='input-surname' class='control-label'>
         {$lang.global.surname}</span>
       </label>
@@ -25,7 +25,7 @@
         <input class='span4' name='surname' value="{$surname}" id="input-surname" type='text' />
       </div>
     </div>
-    <div class="control-group{if isset($error.email)} error{/if}">
+    <div class="control-group{if isset($error.email)} alert alert-error{/if}">
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title="{$lang.global.required}">*</span>
       </label>
@@ -34,7 +34,7 @@
         {if isset($error.email)}<span class="help-inline">{$error.email}</span>{/if}
       </div>
     </div>
-    <div class="control-group{if isset($error.password)} error{/if}">
+    <div class="control-group{if isset($error.password)} alert alert-error{/if}">
       <label for='input-password' class='control-label'>
         {$lang.global.password.password} <span title="{$lang.global.required}">*</span>
       </label>
@@ -61,7 +61,7 @@
           <p>{$lang.user.info.terms}</p>
         </div>
       </div>
-      <div class="control-group{if isset($error.disclaimer)} error{/if}">
+      <div class="control-group{if isset($error.disclaimer)} alert alert-error{/if}">
         <label for='input-terms'>{$lang.global.terms.terms} <span title="{$lang.global.required}">*</span></label>
           {* Absolute URL due to fancybox bug *}
           <div class='controls'>

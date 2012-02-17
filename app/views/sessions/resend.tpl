@@ -16,7 +16,7 @@
         {$lang.session.password.info}
       {/if}
     </p>
-    <div class='control-group{if isset($error.email)} error{/if}'>
+    <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>

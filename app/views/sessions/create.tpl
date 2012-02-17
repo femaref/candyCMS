@@ -3,7 +3,7 @@
     <div class='page-header'>
       <h1>{$lang.global.login}</h1>
     </div>
-    <div class='control-group{if isset($error.email)} error{/if}'>
+    <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -13,7 +13,7 @@
         {if isset($error.email)}<span class='help-inline'>{$error.name}</span>{/if}
       </div>
     </div>
-    <div class='control-group{if isset($error.password)} error{/if}'>
+    <div class='control-group{if isset($error.password)} alert alert-error{/if}'>
       <label for='input-password' class='control-label'>
         {$lang.global.password.password} <span title='{$lang.global.required}'>*</span>
       </label>

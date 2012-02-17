@@ -22,7 +22,7 @@
         <input name='surname' id='input-surname' type='text' class='span4' />
       </div>
     </div>
-    <div class='control-group{if isset($error.email)} error{/if}'>
+    <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>

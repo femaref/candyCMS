@@ -11,7 +11,7 @@
         <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
       </p>
     {/if}
-    <div class='control-group{if isset($error.name)} error{/if}'>
+    <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
       <label for='input-name' class='control-label'>
         {$lang.global.name} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -43,7 +43,7 @@
         {/if}
       </div>
     </div>
-    <div class='control-group{if isset($error.content)} error{/if}'>
+    <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
       <label for='js-create_commment_text'>
         {$lang.global.content} <span title='{$lang.global.required}'>*</span>
       </label>

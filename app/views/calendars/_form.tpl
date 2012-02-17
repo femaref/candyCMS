@@ -3,7 +3,7 @@
     <h1>{$lang.global.calendar}</h1>
   </div>
   <form action='/calendar/{$smarty.get.action}' method='post' class='form-horizontal'>
-    <div class='control-group{if isset($error.title)} error{/if}'>
+    <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -17,7 +17,7 @@
         </span>
       </div>
     </div>
-    <div class='control-group{if isset($error.content)} error{/if}'>
+    <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
       <label for='input-content' class='control-label'>
         {$lang.global.description}
       </label>
@@ -25,7 +25,7 @@
         <input class='span4' type='text' name='content' id='input-content' value='{$content}' />
       </div>
     </div>
-    <div class='control-group{if isset($error.start_date)} error{/if}'>
+    <div class='control-group{if isset($error.start_date)} alert alert-error{/if}'>
       <label for='input-start_date' class='control-label'>
         {$lang.global.date.start} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -40,7 +40,7 @@
         </p>
       </div>
     </div>
-    <div class='control-group{if isset($error.end_date)} error{/if}'>
+    <div class='control-group{if isset($error.end_date)} alert alert-error{/if}'>
       <label for='input-end_date' class='control-label'>
         {$lang.global.date.end}
       </label>

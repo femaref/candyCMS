@@ -187,9 +187,9 @@ class Gallery extends Main {
       # We want to get the image dimension of the original image
       # This function is not set to default due its long processing time
       if ($bAdvancedImageInformation == true) {
-        $aPopupSize = getimagesize($sUrlPopup);
-        $aThumbSize = getimagesize($sUrlThumb);
-        $iImageSize = filesize(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']);
+        $aPopupSize = getimagesize(Helper::removeSlash($sUrlPopup));
+        $aThumbSize = getimagesize(Helper::removeSlash($sUrlThumb));
+        $iImageSize = filesize(Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']));
 
         $this->_aThumbs[$iId]['popup_width']  = $aPopupSize[0];
         $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
