@@ -24,7 +24,6 @@ class I18n {
    *
    * @access public
    * @param string $sLanguage language to load
-   * @todo Exception
    *
    */
   public function __construct($sLanguage) {
@@ -55,22 +54,22 @@ class I18n {
 	/**
 	 * Get language as JSON
 	 *
+	 * @static
 	 * @access public
 	 * @return string JSON
 	 *
 	 */
-	public function getJson() {
-		return json_encode($this->getArray('javascript'));
+	public static function getJson() {
+		return json_encode(self::getArray('javascript'));
 	}
 
   /**
-   * Get a specific string.
+   * Get a specific language string.
    *
    * @static
    * @access public
    * @param string $sLanguagePart language part we want to load. Separated by dots.
    * @return string $mTemp
-   * @todo Exception
    *
    */
   public static function get($sLanguagePart) {
@@ -91,7 +90,7 @@ class I18n {
 					return $mTemp;
 			}
 			catch (AdvancedException $e) {
-				die('No such translation: ' . $mTemp);
+				die('No such translation: ' . $e->getMessage());
 			}
 		}
   }

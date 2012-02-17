@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -19,6 +20,19 @@ use CandyCMS\Model\Gallery as Model_Gallery;
 use Smarty;
 
 class Sitemap extends Main {
+
+	/**
+	 * Include models.
+	 *
+	 * @access public
+	 *
+	 */
+	public function __init() {
+    require PATH_STANDARD . '/app/models/Blog.model.php';
+    require PATH_STANDARD . '/app/models/Content.model.php';
+    require PATH_STANDARD . '/app/models/Download.model.php';
+    require PATH_STANDARD . '/app/models/Gallery.model.php';
+	}
 
 	/**
 	 * Show the sitemap as XML. Site is cached for one hour.
@@ -70,15 +84,9 @@ class Sitemap extends Main {
 	 * Generate the sitemap. Query tables and build structure.
 	 *
 	 * @access private
-   * @todo create __init() method
 	 *
 	 */
 	private function _getSitemap() {
-    require PATH_STANDARD . '/app/models/Blog.model.php';
-    require PATH_STANDARD . '/app/models/Content.model.php';
-    require PATH_STANDARD . '/app/models/Download.model.php';
-    require PATH_STANDARD . '/app/models/Gallery.model.php';
-
 		$oBlog = new Model_Blog($this->_aRequest, $this->_aSession);
 		$aBlog = $oBlog->getData('', false, 1000);
 
@@ -87,9 +95,6 @@ class Sitemap extends Main {
 
 		$oGallery = new Model_Gallery($this->_aRequest, $this->_aSession);
 		$aGallery = $oGallery->getData('', false, false, 1000);
-
-		#$oDownload = new Model_Download($this->_aRequest, $this->_aSession);
-		#$aDownload = $oDownload->getData('', false);
 
 		$this->oSmarty->assign('blog', $aBlog);
 		$this->oSmarty->assign('content', $aContent);

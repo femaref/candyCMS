@@ -23,7 +23,6 @@ class Session extends Main {
 	 * Include the session model.
 	 *
 	 * @access public
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function __init() {
@@ -36,7 +35,6 @@ class Session extends Main {
 	 *
 	 * @access public
 	 * @return string HTML content
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function create() {
@@ -210,16 +208,18 @@ class Session extends Main {
 	 *
 	 * @access public
 	 * @return boolean status of model action
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function destroy() {
+		# Facebook logout
 		if ($this->_aSession['userdata']['role'] == 2) {
 			$this->_aSession['facebook']->getLogoutUrl();
 			session_destroy();
 			unset($_SESSION);
 			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
 		}
+
+		# Standard member
 		elseif ($this->_oModel->destroy() === true) {
 			session_destroy();
 			unset($_SESSION);

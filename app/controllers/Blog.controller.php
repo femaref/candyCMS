@@ -29,7 +29,6 @@ class Blog extends Main {
    * Include the blog model.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
@@ -109,7 +108,6 @@ class Blog extends Main {
 
       else
         return $this->_setBlogTitle();
-
     }
     else
       return I18n::get('global.blog');
@@ -166,7 +164,7 @@ class Blog extends Main {
   protected function _showFormTemplate() {
     # Update
     if (!empty($this->_iId)) {
-      $this->_aData = $this->_oModel->getData($this->_iId, true);
+      $this->_aData = & $this->_oModel->getData($this->_iId, true);
       $this->_setTitle($this->_aData['title']);
     }
 
@@ -180,8 +178,7 @@ class Blog extends Main {
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
-    $sTags = $this->_oModel->getTypeaheadData('blogs', 'tags', true);
-    $this->oSmarty->assign('_tags_', $sTags);
+    $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
 
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
@@ -207,19 +204,23 @@ class Blog extends Main {
    *
    */
   protected function _create() {
-    $this->_setError('title');
-    $this->_setError('content');
+		$this->_setError('title');
+		$this->_setError('content');
 
-    if (isset($this->_aError))
-      return $this->_showFormTemplate();
+		if (isset($this->_aError))
+			return $this->_showFormTemplate();
 
-    elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('blogs'), $this->_aSession['userdata']['id']);
-      return Helper::successMessage(I18n::get('success.create'), '/blog');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
-  }
+		elseif ($this->_oModel->create() === true) {
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$this->_oModel->getLastInsertId('blogs'),
+									$this->_aSession['userdata']['id']);
+
+			return Helper::successMessage(I18n::get('success.create'), '/blog');
+		}
+		else
+			return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
+	}
 
   /**
    * Update a blog entry.
@@ -237,7 +238,11 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
     }
     else
@@ -255,8 +260,12 @@ class Blog extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
-      return Helper::successMessage(I18n::get('success.destroy'), '/blog');
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
+			return Helper::successMessage(I18n::get('success.destroy'), '/blog');
     }
     else
       return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');

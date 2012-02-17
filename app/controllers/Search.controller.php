@@ -39,13 +39,13 @@ class Search extends Main {
 	 * Include the search model.
 	 *
 	 * @access public
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function __init() {
     $this->_sTemplateFolder = 'searches';
 
     require PATH_STANDARD . '/app/models/Search.model.php';
+
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
@@ -61,13 +61,13 @@ class Search extends Main {
       return $this->showFormTemplate();
 
     else {
-      $sString = Helper::formatInput($this->_aRequest['search']);
+      $sString = & Helper::formatInput($this->_aRequest['search']);
 
-      $aTables = array('blogs', 'contents', 'downloads', 'gallery_albums');
       $this->_sHeadline = str_replace('%s', $sString, I18n::get('search.title.show'));
 
       $this->oSmarty->assign('string', $sString);
-      $this->oSmarty->assign('tables', $this->_oModel->getData($sString, $aTables));
+      $this->oSmarty->assign('tables', $this->_oModel->getData($sString,
+							array('blogs', 'contents', 'downloads', 'gallery_albums')));
 
       # Create page title and description
       $this->_setDescription($this->_sHeadline);

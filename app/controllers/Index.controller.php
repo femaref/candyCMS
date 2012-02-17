@@ -7,7 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * @todo I18n
  *
  */
 
@@ -16,6 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Section as Section;
 use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
@@ -97,7 +97,7 @@ class Index {
 		$this->_aCookie		= & $aCookie;
 
     # If this is an ajax request, no layout will be loaded.
-    define('AJAX_REQUEST', isset($_REQUEST['ajax']) ? true : false);
+    define('AJAX_REQUEST', isset($_REQUEST['ajax']) && !empty($_REQUEST['ajax']) ? true : false);
 
     # Clear cache if wanted.
     define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
@@ -246,13 +246,11 @@ class Index {
    *
    */
   public function getCronjob() {
-    $iId = isset($this->_aSession['userdata']['id']) ? (int) $this->_aSession['userdata']['id'] : 0;
-
     if (class_exists('\CandyCMS\Plugin\Cronjob')) {
       if (Cronjob::getNextUpdate() == true) {
 					Cronjob::cleanup();
 					Cronjob::optimize();
-					Cronjob::backup($iId);
+					Cronjob::backup($this->_aSession['userdata']['id']);
       }
     }
   }
@@ -269,10 +267,10 @@ class Index {
   public function getFacebookExtension() {
     if (class_exists('\CandyCMS\Plugin\FacebookCMS')) {
       $this->_aSession['facebook'] = new FacebookCMS(array(
-                  'appId' => FACEBOOK_APP_ID,
-                  'secret' => FACEBOOK_SECRET,
-                  'cookie' => true
-              ));
+					'appId' => FACEBOOK_APP_ID,
+					'secret' => FACEBOOK_SECRET,
+					'cookie' => true
+					));
 
       return $this->_aSession['facebook'];
     }
@@ -353,7 +351,7 @@ class Index {
             str_replace('%v', $sVersionContent, I18n::get('global.update.avaiable')) :
             '';
 
-    return str_replace('%l', Helper::createLinkTo('http://candycms.com', true), $sLangUpdateAvaiable);
+    return str_replace('%l', Helper::createLinkTo('http://www.candycms.com', true), $sLangUpdateAvaiable);
   }
 
   /**
@@ -365,17 +363,17 @@ class Index {
    *
    */
   protected static function _resetUser() {
-    return array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-  }
+		return array(
+				'email' => '',
+				'facebook_id' => '',
+				'id' => 0,
+				'name' => '',
+				'surname' => '',
+				'password' => '',
+				'role' => 0,
+				'full_name' => ''
+		);
+	}
 
   /**
    * Define user constants for global use.
@@ -522,7 +520,7 @@ class Index {
       # System required variables
       # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . $oSection->oI18n->get('website.title'));
+			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . I18n::get('website.title'));
       $oSection->oSmarty->assign('_update_avaiable_', $this->checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
@@ -594,8 +592,6 @@ class Index {
     # *********************************************
     if (ALLOW_PLUGINS !== '')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
-
-		$oSection->oI18n->unsetLanguage();
 
     header("Content-Type: text/html; charset=utf-8");
 		return $sCachedHTML;

@@ -22,7 +22,6 @@ class Calendar extends Main {
 	 * Include the calendar model.
 	 *
 	 * @access public
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
 	public function __init() {
@@ -62,10 +61,10 @@ class Calendar extends Main {
 
 		# Create
 		else {
-			$this->_aData['content'] = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-			$this->_aData['end_date'] = isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
+			$this->_aData['content']		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+			$this->_aData['end_date']		= isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
 			$this->_aData['start_date'] = isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
-			$this->_aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+			$this->_aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 		}
 
 		foreach ($this->_aData as $sColumn => $sData)
@@ -99,7 +98,11 @@ class Calendar extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('calendars'), $this->_aSession['userdata']['id']);
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$this->_oModel->getLastInsertId('calendars'),
+									$this->_aSession['userdata']['id']);
+
 			return Helper::successMessage(I18n::get('success.create'), '/calendar');
 		}
 		else
@@ -123,7 +126,11 @@ class Calendar extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
 			return Helper::successMessage(I18n::get('success.update'), '/calendar');
 		}
 		else
@@ -141,7 +148,11 @@ class Calendar extends Main {
 	 */
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
 			return Helper::successMessage(I18n::get('success.destroy'), '/calendar');
 		}
 		else

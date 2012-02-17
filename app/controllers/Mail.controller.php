@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -58,7 +59,6 @@ class Mail extends Main {
    * Redirect to admin if no ID is given.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
@@ -75,14 +75,17 @@ class Mail extends Main {
 	 *
 	 * @access public
 	 * @return string HTML content
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
-			if ($this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED == true && AJAX_REQUEST == false && MOBILE == false)
+			if ($this->_aSession['userdata']['role'] == 0 &&
+							RECAPTCHA_ENABLED === true &&
+							AJAX_REQUEST === false &&
+							MOBILE === false)
 				return $this->_checkCaptcha();
+
 			else
 				return $this->_create(false);
 		}
@@ -103,25 +106,18 @@ class Mail extends Main {
   protected function _showCreateMailTemplate($bShowCaptcha) {
 		$this->__autoload('User');
 
-    # Look for existing E-Mail address
-    if( isset($this->_aRequest['email']))
-      $sEmail = (string)$this->_aRequest['email'];
-
-    else
-      $sEmail = $this->_aSession['userdata']['email'];
-
-    $sSubject = isset($this->_aRequest['subject']) ?
-            (string)$this->_aRequest['subject']:
-            '';
-
-    $sContent = isset($this->_aRequest['content']) ?
-            (string)$this->_aRequest['content']:
-            '';
-
     $this->oSmarty->assign('contact', Model::getUserNamesAndEmail($this->_iId));
-		$this->oSmarty->assign('content', $sContent);
-		$this->oSmarty->assign('email', $sEmail);
-		$this->oSmarty->assign('subject', $sSubject);
+		$this->oSmarty->assign('content', isset($this->_aRequest['content']) ?
+										(string) $this->_aRequest['content'] :
+										'');
+
+		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+										(string) $this->_aRequest['email'] :
+										$this->_aSession['userdata']['email']);
+
+		$this->oSmarty->assign('subject', isset($this->_aRequest['subject']) ?
+										(string) $this->_aRequest['subject'] :
+										'');
 
 		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
 			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
@@ -188,12 +184,6 @@ class Mail extends Main {
       require_once 'app/models/User.model.php';
       $aRow = Model::getUserNamesAndEmail($this->_iId);
 
-			# When mail is set, send to mail. Otherwise send to system mail
-      $sMailTo	= isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL;
-
-			# Reply to mail
-			$sReplyTo = Helper::formatInput($this->_aRequest['email']);
-
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :
               I18n::get('global.system');
@@ -202,10 +192,11 @@ class Mail extends Main {
               Helper::formatInput($this->_aRequest['subject']) :
               str_replace('%u', $sSendersName, I18n::get('mail.subject.by'));
 
-      $sMessage = Helper::formatInput($this->_aRequest['content']);
-
       # Mail to, Subject, Message, Reply to
-      $bStatus = Mail::send($sMailTo, $sSubject, $sMessage, $sReplyTo);
+      $bStatus = Mail::send(isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
+								$sSubject,
+								Helper::formatInput($this->_aRequest['content']),
+								Helper::formatInput($this->_aRequest['email']));
 
       if ($bStatus == true) {
         Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
@@ -217,8 +208,11 @@ class Mail extends Main {
   }
 
   /**
-   * @todo
-   * @return type
+	 * Show success message after mail is sent.
+	 *
+   * @access private
+   * @return string HTML success page.
+	 *
    */
   private function _showSuccessMessage() {
     $this->_setTitle(I18n::get('mail.info.redirect'));
@@ -232,13 +226,15 @@ class Mail extends Main {
   }
 
   /**
-   * @todo
-   * @param type $sTo
-   * @param type $sSubject
-   * @param type $sMessage
-   * @param type $sReplyTo
-   * @param type $sAttachment
+	 * Send a mail.
+	 *
+   * @param string $sTo email address to send mail to
+   * @param string $sSubject mail subject
+   * @param string $sMessage mail message
+   * @param string $sReplyTo email address the user can reply to
+   * @param string $sAttachment path to the attachment
    * @return type
+	 *
    */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     require_once 'lib/phpmailer/class.phpmailer.php';

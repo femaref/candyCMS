@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -24,19 +25,16 @@ class Newsletter extends Main {
    *
    */
   public function createSubscription() {
-    $this->_setError('email');
+		$this->_setError('email');
 
-    if (isset($this->_aError))
-      return $this->_showCreateSubscriptionTemplate();
+		if (isset($this->_aError))
+			return $this->_showCreateSubscriptionTemplate();
 
-    else {
-      if ($this->_subscribeToNewsletter($this->_aRequest, true) == true)
-        return Helper::successMessage(I18n::get('success.newsletter.create'), '/');
-
-      else
-        return Helper::errorMessage(I18n::get('error.standard'), '/newsletter');
-    }
-  }
+		else
+			return $this->_subscribeToNewsletter($this->_aRequest, true) == true ?
+							Helper::successMessage(I18n::get('success.newsletter.create'), '/') :
+							Helper::errorMessage(I18n::get('error.standard'), '/newsletter');
+	}
 
   /**
    * Show a form for email subscription.

@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -21,11 +22,11 @@ class Content extends Main {
    * Include the content model.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
     require PATH_STANDARD . '/app/models/Content.model.php';
+
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
@@ -55,11 +56,11 @@ class Content extends Main {
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
 			else {
-				/*if (!empty($this->_aData)) {
+				if (!empty($this->_aData)) {
 					$this->_setDescription($this->_aData[$this->_iId]['teaser']);
 					$this->_setKeywords($this->_aData[$this->_iId]['keywords']);
 					$this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
-				}*/
+				}
 
         $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
@@ -84,11 +85,11 @@ class Content extends Main {
       $this->_setTitle($this->_aData['title']);
     }
     else {
-      $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-      $this->_aData['teaser']   = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $this->_aData['keywords'] = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $this->_aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+      $this->_aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $this->_aData['teaser']			= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $this->_aData['keywords']		= isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $this->_aData['content']		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $this->_aData['published']	= isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
     }
 
     foreach($this->_aData as $sColumn => $sData)
@@ -122,7 +123,11 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('contents'), $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$this->_oModel->getLastInsertId('contents'),
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.create'), '/content');
     }
     else
@@ -146,7 +151,11 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
     else
@@ -162,7 +171,11 @@ class Content extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'],  (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+							$this->_aRequest['action'],
+							(int) $this->_aRequest['id'],
+							$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.destroy'), '/content');
     }
     else

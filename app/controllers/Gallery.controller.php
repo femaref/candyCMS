@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -23,7 +24,6 @@ class Gallery extends Main {
    * Include the gallery model.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
@@ -46,11 +46,11 @@ class Gallery extends Main {
     if (!empty($this->_iId) && !isset($this->_aRequest['album_id'])) {
 
       # Collect data array
-      $sAlbumName = Model::getAlbumName($this->_iId);
-      $sAlbumDescription = Model::getAlbumContent($this->_iId);
+      $sAlbumName					= Model::getAlbumName($this->_iId);
+      $sAlbumDescription	= Model::getAlbumContent($this->_iId);
 
       # Get data and count afterwards
-      $this->_aData = $this->_oModel->getThumbs($this->_iId);
+      $this->_aData = & $this->_oModel->getThumbs($this->_iId);
 
       $this->oSmarty->assign('files', $this->_aData);
       $this->oSmarty->assign('file_no', count($this->_aData));
@@ -68,10 +68,11 @@ class Gallery extends Main {
     }
     # Specific image
     elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
-      $this->_aData = Model::getFileData($this->_iId);
+      $this->_aData = & Model::getFileData($this->_iId);
 
       # Absolute URL for image information
-      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] . '/popup/' . $this->_aData['file']);
+      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
+							'/popup/' . $this->_aData['file']);
 
       if (file_exists($sUrl)) {
         # Get image information
@@ -86,25 +87,25 @@ class Gallery extends Main {
 
         $this->oSmarty->assign('i', $this->_aData);
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
+				$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
+				$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+				$this->oSmarty->setTemplateDir($sTemplateDir);
+				return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
       else
         Helper::redirectTo('/error/404');
     }
     # Album overview
     else {
-      $this->_setDescription(I18n::get('global.gallery'));
-      $this->_setTitle(I18n::get('global.gallery'));
-
-      $this->oSmarty->assign('albums', $this->_oModel->getData());
-      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
-
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'albums');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
+
+			$this->_setDescription(I18n::get('global.gallery'));
+			$this->_setTitle(I18n::get('global.gallery'));
+
+			$this->oSmarty->assign('albums', $this->_oModel->getData());
+			$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -119,7 +120,7 @@ class Gallery extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $this->_aData = $this->_oModel->getData($this->_iId, true);
+    $this->_aData = & $this->_oModel->getData($this->_iId, true);
 
     if (!empty($this->_iId))
       $this->_setTitle($this->_aData['title']);
@@ -208,7 +209,11 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
 
@@ -227,11 +232,16 @@ class Gallery extends Main {
    */
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$this->_iId,
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.destroy'), '/gallery');
     }
 
     else {
+			# Fix redirect to gallery main page.
       unset($this->_iId);
       return Helper::errorMessage(I18n::get('error.sql'), '/gallery');
     }
@@ -256,9 +266,9 @@ class Gallery extends Main {
     else {
       # See helper/Image.helper.php for details!
       # r = resize, c = cut
-      $sDefault = isset($this->_aRequest['cut']) ? Helper::formatInput($this->_aRequest['cut']) : 'c';
-
-      $this->oSmarty->assign('default', $sDefault);
+      $this->oSmarty->assign('default', isset($this->_aRequest['cut']) ?
+											Helper::formatInput($this->_aRequest['cut']) :
+											'c');
       $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
     }
 
@@ -290,7 +300,11 @@ class Gallery extends Main {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
           # Log uploaded image. Request ID = album id
-          Log::insert($this->_aRequest['section'], 'createfile', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+          Log::insert($this->_aRequest['section'],
+											'createfile',
+											(int) $this->_aRequest['id'],
+											$this->_aSession['userdata']['id']);
+
           return Helper::successMessage(I18n::get('success.file.upload'), '/gallery/' . $this->_iId);
         }
         else
@@ -312,7 +326,6 @@ class Gallery extends Main {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
-
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
         $aFile['name']      = $this->_aFile['file']['name'][$iI];
         $aFile['type']      = $this->_aFile['file']['type'][$iI];
@@ -322,7 +335,7 @@ class Gallery extends Main {
 
         $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $aFile);
 
-        if ($oUploadFile->uploadGalleryFile() == true)
+        if ($oUploadFile->uploadGalleryFile() === true)
           $this->_oModel->createFile($oUploadFile->getId(), $oUploadFile->getExtension());
       }
 
@@ -350,7 +363,11 @@ class Gallery extends Main {
     else {
       if (isset($this->_aRequest['updatefile_gallery'])) {
         if ($this->_oModel->updateFile($this->_iId) === true) {
-          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+          Log::insert($this->_aRequest['section'],
+											$this->_aRequest['action'],
+											(int) $this->_iId,
+											$this->_aSession['userdata']['id']);
+
           return Helper::successMessage(I18n::get('success.update'), '/gallery');
         }
         else

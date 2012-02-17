@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -23,7 +24,6 @@ class Log extends Main {
    * Include the log model.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
@@ -43,8 +43,6 @@ class Log extends Main {
 
     else {
       $this->oSmarty->assign('logs', $this->_oModel->getData());
-
-      # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
@@ -74,21 +72,6 @@ class Log extends Main {
   }
 
   /**
-   * Delete entry if we have enough rights.
-   * We must override the main method due to a diffent required user right.
-   *
-   * @access public
-   * @return boolean status of model action.
-   * @override app/controllers/Main.controller.php
-   *
-   */
-  public function destroy() {
-    return $this->_aSession['userdata']['role'] < 4 ?
-            Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
-            $this->_destroy();
-  }
-
-  /**
    * Activate model, delete data from database and redirect afterwards.
    *
    * @access protected
@@ -97,12 +80,14 @@ class Log extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_iId, $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$this->_iId,
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.destroy'), '/log');
     }
-    else {
-      unset($this->_iId);
+    else
       return Helper::errorMessage(I18n::get('error.sql'), '/log');
-    }
   }
 }

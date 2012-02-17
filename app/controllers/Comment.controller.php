@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -24,6 +25,7 @@ class Comment extends Main {
    *
    * @var array
    * @access private
+	 *
    */
   private $_aParentData;
 
@@ -33,6 +35,7 @@ class Comment extends Main {
    * @var string
    * @access protected
    * @see config/Candy.inc.php
+	 *
    */
   protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
 
@@ -42,6 +45,7 @@ class Comment extends Main {
    * @var string
    * @access protected
    * @see config/Candy.inc.php
+	 *
    */
   protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
 
@@ -50,6 +54,7 @@ class Comment extends Main {
    *
    * @var object
    * @access protected
+	 *
    */
   protected $_oRecaptchaResponse = '';
 
@@ -58,6 +63,7 @@ class Comment extends Main {
    *
    * @var string
    * @access protected
+	 *
    */
   protected $_sRecaptchaError = '';
 
@@ -66,14 +72,14 @@ class Comment extends Main {
    *
    * @access public
    * @param array $aParentData optionally provided blog data
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init($aParentData = '') {
-    require PATH_STANDARD . '/app/models/Comment.model.php';
-    $this->_aParentData =& $aParentData;
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
-  }
+		require PATH_STANDARD . '/app/models/Comment.model.php';
+
+		$this->_aParentData = & $aParentData;
+		$this->_oModel = new Model($this->_aRequest, $this->_aSession);
+	}
 
   /**
    * Show comment entries.
@@ -84,8 +90,8 @@ class Comment extends Main {
    */
   public function show() {
     if ($this->_iId) {
-      $aData = $this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS);
-      $this->oSmarty->assign('comments', $aData);
+      $this->oSmarty->assign('comments',
+							$this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
       # Set author of blog entry
       $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
@@ -93,7 +99,8 @@ class Comment extends Main {
       # For correct information, do some math to display entries.
       # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
       # when other people don't see it
-      $this->oSmarty->assign('comment_number', ($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
+      $this->oSmarty->assign('comment_number',
+							($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
       # Do we need pages?
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
@@ -115,13 +122,9 @@ class Comment extends Main {
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
-    $sName      = isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '';
-    $sEmail     = isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '';
-    $sContent   = isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '';
-
-    $this->oSmarty->assign('content', $sContent);
-    $this->oSmarty->assign('email', $sEmail);
-    $this->oSmarty->assign('name', $sName);
+    $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '');
+    $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
+    $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
 
     if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
       $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
@@ -143,22 +146,19 @@ class Comment extends Main {
    * @access public
    * @param string $sInputName sent input name to verify action
    * @return string HTML content
-   * @override app/controllers/Main.controller.php
    *
    */
   public function create($sInputName) {
-    if (isset($this->_aRequest[$sInputName])) {
-      if ($this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED == true && MOBILE == false)
-        return $this->_checkCaptcha();
+		if (isset($this->_aRequest[$sInputName]))
+			return	$this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED === true && MOBILE === false ?
+							$this->_checkCaptcha() :
+							$this->_create(false);
 
-      else
-        return $this->_create(false);
-    }
-    else {
-      $bShowCaptcha = $this->_aSession['userdata']['role'] == 0 ? true : false;
-      return $this->_showFormTemplate($bShowCaptcha);
-    }
-  }
+		else {
+			$bShowCaptcha = $this->_aSession['userdata']['role'] == 0 ? true : false;
+			return $this->_showFormTemplate($bShowCaptcha);
+		}
+	}
 
   /**
    * Create a blog entry.
@@ -182,11 +182,10 @@ class Comment extends Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      $iLastComment = Helper::getLastEntry('comments') + 1;
-      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
+      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#add';
 
       if ($this->_oModel->create() === true) {
-        Log::insert('comment', 'create', $iLastComment, $this->_aSession['userdata']['id']);
+        Log::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['userdata']['id']);
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else

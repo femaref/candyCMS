@@ -22,6 +22,7 @@ class Section extends Main {
 	 *
 	 * @var object
 	 * @access protected
+	 *
 	 */
   protected $_oObject;
 
@@ -30,7 +31,6 @@ class Section extends Main {
    *
    * @access public
    * @return object created object
-   * @todo path
    *
    */
   private function _getController() {
@@ -246,7 +246,7 @@ class Section extends Main {
       case 'log':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
-					parent::_setContent($this->_oObject->destroy());
+					parent::_setContent($this->_oObject->destroy(4));
 					parent::_setDescription(I18n::get('global.logs'));
 					parent::_setTitle(I18n::get('global.logs'));
 				}
@@ -387,7 +387,6 @@ class Section extends Main {
 					parent::_setDescription(I18n::get('global.api_token'));
 					parent::_setTitle(I18n::get('global.api_token'));
 				}
-        # TODO
 				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
 					parent::_setContent($this->_oObject->updatePassword());
 					parent::_setDescription(I18n::get('user.title.password'));

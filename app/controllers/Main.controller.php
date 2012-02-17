@@ -129,7 +129,7 @@ abstract class Main {
   protected $_sTemplateFolder;
 
 	/**
-	 * i18n object.
+	 * I18n object.
 	 *
 	 * @var object
 	 * @access public
@@ -186,6 +186,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
+		unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
   }
 
   /**
@@ -209,16 +210,8 @@ abstract class Main {
 
   }
 
-  /**
-   * @access public
-   *
-   */
-  public function __call($sMethod, $Args) {
-
-  }
-
 	/**
-	 * Set up i18n.
+	 * Set up I18n.
 	 *
 	 * @access proteced
 	 * @return obj $this->oI18n
@@ -290,7 +283,7 @@ abstract class Main {
 		$this->oSmarty->assign('_pubdate_', date('r'));
 		$this->oSmarty->assign('_request_id_', $this->_iId);
 
-		# Set up language
+		# Set up javascript language
 		$this->oSmarty->assign('lang', I18n::getArray());
 
 		return $this->oSmarty;
@@ -427,9 +420,11 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError['error'][$sField] = empty($sMessage) ? I18n::get('error.form.missing.' . strtoupper($sField)) : $sMessage;
+			$this->_aError['error'][$sField] = empty($sMessage) ?
+							I18n::get('error.form.missing.' . strtoupper($sField)) :
+							$sMessage;
 
-		if (isset($this->_aRequest['email']) && ( Helper::checkEmailAddress($this->_aRequest['email']) == false ) &&
+		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false ) &&
 						'blog' !== $this->_aRequest['section'])
 			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
 	}
@@ -483,7 +478,7 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRole = 3) {
-		return ($this->_aSession['userdata']['role'] < $iUserRole) ?
+		return	$this->_aSession['userdata']['role'] < $iUserRole ?
             Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
 	}
@@ -495,15 +490,18 @@ abstract class Main {
    * @access protected
    * @param array $aData user data
    * @return boolean status of subscription
+	 *
    */
   protected static function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
     require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
-    $aVars = array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']);
-
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
-    return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID, $aData['email'], $aVars, '', $bDoubleOptIn);
+    return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID,
+																	$aData['email'],
+																	array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']),
+																	'',
+																	$bDoubleOptIn);
   }
 
   /**

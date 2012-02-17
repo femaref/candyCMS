@@ -48,7 +48,8 @@
         {$lang.global.content} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <textarea name='content' id='js-create_commment_text' class='required span4' required>
+        <textarea name='content' id='js-create_commment_text' rows='5'
+                  class='required span4' required>
           {if isset($content)}{$content}{/if}
         </textarea>
       </div>

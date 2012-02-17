@@ -23,7 +23,6 @@ class Rss extends Main {
    * Define the content type as RSS.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
@@ -102,7 +101,6 @@ class Rss extends Main {
    *
    * @access private
    * @return string HTML content
-   * @todo gallery and media rss differences
    *
    */
   private function _showMedia() {

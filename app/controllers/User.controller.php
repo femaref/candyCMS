@@ -23,7 +23,6 @@ class User extends Main {
 	 * Include the user model.
 	 *
 	 * @access public
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
 	public function __init() {
@@ -46,12 +45,12 @@ class User extends Main {
 		}
 
 		# Set user id of person to update
-		$iId = $this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4 ?
+		$iId =	$this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4 ?
             $this->_iId :
             $this->_aSession['userdata']['id'];
 
 		# Fetch data from database
-		$this->_aData = $this->_oModel->getData($iId, false, true);
+		$this->_aData = & $this->_oModel->getData($iId, false, true);
 
 		# Override if we want to use request
 		if ($bUseRequest == true) {
@@ -134,7 +133,11 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['userdata']['id'];
 
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_iId,
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
     }
     else
@@ -154,7 +157,7 @@ class User extends Main {
 		if (!empty($iUserId))
 			$this->_iId = (int) $iUserId;
 
-		$this->_aData = $this->_oModel->getData($iUserId);
+		$this->_aData = & $this->_oModel->getData($iUserId);
     $this->oSmarty->assign('user', $this->_aData);
 
 		if (empty($this->_iId)) {
@@ -192,7 +195,6 @@ class User extends Main {
 	 *
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
 	public function create() {
@@ -207,7 +209,6 @@ class User extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo When an admin creates an user, there must be a diffent success email.
 	 *
 	 */
 	protected function _create() {
@@ -238,18 +239,25 @@ class User extends Main {
       $iUserId = $this->_oModel->getLastInsertId('users');
 
       # Send email if user has registered and creator is not an admin.
-      if ($this->_aSession['userdata']['role'] == 4) {
+      if ($this->_aSession['userdata']['role'] == 4)
         $sMailMessage = '';
-      }
-      else {
+
+			else {
         $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
 
         $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), I18n::get('user.mail.body'));
         $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
       }
 
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iUserId, $this->_aSession['userdata']['id']);
-			Mail::send(Helper::formatInput($this->_aRequest['email']), I18n::get('user.mail.subject'), $sMailMessage, WEBSITE_MAIL_NOREPLY);
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									$iUserId,
+									$this->_aSession['userdata']['id']);
+
+			Mail::send(	Helper::formatInput($this->_aRequest['email']),
+									I18n::get('user.mail.subject'),
+									$sMailMessage,
+									WEBSITE_MAIL_NOREPLY);
 
       return $this->_aSession['userdata']['role'] == 4 ?
               Helper::successMessage(I18n::get('success.create'), '/user') :
@@ -339,7 +347,11 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['userdata']['id'];
 
-			Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+			Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_iId,
+									$this->_aSession['userdata']['id']);
+
 			return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
 		}
 		else
@@ -367,7 +379,6 @@ class User extends Main {
 	 *
 	 * @access public
 	 * @return boolean status message
-	 * @override app/controllers/Main.controller.php
 	 *
 	 */
 	public function destroy() {
@@ -426,7 +437,7 @@ class User extends Main {
 
 		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
 			# Get data from activating user
-			$aUserData = $this->_oModel->getActivationData();
+			$aUserData = & $this->_oModel->getActivationData();
 
 			# Subscribe to MailChimp after email adress is confirmed
 			$this->_subscribeToNewsletter($aUserData);

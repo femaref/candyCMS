@@ -91,7 +91,7 @@ class Download extends Main {
    * Get download data.
    *
    * @access public
-   * @param integer $iId ID to get data from
+   * @param integer $iId ID to get data from.
    * @param boolean $bUpdate prepare data for update
    * @return array data
    *
@@ -102,10 +102,12 @@ class Download extends Main {
   }
 
 	/**
+	 * Return the name of a file.
 	 *
-	 * @param type $iId
-	 * @return type
-	 * @todo
+	 * @static
+	 * @access public
+	 * @param integer $iId ID to get data from.
+	 * @return string $aResult['file'] file name.
 	 *
 	 */
 	public static function getFileName($iId) {

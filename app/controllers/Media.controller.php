@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
 */
 
 namespace CandyCMS\Controller;
@@ -25,7 +26,6 @@ class Media extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @override app/controllers/Main.controller.php
    *
    */
   public function create() {
@@ -33,12 +33,11 @@ class Media extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      if (isset($this->_aRequest['create_file'])) {
-        if ($this->_proceedUpload() == true)
-          return Helper::successMessage(I18n::get('success.file.upload'), '/media');
-        else
-          return Helper::errorMessage(I18n::get('error.file.upload'), '/media');
-      }
+      if (isset($this->_aRequest['create_file']))
+				return $this->_proceedUpload() === true ?
+								Helper::successMessage(I18n::get('success.file.upload'), '/media') :
+								Helper::errorMessage(I18n::get('error.file.upload'), '/media');
+
       else
         return $this->_showUploadFileTemplate();
     }
@@ -101,8 +100,8 @@ class Media extends Main {
         if (substr($sFile, 0, 1) == '.' || is_dir($sPath))
           continue;
 
-        $sFileType = strtolower(substr(strrchr($sPath, '.'), 1));
-        $iNameLen = strlen($sFile) - 4;
+        $sFileType	= strtolower(substr(strrchr($sPath, '.'), 1));
+        $iNameLen		= strlen($sFile) - 4;
 
         if ($sFileType == 'jpeg')
           $iNameLen--;
@@ -145,7 +144,6 @@ class Media extends Main {
    *
    * @access public
    * @return boolean status of model action
-   * @override app/controllers/Main.controller.php
    *
    */
   public function destroy() {

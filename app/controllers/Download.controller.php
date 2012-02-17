@@ -8,6 +8,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
 namespace CandyCMS\Controller;
@@ -24,11 +25,11 @@ class Download extends Main {
    * Include the download model.
    *
    * @access public
-   * @override app/controllers/Main.controller.php
    *
    */
   public function __init() {
     require PATH_STANDARD . '/app/models/Download.model.php';
+
     $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
@@ -37,7 +38,6 @@ class Download extends Main {
    *
    * @access public
    * @return string HTML content
-	 * @todo fix caching
    *
    */
   public function show() {
@@ -97,8 +97,7 @@ class Download extends Main {
       $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
-    $sCategories = $this->_oModel->getTypeaheadData('downloads', 'category');
-    $this->oSmarty->assign('_categories_', $sCategories);
+    $this->oSmarty->assign('_categories_', $this->_oModel->getTypeaheadData('downloads', 'category'));
 
     foreach ($this->_aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
@@ -131,13 +130,18 @@ class Download extends Main {
 
     else {
       # Set up upload helper and rename file to title
-      $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, Helper::formatInput($this->_aRequest['title']));
+      $oUploadFile = new Upload($this->_aRequest,
+																$this->_aSession, $this->_aFile,
+																Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
-      if ($oUploadFile->uploadFile('download') == true) {
-
+      if ($oUploadFile->uploadFile('download') === true) {
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
-          Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $this->_oModel->getLastInsertId('downloads'), $this->_aSession['userdata']['id']);
+          Log::insert($this->_aRequest['section'],
+											$this->_aRequest['action'],
+											$this->_oModel->getLastInsertId('downloads'),
+											$this->_aSession['userdata']['id']);
+
           return Helper::successMessage(I18n::get('success.create'), '/download');
         }
         else
@@ -164,7 +168,11 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.update'), '/download');
     }
     else
@@ -182,7 +190,11 @@ class Download extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['section'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['userdata']['id']);
+
       return Helper::successMessage(I18n::get('success.destroy'), '/download');
     }
     else

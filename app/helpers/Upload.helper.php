@@ -88,6 +88,8 @@ class Upload {
 	 */
   public function uploadFile($sFolder = 'media') {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
+			$bReturn = false;
+
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
         $this->_sFileName       = & Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
         $this->_sFileExtension  = & strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
