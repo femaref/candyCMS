@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Helper;
@@ -18,48 +19,56 @@ class Image {
   /**
    * @var array
    * @access protected
+	 *
    */
   protected $_aInfo;
 
   /**
    * @var integer
    * @access protected
+	 *
    */
   protected $_iImageWidth;
 
   /**
    * @var integer
    * @access protected
+	 *
    */
   protected $_iImageHeight;
 
   /**
    * @var string
    * @access protected
+	 *
    */
   protected $_sFolder;
 
   /**
    * @var string
    * @access protected
+	 *
    */
   protected $_sId;
 
   /**
    * @var string
    * @access protected
+	 *
    */
   protected $_sImgType;
 
   /**
    * @var string
    * @access protected
+	 *
    */
   protected $_sOriginalPath;
 
   /**
    * @var string
    * @access protected
+	 *
    */
   protected $_sUploadDir;
 
@@ -96,7 +105,8 @@ class Image {
    *
    */
   private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
-    $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' . $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
+    $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' .
+						$this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);

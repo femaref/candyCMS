@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Helper;
@@ -21,6 +22,7 @@ class Pagination {
 	 *
 	 * @var array
 	 * @access private
+	 *
 	 */
   private $_aRequest;
 
@@ -29,6 +31,7 @@ class Pagination {
 	 *
 	 * @var integer
 	 * @access private
+	 *
 	 */
   private $_iLimit;
 
@@ -37,6 +40,7 @@ class Pagination {
 	 *
 	 * @var integer
 	 * @access private
+	 *
 	 */
   private $_iOffset;
 
@@ -45,6 +49,7 @@ class Pagination {
 	 *
 	 * @var integer
 	 * @access private
+	 *
 	 */
   private $_iPages;
 
@@ -53,6 +58,7 @@ class Pagination {
 	 *
 	 * @var integer
 	 * @access private
+	 *
 	 */
   private $_iEntries;
 
@@ -61,6 +67,7 @@ class Pagination {
 	 *
 	 * @var integer
 	 * @access private
+	 *
 	 */
   private $_iCurrentPage;
 
@@ -69,6 +76,7 @@ class Pagination {
 	 *
 	 * @var object
 	 * @access private
+	 *
 	 */
   private $_oSmarty;
 
@@ -77,17 +85,19 @@ class Pagination {
 	 *
 	 * @access public
 	 * @param array $aRequest alias for the combination of $_GET and $_POST
-	 * @param integer $iEntries Sum of entries.
+	 * @param integer $iEntries sum of entries.
 	 * @param integer $iLimit limit of entries per page.
 	 *
 	 */
   public function __construct($aRequest, $iEntries, $iLimit = 10) {
-    $this->_aRequest  =& $aRequest;
-    $this->_iEntries  =& $iEntries;
-    $this->_iLimit    =& $iLimit;
+    $this->_aRequest	= & $aRequest;
+		$this->_iEntries	= & $iEntries;
+		$this->_iLimit		= & $iLimit;
 
     $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
-    $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ? (int) $this->_aRequest['page'] : 1;
+    $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ?
+						(int) $this->_aRequest['page'] :
+						1;
 
     if (!$this->_iPages)
       $this->_iPages = 1;

@@ -127,9 +127,10 @@ class Helper {
    *
    */
   public static function createLinkTo($sUrl, $bExternal = false) {
-    return $bExternal == true ? '<a href="' . $sUrl . '">' . $sUrl . '</a>' :
-            '<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
-  }
+		return	$bExternal == true ?
+						'<a href="' . $sUrl . '">' . $sUrl . '</a>' :
+						'<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
+	}
 
   /**
 	 * Return the URL of the user avatar.
@@ -144,8 +145,7 @@ class Helper {
 	 *
 	 */
   public static function getAvatar($sSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
-		$sFilePath = PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId;
-    $sFilePath = Helper::removeSlash($sFilePath);
+    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId);
 
 		if (file_exists($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
@@ -233,7 +233,6 @@ class Helper {
 	 * @access public
 	 * @param string $sDir dir of the templates
 	 * @param string $sFile file name of the template
-	 * @param boolea $bPath show the path
 	 * @return string path of the chosen template
 	 *
 	 */
@@ -297,7 +296,7 @@ class Helper {
       if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
         throw new AdvancedException('Input seems not valid.');
 
-      if ($bDisableHTML == true)
+      if ($bDisableHTML === true)
         $sStr = htmlspecialchars($sStr);
     }
     catch (AdvancedException $e) {
@@ -329,7 +328,7 @@ class Helper {
   public static function formatTimestamp($iTime, $iOptions = 0) {
     # Fallback for unit testing
     if(!constant('WEBSITE_LOCALE'))
-      define('WEBSITE_LOCALE', 'de_DE');
+      define('WEBSITE_LOCALE', 'en_US');
 
 		# Set active locale
 		setlocale(LC_ALL, WEBSITE_LOCALE);
@@ -364,8 +363,7 @@ class Helper {
 	 *
 	 */
   public static function formatOutput($sStr, $sHighlight = false) {
-    $sStr = trim($sStr);
-    $sStr = preg_replace('/\S{500}/', '\0 ', $sStr);
+    $sStr = preg_replace('/\S{500}/', '\0 ', trim($sStr));
 
     # Highlight string
     if ($sHighlight == true)
@@ -392,8 +390,10 @@ class Helper {
     try {
       $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->query(" SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
+      $oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
       $aRow = $oQuery->fetch();
+			$oDb = null;
+
       return $aRow['id'];
     }
     catch (AdvancedException $e) {
@@ -420,7 +420,6 @@ class Helper {
     $sStr = str_replace('ö', 'oe', $sStr);
     $sStr = str_replace('ß', 'ss', $sStr);
     $sStr = str_replace(' ', '_', $sStr);
-    $sStr = strtolower($sStr);
     return $sStr;
   }
 

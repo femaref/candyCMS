@@ -52,7 +52,7 @@ class I18n {
 	}
 
 	/**
-	 * Get language as JSON
+	 * Get language as JSON for JavaScript.
 	 *
 	 * @static
 	 * @access public

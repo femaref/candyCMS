@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Helper;
@@ -20,12 +21,14 @@ class Upload {
 	 *
 	 * @var array
 	 * @access private
+	 *
 	 */
 	private $_aFile;
 
 	/**
 	 * @var string
 	 * @access private
+	 *
 	 */
 	private $_sFileExtension = '';
 
@@ -34,6 +37,7 @@ class Upload {
 	 *
 	 * @var string
 	 * @access private
+	 *
 	 */
 	private $_sFileName;
 
@@ -42,6 +46,7 @@ class Upload {
 	 *
 	 * @var string
 	 * @access private
+	 *
 	 */
 	private $_sRename;
 
@@ -50,6 +55,7 @@ class Upload {
 	 *
 	 * @var string
 	 * @access private
+	 *
 	 */
 	private $_sUploadFolder;
 
@@ -58,6 +64,7 @@ class Upload {
 	 *
 	 * @var string
 	 * @access public
+	 *
 	 */
 	public $sFilePath;
 
@@ -174,13 +181,15 @@ class Upload {
       $oImage->resizeAndCut('64');
       $oImage->resizeAndCut('32');
 
-      if ($bReturnPath == true)
-        return $this->_sFilePath . '.' . $this->_sFileExtension;
-      else
-        return $bReturn;
+			return $bReturnPath == true ? $this->_sFilePath . '.' . $this->_sFileExtension : $bReturn;
     }
   }
 
+	/**
+	 * Delete user avatars.
+	 * @access private
+	 *
+	 */
   private function _deleteAvatarFiles() {
     if (file_exists(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg')))
       unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName . '.jpg'));
@@ -237,15 +246,26 @@ class Upload {
       unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/32/' . $this->_sFileName . '.gif'));
   }
 
+	/**
+	 * Return the files extension.
+	 *
+	 * @return string $this->_sFileExtension file extension.
+	 *
+	 */
   public function getExtension() {
     return $this->_sFileExtension;
   }
 
-  # Return the current file
+	/**
+	 * Return the current file.
+	 *
+	 * @param boolean $bWithExtension
+	 * @return type
+	 *
+	 */
   public function getId($bWithExtension = true) {
-    if ($bWithExtension == true)
-      return $this->_sFileName . '.' . $this->_sFileExtension;
-    else
-      return $this->_sFileName;
-  }
+		return	$bWithExtension == true ?
+						$this->_sFileName . '.' . $this->_sFileExtension :
+						$this->_sFileName;
+	}
 }
