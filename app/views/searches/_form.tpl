@@ -8,7 +8,8 @@
         {$lang.search.label.terms} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input type='search' class='span4' name='search' id='input-search' autofocus required />
+        <input type='search' class='span4 focused' name='search'
+               id='input-search' autofocus required />
         <input type='submit' class='btn btn-primary' value='{$lang.global.search}' data-theme='b' />
       </div>
     </div>

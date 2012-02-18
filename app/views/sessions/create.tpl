@@ -8,7 +8,7 @@
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input name='email' class='required span4' type='email' value="{$email}"
+        <input name='email' class='focused required span4' type='email' value='{$email}'
               id='input-email' autofocus required />
         {if isset($error.email)}<span class='help-inline'>{$error.name}</span>{/if}
       </div>

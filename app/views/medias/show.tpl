@@ -32,7 +32,7 @@
       <tbody>
         {foreach $files as $f}
           <tr>
-            <td>
+            <td class='center'>
               {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
                 <img src='%PATH_UPLOAD%/temp/media/{$f.name}' class='thumbnail'
                     width='32' height='32' alt='{$f.type}' />

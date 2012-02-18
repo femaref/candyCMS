@@ -11,7 +11,7 @@
         {$lang.global.name}
       </label>
       <div class='controls'>
-        <input name='name' type='name' id='input-name' class='span4' autofocus />
+        <input name='name' type='text' id='input-name' class='span4' />
       </div>
     </div>
     <div class='control-group'>
@@ -28,8 +28,8 @@
       </label>
       <div class='controls'>
         <input type='email' name='email' id='input-email'
-              class='span4 required'autofocus required />
-        {if isset($error.email)}<span class="help-inline">{$error.email}</span>{/if}
+              class='span4 required focused' autofocus required />
+        {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
       </div>
     </div>
     <div class='form-actions'>

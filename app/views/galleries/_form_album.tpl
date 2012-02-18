@@ -11,11 +11,12 @@
     </div>
     <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title' class='control-label'>
-        {$lang.global.title} <span title="{$lang.global.required}">*</span>
+        {$lang.global.title} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input name='title' value="{$title}" id="input-title" class='required span4'
-              type='text' autofocus required />
+        <input name='title' value="{$title}" id='input-title'
+               class='required span4 focused'
+               type='text' autofocus required />
         <span class='help-inline'>
           {if isset($error.title)}
             {$error.title}
@@ -28,11 +29,11 @@
         {$lang.global.description}
       </label>
       <div class='controls'>
-        <input name='content' value="{$content}" id="input-content" type='text' class='span4' />
+        <input name='content' value="{$content}" id='input-content' type='text' class='span4' />
         <span class='help-inline'></span>
       </div>
     </div>
-    <div class="form-actions">
+    <div class='form-actions'>
       <input type='submit' class='btn btn-primary'
             value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
       <input type='hidden' value='formdata' name='{$smarty.get.action}_gallery' />

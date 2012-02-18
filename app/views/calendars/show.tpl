@@ -89,7 +89,7 @@
   {/if}
   {if !isset($smarty.get.action)}
     <p class='center'>
-      <a href='/calendar/archive/{$smarty.now|date_format:'%Y'}' class='btn'>
+      <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}" class='btn'>
         {$lang.global.archive}
       </a>
     </p>

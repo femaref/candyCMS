@@ -31,7 +31,10 @@
       <tr>
         <td>{$u.id}</td>
         <td>
-          <img src='{$u.avatar_32}' width='20' height='20' alt='' />
+          <a href='{$u.avatar_popup}' class='thumbnail js-fancybox'
+             title='{$u.full_name}'>
+            <img src='{$u.avatar_32}' width='25' height='25' alt='' />
+          </a>
         </td>
         <td>
           <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
@@ -60,6 +63,7 @@
           <img src='%PATH_IMAGES%/spacer.png'
               class='icon-{if $u.receive_newsletter == 1}success{else}close{/if}'
               alt='{if $u.receive_newsletter == 1}✔{else}✖{/if}' width='16'
+              title='{if $u.receive_newsletter == 1}✔{else}✖{/if}' width='16'
               height='16' title='{if $u.receive_newsletter == 1}✔{else}✖{/if}' />
         </td>
         {if $USER_ROLE == 4}
@@ -71,7 +75,8 @@
                   title='{$lang.global.update.update}'
                   width='16' height='16' />
             </a>
-            <a href="#" onclick="confirmDestroy('/user/{$u.id}/destroy')">
+            &nbsp;
+            <a href='#' onclick="confirmDestroy('/user/{$u.id}/destroy')">
               <img src='%PATH_IMAGES%/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'
@@ -83,8 +88,10 @@
       </tr>
     {/foreach}
   </table>
+  <script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
+    $('.js-fancybox').fancybox({ nextEffect : 'fade', prevEffect : 'fade' });
     $('table').tablesorter();
   </script>
 {/strip}

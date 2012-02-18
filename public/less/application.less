@@ -101,6 +101,20 @@ footer img {
   }
 }
 
+#calendar {
+  .column-date {
+    width:20%;
+  }
+
+  .column-description {
+    width:70%;
+  }
+
+  .column-actions {
+    width:10%;
+  }
+}
+
 #comments {
   clear:both;
   padding:10px 0px;
@@ -146,7 +160,7 @@ footer img {
 
 // Fix column width at download tables
 #download {
-  .column-file {
+  .column-file, .column-actions {
     width:10%;
   }
 
@@ -154,16 +168,8 @@ footer img {
     width:50%;
   }
 
-  .column-date {
+  .column-date, .column-size {
     width:15%;
-  }
-
-  .column-size {
-    width:15%;
-  }
-
-  .column-actions {
-    width:10%;
   }
 }
 
@@ -173,12 +179,18 @@ footer img {
 }
 
 // inputs for copy use
-#media .copybox {
-  display:block;
-  width:98%;
-  padding:0px 4px;
-  font-size:80%;
-  margin:3px 0px 0px;
+#media {
+  .copybox {
+    display:block;
+    width:98%;
+    padding:0px 4px;
+    font-size:80%;
+    margin:3px 0px 0px;
+  }
+
+  .thumbnail {
+    display:inline;
+  }
 }
 
 // Remove border at user details view

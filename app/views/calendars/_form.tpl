@@ -8,7 +8,7 @@
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input class='span4 required' type='text' name='title' id='input-title'
+        <input class='span4 required focused' type='text' name='title' id='input-title'
               value="{$title}" required autofocus />
         <span class='help-inline'>
           {if isset($error.title)}

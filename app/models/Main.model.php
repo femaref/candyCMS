@@ -131,8 +131,9 @@ abstract class Main {
 
         self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       }
-      catch (PDOException $e) {
-        die('Connection failed: ' . $e->getMessage());
+      catch (PDOException $p) {
+        AdvancedException::reportBoth('0102 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
 
