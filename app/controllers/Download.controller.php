@@ -43,7 +43,7 @@ class Download extends Main {
   public function show() {
     # Direct download for this id
     if (!empty($this->_iId)) {
-      $sFile = Model::getFileName();
+      $sFile = Model::getFileName($this->_iId);
 
       # Update download count
       Model::updateDownloadCount($this->_iId);

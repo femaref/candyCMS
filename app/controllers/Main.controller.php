@@ -218,9 +218,12 @@ abstract class Main {
 	 *
 	 */
   protected function _setI18n() {
-    $this->oI18n = new I18n(WEBSITE_LANGUAGE);
-    return $this->oI18n;
-  }
+		if (!defined('WEBSITE_LANGUAGE'))
+			define('WEBSITE_LANGUAGE', 'en');
+
+		$this->oI18n = new I18n(WEBSITE_LANGUAGE);
+		return $this->oI18n;
+	}
 
 	/**
 	 * Set up smarty.

@@ -96,23 +96,14 @@ class Index {
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
 
-    # If this is an ajax request, no layout will be loaded.
-    define('AJAX_REQUEST', isset($_REQUEST['ajax']) && !empty($_REQUEST['ajax']) ? true : false);
-
-    # Clear cache if wanted.
-    define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
-
     # Load actions.
-    self::getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
+    self::getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
     self::getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
     $this->getFacebookExtension();
     $this->setUser();
     $this->setTemplate();
-
-    # Define current url
-    define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
 	}
 
   /**
@@ -140,7 +131,7 @@ class Index {
         if (!file_exists(PATH_STANDARD . '/config/' . ucfirst($sConfig) . '.inc.php'))
           throw new AdvancedException('Missing ' . ucfirst($sConfig) . ' config file.');
         else
-          require PATH_STANDARD . '/config/' . ucfirst($sConfig) . '.inc.php';
+          require_once PATH_STANDARD . '/config/' . ucfirst($sConfig) . '.inc.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());
@@ -168,7 +159,7 @@ class Index {
         if (!file_exists(PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
           throw new AdvancedException('Missing plugin: ' . ucfirst($sConfig));
         else
-          require PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+          require_once PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());

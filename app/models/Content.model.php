@@ -128,7 +128,6 @@ class Content extends Main {
    *
    * @access public
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function create() {
@@ -187,7 +186,6 @@ class Content extends Main {
    * @access public
    * @param integer $iId ID to update
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function update($iId) {
@@ -235,7 +233,6 @@ class Content extends Main {
    * @access public
    * @param integer $iId ID to delete
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function destroy($iId) {

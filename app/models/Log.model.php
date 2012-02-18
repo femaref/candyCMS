@@ -160,7 +160,6 @@ class Log extends Main {
    * @access public
    * @param integer $iId ID to delete
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function destroy($iId) {

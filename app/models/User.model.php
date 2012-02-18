@@ -279,7 +279,6 @@ class User extends Main {
    * @access public
 	 * @param integer $iVerificationCode verification code that was sent to the user.
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function create($iVerificationCode = '') {

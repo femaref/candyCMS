@@ -1,6 +1,6 @@
 {strip}
-  {if $WEBSITE_TRACKING_CODE}
-    <script type="text/javascript">
+  {if $WEBSITE_TRACKING_CODE && $WEBSITE_MODE == 'production'}
+    <script type='text/javascript'>
       var sTrackingCode = '{$WEBSITE_TRACKING_CODE}';
       {literal}
         var _gaq = _gaq || [];

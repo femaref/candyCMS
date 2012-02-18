@@ -26,14 +26,51 @@ date_default_timezone_set('Europe/Berlin');
 # Current version we are working with.
 define('VERSION', '20111114');
 
-# Start user session.
-@session_start();
-
 # Define a standard path
 define('PATH_STANDARD', dirname(__FILE__));
 
-# Initialize software by its controllers.
+# If this is an ajax request, no layout will be loaded.
+define('AJAX_REQUEST', isset($_REQUEST['ajax']) && !empty($_REQUEST['ajax']) ? true : false);
+
+# Clear cache if wanted.
+define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
+
+# Start user session.
+@session_start();
+
+# Do we have a mobile device?
+# *********************************************
+$sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+$bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
+              preg_match('/Symb/i', $sUserAgent) ||
+              preg_match('/Windows CE/i', $sUserAgent) ||
+              preg_match('/IEMobile/i', $sUserAgent) ||
+              preg_match('/iPhone/i', $sUserAgent) ||
+              preg_match('/iPod/i', $sUserAgent) ||
+              preg_match('/Blackberry/i', $sUserAgent) ||
+              preg_match('/Android/i', $sUserAgent) ?
+              true :
+              false;
+
+# Allow mobile access
+if(!isset($_REQUEST['mobile']))
+  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : true;
+
+# Override current session if there is a request.
+else
+  $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
+
+# Spread this information.
+define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
+define('MOBILE_DEVICE', $bMobile);
+
+# Initialize software
+# @todo try / catch
+require PATH_STANDARD . '/config/Candy.inc.php';
 require PATH_STANDARD . '/app/controllers/Index.controller.php';
+
+# Define current url
+define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
 
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
@@ -66,32 +103,6 @@ if (is_dir('tools') && WEBSITE_MODE == 'production')
 # *********************************************
 if (is_file('tests.php') && WEBSITE_MODE == 'production')
   exit('Please delete the tests enviroment (tests.php).');
-
-# Do we have a mobile device?
-# *********************************************
-$sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-$bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
-              preg_match('/Symb/i', $sUserAgent) ||
-              preg_match('/Windows CE/i', $sUserAgent) ||
-              preg_match('/IEMobile/i', $sUserAgent) ||
-              preg_match('/iPhone/i', $sUserAgent) ||
-              preg_match('/iPod/i', $sUserAgent) ||
-              preg_match('/Blackberry/i', $sUserAgent) ||
-              preg_match('/Android/i', $sUserAgent) ?
-              true :
-              false;
-
-# Allow mobile access
-if(!isset($_REQUEST['mobile']))
-  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : true;
-
-# Override current session if there is a request.
-else
-  $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
-
-# Spread this information.
-define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
-define('MOBILE_DEVICE', $bMobile);
 
 # Print out HTML
 echo $oIndex->show();
