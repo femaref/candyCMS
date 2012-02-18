@@ -22,11 +22,11 @@
     <table class='table'>
       <thead>
         <tr>
-          <th></th>
-          <th class='headerSortDown'>{$lang.global.file}</th>
-          <th>{$lang.global.size}</th>
-          <th class='center'>{$lang.global.upload.at}</th>
-          <th></th>
+          <th class='column-icon'></th>
+          <th class='column-file headerSortDown'>{$lang.global.file}</th>
+          <th class='column-size'>{$lang.global.size}</th>
+          <th class='column-uploaded_at center'>{$lang.global.upload.at}</th>
+          <th class='column-actions'></th>
         </tr>
       </thead>
       <tbody>

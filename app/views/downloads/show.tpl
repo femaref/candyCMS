@@ -23,17 +23,17 @@
       <table class='table tablesorter'>
         <thead>
           <tr>
-            <th></th>
-            <th class='headerSortDown'>{$lang.global.title}</th>
-            <th>{$lang.global.date.date}</th>
-            <th>{$lang.global.size}</th>
-            <th></th>
+            <th class='column-file'></th>
+            <th class='column-title headerSortDown'>{$lang.global.title}</th>
+            <th class='column-date'>{$lang.global.date.date}</th>
+            <th class='column-size'>{$lang.global.size}</th>
+            <th class='column-actions'></th>
           </tr>
         </thead>
         <tbody>
         {foreach $d.files as $f}
           <tr>
-            <td>
+            <td class='center'>
               <img src='%PATH_IMAGES%/files/{$f.extension}.png'
                   width='32' height='32' alt='{$f.extension}' />
             </td>

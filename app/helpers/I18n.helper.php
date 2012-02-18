@@ -98,10 +98,11 @@ class I18n {
 	/**
 	 * Unset the language saved in the session.
 	 *
+	 * @static
 	 * @access public
 	 *
 	 */
-	public function unsetLanguage() {
+	public static function unsetLanguage() {
 		unset($_SESSION['lang']);
 	}
 }

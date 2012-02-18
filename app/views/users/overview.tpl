@@ -16,14 +16,14 @@
   <table class='table'>
     <thead>
       <tr>
-        <th class='headerSortDown'>{$lang.global.id}</th>
-        <th></th>
-        <th>{$lang.global.name}</th>
-        <th class='center'>{$lang.user.label.registered_since}</th>
-        <th class='center'>{$lang.user.label.last_login}</th>
-        <th class='center'>{$lang.global.newsletter}</th>
+        <th class='column-id headerSortDown'>{$lang.global.id}</th>
+        <th class='column-icon'></th>
+        <th class='column-name'>{$lang.global.name}</th>
+        <th class='column-registered_since center'>{$lang.user.label.registered_since}</th>
+        <th class='column-last_login center'>{$lang.user.label.last_login}</th>
+        <th class='column-newsletter center'>{$lang.global.newsletter}</th>
         {if $USER_ROLE == 4}
-          <th></th>
+          <th class='column-actions'></th>
         {/if}
       </tr>
     </thead>

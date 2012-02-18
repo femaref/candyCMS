@@ -5,12 +5,12 @@
   <table class='table'>
     <thead>
       <tr>
-        <th>{$lang.global.author}</th>
-        <th>{$lang.global.section}</th>
-        <th>{$lang.global.action}</th>
-        <th class='center'>{$lang.global.id}</th>
-        <th class='headerSortDown'>{$lang.global.date.date}</th>
-        <th></th>
+        <th class='column-author'>{$lang.global.author}</th>
+        <th class='column-section'>{$lang.global.section}</th>
+        <th class='column-action'>{$lang.global.action}</th>
+        <th class='column-id center'>{$lang.global.id}</th>
+        <th class='column-date headerSortDown'>{$lang.global.date.date}</th>
+        <th class='column-actions'></th>
       </tr>
     </thead>
     {foreach $logs as $l}

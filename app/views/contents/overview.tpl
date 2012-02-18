@@ -16,13 +16,13 @@
   <table class='table'>
     <thead>
       <tr>
-        <th class='headerSortDown'>#</th>
-        <th>{$lang.global.title}</th>
-        <th>{$lang.global.date.date}</th>
+        <th class='column-id headerSortDown'>#</th>
+        <th class='column-title'>{$lang.global.title}</th>
+        <th class='column-date'>{$lang.global.date.date}</th>
         <th>{$lang.global.author}</th>
         {if $USER_ROLE >= 3}
-          <th class='center'>{$lang.global.published}</th>
-          <th></th>
+          <th class='column-published center'>{$lang.global.published}</th>
+          <th class='column-actions'></th>
         {/if}
       </tr>
     </thead>

@@ -6,7 +6,7 @@
     </div>
     <div id='js-commments'>
       {foreach $comments as $c}
-        <article>
+        <article{if $c.author_id == $author_id} class='from_author'{/if}>
           <header>
             <a href='#{$c.id}' name='{$c.id}' class='count'>{$c.loop+$comment_number}</a>
             <img class='thumbnail' src='{$c.avatar_64}' width='40' height='40' alt='' />

@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Model;
@@ -32,10 +33,10 @@ class Blog extends Main {
   private function _setData($bUpdate, $iLimit) {
     if (empty($this->_iId)) {
 
-      # Show unpublished items to moderators or administrators only
+			# Show unpublished items to moderators or administrators only
       $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
-              "WHERE published = '1'" :
-              '';
+							"WHERE published = '1'" :
+							'';
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search']) && empty($this->_aRequest['page'])) {
@@ -45,8 +46,8 @@ class Blog extends Main {
 
       # Count entries for pagination
       try {
-        $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
-        $iResult = $oQuery->fetchColumn();
+        $oQuery		= $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
+        $iResult	= $oQuery->fetchColumn();
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());
@@ -185,7 +186,6 @@ class Blog extends Main {
    *
    * @access public
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function create() {
@@ -247,7 +247,6 @@ class Blog extends Main {
    * @access public
    * @param integer $iId ID to update
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function update($iId) {
@@ -315,7 +314,6 @@ class Blog extends Main {
    * @access public
    * @param integer $iId ID to delete
    * @return boolean status of query
-   * @override app/models/Main.model.php
    *
    */
   public function destroy($iId) {

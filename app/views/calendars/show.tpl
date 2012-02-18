@@ -36,10 +36,10 @@
       <table class='table tablesorter'>
         <thead>
           <tr>
-            <th class='headerSortDown'>{$lang.global.date.date}</th>
-            <th>{$lang.global.description}</th>
+            <th class='column-date headerSortDown'>{$lang.global.date.date}</th>
+            <th class='column-description'>{$lang.global.description}</th>
             {if $USER_ROLE >= 3}
-              <th></th>
+              <th class='column-actions'></th>
             {/if}
           </tr>
         </thead>

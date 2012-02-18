@@ -90,6 +90,8 @@ class Media extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
+			require PATH_STANDARD . '/app/helpers/Image.helper.php';
+
       $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/media');
       $oDir = opendir($sOriginalPath);
 

@@ -13,77 +13,47 @@
  *
  */
 
-// Bootstrap
+/* Bootstrap */
 @import "bootstrap/bootstrap.less";
 
-// CandyCMS requirements
+/* CandyCMS requirements */
 @import "core/jquery.capty.less";
 @import "core/jquery.fancybox.less";
 @import "core/jquery.socialshareprivacy.less";
 @import "core/candy.less";
 
-// Own styles
-body {
-  padding-top:60px;
+/* Bootstrap fixes */
+// No margin at BBCode images
+figure.image {
+  margin:0px;
 }
 
+// Make sure that help is really displayed as a block
+.help-block {
+  display:block;
+}
+
+// No center tooltips if they are large
 .tooltip-inner {
   text-align:left;
   max-width:300px;
 }
 
-// Action icon get a margin to top
-.thumbnails .center {
-  margin-top:10px;
+/* Own styles */
+// Avoid conflicts with navbar
+body {
+  padding-top:60px;
 }
-
 
 // Mark active tablesorter th
 th.headerSortUp, th.headerSortDown {
   background-color: @grayLighter;
 }
 
+// Display the columns as clickable
 th:hover, th:hover {
   cursor:pointer;
 }
-
-// Remove border at user details view
-#user table.table.unstyled th, #user table.table.unstyled td {
-  border:none;
-}
-
-// Mark first field at user details table
-#user table td:first-child {
-  font-weight:bold;
-}
-
-// Mail popup
-#create_mail {
-  min-width:600px;
-}
-
-// Center loading image
-#infscr-loading {
-  text-align:center;
-}
-
-// Blogs header
-.blogs h2 {
-  font-size:30px;
-}
-
-.blogs {
-  margin-bottom:50px;
-}
-
-.blogs .page-header {
-  padding-bottom:0px;
-}
-
-.summary {
-  font-weight:bold;
-}
-
 
 // Fix whitespaces
 .tags a:first-child,
@@ -99,17 +69,18 @@ p.center img,
   margin-right:5px;
 }
 
-// inputs for copy use
-.copybox {
-  display:block;
-  width:98%;
-  padding:0px 4px;
-  font-size:80%;
-  margin:3px 0px 0px;
+// Mail popup
+#create_mail {
+  min-width:600px;
 }
 
-figure.image {
-  margin:0px;
+// Center loading image
+#infscr-loading {
+  text-align:center;
+}
+
+.summary {
+  font-weight:bold;
 }
 
 //
@@ -118,51 +89,104 @@ footer img {
   vertical-align:bottom;
 }
 
-.help-block {
-  display:block;
+#blog .blogs {
+  margin-bottom:50px;
+
+  h2 {
+    font-size:30px;
+  }
+
+  .page-header {
+    padding-bottom:0px;
+  }
 }
 
-/* Comments */
 #comments {
   clear:both;
   padding:10px 0px;
+
+  a {
+    font-weight: bold;
+  }
+
+  article {
+    display: table;
+    margin-bottom:50px;
+    text-align:left;
+    width:100%;
+
+    header {
+      display: table-cell;
+      width: 50%;
+
+      img {
+        float:left;
+        margin: 3px 10px 0px 0px;
+      }
+
+      a.count {
+        font-size: 24px;
+        color: #CCCCCC;
+        width: 50px;
+        float:left;
+        margin-top: 10px;
+        text-align:center;
+      }
+    }
+
+    footer {
+      text-align: right;
+    }
+  }
+
+  .from_author {
+    border-left: 3px solid @grayLighter;
+  }
 }
 
-#comments a {
-  font-weight: bold;
+// Fix column width at download tables
+#download {
+  .column-file {
+    width:10%;
+  }
+
+  .column-title {
+    width:50%;
+  }
+
+  .column-date {
+    width:15%;
+  }
+
+  .column-size {
+    width:15%;
+  }
+
+  .column-actions {
+    width:10%;
+  }
 }
 
-#comments article {
-  display: table;
-  margin-bottom:50px;
-  text-align:left;
-  width:100%;
+// Action icon get a margin to top
+#gallery .thumbnails .center {
+  margin-top:10px;
 }
 
-#comments article.from_author {
-  background: @grayDark;
-  border: 1px solid @grayLighter;
-  .border-radius(10px);
+// inputs for copy use
+#media .copybox {
+  display:block;
+  width:98%;
+  padding:0px 4px;
+  font-size:80%;
+  margin:3px 0px 0px;
 }
 
-#comments article header {
-  display: table-cell;
-  width: 50%;
+// Remove border at user details view
+#user table.table.unstyled th, #user table.table.unstyled td {
+  border:none;
 }
 
-#comments article header img {
-  float:left;
-  margin: 3px 10px 0px 0px;
-}
-
-#comments article header a.count {
-  font-size: 24px;
-  color: #CCCCCC;
-  width: 50px;
-  float:left;
-  margin-top: 10px;
-}
-
-#comments article footer {
-  text-align: right;
+// Mark first field at user details table
+#user table td:first-child {
+  font-weight:bold;
 }

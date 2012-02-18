@@ -129,7 +129,7 @@ global:
     at: Updated at
     avaiable: There is an update for this software avaiable (#%v). Please visit %l for more information.
     show: Show update?
-    update: Update entry
+    update: Update
   upload:
     at: Uploaded at
     upload: Upload
@@ -367,7 +367,7 @@ user:
       destroy: Delete account
     content:
       show: About %u
-      update: Personal data
+      update: About you
     gravatar: Use Gravatar?
     image:
       choose: Choose Image
