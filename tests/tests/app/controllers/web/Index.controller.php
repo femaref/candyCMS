@@ -26,6 +26,19 @@ class WebTestOfIndexController extends CandyWebTest {
 
 	function testShowIndexAsGuest() {
 		$this->assertTrue($this->get(WEBSITE_URL));
+		$this->assertResponse(200);
 		$this->assertText('Login'); # This should be on every page.
+	}
+
+	function testShow404() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
+		$this->assertResponse(404);
+	}
+
+	function testShowSampleAddon() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/sample'));
+		$this->assertResponse(200);
+		$this->assertText('Sample');
+		$this->assertNoText('Error');
 	}
 }

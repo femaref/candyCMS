@@ -481,7 +481,9 @@ class Index {
 
 		# We do not have a standard action, so fetch it from the addon folder.
     # If addon exists, proceed with override.
-    elseif (ALLOW_ADDONS === true) {
+    elseif (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
+			require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
+
       $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
       $oSection->getSection();
     }

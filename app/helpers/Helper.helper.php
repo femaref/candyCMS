@@ -205,20 +205,21 @@ class Helper {
   public static function getTemplateDir($sFolder, $sFile) {
 		try {
 			# Addons
-			if (file_exists('addons/views/' . $sFolder . '/' . $sFile . '.tpl') && ALLOW_ADDONS == true)
-				return 'addons/views/' . $sFolder;
+			if (file_exists(PATH_STANDARD . '/addons/views/' . $sFolder . '/' . $sFile . '.tpl') &&
+							(ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test'))
+				return PATH_STANDARD . '/addons/views/' . $sFolder;
 
 			# Template use
-			elseif (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
-				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
+			elseif (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
 
 			# Standard views
 			else {
-				if (!file_exists('app/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				if (!file_exists(PATH_STANDARD . '/app/views/' . $sFolder . '/' . $sFile . '.tpl'))
 					throw new AdvancedException('This template does not exist.');
 
 				else
-					return 'app/views/' . $sFolder;
+					return PATH_STANDARD . '/app/views/' . $sFolder;
 			}
 		}
 		catch (Exception $e) {
@@ -264,16 +265,16 @@ class Helper {
   public static function getPluginTemplateDir($sDir, $sFile) {
 		try {
 			# Template
-			if (file_exists('public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-				return 'public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
+			if (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
+				return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
 
 			# Standard views
 			else {
-				if (!file_exists('plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
+				if (!file_exists(PATH_STANDARD . '/plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
 					throw new AdvancedException('This template does not exist.');
 
 				else
-					return 'plugins/views/' . $sDir;
+					return PATH_STANDARD . '/plugins/views/' . $sDir;
 			}
 		}
 		catch (Exception $e) {
@@ -397,7 +398,8 @@ class Helper {
       return $aRow['id'];
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+			AdvancedException::reportBoth('0103 - ' . $e->getMessage());
+			exit('SQL error.');
     }
   }
 

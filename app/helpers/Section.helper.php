@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * 
+ *
  */
 
 namespace CandyCMS\Helper;
@@ -39,7 +39,7 @@ class Section extends Main {
 
     # Are addons for existing controllers avaiable? If yes, use them
     if (file_exists(PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
-                    '.controller.php') && ALLOW_ADDONS === true) {
+                    '.controller.php') && (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
       require_once PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
               '.controller.php';
 

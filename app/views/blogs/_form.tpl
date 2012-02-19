@@ -43,7 +43,7 @@
       <div class='controls'>
         <input type='text' name='tags' id='input-tags'
               data-provide='typeahead' value="{$tags}"
-              data-source='{$_tags_}' data-items='8'
+              data-source="{$_tags_}" data-items='8'
               class='span4 required' autocomplete='off' required />
         <p class='help-block'>
           {$lang.blog.info.tag}
