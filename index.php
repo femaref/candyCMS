@@ -74,6 +74,7 @@ define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['R
 
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex->__init();
 
 # Redirect to landing page if we got no valid request.
 if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_MODE == 'production' && $_SERVER['REQUEST_URI'] == '/')

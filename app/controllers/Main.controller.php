@@ -164,6 +164,9 @@ abstract class Main {
     if (!defined('WEBSITE_URL'))
       require PATH_STANDARD . '/config/Candy.inc.php';
 
+		if (!defined('WEBSITE_LOCALE'))
+			define('WEBSITE_LOCALE', 'en_US');
+
     if (!isset($this->_aRequest['section'])) {
       Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
       exit();

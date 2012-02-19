@@ -22,17 +22,6 @@ use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
-require PATH_STANDARD . '/app/models/Main.model.php';
-require PATH_STANDARD . '/app/models/Session.model.php';
-require PATH_STANDARD . '/app/controllers/Main.controller.php';
-require PATH_STANDARD . '/app/controllers/Session.controller.php';
-require PATH_STANDARD . '/app/controllers/Log.controller.php';
-require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
-require PATH_STANDARD . '/app/helpers/Section.helper.php';
-require PATH_STANDARD . '/app/helpers/Helper.helper.php';
-require PATH_STANDARD . '/app/helpers/I18n.helper.php';
-require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
-
 class Index {
 
   /**
@@ -95,6 +84,25 @@ class Index {
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
+	}
+
+	/**
+	 * Init the software.
+	 *
+	 * @access public
+	 *
+	 */
+	public function __init() {
+		require PATH_STANDARD . '/app/models/Main.model.php';
+		require PATH_STANDARD . '/app/models/Session.model.php';
+		require PATH_STANDARD . '/app/controllers/Main.controller.php';
+		require PATH_STANDARD . '/app/controllers/Session.controller.php';
+		require PATH_STANDARD . '/app/controllers/Log.controller.php';
+		require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
+		require PATH_STANDARD . '/app/helpers/Section.helper.php';
+		require PATH_STANDARD . '/app/helpers/Helper.helper.php';
+		require PATH_STANDARD . '/app/helpers/I18n.helper.php';
+		require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
     # Load actions.
     self::getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
@@ -176,7 +184,7 @@ class Index {
    * @see config/Candy.inc.php
    *
    */
-  public function getLanguage($sPath = '') {
+  public function getLanguage() {
     if (!defined('DEFAULT_LANGUAGE'))
       define('DEFAULT_LANGUAGE', 'en');
 
@@ -192,7 +200,7 @@ class Index {
       $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
 
       $this->_sLanguage = isset($aRequest['default_language']) &&
-              file_exists($sPath . 'languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
+              file_exists(PATH_STANDARD . '/languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               strtolower(substr(DEFAULT_LANGUAGE, 0, 2));
     }
@@ -276,7 +284,7 @@ class Index {
    *
    */
   protected function _getFlashMessage() {
-    $aFlashMessage = '';
+    $aFlashMessage = array();
     $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) &&
             !empty($this->_aSession['flash_message']['type']) ?
             $this->_aSession['flash_message']['type'] :
@@ -329,7 +337,7 @@ class Index {
    * @return string string with info message and link to download.
    *
    */
-  private function checkForNewVersion() {
+  private function _checkForNewVersion() {
     if ($this->_aSession['userdata']['role'] == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
@@ -440,7 +448,9 @@ class Index {
   */
   public function show() {
     # Set a caching / compile ID
-    define('UNIQUE_ID', substr(md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10));
+		# Ask if defined because of unit tests.
+		if (!defined('UNIQUE_ID'))
+			define('UNIQUE_ID', substr(md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10));
 
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
@@ -512,7 +522,7 @@ class Index {
       # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
 			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . I18n::get('website.title'));
-      $oSection->oSmarty->assign('_update_avaiable_', $this->checkForNewVersion());
+      $oSection->oSmarty->assign('_update_avaiable_', $this->_checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
