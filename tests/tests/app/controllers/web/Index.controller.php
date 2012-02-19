@@ -14,35 +14,14 @@ require_once PATH_STANDARD . '/app/controllers/Index.controller.php';
 
 use \CandyCMS\Controller\Index as Index;
 
-class WebTestOfIndexController extends WebTestCase {
-
-	public $oObject;
-	protected $_aRequest;
-	protected $_aSession;
-	protected $_aFile;
-	protected $_aCookie;
+class WebTestOfIndexController extends CandyWebTest {
 
 	function setUp() {
-		$this->_aRequest	= array();
-		$this->_aFile			= array();
-		$this->_aCookie		= array();
-		$this->_aSession['userdata'] = array(
-				'email' => '',
-				'facebook_id' => '',
-				'id' => 0,
-				'name' => '',
-				'surname' => '',
-				'password' => '',
-				'role' => 0,
-				'full_name' => ''
-		);
-
-		$this->oObject = new Index($this->_aRequest, $this->_aSession);
+		$this->oObject = new Index($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
 		parent::tearDown();
-		unset($this->_aRequest, $this->_aFile, $this->_aCookie, $this->_aSession['userdata']);
 	}
 
 	function testShowIndexAsGuest() {

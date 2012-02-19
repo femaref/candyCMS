@@ -620,7 +620,7 @@ class Gallery extends Main {
 
     if ($bReturn === true) {
       foreach ($aResult as $aRow) {
-        $sPath = PATH_UPLOAD . '/gallery/' . $aRow['album_id'];
+        $sPath = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $aRow['album_id']);
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
         @unlink($sPath . '/popup/' . $aRow['file']);

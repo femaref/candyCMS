@@ -100,7 +100,6 @@ class Index {
 		require PATH_STANDARD . '/app/controllers/Log.controller.php';
 		require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 		require PATH_STANDARD . '/app/helpers/Section.helper.php';
-		require PATH_STANDARD . '/app/helpers/Helper.helper.php';
 		require PATH_STANDARD . '/app/helpers/I18n.helper.php';
 		require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 

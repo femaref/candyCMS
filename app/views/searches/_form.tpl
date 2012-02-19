@@ -10,7 +10,8 @@
       <div class='controls'>
         <input type='search' class='span4 focused' name='search'
                id='input-search' autofocus required />
-        <input type='submit' class='btn btn-primary' value='{$lang.global.search}' data-theme='b' />
+        <input type='submit' name='submit' class='btn btn-primary'
+               value='{$lang.global.search}' data-theme='b' />
       </div>
     </div>
   </form>

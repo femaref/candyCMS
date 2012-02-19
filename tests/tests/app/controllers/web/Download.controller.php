@@ -15,41 +15,22 @@ require_once PATH_STANDARD . '/app/controllers/Download.controller.php';
 use \CandyCMS\Controller\Download as Download;
 use \CandyCMS\Helper\I18n as I18n;
 
-class WebTestOfDownloadController extends WebTestCase {
-
-	public $oObject;
-	protected $_aRequest;
-	protected $_aSession;
-	protected $_aFile;
-	protected $_aCookie;
+class WebTestOfDownloadController extends CandyWebTest {
 
 	function setUp() {
-		$this->_aRequest	= array('section' => 'download');
-		$this->_aFile			= array();
-		$this->_aCookie		= array();
-
-		$this->_aSession['userdata'] = array(
-				'email' => '',
-				'facebook_id' => '',
-				'id' => 0,
-				'name' => '',
-				'surname' => '',
-				'password' => '',
-				'role' => 0,
-				'full_name' => ''
-		);
-
-		$this->oObject = new Download($this->_aRequest, $this->_aSession);
+		$this->aRequest['section'] = 'download';
+		$this->oObject = new Download($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
 		parent::tearDown();
-		unset($this->_aRequest, $this->_aFile, $this->_aCookie, $this->_aSession['userdata']);
 	}
 
 	function testShowDownloadsAsGuest() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/download'));
-		$this->assertText('KB'); # There must be at leastonea file with KB ending.
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
+
+		# There must be at least one file with KB ending.
+		$this->assertText('KB', 'There is no file with KB listing. Please add a download.');
 	}
 
 	/*function testShowDownloadsAsModerator() {
@@ -61,17 +42,17 @@ class WebTestOfDownloadController extends WebTestCase {
 	}*/
 
 	function testUpdateDownloadAsGuest() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/download/1/update'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/update'));
 		$this->assertText(I18n::get('error.missing.permission'));
 	}
 
 	function testDestroyAsGuest() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/download/1/destroy'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/destroy'));
 		$this->assertText(I18n::get('error.missing.permission'));
 	}
 
 	function testDirIsWritable() {
-		$sFile = PATH_STANDARD . '/upload/download/test.log';
+		$sFile = PATH_STANDARD . '/upload/' . $this->aRequest['section'] . '/test.log';
 		$oFile = fopen($sFile, 'a');
 		fwrite($oFile, 'Is writeable.' . "\n");
 		fclose($oFile);

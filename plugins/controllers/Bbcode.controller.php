@@ -26,13 +26,6 @@ use CandyCMS\Helper\Image as Image;
 final class Bbcode {
 
   /**
-   * @todo
-   */
-  public function __constructor() {
-    require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
-  }
-
-  /**
    * Search and replace BB code.
    *
    * @static
@@ -85,6 +78,9 @@ final class Bbcode {
 
       # We do not have a preview
       else {
+				if (!class_exists('\CandyCMS\Helper\Image'))
+					require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
+
         if (!file_exists($sTempFilePath)) {
           $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');

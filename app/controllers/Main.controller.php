@@ -21,6 +21,8 @@ use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use MCAPI;
 use Smarty;
 
+require PATH_STANDARD . '/app/helpers/Helper.helper.php';
+
 abstract class Main {
 
 	/**
@@ -132,9 +134,11 @@ abstract class Main {
 	 * I18n object.
 	 *
 	 * @var object
-	 * @access public
+	 * @access static
+	 * @static
+	 *
 	 */
-	public $oI18n;
+	static $oI18n;
 
 	/**
 	 * Smarty object.
@@ -217,15 +221,15 @@ abstract class Main {
 	 * Set up I18n.
 	 *
 	 * @access proteced
-	 * @return obj $this->oI18n
+	 * @return obj self::$oI18n
 	 *
 	 */
-  protected function _setI18n() {
+  protected static function _setI18n() {
 		if (!defined('WEBSITE_LANGUAGE'))
 			define('WEBSITE_LANGUAGE', 'en');
 
-		$this->oI18n = new I18n(WEBSITE_LANGUAGE);
-		return $this->oI18n;
+		self::$oI18n = new I18n(WEBSITE_LANGUAGE);
+		return self::$oI18n;
 	}
 
 	/**

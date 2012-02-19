@@ -129,6 +129,8 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     else {
+			require_once PATH_STANDARD . '/app/helpers/Upload.helper.php';
+
       # Set up upload helper and rename file to title
       $oUploadFile = new Upload($this->_aRequest,
 																$this->_aSession, $this->_aFile,

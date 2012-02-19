@@ -7,42 +7,51 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
-require_once('lib/simpletest/autorun.php');
-require_once('app/models/Download.model.php');
+
+require_once PATH_STANDARD . '/app/models/Download.model.php';
 
 use \CandyCMS\Model\Download as Download;
 
-class TestOfDownloadModel extends UnitTestCase {
+class UnitTestOfDownloadModel extends UnitTestCase {
 
-  public $oDownload;
+	public $oObject;
+	protected $_aRequest;
+	protected $_aSession;
+	protected $_aFile;
+	protected $_aCookie;
+
+	# Last entry
   public $iLastInsertId;
 
-  function testConstructor() {
+  function setUp() {
 
-    $aRequest = array(
-        'title' => 'Title',
-        'content' => 'Content',
-        'category' => 'Category',
-        'downloads' => 0,
-        'section' => 'download');
+    $this->_aRequest = array(
+				'title' => 'Title',
+				'content' => 'Content',
+				'category' => 'Category',
+				'downloads' => 0,
+				'section' => 'download');
 
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
+		$this->_aSession['userdata'] = array(
+				'email' => '',
+				'facebook_id' => '',
+				'id' => 0,
+				'name' => '',
+				'surname' => '',
+				'password' => '',
+				'role' => 0,
+				'full_name' => ''
+		);
 
-    $aFile = array();
-    $aCookie = array();
-
-    $this->oDownload = new Download($aRequest, $aSession, $aFile, $aCookie);
+    $this->oObject = new Download($aRequest, $aSession);
   }
+
+	function tearDown() {
+		parent::tearDown();
+		unset($this->_aRequest, $this->_aSession['userdata']);
+	}
 
   function testCreate() {
     $this->assertTrue($this->oDownload->create('test.test', 'test'));
