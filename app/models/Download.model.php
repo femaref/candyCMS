@@ -269,7 +269,7 @@ class Download extends Main {
     $aFile = $this->getData($iId);
     $sFile = $aFile['file'];
 
-    if (file_exists(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile)))
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile)))
       unlink(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
 
     return $bReturn;
@@ -285,6 +285,9 @@ class Download extends Main {
    *
    */
   public static function updateDownloadCount($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("UPDATE
                                                 " . SQL_PREFIX . "downloads

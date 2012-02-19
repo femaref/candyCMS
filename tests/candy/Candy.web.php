@@ -22,6 +22,8 @@ abstract class CandyWebTest extends WebTestCase {
 	public $aFile;
 	public $aCookie;
 
+  public $iLastInsertId;
+
 	function __construct() {
 		parent::__construct();
 

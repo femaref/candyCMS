@@ -41,18 +41,18 @@ class AllFileTests extends TestSuite {
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Index.controller.php');
 
 		# Download
-		#$this->addFile(PATH_STANDARD . '/tests/tests/app/models/unit/Download.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/unit/Download.model.php');
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Download.controller.php');
 
 		# Error
-		/*$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Error.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Error.controller.php');
 
 		# Gallery
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Gallery.controller.php');
 
 		# Search
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/unit/Search.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Search.controller.php');*/
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Search.controller.php');
 	}
 }
 

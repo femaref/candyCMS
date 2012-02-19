@@ -149,16 +149,18 @@ class Media extends Main {
    *
    */
   public function destroy() {
-    if ($this->_aSession['userdata']['role'] < 3)
-      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+		if ($this->_aSession['userdata']['role'] < 3)
+			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-    else {
-      if (file_exists(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']))) {
-        unlink(Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']));
-        return Helper::successMessage(I18n::get('success.file.destroy'), '/media');
-      }
-      else
-        return Helper::errorMessage(I18n::get('error.missing.file'), '/media');
-    }
-  }
+		else {
+			$sPath = Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']);
+
+			if (is_file($sPath)) {
+				unlink($sPath);
+				return Helper::successMessage(I18n::get('success.file.destroy'), '/media');
+			}
+			else
+				return Helper::errorMessage(I18n::get('error.missing.file'), '/media');
+		}
+	}
 }

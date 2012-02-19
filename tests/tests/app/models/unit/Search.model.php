@@ -14,31 +14,15 @@ require_once PATH_STANDARD . '/app/models/Search.model.php';
 
 use \CandyCMS\Model\Search as Search;
 
-class TestOfSearchModel extends UnitTestCase {
-
-	public $oObject;
-	protected $_aRequest;
-	protected $_aSession;
+class TestOfSearchModel extends CandyUnitTest {
 
 	function setUp() {
-		$this->_aRequest	= array('section' => 'search');
-		$this->_aSession['userdata'] = array(
-				'email' => '',
-				'facebook_id' => '',
-				'id' => 0,
-				'name' => '',
-				'surname' => '',
-				'password' => '',
-				'role' => 0,
-				'full_name' => ''
-		);
-
-		$this->oObject = new Search($this->_aRequest, $this->_aSession);
+		$this->aRequest['section'] = 'search';
+		$this->oObject = new Search($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
 		parent::tearDown();
-		unset($this->_aRequest, $this->_aFile, $this->_aCookie, $this->_aSession['userdata']);
 	}
 
 	/**

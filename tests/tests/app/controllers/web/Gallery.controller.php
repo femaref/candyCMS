@@ -14,10 +14,18 @@ require_once PATH_STANDARD . '/app/controllers/Gallery.controller.php';
 
 use \CandyCMS\Controller\Gallery as Gallery;
 
-class WebTestOfGalleryController extends WebTestCase {
+class WebTestOfGalleryController extends CandyWebTest {
+
+	function setUp() {
+		$this->aRequest['section'] = 'gallery';
+	}
+
+	function tearDown() {
+		parent::tearDown();
+	}
 
 	function testDirIsWritable() {
-		$sFile = PATH_STANDARD . '/upload/gallery/test.log';
+		$sFile = PATH_STANDARD . '/upload/' . $this->aRequest['section'] . '/test.log';
 		$oFile = fopen($sFile, 'a');
 		fwrite($oFile, 'Is writeable.' . "\n");
 		fclose($oFile);

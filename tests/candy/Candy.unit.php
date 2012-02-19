@@ -22,6 +22,8 @@ abstract class CandyUnitTest extends UnitTestCase {
 	public $aFile;
 	public $aCookie;
 
+  public $iLastInsertId;
+
 	function __construct() {
 		parent::__construct();
 

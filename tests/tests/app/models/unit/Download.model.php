@@ -14,66 +14,44 @@ require_once PATH_STANDARD . '/app/models/Download.model.php';
 
 use \CandyCMS\Model\Download as Download;
 
-class UnitTestOfDownloadModel extends UnitTestCase {
-
-	public $oObject;
-	protected $_aRequest;
-	protected $_aSession;
-	protected $_aFile;
-	protected $_aCookie;
-
-	# Last entry
-  public $iLastInsertId;
+class UnitTestOfDownloadModel extends CandyUnitTest {
 
   function setUp() {
-
-    $this->_aRequest = array(
+    $this->aRequest = array(
 				'title' => 'Title',
 				'content' => 'Content',
 				'category' => 'Category',
 				'downloads' => 0,
 				'section' => 'download');
 
-		$this->_aSession['userdata'] = array(
-				'email' => '',
-				'facebook_id' => '',
-				'id' => 0,
-				'name' => '',
-				'surname' => '',
-				'password' => '',
-				'role' => 0,
-				'full_name' => ''
-		);
-
-    $this->oObject = new Download($aRequest, $aSession);
-  }
+		$this->oObject = new Download($this->aRequest, $this->aSession);
+	}
 
 	function tearDown() {
 		parent::tearDown();
-		unset($this->_aRequest, $this->_aSession['userdata']);
 	}
 
   function testCreate() {
-    $this->assertTrue($this->oDownload->create('test.test', 'test'));
+    $this->assertTrue($this->oObject->create('filename', 'extension'));
 
     $this->iLastInsertId = (int) Download::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'integer', 'Download #' . $this->iLastInsertId . ' created.');
+    $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetData() {
-    $this->assertIsA($this->oDownload->getData(0), 'array');
-    $this->assertIsA($this->oDownload->getData(), 'array');
+    $this->assertIsA($this->oObject->getData(0), 'array');
+    $this->assertIsA($this->oObject->getData(), 'array');
   }
 
   function testUpdate() {
-    $this->assertTrue($this->oDownload->update($this->iLastInsertId), 'Download #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->update($this->iLastInsertId));
   }
 
   function testUpdateDownloadCount() {
-    $this->assertTrue($this->oDownload->updateDownloadCount($this->iLastInsertId), 'Download count #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->updateDownloadCount($this->iLastInsertId));
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oDownload->destroy($this->iLastInsertId), 'Download #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oObject->destroy($this->iLastInsertId));
   }
 }
