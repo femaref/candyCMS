@@ -43,11 +43,13 @@ class WebTestOfDownloadController extends CandyWebTest {
 
 	function testUpdateDownloadAsGuest() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/update'));
+    $this->assertResponse(200);
 		$this->assertText(I18n::get('error.missing.permission'));
 	}
 
 	function testDestroyAsGuest() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/destroy'));
+    $this->assertResponse(200);
 		$this->assertText(I18n::get('error.missing.permission'));
 	}
 

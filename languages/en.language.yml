@@ -47,6 +47,7 @@ global:
     email: Email
     send: Send Mail
     verification: Verify Email
+  event: Event
   file: File
   files: Files
   gallery: Gallery

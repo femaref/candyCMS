@@ -31,6 +31,7 @@ ErrorDocument 500 /error/500
   RewriteRule ^(disclaimer|impressum)$ index.php?section=content&id=1 [L,QSA,NC]
   RewriteRule ^help/BB-?Code$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
 
+  RewriteRule ^calendar/([0-9]+)$ index.php?section=calendar&id=$1&page=1&ajax=true [L,QSA,NC]
   RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2&page=1 [L,QSA,NC]
   RewriteRule ^media/(.*)/destroy$ index.php?section=media&action=destroy&id=$1&page=1 [L,QSA,NC]
   RewriteRule ^user/([A-Za-z0-9]+)/verification$ index.php?section=user&action=verification&code=$1 [L,QSA,NC]

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PHP unit tests.
+ * PHP unit tests
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
@@ -51,5 +51,34 @@ class UnitTestOfIndexController extends CandyUnitTest {
 
 		$this->assertTrue(file_exists($sFile), 'Upload folder is basically writeable.');
 		@unlink($sFile);
+	}
+}
+
+class WebTestOfIndexController extends CandyWebTest {
+
+	function setUp() {
+		$this->oObject = new Index($this->aRequest, $this->aSession);
+	}
+
+	function tearDown() {
+		parent::tearDown();
+	}
+
+	function testShowIndexAsGuest() {
+		$this->assertTrue($this->get(WEBSITE_URL));
+		$this->assertResponse(200);
+		$this->assertText('Login'); # This should be on every page.
+	}
+
+	function testShow404() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
+		$this->assertResponse(404);
+	}
+
+	function testShowSampleAddon() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/sample'));
+		$this->assertResponse(200);
+		$this->assertText('Sample');
+		$this->assertNoText('Error');
 	}
 }

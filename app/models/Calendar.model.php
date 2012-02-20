@@ -28,13 +28,7 @@ class Calendar extends Main {
 	 *
 	 */
 	private function _setData($bUpdate) {
-
-		# Unset ID because if we got an archive action, there also must exists an ID and
-		# this causes a bug
-		if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive')
-			unset($this->_iId);
-
-		if (empty($this->_iId)) {
+		if (empty($this->_iId) || isset($this->_aRequest['action'])) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
 					$iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
@@ -114,7 +108,8 @@ class Calendar extends Main {
 		else {
 			try {
 				$oQuery = $this->_oDb->prepare("SELECT
-                                          *
+                                          *,
+                                          DATE_ADD(end_date, INTERVAL 1 DAY) as ics_end_date
                                         FROM
                                           " . SQL_PREFIX . "calendars
                                         WHERE
@@ -129,7 +124,19 @@ class Calendar extends Main {
         exit('SQL error.');
       }
 
-			$this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
+			if($bUpdate == true)
+        $this->_aData = $this->_formatForUpdate($aRow);
+
+      else {
+        $this->_aData = $this->_formatForOutput($aRow, 'calendar');
+
+        # Overide for iCalendar specs
+        $this->_aData['start_date'] = str_replace('-', '', $aRow['start_date']);
+        $this->_aData['end_date']   = $aRow['end_date'] == '0000-00-00' ?
+                str_replace('-', '', $this->_aData['start_date']) :
+                str_replace('-', '', $aRow['ics_end_date']);
+        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His') . 'Z';
+      }
 		}
 
 		return $this->_aData;

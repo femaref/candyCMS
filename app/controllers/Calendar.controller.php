@@ -37,14 +37,25 @@ class Calendar extends Main {
 	 *
 	 */
 	public function show() {
-		$this->_aData = $this->_oModel->getData($this->_iId);
-		$this->oSmarty->assign('calendar', $this->_aData);
+		$this->_aData = & $this->_oModel->getData($this->_iId);
+    $this->oSmarty->assign('calendar', $this->_aData);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    # Show .ics
+    if(!empty($this->_iId) && !isset($this->_aRequest['action'])) {
+      header('Content-type: text/calendar');
+      header('Content-Disposition: attachment; filename="' . I18n::get('global.event') . 'test.ics"');
+      $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_sTemplateFolder, 'ics'));
+      return $this->oSmarty->fetch('ics.tpl', UNIQUE_ID);
+    }
 
-    $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    # Show overview
+    else {
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
 	}
 
   /**

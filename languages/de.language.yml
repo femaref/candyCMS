@@ -47,6 +47,7 @@ global:
     email: E-Mail-Adresse
     send: E-Mail versenden
     verification: E-Mail-Adresse bestätigen
+  event: Termin
   file: Datei
   files: Dateien
   gallery: Galerie

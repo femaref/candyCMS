@@ -37,22 +37,21 @@ class AllFileTests extends TestSuite {
 		$this->TestSuite('Sections');
 
 		# Index
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/unit/Index.controller.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Index.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
 		# Download
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/unit/Download.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Download.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Download.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Download.controller.php');
 
 		# Error
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Error.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Error.controller.php');
 
 		# Gallery
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Gallery.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
 
 		# Search
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/unit/Search.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/web/Search.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
 	}
 }
 

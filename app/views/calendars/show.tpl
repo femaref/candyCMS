@@ -38,9 +38,7 @@
           <tr>
             <th class='column-date headerSortDown'>{$lang.global.date.date}</th>
             <th class='column-description'>{$lang.global.description}</th>
-            {if $USER_ROLE >= 3}
-              <th class='column-actions'></th>
-            {/if}
+            <th class='column-actions'></th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +47,9 @@
               <td>
                 {$d.start_date}
                 {if $d.end_date > 1}
+                  &nbsp;
                   -
+                  &nbsp;
                   {$d.end_date}
                 {/if}
               </td>
@@ -62,8 +62,8 @@
                   {$d.content}
                 {/if}
               </td>
-              {if $USER_ROLE >= 3}
-                <td>
+              <td>
+                {if $USER_ROLE >= 3}
                   <a href='/calendar/{$d.id}/update'>
                     <img src='%PATH_IMAGES%/spacer.png'
                         class='icon-update js-tooltip'
@@ -79,8 +79,16 @@
                         title='{$lang.global.destroy.destroy}'
                         width='16' height='16' />
                   </a>
-                </td>
-              {/if}
+                {else}
+                  <a href='/calendar/{$d.id}'>
+                    <img src='%PATH_IMAGES%/spacer.png'
+                        class='icon-calendar_add js-tooltip'
+                        alt='{$lang.calendar.title.create}'
+                        title='{$lang.calendar.title.create}'
+                        width='16' height='16' />
+                  </a>
+                {/if}
+              </td>
             </tr>
           {/foreach}
         </tbody>
