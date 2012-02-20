@@ -96,7 +96,7 @@ class Content extends Main {
     }
 
     foreach ($aResult as $aRow) {
-      if ($bUpdate == true)
+      if ($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {

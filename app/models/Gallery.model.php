@@ -94,7 +94,7 @@ class Gallery extends Main {
     }
 
     # Update a single entry. Fix it with 0 o
-    if ($bUpdate == true)
+    if ($bUpdate === true)
       $this->_aData = $this->_formatForUpdate($aResult[0]);
 
     else {
@@ -319,8 +319,8 @@ class Gallery extends Main {
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->execute();
 
-      $bReturn = $oQuery->execute();
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {
@@ -463,7 +463,7 @@ class Gallery extends Main {
                                           album_id = :album_id");
 
         $oQuery->bindParam('album_id', $iId);
-        $bResult = $oQuery->execute();
+        $oQuery->execute();
       }
       catch (\PDOException $p) {
         try {

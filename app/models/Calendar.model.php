@@ -124,7 +124,7 @@ class Calendar extends Main {
         exit('SQL error.');
       }
 
-			if($bUpdate == true)
+			if($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
@@ -135,7 +135,7 @@ class Calendar extends Main {
         $this->_aData['end_date']   = $aRow['end_date'] == '0000-00-00' ?
                 str_replace('-', '', $this->_aData['start_date']) :
                 str_replace('-', '', $aRow['ics_end_date']);
-        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His') . 'Z';
+        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His', $aRow['date']) . 'Z';
       }
 		}
 

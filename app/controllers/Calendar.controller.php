@@ -41,9 +41,10 @@ class Calendar extends Main {
     $this->oSmarty->assign('calendar', $this->_aData);
 
     # Show .ics
-    if(!empty($this->_iId) && !isset($this->_aRequest['action'])) {
-      header('Content-type: text/calendar');
-      header('Content-Disposition: attachment; filename="' . I18n::get('global.event') . 'test.ics"');
+    if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
+      header('Content-type: text/calendar; charset=utf-8');
+      header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
+
       $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_sTemplateFolder, 'ics'));
       return $this->oSmarty->fetch('ics.tpl', UNIQUE_ID);
     }

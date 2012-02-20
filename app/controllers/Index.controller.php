@@ -595,8 +595,11 @@ class Index {
     if (ALLOW_PLUGINS !== '')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
-    header("Content-Type: text/html; charset=utf-8");
-		return $sCachedHTML;
+    # Do only send html charset if we are really sure. This caused problems with .ics files.
+    if (AJAX_REQUEST === false)
+      header("Content-Type: text/html; charset=utf-8");
+
+    return $sCachedHTML;
 	}
 
   /**

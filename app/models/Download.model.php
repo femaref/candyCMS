@@ -81,7 +81,7 @@ class Download extends Main {
         exit('SQL error.');
       }
 
-      $this->_aData = ($bUpdate == true) ? $this->_formatForUpdate($aRow) : $aRow;
+      $this->_aData = $bUpdate === true ? $this->_formatForUpdate($aRow) : $aRow;
     }
 
     return $this->_aData;

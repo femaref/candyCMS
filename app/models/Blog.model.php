@@ -143,7 +143,7 @@ class Blog extends Main {
         exit('SQL error.');
       }
 
-      if ($bUpdate == true)
+      if ($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
