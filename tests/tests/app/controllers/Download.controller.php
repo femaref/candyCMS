@@ -28,6 +28,7 @@ class WebTestOfDownloadController extends CandyWebTest {
 
 	function testShowDownloadsAsGuest() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
+		$this->assertResponse(200);
 
 		# There must be at least one file with KB ending.
 		$this->assertText('KB', 'There is no file with KB listing. Please add a download.');

@@ -29,6 +29,7 @@ class WebTestOfErrorController extends CandyWebTest {
 
 	function testShow404AsGuest() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/404'));
+		$this->assertResponse(200);
 		$this->assertText(I18n::get('error.404.title'));
 	}
 }

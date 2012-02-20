@@ -13,6 +13,7 @@
 require_once PATH_STANDARD . '/app/controllers/Gallery.controller.php';
 
 use \CandyCMS\Controller\Gallery as Gallery;
+use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfGalleryController extends CandyWebTest {
 
@@ -22,6 +23,14 @@ class WebTestOfGalleryController extends CandyWebTest {
 
 	function tearDown() {
 		parent::tearDown();
+	}
+
+	function testShowGalleryAsGuest() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
+		$this->assertResponse(200);
+
+		# Todo: Something
+		$this->assertText(I18n::get('global.files'), 'There is no file with KB listing. Please add a download.');
 	}
 
 	function testDirIsWritable() {
