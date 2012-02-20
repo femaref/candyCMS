@@ -25,23 +25,20 @@
         </li>
         {foreach $c.dates as $d}
           <li>
-            {if $USER_ROLE >= 3}
-              <a href='/calendar/{$d.id}/update'>
-            {/if}
-            <h3>{$d.title}</h3>
+            <h2>
+              {$d.title}
+            </h2>
             <p>
-              <strong>{$d.start_date}
-                {if $d.end_date > 1}
-                -
-                {$d.end_date}
-                {/if}
-              </strong>
+              {$d.start_date}
+              {if $d.end_date > 1}
+              -
+              {$d.end_date}
+              {/if}
             </p>
             {if $d.content !== ''}
-              <p>{$d.content}</p>
-            {/if}
-            {if $USER_ROLE >= 3}
-              </a>
+              <p>
+                {$d.content}
+              </p>
             {/if}
           </li>
         {/foreach}

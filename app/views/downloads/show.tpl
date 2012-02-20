@@ -52,7 +52,7 @@
                 {$f.downloads} {$lang.global.downloads}
               {/if}
             </td>
-            <td>
+            <td class='center'>
               {if $USER_ROLE >= 3}
                 <a href='/download/{$f.id}/update'>
                   <img src='%PATH_IMAGES%/spacer.png'

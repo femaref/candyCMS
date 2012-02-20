@@ -45,6 +45,11 @@ body {
   padding-top:60px;
 }
 
+// Remove outlines on Firefox and Opera
+a:active, a:link {
+  outline:none;
+}
+
 // Mark active tablesorter th
 th.headerSortUp, th.headerSortDown {
   background-color: @grayLighter;
@@ -103,11 +108,11 @@ footer img {
 
 #calendar {
   .column-date {
-    width:20%;
+    width:30%;
   }
 
   .column-description {
-    width:70%;
+    width:60%;
   }
 
   .column-actions {

@@ -62,7 +62,7 @@
                   {$d.content}
                 {/if}
               </td>
-              <td>
+              <td class='center'>
                 {if $USER_ROLE >= 3}
                   <a href='/calendar/{$d.id}/update'>
                     <img src='%PATH_IMAGES%/spacer.png'
@@ -82,9 +82,8 @@
                 {else}
                   <a href='/calendar/{$d.id}'>
                     <img src='%PATH_IMAGES%/spacer.png'
-                        class='icon-calendar_add js-tooltip'
+                        class='icon-calendar_add'
                         alt='{$lang.calendar.title.create}'
-                        title='{$lang.calendar.title.create}'
                         width='16' height='16' />
                   </a>
                 {/if}

@@ -43,7 +43,7 @@
       <ul class='thumbnails'>
         {foreach $files as $f}
           <li>
-            <a href='{$f.url_popup}' class=' thumbnail js-fancybox js-tooltip'
+            <a href='{$f.url_popup}' class=' thumbnail js-fancybox'
               rel='images' title='{$f.content}'>
               <img src='{$f.url_thumb}' alt='{$f.content}' title='' class='js-image' />
             </a>
