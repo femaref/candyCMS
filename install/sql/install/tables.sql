@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `blogs`;
 
 CREATE TABLE `blogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_id` int(11) NOT NULL DEFAULT '1',
+  `author_id` int(11) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `teaser` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `tags` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `contents`;
 
 CREATE TABLE `contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_id` int(11) NOT NULL DEFAULT '1',
+  `author_id` int(11) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `teaser` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `keywords` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,

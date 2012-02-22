@@ -122,23 +122,23 @@ abstract class Main {
    *
    */
   protected static function _connectToDatabase() {
-    if (empty(self::$_oDbStatic)) {
-      try {
-        self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB,
-                        SQL_USER,
-                        SQL_PASSWORD,
-                        array(PDO::ATTR_PERSISTENT => true));
+		if (empty(self::$_oDbStatic)) {
+			try {
+				self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE,
+												SQL_USER,
+												SQL_PASSWORD,
+												array(PDO::ATTR_PERSISTENT => true));
 
-        self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      }
-      catch (PDOException $p) {
-        AdvancedException::reportBoth('0102 - ' . $p->getMessage());
-        exit('SQL error.');
-      }
-    }
+				self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			}
+			catch (PDOException $p) {
+				AdvancedException::reportBoth('0102 - ' . $p->getMessage());
+				exit('SQL error.');
+			}
+		}
 
-    return self::$_oDbStatic;
-  }
+		return self::$_oDbStatic;
+	}
 
   /**
    * Disconnect from database.

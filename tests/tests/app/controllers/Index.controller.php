@@ -74,13 +74,9 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testBackupDirIsWritable() {
-		$sFile = PATH_STANDARD . '/backup/test.log';
-		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Backup dir is writeable.' . "\n");
-		fclose($oFile);
-
+		$sFile = parent::createFile('backup');
 		$this->assertTrue(file_exists($sFile), 'Backup folder is writeable.');
-		@unlink($sFile);
+		unlink($sFile);
 	}
 }
 

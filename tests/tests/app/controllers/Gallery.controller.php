@@ -30,7 +30,7 @@ class WebTestOfGalleryController extends CandyWebTest {
 		$this->assertResponse(200);
 
 		# Todo: Something
-		$this->assertText(I18n::get('global.files'), 'There is no file with KB listing. Please add a download.');
+		$this->assertText(I18n::get('global.files'), 'There is no file.');
 	}
 
 	function testDirIsWritable() {

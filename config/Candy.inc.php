@@ -146,7 +146,7 @@ define('DEFAULT_TIME_FORMAT', '%H:%M %p');
 # DEFAULT: None. Create one before you install this software
 # NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL
 # DESTROY THEIR LOGINS!
-define('RANDOM_HASH', 'h7da87@#asd0io08');
+define('RANDOM_HASH', '');
 
 # ------------------------------------------------------------------------------
 

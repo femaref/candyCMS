@@ -41,4 +41,13 @@ abstract class CandyUnitTest extends UnitTestCase {
 				'full_name' => ''
 		);
 	}
+
+	function createFile($sPath) {
+		$sFile = PATH_STANDARD . '/' . $sPath . '/test.log';
+		$oFile = fopen($sFile, 'a');
+		fwrite($oFile, 'Is writeable.' . "\n");
+		fclose($oFile);
+
+		return $sFile;
+	}
 }
