@@ -22,7 +22,7 @@
               <em style='text-decoration:line-through'>{$lang.global.deleted_user}</em>
             {/if}
             <br />
-            <time datetime='{$c.date_w3c}'>{$c.datetime}</time>
+            <time datetime='{$c.datetime_w3c}'>{$c.datetime}</time>
           </header>
           <div id='js-comment_{$c.id}'>
             {$c.content}

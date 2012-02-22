@@ -34,7 +34,7 @@
             {/if}
           </h2>
           <p>
-            <time datetime='{$b.date_w3c}'>
+            <time datetime='{$b.datetime_w3c}'>
               {$b.datetime}
             </time>
             &nbsp;

@@ -189,10 +189,12 @@ abstract class Main {
     if (isset($aRow['date'])) {
       $aData['time'] = Helper::formatTimestamp($aRow['date'], 2);
       $aData['date'] = Helper::formatTimestamp($aRow['date'], 1);
-      $aData['datetime'] = Helper::formatTimestamp($aRow['date']);
       $aData['date_raw'] = (int) $aRow['date'];
-      $aData['date_rss'] = date('D, d M Y H:i:s O', $aRow['date']);
-      $aData['date_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
+      $aData['date_w3c'] = date('Y-m-d', $aRow['date']);
+
+      $aData['datetime'] = Helper::formatTimestamp($aRow['date']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aRow['date']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aRow['date']);
 
       # SEO optimization
       # Entry is less than a day old
