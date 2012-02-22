@@ -28,6 +28,7 @@ class Blog extends Main {
    * @param boolean $bUpdate prepare data for update
    * @param integer $iLimit blog post limit
    * @return array data
+	 * @todo published to b.published
    *
    */
   private function _setData($bUpdate, $iLimit) {
@@ -35,7 +36,7 @@ class Blog extends Main {
 
 			# Show unpublished items to moderators or administrators only
       $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
-							"WHERE published = '1'" :
+							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'" :
 							'';
 
       # Search blog for tags
@@ -202,6 +203,7 @@ class Blog extends Main {
                                           teaser,
                                           keywords,
                                           content,
+																					language,
                                           date,
                                           published)
                                       VALUES
@@ -211,6 +213,7 @@ class Blog extends Main {
                                           :teaser,
                                           :keywords,
                                           :content,
+																					:language,
                                           :date,
                                           :published )");
 
@@ -220,6 +223,7 @@ class Blog extends Main {
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('language', Helper::formatInput($this->_aRequest['language']), PDO::PARAM_STR);
       $oQuery->bindParam('date', time(), PDO::PARAM_INT);
       $oQuery->bindParam('published', $this->_aRequest['published'], PDO::PARAM_INT);
 
@@ -276,6 +280,7 @@ class Blog extends Main {
                                         teaser = :teaser,
                                         keywords = :keywords,
                                         content = :content,
+																				language = :language,
                                         date = :date,
                                         date_modified = :date_modified,
                                         published = :published
@@ -288,6 +293,7 @@ class Blog extends Main {
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
       $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content'], false), PDO::PARAM_STR);
+      $oQuery->bindParam('language', Helper::formatInput($this->_aRequest['language']), PDO::PARAM_STR);
       $oQuery->bindParam('date', $iDate, PDO::PARAM_INT);
       $oQuery->bindParam('date_modified', $iDateModified, PDO::PARAM_INT);
       $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);

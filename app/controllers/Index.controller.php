@@ -188,10 +188,13 @@ class Index {
       define('DEFAULT_LANGUAGE', 'en');
 
     # We got a language request? Let's switch the language!
-    if (isset($this->_aRequest['language']) && file_exists('languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
+    if (isset($this->_aRequest['language']) &&
+						file_exists(PATH_STANDARD . '/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
+						!isset($this->_aRequest['section'])) {
       $this->_sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
+			exit();
     }
 
     # There is no request, but there might be a cookie instead.

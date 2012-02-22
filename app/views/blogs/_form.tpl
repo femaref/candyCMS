@@ -44,7 +44,7 @@
         <input type='text' name='tags' id='input-tags'
               data-provide='typeahead' value="{$tags}"
               data-source="{$_tags_}" data-items='8'
-              class='span4 required' autocomplete='off' required />
+              class='span4' autocomplete='off' />
         <p class='help-block'>
           {$lang.blog.info.tag}
         </p>
@@ -70,6 +70,18 @@
         <textarea name='content' class='js-tinymce required'
                   id='input-content' required>{$content}</textarea>
         {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
+      </div>
+    </div>
+    <div class='control-group'>
+      <label for='input-language' class='control-label'>
+        {$lang.global.language}
+      </label>
+      <div class='controls'>
+        <select name='language' class='span4'>
+          {foreach $languages as $l}
+            <option value='{$l}' {if $l == $language}selected='selected'{/if}>{$l}</option>
+          {/foreach}
+        </select>
       </div>
     </div>
     <div class='control-group'>

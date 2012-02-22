@@ -193,6 +193,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
+		I18n::unsetLanguage();
 		unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
   }
 

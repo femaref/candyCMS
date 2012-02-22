@@ -58,6 +58,7 @@ global:
     image: Image
   in: in
   keywords: Keywords
+  language: Language
   last_update: last Update
   location: Location
   login: Login

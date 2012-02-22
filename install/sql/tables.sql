@@ -8,6 +8,7 @@ CREATE TABLE `blogs` (
   `tags` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `keywords` varchar(160) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `language` VARCHAR(2)  NULL  DEFAULT 'en',
   `date` int(11) DEFAULT NULL,
   `date_modified` int(11) DEFAULT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '0',

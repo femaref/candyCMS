@@ -43,13 +43,43 @@ class UnitTestOfIndexController extends CandyUnitTest {
 		$this->assertIsA($this->oObject->setTemplate(), 'string');
 	}
 
-	function testDirIsWritable() {
+	function testUploadDirIsWritable() {
 		$sFile = PATH_STANDARD . '/upload/temp/test.log';
 		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Is writeable.' . "\n");
+		fwrite($oFile, 'Upload folder is writeable.' . "\n");
 		fclose($oFile);
 
 		$this->assertTrue(file_exists($sFile), 'Upload folder is basically writeable.');
+		@unlink($sFile);
+	}
+
+	function testCacheDirIsWritable() {
+		$sFile = PATH_STANDARD . '/cache/test.log';
+		$oFile = fopen($sFile, 'a');
+		fwrite($oFile, 'Cache is writeable.' . "\n");
+		fclose($oFile);
+
+		$this->assertTrue(file_exists($sFile), 'Cache folder is writeable.');
+		@unlink($sFile);
+	}
+
+	function testCompileDirIsWritable() {
+		$sFile = PATH_STANDARD . '/compile/test.log';
+		$oFile = fopen($sFile, 'a');
+		fwrite($oFile, 'Compile dir is writeable.' . "\n");
+		fclose($oFile);
+
+		$this->assertTrue(file_exists($sFile), 'Compile folder is writeable.');
+		@unlink($sFile);
+	}
+
+	function testBackupDirIsWritable() {
+		$sFile = PATH_STANDARD . '/backup/test.log';
+		$oFile = fopen($sFile, 'a');
+		fwrite($oFile, 'Backup dir is writeable.' . "\n");
+		fclose($oFile);
+
+		$this->assertTrue(file_exists($sFile), 'Backup folder is writeable.');
 		@unlink($sFile);
 	}
 }
