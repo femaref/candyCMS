@@ -40,7 +40,7 @@ class AdvancedException extends \Exception {
   public static function sendAdminMail($sMessage) {
 		if (WEBSITE_MODE == 'production') {
 			if (!class_exists('\CandyCMS\Controller\Mail'))
-				require_once 'app/controllers/Mail.controller.php';
+				require_once PATH_STANDARD . '/app/controllers/Mail.controller.php';
 
 			$sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
 			return Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
@@ -48,7 +48,7 @@ class AdvancedException extends \Exception {
 	}
 
   /**
-	 * Write an error message to own log.
+	 * Write down an error message to own log.
 	 *
 	 * @static
 	 * @access public
@@ -57,7 +57,7 @@ class AdvancedException extends \Exception {
 	public static function writeLog($sMessage) {
 		$sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
 
-		$sFileName = PATH_STANDARD . '/logs/error.log';
+		$sFileName = PATH_STANDARD . '/logs/' . WEBSITE_MODE . '.log';
 		$oFile = fopen($sFileName, 'a');
 		fputs($oFile, $sMessage . "\n");
 		fclose($oFile);
