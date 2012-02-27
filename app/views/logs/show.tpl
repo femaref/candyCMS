@@ -44,7 +44,7 @@
         </td>
         <td class='center'>
           <a href="#" onclick="confirmDestroy('/log/{$l.id}/destroy')">
-            <img src='%PATH_IMAGES%/spacer.png'
+            <img src='%PATH_IMAGES%/candy.global/spacer.png'
                 class='icon-destroy js-tooltip'
                 alt='{$lang.global.destroy.destroy}'
                 title='{$lang.global.destroy.destroy}'
@@ -63,7 +63,7 @@
         navSelector  : 'div.pagination',
         nextSelector : 'div.pagination a:first',
         itemSelector : 'table tbody tr',
-        loading : { msgText : '', img: '%PATH_IMAGES%/loading.gif', loadingText  : '', finishedMsg  : '' }
+        loading : { msgText : '', img: '%PATH_IMAGES%/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
       });
     });
 

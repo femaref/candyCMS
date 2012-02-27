@@ -15,6 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Content as Model;
+use Smarty;
 
 class Content extends Main {
 
@@ -38,37 +39,41 @@ class Content extends Main {
    *
    */
   public function show() {
-    $this->_aData = $this->_oModel->getData($this->_iId);
-    $this->oSmarty->assign('content', $this->_aData);
+    if (empty($this->_iId)) {
+      $this->_setTitle(I18n::get('global.manager.content'));
 
-		# If data is not found, redirect to 404
-		if (empty($this->_aData[$this->_iId]['id']) && !empty($this->_iId))
-			Helper::redirectTo('/error/404');
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-		else {
-			if (empty($this->_iId)) {
-				$this->_setTitle(I18n::get('global.manager.content'));
+      $this->_aData = $this->_oModel->getData($this->_iId);
+      $this->oSmarty->assign('content', $this->_aData);
 
-        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
-        $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
+    else {
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-        $this->oSmarty->setTemplateDir($sTemplateDir);
-        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-			}
-			else {
-				if (!empty($this->_aData)) {
-					$this->_setDescription($this->_aData[$this->_iId]['teaser']);
-					$this->_setKeywords($this->_aData[$this->_iId]['keywords']);
-					$this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
-				}
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setCacheLifetime(300);
 
-        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-        $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+        $this->_aData = $this->_oModel->getData($this->_iId);
+        $this->oSmarty->assign('content', $this->_aData);
 
-        $this->oSmarty->setTemplateDir($sTemplateDir);
-        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-			}
-		}
+        if (!empty($this->_aData)) {
+          $this->_setDescription($this->_aData[$this->_iId]['teaser']);
+          $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
+          $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
+        }
+        else
+          Helper::redirectTo('/error/404');
+      }
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
   }
 
   /**

@@ -25,7 +25,7 @@
           <footer>
             <a href='#create'
               onclick="quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
-              <img src='%PATH_IMAGES%/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
+              <img src='%PATH_IMAGES%/candy.global/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                   title='{$lang.global.quote.quote}' />
             </a>
           </footer>
@@ -41,7 +41,7 @@
         navSelector  : "div.pages",
         nextSelector : "div.pages a:first",
         itemSelector : "#js-commments article",
-        loading : { msgText : '', img: "%PATH_IMAGES%/loading.gif", loadingText  : '', finishedMsg  : '' }
+        loading : { msgText : '', img: "%PATH_IMAGES%/candy.global/loading.gif", loadingText  : '', finishedMsg  : '' }
       });
     });
   </script>

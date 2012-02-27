@@ -254,7 +254,7 @@ abstract class Main {
     $this->oSmarty->use_sub_dirs = true;
 
     # Only compile our templates on production mode.
-    if (WEBSITE_MODE == 'production')
+    if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging')
 			$this->oSmarty->setCompileCheck(false);
 
     # Clear cache on development mode or when we force it via a request.
@@ -279,6 +279,7 @@ abstract class Main {
 		$this->oSmarty->assign('VERSION', VERSION);
 		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
+		$this->oSmarty->assign('WEBSITE_LANDING_PAGE', WEBSITE_LANDING_PAGE);
 		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
 		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
@@ -371,8 +372,8 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
-	}
+    return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
+  }
 
 	/**
 	 * Set the page content.

@@ -452,7 +452,8 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', substr(md5($this->_aSession['userdata']['id'] . WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10));
+			define('UNIQUE_ID', $this->_aRequest['section'] . '|' . substr(md5($this->_aSession['userdata']['id'] .
+              WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10) . '|' . substr(md5(CURRENT_URL), 0, 10));
 
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
 		if (!isset($this->_aRequest['section']) ||
@@ -525,7 +526,7 @@ class Index {
       # System required variables
       # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . I18n::get('website.title'));
+			$oSection->oSmarty->assign('_title_', $oSection->getTitle());
       $oSection->oSmarty->assign('_update_avaiable_', $this->_checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');

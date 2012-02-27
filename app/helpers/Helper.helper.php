@@ -178,18 +178,16 @@ class Helper {
     $iSize = Helper::removeSlash(@filesize(Helper::removeSlash($sPath)));
 
     if ($iSize > 1024 && $iSize < 1048576)
-      $sReturn = round(($iSize / 1024), 2) . ' KB';
+      return round(($iSize / 1024), 2) . ' KB';
 
     elseif ($iSize >= 1048576 && $iSize < 1073741824)
-      $sReturn = round(($iSize / 1048576), 2) . ' MB';
+      return round(($iSize / 1048576), 2) . ' MB';
 
     elseif ($iSize >= 1073741824)
-      $sReturn = round(($iSize / 1073741824), 2) . ' GB';
+      return round(($iSize / 1073741824), 2) . ' GB';
 
     else
-      $sReturn = round($iSize, 2) . ' Byte';
-
-    return $sReturn;
+      return round($iSize, 2) . ' Byte';
   }
 
 	/**

@@ -16,6 +16,7 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
 use CandyCMS\Model\User as Model;
 use MCAPI;
+use Smarty;
 
 class User extends Main {
 
@@ -157,9 +158,6 @@ class User extends Main {
 		if (!empty($iUserId))
 			$this->_iId = (int) $iUserId;
 
-		$this->_aData = & $this->_oModel->getData($iUserId);
-    $this->oSmarty->assign('user', $this->_aData);
-
 		if (empty($this->_iId)) {
 			$this->_setTitle(I18n::get('user.title.overview'));
 			$this->_setDescription(I18n::get('user.title.overview'));
@@ -171,17 +169,27 @@ class User extends Main {
         $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
+        $this->_aData = & $this->_oModel->getData($iUserId);
+        $this->oSmarty->assign('user', $this->_aData);
+
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
 		}
 		else {
-			# Manage title and description (content)
-			$this->_setTitle($this->_aData[1]['full_name']);
-			$this->_setDescription($this->_aData[1]['full_name']);
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setCacheLifetime(300);
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+        $this->_aData = & $this->_oModel->getData($iUserId);
+        $this->oSmarty->assign('user', $this->_aData);
+
+        $this->_setTitle($this->_aData[1]['full_name']);
+        $this->_setDescription($this->_aData[1]['full_name']);
+      }
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

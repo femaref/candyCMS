@@ -58,7 +58,7 @@ class Gallery extends Main {
       $this->oSmarty->assign('gallery_content', $sAlbumDescription);
 
       $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight(I18n::get('global.gallery') . ': ' . $sAlbumName));
+      $this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
 
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');

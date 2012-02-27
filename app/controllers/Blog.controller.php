@@ -61,24 +61,24 @@ class Blog extends Main {
 			Helper::redirectTo('/error/404');
 
 		else {
-			# Load comments
-			if (!empty($this->_iId)) {
-				$oComments = new Comment($this->_aRequest, $this->_aSession);
-				$oComments->__init($this->_aData);
+      # Load comments
+      if (!empty($this->_iId)) {
+        $oComments = new Comment($this->_aRequest, $this->_aSession);
+        $oComments->__init($this->_aData);
 
-				$this->oSmarty->assign('_blog_footer_', $oComments->show());
-			}
+        $this->oSmarty->assign('_blog_footer_', $oComments->show());
+      }
 
-			# Load blog pages
+      # Load blog pages
       else
-				$this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
+        $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
 
-			# Create page title and description
-			$this->_setDescription($this->_setBlogDescription());
-			$this->_setKeywords($this->_setBlogKeywords());
-			$this->_setTitle($this->_setBlogTitle());
+      # Create page title and description
+      $this->_setDescription($this->_setBlogDescription());
+      $this->_setKeywords($this->_setBlogKeywords());
+      $this->_setTitle($this->_setBlogTitle());
 
-			$this->oSmarty->assign('blog', $this->_aData);
+      $this->oSmarty->assign('blog', $this->_aData);
 
 			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
@@ -143,7 +143,7 @@ class Blog extends Main {
 
     # default blog entry
     elseif (!empty($this->_iId))
-      return $this->_removeHighlight($this->_aData[1]['title']);
+      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blog');
 
     # show overview with pages
     else {

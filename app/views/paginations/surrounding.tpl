@@ -14,7 +14,7 @@
   <p class='center'>
     {if $_rss_section_}
       <a href='/rss/{$_rss_section_}'>
-        <img src='%PATH_IMAGES%/spacer.png' class='icon-rss js-tooltip'
+        <img src='%PATH_IMAGES%/candy.global/spacer.png' class='icon-rss js-tooltip'
             title='{$lang.global.rss}' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
     {/if}
