@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/gallery/{$_request_id_}/createfile'>
-        <img src='%PATH_IMAGES%/spacer.png'
+        <img src='%PATH_IMAGES%/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -23,7 +23,7 @@
         </small>
         {if $USER_ROLE >= 3}
           <a href='/gallery/{$_request_id_}/update'>
-            <img src='%PATH_IMAGES%/spacer.png'
+            <img src='%PATH_IMAGES%/candy.global/spacer.png'
                 class='icon-update js-tooltip'
                 alt='{$lang.global.update.update}'
                 title='{$lang.global.update.update}'
@@ -50,14 +50,14 @@
             {if $USER_ROLE >= 3}
               <p class='center'>
                 <a href='/gallery/{$f.id}/updatefile'>
-                  <img src='%PATH_IMAGES%/spacer.png'
+                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
                       title='{$lang.global.update.update}'
                       width='16' height='16' />
                 </a>
                 <a href='#' onclick="confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
-                  <img src='%PATH_IMAGES%/spacer.png'
+                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
                       title='{$lang.global.destroy.destroy}'
@@ -70,7 +70,7 @@
       </ul>
     <p class='center'>
       <a href='/rss/gallery/{$_request_id_}' class='js-tooltip' title='{$lang.global.rss}'>
-        <img src='%PATH_IMAGES%/spacer.png' class='icon-rss' alt='{$lang.global.rss}' width='16' height='16' />
+        <img src='%PATH_IMAGES%/candy.global/spacer.png' class='icon-rss' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
     </p>
     {/if}

@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/calendar/create'>
-        <img src='%PATH_IMAGES%/spacer.png'
+        <img src='%PATH_IMAGES%/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -65,7 +65,7 @@
               <td class='center'>
                 {if $USER_ROLE >= 3}
                   <a href='/calendar/{$d.id}/update'>
-                    <img src='%PATH_IMAGES%/spacer.png'
+                    <img src='%PATH_IMAGES%/candy.global/spacer.png'
                         class='icon-update js-tooltip'
                         alt='{$lang.global.update.update}'
                         title='{$lang.global.update.update}'
@@ -73,7 +73,7 @@
                   </a>
                   &nbsp;
                   <a href="#" onclick="confirmDestroy('/calendar/{$d.id}/destroy')">
-                    <img src='%PATH_IMAGES%/spacer.png'
+                    <img src='%PATH_IMAGES%/candy.global/spacer.png'
                         class='icon-destroy js-tooltip'
                         alt='{$lang.global.destroy.destroy}'
                         title='{$lang.global.destroy.destroy}'
@@ -81,7 +81,7 @@
                   </a>
                 {else}
                   <a href='/calendar/{$d.id}'>
-                    <img src='%PATH_IMAGES%/spacer.png'
+                    <img src='%PATH_IMAGES%/candy.global/spacer.png'
                         class='icon-calendar_add'
                         alt='{$lang.calendar.title.create}'
                         width='16' height='16' />

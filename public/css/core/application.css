@@ -2108,7 +2108,7 @@ div.capty-caption {
   z-index: 1104;
 }
 .fancybox-prev, .fancybox-next {
-  background: url("http://phpcms.localhost/public/less/core/../../images/spacer.png") repeat scroll 0 0 transparent;
+  background: url("http://phpcms.localhost/public/less/core/../../images/candy.global/spacer.png") repeat scroll 0 0 transparent;
   cursor: pointer;
   height: 100%;
   position: absolute;

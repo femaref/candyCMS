@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/download/create'>
-        <img src='%PATH_IMAGES%/spacer.png'
+        <img src='%PATH_IMAGES%/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -55,7 +55,7 @@
             <td class='center'>
               {if $USER_ROLE >= 3}
                 <a href='/download/{$f.id}/update'>
-                  <img src='%PATH_IMAGES%/spacer.png'
+                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
                       title='{$lang.global.update.update}'
@@ -63,7 +63,7 @@
                 </a>
                 &nbsp;
                 <a href="#" onclick="confirmDestroy('/download/{$f.id}/destroy')">
-                  <img src='%PATH_IMAGES%/spacer.png'
+                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
                       title='{$lang.global.destroy.destroy}'
@@ -71,7 +71,7 @@
                 </a>
               {else}
                 <a href="{$f.url}" target="_blank">
-                  <img src='%PATH_IMAGES%/spacer.png'
+                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
                        class="icon-download js-tooltip"
                        alt='{$lang.global.download}'
                        title='{$lang.global.download}'

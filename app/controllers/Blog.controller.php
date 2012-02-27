@@ -143,7 +143,7 @@ class Blog extends Main {
 
     # default blog entry
     elseif (!empty($this->_iId))
-      return $this->_removeHighlight($this->_aData[1]['title']);
+      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blog');
 
     # show overview with pages
     else {

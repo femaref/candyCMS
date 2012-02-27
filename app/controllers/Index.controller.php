@@ -525,7 +525,7 @@ class Index {
       # System required variables
       # *********************************************
 			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-			$oSection->oSmarty->assign('_title_', $oSection->getTitle() . ' - ' . I18n::get('website.title'));
+			$oSection->oSmarty->assign('_title_', $oSection->getTitle());
       $oSection->oSmarty->assign('_update_avaiable_', $this->_checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');

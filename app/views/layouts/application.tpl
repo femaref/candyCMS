@@ -49,7 +49,7 @@
         var lang = {$_json_language_};
       </script>
 
-      <title>{$_title_}</title>
+      <title>{$_title_} - {$WEBSITE_NAME}</title>
     </head>
     <!--[if lt IE 7]><body class="ie6"><![endif]-->
     <!--[if IE 7]><body class="ie7"><![endif]-->

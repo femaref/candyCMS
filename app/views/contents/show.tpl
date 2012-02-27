@@ -6,7 +6,7 @@
           {$c.title}
           {if $USER_ROLE >= 3}
             <a href='/content/{$c.id}/update'>
-              <img src='%PATH_IMAGES%/spacer.png'
+              <img src='%PATH_IMAGES%/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
                   title='{$lang.global.update.update}'

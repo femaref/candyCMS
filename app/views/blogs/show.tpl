@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/blog/create'>
-        <img src='%PATH_IMAGES%/spacer.png'
+        <img src='%PATH_IMAGES%/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -25,7 +25,7 @@
             <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
             {if $USER_ROLE >= 3}
               <a href='/blog/{$b.id}/update'>
-                <img src='%PATH_IMAGES%/spacer.png'
+                <img src='%PATH_IMAGES%/candy.global/spacer.png'
                     class='icon-update js-tooltip'
                     alt='{$lang.global.update.update}'
                     title='{$lang.global.update.update}'

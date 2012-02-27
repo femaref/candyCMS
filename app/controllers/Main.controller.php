@@ -371,8 +371,8 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
-	}
+    return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
+  }
 
 	/**
 	 * Set the page content.
