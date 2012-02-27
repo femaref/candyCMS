@@ -66,16 +66,14 @@ VALUES
 
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `users`;
-
 LOCK TABLES `users` WRITE;
 
-INSERT INTO `users` (`id`, `name`, `surname`, `password`, `email`, `role`, `date`, `verification_code`, `last_login`, `api_token`, `content`, `use_gravatar`, `receive_newsletter`)
+INSERT INTO `users` (`id`, `name`, `surname`, `password`, `email`, `role`, `date`, `verification_code`, `api_token`, `content`, `use_gravatar`, `receive_newsletter`)
 VALUES
-	(2,'Administrator','c2f9619961','098f6bcd4621d373cade4e832627b4f6','admin@example.com',4,NULL,NULL,NULL,'',NULL,0,1),
-	(3,'Moderator','c3f32cb996','098f6bcd4621d373cade4e832627b4f6','moderator@example.com',3,NULL,NULL,NULL,'',NULL,0,1),
-	(4,'Facebook-User','4ef590ffb5','098f6bcd4621d373cade4e832627b4f6','facebook@example.com',2,NULL,NULL,NULL,'',NULL,0,1),
-	(5,'Member','6b6ff4a437','098f6bcd4621d373cade4e832627b4f6','member@example.com',1,NULL,NULL,NULL,'',NULL,0,1),
-	(6,'Unverified','6ccfcbb125','098f6bcd4621d373cade4e832627b4f6','unverified@example.com',1,NULL,'6ccfcbb125',NULL,'',NULL,0,1);
+	(2,'Administrator','c2f9619961','098f6bcd4621d373cade4e832627b4f6','admin@example.com',4,NULL,NULL,'c2f9619961',NULL,0,1),
+	(3,'Moderator','c3f32cb996','098f6bcd4621d373cade4e832627b4f6','moderator@example.com',3,NULL,NULL,'c3f32cb996',NULL,0,1),
+	(4,'Facebook-User','4ef590ffb5','098f6bcd4621d373cade4e832627b4f6','facebook@example.com',2,NULL,NULL,'4ef590ffb5',NULL,0,1),
+	(5,'Member','6b6ff4a437','098f6bcd4621d373cade4e832627b4f6','member@example.com',1,NULL,NULL,'6b6ff4a437',NULL,0,1),
+	(6,'Unverified','6ccfcbb125','098f6bcd4621d373cade4e832627b4f6','unverified@example.com',1,NULL,'6ccfcbb125','6ccfcbb125',NULL,0,1);
 
 UNLOCK TABLES;

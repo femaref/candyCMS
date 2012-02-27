@@ -60,7 +60,7 @@
       <nav class="navbar navbar-fixed-top">
         <div class='navbar-inner'>
           <div class='container'>
-            <a href="/" class="brand" title="{$WEBSITE_NAME}">
+            <a href="/{$WEBSITE_LANDING_PAGE}" class="brand" title="{$WEBSITE_NAME}">
               {$WEBSITE_NAME}
             </a>
             <ul class="nav">
