@@ -111,7 +111,7 @@ class Rss extends Main {
     $this->oSmarty->setCacheLifetime(60);
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-      $aData = $this->_aData[$this->_iId]['files'];
+      $aData = & $this->_aData[$this->_iId]['files'];
       rsort($aData);
 
       $this->oSmarty->assign('_copyright_', $this->_aData[$this->_iId]['full_name']);

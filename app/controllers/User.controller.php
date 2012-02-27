@@ -51,15 +51,15 @@ class User extends Main {
             $this->_aSession['userdata']['id'];
 
 		# Fetch data from database
-		$this->_aData = & $this->_oModel->getData($iId, false, true);
+		$aData = & $this->_oModel->getData($iId, false, true);
 
 		# Override if we want to use request
 		if ($bUseRequest == true) {
-			foreach ($this->_aData as $sColumn => $sData)
-				$this->_aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
+			foreach ($aData as $sColumn => $sData)
+				$aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
 		}
 
-		foreach ($this->_aData as $sColumn => $sData)
+		foreach ($aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError))
@@ -169,8 +169,7 @@ class User extends Main {
         $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-        $this->_aData = & $this->_oModel->getData($iUserId);
-        $this->oSmarty->assign('user', $this->_aData);
+        $this->oSmarty->assign('user', $this->_oModel->getData($iUserId));
 
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -184,11 +183,11 @@ class User extends Main {
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $this->_aData = & $this->_oModel->getData($iUserId);
-        $this->oSmarty->assign('user', $this->_aData);
+        $aData = & $this->_oModel->getData($iUserId);
+        $this->oSmarty->assign('user', $aData);
 
-        $this->_setTitle($this->_aData[1]['full_name']);
-        $this->_setDescription($this->_aData[1]['full_name']);
+        $this->_setTitle($aData[1]['full_name']);
+        $this->_setDescription($aData[1]['full_name']);
       }
 
       $this->oSmarty->setTemplateDir($sTemplateDir);

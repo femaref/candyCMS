@@ -75,17 +75,17 @@ class Calendar extends Main {
 	protected function _showFormTemplate() {
 		# Update
 		if (!empty($this->_iId))
-			$this->_aData = & $this->_oModel->getData($this->_iId, true);
+			$aData = & $this->_oModel->getData($this->_iId, true);
 
 		# Create
 		else {
-			$this->_aData['content']		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-			$this->_aData['end_date']		= isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
-			$this->_aData['start_date'] = isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
-			$this->_aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+			$aData['content']			= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+			$aData['end_date']		= isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
+			$aData['start_date']	= isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
+			$aData['title']				= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
 		}
 
-		foreach ($this->_aData as $sColumn => $sData)
+		foreach ($aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 
 		if (!empty($this->_aError))

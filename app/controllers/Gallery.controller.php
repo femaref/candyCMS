@@ -44,70 +44,86 @@ class Gallery extends Main {
   public function show() {
     # Album images
     if (!empty($this->_iId) && !isset($this->_aRequest['album_id'])) {
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
+
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
       # Collect data array
       $sAlbumName					= Model::getAlbumName($this->_iId);
       $sAlbumDescription	= Model::getAlbumContent($this->_iId);
 
-      # Get data and count afterwards
-      $this->_aData = & $this->_oModel->getThumbs($this->_iId);
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+				# Get data and count afterwards
+				$aData = & $this->_oModel->getThumbs($this->_iId);
 
-      $this->oSmarty->assign('files', $this->_aData);
-      $this->oSmarty->assign('file_no', count($this->_aData));
-      $this->oSmarty->assign('gallery_name', $sAlbumName);
-      $this->oSmarty->assign('gallery_content', $sAlbumDescription);
+				$this->oSmarty->assign('files', $aData);
+				$this->oSmarty->assign('file_no', count($aData));
+				$this->oSmarty->assign('gallery_name', $sAlbumName);
+				$this->oSmarty->assign('gallery_content', $sAlbumDescription);
 
-      $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+				$this->_setDescription($sAlbumDescription);
+				$this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+			}
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
-
-      $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
+
     # Specific image
     elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
-      $this->_aData = & Model::getFileData($this->_iId);
+      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
 
-      # Absolute URL for image information
-      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
-							'/popup/' . $this->_aData['file']);
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-      if (file_exists($sUrl)) {
-        # Get image information
-        $aImageInfo = getimagesize($sUrl);
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+				$aData = & Model::getFileData($this->_iId);
 
-        $this->_aData['url']    = Helper::addSlash($sUrl);
-        $this->_aData['width']  = $aImageInfo[0];
-        $this->_aData['height'] = $aImageInfo[1];
+				# Absolute URL for image information
+				$sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
+								'/popup/' . $aData['file']);
 
-        $this->_setDescription($this->_aData['content']);
-        $this->_setTitle(I18n::get('global.image.image') . ': ' . $this->_aData['file']);
+				if (file_exists($sUrl)) {
+					# Get image information
+					$aImageInfo = getimagesize($sUrl);
 
-        $this->oSmarty->assign('i', $this->_aData);
+					$aData['url']    = Helper::addSlash($sUrl);
+					$aData['width']  = $aImageInfo[0];
+					$aData['height'] = $aImageInfo[1];
 
-				$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
-				$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
+					$this->_setDescription($aData['content']);
+					$this->_setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
 
-				$this->oSmarty->setTemplateDir($sTemplateDir);
-				return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-      }
-      else
-        Helper::redirectTo('/error/404');
+					$this->oSmarty->assign('i', $aData);
+
+					return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+				}
+				else
+					Helper::redirectTo('/error/404');
+			}
     }
+
     # Album overview
     else {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'albums');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
 
-			$this->_setDescription(I18n::get('global.gallery'));
-			$this->_setTitle(I18n::get('global.gallery'));
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-			$this->oSmarty->assign('albums', $this->_oModel->getData());
-			$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+				$this->_setDescription(I18n::get('global.gallery'));
+				$this->_setTitle(I18n::get('global.gallery'));
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
+				$this->oSmarty->assign('albums', $this->_oModel->getData());
+				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
+			}
+
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
@@ -120,17 +136,17 @@ class Gallery extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $this->_aData = & $this->_oModel->getData($this->_iId, true);
+    $aData = & $this->_oModel->getData($this->_iId, true);
 
     if (!empty($this->_iId))
-      $this->_setTitle($this->_aData['title']);
+      $this->_setTitle($aData['title']);
 
     else {
-      $this->_aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-      $this->_aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
 
-    foreach ($this->_aData as $sColumn => $sData)
+    foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError))

@@ -88,18 +88,18 @@ class Download extends Main {
   protected function _showFormTemplate() {
     # Update
     if (!empty($this->_iId))
-      $this->_aData = $this->_oModel->getData($this->_iId, true);
+      $aData = $this->_oModel->getData($this->_iId, true);
 
     # Create
     else {
-      $this->_aData['category']   = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
-      $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['category']   = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
+      $aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_categories_', $this->_oModel->getTypeaheadData('downloads', 'category'));
 
-    foreach ($this->_aData as $sColumn => $sData)
+    foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError))

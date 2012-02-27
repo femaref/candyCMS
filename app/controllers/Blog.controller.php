@@ -164,35 +164,35 @@ class Blog extends Main {
   protected function _showFormTemplate() {
     # Update
     if (!empty($this->_iId)) {
-      $this->_aData = & $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle($this->_aData['title']);
+      $aData = & $this->_oModel->getData($this->_iId, true);
+      $this->_setTitle($aData['title']);
     }
 
     # Create
     else {
-      $this->_aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $this->_aData['keywords']   = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $this->_aData['language']   = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
-      $this->_aData['published']  = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
-      $this->_aData['tags']       = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
-      $this->_aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $this->_aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['keywords']   = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $aData['language']   = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
+      $aData['published']  = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+      $aData['tags']       = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+      $aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
 
 		# Get avaiable languages
-		$this->_aData['languages'] = array();
+		$aData['languages'] = array();
 		$oPathDir = opendir(PATH_STANDARD . '/languages');
 		while ($sFile = readdir($oPathDir)) {
 			if (substr($sFile, 0, 1) == '.' || substr($sFile, 0, 3) == 'de_')
 				continue;
 
-			array_push($this->_aData['languages'], substr($sFile, 0, 2));
+			array_push($aData['languages'], substr($sFile, 0, 2));
 		}
 		closedir($oPathDir);
 
-    foreach ($this->_aData as $sColumn => $sData)
+    foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError))

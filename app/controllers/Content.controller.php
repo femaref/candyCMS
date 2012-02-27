@@ -84,18 +84,18 @@ class Content extends Main {
    */
   protected function _showFormTemplate() {
     if (!empty($this->_iId)) {
-      $this->_aData = $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle($this->_aData['title']);
+      $aData = $this->_oModel->getData($this->_iId, true);
+      $this->_setTitle($aData['title']);
     }
     else {
-      $this->_aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
-      $this->_aData['teaser']			= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $this->_aData['keywords']		= isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $this->_aData['content']		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $this->_aData['published']	= isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+      $aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['teaser']		= isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $aData['keywords']	= isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $aData['content']		= isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['published']	= isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
     }
 
-    foreach($this->_aData as $sColumn => $sData)
+    foreach($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
     if (!empty($this->_aError))
