@@ -15,6 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Calendar as Model;
+use Smarty;
 
 class Calendar extends Main {
 
@@ -37,11 +38,10 @@ class Calendar extends Main {
 	 *
 	 */
 	public function show() {
-		$this->_aData = & $this->_oModel->getData($this->_iId);
-    $this->oSmarty->assign('calendar', $this->_aData);
-
     # Show .ics
     if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
+			$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
+
       header('Content-type: text/calendar; charset=utf-8');
       header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
 
@@ -54,7 +54,13 @@ class Calendar extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCacheLifetime(300);
       $this->oSmarty->setTemplateDir($sTemplateDir);
+
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+				$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
+
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 	}
@@ -69,7 +75,7 @@ class Calendar extends Main {
 	protected function _showFormTemplate() {
 		# Update
 		if (!empty($this->_iId))
-			$this->_aData = $this->_oModel->getData($this->_iId, true);
+			$this->_aData = & $this->_oModel->getData($this->_iId, true);
 
 		# Create
 		else {
@@ -110,6 +116,8 @@ class Calendar extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
 			Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId('calendars'),
@@ -138,6 +146,8 @@ class Calendar extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
 			Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
@@ -160,6 +170,8 @@ class Calendar extends Main {
 	 */
 	protected function _destroy() {
 		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
 			Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],

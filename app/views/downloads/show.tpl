@@ -34,7 +34,7 @@
         {foreach $d.files as $f}
           <tr>
             <td class='center'>
-              <img src='%PATH_IMAGES%/files/{$f.extension}.png'
+              <img src='%PATH_IMAGES%/candy.files/{$f.extension}.png'
                   width='32' height='32' alt='{$f.extension}' />
             </td>
             <td class='left'>

@@ -143,7 +143,7 @@ class Log extends Main {
     }
     catch (\PDOException $p) {
       try {
-        parent::rollBack();
+        parent::$_oDbStatic->rollBack();
       }
       catch (\Exception $e) {
         AdvancedException::reportBoth('0067 - ' . $e->getMessage());

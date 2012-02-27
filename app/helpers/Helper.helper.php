@@ -386,20 +386,20 @@ class Helper {
 	 *
 	 */
   public static function getLastEntry($sTable) {
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
-      $aRow = $oQuery->fetch();
+		try {
+			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
+			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
+			$aRow = $oQuery->fetch();
 			$oDb = null;
 
-      return $aRow['id'];
-    }
-    catch (AdvancedException $e) {
+			return $aRow['id'];
+		}
+		catch (AdvancedException $e) {
 			AdvancedException::reportBoth('0103 - ' . $e->getMessage());
 			exit('SQL error.');
-    }
-  }
+		}
+	}
 
 	/**
 	 * Replace non alphachars with predefined values.

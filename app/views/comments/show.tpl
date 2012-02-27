@@ -42,7 +42,7 @@
                    class='icon-quote js-tooltip'
                    alt='{$lang.global.quote.quote}'
                    width='16' height='16'
-                    title='{$lang.global.quote.quote}' />
+                   title='{$lang.global.quote.quote}' />
             </a>
             {if $USER_ROLE >= 3}
               &nbsp;

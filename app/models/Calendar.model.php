@@ -28,7 +28,7 @@ class Calendar extends Main {
 	 *
 	 */
 	private function _setData($bUpdate) {
-		if (empty($this->_iId) || isset($this->_aRequest['action'])) {
+		if (empty($this->_iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
 					$iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?

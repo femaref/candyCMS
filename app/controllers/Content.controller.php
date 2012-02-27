@@ -27,7 +27,6 @@ class Content extends Main {
    */
   public function __init() {
     require PATH_STANDARD . '/app/models/Content.model.php';
-
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
@@ -45,10 +44,9 @@ class Content extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-      $this->_aData = $this->_oModel->getData($this->_iId);
-      $this->oSmarty->assign('content', $this->_aData);
-
       $this->oSmarty->setTemplateDir($sTemplateDir);
+      $this->oSmarty->assign('content', $this->_oModel->getData($this->_iId));
+
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
@@ -56,24 +54,24 @@ class Content extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $this->_aData = $this->_oModel->getData($this->_iId);
-        $this->oSmarty->assign('content', $this->_aData);
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+				$aData = & $this->_oModel->getData($this->_iId);
+				$this->oSmarty->assign('content', $aData);
 
-        if (!empty($this->_aData)) {
-          $this->_setDescription($this->_aData[$this->_iId]['teaser']);
-          $this->_setKeywords($this->_aData[$this->_iId]['keywords']);
-          $this->_setTitle($this->_removeHighlight($this->_aData[$this->_iId]['title']));
-        }
-        else
-          Helper::redirectTo('/error/404');
-      }
+				if (!empty($aData)) {
+					$this->_setDescription($aData[$this->_iId]['teaser']);
+					$this->_setKeywords($aData[$this->_iId]['keywords']);
+					$this->_setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+				}
+				else
+					Helper::redirectTo('/error/404');
+			}
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-    }
+			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		}
   }
 
   /**
@@ -156,6 +154,8 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
@@ -176,6 +176,8 @@ class Content extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 							$this->_aRequest['action'],
 							(int) $this->_aRequest['id'],

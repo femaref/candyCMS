@@ -250,6 +250,8 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
@@ -272,6 +274,8 @@ class Blog extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],

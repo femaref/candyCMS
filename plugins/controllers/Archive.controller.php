@@ -24,7 +24,7 @@ final class Archive extends \CandyCMS\Controller\Blog {
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(300);
 
-    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+    if (!$this->oSmarty->isCached($sTemplateFile, 'archive|' . $this->_aSession['userdata']['role'])) {
       $aData = $this->_oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
       $aMonth = array();
@@ -43,6 +43,6 @@ final class Archive extends \CandyCMS\Controller\Blog {
     }
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    return $this->oSmarty->fetch($sTemplateFile, 'archive|' . $this->_aSession['userdata']['role']);
   }
 }

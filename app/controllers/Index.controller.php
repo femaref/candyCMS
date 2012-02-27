@@ -452,7 +452,7 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', $this->_aRequest['section'] . '|' . substr(md5($this->_aSession['userdata']['id'] .
+			define('UNIQUE_ID', $this->_aRequest['section'] . '|' . substr(md5($this->_aSession['userdata']['role'] .
               WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10) . '|' . substr(md5(CURRENT_URL), 0, 10));
 
     # Define out core modules. All of them are separately handled in app/helper/Section.helper.php

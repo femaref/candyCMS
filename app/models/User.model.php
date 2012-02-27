@@ -153,7 +153,7 @@ class User extends Main {
 		}
     catch (\PDOException $p) {
       try {
-        parent::rollBack();
+        parent::$_oDbStatic->rollBack();
       }
       catch (\Exception $e) {
         AdvancedException::reportBoth('0080 - ' . $e->getMessage());

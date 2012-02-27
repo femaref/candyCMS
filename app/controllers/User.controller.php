@@ -344,6 +344,8 @@ class User extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_iId) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       # Check if user wants to unsubscribe from mailchimp
 			if (!isset($this->_aRequest['receive_newsletter']))
 				$this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
@@ -397,6 +399,7 @@ class User extends Main {
       # Password matches with user password
       if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['userdata']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
+					$this->oSmarty->clearCache(null, $this->_aRequest['section']);
 
           # Unsubscribe from newsletter
           $this->_unsubscribeFromNewsletter($aUser['email']);
@@ -413,6 +416,7 @@ class User extends Main {
       # We are admin and can delete users
     } elseif ($this->_aSession['userdata']['role'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
+				$this->oSmarty->clearCache(null, $this->_aRequest['section']);
 
         # Unsubscribe from newsletter
         $this->_unsubscribeFromNewsletter($aUser['email']);

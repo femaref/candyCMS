@@ -43,7 +43,7 @@ class Download extends Main {
   public function show() {
     # Direct download for this id
     if (!empty($this->_iId)) {
-      $sFile = Model::getFileName($this->_iId);
+      $sFile = & Model::getFileName($this->_iId);
 
       # Update download count
       Model::updateDownloadCount($this->_iId);
@@ -68,12 +68,12 @@ class Download extends Main {
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setCacheLifetime(60);
+			$this->oSmarty->setCacheLifetime(300);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('download', $this->_oModel->getData($this->_iId));
 
-			$this->oSmarty->setTemplateDir($sTemplateDir);
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
   }
@@ -138,6 +138,8 @@ class Download extends Main {
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFile('download') === true) {
+				$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
           Log::insert($this->_aRequest['section'],
 											$this->_aRequest['action'],
@@ -170,6 +172,8 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
@@ -192,6 +196,8 @@ class Download extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+
       Log::insert($this->_aRequest['section'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],

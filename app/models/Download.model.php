@@ -301,7 +301,7 @@ class Download extends Main {
     }
     catch (\PDOException $p) {
       try {
-        parent::rollBack();
+        parent::$_oDbStatic->rollBack();
       }
       catch (\Exception $e) {
         AdvancedException::reportBoth('0040 - ' . $e->getMessage());
