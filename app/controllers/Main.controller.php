@@ -245,17 +245,19 @@ abstract class Main {
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->oSmarty = new Smarty();
-		$this->oSmarty->cache_dir = CACHE_DIR;
-		$this->oSmarty->compile_dir = COMPILE_DIR;
-		$this->oSmarty->plugins_dir = PATH_STANDARD . '/lib/smarty/plugins';
-		$this->oSmarty->template_dir = PATH_STANDARD . '/app/views';
+		$this->oSmarty->cache_dir			= CACHE_DIR;
+		$this->oSmarty->compile_dir		= COMPILE_DIR;
+		$this->oSmarty->plugins_dir		= PATH_STANDARD . '/lib/smarty/plugins';
+		$this->oSmarty->template_dir	= PATH_STANDARD . '/app/views';
 
     $this->oSmarty->merge_compiled_includes = true;
     $this->oSmarty->use_sub_dirs = true;
 
     # Only compile our templates on production mode.
-    if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging')
+    if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging') {
 			$this->oSmarty->setCompileCheck(false);
+			$this->oSmarty->setCacheModifiedCheck(true);
+		}
 
     # Clear cache on development mode or when we force it via a request.
     if (CLEAR_CACHE == true || WEBSITE_MODE == 'development') {

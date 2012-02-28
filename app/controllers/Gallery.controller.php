@@ -113,10 +113,10 @@ class Gallery extends Main {
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$this->_setDescription(I18n::get('global.gallery'));
-				$this->_setTitle(I18n::get('global.gallery'));
+			$this->_setDescription(I18n::get('global.gallery'));
+			$this->_setTitle(I18n::get('global.gallery'));
 
+			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$this->oSmarty->assign('albums', $this->_oModel->getData());
 				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
 			}
