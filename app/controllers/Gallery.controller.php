@@ -48,7 +48,6 @@ class Gallery extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
 
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setCacheLifetime(300);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
       # Collect data array
@@ -77,7 +76,6 @@ class Gallery extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
 
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setCacheLifetime(300);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
@@ -113,7 +111,6 @@ class Gallery extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
 
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setCacheLifetime(300);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {

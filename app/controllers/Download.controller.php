@@ -68,7 +68,6 @@ class Download extends Main {
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setCacheLifetime(300);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))

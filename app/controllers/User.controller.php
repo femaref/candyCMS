@@ -176,11 +176,11 @@ class User extends Main {
 			}
 		}
 		else {
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setCacheLifetime(300);
-
 			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = & $this->_oModel->getData($iUserId);
@@ -190,7 +190,6 @@ class User extends Main {
         $this->_setDescription($aData[1]['full_name']);
       }
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 	}

@@ -26,12 +26,11 @@ final class Headlines extends \CandyCMS\Controller\Blog {
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(300);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
 
-    if (!$this->oSmarty->isCached($sTemplateFile, 'headlines|' . $this->_aSession['userdata']['role']))
+    if (!$this->oSmarty->isCached($sTemplateFile, 'blog|headlines|' . $this->_aSession['userdata']['role']))
       $this->oSmarty->assign('data', $this->_oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
 
-    $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, 'headlines|' . $this->_aSession['userdata']['role']);
+    return $this->oSmarty->fetch($sTemplateFile, 'blog|headlines|' . $this->_aSession['userdata']['role']);
   }
 }
