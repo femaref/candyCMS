@@ -40,7 +40,10 @@ class AllFileTests extends TestSuite {
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
     # Blog
+    #$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blog.controller.php');
+
+    # Comment
 
     # Content
 
@@ -54,9 +57,25 @@ class AllFileTests extends TestSuite {
 		# Gallery
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
 
+    # Log
+
+    # Mail
+
+    # Media
+
+    # Newsletter
+
+    # RSS
+
 		# Search
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
+
+    # Session
+
+    # Sitemap
+
+    # User
 	}
 }
 
