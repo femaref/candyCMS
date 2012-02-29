@@ -45,7 +45,7 @@
           <li>
             <a href='{$f.url_popup}' class=' thumbnail js-fancybox'
               rel='images' title='{$f.content}'>
-              <img src='{$f.url_thumb}' alt='{$f.content}' title='' class='js-image' />
+              <img src='{$f.url_thumb}' alt='{$f.file}' title='' class='js-image' />
             </a>
             {if $USER_ROLE >= 3}
               <p class='center'>

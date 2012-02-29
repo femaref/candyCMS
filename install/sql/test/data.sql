@@ -46,7 +46,7 @@ LOCK TABLES `gallery_albums` WRITE;
 
 INSERT INTO `gallery_albums` (`id`, `author_id`, `title`, `content`, `date`)
 VALUES
-	(1,2,'','6dffc4c552',0);
+	(1,2,'6dffc4c552','',0);
 
 UNLOCK TABLES;
 
@@ -54,7 +54,7 @@ LOCK TABLES `gallery_files` WRITE;
 
 INSERT INTO `gallery_files` (`id`, `author_id`, `album_id`, `date`, `file`, `extension`, `content`)
 VALUES
-	(1,2,1,0,'982e960e18','jpg',NULL);
+	(1,2,1,0,'982e960e18','jpg','782c660e17');
 
 UNLOCK TABLES;
 

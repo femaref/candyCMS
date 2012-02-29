@@ -25,12 +25,22 @@ class WebTestOfGalleryController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowGalleryAsGuest() {
+	function testShowGallery() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
 		$this->assertResponse(200);
+		$this->assertText('6dffc4c552');
+	}
 
-		# Todo: Something
-		$this->assertText(I18n::get('global.files'), 'There is no file.');
+	function testShowAlbum() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/6dffc4c552'));
+		$this->assertResponse(200);
+		$this->assertText('982e960e18');
+	}
+
+	function testShowImage() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/image/1'));
+		$this->assertResponse(200);
+		$this->assertText('782c660e17');
 	}
 
 	function testDirIsWritable() {

@@ -54,6 +54,9 @@ class Gallery extends Main {
       $sAlbumName					= Model::getAlbumName($this->_iId);
       $sAlbumDescription	= Model::getAlbumContent($this->_iId);
 
+      $this->_setDescription($sAlbumDescription);
+      $this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				# Get data and count afterwards
 				$aData = & $this->_oModel->getThumbs($this->_iId);
@@ -62,9 +65,6 @@ class Gallery extends Main {
 				$this->oSmarty->assign('file_no', count($aData));
 				$this->oSmarty->assign('gallery_name', $sAlbumName);
 				$this->oSmarty->assign('gallery_content', $sAlbumDescription);
-
-				$this->_setDescription($sAlbumDescription);
-				$this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
 			}
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -75,34 +75,31 @@ class Gallery extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$aData = & Model::getFileData($this->_iId);
+			$aData = & Model::getFileData($this->_iId);
 
-				# Absolute URL for image information
-				$sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
-								'/popup/' . $aData['file']);
+      $this->_setDescription($aData['content']);
+      $this->_setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
 
-				if (file_exists($sUrl)) {
-					# Get image information
-					$aImageInfo = getimagesize($sUrl);
+      # Absolute URL for image information
+      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
+              '/popup/' . $aData['file'] . '.' . $aData['extension']);
 
-					$aData['url']    = Helper::addSlash($sUrl);
-					$aData['width']  = $aImageInfo[0];
-					$aData['height'] = $aImageInfo[1];
+      if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
+        # Get image information
+        $aImageInfo = getimagesize($sUrl);
 
-					$this->_setDescription($aData['content']);
-					$this->_setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
+        $aData['url']    = Helper::addSlash($sUrl);
+        $aData['width']  = $aImageInfo[0];
+        $aData['height'] = $aImageInfo[1];
 
-					$this->oSmarty->assign('i', $aData);
+        $this->oSmarty->assign('i', $aData);
 
-					return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-				}
-				else
-					Helper::redirectTo('/error/404');
-			}
+        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      }
+      else
+        Helper::redirectTo('/error/404');
     }
 
     # Album overview
