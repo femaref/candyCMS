@@ -2,8 +2,10 @@ LOCK TABLES `blogs` WRITE;
 
 INSERT INTO `blogs` (`id`, `author_id`, `title`, `teaser`, `tags`, `keywords`, `content`, `language`, `date`, `date_modified`, `published`)
 VALUES
-	(1,2,'b3cf6b2dd0',NULL,NULL,NULL,'','en',NULL,NULL,1),
-	(2,2,'e12b3a84b2',NULL,NULL,NULL,'','en',NULL,NULL,0);
+	(1,2,'b3cf6b2dd0',NULL,tag1,NULL,'','en',NULL,NULL,1),
+	(2,2,'e12b3a84b2',NULL,NULL,NULL,'','en',NULL,NULL,0),
+	(3,2,'c11be3b344',NULL,tag1,NULL,'','en',NULL,NULL,1),
+	(4,2,'1d2275e170',NULL,NULL,NULL,'','de',NULL,NULL,1);
 
 UNLOCK TABLES;
 

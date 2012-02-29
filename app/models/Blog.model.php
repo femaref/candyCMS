@@ -179,6 +179,9 @@ class Blog extends Main {
             !isset($this->_aRequest['parent_id']))
       $this->_iId = '';
 
+    if(WEBSITE_MODE == 'test')
+      $iLimit = 1;
+
     return $this->_setData($bUpdate, $iLimit);
   }
 

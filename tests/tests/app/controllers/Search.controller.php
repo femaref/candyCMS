@@ -38,4 +38,10 @@ class WebTestOfSearchController extends CandyWebTest {
 		$this->assertText(md5(RANDOM_HASH));
 		$this->assertResponse(200);
 	}
+
+  function testShowWithDirectLink() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/098dec456d'));
+		$this->assertResponse(200);
+		$this->assertText('(1)');
+  }
 }

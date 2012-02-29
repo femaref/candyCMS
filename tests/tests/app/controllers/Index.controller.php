@@ -90,13 +90,13 @@ class WebTestOfIndexController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowIndexAsGuest() {
+	function testShowIndex() {
 		$this->assertTrue($this->get(WEBSITE_URL));
 		$this->assertResponse(200);
 		$this->assertText('Login'); # This should be on every page.
 	}
 
-	function testShow404() {
+	function testShowNonExistingPage() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
 		$this->assertResponse(404);
 	}

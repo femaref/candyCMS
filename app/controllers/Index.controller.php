@@ -596,7 +596,7 @@ class Index {
 
 		# Load plugins
     # *********************************************
-    if (ALLOW_PLUGINS !== '')
+    if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
     # Do only send html charset if we are really sure. This caused problems with .ics files.

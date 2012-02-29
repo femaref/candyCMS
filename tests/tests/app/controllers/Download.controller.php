@@ -26,27 +26,25 @@ class WebTestOfDownloadController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowDownloadsAsGuest() {
+	function testShowDownloads() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
 		$this->assertResponse(200);
 		$this->assertText('098dec456d');
 	}
 
-	/*function testShowDownloadsAsModerator() {
-		$this->_aSession['userdata']['id']		= 3;
-		$this->_aSession['userdata']['role']	= 3;
+	function testCreateDownload() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/create'));
+		$this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+	}
 
-		$this->assertTrue($this->get(WEBSITE_URL . '/download'));
-		$this->assertText(I18n::get('global.create.entry'));
-	}*/
-
-	function testUpdateDownloadAsGuest() {
+	function testUpdateDownload() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/update'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
 
-	function testDestroyAsGuest() {
+	function testDestroyDownload() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/destroy'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);

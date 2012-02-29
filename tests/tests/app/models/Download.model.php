@@ -18,11 +18,11 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
 
   function setUp() {
     $this->aRequest = array(
-				'title' => 'Title',
-				'content' => 'Content',
-				'category' => 'Category',
+				'title'     => 'Title',
+				'content'   => 'Content',
+				'category'  => 'Category',
 				'downloads' => 0,
-				'section' => 'download');
+				'section'   => 'download');
 
 		$this->oObject = new Download($this->aRequest, $this->aSession);
 	}

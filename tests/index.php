@@ -39,8 +39,13 @@ class AllFileTests extends TestSuite {
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
+    # Blog
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blog.controller.php');
+
+    # Content
+
 		# Download
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Download.model.php');
+		/*$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Download.model.php');
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Download.controller.php');
 
 		# Error
@@ -51,7 +56,7 @@ class AllFileTests extends TestSuite {
 
 		# Search
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');*/
 	}
 }
 

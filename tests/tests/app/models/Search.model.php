@@ -25,9 +25,6 @@ class TestOfSearchModel extends CandyUnitTest {
 		parent::tearDown();
 	}
 
-	/**
-	 * Tests if query run through. We use only the blogs table.
-	 */
   function testGetData() {
 		$aData = $this->oObject->getData(md5(RANDOM_HASH), array('blogs'));
     $this->assertIsA($aData['blogs'], 'array');
