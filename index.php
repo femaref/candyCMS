@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @version 2.0
  * @since 1.0
+ *
  */
 
 namespace CandyCMS;

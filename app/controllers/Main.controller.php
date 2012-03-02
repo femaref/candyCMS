@@ -245,8 +245,8 @@ abstract class Main {
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->oSmarty = new Smarty();
-		$this->oSmarty->cache_dir			= CACHE_DIR;
-		$this->oSmarty->compile_dir		= COMPILE_DIR;
+		$this->oSmarty->cache_dir			= PATH_STANDARD . '/' . CACHE_DIR;
+		$this->oSmarty->compile_dir		= PATH_STANDARD . '/' . COMPILE_DIR;
 		$this->oSmarty->plugins_dir		= PATH_STANDARD . '/lib/smarty/plugins';
 		$this->oSmarty->template_dir	= PATH_STANDARD . '/app/views';
 

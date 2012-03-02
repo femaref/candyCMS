@@ -3,6 +3,7 @@
 /*
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @todo refactor
  */
 
 # The cronjob keeps your software backuped, fast and clean. Set up the execution
@@ -20,10 +21,11 @@ if (file_exists('app/controllers/Mail.controller.php'))
 
 final class Cronjob {
 
-  public static final function cleanup() {
-
-    $aFolders = array('media', 'bbcode');
-
+  /**
+   * @todo
+   * @todo add helper
+   */
+  public static final function cleanup($aFolders) {
     foreach ($aFolders as $sFolder) {
       $sTempPath = PATH_UPLOAD . '/temp/' . $sFolder;
       $oDir = opendir($sTempPath);
@@ -37,9 +39,12 @@ final class Cronjob {
     }
   }
 
+  /**
+   *@todo
+   */
   public static final function optimize() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
       $oQuery = $oDb->query(" OPTIMIZE TABLE
@@ -88,7 +93,7 @@ final class Cronjob {
 
     # Get all tables and name them
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD, array(
+      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD, array(
                   PDO::ATTR_PERSISTENT => true));
       $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

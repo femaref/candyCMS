@@ -79,7 +79,7 @@ class Index {
 	 * @param array $aCookie alias for $_COOKIE
 	 *
 	 */
-	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+	public function __construct($aRequest, $aSession = '', $aFile = '', $aCookie = '') {
 		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
@@ -243,13 +243,14 @@ class Index {
    * Get the cronjob working. Check for last execution and plan next cleanup, optimization and backup.
    *
    * @access public
+   * @param boolean $bForceAction force the cronjob to be executed.
    * @see config/Candy.inc.php
    *
    */
-  public function getCronjob() {
+  public function getCronjob($bForceAction = false) {
     if (class_exists('\CandyCMS\Plugin\Cronjob')) {
-      if (Cronjob::getNextUpdate() == true) {
-					Cronjob::cleanup();
+      if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
+					Cronjob::cleanup(array('media', 'bbcode'));
 					Cronjob::optimize();
 					Cronjob::backup($this->_aSession['userdata']['id']);
       }
@@ -481,7 +482,7 @@ class Index {
 		}
 
     elseif (strtolower($this->_aRequest['section']) == 'install')
-      Helper::redirectTo('/install');
+      Helper::redirectTo('/install/index.php');
 
 		# We do not have a standard action, so fetch it from the addon folder.
     # If addon exists, proceed with override.
