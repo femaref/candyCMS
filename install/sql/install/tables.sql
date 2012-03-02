@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `blogs`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%blogs`;
 
-CREATE TABLE `blogs` (
+CREATE TABLE `%SQL_PREFIX%blogs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -17,9 +17,9 @@ CREATE TABLE `blogs` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `comments`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%comments`;
 
-CREATE TABLE `comments` (
+CREATE TABLE `%SQL_PREFIX%comments` (
   `id` int(9) NOT NULL AUTO_INCREMENT,
   `parent_id` int(9) NOT NULL,
   `author_id` int(11) NOT NULL,
@@ -33,9 +33,9 @@ CREATE TABLE `comments` (
   KEY `parent_id` (`parent_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `contents`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%contents`;
 
-CREATE TABLE `contents` (
+CREATE TABLE `%SQL_PREFIX%contents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -47,9 +47,9 @@ CREATE TABLE `contents` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `calendars`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%calendars`;
 
-CREATE TABLE `calendars` (
+CREATE TABLE `%SQL_PREFIX%calendars` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) NOT NULL DEFAULT '',
@@ -60,9 +60,9 @@ CREATE TABLE `calendars` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `downloads`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%downloads`;
 
-CREATE TABLE `downloads` (
+CREATE TABLE `%SQL_PREFIX%downloads` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
@@ -75,9 +75,9 @@ CREATE TABLE `downloads` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `gallery_albums`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%gallery_albums`;
 
-CREATE TABLE `gallery_albums` (
+CREATE TABLE `%SQL_PREFIX%gallery_albums` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -87,9 +87,9 @@ CREATE TABLE `gallery_albums` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `gallery_files`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%gallery_files`;
 
-CREATE TABLE `gallery_files` (
+CREATE TABLE `%SQL_PREFIX%gallery_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `album_id` int(11) NOT NULL,
   `author_id` int(115) NOT NULL,
@@ -100,9 +100,9 @@ CREATE TABLE `gallery_files` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `logs`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%logs`;
 
-CREATE TABLE `logs` (
+CREATE TABLE `%SQL_PREFIX%logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `section_name` varchar(32) NOT NULL DEFAULT 'NOT NULL',
   `action_name` varchar(16) NOT NULL,
@@ -113,18 +113,18 @@ CREATE TABLE `logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `migrations`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%migrations`;
 
-CREATE TABLE `migrations` (
+CREATE TABLE `%SQL_PREFIX%migrations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `file` varchar(100) DEFAULT NULL,
   `date` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `sessions`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%sessions`;
 
-CREATE TABLE `sessions` (
+CREATE TABLE `%SQL_PREFIX%sessions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `session` varchar(32) DEFAULT NULL,
@@ -133,9 +133,9 @@ CREATE TABLE `sessions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `%SQL_PREFIX%users`;
 
-CREATE TABLE `users` (
+CREATE TABLE `%SQL_PREFIX%users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `surname` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,

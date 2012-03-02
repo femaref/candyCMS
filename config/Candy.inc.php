@@ -11,7 +11,7 @@
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
-define('SQL_DB', 'cms_new');
+define('SQL_DB', 'testest');
 define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
@@ -34,9 +34,9 @@ define('WEBSITE_URL', 'http://phpcms.localhost');
 
 # ------------------------------------------------------------------------------
 
-# Define the ABSOLUTE path of your cdn. If you don't use a cdn,
-# enter your website url. This is relevant for your public folder.
+# Define the url to your cdn.
 # EXAMPLE: http://www.google.com
+# DEFAULT: '/public'
 define('WEBSITE_CDN', '/public');
 
 # ------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'test');
+define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 
@@ -78,14 +78,14 @@ define('WEBSITE_TRACKING_CODE', '');
 # ------------------------------------------------------------------------------
 
 # Define the entry point of your website. If you want to use a static page, type
-# "Static/nameofyourpage" and place it at
-# "public/skins/_static/nameofyourpage.tpl"
-# DEFAULT: Blog
+# "static/nameofyourpage" and place it at
+# "public/templates/_static/nameofyourpage.tpl"
+# DEFAULT: blog
 define('WEBSITE_LANDING_PAGE', 'blog');
 
 # ------------------------------------------------------------------------------
 
-# Number of seconds between cronjob execution (if enabled)
+# Number of seconds between cronjob execution (if enabled at ALLOWED_PLUGINS)
 # DEFAULT: '86400'
 define('CRONJOB_UPDATE_INTERVAL', '86400');
 

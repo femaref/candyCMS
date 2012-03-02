@@ -9,6 +9,11 @@
       if (typeof jQuery == 'undefined')
         document.write(unescape("%3Cscript src='%PATH_PUBLIC%/js/core/jquery.1.7.1{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
+    <style type='text/css'>
+      .container {
+        width:800px;
+      }
+    </style>
     <title>{$title}</title>
   </head>
   <body>

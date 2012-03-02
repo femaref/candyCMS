@@ -24,7 +24,6 @@ require PATH_STANDARD . '/app/controllers/Index.controller.php';
 class Install extends Index {
 
   public function __init() {
-		require PATH_STANDARD . '/app/models/Main.model.php';
 		require PATH_STANDARD . '/app/controllers/Main.controller.php';
 		require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 		require PATH_STANDARD . '/app/helpers/I18n.helper.php';
@@ -56,18 +55,94 @@ class Install extends Index {
 
       default:
       case '1':
-        $this->oSmarty->assign('title', 'Installation - Step 1');
+        # Try to create folders (if not avaiable)
+        if (!is_dir(PATH_STANDARD . '/backup'))
+          @mkdir(PATH_STANDARD . '/backup', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/cache'))
+          @mkdir(PATH_STANDARD . '/cache', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/compile'))
+          @mkdir(PATH_STANDARD . '/compile', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/logs'))
+          @mkdir(PATH_STANDARD . '/logs', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload'))
+          @mkdir(PATH_STANDARD . '/upload', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/gallery'))
+          @mkdir(PATH_STANDARD . '/upload/gallery', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/media'))
+          @mkdir(PATH_STANDARD . '/upload/media', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/temp'))
+          @mkdir(PATH_STANDARD . '/upload/temp', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/temp/media'))
+          @mkdir(PATH_STANDARD . '/upload/temp/media', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/temp/bbcode'))
+          @mkdir(PATH_STANDARD . '/upload/temp/bbcode', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/32'))
+          @mkdir(PATH_STANDARD . '/upload/user/32', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/64'))
+          @mkdir(PATH_STANDARD . '/upload/user/64', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/100'))
+          @mkdir(PATH_STANDARD . '/upload/user/100', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/' . THUMB_DEFAULT_X))
+          @mkdir(PATH_STANDARD . '/upload/user/' . THUMB_DEFAULT_X, '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/popup'))
+          @mkdir(PATH_STANDARD . '/upload/user/popup', '0777', true);
+
+        if (!is_dir(PATH_STANDARD . '/upload/user/original'))
+          @mkdir(PATH_STANDARD . '/upload/user/original/', '0777', true);
+
+        $this->oSmarty->assign('_color_backup_', substr(decoct(fileperms(PATH_STANDARD . '/backup')), 2) == '777' ? 'green' : 'red');
+        $this->oSmarty->assign('_color_cache_', substr(decoct(fileperms(PATH_STANDARD . '/cache')), 2) == '777' ? 'green' : 'red');
+        $this->oSmarty->assign('_color_compile_', substr(decoct(fileperms(PATH_STANDARD . '/compile')), 2) == '777' ? 'green' : 'red');
+        $this->oSmarty->assign('_color_logs_', substr(decoct(fileperms(PATH_STANDARD . '/logs')), 2) == '777' ? 'green' : 'red');
+        $this->oSmarty->assign('_color_upload_', substr(decoct(fileperms(PATH_STANDARD . '/upload')), 2) == '777' ? 'green' : 'red');
+
+        $this->oSmarty->assign('title', 'Installation - Step 1 - Preparation');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step1.tpl'));
+
         break;
 
       case '2':
+
+        $sUrl = PATH_STANDARD . '/install/sql/install/tables.sql';
+        if (file_exists($sUrl)) {
+          $oFo = fopen($sUrl, 'r');
+          $sData = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize($sUrl)));
+
+          # Create tables
+          try {
+            $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
+            $oDb->query($sData);
+          }
+          catch (\AdvancedException $e) {
+            die($e->getMessage());
+          }
+        }
+
+        $this->oSmarty->assign('title', 'Installation - Step 2 - Create admin user');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step2.tpl'));
+
         break;
 
       case '3':
+
+        die(print_r($this->_aRequest));
+
         break;
 
-      case '4':
-        break;
     }
   }
 
