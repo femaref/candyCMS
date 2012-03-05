@@ -21,6 +21,7 @@ use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use lessc;
 
 class Index {
 
@@ -595,12 +596,26 @@ class Index {
     $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
 
-		# Load plugins
+		# Compile CSS
     # *********************************************
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
+    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
+      require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
+
+      try {
+        @unlink(Helper::removeSlash($sCachedCss . '/core/application.css'));
+        lessc::ccompile(Helper::removeSlash($sCachedLess . '/core/application.less'),
+                Helper::removeSlash($sCachedCss . '/core/application.css'));
+      }
+      catch (AdvancedException $e) {
+        die('lessc fatal error:<br />' . $e->getMessage());
+      }
+    }
+
     # Do only send html charset if we are really sure. This caused problems with .ics files.
+    # *********************************************
     if (AJAX_REQUEST === false)
       header("Content-Type: text/html; charset=utf-8");
 

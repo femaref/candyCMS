@@ -4,15 +4,9 @@
         xmlns:og="http://opengraphprotocol.org/schema/"
         xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
-      {if $WEBSITE_MODE == 'development'}
-        {* Development mode: Use LESS to minimize CSS. Load first to render the CSS *}
-        <link rel="stylesheet/less" type="text/css" href="%PATH_LESS%/application.less"/>
-        <script src="%PATH_JS%/core/less.js" type="text/javascript"></script>
-      {else}
-        {* Production mode: Use compiled CSS *}
-        <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css'
-              rel='stylesheet' type='text/css' media='screen, projection'/>
-      {/if}
+      {* Production mode: Use compiled CSS *}
+      <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css'
+            rel='stylesheet' type='text/css' media='screen, projection'/>
 
       <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
       <meta name='description' content="{$meta_description}"/>
