@@ -595,13 +595,14 @@ class Index {
     $sCachedHTML = & str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
     $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
-
-		# Compile CSS
-    # *********************************************
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
-    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
+		# Compile CSS
+    # *********************************************
+    if (WEBSITE_MODE == 'development' &&
+            file_exists(Helper::removeSlash($sCachedLess . '/core/application.less')) &&
+            CLEAR_CACHE === true) {
       require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
 
       try {
@@ -610,7 +611,7 @@ class Index {
                 Helper::removeSlash($sCachedCss . '/core/application.css'));
       }
       catch (AdvancedException $e) {
-        die('lessc fatal error:<br />' . $e->getMessage());
+        die($e->getMessage());
       }
     }
 

@@ -36,8 +36,11 @@ class AllFileTests extends TestSuite {
 		parent::__construct();
 		$this->TestSuite('Sections');
 
+    # Helpers
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
+
 		# Index
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
+		/*$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
     # Blog
     #$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
@@ -76,6 +79,7 @@ class AllFileTests extends TestSuite {
     # Sitemap
 
     # User
+*/
 	}
 }
 

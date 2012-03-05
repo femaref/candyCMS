@@ -11,7 +11,7 @@
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
-define('SQL_DB', 'testest');
+define('SQL_DB', 'cms_new');
 define('SQL_PREFIX', '');
 define('SQL_PORT', '3306');
 
@@ -67,7 +67,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'test');
 
 # ------------------------------------------------------------------------------
 

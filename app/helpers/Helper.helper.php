@@ -35,10 +35,7 @@ class Helper {
     $_SESSION['flash_message']['headline']  = '';
     $_SESSION['flash_message']['show']      = '0';
 
-    if(!empty($sRedirectTo))
-      Helper::redirectTo ($sRedirectTo);
-
-    return true;
+    return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : true;
   }
 
   /**
@@ -57,10 +54,7 @@ class Helper {
     $_SESSION['flash_message']['headline']  = I18n::get('error.standard');
     $_SESSION['flash_message']['show']			= '0';
 
-    if(!empty($sRedirectTo))
-      Helper::redirectTo ($sRedirectTo);
-
-    return false;
+    return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : false;
   }
 
   /**
@@ -82,12 +76,12 @@ class Helper {
 	 * @static
    * @access public
 	 * @param string $sMail email address to check
-   * @return boolean true if correct format
+   * @return boolean
+   * @todo check TLD endings
    *
    */
   public static function checkEmailAddress($sMail) {
-		if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail))
-			return true;
+    return preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail) ? true : false;
 	}
 
   /**
@@ -103,7 +97,7 @@ class Helper {
   public static function createRandomChar($iLength, $bIntegerOnly = false) {
 		$sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
 
-		if ($bIntegerOnly == true)
+		if ($bIntegerOnly === true)
 			$sChars = '0123456789';
 
 		$sString = '';
@@ -122,13 +116,13 @@ class Helper {
 	 * @static
    * @access public
 	 * @param string $sUrl URL to create a link with
-	 * @param boolean $bInternal Is this an absolute URL?
+	 * @param boolean $bExternal display a link to an external / absolute URL?
    * @return string HTML code with anchor
    *
    */
   public static function createLinkTo($sUrl, $bExternal = false) {
-		return	$bExternal == true ?
-						'<a href="' . $sUrl . '">' . $sUrl . '</a>' :
+		return	$bExternal === true ?
+						'<a href="' . $sUrl . '" rel="external">' . $sUrl . '</a>' :
 						'<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
 	}
 
@@ -137,15 +131,15 @@ class Helper {
 	 *
 	 * @static
 	 * @access public
-	 * @param string $sSize avatar size
+	 * @param integer $iSize avatar size
 	 * @param integer $iUserId user ID
 	 * @param string $sEmail email address to search gravatar for
    * @param boolean $bUseGravatar do we want to use gravatar?
 	 * @return string URL of the avatar
 	 *
 	 */
-  public static function getAvatar($sSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
-    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $sSize . '/' . $iUserId);
+  public static function getAvatar($iSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
+    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $iSize . '/' . $iUserId);
 
 		if (file_exists($sFilePath . '.jpg') && $bUseGravatar == false)
 			return '/' . $sFilePath . '.jpg';
@@ -157,11 +151,11 @@ class Helper {
 			return '/' . $sFilePath . '.gif';
 
 		else {
-      if (!is_int($sSize))
-        $sSize = POPUP_DEFAULT_X;
+      if (!is_int($iSize))
+        $iSize = POPUP_DEFAULT_X;
 
-      $sMail = isset($sEmail) ? $sEmail : WEBSITE_MAIL;
-      return 'http://www.gravatar.com/avatar/' . md5($sMail) . '.jpg?s=' . $sSize . '&d=mm';
+      $sMail = !empty($sEmail) ? $sEmail : WEBSITE_MAIL;
+      return 'http://www.gravatar.com/avatar/' . md5($sMail) . '.jpg?s=' . $iSize . '&d=mm';
 		}
   }
 
@@ -171,11 +165,11 @@ class Helper {
 	 * @static
 	 * @access public
 	 * @param string $sPath path of the file
-	 * @return string size of the file plus ending
+	 * @return string size of the file plus hardcoded ending
 	 *
 	 */
   public static function getFileSize($sPath) {
-    $iSize = Helper::removeSlash(@filesize(Helper::removeSlash($sPath)));
+    $iSize = @filesize(Helper::removeSlash($sPath));
 
     if ($iSize > 1024 && $iSize < 1048576)
       return round(($iSize / 1024), 2) . ' KB';
@@ -255,24 +249,24 @@ class Helper {
 	 *
 	 * @static
 	 * @access public
-	 * @param string $sDir dir of the templates
+	 * @param string $sFolder dir of the templates
 	 * @param string $sFile file name of the template
 	 * @return string path of the chosen template
 	 *
 	 */
-  public static function getPluginTemplateDir($sDir, $sFile) {
+  public static function getPluginTemplateDir($sFolder, $sFile) {
 		try {
 			# Template
-			if (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sDir . '/' . $sFile . '.tpl'))
-				return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sDir;
+			if (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
 
 			# Standard views
 			else {
-				if (!file_exists(PATH_STANDARD . '/plugins/views/' . $sDir . '/' . $sFile . '.tpl'))
+				if (!file_exists(PATH_STANDARD . '/plugins/views/' . $sFolder . '/' . $sFile . '.tpl'))
 					throw new AdvancedException('This template does not exist.');
 
 				else
-					return PATH_STANDARD . '/plugins/views/' . $sDir;
+					return PATH_STANDARD . '/plugins/views/' . $sFolder;
 			}
 		}
 		catch (Exception $e) {
@@ -296,7 +290,7 @@ class Helper {
         throw new AdvancedException('Input seems not valid.');
 
       if ($bDisableHTML === true)
-        $sStr = htmlspecialchars($sStr);
+        $sStr = & htmlspecialchars($sStr);
     }
     catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
@@ -326,7 +320,7 @@ class Helper {
 	 */
   public static function formatTimestamp($iTime, $iOptions = 0) {
     # Fallback for unit testing
-    if(!constant('WEBSITE_LOCALE'))
+    if(!defined('WEBSITE_LOCALE'))
       define('WEBSITE_LOCALE', 'en_US');
 
 		# Set active locale
@@ -362,10 +356,7 @@ class Helper {
 	 *
 	 */
   public static function formatOutput($sStr, $sHighlight = false) {
-    $sStr = preg_replace('/\S{500}/', '\0 ', trim($sStr));
-
-    # Highlight string
-    if ($sHighlight == true)
+    if ($sHighlight === true)
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
     if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
