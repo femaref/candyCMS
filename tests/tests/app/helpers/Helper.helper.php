@@ -14,7 +14,7 @@ require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
 use \CandyCMS\Helper\Helper as Helper;
 
-class UnitTestOfHelperHelpers extends CandyUnitTest {
+class UnitTestOfHelperHelper extends CandyUnitTest {
 
 	function setUp() {
 	}
