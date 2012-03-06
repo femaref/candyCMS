@@ -26,23 +26,23 @@ class WebTestOfBlogController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowBlog() {
+	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
 		$this->assertResponse(200);
 		$this->assertText('b3cf6b2dd0');
 	}
 
-	function testShowBlogEntryWithShortId() {
+	function testShowEntryWithShortId() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1'));
 		$this->assertResponse(200);
 	}
 
-	function testShowBlogEntryWithLongId() {
+	function testShowEntryWithLongId() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/b3cf6b2dd0'));
 		$this->assertResponse(200);
 	}
 
-	function testShowBlogEntryUnpublished() {
+	function testShowEntryUnpublished() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/2'));
 		$this->assertResponse(200);
     $this->assertText(I18n::get('error.404.title'));
@@ -54,7 +54,7 @@ class WebTestOfBlogController extends CandyWebTest {
     $this->assertText('c11be3b344');
   }
 
-  function testShowBlogEntryWithDifferentLanguage() {
+  function testShowEntryWithDifferentLanguage() {
     # Entry is not listed...
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/page/3'));
 		$this->assertResponse(200);

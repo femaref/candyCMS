@@ -76,7 +76,7 @@ class Image {
 	 * Set up the new image.
 	 *
 	 * @access public
-	 * @param string $sId name of the file.
+	 * @param string $sId name of the file WITHOUT file extension
    * @param string $sFolder section to upload image into
    * @param string $sOriginalPath path of the image to clone from
    * @param string $sImgType type of image
@@ -89,7 +89,7 @@ class Image {
     $this->_sImgType      = & $sImgType;
     $this->_aInfo         = getimagesize($this->_sOriginalPath);
 
-    if (!$this->_aInfo) {
+    if (!isset($this->_aInfo)) {
       $this->_aInfo[0] = 1;
       $this->_aInfo[1] = 1;
     }

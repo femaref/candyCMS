@@ -21,34 +21,34 @@ class TestOfBlogModel extends UnitTestCase {
   function testConstructor() {
 
     $aRequest = array(
-        'title' => 'Title',
-        'tags' => 'Tags',
-        'teaser' => 'Teaser',
-        'content' => 'Blog',
-        'keywords' => 'Keywords',
-        'published' => 0,
-        'author_id' => 0,
-        'section' => 'blog');
+        'title'       => 'Title',
+        'tags'        => 'Tags',
+        'teaser'      => 'Teaser',
+        'content'     => 'Blog',
+        'keywords'    => 'Keywords',
+        'published'   => 0,
+        'author_id'   => 0,
+        'section'     => 'blog');
 
     $aSession['userdata'] = array(
-        'email' => '',
+        'email'       => '',
         'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
+        'id'          => 0,
+        'name'        => '',
+        'surname'     => '',
+        'password'    => '',
+        'role'        => 0,
+        'full_name'   => ''
     );
 
-    $this->oBlog = new Blog($aRequest, $aSession, array(), array());
+    $this->oBlog = new Blog($aRequest, $aSession);
   }
 
   function testCreate() {
     $this->assertTrue($this->oBlog->create());
 
     $this->iLastInsertId = (int) Blog::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'integer', 'Blog #' . $this->iLastInsertId . ' created.');
+    $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetData() {
@@ -57,10 +57,10 @@ class TestOfBlogModel extends UnitTestCase {
   }
 
   function testUpdate() {
-    $this->assertTrue($this->oBlog->update($this->iLastInsertId), 'Blog #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oBlog->update($this->iLastInsertId));
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oBlog->destroy($this->iLastInsertId), 'Blog #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oBlog->destroy($this->iLastInsertId));
   }
 }
