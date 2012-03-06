@@ -86,8 +86,7 @@ class I18n {
 			}
 
 			try {
-				if (is_string($mTemp))
-					return $mTemp;
+        return is_string($mTemp) ? (string) $mTemp : '';
 			}
 			catch (AdvancedException $e) {
 				die('No such translation: ' . $e->getMessage());

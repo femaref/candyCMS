@@ -38,6 +38,7 @@ class AllFileTests extends TestSuite {
 
     # Helpers
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
