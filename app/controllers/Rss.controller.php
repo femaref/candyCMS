@@ -34,7 +34,7 @@ class Rss extends Main {
             (string) strtolower($this->_aRequest['subsection']) :
             'blog';
 
-    # Empty page and search to avoid news filters.
+    # Bugfix: Empty page and search to avoid news filters.
     unset($this->_aRequest['page'], $this->_aRequest['search']);
 
     require PATH_STANDARD . '/app/models/Blog.model.php';

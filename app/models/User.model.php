@@ -180,7 +180,6 @@ class User extends Main {
 		if ($bForceNoId === true)
 			$iId = '';
 
-    # Overview
     if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -222,8 +221,6 @@ class User extends Main {
         $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }
     }
-
-    # Single entry
     else {
       try {
 				$oQuery = $this->_oDb->prepare("SELECT

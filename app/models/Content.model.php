@@ -29,7 +29,6 @@ class Content extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-
     $iPublished = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
 
     if (empty($iId)) {

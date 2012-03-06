@@ -193,7 +193,7 @@ class Pagination {
    * @return string HTML content if there are more than one pages
    *
    */
-  public function showSurrounding($sRssAction = '') {
+  public function showSurrounding($sRssAction = 'blog') {
 		if($this->_iPages > 1) {
 			$iNext = '';
 			$iPrevious = '';

@@ -40,12 +40,11 @@ class Gallery extends Main {
    */
   public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     $sWhere   = '';
-    $iResult  = 1;
+    $iResult  = 0;
 
-    # Overview
     if (empty($iId)) {
       try {
-        $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
+        $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums");
         $iResult = $oQuery->fetchColumn();
       }
       catch (\PDOException $p) {

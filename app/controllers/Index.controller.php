@@ -632,7 +632,7 @@ class Index {
    *
    */
   private function _showPlugins($sCachedHTML) {
-    # Fix search bug
+    # Bugfix: Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['userdata'] = self::_resetUser();
 

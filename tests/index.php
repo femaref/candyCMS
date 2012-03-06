@@ -43,7 +43,7 @@ class AllFileTests extends TestSuite {
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
-/*
+
     # Blog
     #$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blog.controller.php');
@@ -81,7 +81,6 @@ class AllFileTests extends TestSuite {
     # Sitemap
 
     # User
-*/
 	}
 }
 

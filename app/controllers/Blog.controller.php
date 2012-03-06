@@ -48,7 +48,7 @@ class Blog extends Main {
   public function show() {
     $this->__autoload('Comment');
 
-		# Bugfix: We got a page request, so tell the model that we don't want to see an entry.
+    # Bugfix: We got a page request, so tell the model that we don't want to see an entry.
     if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
             isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
             !isset($this->_aRequest['parent_id']))
@@ -56,8 +56,9 @@ class Blog extends Main {
 
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
+    #die(print_r($this->_iId));
 		# If data is not found, redirect to 404
-		if (empty($this->_aData[1]['id']) && !empty($this->_iId))
+		if (empty($this->_aData[1]['id']) && !empty($this->_iId) && !isset($this->_aRequest['page']))
 			Helper::redirectTo('/error/404');
 
 		else {
@@ -70,13 +71,12 @@ class Blog extends Main {
       if (!empty($this->_iId)) {
         $oComments = new Comment($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
-
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
       }
 
       # Load blog pages
       else
-        $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
+        $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
 
       $this->_setDescription($this->_setBlogDescription());
       $this->_setKeywords($this->_setBlogKeywords());

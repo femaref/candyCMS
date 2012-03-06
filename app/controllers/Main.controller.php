@@ -178,6 +178,7 @@ abstract class Main {
 
     # Set the ID we want to work with.
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
+		#$this->_iId = isset($this->_aRequest['id']) && !isset($this->_aRequest['page']) ? (int) $this->_aRequest['id'] : '';
 
     # Set our default template folder.
     $this->_sTemplateFolder = isset($this->_aRequest['section']) ? (string)$this->_aRequest['section'] . 's' : '';

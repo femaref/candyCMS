@@ -41,9 +41,7 @@ class Blog extends Main {
     if(WEBSITE_MODE == 'test')
       $iLimit = 1;
 
-    # Overview
     if (empty($iId)) {
-
 			# Show unpublished items to moderators or administrators only
       $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
 							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'" :
@@ -55,17 +53,15 @@ class Blog extends Main {
         $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }
 
-      # Count entries for pagination
       try {
         $oQuery		= $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult	= $oQuery->fetchColumn();
+        $this->oPagination = new Pagination($this->_aRequest, (int)$iResult, $iLimit);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());
         exit('SQL error.');
       }
-
-      $this->oPagination = new Pagination($this->_aRequest, (int)$iResult, $iLimit);
 
       try {
         $oQuery = $this->_oDb->query("SELECT
@@ -114,8 +110,6 @@ class Blog extends Main {
                 '';
       }
     }
-
-    # Single entry
     else {
       # Show unpublished items to moderators or administrators only
       $iPublished = $this->_aSession['userdata']['role'] >= 3 ? 0 : 1;

@@ -84,7 +84,7 @@ class Gallery extends Main {
 
       # Absolute URL for image information
       $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
-              '/popup/' . $aData['file'] . '.' . $aData['extension']);
+              '/popup/' . $aData['file']);
 
       if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
         # Get image information

@@ -29,8 +29,6 @@ class Download extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false) {
-
-    # Overview
     if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -65,8 +63,6 @@ class Download extends Main {
         $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
       }
     }
-
-    # Single entry
     else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT

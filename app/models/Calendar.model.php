@@ -29,7 +29,6 @@ class Calendar extends Main {
 	 *
 	 */
 	public function getData($iId = '', $bUpdate = false) {
-    # Overview
 		if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
@@ -107,8 +106,6 @@ class Calendar extends Main {
 					$this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
 			}
 		}
-
-    # Show entry
 		else {
 			try {
 				$oQuery = $this->_oDb->prepare("SELECT
