@@ -44,39 +44,28 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testUploadDirIsWritable() {
-		$sFile = PATH_STANDARD . '/upload/temp/test.log';
-		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Upload folder is writeable.' . "\n");
-		fclose($oFile);
-
-		$this->assertTrue(file_exists($sFile), 'Upload folder is basically writeable.');
-		@unlink($sFile);
+		$this->assertTrue(parent::createFile('upload'));
+		$this->assertTrue(unlink(PATH_STANDARD . '/upload/test.log'));
 	}
 
 	function testCacheDirIsWritable() {
-		$sFile = PATH_STANDARD . '/cache/test.log';
-		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Cache is writeable.' . "\n");
-		fclose($oFile);
-
-		$this->assertTrue(file_exists($sFile), 'Cache folder is writeable.');
-		@unlink($sFile);
+		$this->assertTrue(parent::createFile('cache'));
+		$this->assertTrue(unlink(PATH_STANDARD . '/cache/test.log'));
 	}
 
 	function testCompileDirIsWritable() {
-		$sFile = PATH_STANDARD . '/compile/test.log';
-		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Compile dir is writeable.' . "\n");
-		fclose($oFile);
-
-		$this->assertTrue(file_exists($sFile), 'Compile folder is writeable.');
-		@unlink($sFile);
+		$this->assertTrue(parent::createFile('compile'));
+		$this->assertTrue(unlink(PATH_STANDARD . '/compile/test.log'));
 	}
 
 	function testBackupDirIsWritable() {
-		$sFile = parent::createFile('backup');
-		$this->assertTrue(file_exists($sFile), 'Backup folder is writeable.');
-		unlink($sFile);
+		$this->assertTrue(parent::createFile('backup'));
+		$this->assertTrue(unlink(PATH_STANDARD . '/backup/test.log'));
+	}
+
+	function testLogsDirIsWritable() {
+		$this->assertTrue(parent::createFile('logs'));
+		$this->assertTrue(unlink(PATH_STANDARD . '/logs/test.log'));
 	}
 }
 

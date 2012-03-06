@@ -34,14 +34,14 @@ class AllFileTests extends TestSuite {
 
 	function __construct() {
 		parent::__construct();
-		$this->TestSuite('Sections');
+		$this->TestSuite('All tests');
 
     # Helpers
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
 
 		# Index
-		/*$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
-
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
+/*
     # Blog
     #$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blog.controller.php');

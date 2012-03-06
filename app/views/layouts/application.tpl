@@ -56,6 +56,9 @@
           <div class='container'>
             <a href="/{$WEBSITE_LANDING_PAGE}" class="brand" title="{$WEBSITE_NAME}">
               {$WEBSITE_NAME}
+              {if $WEBSITE_MODE !== 'production'}
+                &nbsp;- {$WEBSITE_MODE|upper}
+              {/if}
             </a>
             <ul class="nav">
               <li{if $smarty.get.section == 'blog'} class='active'{/if}>

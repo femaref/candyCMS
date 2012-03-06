@@ -47,34 +47,34 @@ class UnitTestOfHelperHelpers extends CandyUnitTest {
 
   function testCreateLinkTo() {
     $this->assertFalse(preg_match('/external/i', Helper::createLinkTo('/')));
-    $this->assertTrue(preg_match('/external/i', Helper::createLinkTo('/', true)));
+    $this->assertPattern('/external/i', Helper::createLinkTo('/', true));
   }
 
   function testGetAvatar() {
-    $this->assertTrue(preg_match('/gravatar/i', Helper::getAvatar(100, 0)));
+    $this->assertPattern('/gravatar/i', Helper::getAvatar(100, 0));
   }
 
   function testGetFileSize() {
-    $this->assertTrue(preg_match('/KB/i', Helper::getFileSize('index.php')));
-    $this->assertTrue(preg_match('/Byte/i', Helper::getFileSize('not_existing_file')));
+    $this->assertPattern('/KB/i', Helper::getFileSize('index.php'));
+    $this->assertPattern('/Byte/i', Helper::getFileSize('not_existing_file'));
   }
 
   function testGetTemplateDir() {
-    $this->assertTrue(preg_match('/app\/views/i', Helper::getTemplateDir('layouts', 'application')));
-    $this->assertTrue(preg_match('/addons\/views/i', Helper::getTemplateDir('samples', 'show')));
+    $this->assertPattern('/app\/views/i', Helper::getTemplateDir('layouts', 'application'));
+    $this->assertPattern('/addons\/views/i', Helper::getTemplateDir('samples', 'show'));
   }
 
   function testGetTemplateType() {
-    $this->assertTrue(preg_match('/application.tpl/i', Helper::getTemplateType('app/views/layouts', 'application')));
+    $this->assertPattern('/application.tpl/i', Helper::getTemplateType('app/views/layouts', 'application'));
   }
 
   function testGetPluginTemplateDir() {
-    $this->assertTrue(preg_match('/plugins\/views/i', Helper::getPluginTemplateDir('headlines', 'show')));
+    $this->assertPattern('/plugins\/views/i', Helper::getPluginTemplateDir('headlines', 'show'));
   }
 
   function testFormatInput() {
-    $this->assertTrue(preg_match('/&quot;/i', Helper::formatInput('"')));
-    $this->assertTrue(preg_match('/</i', Helper::formatInput('<', false)));
+    $this->assertPattern('/&quot;/i', Helper::formatInput('"'));
+    $this->assertPattern('/</i', Helper::formatInput('<', false));
   }
 
   function testFormatTimestamp() {
