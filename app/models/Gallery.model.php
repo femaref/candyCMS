@@ -28,7 +28,7 @@ class Gallery extends Main {
   private $_aThumbs;
 
   /**
-   * Get blog entry or blog overview data. Depends on avaiable ID.
+   * Get blog entry or blog overview data. Depends on available ID.
    *
    * @access public
    * @param integer $iId Album-ID to load data from. If empty, show overview.

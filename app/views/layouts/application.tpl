@@ -36,7 +36,7 @@
       {* Include jQuery and its components *}
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1{$_compress_files_suffix_}.js"></script>
 
-      {* Fallback if CDN is not avaiable. Also include language parts. *}
+      {* Fallback if CDN is not available. Also include language parts. *}
       <script type="text/javascript">
         if (typeof jQuery == 'undefined')
           document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.7.1{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
@@ -145,9 +145,9 @@
                 </div>
               </div>
             {/if}
-            {if $_update_avaiable_}
+            {if $_update_available_}
               <div class="notice">
-                {$_update_avaiable_}
+                {$_update_available_}
               </div>
             {/if}
             <section id="{$smarty.get.section}">

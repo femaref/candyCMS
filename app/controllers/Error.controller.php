@@ -19,7 +19,7 @@ use Smarty;
 class Error extends Main {
 
 	/**
-	 * Show a 404 error when a page is not avaiable or found.
+	 * Show a 404 error when a page is not available or found.
 	 *
 	 * @access public
 	 * @return string HTML content

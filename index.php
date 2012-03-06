@@ -41,15 +41,14 @@ define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['templat
 
 # Do we have a mobile device?
 # *********************************************
-$sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-$bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
-              preg_match('/Symb/i', $sUserAgent) ||
-              preg_match('/Windows CE/i', $sUserAgent) ||
-              preg_match('/IEMobile/i', $sUserAgent) ||
-              preg_match('/iPhone/i', $sUserAgent) ||
-              preg_match('/iPod/i', $sUserAgent) ||
-              preg_match('/Blackberry/i', $sUserAgent) ||
-              preg_match('/Android/i', $sUserAgent) ?
+$bMobile    = preg_match('/Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/Symb/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/Windows CE/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/IEMobile/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/iPhone/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/iPod/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/Blackberry/i', $_SERVER['HTTP_USER_AGENT']) ||
+              preg_match('/Android/i', $_SERVER['HTTP_USER_AGENT']) ?
               true :
               false;
 
@@ -75,7 +74,6 @@ define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['R
 
 # Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
-$oIndex->__init();
 
 # Redirect to landing page if we got no valid request.
 if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_MODE == 'production' && $_SERVER['REQUEST_URI'] == '/')

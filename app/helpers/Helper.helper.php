@@ -185,7 +185,7 @@ class Helper {
   }
 
 	/**
-	 * Get the template dir. Check if there are addon files and use them if avaiable.
+	 * Get the template dir. Check if there are addon files and use them if available.
 	 *
 	 * @static
 	 * @access public
@@ -220,7 +220,7 @@ class Helper {
 	}
 
 	/**
-	 * Get the template type. Check if mobile template is avaiable and return standard if not.
+	 * Get the template type. Check if mobile template is available and return standard if not.
 	 *
 	 * @static
 	 * @access public
