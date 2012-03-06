@@ -20,15 +20,19 @@ use PDO;
 class Search extends Main {
 
   /**
-   * Fetch information from tables.
+   * Get search information from tables.
    *
-   * @access private
+   * @access public
    * @param string $sSearch query string to search
    * @param array $aTables tables to search in
+   * @param string $sOrderBy how to order search
    * @return array $this->_aData search data
    *
    */
-  private function _setData($sSearch, $aTables, $sOrderBy = 'date DESC') {
+  public function getData($sSearch, $aTables = '', $sOrderBy = 'date DESC') {
+    if (empty($aTables))
+      $aTables = array('blogs', 'contents');
+
     foreach ($aTables as $sTable) {
       try {
         $this->oQuery = $this->_oDb->query("SELECT
@@ -76,21 +80,5 @@ class Search extends Main {
     }
 
     return $this->_aData;
-  }
-
-  /**
-   * Get search information from tables.
-   *
-   * @access public
-   * @param string $sSearch query string to search
-   * @param array $aTables tables to search in
-   * @return array $this->_aData search data
-   *
-   */
-  public function getData($sSearch, $aTables = '') {
-    if (empty($aTables))
-      $aTables = array('blogs', 'contents');
-
-    return $this->_setData($sSearch, $aTables);
   }
 }

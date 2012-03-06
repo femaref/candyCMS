@@ -36,12 +36,37 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testGetLanguage() {
-		$this->assertIsA($this->oObject->getLanguage(), 'string');
+    $this->assertEqual($this->oObject->getLanguage(), WEBSITE_LOCALE);
 	}
+
+  /**
+   *@todo
+   */
+  function testGetCronjob() {
+
+  }
+
+  function testGetFacebookExtension() {
+    $this->assertFalse($this->oObject->getFacebookExtension());
+  }
 
 	function testSetTemplate() {
 		$this->assertIsA($this->oObject->setTemplate(), 'string');
 	}
+
+  /**
+   *@todo
+   */
+  function testSetUser() {
+
+  }
+
+  /**
+   *@todo
+   */
+  function testShow() {
+
+  }
 
 	function testUploadDirIsWritable() {
 		$this->assertTrue(parent::createFile('upload'));

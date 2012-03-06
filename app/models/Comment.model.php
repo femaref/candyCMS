@@ -20,16 +20,16 @@ use PDO;
 class Comment extends Main {
 
   /**
-   * Set comment data.
+   * Get comment data.
    *
-   * @access private
-   * @param integer $iId ID of blog post
-   * @param integer $iEntries number of comments for this blog post
+   * @access public
+   * @param integer $iId blog ID to load data from
+   * @param integer $iEntries number of comments for this blog ID
    * @param integer $iLimit comment limit
-   * @return array data
+   * @return array data from _setData
    *
    */
-  private function _setData($iId, $iEntries, $iLimit) {
+  public function getData($iId, $iEntries, $iLimit) {
     $this->oPagination = new Pagination($this->_aRequest, $iEntries, $iLimit);
 
     try {
@@ -132,20 +132,6 @@ class Comment extends Main {
         $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
       }
     }
-  }
-
-  /**
-   * Get comment data.
-   *
-   * @access public
-   * @param integer $iId blog ID to load data from
-   * @param integer $iEntries number of comments for this blog ID
-   * @param integer $iLimit comment limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iId, $iEntries, $iLimit) {
-    return $this->_setData($iId, $iEntries, $iLimit);
   }
 
   /**

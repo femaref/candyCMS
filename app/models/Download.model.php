@@ -20,16 +20,18 @@ use PDO;
 class Download extends Main {
 
   /**
-   * Set download data.
+   * Get download data.
    *
-   * @access private
+   * @access public
+   * @param integer $iId ID to get data from.
    * @param boolean $bUpdate prepare data for update
    * @return array data
    *
    */
-  private function _setData($bUpdate) {
+  public function getData($iId = '', $bUpdate = false) {
 
-    if (empty($this->_iId)) {
+    # Overview
+    if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           d.*,
@@ -63,6 +65,8 @@ class Download extends Main {
         $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
       }
     }
+
+    # Single entry
     else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -72,7 +76,7 @@ class Download extends Main {
                                         WHERE
                                           id = :id");
 
-        $oQuery->bindParam('id', $this->_iId);
+        $oQuery->bindParam('id', $iId);
         $oQuery->execute();
         $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
       }
@@ -85,20 +89,6 @@ class Download extends Main {
     }
 
     return $this->_aData;
-  }
-
-  /**
-   * Get download data.
-   *
-   * @access public
-   * @param integer $iId ID to get data from.
-   * @param boolean $bUpdate prepare data for update
-   * @return array data
-   *
-   */
-  public function getData($iId = '', $bUpdate = false) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-    return $this->_setData($bUpdate);
   }
 
 	/**
@@ -145,7 +135,7 @@ class Download extends Main {
    *
    */
   public function create($sFile, $sExtension) {
-      try {
+    try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "downloads
                                         ( author_id,

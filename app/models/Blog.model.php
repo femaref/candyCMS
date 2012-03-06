@@ -22,17 +22,27 @@ require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 class Blog extends Main {
 
   /**
-   * Set blog entry or blog overview data.
+   * Get blog entry or blog overview data. Depends on avaiable ID.
    *
-   * @access private
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
    * @param integer $iLimit blog post limit
-   * @return array data
-	 * @todo published to b.published
+   * @return array data from _setData
    *
    */
-  private function _setData($bUpdate, $iLimit) {
-    if (empty($this->_iId)) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
+    # Small fix for pagination
+    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
+            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
+            !isset($this->_aRequest['parent_id']))
+      $iId = '';
+
+    if(WEBSITE_MODE == 'test')
+      $iLimit = 1;
+
+    # Overview
+    if (empty($iId)) {
 
 			# Show unpublished items to moderators or administrators only
       $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
@@ -104,6 +114,8 @@ class Blog extends Main {
                 '';
       }
     }
+
+    # Single entry
     else {
       # Show unpublished items to moderators or administrators only
       $iPublished = $this->_aSession['userdata']['role'] >= 3 ? 0 : 1;
@@ -133,7 +145,7 @@ class Blog extends Main {
                                           b.published >= :published
                                         LIMIT 1");
 
-        $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
+        $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
         $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
         $oQuery->execute();
 
@@ -158,31 +170,6 @@ class Blog extends Main {
     }
 
     return $this->_aData;
-  }
-
-  /**
-   * Get blog entry or blog overview data. Depends on avaiable ID.
-   *
-   * @access public
-   * @param integer $iId ID to load data from. If empty, show overview.
-   * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-
-    # Small fix for pagination
-    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
-            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
-            !isset($this->_aRequest['parent_id']))
-      $this->_iId = '';
-
-    if(WEBSITE_MODE == 'test')
-      $iLimit = 1;
-
-    return $this->_setData($bUpdate, $iLimit);
   }
 
   /**

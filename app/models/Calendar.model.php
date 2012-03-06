@@ -20,15 +20,17 @@ use PDO;
 class Calendar extends Main {
 
 	/**
-	 * Set calendar data.
+	 * Get calendar data.
 	 *
 	 * @access private
+   * @param integer $iId Id to work with
 	 * @param boolean $bUpdate prepare data for update
 	 * @return array data
 	 *
 	 */
-	private function _setData($bUpdate) {
-		if (empty($this->_iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
+	public function getData($iId = '', $bUpdate = false) {
+    # Overview
+		if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
 					$iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
@@ -105,6 +107,8 @@ class Calendar extends Main {
 					$this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
 			}
 		}
+
+    # Show entry
 		else {
 			try {
 				$oQuery = $this->_oDb->prepare("SELECT
@@ -115,7 +119,7 @@ class Calendar extends Main {
                                         WHERE
                                           id = :id");
 
-				$oQuery->bindParam('id', $this->_iId);
+				$oQuery->bindParam('id', $iId);
 				$oQuery->execute();
 				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
 			}
@@ -140,20 +144,6 @@ class Calendar extends Main {
 		}
 
 		return $this->_aData;
-	}
-
-  /**
-	 * Get calendar data.
-	 *
-	 * @access public
-	 * @param integer $iId ID to get data from
-	 * @param boolean $bUpdate prepare data for update
-	 * @return array data
-	 *
-	 */
-	public function getData($iId = '', $bUpdate = false) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-		return $this->_setData($bUpdate);
 	}
 
 	/**

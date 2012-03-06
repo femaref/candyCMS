@@ -165,16 +165,23 @@ class User extends Main {
 	}
 
   /**
-   * Set user entry or user overview data.
+   * Get user entry or user overview data. Depends on avaiable ID.
    *
-   * @access private
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
+   * @param boolean $bForceNoId Override ID to show user overview
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
-   * @return array data
+   * @param integer $iLimit user overview limit
+   * @return array data from _setData
    *
    */
-  private function _setData($bUpdate, $iLimit) {
-    if (empty($this->_iId)) {
+  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
+
+		if ($bForceNoId === true)
+			$iId = '';
+
+    # Overview
+    if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           u.id,
@@ -214,8 +221,9 @@ class User extends Main {
         $this->_aData[$iId] = $this->_formatForOutput($aRow, 'user');
         $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }
-
     }
+
+    # Single entry
     else {
       try {
 				$oQuery = $this->_oDb->prepare("SELECT
@@ -231,7 +239,7 @@ class User extends Main {
                                           u.id = :id
                                         LIMIT 1");
 
-				$oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
+				$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 				$oQuery->execute();
 
 				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
@@ -252,26 +260,6 @@ class User extends Main {
 
     return $this->_aData;
   }
-
-  /**
-   * Get user entry or user overview data. Depends on avaiable ID.
-   *
-   * @access public
-   * @param integer $iId ID to load data from. If empty, show overview.
-   * @param boolean $bForceNoId Override ID to show user overview
-   * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit user overview limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-
-		if ($bForceNoId == true)
-			$this->_iId = '';
-
-		return $this->_setData($bUpdate, $iLimit);
-	}
 
   /**
    * Create a user.

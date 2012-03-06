@@ -21,20 +21,21 @@ require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 class Log extends Main {
 
   /**
-   * Set log overview data.
+   * Get log overview data.
    *
-   * @access private
+   * @access public
    * @param integer $iLimit page limit
-   * @return array data
+   * @return array $this->_aData
    *
    */
-  private function _setData($iLimit) {
+  public function getData($iLimit = 50) {
     try {
       $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
       $iResult = $oQuery->fetchColumn();
     }
-    catch (AdvancedException $e) {
-      $this->_oDb->rollBack();
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0105 - ' . $p->getMessage());
+      exit('SQL error.');
     }
 
     $this->oPagination = new Pagination($this->_aRequest, $iResult, $iLimit);
@@ -77,18 +78,6 @@ class Log extends Main {
     }
 
     return $this->_aData;
-  }
-
-  /**
-   * Get log overview data.
-   *
-   * @access public
-   * @param integer $iLimit page limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iLimit = 50) {
-    return $this->_setData($iLimit);
   }
 
   /**

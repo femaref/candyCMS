@@ -146,18 +146,14 @@ class User extends Main {
   }
 
 	/**
-	 * Show user or user overview (depends on a given ID or not and user role).
+	 * Show user or user overview.
 	 *
 	 * @access public
-	 * @param integer $iUserId user to show
 	 * @return string HTML content
 	 *
 	 */
-	public function show($iUserId = '') {
-		# Fix to avoid empty UID on /user/Settings shortcut
-		if (!empty($iUserId))
-			$this->_iId = (int) $iUserId;
-
+	public function show() {
+    # Overview
 		if (empty($this->_iId)) {
 			$this->_setTitle(I18n::get('user.title.overview'));
 			$this->_setDescription(I18n::get('user.title.overview'));
@@ -169,12 +165,14 @@ class User extends Main {
         $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-        $this->oSmarty->assign('user', $this->_oModel->getData($iUserId));
+        $this->oSmarty->assign('user', $this->_oModel->getData());
 
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
 		}
+
+    # Single entry
 		else {
 			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
@@ -183,7 +181,7 @@ class User extends Main {
       $this->oSmarty->setTemplateDir($sTemplateDir);
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $aData = & $this->_oModel->getData($iUserId);
+        $aData = & $this->_oModel->getData($this->_iId);
         $this->oSmarty->assign('user', $aData);
 
         $this->_setTitle($aData[1]['full_name']);

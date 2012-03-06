@@ -19,19 +19,20 @@ use PDO;
 class Content extends Main {
 
   /**
-   * Set content entry or content overview data.
+   * Get content entry or content overview data. Depends on avaiable ID.
    *
-   * @access private
+   * @access public
+   * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit content post limit
-   * @return array data
+   * @param integer $iLimit blog post limit
+   * @return array $this->_aData
    *
    */
-  private function _setData($bUpdate, $iLimit) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
+
     $iPublished = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
 
-    # Show overview
-    if (empty($this->_iId)) {
+    if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
@@ -59,8 +60,6 @@ class Content extends Main {
         AdvancedException::reportBoth('0024 - ' . $p->getMessage());
         exit('SQL error.');
       }
-
-    # Show ID
     }
     else {
       try {
@@ -82,11 +81,11 @@ class Content extends Main {
                                         LIMIT
                                           1");
 
-        $oQuery->bindParam('id', $this->_iId, PDO::PARAM_INT);
+        $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
         $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
         $oQuery->execute();
 
-        # Fix for using it in the same template as overview
+        # Bugfix: Give array to template to enable a loop.
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
@@ -106,21 +105,6 @@ class Content extends Main {
     }
 
     return $this->_aData;
-  }
-
-  /**
-   * Get content entry or content overview data. Depends on avaiable ID.
-   *
-   * @access public
-   * @param integer $iId ID to load data from. If empty, show overview.
-   * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-    return $this->_setData($bUpdate, $iLimit);
   }
 
   /**

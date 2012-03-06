@@ -42,6 +42,7 @@ class Blog extends Main {
    *
    * @access public
    * @return string HTML content
+   * @todo implement caching
    *
    */
   public function show() {
@@ -53,7 +54,6 @@ class Blog extends Main {
             !isset($this->_aRequest['parent_id']))
       $this->_iId = '';
 
-    # Collect data
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
 		# If data is not found, redirect to 404
@@ -61,6 +61,11 @@ class Blog extends Main {
 			Helper::redirectTo('/error/404');
 
 		else {
+			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+			$this->oSmarty->setTemplateDir($sTemplateDir);
+
       # Load comments
       if (!empty($this->_iId)) {
         $oComments = new Comment($this->_aRequest, $this->_aSession);
@@ -73,17 +78,12 @@ class Blog extends Main {
       else
         $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding('blog'));
 
-      # Create page title and description
       $this->_setDescription($this->_setBlogDescription());
       $this->_setKeywords($this->_setBlogKeywords());
       $this->_setTitle($this->_setBlogTitle());
 
       $this->oSmarty->assign('blog', $this->_aData);
 
-			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
-
-			$this->oSmarty->setTemplateDir($sTemplateDir);
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
   }

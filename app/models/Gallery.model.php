@@ -28,20 +28,22 @@ class Gallery extends Main {
   private $_aThumbs;
 
   /**
-   * Set gallery album data.
+   * Get blog entry or blog overview data. Depends on avaiable ID.
    *
-   * @access private
+   * @access public
+   * @param integer $iId Album-ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
-   * @param boolean $bAdvancedImageInformation get additional image information like MIME, size etc.
+   * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
    * @param integer $iLimit blog post limit
-   * @return array data
+   * @return array data from _setData
    *
    */
-  private function _setData($bUpdate, $bAdvancedImageInformation, $iLimit) {
+  public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
     $sWhere   = '';
     $iResult  = 1;
 
-    if (empty($this->_iId)) {
+    # Overview
+    if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "gallery_albums " . $sWhere);
         $iResult = $oQuery->fetchColumn();
@@ -55,8 +57,9 @@ class Gallery extends Main {
       $bUpdate = false;
     }
 
+    # Single entry
     else
-      $sWhere = "WHERE a.id = '" . $this->_iId . "'";
+      $sWhere = "WHERE a.id = '" . $iId . "'";
 
     $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
 
@@ -110,31 +113,15 @@ class Gallery extends Main {
   }
 
   /**
-   * Get blog entry or blog overview data. Depends on avaiable ID.
+   * Get thumbnail array.
    *
    * @access public
-   * @param integer $iId Album-ID to load data from. If empty, show overview.
-   * @param boolean $bUpdate prepare data for update
-   * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
-   * @param integer $iLimit blog post limit
-   * @return array data from _setData
-   *
-   */
-  public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
-    $this->_iId = !empty($iId) ? $iId : $this->_iId;
-    return $this->_setData($bUpdate, $bAdvancedImageInformation, $iLimit);
-  }
-
-  /**
-   * Fetch all thubms and put them into an array.
-   *
-   * @access private
    * @param integer $iId album id to fetch images from
-   * @param boolean $bAdvancedImageInformation additional information like width, height etc.
-   * @return array $this->_aThumbs array with image information
+   * @param boolean $bAdvancedImageInformation fetch additional information like width, height etc.
+   * @return array $this->_aThumbs processed array with image information
    *
    */
-  private function _setThumbs($iId, $bAdvancedImageInformation) {
+  public function getThumbs($iId, $bAdvancedImageInformation = false) {
     # Clear existing array (fix, when we got no images at a gallery
     if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
@@ -203,19 +190,6 @@ class Gallery extends Main {
     }
 
     return $this->_aThumbs;
-  }
-
-  /**
-   * Get thumbnail array.
-   *
-   * @access public
-   * @param integer $iId album id to fetch images from
-   * @param boolean $bAdvancedImageInformation fetch additional information like width, height etc.
-   * @return array $this->_aThumbs processed array with image information
-   *
-   */
-  public function getThumbs($iId, $bAdvancedImageInformation = false) {
-    return $this->_setThumbs($iId, $bAdvancedImageInformation);
   }
 
   /**
