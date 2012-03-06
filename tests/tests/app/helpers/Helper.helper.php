@@ -82,4 +82,26 @@ class UnitTestOfHelperHelpers extends CandyUnitTest {
     $this->assertTrue(Helper::formatTimestamp(0, 1) == strftime(DEFAULT_DATE_FORMAT, 0));
     $this->assertTrue(Helper::formatTimestamp(0, 2) == strftime(DEFAULT_TIME_FORMAT, 0));
   }
+
+  function testFormatOutput() {
+    $this->assertPattern('/<mark>/i', Helper::formatOutput('test', 'test'));
+  }
+
+  function testGetLastEntry() {
+    $this->assertTrue((int) Helper::getLastEntry('logs') > 0);
+  }
+
+  function testReplaceNonAlphachars() {
+    $this->assertPattern('/_/i', Helper::replaceNonAlphachars(' '));
+  }
+
+  function testRemoveSlash() {
+    $this->assertEqual(Helper::removeSlash('/test'), 'test');
+    $this->assertEqual(Helper::removeSlash('//test'), '/test');
+  }
+
+  function testAddSlash() {
+    $this->assertEqual(Helper::addSlash('test'), '/test');
+    $this->assertEqual(Helper::addSlash('/test'), '/test');
+  }
 }

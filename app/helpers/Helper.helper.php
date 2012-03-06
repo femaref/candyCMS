@@ -350,13 +350,13 @@ class Helper {
 	 * @static
 	 * @access public
 	 * @param string $sStr string to format
-	 * @param string $sHighlight enable string highlighting
+	 * @param string $sHighlight string to highlight
 	 * @see plugins/controllers/Bbcode.controller.php
-	 * @return string formatted string
+	 * @return string $sStr formatted string
 	 *
 	 */
-  public static function formatOutput($sStr, $sHighlight = false) {
-    if ($sHighlight === true)
+  public static function formatOutput($sStr, $sHighlight = '') {
+    if (!empty($sHighlight))
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
     if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
@@ -399,6 +399,7 @@ class Helper {
 	 * @access public
 	 * @param string $sStr string to replace chars
 	 * @return string string with formatted chars
+   * @todo find better solution for i18n
 	 *
 	 */
   public static function replaceNonAlphachars($sStr) {
