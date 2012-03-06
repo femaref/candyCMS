@@ -264,7 +264,7 @@ class Upload {
 	 *
 	 */
   public function getId($bWithExtension = true) {
-		return	$bWithExtension == true ?
+		return	$bWithExtension === true ?
 						$this->_sFileName . '.' . $this->_sFileExtension :
 						$this->_sFileName;
 	}
