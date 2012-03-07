@@ -19,7 +19,7 @@ use PDO;
 class Content extends Main {
 
   /**
-   * Get content entry or content overview data. Depends on avaiable ID.
+   * Get content entry or content overview data. Depends on available ID.
    *
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.

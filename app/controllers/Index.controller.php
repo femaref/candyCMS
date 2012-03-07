@@ -14,14 +14,24 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Dispatcher as Dispatcher;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\Section as Section;
 use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use lessc;
+
+require PATH_STANDARD . '/app/models/Main.model.php';
+require PATH_STANDARD . '/app/models/Session.model.php';
+require PATH_STANDARD . '/app/controllers/Main.controller.php';
+require PATH_STANDARD . '/app/controllers/Session.controller.php';
+require PATH_STANDARD . '/app/controllers/Log.controller.php';
+require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
+require PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
+require PATH_STANDARD . '/app/helpers/I18n.helper.php';
+require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
 class Index {
 
@@ -53,22 +63,13 @@ class Index {
 	protected $_aCookie;
 
 	/**
-	 * name of the selected template (via request)
+	 * Saves the object.
 	 *
-	 * @var string
-	 * @access private
-   *
-	 */
-	private $_sTemplate;
-
-	/**
-	 * name of the selected language (via request)
+	 * @var object
+	 * @access protected
 	 *
-	 * @var string
-	 * @access private
-   *
 	 */
-	private $_sLanguage;
+  protected $_oObject;
 
 	/**
 	 * Initialize the software by adding input params.
@@ -81,37 +82,22 @@ class Index {
 	 *
 	 */
 	public function __construct($aRequest, $aSession = '', $aFile = '', $aCookie = '') {
+    if (!isset($aRequest['section']) && !isset($aRequest['language'])) {
+      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+      exit();
+    }
+
 		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
 		$this->_aCookie		= & $aCookie;
-	}
 
-	/**
-	 * Init the software.
-	 *
-	 * @access public
-	 *
-	 */
-	public function __init() {
-		require PATH_STANDARD . '/app/models/Main.model.php';
-		require PATH_STANDARD . '/app/models/Session.model.php';
-		require PATH_STANDARD . '/app/controllers/Main.controller.php';
-		require PATH_STANDARD . '/app/controllers/Session.controller.php';
-		require PATH_STANDARD . '/app/controllers/Log.controller.php';
-		require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
-		require PATH_STANDARD . '/app/helpers/Section.helper.php';
-		require PATH_STANDARD . '/app/helpers/I18n.helper.php';
-		require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
-
-    # Load actions.
-    self::getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
-    self::getPlugins(ALLOW_PLUGINS);
+    $this->getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
+    $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
     $this->getFacebookExtension();
     $this->setUser();
-    $this->setTemplate();
 	}
 
   /**
@@ -189,27 +175,27 @@ class Index {
       define('DEFAULT_LANGUAGE', 'en');
 
     # We got a language request? Let's switch the language!
+		# Bugfix: Added "$this->_aRequest['section']" to make a blog update possible.
     if (isset($this->_aRequest['language']) &&
 						file_exists(PATH_STANDARD . '/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
 						!isset($this->_aRequest['section'])) {
-      $this->_sLanguage = (string) $this->_aRequest['language'];
+      $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      Helper::redirectTo('/');
+      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
 			exit();
     }
 
     # There is no request, but there might be a cookie instead.
     else {
-      $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-
-      $this->_sLanguage = isset($aRequest['default_language']) &&
+      $aRequest		= isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
+      $sLanguage	= isset($aRequest['default_language']) &&
               file_exists(PATH_STANDARD . '/languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               strtolower(substr(DEFAULT_LANGUAGE, 0, 2));
     }
 
     # Set iso language codes
-    switch ($this->_sLanguage) {
+    switch ($sLanguage) {
       case 'de':
         $sLocale = 'de_DE';
         break;
@@ -232,7 +218,7 @@ class Index {
     }
 
     if (!defined('WEBSITE_LANGUAGE'))
-      define('WEBSITE_LANGUAGE', $this->_sLanguage);
+      define('WEBSITE_LANGUAGE', $sLanguage);
 
     if (!defined('WEBSITE_LOCALE'))
       define('WEBSITE_LOCALE', $sLocale);
@@ -288,51 +274,14 @@ class Index {
    *
    */
   protected function _getFlashMessage() {
-    $aFlashMessage = array();
-    $aFlashMessage['type'] = isset($this->_aSession['flash_message']['type']) &&
-            !empty($this->_aSession['flash_message']['type']) ?
-            $this->_aSession['flash_message']['type'] :
-            '';
-    $aFlashMessage['message'] = isset($this->_aSession['flash_message']['message']) &&
-            !empty($this->_aSession['flash_message']['message']) ?
-            $this->_aSession['flash_message']['message'] :
-            '';
-    $aFlashMessage['headline'] = isset($this->_aSession['flash_message']['headline']) &&
-            !empty($this->_aSession['flash_message']['headline']) ?
-            $this->_aSession['flash_message']['headline'] :
-            '';
+		$aFlashMessage = isset($this->_aSession['flash_message']) ? $this->_aSession['flash_message'] : array(
+				'type'			=> '',
+				'message'		=> '',
+				'headline'	=> '');
+		unset($_SESSION['flash_message']);
 
-    unset($_SESSION['flash_message']);
-    return $aFlashMessage;
-  }
-
-  /**
-   * Sets the template. This can be done via a template request and be temporarily saved in a cookie.
-   *
-   * @access public
-   * @see config/Candy.inc.php
-   * @return string $this->_sTemplate template name
-   *
-   */
-  public function setTemplate() {
-    # We got a template request? Let's change it!
-    if (isset($this->_aRequest['template']) && is_dir(WEBSITE_CDN . '/templates/' . (string) $this->_aRequest['template'])) {
-      $this->_sTemplate = (string) $this->_aRequest['template'];
-      setcookie('default_template', (string) $this->_aRequest['template'], time() + 2592000, '/');
-      Helper::redirectTo('/');
-    }
-
-    # There is no request, but there might be a cookie instead
-    else {
-      $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $this->_sTemplate = isset($aRequest['default_template']) &&
-              is_dir(WEBSITE_CDN . '/templates/' . $aRequest['default_template']) ?
-              (string) $aRequest['default_template'] :
-              '';
-    }
-
-    return $this->_sTemplate;
-  }
+		return $aFlashMessage;
+	}
 
   /**
    * Checks the empuxa server for a new CandyCMS version.
@@ -350,11 +299,11 @@ class Index {
       $sVersionContent = $sVersionContent > VERSION ? (int) $sVersionContent : '';
     }
 
-    $sLangUpdateAvaiable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, I18n::get('global.update.avaiable')) :
+    $sLangUpdateAvailable = isset($sVersionContent) && !empty($sVersionContent) ?
+            str_replace('%v', $sVersionContent, I18n::get('global.update.available')) :
             '';
 
-    return str_replace('%l', Helper::createLinkTo('http://www.candycms.com', true), $sLangUpdateAvaiable);
+    return str_replace('%l', Helper::createLinkTo('http://www.candycms.com', true), $sLangUpdateAvailable);
   }
 
   /**
@@ -457,8 +406,12 @@ class Index {
 			define('UNIQUE_ID', $this->_aRequest['section'] . '|' . substr(md5($this->_aSession['userdata']['role'] .
               WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10) . '|' . substr(md5(CURRENT_URL), 0, 10));
 
-    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
-		if (!isset($this->_aRequest['section']) ||
+		# Direct to install
+    if (strtolower($this->_aRequest['section']) == 'install')
+      Helper::redirectTo('/install/index.php');
+
+    # Define out core modules. All of them are separately handled in app/helper/Dispatcher.helper.php
+		elseif (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						strtolower($this->_aRequest['section']) == 'blog' ||
 						strtolower($this->_aRequest['section']) == 'calendar' ||
@@ -478,20 +431,19 @@ class Index {
             strtolower($this->_aRequest['section']) == 'static' ||
 						strtolower($this->_aRequest['section']) == 'user') {
 
-			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
-			$oSection->getSection();
+			$oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oDispatcher->getController();
+			$oDispatcher->getAction();
 		}
-
-    elseif (strtolower($this->_aRequest['section']) == 'install')
-      Helper::redirectTo('/install/index.php');
 
 		# We do not have a standard action, so fetch it from the addon folder.
     # If addon exists, proceed with override.
     elseif (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
 
-      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oSection->getSection();
+      $oDispatcher = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oDispatcher->getController();
+      $oDispatcher->getAction();
     }
 
     # There's no request on a core module and addons are disabled. */
@@ -503,7 +455,7 @@ class Index {
     # Minimal settings for AJAX-request
 		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
-			$sCachedHTML = $oSection->getContent();
+			$sCachedHTML = $oDispatcher->oController->getContent();
 
     # HTML with template
 		else {
@@ -511,31 +463,31 @@ class Index {
       # Get flash messages (success and error)
       # *********************************************
       $aFlashMessages = & $this->_getFlashMessage();
-      $oSection->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-      $oSection->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-      $oSection->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+      $oDispatcher->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+      $oDispatcher->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+      $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
       # Define meta elements
       # *********************************************
-			$oSection->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oSection->oSmarty->assign('meta_description', $oSection->getDescription());
-			$oSection->oSmarty->assign('meta_keywords', $oSection->getKeywords());
-			$oSection->oSmarty->assign('meta_og_description', $oSection->getDescription());
-			$oSection->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
-			$oSection->oSmarty->assign('meta_og_title', $oSection->getTitle());
-			$oSection->oSmarty->assign('meta_og_url', CURRENT_URL);
+			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
+			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
+			$oDispatcher->oController->oSmarty->assign('meta_og_description', $oDispatcher->oController->getDescription());
+			$oDispatcher->oController->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+			$oDispatcher->oController->oSmarty->assign('meta_og_title', $oDispatcher->oController->getTitle());
+			$oDispatcher->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
 
       # System required variables
       # *********************************************
-			$oSection->oSmarty->assign('_content_', $oSection->getContent());
-			$oSection->oSmarty->assign('_title_', $oSection->getTitle());
-      $oSection->oSmarty->assign('_update_avaiable_', $this->_checkForNewVersion());
+			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());
+			$oDispatcher->oController->oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
+      $oDispatcher->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
 
-      $oSection->oSmarty->setTemplateDir($sTemplateDir);
-      $sCachedHTML = $oSection->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      $oDispatcher->oController->oSmarty->setTemplateDir($sTemplateDir);
+      $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 
 		# Build absolute URLs
@@ -546,28 +498,8 @@ class Index {
 
 		# Check for template files
     # *********************************************
-    # We use templates via template request.
-    if (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) == 'http') {
-      $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
-
-      $sCachedCss     = $sPath . '/css';
-      $sCachedImages  = $sPath . '/images';
-      $sCachedLess    = $sPath . '/less';
-      $sCachedJs      = $sPath . '/js';
-    }
-
-    # Intern use with template request
-    elseif (!empty($this->_sTemplate) && substr(WEBSITE_CDN, 0, 4) !== 'http') {
-      $sPath    = WEBSITE_CDN . '/templates/' . $this->_sTemplate;
-
-      $sCachedCss     = @is_dir(substr($sPath, 1) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
-      $sCachedImages  = @is_dir(substr($sPath, 1) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
-      $sCachedLess    = @is_dir(substr($sPath, 1) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
-      $sCachedJs      = @is_dir(substr($sPath, 1) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
-    }
-
     # We use templates defined in our Candy.inc.php
-    elseif (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
+    if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
 
       $sCachedCss     = $sPath . '/css';
@@ -642,13 +574,13 @@ class Index {
     }
 
     if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Archive')) {
-      $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession);
+      $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       $oArchive->__init();
       $sCachedHTML = & str_replace('<!-- plugin:archive -->', $oArchive->show(), $sCachedHTML);
     }
 
     if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Headlines')) {
-      $oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession);
+      $oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       $oHeadlines->__init();
       $sCachedHTML = & str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
     }

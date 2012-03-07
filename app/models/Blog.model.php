@@ -22,7 +22,7 @@ require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 class Blog extends Main {
 
   /**
-   * Get blog entry or blog overview data. Depends on avaiable ID.
+   * Get blog entry or blog overview data. Depends on available ID.
    *
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.

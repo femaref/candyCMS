@@ -70,8 +70,8 @@ class Search extends Main {
 							array('blogs', 'contents', 'downloads', 'gallery_albums')));
 
       # Create page title and description
-      $this->_setDescription($this->_sHeadline);
-      $this->_setTitle($this->_sHeadline);
+      $this->setDescription($this->_sHeadline);
+      $this->setTitle($this->_sHeadline);
 
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
@@ -89,8 +89,8 @@ class Search extends Main {
 	 *
 	 */
   public function showFormTemplate() {
-    $this->_setDescription(I18n::get('global.search'));
-    $this->_setTitle(I18n::get('global.search'));
+    $this->setDescription(I18n::get('global.search'));
+    $this->setTitle(I18n::get('global.search'));
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');

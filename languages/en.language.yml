@@ -128,7 +128,7 @@ global:
   today: Today
   update:
     at: Updated at
-    avaiable: There is an update for this software avaiable (#%v). Please visit %l for more information.
+    available: There is an update for this software available (#%v). Please visit %l for more information.
     show: Show update?
     update: Update
   upload:
@@ -208,10 +208,10 @@ error:
     entries: There are no entries yet!
     entry: This entry does not exist!
     flash: Download flash to watch this video.
-    file: File not avaiable!
+    file: File not available!
     files: No files have been uploaded.
     permission: You do not have permission to proceed!
-    template: This template is not avaiable!
+    template: This template is not available!
   passwords: Passwords do not match, please retype.
   session:
     create: Please check your Email and password. Also, is your Email verified?
@@ -273,7 +273,7 @@ content:
 
 cronjob:
   mail:
-    body: Your backup has successfully been created and is avaiable as attachment.\r\n
+    body: Your backup has successfully been created and is available as attachment.\r\n
     subject: Backup from %d
 
 download:

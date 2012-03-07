@@ -165,7 +165,7 @@ class User extends Main {
 	}
 
   /**
-   * Get user entry or user overview data. Depends on avaiable ID.
+   * Get user entry or user overview data. Depends on available ID.
    *
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.

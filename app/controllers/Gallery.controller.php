@@ -54,8 +54,8 @@ class Gallery extends Main {
       $sAlbumName					= Model::getAlbumName($this->_iId);
       $sAlbumDescription	= Model::getAlbumContent($this->_iId);
 
-      $this->_setDescription($sAlbumDescription);
-      $this->_setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+      $this->setDescription($sAlbumDescription);
+      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				# Get data and count afterwards
@@ -79,8 +79,8 @@ class Gallery extends Main {
 
 			$aData = & Model::getFileData($this->_iId);
 
-      $this->_setDescription($aData['content']);
-      $this->_setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
+      $this->setDescription($aData['content']);
+      $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
 
       # Absolute URL for image information
       $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
@@ -110,8 +110,8 @@ class Gallery extends Main {
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-			$this->_setDescription(I18n::get('global.gallery'));
-			$this->_setTitle(I18n::get('global.gallery'));
+			$this->setDescription(I18n::get('global.gallery'));
+			$this->setTitle(I18n::get('global.gallery'));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$this->oSmarty->assign('albums', $this->_oModel->getData());

@@ -7,19 +7,19 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.5
- * @see app/helpers/Section.helper.php
+ * @see app/helpers/Dispatcher.helper.php
  */
 
 namespace CandyCMS\Addon\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 
-if (!class_exists('\CandyCMS\Helper\Section'))
-  require_once 'app/helpers/Section.helper.php';
+if (!class_exists('\CandyCMS\Helper\Dispatcher'))
+  require_once 'app/helpers/Dispatcher.helper.php';
 
-class Addon extends \CandyCMS\Helper\Section {
+class Addon extends \CandyCMS\Helper\Dispatcher {
 
-  public function getSection() {
+  public function getAction() {
 
     switch (strtolower($this->_aRequest['section'])) {
       default:
@@ -33,7 +33,7 @@ class Addon extends \CandyCMS\Helper\Section {
         break;
 
       # This is an example of how to create a addon.
-      # For more information take a look at "app/helpers/Section.helper.php"
+      # For more information take a look at "app/helpers/Dispatcher.helper.php"
       case 'sample':
 
         require_once 'addons/controllers/Sample.controller.php';

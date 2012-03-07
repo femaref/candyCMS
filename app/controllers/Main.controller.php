@@ -171,14 +171,7 @@ abstract class Main {
 		if (!defined('WEBSITE_LOCALE'))
 			define('WEBSITE_LOCALE', 'en_US');
 
-    if (!isset($this->_aRequest['section'])) {
-      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-      exit();
-    }
-
-    # Set the ID we want to work with.
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
-		$this->_iId = isset($this->_aRequest['id']) && !isset($this->_aRequest['page']) ? (int) $this->_aRequest['id'] : '';
 
     # Set our default template folder.
     $this->_sTemplateFolder = isset($this->_aRequest['section']) ? (string)$this->_aRequest['section'] . 's' : '';
@@ -309,11 +302,11 @@ abstract class Main {
 	/**
 	 * Set meta description.
 	 *
-	 * @access protected
+	 * @access public
 	 * @param string $sDescription description to be set.
 	 *
 	 */
-	protected function _setDescription($sDescription = '') {
+	public function setDescription($sDescription = '') {
 		$this->_sDescription = & $sDescription;
 	}
 
@@ -337,11 +330,11 @@ abstract class Main {
 	/**
 	 * Set meta keywords.
 	 *
-	 * @access protected
+	 * @access public
 	 * @param string $sKeywords keywords to be set.
 	 *
 	 */
-	protected function _setKeywords($sKeywords = '') {
+	public function setKeywords($sKeywords = '') {
 		$this->_sKeywords = & $sKeywords;
 	}
 
@@ -359,11 +352,11 @@ abstract class Main {
 	/**
 	 * Set meta keywords.
 	 *
-	 * @access protected
+	 * @access public
 	 * @param string $sTitle title to be set.
 	 *
 	 */
-	protected function _setTitle($sTitle = '') {
+	public function setTitle($sTitle = '') {
 		$this->_sTitle = & $sTitle;
 	}
 
@@ -372,21 +365,26 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string page title
+	 * @todo add error support
 	 *
 	 */
 	public function getTitle() {
-    return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
-  }
+		if($this->_aRequest['section'] == 'error')
+			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
+
+		else
+			return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['section']));
+	}
 
 	/**
 	 * Set the page content.
 	 *
-	 * @access protected
+	 * @access public
 	 * @param string $sContent html content
-	 * @see app/helpers/Section.helper.php
+	 * @see app/helpers/Dispatcher.helper.php
 	 *
 	 */
-	protected function _setContent($sContent) {
+	public function setContent($sContent) {
 		$this->_sContent = & $sContent;
 	}
 
@@ -477,6 +475,7 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRole = 3) {
+		#die(print_r($this->_aRequest));
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 

@@ -78,9 +78,9 @@ class Blog extends Main {
       else
         $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
 
-      $this->_setDescription($this->_setBlogDescription());
-      $this->_setKeywords($this->_setBlogKeywords());
-      $this->_setTitle($this->_setBlogTitle());
+      $this->setDescription($this->_setBlogDescription());
+      $this->setKeywords($this->_setBlogKeywords());
+      $this->setTitle($this->_setBlogTitle());
 
       $this->oSmarty->assign('blog', $this->_aData);
 
@@ -165,7 +165,7 @@ class Blog extends Main {
     # Update
     if (!empty($this->_iId)) {
       $aData = & $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle($aData['title']);
+      $this->setTitle($aData['title']);
     }
 
     # Create
@@ -181,7 +181,7 @@ class Blog extends Main {
 
     $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
 
-		# Get avaiable languages
+		# Get available languages
 		$aData['languages'] = array();
 		$oPathDir = opendir(PATH_STANDARD . '/languages');
 		while ($sFile = readdir($oPathDir)) {

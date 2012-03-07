@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class provides an overview about avaiable downloads, counts them and gives
+ * This class provides an overview about available downloads, counts them and gives
  * administrators and moderators the option to upload and manage files.
  *
  * @link http://github.com/marcoraddatz/candyCMS
