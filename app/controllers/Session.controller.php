@@ -39,13 +39,6 @@ class Session extends Main {
   public function show() {
     if (isset($this->_aRequest['action'])) {
       switch ($this->_aRequest['action']) {
-        default:
-        case '404':
-
-          Helper::redirectTo('/error/404');
-          exit();
-
-          break;
 
         case 'password':
 
