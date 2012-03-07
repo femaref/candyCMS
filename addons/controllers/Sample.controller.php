@@ -39,6 +39,8 @@ class Addon_Sample extends \CandyCMS\Controller\Main {
 		$sTemplateDir		= Helper::getTemplateDir('samples', 'show');
 		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
+    $this->setTitle('Sample addon');
+
 		$this->oSmarty->setTemplateDir($sTemplateDir);
 		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }

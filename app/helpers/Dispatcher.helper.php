@@ -50,9 +50,7 @@ class Dispatcher {
    *
    */
   public function getController() {
-    require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
-
-    # Are addons for existing controllers available? If yes, use them
+    # Are addons for existing controllers available? If yes, use them.
     if (file_exists(PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
                     '.controller.php') && (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
       require_once PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
@@ -89,9 +87,7 @@ class Dispatcher {
   public function getAction() {
 		$sAction = isset($this->_aRequest['action']) ? strtolower((string) $this->_aRequest['action']) : 'show';
 
-		if ((string) strtolower($this->_aRequest['section']) !== 'static') {
 			switch ($sAction) {
-
 				case 'create':
 
 					$this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
@@ -144,23 +140,8 @@ class Dispatcher {
 
 					break;
 			}
-		}
-		else {
-      /*$sTpl = isset($this->_aRequest['subsection']) ?
-              (string) $this->_aRequest['subsection'] :
-              die(I18n::get('error.missing.template'));
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setCacheLifetime(300);
-
-      parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
-      parent::_setDescription(ucfirst($sTpl));
-      parent::_setTitle(ucfirst($sTpl));*/
-		}
-
-    /*switch (strtolower((string) $this->_aRequest['section'])) {
-
-
+      /*
       case 'gallery':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {

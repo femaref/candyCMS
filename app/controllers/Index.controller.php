@@ -406,47 +406,11 @@ class Index {
     if (strtolower($this->_aRequest['section']) == 'install')
       Helper::redirectTo('/install/index.php');
 
-    # @todo kick out addons
-    # Define out core modules. All of them are separately handled in app/helper/Dispatcher.helper.php
-		elseif (!isset($this->_aRequest['section']) ||
-						empty($this->_aRequest['section']) ||
-						strtolower($this->_aRequest['section']) == 'blog' ||
-						strtolower($this->_aRequest['section']) == 'calendar' ||
-						strtolower($this->_aRequest['section']) == 'comment' ||
-						strtolower($this->_aRequest['section']) == 'content' ||
-						strtolower($this->_aRequest['section']) == 'download' ||
-						strtolower($this->_aRequest['section']) == 'error' ||
-						strtolower($this->_aRequest['section']) == 'gallery' ||
-						strtolower($this->_aRequest['section']) == 'log' ||
-						strtolower($this->_aRequest['section']) == 'mail' ||
-						strtolower($this->_aRequest['section']) == 'media' ||
-						strtolower($this->_aRequest['section']) == 'newsletter' ||
-            strtolower($this->_aRequest['section']) == 'rss' ||
-            strtolower($this->_aRequest['section']) == 'search' ||
-						strtolower($this->_aRequest['section']) == 'session' ||
-            strtolower($this->_aRequest['section']) == 'sitemap' ||
-            strtolower($this->_aRequest['section']) == 'static' ||
-						strtolower($this->_aRequest['section']) == 'user') {
-
-			$oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile);
-			$oDispatcher->getController();
-			$oDispatcher->getAction();
-		}
-
-		# We do not have a standard action, so fetch it from the addon folder.
-    # If addon exists, proceed with override.
-    elseif (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
-			require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
-
-      $oDispatcher = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+    # Start the dispatcher and grab the controller.
+    else {
+      $oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       $oDispatcher->getController();
       $oDispatcher->getAction();
-    }
-
-    # There's no request on a core module and addons are disabled. */
-    else {
-      header('Status: 404 Not Found');
-      Helper::redirectTo('/error/404');
     }
 
     # Minimal settings for AJAX-request
@@ -458,14 +422,12 @@ class Index {
 		else {
 
       # Get flash messages (success and error)
-      # *********************************************
       $aFlashMessages = & $this->_getFlashMessage();
       $oDispatcher->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
       $oDispatcher->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
       $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
       # Define meta elements
-      # *********************************************
 			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
 			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
 			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
@@ -475,7 +437,6 @@ class Index {
 			$oDispatcher->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
 
       # System required variables
-      # *********************************************
 			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());
 			$oDispatcher->oController->oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
       $oDispatcher->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
@@ -487,15 +448,14 @@ class Index {
       $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 
-		# Build absolute URLs
-    # *********************************************
+		# Build URLs
 		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE, $sCachedHTML);
 		$sCachedHTML = str_replace('%PATH_UPLOAD%', PATH_UPLOAD, $sCachedHTML);
 
 		# Check for template files
     # *********************************************
-    # We use templates defined in our Candy.inc.php
+    # Use an external CDN within a custom template
     if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
 
@@ -504,6 +464,7 @@ class Index {
       $sCachedLess    = $sPath . '/less';
       $sCachedJs      = $sPath . '/js';
     }
+    # Use our public folder within a custom template
     elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
       $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
 
@@ -512,6 +473,8 @@ class Index {
       $sCachedLess    = @is_dir(substr($sPath, 1) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
       $sCachedJs      = @is_dir(substr($sPath, 1) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
     }
+
+    # Use standard folders
     else {
       $sCachedCss     = WEBSITE_CDN . '/css';
       $sCachedImages  = WEBSITE_CDN . '/images';
@@ -527,8 +490,7 @@ class Index {
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
-		# Compile CSS
-    # *********************************************
+		# Compile CSS when in development mode and clearing the cache
     if (WEBSITE_MODE == 'development' &&
             file_exists(Helper::removeSlash($sCachedLess . '/core/application.less')) &&
             CLEAR_CACHE === true) {
@@ -544,8 +506,8 @@ class Index {
       }
     }
 
-    # Do only send html charset if we are really sure. This caused problems with .ics files.
-    # *********************************************
+    # Do only send html charset if we are really sure.
+    # This caused problems with .ics files.
     if (AJAX_REQUEST === false)
       header("Content-Type: text/html; charset=utf-8");
 

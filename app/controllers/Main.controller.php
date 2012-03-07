@@ -187,7 +187,8 @@ abstract class Main {
    *
    */
   public function __destruct() {
-		if (WEBSITE_MODE !== 'test')
+    # Only reload language each time the controller is activated in development mode.
+		if (WEBSITE_MODE == 'development')
 			I18n::unsetLanguage();
 
 		unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
@@ -439,7 +440,8 @@ abstract class Main {
 							I18n::get('error.form.missing.' . strtoupper($sField)) :
 							$sMessage;
 
-		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false ) &&
+    # Bugfix: Don't try to validate email on comment post.
+		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false) &&
 						'blog' !== $this->_aRequest['section'])
 			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
 	}
