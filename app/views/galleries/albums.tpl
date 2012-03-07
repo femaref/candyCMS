@@ -56,7 +56,7 @@
             {/foreach}
           </ul>
         {* Show gallery albums without uploaded images *}
-        {elseif $USER_ROLE >= 3}
+        {else}
           <header>
             <h2>
               <a href='{$a.url}'>{$a.title}</a>

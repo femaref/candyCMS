@@ -18,35 +18,34 @@ ErrorDocument 500 /error/500
   Allow from all
 </Files>
 
-<IfModule mod_rewrite.c>
-  Options +FollowSymLinks
-  RewriteEngine On
-  RewriteBase /
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
 
-  # Redirect from root to public folder
-  RewriteRule ^(human|robots|favicon).(txt|ico)$ public/$1.$2 [L]
-  RewriteRule ^sitemap.xml$ index.php?section=sitemap&action=xml&ajax=1 [L]
+# Nice to have
+RewriteRule ^help/BB-?Code$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
 
-  # Nice to have
-  RewriteRule ^(disclaimer|impressum)$ index.php?section=content&id=1 [L,QSA,NC]
-  RewriteRule ^help/BB-?Code$ http://github.com/marcoraddatz/candyCMS/wiki/BBCode [R=301,NC]
+# Redirect from root to public folder
+RewriteRule ^(human|robots|favicon).(txt|ico)$ public/$1.$2 [L]
+RewriteRule ^([A-Za-z]+).xml$ index.php?section=$1&action=xml&ajax=1 [L]
 
-  # Special behavior
-  RewriteRule ^calendar/([0-9]+)$ index.php?section=calendar&id=$1&ajax=true [L,QSA,NC]
-  RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2 [L,QSA,NC]
-  RewriteRule ^media/(.*)/destroy$ index.php?section=media&action=destroy&id=$1 [L,QSA,NC]
-  RewriteRule ^user/([A-Za-z0-9]+)/verification$ index.php?section=user&action=verification&code=$1 [L,QSA,NC]
+# Special behavior
+RewriteRule ^calendar/([0-9]+)$ index.php?section=calendar&id=$1&ajax=true [L,QSA,NC]
+RewriteRule ^gallery/([0-9]+)/image/([0-9]+)$ index.php?section=gallery&action=image&album_id=$1&id=$2 [L,QSA,NC]
+RewriteRule ^media/(.*)/destroy$ index.php?section=media&action=destroy&id=$1 [L,QSA,NC]
+RewriteRule ^user/([A-Za-z0-9]+)/verification$ index.php?section=user&action=verification&code=$1 [L,QSA,NC]
 
-  # Switch language or template
-  RewriteRule ^language/([a-z]+)$ index.php?language=$2&clearcache=1 [L,QSA,NC]
+# Switch language or template
+RewriteRule ^language/([a-z]+)$ index.php?language=$2&clearcache=1 [L,QSA,NC]
 
-  # Universal rules
-  RewriteRule ^([A-Za-z]+)/?([0-9]+)?(/ajax)?$ index.php?section=$1&id=$2&ajax=$3 [L,QSA,NC]
-  RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&highlight=$3 [L,QSA,NC]
-  RewriteRule ^([A-Za-z]+)/([0-9]+)/([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&action=$3&page=$4&parent_id=$4 [L,QSA,NC]
-  RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&action=$3&seo_title=$3&page=1 [L,QSA,NC]
-  RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)(/([0-9]+))?$ index.php?section=$1&action=$2&subsection=$2&search=$2&page=$4&id=$4 [L,QSA,NC]
-</IfModule>
+# Universal rules
+RewriteRule ^([A-Za-z]+)/?([0-9]+)?(/ajax)?$ index.php?section=$1&id=$2&ajax=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/highlight/(.*)$ index.php?section=$1&id=$2&highlight=$3 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/page/([0-9]+)$ index.php?section=$1&id=$2&page=$3 [L,QSA,NC]
+#RewriteRule ^([A-Za-z]+)/([0-9]+)/([A-Za-z]+)/([0-9]+)$ index.php?section=$1&id=$2&action=$3&parent_id=$4 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([0-9]+)/(.*)$ index.php?section=$1&id=$2&action=$3&seo_title=$3&page=1 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/page/([0-9]+)?$ index.php?section=$1&page=$2 [L,QSA,NC]
+RewriteRule ^([A-Za-z]+)/([A-Za-z0-9]+)(/([0-9]+))?$ index.php?section=$1&action=$2&subsection=$2&search=$2&page=$4&id=$4 [L,QSA,NC]
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
 # github.com/rails/rails/commit/123eb25#commitcomment-118920

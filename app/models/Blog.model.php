@@ -32,12 +32,6 @@ class Blog extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
-    # Small fix for pagination
-    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
-            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
-            !isset($this->_aRequest['parent_id']))
-      $iId = '';
-
     if(WEBSITE_MODE == 'test')
       $iLimit = 1;
 

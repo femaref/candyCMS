@@ -154,7 +154,7 @@ class Gallery extends Main {
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$this->oSmarty->assign('albums', $this->_oModel->getData());
-				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
+				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/gallery'));
 			}
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

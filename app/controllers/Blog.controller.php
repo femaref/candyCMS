@@ -46,17 +46,8 @@ class Blog extends Main {
    *
    */
   protected function _show() {
-    $this->__autoload('Comment');
-
-    # Bugfix: We got a page request, so tell the model that we don't want to see an entry.
-    if (isset($this->_aRequest['page']) && !empty($this->_aRequest['page']) &&
-            isset($this->_aRequest['action']) && 'page' == $this->_aRequest['action'] &&
-            !isset($this->_aRequest['parent_id']))
-      $this->_iId = '';
-
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
-    #die(print_r($this->_iId));
 		# If data is not found, redirect to 404
 		if (empty($this->_aData[1]['id']) && !empty($this->_iId) && !isset($this->_aRequest['page']))
 			Helper::redirectTo('/error/404');
@@ -69,6 +60,8 @@ class Blog extends Main {
 
       # Load comments
       if (!empty($this->_iId)) {
+				$this->__autoload('Comment');
+
         $oComments = new Comment($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
