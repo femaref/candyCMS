@@ -37,11 +37,11 @@ class Gallery extends Main {
   /**
    * Show gallery album or album overview (depends on a given ID or not).
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     # Album images
     if (!empty($this->_iId) && !isset($this->_aRequest['album_id'])) {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');

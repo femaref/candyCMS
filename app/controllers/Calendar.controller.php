@@ -33,11 +33,11 @@ class Calendar extends Main {
 	/**
 	 * Show calendar overview.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
-	public function show() {
+	protected function _show() {
     # Show .ics
     if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
 			$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));

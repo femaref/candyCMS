@@ -21,12 +21,12 @@ class Error extends Main {
 	/**
 	 * Show a 404 error when a page is not available or found.
 	 *
-	 * @access public
+	 * @access protected
 	 * @param string $sError error to display
 	 * @return string HTML content
 	 *
 	 */
-	public function show($sError = '404') {
+	protected function _show($sError = '404') {
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, $sError);
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, $sError);
 

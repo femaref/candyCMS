@@ -446,6 +446,28 @@ abstract class Main {
 			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
 	}
 
+  /**
+   * Show a entry.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function show() {
+    return $this->_show();
+  }
+
+  /**
+   * Show a entry asXML.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function showXML() {
+    return $this->_showXML();
+  }
+
 	/**
 	 * Create an action.
 	 *

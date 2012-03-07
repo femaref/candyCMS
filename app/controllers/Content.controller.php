@@ -33,11 +33,11 @@ class Content extends Main {
   /**
    * Show content entry or content overview (depends on a given ID or not).
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     if (empty($this->_iId)) {
       $this->setTitle(I18n::get('global.manager.content'));
 

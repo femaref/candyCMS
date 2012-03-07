@@ -149,11 +149,11 @@ class User extends Main {
 	/**
 	 * Show user or user overview.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
-	public function show() {
+	protected function _show() {
     # Overview
 		if (empty($this->_iId)) {
 			$this->setTitle(I18n::get('user.title.overview'));

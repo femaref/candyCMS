@@ -36,11 +36,11 @@ class Download extends Main {
   /**
    * Download entry or show download overview (depends on a given ID or not).
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     # Direct download for this id
     if (!empty($this->_iId)) {
       $sFile = & Model::getFileName($this->_iId);

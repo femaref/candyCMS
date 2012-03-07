@@ -44,11 +44,11 @@ class Rss extends Main {
   /**
    * Show RSS feed.
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     # Blog
     if ($this->_sSection == 'blog') {
       $this->_oModel  = new Model_Blog($this->_aRequest, $this->_aSession);

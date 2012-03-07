@@ -21,7 +21,7 @@ class Site extends Main {
   /**
    *
    */
-  public function show() {
+  protected function _show() {
     $sTpl = isset($this->_aRequest['subsection']) ?
             (string) $this->_aRequest['subsection'] :
             '';

@@ -37,11 +37,11 @@ class Sitemap extends Main {
 	/**
 	 * Show the sitemap as XML. Site is cached for one hour.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string XML content
 	 *
 	 */
-	public function showXML() {
+	protected function _showXML() {
 		Header('Content-Type: text/xml');
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'xml');
@@ -62,11 +62,11 @@ class Sitemap extends Main {
 	/**
 	 * Show the sitemap as HTML. Site is cached for one minute.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
-	public function show() {
+	protected function _show() {
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 

@@ -22,7 +22,7 @@ class Media extends Main {
 
   /**
    * Upload media file.
-   * We must override the main method due to a diffent required user right.
+   * We must override the main method due to a file upload.
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -81,11 +81,11 @@ class Media extends Main {
   /**
    * Show media files overview.
    *
-   * @access public
+   * @access protected
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  public function show() {
+  protected function _show() {
     if ($this->_aSession['userdata']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 

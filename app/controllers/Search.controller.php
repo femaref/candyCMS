@@ -52,11 +52,11 @@ class Search extends Main {
 	/**
 	 * Show search results.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
-  public function show() {
+  protected function _show() {
     if (!isset($this->_aRequest['search']) || empty($this->_aRequest['search']))
       return $this->showFormTemplate();
 

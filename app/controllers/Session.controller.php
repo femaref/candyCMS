@@ -38,7 +38,7 @@ class Session extends Main {
 	 *
 	 */
   public function create() {
-		return isset($this->_aRequest['create_session']) ? $this->_create() : $this->showCreateSessionTemplate();
+		return isset($this->_aRequest['create_session']) ? $this->_create() : $this->_show();
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Session extends Main {
 		$this->_setError('password');
 
 		if (isset($this->_aError))
-			return $this->showCreateSessionTemplate();
+			return $this->_show();
 
 		elseif ($this->_oModel->create() === true)
 			return Helper::successMessage(I18n::get('success.session.create'), '/');
@@ -72,7 +72,7 @@ class Session extends Main {
 	 * @return string HTML content
 	 *
 	 */
-  public function showCreateSessionTemplate() {
+  public function _show() {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
@@ -122,7 +122,7 @@ class Session extends Main {
 
 				return $bStatus === true ?
 								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
-								Helper::errorMessage(I18n::get('error.mail.create')) . $this->showCreateSessionTemplate();
+								Helper::errorMessage(I18n::get('error.mail.create')) . $this->_show();
 			}
 			else
 				# Replace error message with message, that email could not be found
@@ -168,7 +168,7 @@ class Session extends Main {
 
 				return $bStatus === true ?
 								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
-								$this->showCreateSessionTemplate();
+								$this->_show();
 			}
 			else
 				# Replace error message with message, that email could not be found

@@ -84,11 +84,11 @@ class Comment extends Main {
   /**
    * Show comment entries.
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     if ($this->_iId) {
       $this->oSmarty->assign('comments',
 							$this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));

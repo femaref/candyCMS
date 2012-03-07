@@ -33,11 +33,11 @@ class Log extends Main {
   /**
    * Show log overview if we have admin rights.
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    *
    */
-  public function show() {
+  protected function _show() {
     if ($this->_aSession['userdata']['role'] < 4)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 

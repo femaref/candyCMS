@@ -40,12 +40,12 @@ class Blog extends Main {
   /**
    * Show blog entry or blog overview (depends on a given ID or not).
    *
-   * @access public
+   * @access protected
    * @return string HTML content
    * @todo implement caching
    *
    */
-  public function show() {
+  protected function _show() {
     $this->__autoload('Comment');
 
     # Bugfix: We got a page request, so tell the model that we don't want to see an entry.
