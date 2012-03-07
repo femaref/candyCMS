@@ -98,7 +98,7 @@ abstract class Main {
 
     # Set ID if needed (fix for detailed user view)
     $this->_iId = isset($this->_aRequest['id']) && !isset($this->_iId) ? (int) $this->_aRequest['id'] : '';
-		#$this->_iId = isset($this->_aRequest['id']) && !isset($this->_aRequest['page']) ? (int) $this->_aRequest['id'] : '';
+		$this->_iId = isset($this->_aRequest['id']) && !isset($this->_aRequest['page']) ? (int) $this->_aRequest['id'] : '';
 
     $this->_oDb = $this->_connectToDatabase();
   }
