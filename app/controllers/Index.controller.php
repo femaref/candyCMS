@@ -23,6 +23,16 @@ use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use lessc;
 
+require_once PATH_STANDARD . '/app/models/Main.model.php';
+require_once PATH_STANDARD . '/app/models/Session.model.php';
+require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Session.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
+require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
+require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
+require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
+
 class Index {
 
   /**
@@ -76,17 +86,6 @@ class Index {
     $this->_aSession	= & $aSession;
     $this->_aFile			= & $aFile;
     $this->_aCookie		= & $aCookie;
-
-    # require_once is important for tests.
-    require_once PATH_STANDARD . '/app/models/Main.model.php';
-    require_once PATH_STANDARD . '/app/models/Session.model.php';
-    require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-    require_once PATH_STANDARD . '/app/controllers/Session.controller.php';
-    require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
-    require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
-    require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
-    require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
-    require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
     $this->getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
     $this->getPlugins(ALLOW_PLUGINS);
@@ -509,7 +508,7 @@ class Index {
     # Do only send html charset if we are really sure.
     # This caused problems with .ics files.
     if (AJAX_REQUEST === false)
-      header("Content-Type: text/html; charset=utf-8");
+      header('Content-Type: text/html; charset=utf-8');
 
     return $sCachedHTML;
 	}

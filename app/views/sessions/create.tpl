@@ -1,5 +1,5 @@
 {strip}
-  <form method='post' data-ajax='false' class='form-horizontal'>
+  <form action='/session/create' method='post' data-ajax='false' class='form-horizontal'>
     <div class='page-header'>
       <h1>{$lang.global.login}</h1>
     </div>

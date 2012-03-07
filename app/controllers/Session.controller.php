@@ -29,6 +29,45 @@ class Session extends Main {
     $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
+  /**
+   * Route to right action.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function show() {
+    if (isset($this->_aRequest['action'])) {
+      switch ($this->_aRequest['action']) {
+        default:
+        case '404':
+
+          Helper::redirectTo('/error/404');
+          exit();
+
+          break;
+
+        case 'password':
+
+          $this->setTitle(I18n::get('session.password.title'));
+          $this->setDescription(I18n::get('session.password.info'));
+          return $this->resendPassword();
+
+          break;
+
+        case 'verification':
+
+          $this->_setTitle(I18n::get('session.verification.title'));
+          $this->_setDescription(I18n::get('session.verification.info'));
+          return $this->resendVerification();
+
+          break;
+      }
+    }
+    else
+      return $this->_show();
+  }
+
 	/**
 	 * Create a session or show template instead.
 	 * We must override the main method due to a diffent required user right.
@@ -80,6 +119,9 @@ class Session extends Main {
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
+    $this->setDescription(I18n::get('global.login'));
+    $this->setTitle(I18n::get('global.login'));
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -184,14 +226,7 @@ class Session extends Main {
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-		if ($this->_aRequest['action'] == 'password') {
-			$this->_setTitle(I18n::get('session.password.title'));
-			$this->_setDescription(I18n::get('session.password.info'));
-		}
-		else {
-			$this->_setTitle(I18n::get('session.verification.title'));
-			$this->_setDescription(I18n::get('session.verification.info'));
-		}
+    $this->_setError('email');
 
 		if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);

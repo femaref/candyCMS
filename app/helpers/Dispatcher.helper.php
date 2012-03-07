@@ -6,7 +6,7 @@
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
- * @since 1.0
+ * @since 2.0
  *
  */
 
@@ -17,8 +17,6 @@ use CandyCMS\Addon\Controller\Addon as Addon;
 class Dispatcher {
 
 	/**
-	 * Saves the object.
-	 *
 	 * @var object
 	 * @access public
 	 *
@@ -26,7 +24,7 @@ class Dispatcher {
   public $oController;
 
 	/**
-	 * Initialize the controller by adding input params, set default id and start template engine.
+	 * Initialize the controller by adding input params.
 	 *
 	 * @access public
 	 * @param array $aRequest alias for the combination of $_GET and $_POST
@@ -43,36 +41,35 @@ class Dispatcher {
 	}
 
   /**
-   * Get the controller.
+   * Get the controller object.
    *
    * @access public
-   * @return object created object
+   * @return object $this->oController controller
    *
    */
   public function getController() {
-    # Are addons for existing controllers available? If yes, use them.
-    if (file_exists(PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
-                    '.controller.php') && (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
-      require_once PATH_STANDARD . '/addons/controllers/' . (string) ucfirst($this->_aRequest['section']) .
-              '.controller.php';
+    $sController = (string) ucfirst(strtolower($this->_aRequest['section']));
 
-      $sClassName = '\CandyCMS\Addon\Controller\Addon_' . (string) ucfirst($this->_aRequest['section']);
-      $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
+    # Are addons for existing controllers available? If yes, use them.
+    if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php') &&
+            (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
+      require_once PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php';
+
+      $sClassName = '\CandyCMS\Addon\Controller\Addon_' . $sController;
+      $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
     }
 
     # There are no addons, so we use the default controllers
-    elseif (file_exists(PATH_STANDARD . '/app/controllers/' . (string) ucfirst($this->_aRequest['section']) . '.controller.php')) {
-      require_once PATH_STANDARD . '/app/controllers/' .
-              (string) ucfirst($this->_aRequest['section']) . '.controller.php';
+    elseif (file_exists(PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php')) {
+      require_once PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php';
 
       $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['section']);
-      $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile);
+      $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
     }
 
     # Some files are missing. Quit work!
     else
-      throw new AdvancedException('Controller not found:' . 'app/controllers/' .
-              (string) ucfirst($this->_aRequest['section']) . '.controller.php');
+      throw new AdvancedException('Controller not found:' . PATH_STANDARD . 'app/controllers/' . $sController . '.controller.php');
 
     $this->oController->__init();
     return $this->oController;
@@ -85,174 +82,56 @@ class Dispatcher {
    *
    */
   public function getAction() {
-		$sAction = isset($this->_aRequest['action']) ? strtolower((string) $this->_aRequest['action']) : 'show';
+    $sAction = isset($this->_aRequest['action']) ? strtolower((string) $this->_aRequest['action']) : 'show';
 
-			switch ($sAction) {
-				case 'create':
+    switch ($sAction) {
+      case 'create':
 
-					$this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
-					$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
-					$this->oController->setKeywords($this->oController->getKeywords());
-					$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
-
-					break;
-
-				case 'destroy':
-
-					$this->oController->setContent($this->oController->destroy());
-					$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
-					$this->oController->setKeywords($this->oController->getKeywords());
-					$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
-
-					break;
-
-				default:
-				case 'show':
-
-					$this->oController->setContent($this->oController->show());
-					$this->oController->setDescription($this->oController->getDescription());
-					$this->oController->setKeywords($this->oController->getKeywords());
-					$this->oController->setTitle($this->oController->getTitle());
-
-					break;
-
-				case 'update':
-
-					$this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['section'])));
-					$this->oController->setDescription(
-									str_replace('%p',
-													$this->oController->getTitle(),
-													I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
-					$this->oController->setKeywords($this->oController->getKeywords());
-					$this->oController->setTitle(
-									str_replace('%p',
-													$this->oController->getTitle(),
-													I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
-
-					break;
-
-				case 'xml':
-
-					$this->oController->setContent($this->oController->showXML());
-					$this->oController->setDescription($this->oController->getDescription());
-					$this->oController->setKeywords($this->oController->getKeywords());
-					$this->oController->setTitle($this->oController->getTitle());
-
-					break;
-			}
-
-      /*
-      case 'gallery':
-
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->oController->create('create_gallery'));
-          parent::_setDescription(I18n::get('gallery.albums.title.create'));
-          parent::_setTitle(I18n::get('gallery.albums.title.create'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'createfile') {
-          parent::_setContent($this->oController->createFile());
-          parent::_setDescription(I18n::get('gallery.files.title.create'));
-          parent::_setTitle(I18n::get('gallery.files.title.update'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
-          parent::_setContent($this->oController->update('update_gallery'));
-          parent::_setDescription($this->oController->getDescription(str_replace('%p', $this->oController->getTitle(),
-									I18n::get('gallery.albums.title.update'))));
-          parent::_setTitle(str_replace('%p', $this->oController->getTitle(),
-									I18n::get('gallery.albums.title.update')));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'updatefile') {
-          parent::_setContent($this->oController->updateFile());
-          parent::_setDescription(I18n::get('gallery.files.title.update'));
-          parent::_setTitle(I18n::get('gallery.files.title.update'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
-          parent::_setContent($this->oController->destroy());
-          parent::_setDescription(I18n::get('gallery.albums.title.destroy'));
-          parent::_setTitle(I18n::get('gallery.albums.title.destroy'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroyfile') {
-          parent::_setContent($this->oController->destroyFile());
-          parent::_setDescription(I18n::get('gallery.files.title.destroy'));
-          parent::_setTitle(I18n::get('gallery.files.title.destroy'));
-        }
-        else {
-          parent::_setContent($this->oController->show());
-          parent::_setDescription($this->oController->getDescription());
-          parent::_setTitle($this->oController->getTitle());
-        }
+        $this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
+        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
+        $this->oController->setKeywords($this->oController->getKeywords());
+        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
 
         break;
 
-      case 'session':
+      case 'destroy':
 
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->oController->create());
-          parent::_setDescription(I18n::get('global.login'));
-          parent::_setTitle(I18n::get('global.login'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
-					parent::_setContent($this->oController->resendPassword());
-					parent::_setDescription($this->oController->getDescription());
-					parent::_setTitle($this->oController->getTitle());
-				}
-				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification') {
-					parent::_setContent($this->oController->resendVerification());
-					parent::_setDescription($this->oController->getDescription());
-					parent::_setTitle($this->oController->getTitle());
-				}
-        else {
-          parent::_setContent($this->oController->destroy());
-          parent::_setDescription(I18n::get('global.logout'));
-          parent::_setTitle(I18n::get('global.logout'));
-        }
+        $this->oController->setContent($this->oController->destroy());
+        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
+        $this->oController->setKeywords($this->oController->getKeywords());
+        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
 
         break;
 
-      case 'user':
+      default:
+      case 'show':
 
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'update') {
-          parent::_setContent($this->oController->update());
-          parent::_setDescription(I18n::get('user.title.update'));
-          parent::_setTitle(I18n::get('user.title.update'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
-          parent::_setContent($this->oController->create());
-          parent::_setDescription(I18n::get('global.registration'));
-          parent::_setTitle(I18n::get('global.registration'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'destroy') {
-          parent::_setContent($this->oController->destroy());
-          parent::_setDescription(I18n::get('user.title.destroy'));
-          parent::_setTitle(I18n::get('user.title.destroy'));
-        }
-        elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'verification') {
-          parent::_setContent($this->oController->verifyEmail());
-          parent::_setDescription(I18n::get('global.email.verification'));
-          parent::_setTitle(I18n::get('global.email.verification'));
-        }
-				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'token') {
-					parent::_setContent($this->oController->getToken());
-					parent::_setDescription(I18n::get('global.api_token'));
-					parent::_setTitle(I18n::get('global.api_token'));
-				}
-				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'password') {
-					parent::_setContent($this->oController->updatePassword());
-					parent::_setDescription(I18n::get('user.title.password'));
-					parent::_setTitle(I18n::get('user.title.password'));
-				}
-				elseif (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'avatar') {
-					parent::_setContent($this->oController->updateAvatar());
-					parent::_setDescription(I18n::get('user.title.avatar'));
-					parent::_setTitle(I18n::get('user.title.avatar'));
-				}
-        else {
-          parent::_setContent($this->oController->show());
-          parent::_setDescription($this->oController->getDescription());
-          parent::_setTitle($this->oController->getTitle());
-        }
+        $this->oController->setContent($this->oController->show());
+        $this->oController->setDescription($this->oController->getDescription());
+        $this->oController->setKeywords($this->oController->getKeywords());
+        $this->oController->setTitle($this->oController->getTitle());
 
         break;
-    }*/
+
+      case 'update':
+
+        $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['section'])));
+        $this->oController->setDescription(
+                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+        $this->oController->setKeywords($this->oController->getKeywords());
+        $this->oController->setTitle(
+                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+
+        break;
+
+      case 'xml':
+
+        $this->oController->setContent($this->oController->showXML());
+        $this->oController->setDescription($this->oController->getDescription());
+        $this->oController->setKeywords($this->oController->getKeywords());
+        $this->oController->setTitle($this->oController->getTitle());
+
+        break;
+    }
   }
 }

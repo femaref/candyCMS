@@ -31,11 +31,11 @@ class Addon_Sample extends \CandyCMS\Controller\Main {
   /**
    * Return the content.
    *
-   * @access public
+   * @access protected
    * @return string example content.
    *
    */
-  public function show() {
+  protected function _show() {
 		$sTemplateDir		= Helper::getTemplateDir('samples', 'show');
 		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 

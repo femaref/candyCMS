@@ -27,11 +27,58 @@ class Gallery extends Main {
    *
    */
   public function __init() {
-    # Override template folder.
+    # Override template folder because controller name and view name don't match.
     $this->_sTemplateFolder = 'galleries';
 
     require PATH_STANDARD . '/app/models/Gallery.model.php';
     $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
+  }
+
+  /**
+   * Route to right action.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function show() {
+    if (isset($this->_aRequest['action'])) {
+      switch ($this->_aRequest['action']) {
+        default:
+        case '404':
+
+          Helper::redirectTo('/error/404');
+          exit();
+
+          break;
+
+        case 'createfile':
+
+          $this->setDescription(I18n::get('gallery.files.title.create'));
+          $this->setTitle(I18n::get('gallery.files.title.create'));
+          return $this->createFile();
+
+          break;
+
+        case 'updatefile':
+
+          $this->setDescription(I18n::get('gallery.files.title.update'));
+          $this->setTitle(I18n::get('gallery.files.title.update'));
+          return $this->updateFile();
+
+          break;
+
+        case 'destroyfile':
+
+          $this->setDescription(I18n::get('gallery.files.title.destroy'));
+          $this->setTitle(I18n::get('gallery.files.title.destroy'));
+          return $this->destroyFile();
+
+          break;
+      }
+    }
+    else
+      return $this->_show();
   }
 
   /**
@@ -58,7 +105,6 @@ class Gallery extends Main {
       $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				# Get data and count afterwards
 				$aData = & $this->_oModel->getThumbs($this->_iId);
 
 				$this->oSmarty->assign('files', $aData);

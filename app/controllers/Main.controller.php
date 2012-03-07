@@ -458,7 +458,7 @@ abstract class Main {
   }
 
   /**
-   * Show a entry asXML.
+   * Show a entry as XML.
    *
    * @access public
    * @return string HTML
@@ -499,7 +499,6 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRole = 3) {
-		#die(print_r($this->_aRequest));
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 

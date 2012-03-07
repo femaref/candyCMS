@@ -80,7 +80,7 @@
             <ul class="nav pull-right">
               {if $USER_ID == 0}
                 <li{if $smarty.get.section == 'session' && $smarty.get.action == 'create'} class='active'{/if}>
-                  <a href='/session/create'>{$lang.global.login}</a>
+                  <a href='/session'>{$lang.global.login}</a>
                 </li>
                 <li class="divider-vertical"/>
                 <li{if $smarty.get.section == 'user' && $smarty.get.action == 'create'} class='active'{/if}>

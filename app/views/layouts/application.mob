@@ -24,7 +24,7 @@
         <div data-role="header">
           <h1>{$_title_}</h1>
           {if $USER_ROLE == 0}
-            <a href="/session/create" class="ui-btn-right">{$lang.global.login}</a>
+            <a href="/session" class="ui-btn-right">{$lang.global.login}</a>
           {else}
             <a href="/session/destroy" class="ui-btn-right">{$lang.global.logout}</a>
           {/if}

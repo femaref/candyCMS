@@ -32,11 +32,111 @@ class User extends Main {
 		$this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
 	}
 
+  /**
+   * Route to right action.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function show() {
+    if (isset($this->_aRequest['action'])) {
+      switch ($this->_aRequest['action']) {
+        default:
+        case '404':
+
+          Helper::redirectTo('/error/404');
+          exit();
+
+          break;
+
+        case 'avatar':
+
+          $this->setDescription(I18n::get('user.title.avatar'));
+          $this->setTitle(I18n::get('user.title.avatar'));
+          return $this->updateAvatar();
+
+          break;
+
+        case 'password':
+
+          $this->setDescription(I18n::get('user.title.password'));
+          $this->setTitle(I18n::get('user.title.password'));
+          return $this->updatePassword();
+
+          break;
+
+        case 'token':
+
+          $this->setDescription(I18n::get('global.api_token'));
+          $this->setTitle(I18n::get('global.api_token'));
+          return $this->getToken();
+
+          break;
+
+        case 'verification':
+
+          $this->setDescription(I18n::get('global.email.verification'));
+          $this->setTitle(I18n::get('global.email.verification'));
+          return $this->verifyEmail();
+
+          break;
+      }
+    }
+    else
+      return $this->_show();
+  }
+
+	/**
+	 * Show user or user overview.
+	 *
+	 * @access protected
+	 * @return string HTML content
+	 *
+	 */
+	protected function _show() {
+		if (empty($this->_iId)) {
+			$this->setTitle(I18n::get('user.title.overview'));
+			$this->setDescription(I18n::get('user.title.overview'));
+
+			if ($this->_aSession['userdata']['role'] < 3)
+				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+
+			else {
+        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
+        $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
+
+        $this->oSmarty->assign('user', $this->_oModel->getData());
+
+        $this->oSmarty->setTemplateDir($sTemplateDir);
+        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+			}
+		}
+		else {
+			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+        $aData = & $this->_oModel->getData($this->_iId);
+        $this->oSmarty->assign('user', $aData);
+
+        $this->setTitle($aData[1]['full_name']);
+        $this->setDescription($aData[1]['full_name']);
+      }
+
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		}
+	}
+
 	/**
 	 * Build form template to create or update a user.
 	 *
 	 * @access protected
 	 * @return string HTML content
+   * @todo set title and description
 	 *
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
@@ -145,53 +245,6 @@ class User extends Main {
     else
       return Helper::errorMessage(I18n::get('error.sql'), '/user/' . $this->_iId);
   }
-
-	/**
-	 * Show user or user overview.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
-	protected function _show() {
-    # Overview
-		if (empty($this->_iId)) {
-			$this->setTitle(I18n::get('user.title.overview'));
-			$this->setDescription(I18n::get('user.title.overview'));
-
-			if ($this->_aSession['userdata']['role'] < 3)
-				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
-
-			else {
-        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
-        $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
-
-        $this->oSmarty->assign('user', $this->_oModel->getData());
-
-        $this->oSmarty->setTemplateDir($sTemplateDir);
-        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-			}
-		}
-
-    # Single entry
-		else {
-			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
-
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-
-      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $aData = & $this->_oModel->getData($this->_iId);
-        $this->oSmarty->assign('user', $aData);
-
-        $this->setTitle($aData[1]['full_name']);
-        $this->setDescription($aData[1]['full_name']);
-      }
-
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
-	}
 
 	/**
 	 * Create user or show form template.
@@ -407,6 +460,7 @@ class User extends Main {
         }
         else
           return Helper::errorMessage(I18n::get('error.sql'), '/user/update');
+
       } else
         return Helper::errorMessage(I18n::get('error.user.destroy.password'), '/user/update#user-destroy');
 
