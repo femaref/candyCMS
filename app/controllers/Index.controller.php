@@ -77,8 +77,7 @@ class Index {
     $this->_aFile			= & $aFile;
     $this->_aCookie		= & $aCookie;
 
-    # Only include files below if we are not in tests enviroment because otherwise they would be
-    # included more than once. Tests have their dependencies on their own!
+    # require_once is important for tests.
     require_once PATH_STANDARD . '/app/models/Main.model.php';
     require_once PATH_STANDARD . '/app/models/Session.model.php';
     require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
@@ -407,6 +406,7 @@ class Index {
     if (strtolower($this->_aRequest['section']) == 'install')
       Helper::redirectTo('/install/index.php');
 
+    # @todo kick out addons
     # Define out core modules. All of them are separately handled in app/helper/Dispatcher.helper.php
 		elseif (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||

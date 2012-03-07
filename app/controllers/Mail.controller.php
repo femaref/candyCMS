@@ -66,8 +66,19 @@ class Mail extends Main {
       Helper::redirectTo('/mail/1');
   }
 
+  /**
+   * Redirect to create method due to logic at the dispatcher.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
+  public function show() {
+    return $this->create();
+  }
+
 	/**
-	 * Create a mail.
+	 * Show a mail form or direct it to the user.
 	 *
 	 * Create entry or show form template if we have enough rights. Due to spam bots we provide
 	 * a captcha and need to override the original method.
@@ -126,8 +137,8 @@ class Mail extends Main {
       $this->oSmarty->assign('error', $this->_aError);
 
     # Create page title and description
-    $this->_setDescription(I18n::get('global.contact'));
-    $this->_setTitle(I18n::get('global.contact'));
+    $this->setDescription(I18n::get('global.contact'));
+    $this->setTitle(I18n::get('global.contact'));
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
@@ -215,7 +226,7 @@ class Mail extends Main {
 	 *
    */
   private function _showSuccessMessage() {
-    $this->_setTitle(I18n::get('mail.info.redirect'));
+    $this->setTitle(I18n::get('mail.info.redirect'));
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'success');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
@@ -256,7 +267,7 @@ class Mail extends Main {
       $oMail->IsMail();
 
     try {
-      if (SMTP_ON == true) {
+      if (SMTP_ENABLE == true) {
         if (WEBSITE_MODE == 'development') {
           $oMail->SMTPDebug = 1;
           $oMail->SMTPAuth  = false;

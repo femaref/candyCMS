@@ -133,6 +133,9 @@ class Media extends Main {
 
       $this->oSmarty->assign('files', $aFiles);
 
+      $this->setDescription(I18n::get('global.manager.media'));
+      $this->setTitle(I18n::get('global.manager.media'));
+
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 

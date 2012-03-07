@@ -18,13 +18,24 @@ use CandyCMS\Helper\I18n as I18n;
 class Newsletter extends Main {
 
   /**
+   * Redirect to create method due to logic at the dispatcher.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
+  public function show() {
+    return $this->create();
+  }
+
+  /**
    * Create a newsletter subscription. Send email information to mailchimp servers.
    *
    * @access public
    * @return string HTML content
    *
    */
-  public function createSubscription() {
+  public function create() {
 		$this->_setError('email');
 
 		if (isset($this->_aError))

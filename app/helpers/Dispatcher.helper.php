@@ -13,7 +13,6 @@
 namespace CandyCMS\Helper;
 
 use CandyCMS\Addon\Controller\Addon as Addon;
-use Smarty;
 
 class Dispatcher {
 
@@ -91,7 +90,6 @@ class Dispatcher {
 		$sAction = isset($this->_aRequest['action']) ? strtolower((string) $this->_aRequest['action']) : 'show';
 
 		if ((string) strtolower($this->_aRequest['section']) !== 'static') {
-
 			switch ($sAction) {
 
 				case 'create':
@@ -148,7 +146,16 @@ class Dispatcher {
 			}
 		}
 		else {
+      /*$sTpl = isset($this->_aRequest['subsection']) ?
+              (string) $this->_aRequest['subsection'] :
+              die(I18n::get('error.missing.template'));
 
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setCacheLifetime(300);
+
+      parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
+      parent::_setDescription(ucfirst($sTpl));
+      parent::_setTitle(ucfirst($sTpl));*/
 		}
 
     /*switch (strtolower((string) $this->_aRequest['section'])) {
@@ -196,33 +203,6 @@ class Dispatcher {
 
         break;
 
-
-      case 'mail':
-
-        parent::_setContent($this->oController->create());
-        parent::_setDescription($this->oController->getDescription());
-        parent::_setTitle($this->oController->getTitle());
-
-        break;
-
-      case 'media':
-
-        else {
-          parent::_setContent($this->oController->show());
-          parent::_setDescription(I18n::get('global.manager.media'));
-          parent::_setTitle(I18n::get('global.manager.media'));
-        }
-
-        break;
-
-      case 'newsletter':
-
-        parent::_setContent($this->oController->createSubscription());
-        parent::_setDescription(I18n::get('newsletter.title.subscribe'));
-        parent::_setTitle(I18n::get('newsletter.title.subscribe'));
-
-        break;
-
       case 'session':
 
         if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'create') {
@@ -245,20 +225,6 @@ class Dispatcher {
           parent::_setDescription(I18n::get('global.logout'));
           parent::_setTitle(I18n::get('global.logout'));
         }
-
-        break;
-
-      case 'static':
-        $sTpl = isset($this->_aRequest['subsection']) ?
-                (string) $this->_aRequest['subsection'] :
-                die(I18n::get('error.missing.template'));
-
-        $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-        $this->oSmarty->setCacheLifetime(300);
-
-        parent::_setContent($this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl'));
-        parent::_setDescription(ucfirst($sTpl));
-        parent::_setTitle(ucfirst($sTpl));
 
         break;
 
