@@ -155,8 +155,8 @@ class User extends Main {
 	public function show() {
     # Overview
 		if (empty($this->_iId)) {
-			$this->_setTitle(I18n::get('user.title.overview'));
-			$this->_setDescription(I18n::get('user.title.overview'));
+			$this->setTitle(I18n::get('user.title.overview'));
+			$this->setDescription(I18n::get('user.title.overview'));
 
 			if ($this->_aSession['userdata']['role'] < 3)
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
@@ -184,8 +184,8 @@ class User extends Main {
         $aData = & $this->_oModel->getData($this->_iId);
         $this->oSmarty->assign('user', $aData);
 
-        $this->_setTitle($aData[1]['full_name']);
-        $this->_setDescription($aData[1]['full_name']);
+        $this->setTitle($aData[1]['full_name']);
+        $this->setDescription($aData[1]['full_name']);
       }
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

@@ -365,18 +365,23 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string page title
+	 * @todo add error support
 	 *
 	 */
 	public function getTitle() {
-    return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('error.404.title');
-  }
+		if($this->_aRequest['section'] == 'error')
+			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
+
+		else
+			return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['section']));
+	}
 
 	/**
 	 * Set the page content.
 	 *
 	 * @access public
 	 * @param string $sContent html content
-	 * @see app/helpers/Section.helper.php
+	 * @see app/helpers/Dispatcher.helper.php
 	 *
 	 */
 	public function setContent($sContent) {
@@ -470,6 +475,7 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRole = 3) {
+		#die(print_r($this->_aRequest));
 		if ($this->_aSession['userdata']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 

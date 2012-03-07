@@ -62,14 +62,17 @@
         </p>
       </div>
     </div>
+
     <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
       <label for='input-content' class='control-label'>
         {$lang.global.content} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
         <textarea name='content' class='js-tinymce required'
-                  id='input-content' required>{$content}</textarea>
-        {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
+                  id='input-content'>{$content}</textarea>
+        {if isset($error.content)}
+          <span class='help-inline'>{$error.content}</span>
+        {/if}
       </div>
     </div>
     <div class='control-group'>
@@ -77,7 +80,7 @@
         {$lang.global.language}
       </label>
       <div class='controls'>
-        <select name='language' class='span4'>
+        <select name='language' class='span4' id='input-language'>
           {foreach $languages as $l}
             <option value='{$l}' {if $l == $language}selected='selected'{/if}>{$l}</option>
           {/foreach}
@@ -118,9 +121,12 @@
         <input type='hidden' value='{$author_id}' name='author_id' />
       {/if}
       <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-      <input type='submit' class='btn btn-primary' value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
-      {if $smarty.get.action == 'update'}
-        <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}' onclick='confirmDestroy('/blog/{$_request_id_}/destroy')' />
+      {if $smarty.get.action == 'create'}
+      <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
+      {elseif $smarty.get.action == 'update'}
+      <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
+        <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}'
+               onclick="confirmDestroy('/blog/{$_request_id_}/destroy')" />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
         <input type='hidden' value='{$_request_id_}' name='id' />
         <input type='hidden' value='{$date}' name='date' />

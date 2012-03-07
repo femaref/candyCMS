@@ -15,7 +15,7 @@ namespace CandyCMS\Helper;
 use CandyCMS\Addon\Controller\Addon as Addon;
 use Smarty;
 
-class Section {
+class Dispatcher {
 
 	/**
 	 * Saves the object.
@@ -50,7 +50,7 @@ class Section {
    * @return object created object
    *
    */
-  private function _getController() {
+  public function getController() {
     require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
 
     # Are addons for existing controllers available? If yes, use them
@@ -88,77 +88,71 @@ class Section {
    *
    */
   public function getAction() {
-    if ((string) strtolower($this->_aRequest['section']) !== 'static')
-      $this->oController = & $this->_getController();
-
 		$sAction = isset($this->_aRequest['action']) ? strtolower((string) $this->_aRequest['action']) : 'show';
 
-		switch ($sAction) {
-			case 'create':
+		if ((string) strtolower($this->_aRequest['section']) !== 'static') {
 
-        $this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
-				$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
-				$this->oController->setKeywords($this->oController->getKeywords());
-				$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
+			switch ($sAction) {
 
-				break;
+				case 'create':
 
-			case 'destroy':
+					$this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
+					$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
+					$this->oController->setKeywords($this->oController->getKeywords());
+					$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
 
-        $this->oController->setContent($this->oController->destroy());
-				$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
-				$this->oController->setKeywords($this->oController->getKeywords());
-				$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
+					break;
 
-				break;
+				case 'destroy':
 
-			default:
-			case 'show':
+					$this->oController->setContent($this->oController->destroy());
+					$this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
+					$this->oController->setKeywords($this->oController->getKeywords());
+					$this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
 
-				$this->oController->setContent($this->oController->show());
-				$this->oController->setDescription($this->oController->getDescription());
-				$this->oController->setKeywords($this->oController->getKeywords());
-				$this->oController->setTitle($this->oController->getTitle());
+					break;
 
-				break;
+				default:
+				case 'show':
 
-			case 'update':
+					$this->oController->setContent($this->oController->show());
+					$this->oController->setDescription($this->oController->getDescription());
+					$this->oController->setKeywords($this->oController->getKeywords());
+					$this->oController->setTitle($this->oController->getTitle());
 
-        $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['section'])));
-				$this->oController->setDescription(
-								str_replace('%p',
-												$this->oController->getTitle(),
-												I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
-				$this->oController->setKeywords($this->oController->getKeywords());
-				$this->oController->setTitle(
-								str_replace('%p',
-												$this->oController->getTitle(),
-												I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+					break;
 
-				break;
+				case 'update':
+
+					$this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['section'])));
+					$this->oController->setDescription(
+									str_replace('%p',
+													$this->oController->getTitle(),
+													I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+					$this->oController->setKeywords($this->oController->getKeywords());
+					$this->oController->setTitle(
+									str_replace('%p',
+													$this->oController->getTitle(),
+													I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+
+					break;
+
+				case 'xml':
+
+					$this->oController->setContent($this->oController->showXML());
+					$this->oController->setDescription($this->oController->getDescription());
+					$this->oController->setKeywords($this->oController->getKeywords());
+					$this->oController->setTitle($this->oController->getTitle());
+
+					break;
+			}
+		}
+		else {
+
 		}
 
     /*switch (strtolower((string) $this->_aRequest['section'])) {
 
-      case 'calendar':
-
-				else {
-					parent::_setContent($this->oController->show());
-					parent::_setDescription(I18n::get('global.calendar'));
-					parent::_setTitle(I18n::get('global.calendar'));
-				}
-
-				break;
-
-      case 'error':
-
-        if (isset($this->_aRequest['id']) && $this->_aRequest['id'] == '404') {
-          parent::_setContent($this->oController->show404());
-          parent::_setDescription(I18n::get('error.404.info'));
-          parent::_setTitle(I18n::get('error.404.title'));
-        }
-
-        break;
 
       case 'gallery':
 
@@ -226,26 +220,6 @@ class Section {
         parent::_setContent($this->oController->createSubscription());
         parent::_setDescription(I18n::get('newsletter.title.subscribe'));
         parent::_setTitle(I18n::get('newsletter.title.subscribe'));
-
-        break;
-
-      case 'rss':
-
-        parent::_setContent($this->oController->show());
-
-        break;
-
-
-      case 'sitemap':
-
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'xml')
-          parent::_setContent($this->oController->showXML());
-
-        else {
-          parent::_setContent($this->oController->show());
-          parent::_setDescription(I18n::get('global.sitemap'));
-          parent::_setTitle(I18n::get('global.sitemap'));
-        }
 
         break;
 

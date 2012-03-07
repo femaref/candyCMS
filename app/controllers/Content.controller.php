@@ -39,7 +39,7 @@ class Content extends Main {
    */
   public function show() {
     if (empty($this->_iId)) {
-      $this->_setTitle(I18n::get('global.manager.content'));
+      $this->setTitle(I18n::get('global.manager.content'));
 
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
@@ -61,9 +61,9 @@ class Content extends Main {
 				$this->oSmarty->assign('content', $aData);
 
 				if (!empty($aData)) {
-					$this->_setDescription($aData[$this->_iId]['teaser']);
-					$this->_setKeywords($aData[$this->_iId]['keywords']);
-					$this->_setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+					$this->setDescription($aData[$this->_iId]['teaser']);
+					$this->setKeywords($aData[$this->_iId]['keywords']);
+					$this->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
 				}
 				else
 					Helper::redirectTo('/error/404');
@@ -84,7 +84,7 @@ class Content extends Main {
   protected function _showFormTemplate() {
     if (!empty($this->_iId)) {
       $aData = $this->_oModel->getData($this->_iId, true);
-      $this->_setTitle($aData['title']);
+      $this->setTitle($aData['title']);
     }
     else {
       $aData['title']			= isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

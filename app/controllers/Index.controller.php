@@ -14,9 +14,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Dispatcher as Dispatcher;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\Section as Section;
 use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
@@ -29,7 +29,7 @@ require PATH_STANDARD . '/app/controllers/Main.controller.php';
 require PATH_STANDARD . '/app/controllers/Session.controller.php';
 require PATH_STANDARD . '/app/controllers/Log.controller.php';
 require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
-require PATH_STANDARD . '/app/helpers/Section.helper.php';
+require PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require PATH_STANDARD . '/app/helpers/I18n.helper.php';
 require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
@@ -175,8 +175,10 @@ class Index {
       define('DEFAULT_LANGUAGE', 'en');
 
     # We got a language request? Let's switch the language!
+		# Bugfix: Added "$this->_aRequest['section']" to make a blog update possible.
     if (isset($this->_aRequest['language']) &&
-						file_exists(PATH_STANDARD . '/languages/' . (string) $this->_aRequest['language'] . '.language.yml')) {
+						file_exists(PATH_STANDARD . '/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
+						!isset($this->_aRequest['section'])) {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
@@ -408,7 +410,7 @@ class Index {
     if (strtolower($this->_aRequest['section']) == 'install')
       Helper::redirectTo('/install/index.php');
 
-    # Define out core modules. All of them are separately handled in app/helper/Section.helper.php
+    # Define out core modules. All of them are separately handled in app/helper/Dispatcher.helper.php
 		elseif (!isset($this->_aRequest['section']) ||
 						empty($this->_aRequest['section']) ||
 						strtolower($this->_aRequest['section']) == 'blog' ||
@@ -429,8 +431,9 @@ class Index {
             strtolower($this->_aRequest['section']) == 'static' ||
 						strtolower($this->_aRequest['section']) == 'user') {
 
-			$oSection = new Section($this->_aRequest, $this->_aSession, $this->_aFile);
-			$oSection->getAction();
+			$oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile);
+			$oDispatcher->getController();
+			$oDispatcher->getAction();
 		}
 
 		# We do not have a standard action, so fetch it from the addon folder.
@@ -438,8 +441,9 @@ class Index {
     elseif (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require PATH_STANDARD . '/addons/controllers/Addon.controller.php';
 
-      $oSection = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
-      $oSection->getSection();
+      $oDispatcher = new Addon($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oDispatcher->getController();
+      $oDispatcher->getAction();
     }
 
     # There's no request on a core module and addons are disabled. */
@@ -451,7 +455,7 @@ class Index {
     # Minimal settings for AJAX-request
 		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
-			$sCachedHTML = $oSection->getContent();
+			$sCachedHTML = $oDispatcher->oController->getContent();
 
     # HTML with template
 		else {
@@ -459,31 +463,31 @@ class Index {
       # Get flash messages (success and error)
       # *********************************************
       $aFlashMessages = & $this->_getFlashMessage();
-      $oSection->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-      $oSection->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-      $oSection->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+      $oDispatcher->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+      $oDispatcher->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+      $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
       # Define meta elements
       # *********************************************
-			$oSection->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oSection->oController->oSmarty->assign('meta_description', $oSection->oController->getDescription());
-			$oSection->oController->oSmarty->assign('meta_keywords', $oSection->oController->getKeywords());
-			$oSection->oController->oSmarty->assign('meta_og_description', $oSection->oController->getDescription());
-			$oSection->oController->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
-			$oSection->oController->oSmarty->assign('meta_og_title', $oSection->oController->getTitle());
-			$oSection->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
+			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
+			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
+			$oDispatcher->oController->oSmarty->assign('meta_og_description', $oDispatcher->oController->getDescription());
+			$oDispatcher->oController->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+			$oDispatcher->oController->oSmarty->assign('meta_og_title', $oDispatcher->oController->getTitle());
+			$oDispatcher->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
 
       # System required variables
       # *********************************************
-			$oSection->oController->oSmarty->assign('_content_', $oSection->oController->getContent());
-			$oSection->oController->oSmarty->assign('_title_', $oSection->oController->getTitle());
-      $oSection->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
+			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());
+			$oDispatcher->oController->oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
+      $oDispatcher->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
 
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
 
-      $oSection->oController->oSmarty->setTemplateDir($sTemplateDir);
-      $sCachedHTML = $oSection->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      $oDispatcher->oController->oSmarty->setTemplateDir($sTemplateDir);
+      $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 
 		# Build absolute URLs
