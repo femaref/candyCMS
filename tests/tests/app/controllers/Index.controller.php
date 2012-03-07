@@ -11,6 +11,7 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Index.controller.php';
+require_once PATH_STANDARD . '/app/models/Session.model.php';
 
 use \CandyCMS\Controller\Index as Index;
 
@@ -22,6 +23,7 @@ class UnitTestOfIndexController extends CandyUnitTest {
 
 	function tearDown() {
 		parent::tearDown();
+    $this->oObject->__destruct();
 	}
 
 	function testGetConfigFiles() {
@@ -49,10 +51,6 @@ class UnitTestOfIndexController extends CandyUnitTest {
   function testGetFacebookExtension() {
     $this->assertFalse($this->oObject->getFacebookExtension());
   }
-
-	function testSetTemplate() {
-		$this->assertIsA($this->oObject->setTemplate(), 'string');
-	}
 
   /**
    *@todo
@@ -93,11 +91,12 @@ class UnitTestOfIndexController extends CandyUnitTest {
 		$this->assertTrue(unlink(PATH_STANDARD . '/logs/test.log'));
 	}
 }
-
+/*
 class WebTestOfIndexController extends CandyWebTest {
 
 	function setUp() {
 		$this->oObject = new Index($this->aRequest, $this->aSession);
+    $this->oObject->__destruct();
 	}
 
 	function tearDown() {
@@ -121,4 +120,4 @@ class WebTestOfIndexController extends CandyWebTest {
 		$this->assertText('Sample');
 		$this->assertNoText('Error');
 	}
-}
+}*/

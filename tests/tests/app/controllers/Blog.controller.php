@@ -10,6 +10,7 @@
  *
  */
 
+require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 
 use \CandyCMS\Controller\Blog as Blog;

@@ -21,7 +21,7 @@ use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use MCAPI;
 use Smarty;
 
-require PATH_STANDARD . '/app/helpers/Helper.helper.php';
+require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
 abstract class Main {
 

@@ -23,16 +23,6 @@ use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use lessc;
 
-require PATH_STANDARD . '/app/models/Main.model.php';
-require PATH_STANDARD . '/app/models/Session.model.php';
-require PATH_STANDARD . '/app/controllers/Main.controller.php';
-require PATH_STANDARD . '/app/controllers/Session.controller.php';
-require PATH_STANDARD . '/app/controllers/Log.controller.php';
-require PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
-require PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
-require PATH_STANDARD . '/app/helpers/I18n.helper.php';
-require PATH_STANDARD . '/lib/smarty/Smarty.class.php';
-
 class Index {
 
   /**
@@ -82,15 +72,22 @@ class Index {
 	 *
 	 */
 	public function __construct($aRequest, $aSession = '', $aFile = '', $aCookie = '') {
-    if (!isset($aRequest['section']) && !isset($aRequest['language'])) {
-      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
-      exit();
-    }
+    $this->_aRequest	= & $aRequest;
+    $this->_aSession	= & $aSession;
+    $this->_aFile			= & $aFile;
+    $this->_aCookie		= & $aCookie;
 
-		$this->_aRequest	= & $aRequest;
-		$this->_aSession	= & $aSession;
-		$this->_aFile			= & $aFile;
-		$this->_aCookie		= & $aCookie;
+    # Only include files below if we are not in tests enviroment because otherwise they would be
+    # included more than once. Tests have their dependencies on their own!
+    require_once PATH_STANDARD . '/app/models/Main.model.php';
+    require_once PATH_STANDARD . '/app/models/Session.model.php';
+    require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
+    require_once PATH_STANDARD . '/app/controllers/Session.controller.php';
+    require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
+    require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
+    require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
+    require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
+    require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
     $this->getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
     $this->getPlugins(ALLOW_PLUGINS);
