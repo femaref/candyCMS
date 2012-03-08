@@ -46,7 +46,8 @@ class Calendar extends Main {
       header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
 
       $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_sTemplateFolder, 'ics'));
-      return $this->oSmarty->fetch('ics.tpl', UNIQUE_ID);
+      $this->oSmarty->display('ics.tpl', UNIQUE_ID);
+			exit();
     }
 
     # Show overview

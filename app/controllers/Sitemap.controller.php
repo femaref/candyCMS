@@ -56,7 +56,8 @@ class Sitemap extends Main {
 		}
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
+		exit();
 	}
 
 	/**

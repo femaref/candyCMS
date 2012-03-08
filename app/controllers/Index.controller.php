@@ -550,10 +550,7 @@ class Index {
       }
     }
 
-    # Do only send html charset if we are really sure.
-    # This caused problems with .ics files.
-    if (AJAX_REQUEST === false)
-      header('Content-Type: text/html; charset=utf-8');
+		header('Content-Type: text/html; charset=utf-8');
 
     return $sCachedHTML;
 	}

@@ -56,7 +56,7 @@ class Rss extends Main {
 
       $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
 
-      return $this->_showDefault();
+			$this->_showDefault();
     }
     # Gallery
     elseif ($this->_sSection == 'gallery' && $this->_iId > 0) {
@@ -65,7 +65,7 @@ class Rss extends Main {
 
       $this->setTitle(I18n::get('global.gallery') . ': ' . $this->_aData[$this->_iId]['title']);
 
-      return $this->_showMedia();
+			$this->_showMedia();
     }
     else
       return Helper::redirectTo('/error/404');
@@ -92,7 +92,8 @@ class Rss extends Main {
 		}
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
+		exit();
 	}
 
   /**
@@ -125,6 +126,7 @@ class Rss extends Main {
     }
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
+		exit();
   }
 }

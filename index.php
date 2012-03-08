@@ -36,6 +36,27 @@ define('AJAX_REQUEST', isset($_REQUEST['ajax']) && !empty($_REQUEST['ajax']) ? t
 # Clear cache if wanted.
 define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
 
+# Initialize software
+# @todo try / catch
+require PATH_STANDARD . '/config/Candy.inc.php';
+require PATH_STANDARD . '/app/controllers/Index.controller.php';
+
+# Override the system variables in development mode.
+if (WEBSITE_MODE == 'test') {
+  ini_set('display_errors', 0);
+	ini_set('error_reporting', 0);
+	ini_set('log_errors', 1);
+}
+else {
+  ini_set('display_errors', 1);
+	ini_set('error_reporting', 1);
+	ini_set('log_errors', 1);
+}
+
+
+# Define current url
+define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
+
 # Start user session.
 @session_start();
 
@@ -69,25 +90,7 @@ define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false
 define('MOBILE_DEVICE', $bMobile);
 
 # Initialize software
-# @todo try / catch
-require PATH_STANDARD . '/config/Candy.inc.php';
-require PATH_STANDARD . '/app/controllers/Index.controller.php';
-
-# Define current url
-define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
-
-# Initialize software
 $oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
-
-# Override the system variables in development mode.
-if (WEBSITE_MODE == 'development') {
-  ini_set('display_errors', 1);
-  error_reporting(E_ALL);
-}
-else {
-  ini_set('display_errors', 0);
-  error_reporting(E_NONE);
-}
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 # *********************************************

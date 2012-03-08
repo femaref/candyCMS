@@ -11,7 +11,6 @@
 # Special behaviour
 "blog/(:num)": controller=blog&id=$1
 "blog/(:any)": controller=blog&search=$1
-"calendar/(:num)": controller=calendar&id=$1&ajax=1
 "calendar/(:num)/archive": controller=calendar&action=archive&id=$1
 "gallery": controller=gallery&page=1
 "gallery/(:num)/(createfile|updatefile|destroyfile)": controller=gallery&action=$2&id=$1
