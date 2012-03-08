@@ -40,14 +40,6 @@ class Dispatcher {
 		$this->_aCookie		= & $aCookie;
 	}
 
-	/**
-	 * @todo finish this route
-	 */
-	/*public function getRoutes() {
-		require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
-
-	}*/
-
   /**
    * Get the controller object.
    *

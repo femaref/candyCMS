@@ -22,6 +22,7 @@ use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use lessc;
+use Routes;
 
 require_once PATH_STANDARD . '/app/models/Main.model.php';
 require_once PATH_STANDARD . '/app/models/Session.model.php';
@@ -31,6 +32,7 @@ require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
 require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/lib/routes/Routes.php';
 require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
 class Index {
@@ -89,6 +91,7 @@ class Index {
 
     $this->getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
     $this->getPlugins(ALLOW_PLUGINS);
+		$this->getRoutes();
     $this->getLanguage();
     $this->getCronjob();
     $this->getFacebookExtension();
@@ -141,7 +144,7 @@ class Index {
    *
    */
   public static function getPlugins($sAllowedPlugins) {
-    $aPlugins = preg_split("/[\s]*[,][\s]*/", $sAllowedPlugins);
+    $aPlugins = explode(',', $sAllowedPlugins);
 
     foreach ($aPlugins as $sPluginName) {
       try {
@@ -157,6 +160,35 @@ class Index {
 
     return true;
   }
+
+	public function getRoutes() {
+		Routes::add(array(
+				'/'														=> WEBSITE_LANDING_PAGE,
+				'blog/(:num)'									=> 'section=blog&id=$1',
+				'blog/(:num)/(:any)'					=> 'section=blog&id=$1&seo_title=$2',
+				'blog/(:alpha)'								=> 'section=blog&action=$1',
+				'calendar/archive/(:num)'			=> 'section=calendar&action=archive&id=$1',
+				'language/(:alpha)'						=> 'language=$1&clearcache=1'
+		));
+
+		$sURI					= Helper::removeSlash($_SERVER['REQUEST_URI']);
+		$sRoutemap		= Routes::route(empty($sURI) ? '/' : $sURI);
+		$aRouteParts	= explode('&', $sRoutemap);
+
+		if (count($aRouteParts) > 1) {
+			foreach ($aRouteParts as $sRoutes) {
+				$aRoute = explode('=', $sRoutes);
+
+				if(!isset($this->_aRequest[$aRoute[0]]))
+					$this->_aRequest[$aRoute[0]] = $aRoute[1];
+			}
+		}
+		else
+			$this->_aRequest['section'] = isset($this->_aRequest['section']) ? $this->_aRequest['section'] : $sRoutemap;
+
+		print_R($this->_aRequest);
+		print_r($_REQUEST);
+	}
 
   /**
    * Sets the language. This can be done via a language request and be temporarily saved in a cookie.

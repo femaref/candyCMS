@@ -136,7 +136,6 @@ class Mail extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    # Create page title and description
     $this->setDescription(I18n::get('global.contact'));
     $this->setTitle(I18n::get('global.contact'));
 
@@ -184,8 +183,8 @@ class Mail extends Main {
 	 *
 	 */
   protected function _create($bShowCaptcha = true) {
-		$this->_setError('email');
 		$this->_setError('content');
+		$this->_setError('email');
 
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);

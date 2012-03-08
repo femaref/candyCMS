@@ -312,8 +312,8 @@ abstract class Main {
 
       $sString = '';
       foreach ($aResult as $aRow) {
-        if ($bSplit == true) {
-          $aItems = preg_split("/[\s]*[,][\s]*/", $aRow[$sColumn]);
+        if ($bSplit === true) {
+          $aItems = explode(',', $aRow[$sColumn]);
 
           foreach ($aItems as $sItem)
             $sString .= '"' . $sItem . '",';

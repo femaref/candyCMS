@@ -75,7 +75,7 @@ class Content extends Main {
 
   /**
    * Build form template to create or update a content entry.
-   * INFO: $this->_setTitle comes from section helper.
+   * INFO: $this->setTitle comes from section helper.
    *
    * @access protected
    * @return string HTML content

@@ -42,7 +42,8 @@ class Gallery extends Main {
    *
    */
   public function show() {
-    if (isset($this->_aRequest['action'])) {
+		# Bugfix: Display single image.
+    if (isset($this->_aRequest['action']) && 'image' !== $this->_aRequest['action']) {
       switch ($this->_aRequest['action']) {
 
         case 'createfile':
@@ -172,7 +173,7 @@ class Gallery extends Main {
     $aData = & $this->_oModel->getData($this->_iId, true);
 
     if (!empty($this->_iId))
-      $this->_setTitle($aData['title']);
+      $this->setTitle($aData['title']);
 
     else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

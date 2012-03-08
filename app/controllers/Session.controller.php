@@ -50,8 +50,8 @@ class Session extends Main {
 
         case 'verification':
 
-          $this->_setTitle(I18n::get('session.verification.title'));
-          $this->_setDescription(I18n::get('session.verification.info'));
+          $this->setTitle(I18n::get('session.verification.title'));
+          $this->setDescription(I18n::get('session.verification.info'));
           return $this->resendVerification();
 
           break;

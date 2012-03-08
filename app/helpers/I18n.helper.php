@@ -73,7 +73,7 @@ class I18n {
    *
    */
   public static function get($sLanguagePart) {
-    $aLang = preg_split("/[\s]*[.][\s]*/", $sLanguagePart);
+    $aLang = explode('.', $sLanguagePart);
 
 		if(isset($_SESSION['lang'])) {
 			$mTemp = $_SESSION['lang'];
