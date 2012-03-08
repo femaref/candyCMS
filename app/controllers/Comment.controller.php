@@ -182,7 +182,7 @@ class Comment extends Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#add';
+      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
         Log::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['userdata']['id']);

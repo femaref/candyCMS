@@ -60,9 +60,15 @@ class Blog extends Main {
 
       # Load comments
       if (!empty($this->_iId)) {
-				$this->__autoload('Comment');
+        if(file_exists(PATH_STANDARD . '/addons/controller/Comment.controller.php')) {
+          require_once PATH_STANDARD . '/addons/controller/Comment.controller.php';
+          $oComments = new Addon_Comment($this->_aRequest, $this->_aSession);
+        }
+        else {
+          $this->__autoload('Comment');
+          $oComments = new Comment($this->_aRequest, $this->_aSession);
+        }
 
-        $oComments = new Comment($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
       }

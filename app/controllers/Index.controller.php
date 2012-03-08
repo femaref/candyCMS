@@ -563,11 +563,6 @@ class Index {
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['userdata'] = self::_resetUser();
 
-    if (preg_match('/<!-- plugin:adsense -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Adsense')) {
-      $oAdsense = new \CandyCMS\Plugin\Adsense();
-      $sCachedHTML = & str_replace('<!-- plugin:adsense -->', $oAdsense->show(), $sCachedHTML);
-    }
-
     if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Archive')) {
       $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       $oArchive->__init();
