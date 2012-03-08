@@ -23,6 +23,7 @@ use CandyCMS\Plugin\Cronjob as Cronjob;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use lessc;
 use Routes;
+use sfYaml;
 
 require_once PATH_STANDARD . '/app/models/Main.model.php';
 require_once PATH_STANDARD . '/app/models/Session.model.php';
@@ -161,15 +162,15 @@ class Index {
     return true;
   }
 
+  /**
+   * @todo
+   */
 	public function getRoutes() {
-		Routes::add(array(
-				'/'														=> WEBSITE_LANDING_PAGE,
-				'blog/(:num)'									=> 'section=blog&id=$1',
-				'blog/(:num)/(:any)'					=> 'section=blog&id=$1&seo_title=$2',
-				'blog/(:alpha)'								=> 'section=blog&action=$1',
-				'calendar/archive/(:num)'			=> 'section=calendar&action=archive&id=$1',
-				'language/(:alpha)'						=> 'language=$1&clearcache=1'
-		));
+    require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
+		Routes::add(sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml')));
+
+    if (!defined('WEBSITE_LANDING_PAGE'))
+      define('WEBSITE_LANDING_PAGE', Routes::route('/'));
 
 		$sURI					= Helper::removeSlash($_SERVER['REQUEST_URI']);
 		$sRoutemap		= Routes::route(empty($sURI) ? '/' : $sURI);
@@ -184,10 +185,14 @@ class Index {
 			}
 		}
 		else
-			$this->_aRequest['section'] = isset($this->_aRequest['section']) ? $this->_aRequest['section'] : $sRoutemap;
+			$this->_aRequest['controller'] = isset($this->_aRequest['controller']) ? $this->_aRequest['controller'] : $sRoutemap;
 
+    # Show files from public folder (robots.txt, human.txt and favicon.ico)
+    if(preg_match('/\./', $this->_aRequest['controller'])) {
+      echo file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']);
+      exit;
+    }
 		print_R($this->_aRequest);
-		print_r($_REQUEST);
 	}
 
   /**
@@ -202,13 +207,13 @@ class Index {
       define('DEFAULT_LANGUAGE', 'en');
 
     # We got a language request? Let's switch the language!
-		# Bugfix: Added "$this->_aRequest['section']" to make a blog update possible.
+		# Bugfix: Added "$this->_aRequest['controller']" to make a blog update possible.
     if (isset($this->_aRequest['language']) &&
 						file_exists(PATH_STANDARD . '/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
-						!isset($this->_aRequest['section'])) {
+						!isset($this->_aRequest['controller'])) {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      Helper::redirectTo('/' . WEBSITE_LANDING_PAGE);
+      Helper::redirectTo('/');
 			exit();
     }
 
@@ -430,11 +435,11 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', $this->_aRequest['section'] . '|' . substr(md5($this->_aSession['userdata']['role'] .
+			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . substr(md5($this->_aSession['userdata']['role'] .
               WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10) . '|' . substr(md5(CURRENT_URL), 0, 10));
 
 		# Direct to install
-    if (strtolower($this->_aRequest['section']) == 'install')
+    if (strtolower($this->_aRequest['controller']) == 'install')
       Helper::redirectTo('/install/index.php');
 
     # Start the dispatcher and grab the controller.
@@ -445,7 +450,7 @@ class Index {
     }
 
     # Minimal settings for AJAX-request
-		if ((isset($this->_aRequest['section']) && 'rss' == strtolower($this->_aRequest['section'])) ||
+		if ((isset($this->_aRequest['controller']) && 'rss' == strtolower($this->_aRequest['controller'])) ||
 						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
 			$sCachedHTML = $oDispatcher->oController->getContent();
 

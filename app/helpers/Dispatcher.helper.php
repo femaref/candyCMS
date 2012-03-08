@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Route the application to the given section.
+ * Route the application to the given controller and action.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
@@ -48,7 +48,7 @@ class Dispatcher {
    *
    */
   public function getController() {
-    $sController = (string) ucfirst(strtolower($this->_aRequest['section']));
+    $sController = (string) ucfirst(strtolower($this->_aRequest['controller']));
 
     # Are addons for existing controllers available? If yes, use them.
     if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php') &&
@@ -63,7 +63,7 @@ class Dispatcher {
     elseif (file_exists(PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php')) {
       require_once PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php';
 
-      $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['section']);
+      $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['controller']);
       $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
     }
 
@@ -76,7 +76,7 @@ class Dispatcher {
   }
 
   /**
-   * Handle the pre-defined sections.
+   * Handle the pre-defined actions.
    *
    * @access public
    *
@@ -87,19 +87,19 @@ class Dispatcher {
     switch ($sAction) {
       case 'create':
 
-        $this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['section'])));
-        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
+        $this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['controller'])));
+        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['controller']) . '.title.create'));
         $this->oController->setKeywords($this->oController->getKeywords());
-        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.create'));
+        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['controller']) . '.title.create'));
 
         break;
 
       case 'destroy':
 
         $this->oController->setContent($this->oController->destroy());
-        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
+        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['controller']) . '.title.destroy'));
         $this->oController->setKeywords($this->oController->getKeywords());
-        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['section']) . '.title.destroy'));
+        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['controller']) . '.title.destroy'));
 
         break;
 
@@ -115,12 +115,12 @@ class Dispatcher {
 
       case 'update':
 
-        $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['section'])));
+        $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['controller'])));
         $this->oController->setDescription(
-                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
         $this->oController->setKeywords($this->oController->getKeywords());
         $this->oController->setTitle(
-                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['section']) . '.title.update')));
+                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
 
         break;
 

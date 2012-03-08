@@ -4,7 +4,7 @@
       <h1>
         {$u.full_name}
         {if $USER_ROLE == 4 || $u.id == $USER_ID}
-          <a href='/user/{$_request_id_}/update'>
+          <a href='/user/{$_REQUEST.id}/update'>
             <img src='%PATH_IMAGES%/candy.global/spacer.png'
                 class='icon-update js-tooltip'
                 alt='{$lang.global.update.update}'
@@ -60,7 +60,7 @@
         </td>
         <td>
           {* Absolute URL due to fancybox bug *}
-          <a href='{$WEBSITE_URL}/mail/{$_request_id_}/ajax' class="js-fancybox fancybox.ajax">
+          <a href='{$WEBSITE_URL}/mail/{$_REQUEST.id}/ajax' class="js-fancybox fancybox.ajax">
             {$lang.user.contact_via_email|replace:'%u':$u.name}
           </a>
         </td>

@@ -22,21 +22,19 @@ class Site extends Main {
    *
    */
   protected function _show() {
-    $sTpl = isset($this->_aRequest['subsection']) ?
-            (string) $this->_aRequest['subsection'] :
-            '';
+    $sSite = isset($this->_aRequest['site']) ?(string) $this->_aRequest['site'] : '';
 
-    if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl')) {
+    if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl')) {
       Helper::redirectTo('/error/404');
       exit();
     }
 
-    $this->setDescription(ucfirst($sTpl));
-    $this->setTitle(ucfirst($sTpl));
+    $this->setDescription(ucfirst($sSite));
+    $this->setTitle(ucfirst($sSite));
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(300);
 
-    return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sTpl . '.tpl');
+    return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');
   }
 }

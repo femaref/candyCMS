@@ -18,7 +18,7 @@ use \CandyCMS\Helper\I18n as I18n;
 class WebTestOfDownloadController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['section'] = 'download';
+		$this->aRequest['controller'] = 'download';
 		$this->oObject = new Download($this->aRequest, $this->aSession);
 	}
 
@@ -27,31 +27,31 @@ class WebTestOfDownloadController extends CandyWebTest {
 	}
 
 	function testShowDownloads() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('098dec456d');
 	}
 
 	function testCreateDownload() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/create'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
 
 	function testUpdateDownload() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/update'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
 
 	function testDestroyDownload() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/destroy'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
 
 	function testDirIsWritable() {
-		$sFile = $this->createFile('upload/' . $this->aRequest['section']);
+		$sFile = $this->createFile('upload/' . $this->aRequest['controller']);
 		$this->assertTrue(file_exists($sFile), 'Download folder is writeable.');
 		unlink($sFile);
 	}

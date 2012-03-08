@@ -49,7 +49,7 @@ class Blog extends Main {
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
 		# If data is not found, redirect to 404
-		if (empty($this->_aData[1]['id']) && !empty($this->_iId) && !isset($this->_aRequest['page']))
+		if (empty($this->_aData[1]['id']) && !empty($this->_iId))
 			Helper::redirectTo('/error/404');
 
 		else {
@@ -216,7 +216,7 @@ class Blog extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-			Log::insert($this->_aRequest['section'],
+			Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId('blogs'),
 									$this->_aSession['userdata']['id']);
@@ -243,9 +243,9 @@ class Blog extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);
@@ -267,9 +267,9 @@ class Blog extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);

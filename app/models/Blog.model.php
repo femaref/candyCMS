@@ -42,7 +42,7 @@ class Blog extends Main {
 							'';
 
       # Search blog for tags
-      if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search']) && empty($this->_aRequest['page'])) {
+      if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
         $sWhere .= isset($sWhere) && !empty($sWhere) ? ' AND ' : ' WHERE ';
         $sWhere .= "tags LIKE '%" . Helper::formatInput($this->_aRequest['search']) . "%'";
       }

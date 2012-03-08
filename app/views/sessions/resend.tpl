@@ -1,8 +1,8 @@
 {strip}
-  <form method='post' action='/session/{$smarty.get.action}' class='form-horizontal'>
+  <form method='post' action='/session/{$_REQUEST.action}' class='form-horizontal'>
     <div class='page-header'>
       <h1>
-        {if $smarty.get.action == 'verification'}
+        {if $_REQUEST.action == 'verification'}
           {$lang.session.verification.title}
         {else}
           {$lang.session.password.title}
@@ -10,7 +10,7 @@
       </h1>
     </div>
     <p>
-      {if $smarty.get.action == 'verification'}
+      {if $_REQUEST.action == 'verification'}
         {$lang.session.verification.info}
       {else}
         {$lang.session.password.info}

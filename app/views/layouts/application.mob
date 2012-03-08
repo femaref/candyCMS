@@ -31,14 +31,14 @@
         </div><!-- /header -->
         <div data-role="navbar">
           <ul>
-            <li><a href='/blog' {if $smarty.get.section == 'blog'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
-            <li><a href='/gallery' {if $smarty.get.section == 'gallery'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
-            <li><a href='/search' {if $smarty.get.section == 'search'}class="ui-btn-active" data-ajax="false"{/if}>{$lang.global.search}</a></li>
-            <li><a href='/calendar' {if $smarty.get.section == 'calendar'}class="ui-btn-active"{/if}>{$lang.global.calendar}</a></li>
+            <li><a href='/blog' {if $_REQUEST.controller == 'blog'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
+            <li><a href='/gallery' {if $_REQUEST.controller == 'gallery'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
+            <li><a href='/search' {if $_REQUEST.controller == 'search'}class="ui-btn-active" data-ajax="false"{/if}>{$lang.global.search}</a></li>
+            <li><a href='/calendar' {if $_REQUEST.controller == 'calendar'}class="ui-btn-active"{/if}>{$lang.global.calendar}</a></li>
           </ul>
         </div><!-- /navbar -->
         <div data-role="content">
-          <section id="{$smarty.get.section}">
+          <section id="{$_REQUEST.controller}">
             {if $_flash_type_}
               <div id='js-flash_message'>
                 <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
@@ -53,7 +53,7 @@
         <div data-role="footer" class="ui-bar">
           <div data-role="controlgroup" data-type="horizontal">
             <a id='top' data-role="button" class="ui-btn-right" data-icon="arrow-u">Top</a>
-            <a href='/disclaimer' {if $smarty.get.section == 'content' && $_request_id_ == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
+            <a href='/disclaimer' {if $_REQUEST.controller == 'content' && $_REQUEST.id == 1}class="ui-btn-active"{/if}>{$lang.global.disclaimer}</a>
             <a href='?mobile=0' data-ajax="false">{$lang.global.view.web}</a>
           </div>
         </div><!-- /footer -->

@@ -2,9 +2,9 @@
   <div class='page-header'>
     <h1>{$lang.global.download}</h1>
   </div>
-  <form action='/download/{$smarty.get.action}' method='post'
+  <form action='/download/{$_REQUEST.action}' method='post'
         enctype='multipart/form-data' class='form-horizontal'>
-    {if $smarty.get.action == 'create'}
+    {if $_REQUEST.action == 'create'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
           {$lang.download.label.choose} <span title="{$lang.global.required}">*</span>
@@ -51,7 +51,7 @@
         {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
       </div>
     </div>
-    {if $smarty.get.action == 'update'}
+    {if $_REQUEST.action == 'update'}
       <div class='control-group'>
         <label for='input-downloads' class='control-label'>
           {$lang.global.downloads}
@@ -63,14 +63,14 @@
       </div>
     {/if}
     <div class="form-actions">
-      <input type='hidden' value='formdata' name='{$smarty.get.action}_download' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_download' />
       <input type='submit' class='btn btn-primary'
-            value='{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
-      {if $smarty.get.action == 'update'}
+            value='{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
+      {if $_REQUEST.action == 'update'}
         <input type='button' class='btn btn-danger'
               value='{$lang.global.destroy.destroy}'
-              onclick="confirmDestroy('/download/{$_request_id_}/destroy')" />
-        <input type='hidden' value='{$_request_id_}' name='id' />
+              onclick="confirmDestroy('/download/{$_REQUEST.id}/destroy')" />
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
       {/if}
     </p>

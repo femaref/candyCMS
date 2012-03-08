@@ -7,7 +7,7 @@
     </p>
   {/if}
   {* blog overview *}
-  {if !$_request_id_}
+  {if !$_REQUEST.id}
     <ul data-role="listview">
       {foreach $blog as $b}
         <li role="heading" data-role="list-divider">

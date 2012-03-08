@@ -75,7 +75,6 @@ class Content extends Main {
 
   /**
    * Build form template to create or update a content entry.
-   * INFO: $this->setTitle comes from section helper.
    *
    * @access protected
    * @return string HTML content
@@ -125,7 +124,7 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId('contents'),
 									$this->_aSession['userdata']['id']);
@@ -153,9 +152,9 @@ class Content extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);
@@ -175,9 +174,9 @@ class Content extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 							$this->_aRequest['action'],
 							(int) $this->_aRequest['id'],
 							$this->_aSession['userdata']['id']);

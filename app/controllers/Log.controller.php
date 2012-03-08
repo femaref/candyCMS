@@ -58,7 +58,7 @@ class Log extends Main {
    *
    * @static
    * @access public
-   * @param string $sSectionName name of section
+   * @param string $sControllerName name of controller
    * @param string $sActionName name of action (CRUD)
    * @param integer $iActionId ID of the row that is affected
    * @param integer $iUserId ID of the acting user
@@ -67,8 +67,8 @@ class Log extends Main {
    * @return boolean status of query
    *
    */
-  public static function insert($sSectionName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
-    return Model::insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+  public static function insert($sControllerName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
+    return Model::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
 
   /**
@@ -80,7 +80,7 @@ class Log extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_iId,
 									$this->_aSession['userdata']['id']);

@@ -30,8 +30,8 @@ class Rss extends Main {
     $this->_sTemplateFolder = 'rss';
 
     Header('Content-Type: application/rss+xml');
-    $this->_sSection = isset($this->_aRequest['subsection']) ?
-            (string) strtolower($this->_aRequest['subsection']) :
+    $this->_sSection = isset($this->_aRequest['section']) ?
+            (string) strtolower($this->_aRequest['section']) :
             'blog';
 
     # Bugfix: Empty page and search to avoid news filters.

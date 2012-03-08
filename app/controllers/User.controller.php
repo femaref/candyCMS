@@ -228,7 +228,7 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['userdata']['id'];
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
 									$this->_aSession['userdata']['id']);
@@ -300,7 +300,7 @@ class User extends Main {
         $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
       }
 
-			Log::insert($this->_aRequest['section'],
+			Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$iUserId,
 									$this->_aSession['userdata']['id']);
@@ -387,7 +387,7 @@ class User extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_iId) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
       # Check if user wants to unsubscribe from mailchimp
 			if (!isset($this->_aRequest['receive_newsletter']))
@@ -400,7 +400,7 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['userdata']['id'];
 
-			Log::insert($this->_aRequest['section'],
+			Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
 									$this->_aSession['userdata']['id']);
@@ -442,7 +442,7 @@ class User extends Main {
       # Password matches with user password
       if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['userdata']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
           # Unsubscribe from newsletter
           $this->_unsubscribeFromNewsletter($aUser['email']);
@@ -460,7 +460,7 @@ class User extends Main {
       # We are admin and can delete users
     } elseif ($this->_aSession['userdata']['role'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
         # Unsubscribe from newsletter
         $this->_unsubscribeFromNewsletter($aUser['email']);
@@ -468,7 +468,7 @@ class User extends Main {
         # Destroy profile image
         $this->_destroyUserAvatars($this->_iId);
 
-        Log::insert($this->_aRequest['section'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+        Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
         return Helper::successMessage(I18n::get('success.destroy'), '/user');
       }
       else

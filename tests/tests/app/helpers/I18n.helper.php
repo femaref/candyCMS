@@ -10,6 +10,7 @@
  *
  */
 
+require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
 
 use \CandyCMS\Helper\I18n as I18n;

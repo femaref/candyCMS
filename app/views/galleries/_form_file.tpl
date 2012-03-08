@@ -1,16 +1,16 @@
 {strip}
-  <form action='/gallery/{$_request_id_}/{$smarty.get.action}' method='post'
+  <form action='/gallery/{$_REQUEST.id}/{$_REQUEST.action}' method='post'
         enctype='multipart/form-data' class='form-horizontal'>
     <div class='page-header'>
       <h1>
-        {if $smarty.get.action == 'createfile'}
+        {if $_REQUEST.action == 'createfile'}
           {$lang.gallery.files.title.create}
         {else}
           {$lang.gallery.files.title.update}
         {/if}
       </h1>
     </div>
-    {if $smarty.get.action == 'createfile'}
+    {if $_REQUEST.action == 'createfile'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
           {$lang.gallery.files.label.choose} <span title="{$lang.global.required}">*</span>
@@ -44,14 +44,14 @@
     </div>
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary'
-            value="{if $smarty.get.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}" />
-      {if $smarty.get.action == 'updatefile'}
+            value="{if $_REQUEST.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}" />
+      {if $_REQUEST.action == 'updatefile'}
         <input type='button' value='{$lang.global.destroy.destroy}' class='btn btn-danger'
-        onclick="confirmDestroy('/gallery/{$_request_id_}/destroyfile?album_id={$album_id}')" />
+        onclick="confirmDestroy('/gallery/{$_REQUEST.id}/destroyfile?album_id={$album_id}')" />
         <input class='btn' type='reset' value='{$lang.global.reset}' />
-        <input type='hidden' value='{$_request_id_}' name='id' />
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
       {/if}
-      <input type='hidden' value='formdata' name='{$smarty.get.action}_gallery' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_gallery' />
     </div>
   </form>
   <script type='text/javascript'>

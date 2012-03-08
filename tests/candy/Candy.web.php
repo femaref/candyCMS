@@ -27,7 +27,7 @@ abstract class CandyWebTest extends WebTestCase {
 	function __construct() {
 		parent::__construct();
 
-		$this->aRequest	= array('section' => WEBSITE_LANDING_PAGE, 'clearcache' => 'true');
+		$this->aRequest	= array('section' => 'blog', 'clearcache' => 'true');
 		$this->aFile			= array();
 		$this->aCookie		= array();
 		$this->aSession['userdata'] = array(

@@ -18,7 +18,7 @@ use \CandyCMS\Helper\I18n as I18n;
 class WebTestOfGalleryController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['section'] = 'gallery';
+		$this->aRequest['controller'] = 'gallery';
 	}
 
 	function tearDown() {
@@ -26,25 +26,25 @@ class WebTestOfGalleryController extends CandyWebTest {
 	}
 
 	function testShowGallery() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section']));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('6dffc4c552');
 	}
 
 	function testShowAlbum() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/6dffc4c552'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/6dffc4c552'));
 		$this->assertResponse(200);
 		$this->assertText('982e960e18');
 	}
 
 	function testShowImage() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/1/image/1'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/image/1'));
 		$this->assertResponse(200);
 		$this->assertText('782c660e17');
 	}
 
 	function testDirIsWritable() {
-		$sFile = PATH_STANDARD . '/upload/' . $this->aRequest['section'] . '/test.log';
+		$sFile = PATH_STANDARD . '/upload/' . $this->aRequest['controller'] . '/test.log';
 		$oFile = fopen($sFile, 'a');
 		fwrite($oFile, 'Is writeable.' . "\n");
 		fclose($oFile);

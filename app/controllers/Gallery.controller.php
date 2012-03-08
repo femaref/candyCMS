@@ -210,7 +210,7 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $iId);
@@ -235,7 +235,7 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['section'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
       return Helper::successMessage(I18n::get('success.create'), '/gallery/' . $iId);
     }
 
@@ -261,9 +261,9 @@ class Gallery extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);
@@ -286,9 +286,9 @@ class Gallery extends Main {
    */
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_iId,
 									$this->_aSession['userdata']['id']);
@@ -355,10 +355,10 @@ class Gallery extends Main {
     else {
       if (isset($this->_aRequest['createfile_gallery'])) {
         if ($this->_createFile() === true) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
           # Log uploaded image. Request ID = album id
-          Log::insert($this->_aRequest['section'],
+          Log::insert($this->_aRequest['controller'],
 											'createfile',
 											(int) $this->_aRequest['id'],
 											$this->_aSession['userdata']['id']);
@@ -421,9 +421,9 @@ class Gallery extends Main {
     else {
       if (isset($this->_aRequest['updatefile_gallery'])) {
         if ($this->_oModel->updateFile($this->_iId) === true) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-          Log::insert($this->_aRequest['section'],
+          Log::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											(int) $this->_iId,
 											$this->_aSession['userdata']['id']);
@@ -451,9 +451,9 @@ class Gallery extends Main {
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-        Log::insert($this->_aRequest['section'],
+        Log::insert($this->_aRequest['controller'],
 										$this->_aRequest['action'],
 										(int) $this->_iId,
 										$this->_aSession['userdata']['id']);

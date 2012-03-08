@@ -1,7 +1,7 @@
 {strip}
   {if $USER_ROLE >= 3}
     <p class='center'>
-      <a href='/gallery/{$_request_id_}/createfile'>
+      <a href='/gallery/{$_REQUEST.id}/createfile'>
         <img src='%PATH_IMAGES%/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -22,7 +22,7 @@
           ({$file_no} {$lang.global.files})
         </small>
         {if $USER_ROLE >= 3}
-          <a href='/gallery/{$_request_id_}/update'>
+          <a href='/gallery/{$_REQUEST.id}/update'>
             <img src='%PATH_IMAGES%/candy.global/spacer.png'
                 class='icon-update js-tooltip'
                 alt='{$lang.global.update.update}'
@@ -56,7 +56,7 @@
                       title='{$lang.global.update.update}'
                       width='16' height='16' />
                 </a>
-                <a href='#' onclick="confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_request_id_}')">
+                <a href='#' onclick="confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_REQUEST.id}')">
                   <img src='%PATH_IMAGES%/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
@@ -69,7 +69,7 @@
         {/foreach}
       </ul>
     <p class='center'>
-      <a href='/rss/gallery/{$_request_id_}' class='js-tooltip' title='{$lang.global.rss}'>
+      <a href='/rss/gallery/{$_REQUEST.id}' class='js-tooltip' title='{$lang.global.rss}'>
         <img src='%PATH_IMAGES%/candy.global/spacer.png' class='icon-rss' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
     </p>

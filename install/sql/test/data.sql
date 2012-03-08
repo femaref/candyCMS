@@ -62,7 +62,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `logs` WRITE;
 
-INSERT INTO `logs` (`id`, `section_name`, `action_name`, `action_id`, `time_start`, `time_end`, `user_id`)
+INSERT INTO `logs` (`id`, `controller_name`, `action_name`, `action_id`, `time_start`, `time_end`, `user_id`)
 VALUES
 	(1,'blog','create',1,2020,NULL,1);
 

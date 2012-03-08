@@ -31,7 +31,7 @@
       {/if}
       {$c.content}
       <footer>
-        {if $_request_id_ && (!isset($smarty.get.action) || $smarty.get.action !== 'page')}
+        {if $_REQUEST.id && (!isset($_REQUEST.action) || $_REQUEST.action !== 'page')}
           <hr />
           <div id='socialshareprivacy'></div>
           <script src='%PATH_JS%/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>

@@ -14,7 +14,7 @@
       <meta name='dc.title' content="{$_title_}"/>
 
       {* Provide more details for specific entry. *}
-      {if $_request_id_}
+      {if isset($_REQUEST.id)}
         <meta property="og:description" content="{$meta_og_description}"/>
         <meta property="og:site_name" content="{$meta_og_site_name}"/>
         <meta property="og:title" content="{$meta_og_title}"/>
@@ -54,36 +54,36 @@
       <nav class="navbar navbar-fixed-top">
         <div class='navbar-inner'>
           <div class='container'>
-            <a href="/{$WEBSITE_LANDING_PAGE}" class="brand" title="{$WEBSITE_NAME}">
+            <a href="/" class="brand" title="{$WEBSITE_NAME}">
               {$WEBSITE_NAME}
               {if $WEBSITE_MODE !== 'production'}
                 &nbsp;- {$WEBSITE_MODE|upper}
               {/if}
             </a>
             <ul class="nav">
-              <li{if $smarty.get.section == 'blog'} class='active'{/if}>
+              <li{if $_REQUEST.controller == 'blog'} class='active'{/if}>
                 <a href='/blog'>{$lang.global.blog}</a>
               </li>
-              <li{if $smarty.get.section == 'gallery'} class='active'{/if}>
+              <li{if $_REQUEST.controller == 'gallery'} class='active'{/if}>
                 <a href='/gallery'>{$lang.global.gallery}</a>
               </li>
-              <li{if $smarty.get.section == 'calendar'} class='active'{/if}>
+              <li{if $_REQUEST.controller == 'calendar'} class='active'{/if}>
                 <a href='/calendar'>{$lang.global.calendar}</a>
               </li>
-              <li{if $smarty.get.section == 'download'} class='active'{/if}>
+              <li{if $_REQUEST.controller == 'download'} class='active'{/if}>
                 <a href='/download'>{$lang.global.download}</a>
               </li>
-              <li{if $smarty.get.section == 'search'} class='active'{/if}>
+              <li{if $_REQUEST.controller == 'search'} class='active'{/if}>
                 <a href='/search'>{$lang.global.search}</a>
               </li>
             </ul>
             <ul class="nav pull-right">
               {if $USER_ID == 0}
-                <li{if $smarty.get.section == 'session' && $smarty.get.action == 'create'} class='active'{/if}>
+                <li{if $_REQUEST.controller == 'session'} class='active'{/if}>
                   <a href='/session'>{$lang.global.login}</a>
                 </li>
                 <li class="divider-vertical"/>
-                <li{if $smarty.get.section == 'user' && $smarty.get.action == 'create'} class='active'{/if}>
+                <li{if $_REQUEST.controller == 'user' && isset($_REQUEST.action) && $_REQUEST.action == 'create'} class='active'{/if}>
                   <a href='/user/create'>{$lang.global.register}</a>
                 </li>
               {else}
@@ -150,7 +150,7 @@
                 {$_update_available_}
               </div>
             {/if}
-            <section id="{$smarty.get.section}">
+            <section id='{$_REQUEST.controller}'>
               {$_content_}
             </section>
           </div>

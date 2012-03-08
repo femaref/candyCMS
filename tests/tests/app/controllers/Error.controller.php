@@ -19,7 +19,7 @@ use \CandyCMS\Helper\I18n as I18n;
 class WebTestOfErrorController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['section'] = 'error';
+		$this->aRequest['controller'] = 'error';
 		$this->oObject = new Error($this->aRequest, $this->aSession);
 	}
 
@@ -28,7 +28,7 @@ class WebTestOfErrorController extends CandyWebTest {
 	}
 
 	function testShow404() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['section'] . '/404'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/404'));
 		$this->assertResponse(200);
 		$this->assertText(I18n::get('error.404.title'));
 	}

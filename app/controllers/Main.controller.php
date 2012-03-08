@@ -174,7 +174,7 @@ abstract class Main {
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
     # Set our default template folder.
-    $this->_sTemplateFolder = isset($this->_aRequest['section']) ? (string)$this->_aRequest['section'] . 's' : '';
+    $this->_sTemplateFolder = isset($this->_aRequest['controller']) ? (string)$this->_aRequest['controller'] . 's' : '';
 
     $this->_setI18n();
     $this->_setSmarty();
@@ -262,7 +262,7 @@ abstract class Main {
 
     $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;
 
-    if($bUseFacebook == true) {
+    if($bUseFacebook === true) {
       $this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
       $this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
     }
@@ -276,7 +276,6 @@ abstract class Main {
 		$this->oSmarty->assign('VERSION', VERSION);
 		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
 		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
-		$this->oSmarty->assign('WEBSITE_LANDING_PAGE', WEBSITE_LANDING_PAGE);
 		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
 		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
@@ -292,7 +291,10 @@ abstract class Main {
 		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
 		$this->oSmarty->assign('_json_language_', I18n::getJson());
 		$this->oSmarty->assign('_pubdate_', date('r'));
-		$this->oSmarty->assign('_request_id_', $this->_iId);
+
+    # Global variables
+		$this->oSmarty->assign('_REQUEST', $this->_aRequest);
+		$this->oSmarty->assign('_SESSION', $this->_aSession);
 
 		# Set up javascript language
 		$this->oSmarty->assign('lang', I18n::getArray());
@@ -370,11 +372,11 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		if($this->_aRequest['section'] == 'error')
+		if($this->_aRequest['controller'] == 'error')
 			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
 
 		else
-			return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['section']));
+			return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['controller']));
 	}
 
 	/**
@@ -442,7 +444,7 @@ abstract class Main {
 
     # Bugfix: Don't try to validate email on comment post.
 		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false) &&
-						'blog' !== $this->_aRequest['section'])
+						'blog' !== $this->_aRequest['controller'])
 			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
 	}
 

@@ -67,21 +67,13 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'test');
 
 # ------------------------------------------------------------------------------
 
 # Enter your Google tracking code here
 # DEFAULT: ''
 define('WEBSITE_TRACKING_CODE', '');
-
-# ------------------------------------------------------------------------------
-
-# Define the entry point of your website. If you want to use a static page, type
-# "static/nameofyourpage" and place it at
-# "public/templates/_static/nameofyourpage.tpl"
-# DEFAULT: blog
-define('WEBSITE_LANDING_PAGE', 'blog');
 
 # ------------------------------------------------------------------------------
 

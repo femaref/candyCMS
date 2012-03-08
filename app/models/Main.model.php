@@ -172,7 +172,7 @@ abstract class Main {
    *
    * @access protected
    * @param array $aRow array with data to format
-   * @param string $sSection name of the section we are working in
+   * @param string $sSection name of the controller we are working in
 	 * @param boolean $bNl2br format string to br
    * @return array $aData rebuild data
    *
@@ -235,7 +235,7 @@ abstract class Main {
     # Build user ID
     $iUserId = isset($aRow['author_id']) ? $aRow['author_id'] : $aRow['id'];
 
-    if(isset($this->_aRequest['section']) && 'log' !== $this->_aRequest['section']) {
+    if(isset($this->_aRequest['controller']) && 'log' !== $this->_aRequest['controller']) {
 			$sEmail       = isset($aRow['email']) ? $aRow['email'] : '';
       $bUseGravatar = isset($aRow['use_gravatar']) ? (bool) $aRow['use_gravatar'] : false;
 

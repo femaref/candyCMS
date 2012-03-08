@@ -119,6 +119,8 @@ class Pagination {
     $this->_oSmarty = new \Smarty();
     $this->_oSmarty->cache_dir    = CACHE_DIR;
     $this->_oSmarty->compile_dir  = COMPILE_DIR;
+
+    $this->_oSmarty->assign('_REQUEST', $this->_aRequest);
   }
 
 	/**
@@ -169,15 +171,15 @@ class Pagination {
    * Show all page numbers as a link.
    *
    * @access public
-   * @param string $sUrl section to show.
+   * @param string $sController controller to show.
    * @return string HTML content if there are more than one pages
    *
    */
-  public function showPages($sUrl = '') {
+  public function showPages($sController = '') {
 		if($this->_iPages > 1) {
 			$this->_oSmarty->assign('page_current', $this->_iCurrentPage);
 			$this->_oSmarty->assign('page_last', $this->_iPages);
-			$this->_oSmarty->assign('_action_url_', !empty($sUrl) ? $sUrl : Helper::formatInput($this->_aRequest['section']));
+			$this->_oSmarty->assign('_action_url_', !empty($sController) ? $sController : Helper::formatInput($this->_aRequest['controller']));
 			$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
 
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
@@ -189,11 +191,11 @@ class Pagination {
    * Show surrounding pages.
    *
    * @access public
-   * @param string $sRssAction section to show for RSS
+   * @param string $sController controller to show for RSS
    * @return string HTML content if there are more than one pages
    *
    */
-  public function showSurrounding($sRssAction = 'blog') {
+  public function showSurrounding($sController = 'blog') {
 		if($this->_iPages > 1) {
 			$iNext = '';
 			$iPrevious = '';
@@ -212,7 +214,7 @@ class Pagination {
 			$this->_oSmarty->assign('_page_limit_', $this->_iLimit);
 			$this->_oSmarty->assign('_page_next_', $iNext);
 			$this->_oSmarty->assign('_page_previous_', $iPrevious);
-			$this->_oSmarty->assign('_rss_section_', $sRssAction);
+			$this->_oSmarty->assign('_rss_section_', $sController);
 
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
 			return $this->_oSmarty->fetch('surrounding.tpl');

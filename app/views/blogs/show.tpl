@@ -70,7 +70,7 @@
               {$b.comment_sum} {$lang.global.comments}
             </a>
           </div>
-          {if $_request_id_ && (!isset($smarty.get.action) || $smarty.get.action !== 'page')}
+          {if isset($_REQUEST.id)}
             <div class='span8'>
               <hr />
               <div id='socialshareprivacy'></div>

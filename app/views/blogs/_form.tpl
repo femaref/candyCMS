@@ -1,14 +1,14 @@
 {strip}
   <div class='page-header'>
     <h1>
-      {if $smarty.get.action == 'create'}
+      {if $_REQUEST.action == 'create'}
         {$lang.blog.title.create}
       {else}
         {$lang.blog.title.update|replace:'%p':$title}
       {/if}
     </h1>
   </div>
-  <form method='post' action='/blog/{$smarty.get.action}' class='form-horizontal'>
+  <form method='post' action='/blog/{$_REQUEST.action}' class='form-horizontal'>
     <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title' class='control-label'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
@@ -96,7 +96,7 @@
               id='input-published' {if $published == true}checked{/if} />
       </div>
     </div>
-    {if $smarty.get.action == 'update'}
+    {if $_REQUEST.action == 'update'}
       <div class='control-group'>
         <label for='input-update_date' class='control-label'>
           {$lang.blog.label.date}
@@ -120,15 +120,15 @@
       {if isset($author_id)}
         <input type='hidden' value='{$author_id}' name='author_id' />
       {/if}
-      <input type='hidden' value='formdata' name='{$smarty.get.action}_blog' />
-      {if $smarty.get.action == 'create'}
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_blog' />
+      {if $_REQUEST.action == 'create'}
       <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
-      {elseif $smarty.get.action == 'update'}
+      {elseif $_REQUEST.action == 'update'}
       <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
         <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}'
-               onclick="confirmDestroy('/blog/{$_request_id_}/destroy')" />
+               onclick="confirmDestroy('/blog/{$_REQUEST.id}/destroy')" />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
-        <input type='hidden' value='{$_request_id_}' name='id' />
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
         <input type='hidden' value='{$date}' name='date' />
       {/if}
     </div>

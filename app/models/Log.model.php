@@ -85,7 +85,7 @@ class Log extends Main {
    *
    * @static
    * @access public
-   * @param string $sSectionName name of section
+   * @param string $sControllerName name of controller
    * @param string $sActionName name of action (CRUD)
    * @param integer $iActionId ID of the row that is affected
    * @param integer $iUserId ID of the acting user
@@ -94,7 +94,7 @@ class Log extends Main {
    * @return boolean status of query
    *
    */
-  public static function insert($sSectionName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
+  public static function insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
@@ -104,21 +104,21 @@ class Log extends Main {
     try {
       $oQuery = parent::$_oDbStatic->prepare("INSERT INTO
                                                 " . SQL_PREFIX . "logs
-                                                ( section_name,
+                                                ( controller_name,
                                                   action_name,
                                                   action_id,
                                                   time_start,
                                                   time_end,
                                                   user_id)
                                               VALUES
-                                                ( :section_name,
+                                                ( :controller_name,
                                                   :action_name,
                                                   :action_id,
                                                   :time_start,
                                                   :time_end,
                                                   :user_id)");
 
-      $oQuery->bindParam('section_name', strtolower($sSectionName));
+      $oQuery->bindParam('controller_name', strtolower($sControllerName));
       $oQuery->bindParam('action_name', strtolower($sActionName));
       $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
       $oQuery->bindParam('time_start', $iTimeStart);

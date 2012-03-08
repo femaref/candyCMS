@@ -209,7 +209,7 @@ class Mail extends Main {
 								Helper::formatInput($this->_aRequest['email']));
 
       if ($bStatus == true) {
-        Log::insert($this->_aRequest['section'], 'create', (int) $this->_iId);
+        Log::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
 				return $this->_showSuccessMessage();
       }
 			else

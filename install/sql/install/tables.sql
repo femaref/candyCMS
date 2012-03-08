@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS `%SQL_PREFIX%logs`;
 
 CREATE TABLE `%SQL_PREFIX%logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `section_name` varchar(32) NOT NULL DEFAULT 'NOT NULL',
+  `controller_name` varchar(32) NOT NULL DEFAULT 'NOT NULL',
   `action_name` varchar(16) NOT NULL,
   `action_id` int(11) DEFAULT NULL,
   `time_start` int(11) DEFAULT NULL,

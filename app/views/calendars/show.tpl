@@ -13,17 +13,17 @@
   <div class='page-header'>
     <h1>
       {$lang.global.calendar}
-      {if isset($smarty.get.action) && $smarty.get.action == 'archive'}
+      {if isset($_REQUEST.action) && $_REQUEST.action == 'archive'}
         -
         {$lang.global.archive}
       {/if}
     </h1>
   </div>
   <p class='center'>
-    {if isset($smarty.get.page) && $smarty.get.page > 1}
-      <a href='{$smarty.get.page - 1}' rel='prev'>&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
-      <strong>{$smarty.get.page}</strong>
-      &nbsp;&nbsp;<a href='{$smarty.get.page + 1}' rel='next'>{$smarty.get.page + 1} &raquo;</a>
+    {if isset($_REQUEST.id)}
+      <a href='{$_REQUEST.id - 1}' rel='prev'>&laquo; {$_REQUEST.id - 1}</a>&nbsp;&nbsp;
+      <strong>{$_REQUEST.id}</strong>
+      &nbsp;&nbsp;<a href='{$_REQUEST.id + 1}' rel='next'>{$_REQUEST.id + 1} &raquo;</a>
     {/if}
   </p>
   {if !$calendar}
@@ -94,7 +94,7 @@
       </table>
     {/foreach}
   {/if}
-  {if !isset($smarty.get.action)}
+  {if !isset($_REQUEST.action)}
     <p class='center'>
       <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}" class='btn'>
         {$lang.global.archive}

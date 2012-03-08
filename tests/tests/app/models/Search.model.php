@@ -17,7 +17,7 @@ use \CandyCMS\Model\Search as Search;
 class TestOfSearchModel extends CandyUnitTest {
 
 	function setUp() {
-		$this->aRequest['section'] = 'search';
+		$this->aRequest['controller'] = 'search';
 		$this->oObject = new Search($this->aRequest, $this->aSession);
 	}
 

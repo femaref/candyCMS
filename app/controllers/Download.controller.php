@@ -137,10 +137,10 @@ class Download extends Main {
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFile('download') === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
-          Log::insert($this->_aRequest['section'],
+          Log::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											$this->_oModel->getLastInsertId('downloads'),
 											$this->_aSession['userdata']['id']);
@@ -171,9 +171,9 @@ class Download extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);
@@ -195,9 +195,9 @@ class Download extends Main {
    */
   protected function _destroy() {
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['section']);
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['section'],
+      Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['userdata']['id']);

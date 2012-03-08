@@ -6,11 +6,11 @@
       </a>
     </p>
   {/if}
-  {if isset($smarty.get.page) && $smarty.get.page > 1}
-    <p class="center">
-      <a href="{$smarty.get.page - 1}" rel="prev">&laquo; {$smarty.get.page - 1}</a>&nbsp;&nbsp;
-      <strong>{$smarty.get.page}</strong>
-      &nbsp;&nbsp;<a href="{$smarty.get.page + 1}" rel="next">{$smarty.get.page + 1} &raquo;</a>
+  {if isset($_REQUEST.id)}
+    <p>
+      <a href='{$_REQUEST.id - 1}' rel='prev'>&laquo; {$_REQUEST.id - 1}</a>&nbsp;&nbsp;
+      <strong>{$_REQUEST.id}</strong>
+      &nbsp;&nbsp;<a href='{$_REQUEST.id + 1}' rel='next'>{$_REQUEST.id + 1} &raquo;</a>
     </p>
   {/if}
   {if !$calendar}
@@ -45,7 +45,7 @@
       </ul>
     {/foreach}
   {/if}
-  {if !isset($smarty.get.action)}
+  {if !isset($_REQUEST.action)}
     <p class="center">
       <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}">{$lang.global.archive}</a>
     </p>

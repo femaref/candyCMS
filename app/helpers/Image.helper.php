@@ -77,7 +77,7 @@ class Image {
 	 *
 	 * @access public
 	 * @param string $sId name of the file WITHOUT file extension
-   * @param string $sFolder section to upload image into
+   * @param string $sFolder folder to upload image to. Normally the controller name.
    * @param string $sOriginalPath path of the image to clone from
    * @param string $sImgType type of image
 	 *
@@ -100,7 +100,7 @@ class Image {
    *
    * @access private
    * @param array $aParams width and height params
-   * @param string $sFolder section to upload image into
+   * @param string $sFolder folder to upload image to. Normally the controller name.
    * @return string $sPath path of the new image
    *
    */

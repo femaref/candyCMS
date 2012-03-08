@@ -2,7 +2,7 @@
   <div class='page-header'>
     <h1>{$lang.global.calendar}</h1>
   </div>
-  <form action='/calendar/{$smarty.get.action}' method='post' class='form-horizontal'>
+  <form action='/calendar/{$_REQUEST.action}' method='post' class='form-horizontal'>
     <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
@@ -56,14 +56,14 @@
       </div>
     </div>
     <div class='form-actions'>
-      <input class='btn btn-primary' type='submit' value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
-      {if $smarty.get.action == 'update'}
+      <input class='btn btn-primary' type='submit' value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
+      {if $_REQUEST.action == 'update'}
         <input class='btn btn-danger' type='button' value='{$lang.global.destroy.destroy}'
-              onclick="confirmDestroy('/calendar/{$_request_id_}/destroy')" />
+              onclick="confirmDestroy('/calendar/{$_REQUEST.id}/destroy')" />
         <input class='btn' type='reset' value='{$lang.global.reset}' />
-        <input type='hidden' value="{$_request_id_}" name='id' />
+        <input type='hidden' value="{$_REQUEST.id}" name='id' />
       {/if}
-      <input type='hidden' value='formdata' name='{$smarty.get.action}_calendar' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_calendar' />
     </div>
   </form>
   <script type='text/javascript'>

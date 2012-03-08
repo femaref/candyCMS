@@ -1,8 +1,8 @@
 {strip}
-  <form method='post' action='/gallery/{$smarty.get.action}' class='form-horizontal'>
+  <form method='post' action='/gallery/{$_REQUEST.action}' class='form-horizontal'>
     <div class='page-header'>
       <h1>
-        {if $smarty.get.action == 'create'}
+        {if $_REQUEST.action == 'create'}
           {$lang.gallery.albums.title.create}
         {else}
           {$lang.gallery.albums.title.update|replace:'%p':$title}
@@ -35,12 +35,12 @@
     </div>
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary'
-            value="{if $smarty.get.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
-      <input type='hidden' value='formdata' name='{$smarty.get.action}_gallery' />
-      {if $smarty.get.action == 'update'}
-        <input type='hidden' value='{$_request_id_}' name='id' />
+            value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_gallery' />
+      {if $_REQUEST.action == 'update'}
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
         <input type='button' value='{$lang.gallery.albums.title.destroy}' class='btn btn-danger'
-          onclick="confirmDestroy('/gallery/{$_request_id_}/destroy')" />
+          onclick="confirmDestroy('/gallery/{$_REQUEST.id}/destroy')" />
         <input type='reset' value='{$lang.global.reset}' class='btn' />
       {/if}
     </div>
