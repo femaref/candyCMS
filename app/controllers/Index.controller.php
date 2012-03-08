@@ -174,7 +174,7 @@ class Index {
     if (!defined('WEBSITE_LANDING_PAGE'))
       define('WEBSITE_LANDING_PAGE', Routes::route('/'));
 
-		$sURI					= Helper::removeSlash($_SERVER['REQUEST_URI']);
+		$sURI					= isset($_SERVER['REQUEST_URI']) ? Helper::removeSlash($_SERVER['REQUEST_URI']) : '';
 		$sRoutemap		= Routes::route(empty($sURI) ? '/' : $sURI);
 		$aRouteParts	= explode('&', $sRoutemap);
 

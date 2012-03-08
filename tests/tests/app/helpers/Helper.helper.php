@@ -69,7 +69,7 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testGetPluginTemplateDir() {
-    $this->assertPattern('/plugins\/views/i', Helper::getPluginTemplateDir('headlines', 'show'));
+    $this->assertPattern('/Headlines/i', Helper::getPluginTemplateDir('headlines', 'show'));
   }
 
   function testFormatInput() {

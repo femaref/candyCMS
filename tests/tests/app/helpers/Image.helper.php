@@ -31,7 +31,7 @@ class UnitTestOfImageHelper extends CandyUnitTest {
 
   function testResizeDefault() {
     $this->assertIsA($this->oObject->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y, 'media'), 'string');
-    $aInfo = getimagesize($this->sImagePath);
+    $aInfo = @getimagesize($this->sImagePath);
 
     $this->assertIsA($aInfo, 'array');
     $this->assertEqual($aInfo[0], THUMB_DEFAULT_X);
@@ -41,7 +41,7 @@ class UnitTestOfImageHelper extends CandyUnitTest {
 
   function testResizeAndCut() {
     $this->assertIsA($this->oObject->resizeAndCut(THUMB_DEFAULT_X, 'media'), 'string');
-    $aInfo = getimagesize($this->sImagePath);
+    $aInfo = @getimagesize($this->sImagePath);
 
     $this->assertIsA($aInfo, 'array');
     $this->assertEqual($aInfo[0], THUMB_DEFAULT_X);

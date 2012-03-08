@@ -1,7 +1,15 @@
 # Define the landing page
 "/": blog
 
+# Shared behaviour
+"(:alpha).xml": controller=$1&action=xml&ajax=1
+"(:alpha)/page/(:num)": controller=$1&page=$2
+"(:alpha)/(create|update|destroy)": controller=$1&action=$2
+"(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
+"(:alpha)/(:num)/highlight/(:any)": controller=$1&id=$2&highlight=$3
+
 # Special behaviour
+"blog/(:num)": controller=blog&id=$1
 "blog/(:any)": controller=blog&search=$1
 "calendar/(:num)": controller=calendar&id=$1&ajax=1
 "calendar/(:num)/archive": controller=calendar&action=archive&id=$1
@@ -13,11 +21,6 @@
 "search/(:any)": controller=search&search=$1
 "user/(:num)/verification": controller=user&action=verification&code=$1
 
-# Shared behaviour
-"(:alpha).xml": controller=$1&action=xml&ajax=1
-"(:alpha)/page/(:num)": controller=$1&page=$2
-"(:alpha)/(create|update|destroy)": controller=$1&action=$2
-"(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
-"(:alpha)/(:num)/highlight/(:any)": controller=$1&id=$2&highlight=$3
+# Magic rule
 "(:alpha)/(:num)": controller=$1&id=$2
 "(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3
