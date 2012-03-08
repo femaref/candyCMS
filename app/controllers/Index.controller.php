@@ -149,10 +149,12 @@ class Index {
 
     foreach ($aPlugins as $sPluginName) {
       try {
-        if (!file_exists(PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php'))
+        if (!file_exists(PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
+                        (string) ucfirst($sPluginName) . '.controller.php'))
           throw new AdvancedException('Missing plugin: ' . ucfirst($sConfig));
         else
-          require_once PATH_STANDARD . '/plugins/controllers/' . (string) ucfirst($sPluginName) . '.controller.php';
+          require_once PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
+                  (string) ucfirst($sPluginName) . '.controller.php';
       }
       catch (AdvancedException $e) {
         die($e->getMessage());

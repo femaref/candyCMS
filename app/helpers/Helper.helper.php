@@ -262,11 +262,11 @@ class Helper {
 
 			# Standard views
 			else {
-				if (!file_exists(PATH_STANDARD . '/plugins/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				if (!file_exists(PATH_STANDARD . '/plugins/' . ucfirst($sFolder) . '/views/' . $sFile . '.tpl'))
 					throw new AdvancedException('This template does not exist.');
 
 				else
-					return PATH_STANDARD . '/plugins/views/' . $sFolder;
+					return PATH_STANDARD . '/plugins/' . ucfirst($sFolder) . '/views';
 			}
 		}
 		catch (Exception $e) {

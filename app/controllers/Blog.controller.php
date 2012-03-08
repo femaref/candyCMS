@@ -60,9 +60,9 @@ class Blog extends Main {
 
       # Load comments
       if (!empty($this->_iId)) {
-        if(file_exists(PATH_STANDARD . '/addons/controller/Comment.controller.php')) {
-          require_once PATH_STANDARD . '/addons/controller/Comment.controller.php';
-          $oComments = new Addon_Comment($this->_aRequest, $this->_aSession);
+        if(file_exists(PATH_STANDARD . '/addons/controllers/Comment.controller.php')) {
+          require_once PATH_STANDARD . '/addons/controllers/Comment.controller.php';
+          $oComments = new \CandyCMS\Addon\Controller\Addon_Comment($this->_aRequest, $this->_aSession);
         }
         else {
           $this->__autoload('Comment');

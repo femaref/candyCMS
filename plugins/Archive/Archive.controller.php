@@ -18,7 +18,7 @@ require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 final class Archive extends \CandyCMS\Controller\Blog {
 
   public final function show() {
-    $sTemplateDir		= Helper::getPluginTemplateDir('archives', 'show');
+    $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
