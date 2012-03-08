@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Content.controller.php';
 
-use \CandyCMS\Controller\Blog as Blog;
+use \CandyCMS\Controller\Content as Content;
 use \CandyCMS\Helper\I18n as I18n;
 
-class WebTestOfBlogController extends CandyWebTest {
+class WebTestOfContentController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'blog';
-		$this->oObject = new Blog($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'content';
+		$this->oObject = new Content($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
@@ -30,7 +30,7 @@ class WebTestOfBlogController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText('b3cf6b2dd0');
+		$this->assertText('18855f87f2');
 	}
 
 	function testShowEntryWithShortId() {
@@ -39,7 +39,7 @@ class WebTestOfBlogController extends CandyWebTest {
 	}
 
 	function testShowEntryWithLongId() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/b3cf6b2dd0'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/18855f87f2'));
 		$this->assertResponse(200);
 	}
 
@@ -48,30 +48,6 @@ class WebTestOfBlogController extends CandyWebTest {
 		$this->assertResponse(200);
     $this->assertText(I18n::get('error.404.title'));
 	}
-
-  function testShowPageTwo() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/page/2'));
-		$this->assertResponse(200);
-    $this->assertText('c11be3b344');
-  }
-
-  function testShowEntryWithDifferentLanguage() {
-    # Entry is not listed...
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/page/3'));
-		$this->assertResponse(200);
-    $this->assertText(I18n::get('error.404.title'));
-
-    # ...but we can access it directly.
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/4'));
-		$this->assertResponse(200);
-    $this->assertText('1d2275e170');
-  }
-
-  function testShowTags() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/tag1'));
-		$this->assertResponse(200);
-    $this->assertText('tag1');
-  }
 
 	function testCreate() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));

@@ -165,7 +165,11 @@ class Index {
   }
 
   /**
-   * @todo
+   * Read the routes from Routes.yml and set request params.
+	 *
+	 * @access public
+	 * @see config/Routes.yml
+	 *
    */
 	public function getRoutes() {
     require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
@@ -194,6 +198,8 @@ class Index {
       echo file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']);
       exit;
     }
+
+		return $this->_aRequest;
 		#print_R($this->_aRequest);
 	}
 

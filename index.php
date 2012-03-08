@@ -41,16 +41,20 @@ define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['templat
 
 # Do we have a mobile device?
 # *********************************************
-$bMobile    = preg_match('/Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/Symb/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/Windows CE/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/IEMobile/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/iPhone/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/iPod/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/Blackberry/i', $_SERVER['HTTP_USER_AGENT']) ||
-              preg_match('/Android/i', $_SERVER['HTTP_USER_AGENT']) ?
-              true :
-              false;
+if(isset($_SERVER['HTTP_USER_AGENT'])) {
+	$bMobile    = preg_match('/Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/Symb/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/Windows CE/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/IEMobile/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/iPhone/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/iPod/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/Blackberry/i', $_SERVER['HTTP_USER_AGENT']) ||
+								preg_match('/Android/i', $_SERVER['HTTP_USER_AGENT']) ?
+								true :
+								false;
+}
+else
+	$bMobile = false;
 
 # Allow mobile access
 if(!isset($_REQUEST['mobile']))

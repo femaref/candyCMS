@@ -18,6 +18,7 @@
 "gallery/(:num)/image/(:num)": controller=gallery&action=image&album_id=$1&id=$2
 "language/(:alpha)": language=$1
 "media/(:any)/destroy": controller=media&action=destroy&file=$1
+"rss/(:alpha)": controller=rss&section=$1
 "search/(:any)": controller=search&search=$1
 "user/(:num)/verification": controller=user&action=verification&code=$1
 

@@ -37,6 +37,10 @@ class UnitTestOfIndexController extends CandyUnitTest {
 		$this->assertTrue($this->oObject->getPlugins(ALLOW_PLUGINS));
 	}
 
+	function testGetRoutes() {
+		$this->assertIsA($this->oObject->getRoutes(), 'array');
+	}
+
 	function testGetLanguage() {
     $this->assertEqual($this->oObject->getLanguage(), WEBSITE_LOCALE);
 	}
