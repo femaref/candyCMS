@@ -194,7 +194,7 @@ class Index {
       echo file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']);
       exit;
     }
-		print_R($this->_aRequest);
+		#print_R($this->_aRequest);
 	}
 
   /**

@@ -164,13 +164,11 @@
             {/if}
           </div>
         </div>
+
         <!--
         <footer id="footer" class="row">
           <section id="about" class="span8">
             <ul>
-              <li>
-                <a href='/Disclaimer'>{$lang.global.disclaimer}</a>
-              </li>
               <li>
                 <a href='/sitemap'>{$lang.global.sitemap}</a>
               </li>

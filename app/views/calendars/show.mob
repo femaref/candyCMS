@@ -7,10 +7,16 @@
     </p>
   {/if}
   {if isset($_REQUEST.id)}
-    <p>
-      <a href='{$_REQUEST.id - 1}' rel='prev'>&laquo; {$_REQUEST.id - 1}</a>&nbsp;&nbsp;
+    <p class='center'>
+      <a href='/calendar/{$_REQUEST.id - 1}/archive' rel='prev'>
+        &laquo; {$_REQUEST.id - 1}
+      </a>
+      &nbsp;&nbsp;
       <strong>{$_REQUEST.id}</strong>
-      &nbsp;&nbsp;<a href='{$_REQUEST.id + 1}' rel='next'>{$_REQUEST.id + 1} &raquo;</a>
+      &nbsp;&nbsp;
+      <a href='/calendar/{$_REQUEST.id + 1}/archive' rel='next'>
+        {$_REQUEST.id + 1} &raquo;
+      </a>
     </p>
   {/if}
   {if !$calendar}

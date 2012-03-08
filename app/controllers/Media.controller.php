@@ -156,7 +156,7 @@ class Media extends Main {
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else {
-			$sPath = Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['id']);
+			$sPath = Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['file']);
 
 			if (is_file($sPath)) {
 				unlink($sPath);

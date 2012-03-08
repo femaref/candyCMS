@@ -19,13 +19,19 @@
       {/if}
     </h1>
   </div>
-  <p class='center'>
-    {if isset($_REQUEST.id)}
-      <a href='{$_REQUEST.id - 1}' rel='prev'>&laquo; {$_REQUEST.id - 1}</a>&nbsp;&nbsp;
+  {if isset($_REQUEST.id)}
+    <p class='center'>
+      <a href='/calendar/{$_REQUEST.id - 1}/archive' rel='prev'>
+        &laquo; {$_REQUEST.id - 1}
+      </a>
+      &nbsp;&nbsp;
       <strong>{$_REQUEST.id}</strong>
-      &nbsp;&nbsp;<a href='{$_REQUEST.id + 1}' rel='next'>{$_REQUEST.id + 1} &raquo;</a>
-    {/if}
-  </p>
+      &nbsp;&nbsp;
+      <a href='/calendar/{$_REQUEST.id + 1}/archive' rel='next'>
+        {$_REQUEST.id + 1} &raquo;
+      </a>
+    </p>
+  {/if}
   {if !$calendar}
     <div class='alert alert-warning'>
       <h4>{$lang.error.missing.entries}</h4>

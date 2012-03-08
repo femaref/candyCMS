@@ -20,30 +20,29 @@
   {else}
     {foreach $albums as $a}
       <article class='gallery_albums'>
-        {* Show gallery albums with uploaded images *}
+        <header>
+          <h2>
+            <a href='{$a.url}'>{$a.title}</a>
+            {if $USER_ROLE >= 3}
+              <a href='/gallery/{$a.id}/createfile'>
+                <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                    class='icon-create js-tooltip'
+                    alt='{$lang.gallery.files.title.create}'
+                    title='{$lang.gallery.files.title.create}'
+                    width='16' height='16' />
+              </a>
+              <a href='/gallery/{$a.id}/update'>
+                <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                    class='icon-update js-tooltip'
+                    alt='{$lang.global.update.update}'
+                    title='{$lang.global.update.update}'
+                    width='16' height='16' />
+              </a>
+            {/if}
+          </h2>
+          <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
+        </header>
         {if $a.files_sum > 0}
-          <header>
-            <h2>
-              <a href='{$a.url}'>{$a.title}</a>
-              {if $USER_ROLE >= 3}
-                <a href='/gallery/{$a.id}/createfile'>
-                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
-                      class='icon-create js-tooltip'
-                      alt='{$lang.gallery.files.title.create}'
-                      title='{$lang.gallery.files.title.create}'
-                      width='16' height='16' />
-                </a>
-                <a href='/gallery/{$a.id}/update'>
-                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
-                      class='icon-update js-tooltip'
-                      alt='{$lang.global.update.update}'
-                      title='{$lang.global.update.update}'
-                      width='16' height='16' />
-                </a>
-              {/if}
-            </h2>
-            <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
-          </header>
           <ul class='thumbnails'>
             {foreach $a.files as $f}
               <li>
@@ -55,30 +54,9 @@
               </li>
             {/foreach}
           </ul>
-        {* Show gallery albums without uploaded images *}
         {else}
-          <header>
-            <h2>
-              <a href='{$a.url}'>{$a.title}</a>
-              <a href='/gallery/{$a.id}/createfile'>
-                <img src='%PATH_IMAGES%/candy.global/spacer.png'
-                    class='icon-create js-tooltip'
-                    alt='{$lang.gallery.files.title.create}'
-                    title='{$lang.gallery.files.title.create}'
-                    width='16' height='16' />
-              </a>
-              <a href='/gallery/{$a.id}/update'>
-                <img src='%PATH_IMAGES%/candy.global/spacer.png'
-                    class='icon-update js-tooltip'
-                    alt='{$lang.gallery.albums.title.update}'
-                    title='{$lang.gallery.albums.title.update}'
-                    width='16' height='16' />
-              </a>
-            </h2>
-            <p>{$a.datetime} - {$a.files_sum} {$lang.global.files}</p>
-          </header>
           <div class='alert alert-warning'>
-            <h4>
+            <h4 class='alert-heading'>
               {$lang.error.missing.files}
             </h4>
           </div>

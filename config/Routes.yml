@@ -1,16 +1,23 @@
+# Define the landing page
 "/": blog
 
+# Special behaviour
+"blog/(:any)": controller=blog&search=$1
+"calendar/(:num)": controller=calendar&id=$1&ajax=1
+"calendar/(:num)/archive": controller=calendar&action=archive&id=$1
+"gallery": controller=gallery&page=1
+"gallery/(:num)/(createfile|updatefile|destroyfile)": controller=gallery&action=$2&id=$1
+"gallery/(:num)/image/(:num)": controller=gallery&action=image&album_id=$1&id=$2
+"language/(:alpha)": language=$1
+"media/(:any)/destroy": controller=media&action=destroy&file=$1
+"search/(:any)": controller=search&search=$1
+"user/(:num)/verification": controller=user&action=verification&code=$1
+
+# Shared behaviour
 "(:alpha).xml": controller=$1&action=xml&ajax=1
 "(:alpha)/page/(:num)": controller=$1&page=$2
 "(:alpha)/(create|update|destroy)": controller=$1&action=$2
 "(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
 "(:alpha)/(:num)/highlight/(:any)": controller=$1&id=$2&highlight=$3
-
-"blog/(:num)": controller=$1&id=$2
-"blog/(:num)/(:any)": controller=blog&id=$1&seo_title=$2
-"blog/(:any)": controller=blog&search=$1
-
-"calendar/archive/(:num)": controller=calendar&action=archive&id=$1
-"calendar/(:num)": controller=calendar&id=$1&ajax=1
-
-"language/(:alpha)": language=$1
+"(:alpha)/(:num)": controller=$1&id=$2
+"(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3
