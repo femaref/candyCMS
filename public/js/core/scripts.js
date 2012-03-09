@@ -14,9 +14,13 @@ function hide(sDivId, iDelay) {
 /* ToggleOpacity */
 function toggleOpacity(t, target) {
   if(t.is(':checked'))
-    target.stop(true,true).animate({opacity:1});
+    target.stop(true,true).animate({
+      opacity:1
+    });
   else
-    target.stop(true,true).animate({opacity:0.25});
+    target.stop(true,true).animate({
+      opacity:0.25
+    });
 }
 
 /* Quote comment */

@@ -289,7 +289,7 @@ gallery:
     title:
       create: Create album
       destroy: Destroy album
-      update: Update: '%p'
+      update: "Update: '%p'"
   files:
     label:
       choose: Choose file(s)
@@ -335,9 +335,9 @@ search:
     terms: Terms
   title:
     create: Search
-    show: Search results for "%s"
+    show: "Search results for '%s'"
   info:
-    fail: There are no results for the term: "<strong>%b</strong>".<br /> <a href="/search" title="Search">Search again.</a>
+    fail: "There are no results for the term: '<strong>%b</strong>'.<br /><a href='/search'>Search again.</a>"
 
 session:
   password:
@@ -360,7 +360,7 @@ user:
   contact_via_email: "Click to send %u an Email!"
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
-    gravatar: If checked, we will automatically search <a href="http://gravatar.com" target="_blank">Gravatar.com</a> for an avatar of you.
+    gravatar:  "If you don't want to <a href='/user/update#user-image'>upload a profile image</a>, you can use <a href='http://gravatar.com' target='_blank'>Gravatar.com</a> instead. The displayed image is shown above."
     image: You are only allowed to upload images less than 400KB.
     terms: Terms... TODO
   label:

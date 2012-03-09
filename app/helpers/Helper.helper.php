@@ -160,7 +160,7 @@ class Helper {
   }
 
   /**
-   * add the avatar_* entries to $aData
+   * Add the avatar_* entries to $aData
    *
    * @static
    * @access public
@@ -171,9 +171,10 @@ class Helper {
    * @return array array with all avatarURLs added
    *
    */
-  public static function addAvatarURLs(&$aData, $iUserId, $sEmail = '', $bUseGravatar = false) {
+  public static function createAvatarURLs(&$aData, $iUserId, $sEmail = '', $bUseGravatar = false) {
     if (!is_array($aData))
       $aData = array();
+
     $aData['avatar_32']     = Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
     $aData['avatar_64']     = Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
     $aData['avatar_100']    = Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);

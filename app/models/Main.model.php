@@ -239,7 +239,7 @@ abstract class Main {
       $sEmail       = isset($aRow['email']) ? $aRow['email'] : '';
       $bUseGravatar = isset($aRow['use_gravatar']) ? (bool) $aRow['use_gravatar'] : false;
 
-      Helper::addAvatarURLs($aData, $iUserId, $sEmail, $bUseGravatar);
+      Helper::createAvatarURLs($aData, $iUserId, $sEmail, $bUseGravatar);
     }
 
     # Build full user name

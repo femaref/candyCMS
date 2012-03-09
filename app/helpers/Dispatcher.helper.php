@@ -111,7 +111,6 @@ class Dispatcher {
 
       default:
       case 'show':
-
         $this->oController->setContent($this->oController->show());
         $this->oController->setDescription($this->oController->getDescription());
         $this->oController->setKeywords($this->oController->getKeywords());

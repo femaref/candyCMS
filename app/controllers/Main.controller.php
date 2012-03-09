@@ -218,11 +218,14 @@ abstract class Main {
       }
     }
     else {
-      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php'))
+      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php')) {
+        require_once PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php';
         return '\CandyCMS\Addon\Controller\Addon_' . $sClass;
-
-      else
+      }
+      else {
+        require_once PATH_STANDARD . '/app/controllers/' . $sClass . '.controller.php';
         return '\CandyCMS\Controller\\' . $sClass;
+      }
     }
   }
 
