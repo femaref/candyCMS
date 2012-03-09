@@ -12,8 +12,6 @@
 
 namespace CandyCMS\Helper;
 
-use CandyCMS\Addon\Controller\Addon as Addon;
-
 class Dispatcher {
 
 	/**
@@ -45,38 +43,40 @@ class Dispatcher {
    *
    * @access public
    * @return object $this->oController controller
+   * @see app/controllers/Main.controller.php -> __autoload()
    *
    */
   public function getController() {
     $sController = (string) ucfirst(strtolower($this->_aRequest['controller']));
 
-		try {
-			# Are addons for existing controllers available? If yes, use them.
-			if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php') &&
-							(ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
-				require_once PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php';
+    try {
+      # Are addons for existing controllers available? If yes, use them.
+      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php') &&
+              (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
+        require_once PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php';
 
-				$sClassName = '\CandyCMS\Addon\Controller\Addon_' . $sController;
-				$this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
-			}
+        $sClassName = '\CandyCMS\Addon\Controller\Addon_' . $sController;
+        $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+      }
 
-			# There are no addons, so we use the default controllers
-			elseif (file_exists(PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php')) {
-				require_once PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php';
+      # There are no addons, so we use the default controllers
+      elseif (file_exists(PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php')) {
+        require_once PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php';
 
-				$sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['controller']);
-				$this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
-			}
+        $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['controller']);
+        $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+      }
 
-			# Some files are missing. Quit work!
-			else
-				throw new AdvancedException('Controller not found:' . PATH_STANDARD .
-								'/app/controllers/' . $sController . '.controller.php');
-		}
-		catch(AdvancedException $e) {
-			AdvancedException::reportBoth($e->getMessage());
-			exit('Controller not found.');
-		}
+      # Some files are missing. Quit work!
+      else
+        throw new AdvancedException('Controller not found:' . PATH_STANDARD .
+                '/app/controllers/' . $sController . '.controller.php');
+    }
+    catch (AdvancedException $e) {
+      AdvancedException::reportBoth($e->getMessage());
+      Helper::redirectTo('/error/404');
+      exit('Controller not found.');
+    }
     $this->oController->__init();
     return $this->oController;
   }

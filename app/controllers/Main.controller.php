@@ -13,6 +13,7 @@
 
 namespace CandyCMS\Controller;
 
+use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Session as Session;
@@ -205,25 +206,23 @@ abstract class Main {
    */
   public static function __autoload($sClass, $bModel = false) {
     $sClass = (string) ucfirst(strtolower($sClass));
+
     if ($bModel === true) {
       if (file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
         require_once PATH_STANDARD . '/addons/models/' . $sClass . '.model.php';
         return '\CandyCMS\Addon\Model\Addon_' . $sClass;
       }
-      else {
+      elseif (file_exists(PATH_STANDARD . '/app/models/' . $sClass . '.model.php')) {
         require_once PATH_STANDARD . '/app/models/' . $sClass . '.model.php';
         return '\CandyCMS\Model\\' . $sClass;
       }
     }
     else {
-      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php')) {
-        require_once PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php';
+      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php'))
         return '\CandyCMS\Addon\Controller\Addon_' . $sClass;
-      }
-      else {
-        require_once PATH_STANDARD . '/app/controllers/' . $sClass . '.controller.php';
+
+      else
         return '\CandyCMS\Controller\\' . $sClass;
-      }
     }
   }
 
@@ -235,7 +234,9 @@ abstract class Main {
 	 */
   public function __init() {
     $oModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+
+    if (!empty($oModel))
+      $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
   }
 
 	/**

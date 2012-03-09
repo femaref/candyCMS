@@ -372,7 +372,6 @@ user:
     gravatar: Use Gravatar?
     image:
       choose: Choose Image
-      create: Change Image
       terms: I am allowed to upload this image and will not conflict with others copyright.
       update: Change Image?
     last_login: Last login
