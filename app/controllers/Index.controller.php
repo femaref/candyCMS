@@ -172,8 +172,13 @@ class Index {
 	 *
    */
 	public function getRoutes() {
-    require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
-		Routes::add(sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml')));
+		# Cache routes for performance reasons
+		if(!isset($_SESSION['routes'])) {
+			require PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
+			$_SESSION['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
+		}
+
+		Routes::add($_SESSION['routes']);
 
     if (!defined('WEBSITE_LANDING_PAGE'))
       define('WEBSITE_LANDING_PAGE', Routes::route('/'));
@@ -551,7 +556,6 @@ class Index {
     }
 
 		header('Content-Type: text/html; charset=utf-8');
-
     return $sCachedHTML;
 	}
 
