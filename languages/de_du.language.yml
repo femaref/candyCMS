@@ -372,7 +372,6 @@ user:
     gravatar: Gravatar verwenden?
     image:
       choose: Bild auswählen
-      create: Bild hochladen
       terms: Ich darf das Bild hochladen und verletze keine Rechte Dritter.
       update: Userbild ändern?
     last_login: Letzter Login

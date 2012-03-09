@@ -79,7 +79,7 @@ class Upload {
 	 */
   public function __construct($aRequest, $aSession, $aFile, $sRename = '') {
     $this->_aRequest  = & $aRequest;
-    $this->_aSession	= empty($aSession) ? die('NO SESSION ARRAY FOR HELPERS.') : $aSession;
+    $this->_aSession	= & $aSession;
     $this->_aFile     = & $aFile;
     $this->_sRename   = & $sRename;
 
@@ -183,13 +183,13 @@ class Upload {
       $oImage->resizeAndCut('64');
       $oImage->resizeAndCut('32');
 
-			return $bReturnPath == true ? $this->_sFilePath . '.' . $this->_sFileExtension : $bReturn;
+			return $bReturnPath === true ? $this->_sFilePath . '.' . $this->_sFileExtension : $bReturn;
     }
   }
 
 	/**
 	 * Delete user avatars.
-   * 
+   *
 	 * @access private
 	 *
 	 */

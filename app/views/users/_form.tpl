@@ -4,19 +4,19 @@
   </div>
   <div class='tabbable'>
     <ul class='nav nav-tabs'>
-      <li class='active'>
+      <li{if $_REQUEST['action'] == 'update'} class='active'{/if}>
         <a href='#user-personal' data-toggle='tab'>{$lang.user.title.personal_data}</a>
       </li>
       {if $USER_ID == $uid}
-        <li>
+        <li{if $_REQUEST['action'] == 'password'} class='active'{/if}>
           <a href='#user-password' data-toggle='tab'>{$lang.user.title.password}</a>
         </li>
       {/if}
-      <li>
+      <li{if $_REQUEST['action'] == 'avatar'} class='active'{/if}>
         <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
       </li>
       {if $USER_ROLE < 4}
-        <li>
+        <li{if $_REQUEST['action'] == 'destroy'} class='active'{/if}>
           <a href='#user-destroy' data-toggle='tab'>{$lang.user.title.account}</a>
         </li>
       {/if}
@@ -24,7 +24,7 @@
   </div>
   <div class='tab-content'>
     {* Account data *}
-    <div class='tab-pane active' id='user-personal'>
+    <div class="tab-pane{if $_REQUEST['action'] == 'update'} active{/if}" id='user-personal'>
       <form method='post' action='/user/{$uid}/update' class='form-horizontal'>
         <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
           <label for='input-name' class='control-label'>
@@ -124,7 +124,7 @@
 
   {* Password *}
   {if $USER_ID == $uid}
-    <div class='tab-pane' id='user-password'>
+    <div class="tab-pane{if $_REQUEST['action'] == 'password'} active{/if}" id='user-password'>
       <form method='post' action='/user/{$uid}/password' class='form-horizontal'>
         <div class='control-group{if isset($error.password_old)} alert alert-error{/if}'>
           <label for='input-password_old' class='control-label'>
@@ -164,7 +164,7 @@
   {/if}
 
   {* Avatar *}
-    <div class='tab-pane' id='user-image'>
+    <div class="tab-pane{if $_REQUEST['action'] == 'avatar'} active{/if}" id='user-image'>
       <form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'
             class='form-horizontal'>
         <div class='control-group{if isset($error.image)} alert alert-error{/if}'>
@@ -198,7 +198,7 @@
           </div>
         </div>
         <div class='form-actions'>
-          <input type='submit' class='btn btn-primary' value='{$lang.user.label.image.create}' />
+          <input type='submit' class='btn btn-primary' value='{$lang.user.title.image}' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value='formdata' name='create_avatar' />
           <input type='hidden' name='MAX_FILE_SIZE' value='409600' />
@@ -208,7 +208,7 @@
 
   {* Destroy account *}
   {if $USER_ROLE < 4}
-    <div class='tab-pane' id='user-destroy'>
+    <div class="tab-pane{if $_REQUEST['action'] == 'destroy'} active{/if}" id='user-destroy'>
       <form method='post' action='/user/{$uid}/destroy' class='form-horizontal'>
         <p class='alert alert-danger'>
           {$lang.user.info.destroy_account}
