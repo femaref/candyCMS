@@ -22,7 +22,7 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
 				'content'   => 'Content',
 				'category'  => 'Category',
 				'downloads' => 0,
-				'section'   => 'download');
+				'controller'=> 'download');
 
 		$this->oObject = new Download($this->aRequest, $this->aSession);
 	}
@@ -39,7 +39,7 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
   }
 
   function testGetData() {
-    $this->assertIsA($this->oObject->getData(0), 'array');
+    $this->assertIsA($this->oObject->getData(1), 'array');
     $this->assertIsA($this->oObject->getData(), 'array');
   }
 

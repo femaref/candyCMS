@@ -7,60 +7,53 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
-require_once('lib/simpletest/autorun.php');
-require_once('app/models/Blog.model.php');
+
+require_once PATH_STANDARD . '/app/models/Blog.model.php';
 
 use \CandyCMS\Model\Blog as Blog;
 
-class TestOfBlogModel extends UnitTestCase {
+class UnitTestOfBlogModel extends CandyUnitTest {
 
-  public $oBlog;
-  public $iLastInsertId;
-
-  function testConstructor() {
-
-    $aRequest = array(
+  function setUp() {
+    $this->aRequest = array(
         'title'       => 'Title',
         'tags'        => 'Tags',
         'teaser'      => 'Teaser',
         'content'     => 'Blog',
+        'date'        => '0',
         'keywords'    => 'Keywords',
         'published'   => 0,
         'author_id'   => 0,
-        'section'     => 'blog');
+        'controller'  => 'blog',
+        'language'    => 'en');
 
-    $aSession['userdata'] = array(
-        'email'       => '',
-        'facebook_id' => '',
-        'id'          => 0,
-        'name'        => '',
-        'surname'     => '',
-        'password'    => '',
-        'role'        => 0,
-        'full_name'   => ''
-    );
 
-    $this->oBlog = new Blog($aRequest, $aSession);
+    $this->oObject = new Blog($this->aRequest, $this->aSession);
   }
 
+	function tearDown() {
+		parent::tearDown();
+	}
+
   function testCreate() {
-    $this->assertTrue($this->oBlog->create());
+    $this->assertTrue($this->oObject->create());
 
     $this->iLastInsertId = (int) Blog::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetData() {
-    $this->assertIsA($this->oBlog->getData(0), 'array');
-    $this->assertIsA($this->oBlog->getData(), 'array');
+    $this->assertIsA($this->oObject->getData(1), 'array');
+    $this->assertIsA($this->oObject->getData(), 'array');
   }
 
   function testUpdate() {
-    $this->assertTrue($this->oBlog->update($this->iLastInsertId));
+    $this->assertTrue($this->oObject->update($this->iLastInsertId));
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oBlog->destroy($this->iLastInsertId));
+    $this->assertTrue($this->oObject->destroy($this->iLastInsertId));
   }
 }
