@@ -25,7 +25,7 @@ class I18n {
    *
    */
   public function __construct($sLanguage) {
-    if (!isset($_SESSION['lang']) || WEBSITE_MODE == 'development') {
+    if (!isset($_SESSION['lang']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
       $sLanguageFile = PATH_STANDARD . '/languages/' . $sLanguage . '.language.yml';
 

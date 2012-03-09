@@ -10,6 +10,7 @@
  *
  */
 
+require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/app/controllers/Search.controller.php';
 
 use \CandyCMS\Controller\Search as Search;
@@ -30,7 +31,9 @@ class WebTestOfSearchController extends CandyWebTest {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText(I18n::get('global.search'));
+	}
 
+	function testSearch() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'search' => md5(RANDOM_HASH)
 		));

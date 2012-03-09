@@ -42,7 +42,7 @@ class Newsletter extends Main {
 			return $this->_showCreateSubscriptionTemplate();
 
 		else
-			return $this->_subscribeToNewsletter($this->_aRequest, true) == true ?
+			return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
 							Helper::successMessage(I18n::get('success.newsletter.create'), '/') :
 							Helper::errorMessage(I18n::get('error.standard'), '/newsletter');
 	}

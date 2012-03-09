@@ -322,7 +322,7 @@ media:
 
 newsletter:
   info:
-    subscribe: Please enter your Email to subscribe to our newsletter.
+    subscribe: Please enter your information to subscribe to our newsletter. You can unsubscribe to this newsletter at the end of each mail.
   title:
     subscribe: Subscribe to newsletter
 

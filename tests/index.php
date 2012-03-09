@@ -37,16 +37,16 @@ class AllFileTests extends TestSuite {
 		$this->TestSuite('All tests');
 
     # Helpers
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
+    /*$this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');*/
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
 
     # Blog
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
+    /*$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blog.controller.php');
 
     # Comment
@@ -64,7 +64,7 @@ class AllFileTests extends TestSuite {
 
 		# Gallery
     $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Gallery.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');*/
 
     # Log
 
@@ -73,6 +73,7 @@ class AllFileTests extends TestSuite {
     # Media
 
     # Newsletter
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletter.controller.php');
 
     # RSS
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
