@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\User as Model;
 use Smarty;
 
 require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
@@ -189,8 +188,9 @@ class Mail extends Main {
 
     else {
       # Select user name and surname
-      require_once 'app/models/User.model.php';
-      $aRow = $this->_oModel->getUserNamesAndEmail($this->_iId);
+      $oClass = $this->__autoload('User', true);
+      $oModel = new $oClass($this->_aRequest, $this->_aSession);
+      $aRow = $oModel->getUserNamesAndEmail($this->_iId);
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :

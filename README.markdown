@@ -19,7 +19,7 @@ Its main functions are:
 - a full log system
 
 
-Additional reasons, why CandyCMS might be interessting for you
+Additional reasons, why CandyCMS might be interesting for you
 ------------------------------------------------------------------------------------------------------------------------
 - easy internationalization and localization via YAML
 - WYSIWYG-Editor ([TinyMCE](http://tinymce.moxiecode.com/)) and support of [BB-Code](https://github.com/marcoraddatz/candyCMS/wiki/BBCode)
@@ -50,8 +50,8 @@ Setup
 Configure your website settings at "config/Candy.inc.php, upload all files and execute the "/install/index.php" file.
 Follow the instructions and make sure, you delete the install dir after installation.
 
-To upgrade CandyCMS, upload the install folder, run "/install/index.php" and click on "mgrate". Make sure you override
-the existing "app", "lib" and "plugin" folders before. Please also take a look on release notes.
+To upgrade CandyCMS, upload the install folder, run "/install/index.php" and click on "migrate". Make sure you override
+the existing "app", "lib" and "plugin" folders before. Please also take a look at the release notes.
 
 
 Credits

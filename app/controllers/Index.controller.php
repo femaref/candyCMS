@@ -12,7 +12,6 @@
 
 namespace CandyCMS\Controller;
 
-use CandyCMS\Addon\Controller\Addon as Addon;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Dispatcher as Dispatcher;
 use CandyCMS\Helper\Helper as Helper;
@@ -291,7 +290,7 @@ class Index {
   }
 
   /**
-   * Give the users the ability to interact with facebook. Facebook is used as a plugin an loaded in the method above.
+   * Give the users the ability to interact with facebook. Facebook is used as a plugin and loaded in the method above.
    *
    * @access public
    * @see config/Candy.inc.php
@@ -401,8 +400,9 @@ class Index {
     else
       $aUserData = & Model_Session::getUserDataBySession();
 
-    $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], is_array($aUserData) ? $aUserData : array());
-
+    if (is_array($aUserData))
+      $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], $aUserData);
+	
     # Try to get facebook data
     if ($this->_aSession['userdata']['id'] == 0) {
       $oFacebook = $this->getFacebookExtension();
