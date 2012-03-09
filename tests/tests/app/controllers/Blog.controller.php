@@ -30,7 +30,8 @@ class WebTestOfBlogController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText('b3cf6b2dd0');
+		$this->assertText('hs24br55e2');
+		$this->assertNoText('1d2275e170');
 	}
 
 	function testShowEntryWithShortId() {
@@ -52,7 +53,8 @@ class WebTestOfBlogController extends CandyWebTest {
   function testShowPageTwo() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/page/2'));
 		$this->assertResponse(200);
-    $this->assertText('c11be3b344');
+    $this->assertText('b3cf6b2dd0');
+    $this->assertNoText('e12b3a84b2');
   }
 
   function testShowEntryWithDifferentLanguage() {

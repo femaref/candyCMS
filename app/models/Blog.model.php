@@ -33,10 +33,10 @@ class Blog extends Main {
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     if(WEBSITE_MODE == 'test')
-      $iLimit = 1;
+      $iLimit = 2;
 
     if (empty($iId)) {
-			# Show unpublished items to moderators or administrators only
+			# Show unpublished items and entries with diffent languages to moderators or administrators only
       $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
 							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'" :
 							'';

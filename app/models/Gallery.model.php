@@ -52,7 +52,7 @@ class Gallery extends Main {
         exit('SQL error.');
       }
 
-      # Set update to false when creating an entry to avoid offset warnings.
+      # Bugfix: Set update to false when creating an entry to avoid offset warnings.
       $bUpdate = false;
     }
 

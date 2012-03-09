@@ -37,9 +37,9 @@ class AllFileTests extends TestSuite {
 		$this->TestSuite('All tests');
 
     # Helpers
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
+    #$this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
+    #$this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
+    #$this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
@@ -52,17 +52,17 @@ class AllFileTests extends TestSuite {
     # Comment
 
     # Content
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Content.controller.php');
+    #$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Content.controller.php');
 
 		# Download
 		#$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Download.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Download.controller.php');
+		#$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Download.controller.php');
 
 		# Error
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Error.controller.php');
+		#$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Error.controller.php');
 
 		# Gallery
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
+		#$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
 
     # Log
 
@@ -73,10 +73,11 @@ class AllFileTests extends TestSuite {
     # Newsletter
 
     # RSS
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
 
 		# Search
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
+		#$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
+		#$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
 
     # Session
 

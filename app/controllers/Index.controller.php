@@ -172,7 +172,7 @@ class Index {
    */
 	public function getRoutes() {
 		# Cache routes for performance reasons
-		if(!isset($_SESSION['routes']) || WEBSITE_MODE == 'development') {
+		if(!isset($_SESSION['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
 			$_SESSION['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
 		}
