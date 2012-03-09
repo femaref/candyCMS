@@ -47,7 +47,6 @@ else {
 	ini_set('log_errors', 1);
 }
 
-
 # Define current url
 define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
 

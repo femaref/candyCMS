@@ -20,7 +20,7 @@
 "rss/(:alpha)": controller=rss&section=$1
 "search/(:any)": controller=search&search=$1
 "user/(:num)/(:alpha)": controller=user&action=$2&id=$1
-"user/(:num)/verification": controller=user&action=verification&code=$1
+"user/(:alnum)/verification": controller=user&action=verification&code=$1
 
 # Magic rule
 "(:alpha)/(:num)": controller=$1&id=$2
