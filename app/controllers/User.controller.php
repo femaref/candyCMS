@@ -15,22 +15,10 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use CandyCMS\Model\User as Model;
 use MCAPI;
 use Smarty;
 
 class User extends Main {
-
-	/**
-	 * Include the user model.
-	 *
-	 * @access public
-	 *
-	 */
-	public function __init() {
-    require_once PATH_STANDARD . '/app/models/User.model.php';
-		$this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
-	}
 
   /**
    * Route to right action.
@@ -268,7 +256,7 @@ class User extends Main {
 		$this->_setError('email');
 		$this->_setError('password');
 
-		if (Model::getExistingUser($this->_aRequest['email']))
+		if ($this->_oModel->getExistingUser($this->_aRequest['email']))
 			$this->_aError['email'] = I18n::get('error.user.create.email');
 
 		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])

@@ -302,11 +302,11 @@ abstract class Main {
   public static function getTypeaheadData($sTable, $sColumn, $bSplit = false) {
     try {
       $oQuery = self::$_oDbStatic->query("SELECT
-                                              " . $sColumn . "
-                                            FROM
-                                              " . SQL_PREFIX . $sTable . "
-                                            GROUP BY
-                                              " . $sColumn);
+                                            " . $sColumn . "
+                                          FROM
+                                            " . SQL_PREFIX . $sTable . "
+                                          GROUP BY
+                                            " . $sColumn);
 
       $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
 

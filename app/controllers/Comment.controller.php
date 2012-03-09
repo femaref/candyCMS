@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Comment as Model;
 
 require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
@@ -75,10 +74,9 @@ class Comment extends Main {
    *
    */
   public function __init($aParentData = '') {
-		require PATH_STANDARD . '/app/models/Comment.model.php';
-
+    $oModel = $this->__autoload('Comment', true);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
 		$this->_aParentData = & $aParentData;
-		$this->_oModel = new Model($this->_aRequest, $this->_aSession);
 	}
 
   /**

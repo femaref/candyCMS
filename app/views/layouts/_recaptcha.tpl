@@ -1,5 +1,5 @@
 {strip}
-  {if isset($_captcha_) && $MOBILE == false && $AJAX_REQUEST == false}
+  {if isset($_captcha_) && $MOBILE == false && !isset($_REQUEST.ajax) == false}
     <div class="control-group{if isset($error.captcha)} alert alert-error{/if}">
       <label class='control-label'>
         {$lang.global.captcha} <span title="{$lang.global.required}">*</span>

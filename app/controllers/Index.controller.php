@@ -204,8 +204,9 @@ class Index {
       exit;
     }
 
+    print_r($this->_aRequest);
+
 		return $this->_aRequest;
-		#print_R($this->_aRequest);
 	}
 
   /**
@@ -463,8 +464,7 @@ class Index {
     }
 
     # Minimal settings for AJAX-request
-		if ((isset($this->_aRequest['controller']) && 'rss' == strtolower($this->_aRequest['controller'])) ||
-						(isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax']))
+		if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])
 			$sCachedHTML = $oDispatcher->oController->getContent();
 
     # HTML with template
@@ -540,9 +540,8 @@ class Index {
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
 		# Compile CSS when in development mode and clearing the cache
-    if (WEBSITE_MODE == 'development' &&
-            file_exists(Helper::removeSlash($sCachedLess . '/core/application.less')) &&
-            CLEAR_CACHE === true) {
+    if (WEBSITE_MODE == 'development' && isset($this->_aRequest['clearcache']) &&
+            file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
       require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
 
       try {

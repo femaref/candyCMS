@@ -92,9 +92,7 @@ class Mail extends Main {
 		if (isset($this->_aRequest['create_mail'])) {
 			# Disable at AJAX due to a bug in reloading JS code
 			if ($this->_aSession['userdata']['role'] == 0 &&
-							RECAPTCHA_ENABLED === true &&
-							AJAX_REQUEST === false &&
-							MOBILE === false)
+							RECAPTCHA_ENABLED === true && MOBILE === false && !isset($this->_aRequest['ajax']))
 				return $this->_checkCaptcha();
 
 			else
@@ -115,9 +113,9 @@ class Mail extends Main {
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
-		$this->__autoload('User');
+		$oUser = $this->__autoload('User', true);
 
-    $this->oSmarty->assign('contact', Model::getUserNamesAndEmail($this->_iId));
+    $this->oSmarty->assign('contact', $oUser::getUserNamesAndEmail($this->_iId));
 		$this->oSmarty->assign('content', isset($this->_aRequest['content']) ?
 										(string) $this->_aRequest['content'] :
 										'');
@@ -192,7 +190,7 @@ class Mail extends Main {
     else {
       # Select user name and surname
       require_once 'app/models/User.model.php';
-      $aRow = Model::getUserNamesAndEmail($this->_iId);
+      $aRow = $this->_oModel->getUserNamesAndEmail($this->_iId);
 
       $sSendersName = isset($this->_aSession['userdata']['name']) ?
               $this->_aSession['userdata']['name'] :

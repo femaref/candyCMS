@@ -14,21 +14,10 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Log as Model;
 
 require_once PATH_STANDARD . '/app/models/Log.model.php';
 
 class Log extends Main {
-
-  /**
-   * Include the log model.
-   *
-   * @access public
-   *
-   */
-  public function __init() {
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
-  }
 
   /**
    * Show log overview if we have admin rights.
@@ -68,7 +57,7 @@ class Log extends Main {
    *
    */
   public static function insert($sControllerName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
-    return Model::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+    return \CandyCMS\Model\Log::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
 
   /**

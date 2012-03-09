@@ -14,21 +14,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Content as Model;
 use Smarty;
 
 class Content extends Main {
-
-  /**
-   * Include the content model.
-   *
-   * @access public
-   *
-   */
-  public function __init() {
-    require PATH_STANDARD . '/app/models/Content.model.php';
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
-  }
 
   /**
    * Show content entry or content overview (depends on a given ID or not).

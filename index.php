@@ -30,12 +30,6 @@ define('VERSION', '20111114');
 # Define a standard path
 define('PATH_STANDARD', dirname(__FILE__));
 
-# If this is an ajax request, no layout will be loaded.
-define('AJAX_REQUEST', isset($_REQUEST['ajax']) && !empty($_REQUEST['ajax']) ? true : false);
-
-# Clear cache if wanted.
-define('CLEAR_CACHE', isset($_REQUEST['clearcache']) || isset($_REQUEST['template']) ? true : false);
-
 # Initialize software
 # @todo try / catch
 require PATH_STANDARD . '/config/Candy.inc.php';

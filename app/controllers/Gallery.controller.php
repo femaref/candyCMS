@@ -27,11 +27,11 @@ class Gallery extends Main {
    *
    */
   public function __init() {
+    $oModel = $this->__autoload($this->_aRequest['controller'], true);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+
     # Override template folder because controller name and view name don't match.
     $this->_sTemplateFolder = 'galleries';
-
-    require PATH_STANDARD . '/app/models/Gallery.model.php';
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
   /**
@@ -92,8 +92,8 @@ class Gallery extends Main {
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
       # Collect data array
-      $sAlbumName					= Model::getAlbumName($this->_iId);
-      $sAlbumDescription	= Model::getAlbumContent($this->_iId);
+      $sAlbumName					= $this->_oModel->getAlbumName($this->_iId);
+      $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId);
 
       $this->setDescription($sAlbumDescription);
       $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
@@ -117,7 +117,7 @@ class Gallery extends Main {
 
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
-			$aData = & Model::getFileData($this->_iId);
+			$aData = & $this->_oModel->getFileData($this->_iId);
 
       $this->setDescription($aData['content']);
       $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
@@ -314,7 +314,7 @@ class Gallery extends Main {
   protected function _showFormFileTemplate() {
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
-      $aDetails = Model::getFileDetails($this->_iId);
+      $aDetails = $this->_oModel->getFileDetails($this->_iId);
       $this->oSmarty->assign('content', Helper::formatOutput($aDetails['content']));
       $this->oSmarty->assign('album_id', Helper::formatOutput($aDetails['album_id']));
     }

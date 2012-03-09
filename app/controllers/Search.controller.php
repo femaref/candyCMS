@@ -42,11 +42,10 @@ class Search extends Main {
 	 *
 	 */
   public function __init() {
+    $oModel = $this->__autoload($this->_aRequest['controller'], true);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+
     $this->_sTemplateFolder = 'searches';
-
-    require PATH_STANDARD . '/app/models/Search.model.php';
-
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
   }
 
 	/**

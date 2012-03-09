@@ -198,11 +198,33 @@ abstract class Main {
    * Dynamically load classes.
    *
    * @static
-   * @param string $sClassName name of class to load
+   * @param string $sClass name of class to load
+   * @param boolean $bModel load a model file
+   * @return string class name
    *
    */
-  public static function __autoload($sClassName) {
-    require_once 'app/controllers/' .$sClassName. '.controller.php';
+  public static function __autoload($sClass, $bModel = false) {
+    $sClass = (string) ucfirst(strtolower($sClass));
+    if ($bModel === true) {
+      if (file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
+        require_once PATH_STANDARD . '/addons/models/' . $sClass . '.model.php';
+        return '\CandyCMS\Addon\Model\Addon_' . $sClass;
+      }
+      else {
+        require_once PATH_STANDARD . '/app/models/' . $sClass . '.model.php';
+        return '\CandyCMS\Model\\' . $sClass;
+      }
+    }
+    else {
+      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php')) {
+        require_once PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php';
+        return '\CandyCMS\Addon\Controller\Addon_' . $sClass;
+      }
+      else {
+        require_once PATH_STANDARD . '/app/controllers/' . $sClass . '.controller.php';
+        return '\CandyCMS\Controller\\' . $sClass;
+      }
+    }
   }
 
 	/**
@@ -212,7 +234,8 @@ abstract class Main {
 	 *
 	 */
   public function __init() {
-
+    $oModel = $this->__autoload($this->_aRequest['controller'], true);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -255,7 +278,7 @@ abstract class Main {
 		}
 
     # Clear cache on development mode or when we force it via a request.
-    if (CLEAR_CACHE == true || WEBSITE_MODE == 'development') {
+    if (isset($this->_aRequest['clearcache']) || WEBSITE_MODE == 'development') {
       $this->oSmarty->clearAllCache();
       $this->oSmarty->clearCompiledTemplate();
     }
@@ -268,7 +291,6 @@ abstract class Main {
     }
 
 		# Define smarty constants
-		$this->oSmarty->assign('AJAX_REQUEST', AJAX_REQUEST);
 		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
 		$this->oSmarty->assign('MOBILE', MOBILE);
 		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);

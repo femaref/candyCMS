@@ -17,6 +17,11 @@ require_once PATH_STANDARD . '/app/controllers/Blog.controller.php';
 
 final class Archive extends \CandyCMS\Controller\Blog {
 
+  public final function __init() {
+    $oModel = $this->__autoload('Blog', true);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+  }
+
   public final function show() {
     $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');

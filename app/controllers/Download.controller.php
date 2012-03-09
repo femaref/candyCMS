@@ -22,18 +22,6 @@ use Smarty;
 class Download extends Main {
 
   /**
-   * Include the download model.
-   *
-   * @access public
-   *
-   */
-  public function __init() {
-    require PATH_STANDARD . '/app/models/Download.model.php';
-
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession, $this->_aFile);
-  }
-
-  /**
    * Download entry or show download overview (depends on a given ID or not).
    *
    * @access protected
@@ -43,10 +31,10 @@ class Download extends Main {
   protected function _show() {
     # Direct download for this id
     if (!empty($this->_iId)) {
-      $sFile = & Model::getFileName($this->_iId);
+      $sFile = & $this->_oModel->getFileName($this->_iId);
 
       # Update download count
-      Model::updateDownloadCount($this->_iId);
+      $this->_oModel->updateDownloadCount($this->_iId);
 
       # Get mime type
       if(function_exists('finfo_open')) {

@@ -77,7 +77,6 @@ class Dispatcher {
 			AdvancedException::reportBoth($e->getMessage());
 			exit('Controller not found.');
 		}
-
     $this->oController->__init();
     return $this->oController;
   }

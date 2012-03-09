@@ -14,21 +14,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Calendar as Model;
 use Smarty;
 
 class Calendar extends Main {
-
-  /**
-	 * Include the calendar model.
-	 *
-	 * @access public
-	 *
-	 */
-	public function __init() {
-    require PATH_STANDARD . '/app/models/Calendar.model.php';
-		$this->_oModel = new Model($this->_aRequest, $this->_aSession);
-	}
 
 	/**
 	 * Show calendar overview.

@@ -14,20 +14,9 @@ namespace CandyCMS\Controller;
 use CandyCMS\Controller\Main as Main;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Session as Model;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 
 class Session extends Main {
-
-	/**
-	 * Include the session model.
-	 *
-	 * @access public
-	 *
-	 */
-  public function __init() {
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
-  }
 
   /**
    * Route to right action.

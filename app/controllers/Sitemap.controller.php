@@ -22,19 +22,6 @@ use Smarty;
 class Sitemap extends Main {
 
 	/**
-	 * Include models.
-	 *
-	 * @access public
-	 *
-	 */
-	public function __init() {
-    require PATH_STANDARD . '/app/models/Blog.model.php';
-    require PATH_STANDARD . '/app/models/Content.model.php';
-    require PATH_STANDARD . '/app/models/Download.model.php';
-    require PATH_STANDARD . '/app/models/Gallery.model.php';
-	}
-
-	/**
 	 * Show the sitemap as XML. Site is cached for one hour.
 	 *
 	 * @access protected
@@ -85,6 +72,7 @@ class Sitemap extends Main {
 	 * Generate the sitemap. Query tables and build structure.
 	 *
 	 * @access private
+   * @todo implement models
 	 *
 	 */
 	private function _getSitemap() {

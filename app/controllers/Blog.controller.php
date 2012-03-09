@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Blog as Model;
 
 class Blog extends Main {
 
@@ -24,18 +23,6 @@ class Blog extends Main {
    *
    */
   public $oPagination;
-
-  /**
-   * Include the blog model.
-   *
-   * @access public
-   *
-   */
-  public function __init() {
-    # Require_once because blog elements can be used on different parts of the website.
-    require_once PATH_STANDARD . '/app/models/Blog.model.php';
-    $this->_oModel = new Model($this->_aRequest, $this->_aSession);
-  }
 
   /**
    * Show blog entry or blog overview (depends on a given ID or not).
@@ -60,15 +47,8 @@ class Blog extends Main {
 
       # Load comments
       if (!empty($this->_iId)) {
-        if(file_exists(PATH_STANDARD . '/addons/controllers/Comment.controller.php')) {
-          require_once PATH_STANDARD . '/addons/controllers/Comment.controller.php';
-          $oComments = new \CandyCMS\Addon\Controller\Addon_Comment($this->_aRequest, $this->_aSession);
-        }
-        else {
-          $this->__autoload('Comment');
-          $oComments = new Comment($this->_aRequest, $this->_aSession);
-        }
-
+        $sClass = $this->__autoload('Comment');
+        $oComments = new $sClass($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
       }
