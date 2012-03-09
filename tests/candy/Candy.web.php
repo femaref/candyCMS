@@ -43,11 +43,15 @@ abstract class CandyWebTest extends WebTestCase {
 	}
 
 	function createFile($sPath) {
-		$sFile = PATH_STANDARD . '/' . $sPath . '/test.log';
+		$sFile = PATH_STANDARD . '/' . $sPath . '/test_generated.log';
 		$oFile = fopen($sFile, 'a');
 		fwrite($oFile, 'Is writeable.' . "\n");
 		fclose($oFile);
 
 		return $sFile;
+	}
+
+	function removeFile($sPath) {
+		return unlink(PATH_STANDARD . '/' . $sPath . '/test_generated.log');
 	}
 }

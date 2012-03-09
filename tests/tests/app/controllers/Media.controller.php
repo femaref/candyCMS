@@ -7,67 +7,52 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
-require_once('lib/simpletest/autorun.php');
-require_once('app/controllers/Media.controller.php');
+require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Media.controller.php';
 
 use \CandyCMS\Controller\Media as Media;
 use \CandyCMS\Helper\I18n as I18n;
 
-class TestOfMediaController extends WebTestCase {
+class WebTestOfMediaController extends CandyWebTest {
 
-  public $oMedia;
+	function setUp() {
+		$this->aRequest['controller'] = 'media';
+		$this->oObject = new Media($this->aRequest, $this->aSession);
+	}
 
-  function testConstructor() {
-
-    $aRequest = array('section' => 'media');
-    $aFile    = array();
-    $aCookie  = array();
-    $aSession['userdata'] = array(
-      'email' => '',
-      'facebook_id' => '',
-      'id' => 0,
-      'name' => '',
-      'surname' => '',
-      'password' => '',
-      'role' => 0,
-      'full_name' => ''
-    );
-
-    $this->oMedia = new Media($aRequest, $aSession, $aFile, $aCookie);
-  }
+	function tearDown() {
+		parent::tearDown();
+	}
 
   function testShow() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/media'));
-    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
-    $this->assertResponse('200');
-  }
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+		$this->assertText(I18n::get('error.missing.permission'));
+		$this->assertResponse('200');
+	}
 
-  function testCreate() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/media/create'));
-    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
-    $this->assertResponse('200');
-  }
+	function testCreate() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+		$this->assertText(I18n::get('error.missing.permission'));
+		$this->assertResponse('200');
+	}
 
-  function testUpdate() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/media/update'));
-    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
-    $this->assertResponse('200');
-  }
+	function testUpdate() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/update'));
+		$this->assertText(I18n::get('error.missing.permission'));
+		$this->assertResponse('200');
+	}
 
-  function testDestroy() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/media/destroy'));
-    $this->assertText(I18n::get('lang.error.missing.permission')); # user has not enough permission
-    $this->assertResponse('200');
-  }
+	function testDestroy() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy'));
+		$this->assertText(I18n::get('error.missing.permission'));
+		$this->assertResponse('200');
+	}
 
   function testDirIsWritable() {
-    $oFile = fopen('upload/media/test.log', 'a');
-    fwrite($oFile, 'Is writeable.' . "\n");
-    fclose($oFile);
-
-    $this->assertTrue(file_exists('upload/media/test.log'), 'File was created.');
-    @unlink('upload/media/test.log');
-  }
+		$this->assertTrue(parent::createFile('upload/' . $this->aRequest['controller']));
+		$this->assertTrue(parent::removeFile('upload/' . $this->aRequest['controller']));
+	}
 }

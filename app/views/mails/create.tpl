@@ -2,7 +2,8 @@
   <div class='page-header'>
     <h1>{$lang.global.contact} {$contact.name} {$contact.surname}</h1>
   </div>
-  <form method='post' action='/mail/{$_REQUEST.id}' id='create_mail' class='form-horizontal'>
+  <form method='post' action='/mail/{$_REQUEST.id}{if isset($_REQUEST.ajax)}/ajax{/if}'
+        id='create_mail' class='form-horizontal'>
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>

@@ -40,7 +40,7 @@ class TestOfSessionController extends WebTestCase {
 
   function testShow() {
     $this->assertTrue($this->get(WEBSITE_URL . '/session'));
-    $this->assertNoText(I18n::get('lang.error.standard'));
+    $this->assertNoText(I18n::get('error.standard'));
     $this->assertResponse('200');
   }
 
@@ -53,7 +53,7 @@ class TestOfSessionController extends WebTestCase {
     $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_session');
     $this->assertTrue($this->post(WEBSITE_URL . '/session/create', $aParams));
     $this->assertResponse('200');
-    $this->assertNoText(I18n::get('lang.error.standard'));
+    $this->assertNoText(I18n::get('error.standard'));
   }
 
   function testDestroy() {

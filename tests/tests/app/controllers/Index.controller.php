@@ -14,6 +14,7 @@ require_once PATH_STANDARD . '/app/controllers/Index.controller.php';
 require_once PATH_STANDARD . '/app/models/Session.model.php';
 
 use \CandyCMS\Controller\Index as Index;
+use \CandyCMS\Helper\I18n as I18n;
 
 class UnitTestOfIndexController extends CandyUnitTest {
 
@@ -72,35 +73,34 @@ class UnitTestOfIndexController extends CandyUnitTest {
 
 	function testUploadDirIsWritable() {
 		$this->assertTrue(parent::createFile('upload'));
-		$this->assertTrue(unlink(PATH_STANDARD . '/upload/test.log'));
+		$this->assertTrue(parent::removeFile('upload'));
 	}
 
 	function testCacheDirIsWritable() {
 		$this->assertTrue(parent::createFile('cache'));
-		$this->assertTrue(unlink(PATH_STANDARD . '/cache/test.log'));
+		$this->assertTrue(parent::removeFile('cache'));
 	}
 
 	function testCompileDirIsWritable() {
 		$this->assertTrue(parent::createFile('compile'));
-		$this->assertTrue(unlink(PATH_STANDARD . '/compile/test.log'));
+		$this->assertTrue(parent::removeFile('compile'));
 	}
 
 	function testBackupDirIsWritable() {
 		$this->assertTrue(parent::createFile('backup'));
-		$this->assertTrue(unlink(PATH_STANDARD . '/backup/test.log'));
+		$this->assertTrue(parent::removeFile('backup'));
 	}
 
 	function testLogsDirIsWritable() {
 		$this->assertTrue(parent::createFile('logs'));
-		$this->assertTrue(unlink(PATH_STANDARD . '/logs/test.log'));
+		$this->assertTrue(parent::removeFile('logs'));
 	}
 }
-/*
+
 class WebTestOfIndexController extends CandyWebTest {
 
 	function setUp() {
 		$this->oObject = new Index($this->aRequest, $this->aSession);
-    $this->oObject->__destruct();
 	}
 
 	function tearDown() {
@@ -110,18 +110,25 @@ class WebTestOfIndexController extends CandyWebTest {
 	function testShowIndex() {
 		$this->assertTrue($this->get(WEBSITE_URL));
 		$this->assertResponse(200);
-		$this->assertText('Login'); # This should be on every page.
+		$this->assertText('TEST'); # This should be on every page.
 	}
 
+	/**
+	 *@todo fix 404 to i18n
+	 */
 	function testShowNonExistingPage() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
-		$this->assertResponse(404);
+		$this->assertResponse(200);
+		$this->assertText('404');
 	}
 
+	/**
+	 *@todo fix 404 to i18n
+	 */
 	function testShowSampleAddon() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/sample'));
 		$this->assertResponse(200);
 		$this->assertText('Sample');
-		$this->assertNoText('Error');
+		$this->assertNoText('404');
 	}
-}*/
+}

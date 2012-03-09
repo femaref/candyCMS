@@ -51,8 +51,7 @@ class WebTestOfDownloadController extends CandyWebTest {
 	}
 
 	function testDirIsWritable() {
-		$sFile = $this->createFile('upload/' . $this->aRequest['controller']);
-		$this->assertTrue(file_exists($sFile), 'Download folder is writeable.');
-		unlink($sFile);
+		$this->assertTrue(parent::createFile('upload/' . $this->aRequest['controller']));
+		$this->assertTrue(parent::removeFile('upload/' . $this->aRequest['controller']));
 	}
 }

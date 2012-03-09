@@ -49,7 +49,7 @@ class WebTestOfGalleryController extends CandyWebTest {
 		fwrite($oFile, 'Is writeable.' . "\n");
 		fclose($oFile);
 
-		$this->assertTrue(file_exists($sFile), 'Gallery folder is writeable.');
-		@unlink($sFile);
+		$this->assertTrue(file_exists($sFile));
+		$this->assertTrue(unlink($sFile));
 	}
 }

@@ -72,21 +72,20 @@ class Sitemap extends Main {
 	 * Generate the sitemap. Query tables and build structure.
 	 *
 	 * @access private
-   * @todo implement models
 	 *
 	 */
 	private function _getSitemap() {
-		$oBlog = new Model_Blog($this->_aRequest, $this->_aSession);
-		$aBlog = $oBlog->getData('', false, 1000);
+		$sModel		= $this->__autoload('Blog', true);
+		$oBlog		= new $sModel($this->_aRequest, $this->_aSession);
 
-		$oContent = new Model_Content($this->_aRequest, $this->_aSession);
-		$aContent = $oContent->getData('', false, 1000);
+		$sModel		= $this->__autoload('Content', true);
+		$oContent = new $sModel($this->_aRequest, $this->_aSession);
 
-		$oGallery = new Model_Gallery($this->_aRequest, $this->_aSession);
-		$aGallery = $oGallery->getData('', false, false, 1000);
+		$sModel		= $this->__autoload('Gallery', true);
+		$oGallery = new $sModel($this->_aRequest, $this->_aSession);
 
-		$this->oSmarty->assign('blog', $aBlog);
-		$this->oSmarty->assign('content', $aContent);
-		$this->oSmarty->assign('gallery', $aGallery);
+		$this->oSmarty->assign('blog', $oBlog->getData('', false, 1000));
+		$this->oSmarty->assign('content', $oContent->getData('', false, 1000));
+		$this->oSmarty->assign('gallery', $oGallery->getData('', false, false, 1000));
 	}
 }
