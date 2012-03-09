@@ -52,6 +52,7 @@ class AllFileTests extends TestSuite {
     # Comment
 
     # Content
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Content.model.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Content.controller.php');
 
 		# Download

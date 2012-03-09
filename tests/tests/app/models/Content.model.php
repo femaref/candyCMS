@@ -7,60 +7,47 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
-require_once('lib/simpletest/autorun.php');
-require_once('app/models/Content.model.php');
+
+require_once PATH_STANDARD . '/app/models/Content.model.php';
 
 use \CandyCMS\Model\Content as Content;
 
-class TestOfContentModel extends UnitTestCase {
+class UnitTestOfContentModel extends CandyUnitTest {
 
-  public $oContent;
-  public $iLastInsertId;
+  function setUp() {
+    $this->aRequest = array(
+        'title'     => 'Title',
+        'teaser'    => 'Teaser',
+        'content'   => 'Content',
+        'keywords'  => 'Keywords',
+        'controller'=> 'content');
 
-  function testConstructor() {
-
-    $aRequest = array(
-        'title' => 'Title',
-        'teaser' => 'Teaser',
-        'content' => 'Content',
-        'keywords' => 'Keywords',
-        'section' => 'content');
-
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-
-    $aFile = array();
-    $aCookie = array();
-
-    $this->oContent = new Content($aRequest, $aSession, $aFile, $aCookie);
+    $this->oObject = new Content($this->aRequest, $this->aSession);
   }
 
+	function tearDown() {
+		parent::tearDown();
+	}
+
   function testCreate() {
-    $this->assertTrue($this->oContent->create());
+    $this->assertTrue($this->oObject->create());
 
     $this->iLastInsertId = (int) Content::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'integer', 'Content #' . $this->iLastInsertId . ' created.');
+    $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetData() {
-    $this->assertIsA($this->oContent->getData(0), 'array');
-    $this->assertIsA($this->oContent->getData(), 'array');
+    $this->assertIsA($this->oObject->getData(1), 'array');
+    $this->assertIsA($this->oObject->getData(), 'array');
   }
 
   function testUpdate() {
-    $this->assertTrue($this->oContent->update($this->iLastInsertId), 'Content #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->update($this->iLastInsertId));
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oContent->destroy($this->iLastInsertId), 'Content #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oObject->destroy($this->iLastInsertId));
   }
 }

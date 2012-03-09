@@ -29,7 +29,6 @@ class UnitTestOfBlogModel extends CandyUnitTest {
         'controller'  => 'blog',
         'language'    => 'en');
 
-
     $this->oObject = new Blog($this->aRequest, $this->aSession);
   }
 
