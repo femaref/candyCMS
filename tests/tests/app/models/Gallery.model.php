@@ -7,94 +7,78 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
-require_once('lib/simpletest/autorun.php');
-require_once('app/models/Gallery.model.php');
+
+require_once PATH_STANDARD . '/app/models/Gallery.model.php';
 
 use \CandyCMS\Model\Gallery as Gallery;
 
-class TestOfGalleryModel extends UnitTestCase {
+class UnitTestOfGalleryModel extends CandyUnitTest {
 
-  public $oGallery;
-  public $iLastInsertId;
+  function setUp() {
 
-  function testConstructor() {
+    $this->aRequest = array(
+        'title'     => 'Title',
+        'content'   => 'Content',
+        'id'        => 0,
+        'controller'=> 'gallery');
 
-    $aRequest = array(
-        'title' => 'Title',
-        'content' => 'Content',
-        'id' => 0,
-        'section' => 'gallery');
-
-    $aSession['userdata'] = array(
-        'email' => '',
-        'facebook_id' => '',
-        'id' => 0,
-        'name' => '',
-        'surname' => '',
-        'password' => '',
-        'role' => 0,
-        'full_name' => ''
-    );
-
-    $aFile    = array();
-    $aCookie  = array();
-
-    $this->oGallery = new Gallery($aRequest, $aSession, $aFile, $aCookie);
+    $this->oObject = new Gallery($this->aRequest, $this->aSession);
   }
 
   function testCreate() {
-    $this->assertTrue($this->oGallery->create());
+    $this->assertTrue($this->oObject->create());
 
     $this->iLastInsertId = (int) Gallery::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'integer', 'Gallery album #' . $this->iLastInsertId . ' created.');
+    $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetData() {
-    $this->assertIsA($this->oGallery->getData(0), 'array');
-    $this->assertIsA($this->oGallery->getData(), 'array');
+    $this->assertIsA($this->oObject->getData(1), 'array');
+    $this->assertIsA($this->oObject->getData(), 'array');
   }
 
   function testGetAlbumName() {
-    $this->assertIsA($this->oGallery->getAlbumName($this->iLastInsertId), 'string');
+    $this->assertIsA($this->oObject->getAlbumName($this->iLastInsertId), 'string');
   }
 
   function testGetAlbumContent() {
-    $this->assertIsA($this->oGallery->getAlbumContent($this->iLastInsertId), 'string');
+    $this->assertIsA($this->oObject->getAlbumContent($this->iLastInsertId), 'string');
   }
 
   function testUpdate() {
-    $this->assertTrue($this->oGallery->update($this->iLastInsertId), 'Gallery album #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->update($this->iLastInsertId));
   }
 
   function testDestroy() {
-    $this->assertTrue($this->oGallery->destroy($this->iLastInsertId), 'Gallery album #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oObject->destroy($this->iLastInsertId));
   }
 
   function testCreateFile() {
-    $this->assertTrue($this->oGallery->createFile('test.test', 'test'));
+    $this->assertTrue($this->oObject->createFile('test.test', 'test'));
 
     $this->iLastInsertId = (int) Gallery::getLastInsertId();
-    $this->assertIsA($this->iLastInsertId, 'integer', 'Gallery album #' . $this->iLastInsertId . ' created.');
+    $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
   function testGetThumbs() {
-    $this->assertIsA($this->oGallery->getThumbs(0), 'array');
+    $this->assertIsA($this->oObject->getThumbs(1), 'array');
   }
 
   function testGetFileDetails() {
-    $this->assertIsA($this->oGallery->getFileDetails($this->iLastInsertId), 'array');
+    $this->assertIsA($this->oObject->getFileDetails($this->iLastInsertId), 'array');
   }
 
   function testGetFileData() {
-    $this->assertIsA($this->oGallery->getFileData($this->iLastInsertId), 'array');
+    $this->assertIsA($this->oObject->getFileData($this->iLastInsertId), 'array');
   }
 
   function testUpdateFile() {
-    $this->assertTrue($this->oGallery->updateFile($this->iLastInsertId), 'Gallery file #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->updateFile($this->iLastInsertId));
   }
 
   function testDestroyFile() {
-    $this->assertTrue($this->oGallery->destroyFile($this->iLastInsertId), 'Gallery file #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oObject->destroyFile($this->iLastInsertId));
   }
 }

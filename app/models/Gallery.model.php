@@ -201,6 +201,9 @@ class Gallery extends Main {
    *
    */
   public static function getAlbumName($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
@@ -232,6 +235,9 @@ class Gallery extends Main {
    *
    */
   public static function getAlbumContent($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
@@ -263,6 +269,9 @@ class Gallery extends Main {
    *
    */
   public static function getFileDetails($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT album_id, content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
@@ -289,6 +298,9 @@ class Gallery extends Main {
    *
    */
   public static function getFileData($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);

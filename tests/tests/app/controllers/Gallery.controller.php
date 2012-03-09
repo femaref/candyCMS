@@ -25,7 +25,7 @@ class WebTestOfGalleryController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowGallery() {
+	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('6dffc4c552');

@@ -63,6 +63,7 @@ class AllFileTests extends TestSuite {
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Error.controller.php');
 
 		# Gallery
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Gallery.model.php');
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
 
     # Log
