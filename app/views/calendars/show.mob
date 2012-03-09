@@ -53,7 +53,7 @@
   {/if}
   {if !isset($_REQUEST.action)}
     <p class="center">
-      <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}">{$lang.global.archive}</a>
+      <a href="/calendar/{$smarty.now|date_format:'%Y'}/archive">{$lang.global.archive}</a>
     </p>
   {/if}
 {/strip}

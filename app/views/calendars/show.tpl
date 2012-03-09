@@ -102,7 +102,7 @@
   {/if}
   {if !isset($_REQUEST.action)}
     <p class='center'>
-      <a href="/calendar/archive/{$smarty.now|date_format:'%Y'}" class='btn'>
+      <a href="/calendar/{$smarty.now|date_format:'%Y'}/archive" class='btn'>
         {$lang.global.archive}
       </a>
     </p>
