@@ -11,6 +11,14 @@ function hide(sDivId, iDelay) {
   $(sDivId).delay(iDelay).slideUp();
 }
 
+/* ToggleOpacity */
+function toggleOpacity(t, target) {
+  if(t.is(':checked'))
+    target.stop(true,true).animate({opacity:1});
+  else
+    target.stop(true,true).animate({opacity:0.25});
+}
+
 /* Quote comment */
 function quote(sName, sDivId) {
   var sOldMessage = $('#js-create_commment_text').val();

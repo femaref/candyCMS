@@ -60,8 +60,19 @@
             {$lang.user.label.gravatar}
           </label>
           <div class='controls'>
+            <a href='{$avatar_popup}'
+               class='thumbnail js-fancybox'
+               title='{$full_name}'
+               id='gravatar-image'
+               style='
+                  {if $use_gravatar != 1}opacity: 0.25;{/if}
+                  float: right;'>
+              <img alt='{$full_name}'
+                   src='{$avatar_100}'
+                   width='100' />
+            </a>
             <input type='checkbox' class='checkbox' name='use_gravatar' id='input-use_gravatar'
-                    {if $use_gravatar == 1}checked{/if} />
+                    {if $use_gravatar == 1}checked{/if} onchange="toggleOpacity($(this), $('#gravatar-image'));" />
             <p class='help-block'>
               {$lang.user.info.gravatar}
             </p>
@@ -217,10 +228,14 @@
       </form>
     </div>
   {/if}
+  <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
-    $('#input-content').bind('keyup', function() {
-      countCharLength(this, 1000);
+    $(document).ready(function(){
+      $('#input-content').bind('keyup', function() {
+        countCharLength(this, 1000);
+      });
+      $('.js-fancybox').fancybox();
     });
   </script>
 {/strip}

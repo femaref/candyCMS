@@ -134,13 +134,14 @@ class User extends Main {
 
 		# Fetch data from database
 		$aData = & $this->_oModel->getData($iId, false, true);
+    #add the gravatar_urls, so the suer can preview those
+    Helper::addAvatarURLs($aData, $aData['id'], $aData['email'], true);
 
 		# Override if we want to use request
 		if ($bUseRequest == true) {
 			foreach ($aData as $sColumn => $sData)
 				$aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
 		}
-
 		foreach ($aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 

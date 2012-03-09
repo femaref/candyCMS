@@ -141,13 +141,13 @@ class Helper {
   public static function getAvatar($iSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
     $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $iSize . '/' . $iUserId);
 
-		if (file_exists($sFilePath . '.jpg') && $bUseGravatar == false)
+		if ($bUseGravatar == false && file_exists($sFilePath . '.jpg'))
 			return '/' . $sFilePath . '.jpg';
 
-		elseif (file_exists($sFilePath . '.png') && $bUseGravatar == false)
+		elseif ($bUseGravatar == false && file_exists($sFilePath . '.png'))
 			return '/' . $sFilePath . '.png';
 
-		elseif (file_exists($sFilePath . '.gif') && $bUseGravatar == false)
+		elseif ($bUseGravatar == false && file_exists($sFilePath . '.gif'))
 			return '/' . $sFilePath . '.gif';
 
 		else {
@@ -157,6 +157,29 @@ class Helper {
       $sMail = !empty($sEmail) ? $sEmail : WEBSITE_MAIL;
       return 'http://www.gravatar.com/avatar/' . md5($sMail) . '.jpg?s=' . $iSize . '&d=mm';
 		}
+  }
+
+  /**
+   * add the avatar_* entries to $aData
+   *
+   * @static
+   * @access public
+   * @param array $aData array of userdata
+   * @param integer $iUserId user ID
+   * @param string $sEmail email address to search gravatar for
+   * @param boolean $bUseGravatar do we want to use gravatar?
+   * @return array array with all avatarURLs added
+   *
+   */
+  public static function addAvatarURLs(&$aData, $iUserId, $sEmail = '', $bUseGravatar = false) {
+    if (!is_array($aData))
+      $aData = array();
+    $aData['avatar_32']     = Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
+    $aData['avatar_64']     = Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
+    $aData['avatar_100']    = Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);
+    $aData['avatar_popup']  = Helper::getAvatar('popup', $iUserId, $sEmail, $bUseGravatar);
+
+    return $aData;
   }
 
   /**
