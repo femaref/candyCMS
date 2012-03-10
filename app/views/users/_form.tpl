@@ -12,7 +12,9 @@
           <a href='#user-password' data-toggle='tab'>{$lang.user.title.password}</a>
         </li>
       {/if}
-      <li{if $_REQUEST['action'] == 'avatar'} class='active'{/if}>
+      <li id='js-avatar_tab'
+          {if $_REQUEST['action'] == 'avatar'}class='active'{/if}
+          {if $use_gravatar == 1}class='hide'{/if}>
         <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
       </li>
       {if $USER_ROLE < 4}
@@ -60,9 +62,10 @@
             {$lang.user.label.gravatar}
           </label>
           <div class='controls'>
-            <input type='checkbox' class='checkbox' name='use_gravatar'
+            <input type='checkbox'
+                   class='checkbox'
+                   name='use_gravatar'
                    id='input-use_gravatar'
-                   onchange="toggleOpacity($(this), $('#js-gravatar'));"
                    {if $use_gravatar == 1}checked{/if} />
             <div class='help-inline'>
               <a href='{$avatar_popup}'
@@ -73,11 +76,9 @@
                 <img alt='{$full_name}' src='{$avatar_32}' width='32' height='32' />
               </a>
             </div>
-            {if $use_gravatar == 0}
-              <p class='help-block'>
-                {$lang.user.info.gravatar}
-              </p>
-            {/if}
+            <p id='js-gravatar_help' class='help-block{if $use_gravatar == 1} hide{/if}'>
+              {$lang.user.info.gravatar}
+            </p>
           </div>
         </div>
         <div class='control-group'>
@@ -233,6 +234,12 @@
   <script src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
+    $('#input-use_gravatar').change(function() {
+      toggleOpacity($(this), $('#js-gravatar'));
+      $('#js-gravatar_help').toggle();
+      $('#js-avatar_tab').toggle().effect('highlight', {}, 3000);
+    });
+
     $('#input-content').bind('keyup', function() {
       countCharLength(this, 1000);
     });

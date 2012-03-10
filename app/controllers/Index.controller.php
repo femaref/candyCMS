@@ -538,8 +538,7 @@ class Index {
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
 		# Compile CSS when in development mode and clearing the cache
-    if (WEBSITE_MODE == 'development' && isset($this->_aRequest['clearcache']) &&
-            file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
+    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
       require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
 
       try {

@@ -33,7 +33,6 @@ class Rss extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo models in correct way
    *
    */
   protected function _show() {

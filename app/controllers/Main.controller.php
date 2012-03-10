@@ -394,7 +394,6 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string page title
-	 * @todo add error support
 	 *
 	 */
 	public function getTitle() {

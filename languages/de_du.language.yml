@@ -177,7 +177,7 @@ success:
 error:
   404:
     info: Die angeforderte URL wurde nicht gefunden. Entweder haben Sie auf einen fehlerhaften Link geklickt, die Seite wurde gelöscht oder die URL ist falsch eingegeben worden.
-    title: Error 404
+    title: Error 404 - URL nicht gefunden
   audio: Dein Browser unterstützt leider das Abspielen dieser Audiodatei nicht. Klicke auf <a href="%u">diesen Link</a> um die Datei herunterzuladen.
   captcha:
     incorrect: Der Code war leider nicht korrekt!

@@ -423,7 +423,6 @@ class Helper {
 	 * @access public
 	 * @param string $sStr string to replace chars
 	 * @return string string with formatted chars
-   * @todo find better solution for i18n
 	 *
 	 */
   public static function replaceNonAlphachars($sStr) {
@@ -435,7 +434,13 @@ class Helper {
     $sStr = str_replace('Ö', 'Oe', $sStr);
     $sStr = str_replace('ö', 'oe', $sStr);
     $sStr = str_replace('ß', 'ss', $sStr);
+
+		# Remove non alpha chars
+		$sStr = preg_replace("/[^a-zA-Z0-9\s]/", '', $sStr);
+
+		# Remove spaces
     $sStr = str_replace(' ', '_', $sStr);
+
     return $sStr;
   }
 
