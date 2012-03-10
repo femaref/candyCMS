@@ -93,7 +93,6 @@ class Mail extends Main {
 			if ($this->_aSession['userdata']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
-							!isset($this->_aRequest['ajax']) &&
 							WEBSITE_DEVELOPMENT !== 'test')
 				return $this->_checkCaptcha();
 

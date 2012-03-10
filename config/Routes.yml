@@ -7,9 +7,11 @@
 "(:alpha)/(create|update|destroy)": controller=$1&action=$2
 "(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
 "(:alpha)/(:num)/highlight/(:any)": controller=$1&id=$2&highlight=$3
+"(:alpha)/(:num)/page/(:num)": controller=$1&id=$2&page=$3
 
 # Special behaviour
-"blog/(:num)": controller=blog&id=$1
+"blog/(:num)": controller=blog&id=$1&page=1
+"blog/(:num)/(:any)": controller=blog&id=$1&page=1
 "calendar/(:num)/archive": controller=calendar&action=archive&id=$1
 "gallery": controller=gallery&page=1
 "gallery/(:num)/(createfile|updatefile|destroyfile)": controller=gallery&action=$2&id=$1
@@ -20,6 +22,7 @@
 "rss/(:alpha)": controller=rss&section=$1
 "rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
 "search/(:any)": controller=search&search=$1
+"session/(password|verification)": controller=session&action=$1
 "user/(:num)/(:alpha)": controller=user&action=$2&id=$1
 "user/(:alnum)/verification": controller=user&action=verification&code=$1
 
