@@ -71,12 +71,6 @@ define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
-# Enter your Google tracking code here
-# DEFAULT: ''
-define('WEBSITE_TRACKING_CODE', '');
-
-# ------------------------------------------------------------------------------
-
 # Number of seconds between cronjob execution (if enabled at ALLOWED_PLUGINS)
 # DEFAULT: '86400'
 define('CRONJOB_UPDATE_INTERVAL', '86400');
@@ -102,9 +96,9 @@ define('ALLOW_ADDONS', false);
 # ------------------------------------------------------------------------------
 
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Facebook
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
+# DEFAULT: 'Bbcode,FormatTimestamp,Headlines,Archive,Anayltics'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Facebook, Cronjob
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive,Analytics');
 
 # ------------------------------------------------------------------------------
 

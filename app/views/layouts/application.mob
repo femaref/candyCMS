@@ -74,7 +74,7 @@
         });
       </script>
       <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
-      {include file="_google.tpl"}
+      <!-- plugin:analytics -->
     </body>
   </html>
 {/strip}

@@ -306,7 +306,6 @@ abstract class Main {
 		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
 		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
 		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
-		$this->oSmarty->assign('WEBSITE_TRACKING_CODE', WEBSITE_TRACKING_CODE);
 
 		foreach ($this->_aSession['userdata'] as $sKey => $sData)
 			$this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);

@@ -23,49 +23,53 @@ require_once PATH_STANDARD . '/lib/facebook/facebook.php';
 
 final class FacebookCMS extends Facebook {
 
-  /**
-   *
-   * @param type $sKey
-   * @return type
-   *
-   */
-  public function getUserData($sKey = '') {
-    if ($this->getAccessToken()) {
-      try {
-        $iUid = $this->getUser();
-        $aApiCall = array(
-            'method' => 'users.getinfo',
-            'uids' => $iUid,
-            'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
-        );
+	/**
+	 *
+	 * @param type $sKey
+	 * @return type
+	 *
+	 */
+	public final function getUserData($sKey = '') {
+		if ($this->getAccessToken()) {
+			try {
+				$iUid = $this->getUser();
+				$aApiCall = array(
+						'method' => 'users.getinfo',
+						'uids' => $iUid,
+						'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
+				);
 
-        $aData = $this->api($aApiCall);
-        return!empty($sKey) ? $aData[$sKey] : $aData;
-      }
-      catch (AdvancedException $e) {
-        die($e->getMessage());
-      }
-    }
-  }
+				$aData = $this->api($aApiCall);
+				return !empty($sKey) ? $aData[$sKey] : $aData;
+			}
+			catch (AdvancedException $e) {
+				die($e->getMessage());
+			}
+		}
+	}
 
-  /**
-   *
-   * @param type $sUids
-   * @return type
-   *
-   */
-  public function getUserAvatar($sUids) {
-    try {
-      $aApiCall = array(
-          'method'  => 'users.getinfo',
-          'uids'    => $sUids,
-          'fields'  => 'pic_square_with_logo, profile_url'
-      );
+	/**
+	 *
+	 * @param type $sUids
+	 * @return type
+	 *
+	 */
+	public final function getUserAvatar($sUids) {
+		try {
+			$aApiCall = array(
+					'method' => 'users.getinfo',
+					'uids' => $sUids,
+					'fields' => 'pic_square_with_logo, profile_url'
+			);
 
-      return $this->api($aApiCall);
-    }
-    catch (AdvancedException $e) {
-      die($e->getMessage());
-    }
-  }
+			return $this->api($aApiCall);
+		}
+		catch (AdvancedException $e) {
+			die($e->getMessage());
+		}
+	}
+
+	public final function show() {
+
+	}
 }

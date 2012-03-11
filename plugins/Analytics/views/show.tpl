@@ -1,7 +1,7 @@
 {strip}
-  {if $WEBSITE_TRACKING_CODE && $WEBSITE_MODE == 'production'}
+  {if $PLUGIN_ANALYTICS_TRACKING_CODE !== '' && ($WEBSITE_MODE == 'production' || $WEBSITE_MODE == 'staging')}
     <script type='text/javascript'>
-      var sTrackingCode = '{$WEBSITE_TRACKING_CODE}';
+      var sTrackingCode = '{$PLUGIN_ANALYTICS_TRACKING_CODE}';
       {literal}
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', sTrackingCode]);

@@ -194,8 +194,8 @@
       <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
 
       <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
-      {include file="_facebook.tpl"}
-      {include file="_google.tpl"}
+      <!-- plugin:analytics -->
+      <!-- plugin:facebook -->
     </body>
   </html>
 {/strip}

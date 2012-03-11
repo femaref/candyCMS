@@ -150,7 +150,7 @@ class Index {
       try {
         if (!file_exists(PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
                         (string) ucfirst($sPluginName) . '.controller.php'))
-          throw new AdvancedException('Missing plugin: ' . ucfirst($sConfig));
+          throw new AdvancedException('Missing plugin: ' . ucfirst($sPluginName));
         else
           require_once PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
                   (string) ucfirst($sPluginName) . '.controller.php';
@@ -568,6 +568,14 @@ class Index {
     # Bugfix: Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['userdata'] = self::_resetUser();
+
+    if (preg_match('/<!-- plugin:analytics -->/', $sCachedHTML) &&
+						class_exists('\CandyCMS\Plugin\Controller\Analytics')) {
+      $oAnalytics = new \CandyCMS\Plugin\Controller\Analytics();
+      $sCachedHTML = & str_replace('<!-- plugin:analytics -->',
+							$oAnalytics->show(),
+							$sCachedHTML);
+    }
 
     if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\Archive')) {
