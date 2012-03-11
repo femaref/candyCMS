@@ -34,10 +34,7 @@ class WebTestOfMailController extends CandyWebTest {
 		$this->assertResponse('200');
 	}
 
-	/**
-	 * @todo validate forms
-	 */
-	function testCreate() {
+	function testCreateSuccess() {
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
 				'content' => 'Test',
@@ -46,5 +43,15 @@ class WebTestOfMailController extends CandyWebTest {
 
 		$this->assertResponse(200);
 		$this->assertText(I18n::get('mail.info.title'));
+	}
+
+	function testCreateFail() {
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
+				'create_mail' => 'formdata'
+		)));
+
+		$this->assertResponse(200);
+		$this->assertText(I18n::get('error.form.missing.email'));
+		$this->assertText(I18n::get('error.form.missing.content'));
 	}
 }
