@@ -34,33 +34,17 @@ class WebTestOfMailController extends CandyWebTest {
 		$this->assertResponse('200');
 	}
 
-  function testShowAjax() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
-		$this->assertText(I18n::get('global.contact'));
-		$this->assertText('c2f9619961');
-		$this->assertResponse('200');
-	}
-
-	/*function testCreate() {
+	/**
+	 * @todo tests when not all inputs are filled out
+	 * @todo test if mail sends
+	 */
+	function testCreate() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
 				'content' => 'Test'
 		));
 
-		# Same view as before as we have to validate captcha
-		$this->assertText('c2f9619961');
-		#$this->assertText(I18n::get('error.captcha.incorrect'));
+		#$this->assertText(I18n::get('mail.info.title'));
 		$this->assertResponse(200);
 	}
-
-	function testCreateAjax() {
-		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/ajax', array(
-				'email' => WEBSITE_MAIL_NOREPLY,
-				'content' => 'Test'
-		));
-
-		$this->assertResponse(200);
-		$this->assertText(I18n::get('mail.info.title'));
-		$this->showSource();
-	}*/
 }

@@ -89,15 +89,12 @@ class Mail extends Main {
 	 */
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
-			# Disable at AJAX due to a bug in reloading JS code
-			if ($this->_aSession['userdata']['role'] == 0 &&
+			return	$this->_aSession['userdata']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
-							WEBSITE_DEVELOPMENT !== 'test')
-				return $this->_checkCaptcha();
-
-			else
-				return $this->_create(false);
+							WEBSITE_MODE !== 'test' ?
+							$this->_checkCaptcha() :
+							$this->_create(false);
 		}
 		else
 			return $this->_showCreateMailTemplate($this->_aSession['userdata']['role'] == 0 ? true : false);
@@ -129,7 +126,7 @@ class Mail extends Main {
 										(string) $this->_aRequest['subject'] :
 										'');
 
-		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
+		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
 			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
     if (!empty($this->_aError))

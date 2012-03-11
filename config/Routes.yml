@@ -13,6 +13,7 @@
 "blog/(:num)": controller=blog&id=$1&page=1
 "blog/(:num)/(:any)": controller=blog&id=$1&page=1
 "calendar/(:num)/archive": controller=calendar&action=archive&id=$1
+"comment/(:num)/destroy/(:num)": controller=comment&action=destroy&id=$1&parent_id=$2
 "gallery": controller=gallery&page=1
 "gallery/(:num)/(createfile|updatefile|destroyfile)": controller=gallery&action=$2&id=$1
 "gallery/(:num)/image/(:num)": controller=gallery&action=image&album_id=$1&id=$2

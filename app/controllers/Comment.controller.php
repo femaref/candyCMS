@@ -15,8 +15,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
-
 class Comment extends Main {
 
   /**
@@ -74,6 +72,8 @@ class Comment extends Main {
    *
    */
   public function __init($aParentData = '') {
+		require_once PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
+
     $oModel = $this->__autoload('Comment', true);
     $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
 		$this->_aParentData = & $aParentData;
@@ -87,28 +87,26 @@ class Comment extends Main {
    *
    */
   protected function _show() {
-    if ($this->_iId) {
-      $this->oSmarty->assign('comments',
-							$this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
+		$this->oSmarty->assign('comments',
+						$this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
-      # Set author of blog entry
-      $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
+		# Set author of blog entry
+		$this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
 
-      # For correct information, do some math to display entries.
-      # NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
-      # when other people don't see it
-      $this->oSmarty->assign('comment_number',
-							($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
+		# For correct information, do some math to display entries.
+		# NOTE: If you're admin, you can see all entries. That might bring pagination to your view, even
+		# when other people don't see it
+		$this->oSmarty->assign('comment_number',
+						($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
-      # Do we need pages?
-      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
+		# Do we need pages?
+		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
 
-      $sTemplateDir		= Helper::getTemplateDir('comments', 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+		$sTemplateDir		= Helper::getTemplateDir('comments', 'show');
+		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comment');
-    }
+		$this->oSmarty->setTemplateDir($sTemplateDir);
+		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comment');
   }
 
   /**
@@ -124,7 +122,7 @@ class Comment extends Main {
     $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
 
-    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true)
+    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
       $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
     if (!empty($this->_aError))
@@ -148,7 +146,10 @@ class Comment extends Main {
    */
   public function create($sInputName) {
 		if (isset($this->_aRequest[$sInputName]))
-			return	$this->_aSession['userdata']['role'] == 0 && RECAPTCHA_ENABLED === true && MOBILE === false ?
+			return	$this->_aSession['userdata']['role'] == 0 &&
+							RECAPTCHA_ENABLED === true &&
+							MOBILE === false &&
+							WEBSITE_MODE !== 'test' ?
 							$this->_checkCaptcha() :
 							$this->_create(false);
 

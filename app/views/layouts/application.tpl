@@ -193,6 +193,7 @@
       <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.dropdown{$_compress_files_suffix_}.js'></script>
       <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
 
+      {* Own JS and plugins *}
       <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
       <!-- plugin:analytics -->
       <!-- plugin:facebook -->

@@ -65,10 +65,4 @@
     {/foreach}
     {$_pages_}
   {/if}
-  <script src='%PATH_JS%/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $(".image img").lazyload({ effect : "fadeIn" });
-    });
-  </script>
 {/strip}
