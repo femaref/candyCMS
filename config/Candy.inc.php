@@ -44,7 +44,7 @@ define('WEBSITE_CDN', '/public');
 # Use compressed or non-compressed files. Note that compressed files must be
 # updated every time you work on a non-compressed file!
 # DEFAULT: 'true'
-define('WEBSITE_COMPRESS_FILES', false);
+define('WEBSITE_COMPRESS_FILES', true);
 # ------------------------------------------------------------------------------
 
 # Enter the full name of website. This is used for Emails and RSS
@@ -67,7 +67,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
@@ -97,8 +97,8 @@ define('ALLOW_ADDONS', false);
 
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Headlines,Archive,Anayltics'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Facebook, Cronjob
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive,Analytics');
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Facebook, Cronjob, Analytics
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
 
 # ------------------------------------------------------------------------------
 

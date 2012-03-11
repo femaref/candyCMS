@@ -14,7 +14,7 @@ define('PLUGIN_ARCHIVE_LIMIT', 1000);
 
 # Enter your Google tracking code here
 # DEFAULT: ''
-define('PLUGIN_ANALYTICS_TRACKING_CODE', '123456');
+define('PLUGIN_ANALYTICS_TRACKING_CODE', '');
 
 # Admins user id(s). Must be comma-separated. (more info at http://developers.facebook.com/docs/opengraph/)
 define('PLUGIN_FACEBOOK_ADMIN_ID', '');
