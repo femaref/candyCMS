@@ -154,8 +154,7 @@ class Helper {
       if (!is_int($iSize))
         $iSize = POPUP_DEFAULT_X;
 
-      $sMail = !empty($sEmail) ? $sEmail : WEBSITE_MAIL;
-      return 'http://www.gravatar.com/avatar/' . md5($sMail) . '.jpg?s=' . $iSize . '&d=mm';
+      return 'http://www.gravatar.com/avatar/' . md5($sEmail) . '.jpg?s=' . $iSize . '&d=mm';
 		}
   }
 
@@ -168,13 +167,11 @@ class Helper {
    * @param integer $iUserId user ID
    * @param string $sEmail email address to search gravatar for
    * @param boolean $bUseGravatar do we want to use gravatar?
-   * @return array array with all avatarURLs added
+   * @return array $aData with all avatarURLs added
+	 * @todo test
    *
    */
-  public static function createAvatarURLs(&$aData, $iUserId, $sEmail = '', $bUseGravatar = false) {
-    if (!is_array($aData))
-      $aData = array();
-
+  public static function createAvatarURLs(&$aData, $iUserId, $sEmail, $bUseGravatar = false) {
     $aData['avatar_32']     = Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
     $aData['avatar_64']     = Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
     $aData['avatar_100']    = Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);

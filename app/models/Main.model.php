@@ -235,12 +235,20 @@ abstract class Main {
     # Build user ID
     $iUserId = isset($aRow['author_id']) ? $aRow['author_id'] : $aRow['id'];
 
-    if(isset($this->_aRequest['controller']) && 'log' !== $this->_aRequest['controller']) {
-      $sEmail       = isset($aRow['email']) ? $aRow['email'] : '';
-      $bUseGravatar = isset($aRow['use_gravatar']) ? (bool) $aRow['use_gravatar'] : false;
+		# Create avatars
+		if(isset($aRow['author_email']))
+			$sEmail = $aRow['author_email'];
 
-      Helper::createAvatarURLs($aData, $iUserId, $sEmail, $bUseGravatar);
-    }
+		elseif(isset($aRow['email']))
+			$sEmail = $aRow['email'];
+
+		else
+			$sEmail = 'admin@example.com';
+
+		Helper::createAvatarURLs($aData,
+						$iUserId,
+						$sEmail,
+						isset($aRow['use_gravatar']) ? (bool) $aRow['use_gravatar'] : false);
 
     # Build full user name
     $aData['name']    = isset($aData['name']) ? (string) $aData['name'] : '';
