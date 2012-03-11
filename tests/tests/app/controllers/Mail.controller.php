@@ -35,16 +35,16 @@ class WebTestOfMailController extends CandyWebTest {
 	}
 
 	/**
-	 * @todo tests when not all inputs are filled out
-	 * @todo test if mail sends
+	 * @todo validate forms
 	 */
 	function testCreate() {
-		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
-				'content' => 'Test'
-		));
+				'content' => 'Test',
+				'create_mail' => 'formdata'
+		)));
 
-		#$this->assertText(I18n::get('mail.info.title'));
 		$this->assertResponse(200);
+		$this->assertText(I18n::get('mail.info.title'));
 	}
 }

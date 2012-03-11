@@ -33,8 +33,33 @@ class WebTestOfCommentController extends CandyWebTest {
     $this->assertResponse(200);
 	}
 
+	function testCreateSuccess() {
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
+				'name' => 'Name',
+				'content' => 'Test',
+				'create_comment' => 'formdata',
+				'parent_id' => '1'
+		)));
+
+    $this->assertResponse(200);
+		$this->assertText(I18n::get('success.create'));
+	}
+
+	/**
+	 * @todo Check parent_id
+	 */
+	function testCreateFail() {
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
+				'create_comment' => 'formdata'
+		)));
+
+		$this->assertResponse(200);
+		$this->assertText(I18n::get('error.form.missing.name'));
+		$this->assertText(I18n::get('error.form.missing.content'));
+	}
+
 	function testDestroy() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/commetn/1/destroy/1'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/comment/1/destroy/1'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}

@@ -33,6 +33,9 @@ class WebTestOfSearchController extends CandyWebTest {
 		$this->assertText(I18n::get('global.search'));
 	}
 
+	/**
+	 * @todo validate forms
+	 */
 	function testSearch() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'search' => md5(RANDOM_HASH)

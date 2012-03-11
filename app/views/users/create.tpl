@@ -20,10 +20,12 @@
     </div>
     <div class='control-group{if isset($error.surname)} alert alert-error{/if}'>
       <label for='input-surname' class='control-label'>
-        {$lang.global.surname}</span>
+        {$lang.global.surname} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input class='span4' name='surname' value='{$surname}' id='input-surname' type='text' />
+        <input class='span4' name='surname'
+               value='{$surname}' id='input-surname' type='text' required />
+        {if isset($error.surname)}<span class='help-inline'>{$error.surname}</span>{/if}
       </div>
     </div>
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>

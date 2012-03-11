@@ -52,6 +52,7 @@
                   class='required span4' required>
           {if isset($content)}{$content}{/if}
         </textarea>
+        {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
       </div>
     </div>
     {include file='../layouts/_recaptcha.tpl'}

@@ -462,14 +462,14 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError['error'][$sField] = empty($sMessage) ?
-							I18n::get('error.form.missing.' . strtoupper($sField)) :
+			$this->_aError[$sField] = empty($sMessage) ?
+							I18n::get('error.form.missing.' . strtolower($sField)) :
 							$sMessage;
 
     # Bugfix: Don't try to validate email on comment post.
 		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false) &&
 						'blog' !== $this->_aRequest['controller'])
-			$this->_aError['error']['email'] = I18n::get('error.form.missing.email');
+			$this->_aError['email'] = I18n::get('error.form.missing.email');
 	}
 
   /**
