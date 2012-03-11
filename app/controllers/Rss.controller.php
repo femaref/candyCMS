@@ -99,7 +99,7 @@ class Rss extends Main {
       $this->oSmarty->assign('_copyright_', $aData[$this->_iId]['full_name']);
       $this->oSmarty->assign('_content_', $aData[$this->_iId]['content']);
       $this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
-      $this->oSmarty->assign('_link_', $aData[$this->_iId]['url']);
+      $this->oSmarty->assign('_link_', Helper::removeSlash($aData[$this->_iId]['url']));
       $this->oSmarty->assign('_pubdate_', $aData[$this->_iId]['datetime_rss']);
       $this->oSmarty->assign('_title_', $this->getTitle());
 

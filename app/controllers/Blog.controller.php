@@ -18,13 +18,6 @@ use CandyCMS\Helper\I18n as I18n;
 class Blog extends Main {
 
   /**
-   * @var object
-   * @access public
-   *
-   */
-  public $oPagination;
-
-  /**
    * Show blog entry or blog overview (depends on a given ID or not).
    *
    * @access protected

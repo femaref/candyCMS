@@ -57,7 +57,7 @@ class Blog extends Main {
         exit('SQL error.');
       }
 
-      try {
+			try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
                                         u.id AS uid,

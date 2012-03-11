@@ -267,13 +267,13 @@ abstract class Main {
 	protected function _setSmarty() {
 		# Initialize smarty
 		$this->oSmarty = new Smarty();
-		$this->oSmarty->cache_dir			= PATH_STANDARD . '/' . CACHE_DIR;
-		$this->oSmarty->compile_dir		= PATH_STANDARD . '/' . COMPILE_DIR;
-		$this->oSmarty->plugins_dir		= PATH_STANDARD . '/lib/smarty/plugins';
-		$this->oSmarty->template_dir	= PATH_STANDARD . '/app/views';
+		$this->oSmarty->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
+		$this->oSmarty->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
+		$this->oSmarty->setPluginsDir(PATH_STANDARD . '/lib/smarty/plugins');
+		$this->oSmarty->setTemplateDir(PATH_STANDARD . '/app/views');
 
-    $this->oSmarty->merge_compiled_includes = true;
-    $this->oSmarty->use_sub_dirs = true;
+		$this->oSmarty->merge_compiled_includes = true;
+		$this->oSmarty->use_sub_dirs = true;
 
     # Only compile our templates on production mode.
     if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging') {

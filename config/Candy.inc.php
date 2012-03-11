@@ -67,7 +67,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
@@ -102,9 +102,9 @@ define('ALLOW_ADDONS', false);
 # ------------------------------------------------------------------------------
 
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob,Facebook'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Adsense, Teaser, Facebook
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Archive,Headlines');
+# DEFAULT: 'Bbcode,FormatTimestamp,Cronjob'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Archive, Headlines, Facebook
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
 
 # ------------------------------------------------------------------------------
 

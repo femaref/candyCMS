@@ -447,8 +447,9 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . substr(md5($this->_aSession['userdata']['role'] .
-              WEBSITE_LOCALE . PATH_TEMPLATE), 0, 10) . '|' . substr(md5(CURRENT_URL), 0, 10));
+			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' .
+							substr(md5($this->_aSession['userdata']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
+							substr(md5(CURRENT_URL), 0, 10));
 
 		# Direct to install
     if (strtolower($this->_aRequest['controller']) == 'install')
@@ -568,16 +569,20 @@ class Index {
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['userdata'] = self::_resetUser();
 
-    if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Archive')) {
-      $oArchive = new \CandyCMS\Plugin\Archive($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
-      $oArchive->__init();
-      $sCachedHTML = & str_replace('<!-- plugin:archive -->', $oArchive->show(), $sCachedHTML);
+    if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) &&
+						class_exists('\CandyCMS\Plugin\Controller\Archive')) {
+      $oArchive = new \CandyCMS\Plugin\Controller\Archive();
+      $sCachedHTML = & str_replace('<!-- plugin:archive -->',
+							$oArchive->show($this->_aRequest, $this->_aSession),
+							$sCachedHTML);
     }
 
-    if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) && class_exists('\CandyCMS\Plugin\Headlines')) {
-      $oHeadlines = new \CandyCMS\Plugin\Headlines($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
-      $oHeadlines->__init();
-      $sCachedHTML = & str_replace('<!-- plugin:headlines -->', $oHeadlines->show(), $sCachedHTML);
+    if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) &&
+						class_exists('\CandyCMS\Plugin\Controller\Headlines')) {
+      $oHeadlines = new \CandyCMS\Plugin\Controller\Headlines();
+      $sCachedHTML = & str_replace('<!-- plugin:headlines -->',
+							$oHeadlines->show($this->_aRequest, $this->_aSession),
+							$sCachedHTML);
     }
 
     return $sCachedHTML;
