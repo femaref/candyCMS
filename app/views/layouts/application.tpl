@@ -25,8 +25,8 @@
 
       {* If we want to use a facebook plugin, provide tracking data. *}
       {if $_facebook_plugin_ == true}
-        <meta property="fb:admins" content="{$FACEBOOK_ADMIN_ID}"/>
-        <meta property="fb:app_id" content="{$FACEBOOK_APP_ID}"/>
+        <meta property="fb:admins" content="{$PLUGIN_FACEBOOK_ADMIN_ID}"/>
+        <meta property="fb:app_id" content="{$PLUGIN_FACEBOOK_APP_ID}"/>
       {/if}
 
       {* Basic stuff *}

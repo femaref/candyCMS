@@ -14,7 +14,7 @@ namespace CandyCMS\Model;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
-use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 use PDO;
 
 class Comment extends Main {
@@ -73,7 +73,7 @@ class Comment extends Main {
     }
 
     # We crawl the facebook avatars
-    if (class_exists('\CandyCMS\Plugin\FacebookCMS'))
+    if (class_exists('\CandyCMS\Plugin\Controller\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
 
     # Get comment number

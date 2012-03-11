@@ -18,8 +18,8 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
-use CandyCMS\Plugin\Cronjob as Cronjob;
-use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use CandyCMS\Plugin\Controller\Cronjob as Cronjob;
+use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 use lessc;
 use Routes;
 use sfYaml;
@@ -89,7 +89,7 @@ class Index {
     $this->_aFile			= & $aFile;
     $this->_aCookie		= & $aCookie;
 
-    $this->getConfigFiles(array('Plugins', 'Facebook', 'Mailchimp'));
+    $this->getConfigFiles(array('Plugins', 'Mailchimp'));
     $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
@@ -278,7 +278,7 @@ class Index {
    *
    */
   public function getCronjob($bForceAction = false) {
-    if (class_exists('\CandyCMS\Plugin\Cronjob')) {
+    if (class_exists('\CandyCMS\Plugin\Controller\Cronjob')) {
       if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
 					Cronjob::cleanup(array('media', 'bbcode'));
 					Cronjob::optimize();
@@ -297,10 +297,10 @@ class Index {
    *
    */
   public function getFacebookExtension() {
-    if (class_exists('\CandyCMS\Plugin\FacebookCMS')) {
+    if (class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
       $this->_aSession['facebook'] = new FacebookCMS(array(
-					'appId' => FACEBOOK_APP_ID,
-					'secret' => FACEBOOK_SECRET,
+					'appId' => PLUGIN_FACEBOOK_APP_ID,
+					'secret' => PLUGIN_FACEBOOK_SECRET,
 					'cookie' => true
 					));
 
@@ -590,6 +590,14 @@ class Index {
       $oHeadlines = new \CandyCMS\Plugin\Controller\Headlines();
       $sCachedHTML = & str_replace('<!-- plugin:headlines -->',
 							$oHeadlines->show($this->_aRequest, $this->_aSession),
+							$sCachedHTML);
+    }
+
+    if (preg_match('/<!-- plugin:facebook -->/', $sCachedHTML) &&
+						class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
+			$oFacebook = new \CandyCMS\Plugin\Controller\FacebookCMS();
+      $sCachedHTML = & str_replace('<!-- plugin:facebook -->',
+							$oFacebook->show(),
 							$sCachedHTML);
     }
 

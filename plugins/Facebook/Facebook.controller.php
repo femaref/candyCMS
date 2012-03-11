@@ -13,9 +13,10 @@
  *
  */
 
-namespace CandyCMS\Plugin;
+namespace CandyCMS\Plugin\Controller;
 
 use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
 use Facebook;
 use Smarty;
 
@@ -70,6 +71,23 @@ final class FacebookCMS extends Facebook {
 	}
 
 	public final function show() {
+    $sTemplateDir   = Helper::getPluginTemplateDir('facebook', 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
+		$oSmarty = new Smarty();
+		$oSmarty->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
+		$oSmarty->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
+		$oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+		$oSmarty->setTemplateDir($sTemplateDir);
+
+		$oSmarty->merge_compiled_includes = true;
+		$oSmarty->use_sub_dirs = true;
+
+		if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|facebook')) {
+			$oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', defined(PLUGIN_FACEBOOK_APP_ID)? PLUGIN_FACEBOOK_APP_ID : '');
+			$oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
+		}
+
+		return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|facebook');
 	}
 }

@@ -287,11 +287,11 @@ abstract class Main {
       $this->oSmarty->clearCompiledTemplate();
     }
 
-    $bUseFacebook = class_exists('\CandyCMS\Plugin\FacebookCMS') ? true : false;
+    $bUseFacebook = class_exists('\CandyCMS\Plugin\Controller\FacebookCMS') ? true : false;
 
     if($bUseFacebook === true) {
-      $this->oSmarty->assign('FACEBOOK_ADMIN_ID', FACEBOOK_ADMIN_ID); # required for meta only
-      $this->oSmarty->assign('FACEBOOK_APP_ID', FACEBOOK_APP_ID); # required for facebook actions
+      $this->oSmarty->assign('PLUGIN_FACEBOOK_ADMIN_ID', PLUGIN_FACEBOOK_ADMIN_ID); # required for meta only
+      $this->oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', PLUGIN_FACEBOOK_APP_ID); # required for facebook actions
     }
 
 		# Define smarty constants

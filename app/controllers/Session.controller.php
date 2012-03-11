@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Controller\Main as Main;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 
 class Session extends Main {
 

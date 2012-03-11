@@ -13,7 +13,6 @@
 namespace CandyCMS\Plugin\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
 final class Analytics {
