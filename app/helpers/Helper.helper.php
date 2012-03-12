@@ -77,11 +77,10 @@ class Helper {
    * @access public
 	 * @param string $sMail email address to check
    * @return boolean
-   * @todo check TLD endings
    *
    */
   public static function checkEmailAddress($sMail) {
-    return preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $sMail) ? true : false;
+    return preg_match("/^([a-zA-Z0-9])+(\.?[a-zA-Z0-9_-]+)*@([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,6}$/", $sMail) ? true : false;
 	}
 
   /**
@@ -168,7 +167,6 @@ class Helper {
    * @param string $sEmail email address to search gravatar for
    * @param boolean $bUseGravatar do we want to use gravatar?
    * @return array $aData with all avatarURLs added
-	 * @todo test
    *
    */
   public static function createAvatarURLs(&$aData, $iUserId, $sEmail, $bUseGravatar = false) {

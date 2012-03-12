@@ -31,12 +31,20 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertFalse(Helper::errorMessage('Message'));
   }
 
-  /**
-   * @todo
-   */
   function testCheckEmailAddress() {
     $this->assertTrue(Helper::checkEmailAddress('admin@example.com'));
-    #$this->assertFalse(Helper::checkEmailAddress('admin@example'));
+    $this->assertTrue(Helper::checkEmailAddress('admin@sub.domain.example.com'));
+    $this->assertTrue(Helper::checkEmailAddress('admin-helper@example.com'));
+    $this->assertTrue(Helper::checkEmailAddress('admin-helper__-@example.com'));
+
+    $this->assertFalse(Helper::checkEmailAddress('admin...helper@example.com'));
+    $this->assertFalse(Helper::checkEmailAddress('admin.@example.com'));
+
+    $this->assertFalse(Helper::checkEmailAddress('admin@example'));
+    //should fail becaus tld is too short (2-6)
+    $this->assertFalse(Helper::checkEmailAddress('a@b.c'));
+    //should fail becaus tld is too long (2-6)
+    $this->assertFalse(Helper::checkEmailAddress('a@b.cdefghi'));
     $this->assertFalse(Helper::checkEmailAddress('admin'));
   }
 
