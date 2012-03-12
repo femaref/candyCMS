@@ -15,10 +15,10 @@ namespace CandyCMS\Plugin\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use Smarty;
 
-final class Analytics {
+final class Piwik {
 
   public final static function show() {
-    $sTemplateDir   = Helper::getPluginTemplateDir('piwikanalytics', 'show');
+    $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = new Smarty();
@@ -30,12 +30,12 @@ final class Analytics {
     $oSmarty->merge_compiled_includes = true;
     $oSmarty->use_sub_dirs = true;
 
-    if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwikanalytics')) {
+    if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik')) {
       $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
-      $oSmarty->assign('PLUGIN_PIWIKANALYTICS_SITEID', PLUGIN_PIWIKANALYTICS_SITEID);
-      $oSmarty->assign('PLUGIN_PIWIKANALYTICS_SITEURL', PLUGIN_PIWIKANALYTICS_SITEURL);
+      $oSmarty->assign('PLUGIN_PIWIK_SITEID', PLUGIN_PIWIK_SITEID);
+      $oSmarty->assign('PLUGIN_PIWIK_SITEURL', PLUGIN_PIWIK_SITEURL);
     }
 
-    return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwikanalytics');
+    return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik');
   }
 }

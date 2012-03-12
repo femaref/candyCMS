@@ -601,6 +601,14 @@ class Index {
 							$sCachedHTML);
     }
 
+    if (preg_match('/<!-- plugin:piwik -->/', $sCachedHTML) &&
+						class_exists('\CandyCMS\Plugin\Controller\Piwik')) {
+      $oPiwik = new \CandyCMS\Plugin\Controller\Piwik();
+      $sCachedHTML = & str_replace('<!-- plugin:piwik -->',
+							$oPiwik->show(),
+							$sCachedHTML);
+    }
+
     return $sCachedHTML;
   }
 }
