@@ -54,6 +54,20 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertPattern('/gravatar/i', Helper::getAvatar(100, 0));
   }
 
+  function testCreateAvatarURLs() {
+    $arr = array();
+    $x = Helper::createAvatarURLs($arr, 0, '', false);
+    $this->assertEqual($arr['avatar_32'], Helper::getAvatar(32, 0));
+    $this->assertEqual($arr['avatar_64'], Helper::getAvatar(64, 0));
+    $this->assertEqual($arr['avatar_100'], Helper::getAvatar(100, 0));
+    $this->assertEqual($arr['avatar_popup'], Helper::getAvatar('popup', 0));
+    $this->assertNotNull($arr['avatar_32']);
+    $this->assertNotNull($arr['avatar_64']);
+    $this->assertNotNull($arr['avatar_100']);
+    $this->assertNotNull($arr['avatar_popup']);
+    $this->assertSame($x, $arr);
+  }
+
   function testGetFileSize() {
     $this->assertPattern('/KB/i', Helper::getFileSize('index.php'));
     $this->assertPattern('/Byte/i', Helper::getFileSize('not_existing_file'));
