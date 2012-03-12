@@ -257,7 +257,7 @@ abstract class Main {
 
     # Encode data for SEO
     $aData['encoded_full_name'] = urlencode($aData['full_name']);
-    $aData['encoded_title'] = isset($aRow['title']) ? urlencode($aRow['title']) : '';
+    $aData['encoded_title']			= isset($aRow['title']) ? urlencode($aRow['title']) : '';
 
     # URL to entry
     $aData['url_clean']   = WEBSITE_URL . '/' . $sSection . '/' . $aRow['id'];
