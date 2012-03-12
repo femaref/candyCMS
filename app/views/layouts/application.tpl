@@ -196,6 +196,7 @@
       {* Own JS and plugins *}
       <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
       <!-- plugin:analytics -->
+      <!-- plugin:piwikanalytics -->
       <!-- plugin:facebook -->
     </body>
   </html>

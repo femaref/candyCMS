@@ -23,4 +23,8 @@ define('PLUGIN_FACEBOOK_ADMIN_ID', '');
 define('PLUGIN_FACEBOOK_APP_ID', '');
 define('PLUGIN_FACEBOOK_SECRET', '');
 
+#Piwik Tracking Information for Piwik Plugin
+define('PLUGIN_PIWIKANALYTICS_SITEURL', '');
+define('PLUGIN_PIWIKANALYTICS_SITEID', '');
+
 ?>

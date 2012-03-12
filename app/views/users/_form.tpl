@@ -13,8 +13,9 @@
         </li>
       {/if}
       <li id='js-avatar_tab'
-          {if $_REQUEST['action'] == 'avatar'}class='active'{/if}
-          {if $use_gravatar == 1}class='hide'{/if}>
+          {if $_REQUEST['action'] == 'avatar' && $use_gravatar == 1}class='active hide'
+          {elseif $use_gravatar == 1}class='hide'
+          {elseif $_REQUEST['action'] == 'avatar'}class='active'{/if}>
         <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
       </li>
       {if $USER_ROLE < 4}
@@ -73,7 +74,7 @@
                 title='{$full_name}'
                 id='js-gravatar'
                 style='{if $use_gravatar == 0}opacity:0.25{/if}'>
-                <img alt='{$full_name}' src='{$avatar_32}' width='32' height='32' />
+                <img alt='{$name} {$surname}' src='{$avatar_32}' width='32' height='32' />
               </a>
             </div>
             <p id='js-gravatar_help' class='help-block{if $use_gravatar == 1} hide{/if}'>
@@ -235,9 +236,10 @@
   <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
     $('#input-use_gravatar').change(function() {
-      toggleOpacity($(this), $('#js-gravatar'));
-      $('#js-gravatar_help').toggle();
-      $('#js-avatar_tab').toggle().effect('highlight', {}, 3000);
+      var avatarIsChecked = $(this).is(':checked');
+      $('#js-gravatar').toggleOpacity(avatarIsChecked);
+      $('#js-gravatar_help').toggle('fast');
+      $('#js-avatar_tab').toggle(avatarIsChecked);
     });
 
     $('#input-content').bind('keyup', function() {
