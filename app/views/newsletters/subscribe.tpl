@@ -28,12 +28,13 @@
       </label>
       <div class='controls'>
         <input type='email' name='email' id='input-email'
-              class='span4 required focused' required />
+              class='span4 required focused' />
         {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
       </div>
     </div>
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.newsletter.title.subscribe}' />
+      <input type='hidden' value='formdata' name='subscribe_newsletter' />
     </div>
   </form>
 {/strip}

@@ -33,11 +33,15 @@ class WebTestOfNewsletterController extends CandyWebTest {
 		$this->assertText(I18n::get('newsletter.title.subscribe'));
 	}
 
+  /**
+   * @todo validate forms
+   */
 	function testSubscribe() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'name' => md5($this->aSession['userdata']['name'] . time()),
 				'surname' => md5($this->aSession['userdata']['surname'] . time()),
-				'email' => time() . '_' . WEBSITE_MAIL_NOREPLY
+				'email' => time() . '_' . WEBSITE_MAIL_NOREPLY,
+        'subscribe_newsletter' => 'formdata'
 		));
 
 		$this->assertText(I18n::get('success.newsletter.create'));
@@ -48,7 +52,8 @@ class WebTestOfNewsletterController extends CandyWebTest {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'name' => md5($this->aSession['userdata']['name'] . time()),
 				'surname' => md5($this->aSession['userdata']['surname'] . time()),
-				'email' => str_replace('@', '', WEBSITE_MAIL_NOREPLY)
+				'email' => str_replace('@', '', WEBSITE_MAIL_NOREPLY),
+        'subscribe_newsletter' => 'formdata'
 		));
 
 		$this->assertText(I18n::get('error.standard'));

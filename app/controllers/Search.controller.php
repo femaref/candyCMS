@@ -58,7 +58,7 @@ class Search extends Main {
 	 */
   protected function _show() {
     if (!isset($this->_aRequest['search']) || empty($this->_aRequest['search']))
-      return $this->showFormTemplate();
+      return $this->_showFormTemplate();
 
     else {
       $sString = & Helper::formatInput($this->_aRequest['search']);
@@ -84,11 +84,11 @@ class Search extends Main {
 	/**
 	 * Provide a search form template.
 	 *
-	 * @access public
+	 * @access protected
 	 * @return string HTML content
 	 *
 	 */
-  public function showFormTemplate() {
+  protected function _showFormTemplate() {
     $this->setDescription(I18n::get('global.search'));
     $this->setTitle(I18n::get('global.search'));
 

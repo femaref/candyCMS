@@ -563,10 +563,10 @@ abstract class Main {
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID,
-																	$aData['email'],
-																	array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']),
-																	'',
-																	$bDoubleOptIn);
+              $aData['email'],
+              array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']),
+              '',
+              $bDoubleOptIn);
   }
 
   /**

@@ -23,7 +23,6 @@ require_once PATH_STANDARD . '/config/Candy.inc.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
 require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
-define('AJAX_REQUEST', false);
 define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
 define('MOBILE', false);
@@ -44,7 +43,6 @@ class AllFileTests extends TestSuite {
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
-
 
     # Blog
     $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blog.model.php');
@@ -75,7 +73,6 @@ class AllFileTests extends TestSuite {
 
     # Mail
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mail.controller.php');
-
 
     # Media
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Media.controller.php');

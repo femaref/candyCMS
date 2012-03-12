@@ -25,7 +25,7 @@ class Newsletter extends Main {
    *
    */
   public function show() {
-    return $this->create();
+    return $this->create('subscribe_newsletter', 0);
   }
 
   /**
@@ -35,11 +35,11 @@ class Newsletter extends Main {
    * @return string HTML content
    *
    */
-  public function create() {
+  public function _create() {
 		$this->_setError('email');
 
 		if (isset($this->_aError))
-			return $this->_showCreateSubscriptionTemplate();
+			return $this->_showFormTemplate();
 
 		else
 			return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
@@ -50,11 +50,11 @@ class Newsletter extends Main {
   /**
    * Show a form for email subscription.
    *
-   * @access private
+   * @access protected
    * @return string HTML content
    *
    */
-  private function _showCreateSubscriptionTemplate() {
+  protected function _showFormTemplate() {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
