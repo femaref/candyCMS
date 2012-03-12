@@ -48,9 +48,20 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertFalse(Helper::checkEmailAddress('admin'));
   }
 
+  private function containsNumber($sString) {
+    for ($iI = 0; $iI < strlen($sString); $iI++)
+      if (is_numeric($sString[$iI]))
+        return true;
+    return false;
+  }
+
   function testCreateRandomChar() {
     $this->assertEqual(strlen(Helper::createRandomChar(10)), '10');
-    $this->assertTrue(is_numeric(Helper::createRandomChar(3, true)));
+    $this->assertEqual(strlen(Helper::createRandomChar(3)), '3');
+    $this->assertTrue($this->containsNumber(Helper::createRandomChar(10, true)));
+    //speakable passwords shall not start with numbers
+    $pwd = Helper::createRandomChar(10, true);
+    $this->assertFalse(is_numeric($pwd[0]));
   }
 
   function testCreateLinkTo() {

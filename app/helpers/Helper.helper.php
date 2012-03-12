@@ -89,25 +89,48 @@ class Helper {
 	 * @static
    * @access public
 	 * @param integer $iLength length of the charset
-	 * @param boolean $bIntegerOnly create a charset of numbers
+	 * @param boolean $bSpeakable charset is speakable by humans (every second char is a vocal)
    * @return string $sString created random charset
    *
    */
-  public static function createRandomChar($iLength, $bIntegerOnly = false) {
-		$sChars = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcedfghijkmnopqrstuvwxyz123456789';
+  public static function createRandomChar($iLength, $bSpeakable = false) {
+    $sChars = 'BCDFGHJKLMNPQRSTVWXZbcdfghjkmnpqrstvwxz';
+    $sVocals = 'AaEeiOoUuYy';
+    $sNumbers = '123456789';
 
-		if ($bIntegerOnly === true)
-			$sChars = '0123456789';
+    $sString = '';
 
-		$sString = '';
-		for ($iI = 1; $iI <= $iLength; $iI++) {
-			$iTemp = rand(1, strlen($sChars));
-			$iTemp--;
-			$sString .= $sChars[$iTemp];
-		}
+    if (!$bSpeakable) {
+      $sChars .= $sVocals . $sNumbers;
+      for ($iI = 1; $iI <= $iLength; $iI++) {
+        $iTemp = rand(0, strlen($sChars) - 1);
+        $sString .= $sChars[$iTemp];
+      }
+    }
+    else {
+      $iI = 1;
+      while ($iI < $iLength) {
+        if ($iI % 5 == 0) {
+          $sString .= $sNumbers[rand(0, strlen($sNumbers) - 1)];
+          $iI++;
+        }
+        else {
+          //vocal
+          $sString .= $sChars[rand(0, strlen($sChars) - 1)];
+          //if we have more chars to put, use a vocal, otherwise use numbers to fill the string
+          if ($iI < $iLength - 1)
+            $sString .= $sVocals[rand(0, strlen($sVocals) - 1)];
+          else if ($iI < $iLength)
+            $sString .= $sNumbers[rand(0, strlen($sNumbers) - 1)];
+          else
+            $iI--;
+          $iI += 2;
+        }
+      }
+    }
 
-		return $sString;
-	}
+    return $sString;
+  }
 
   /**
    * Create a simple link with provided params.

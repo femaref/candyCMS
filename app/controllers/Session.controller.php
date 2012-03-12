@@ -132,7 +132,7 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
-			$sNewPasswordClean = Helper::createRandomChar(10);
+			$sNewPasswordClean = Helper::createRandomChar(10, true);
 			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
 			if ($aData == true) {
