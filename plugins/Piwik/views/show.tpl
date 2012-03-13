@@ -1,9 +1,9 @@
 {strip}
-  {if $PLUGIN_PIWIKANALYTICS_SITEURL !== '' && $PLUGIN_PIWIKANALYTICS_SITEID !== '' && 
+  {if $PLUGIN_PIWIK_URL !== '' && $PLUGIN_PIWIK_ID !== '' &&
           ($WEBSITE_MODE == 'production' || $WEBSITE_MODE == 'staging')}
     <!-- Piwik --> <script type='text/javascript'>
-      var siteId = '{$PLUGIN_PIWIKANALYTICS_SITEID}';
-      var siteURL = '{$PLUGIN_PIWIKANALYTICS_SITEURL}';
+      var siteId  = '{$PLUGIN_PIWIK_ID}';
+      var siteURL = '{$PLUGIN_PIWIK_URL}';
       {literal}
         var _paq = _paq || [];
         (function(){ var u=(("https:" == document.location.protocol) ? "https://"+siteURL+"/" : "http://"+siteURL+"/");

@@ -32,8 +32,8 @@ final class Piwik {
 
     if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik')) {
       $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
-      $oSmarty->assign('PLUGIN_PIWIK_SITEID', PLUGIN_PIWIK_SITEID);
-      $oSmarty->assign('PLUGIN_PIWIK_SITEURL', PLUGIN_PIWIK_SITEURL);
+      $oSmarty->assign('PLUGIN_PIWIK_ID', PLUGIN_PIWIK_ID);
+      $oSmarty->assign('PLUGIN_PIWIK_URL', PLUGIN_PIWIK_URL);
     }
 
     return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik');
