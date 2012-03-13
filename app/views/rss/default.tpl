@@ -8,7 +8,7 @@
     <language>{$WEBSITE_LANGUAGE}</language>
     <link>{$WEBSITE_URL}</link>
     <copyright>{$WEBSITE_NAME}</copyright>
-    <pubDate>{$_pubdate_}</pubDate>
+    <pubDate>{$smarty.now|date_format:'%a, %d %b %Y %H:%M:%S %z'}</pubDate>
     <atom:link href="{$CURRENT_URL}" rel="self" type="application/rss+xml" />
     {foreach $data as $d}
       <item>
