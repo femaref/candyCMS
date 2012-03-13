@@ -232,8 +232,8 @@
       </form>
     </div>
   {/if}
-  <script src='{$_PATH.js}/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
+  <script src='{$_PATH.js}/core/jquery.fancybox{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tabs{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type='text/javascript'>
     $('#input-use_gravatar').change(function() {
       var avatarIsChecked = $(this).is(':checked');

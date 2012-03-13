@@ -309,10 +309,10 @@ abstract class Main {
       $this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
     # Define system variables
-		$this->oSmarty->assign('_date_', date('Y-m-d'));
-		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES === true ? '.min' : '');
-		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
-		$this->oSmarty->assign('_json_language_', I18n::getJson());
+    $this->oSmarty->assign('_SYSTEM', array("date" => date('Y-m-d'),
+                                            "compress_files_suffix" => WEBSITE_COMPRESS_FILES === true ? '.min' : '',
+                                            "facebook_plugin" => $bUseFacebook,
+                                            "json_language" => I18n::getJson()));
 
     # Global variables
 		$this->oSmarty->assign('_REQUEST', $this->_aRequest);

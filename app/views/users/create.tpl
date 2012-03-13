@@ -83,8 +83,8 @@
       <input type='hidden' value='formdata' name='create_user' />
     </div>
   </form>
-  <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.modal{$_compress_files_suffix_}.js'></script>
-  <script type='text/javascript' src='{$_PATH.js}/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.modal{$_SYSTEM.compress_files_suffix}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.fancybox{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $("input[name='password2']").keyup(function(){

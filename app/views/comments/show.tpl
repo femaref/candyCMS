@@ -60,7 +60,7 @@
     </div>
   </div>
   {$_pages_}
-  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#js-commments').infinitescroll({

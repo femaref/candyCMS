@@ -75,8 +75,8 @@
     </p>
     {/if}
   {/if}
-  <script src='{$_PATH.js}/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script src='{$_PATH.js}/core/jquery.lazyload{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='{$_PATH.js}/core/jquery.fancybox{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
+  <script src='{$_PATH.js}/core/jquery.lazyload{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
   <script type='text/javascript'>
     $(document).ready(function(){
       $('.js-fancybox').fancybox({ nextEffect : 'fade', prevEffect : 'fade' });

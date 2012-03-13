@@ -75,7 +75,7 @@
       {/if}
     </p>
   </form>
-  <script type='text/javascript' src='{$_PATH.js}/core/jquery.typeahead{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.typeahead{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type='text/javascript'>
     $('#input-title').bind('keyup', function() {
       countCharLength(this, 128);

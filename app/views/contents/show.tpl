@@ -34,12 +34,12 @@
         {if $_REQUEST.id && (!isset($_REQUEST.action) || $_REQUEST.action !== 'page')}
           <hr />
           <div id='socialshareprivacy'></div>
-          <script src='{$_PATH.js}/core/jquery.socialshareprivacy{$_compress_files_suffix_}.js' type='text/javascript'></script>
+          <script src='{$_PATH.js}/core/jquery.socialshareprivacy{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
         {/if}
       </footer>
     </article>
-    <script src='{$_PATH.js}/core/jquery.fancybox{$_compress_files_suffix_}.js' type='text/javascript'></script>
-    <script src='{$_PATH.js}/core/jquery.capty{$_compress_files_suffix_}.js' type='text/javascript'></script>
+    <script src='{$_PATH.js}/core/jquery.fancybox{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
+    <script src='{$_PATH.js}/core/jquery.capty{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $(".js-fancybox").fancybox();
