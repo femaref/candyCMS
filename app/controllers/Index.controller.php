@@ -33,7 +33,8 @@ require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
 require_once PATH_STANDARD . '/lib/routes/Routes.php';
-require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
+//require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
+require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
 
 class Index {
 

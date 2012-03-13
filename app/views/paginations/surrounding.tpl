@@ -14,7 +14,7 @@
   <p class='center'>
     {if $_PAGE.controller}
       <a href='/rss/{$_PAGE.controller}'>
-        <img src='$_PATH.images/candy.global/spacer.png' class='icon-rss js-tooltip'
+        <img src='{$_PATH.images}/candy.global/spacer.png' class='icon-rss js-tooltip'
             title='{$lang.global.rss}' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
     {/if}
