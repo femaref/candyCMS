@@ -21,7 +21,6 @@ use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use MCAPI;
-//use Smarty;
 
 require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
@@ -272,9 +271,6 @@ abstract class Main {
       $this->oSmarty->clearAllCache();
       $this->oSmarty->clearCompiledTemplate();
     }
-
-    foreach ($this->_aSession['user'] as $sKey => $sData)
-      $this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
     # Global variables
 		$this->oSmarty->assign('_REQUEST', $this->_aRequest);
