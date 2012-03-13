@@ -30,7 +30,7 @@ abstract class CandyWebTest extends WebTestCase {
 		$this->aRequest	= array('section' => 'blog', 'clearcache' => 'true');
 		$this->aFile			= array();
 		$this->aCookie		= array();
-		$this->aSession['userdata'] = array(
+		$this->aSession['user'] = array(
 				'email' => '',
 				'facebook_id' => '',
 				'id' => 0,

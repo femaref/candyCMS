@@ -326,13 +326,13 @@ class User extends Main {
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user roles
-    # There was a bug with "$iId !== $this->_aSession['userdata']['id']". Why didn't it work?
-    if ($iId <> $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4)
+    # There was a bug with "$iId !== $this->_aSession['user']['id']". Why didn't it work?
+    if ($iId <> $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4)
       $iUserRole = isset($this->_aRequest['role']) && !empty($this->_aRequest['role']) ?
               (int) $this->_aRequest['role'] :
               1;
     else
-      $iUserRole = & $this->_aSession['userdata']['role'];
+      $iUserRole = & $this->_aSession['user']['role'];
 
 		try {
 			$oQuery = $this->_oDb->prepare("UPDATE
@@ -594,7 +594,7 @@ class User extends Main {
    * @see app/controllers/Index.controller.php
 	 *
    */
-  public static function getUserDataByToken($sApiToken) {
+  public static function getuserByToken($sApiToken) {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 

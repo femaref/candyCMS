@@ -190,7 +190,7 @@ class Helper {
    *
    * @static
    * @access public
-   * @param array $aData array of userdata
+   * @param array $aData array of user
    * @param integer $iUserId user ID
    * @param string $sEmail email address to search gravatar for
    * @param boolean $bUseGravatar do we want to use gravatar?
@@ -213,10 +213,11 @@ class Helper {
 	 * @access public
 	 * @param string $sPath path of the file
 	 * @return string size of the file plus hardcoded ending
+   * @todo throw exception
 	 *
 	 */
   public static function getFileSize($sPath) {
-    $iSize = filesize(Helper::removeSlash($sPath));
+    $iSize = @filesize(Helper::removeSlash($sPath));
 
     if ($iSize > 1024 && $iSize < 1048576)
       return round(($iSize / 1024), 2) . ' KB';
@@ -227,10 +228,10 @@ class Helper {
     elseif ($iSize >= 1073741824)
       return round(($iSize / 1073741824), 2) . ' GB';
 
-    elseif($iSize > 0)
+    #elseif($iSize > 0)
+    else
       return round($iSize, 2) . ' Byte';
 
-    #else
     #  throw new AdvancedException('File does not exist:' . $sPath);
   }
 

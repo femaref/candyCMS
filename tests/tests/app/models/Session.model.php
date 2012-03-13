@@ -25,7 +25,7 @@ class TestOfSessionModel extends UnitTestCase {
         'password' => 'Password',
         'section' => 'search');
 
-    $aSession['userdata'] = array(
+    $aSession['user'] = array(
         'email' => '',
         'facebook_id' => '',
         'id' => 0,
@@ -48,8 +48,8 @@ class TestOfSessionModel extends UnitTestCase {
   }
 
   # Session will not be found, so we expect no return.
-  function testGetUserDataBySession() {
-    $this->assertFalse(Session::getUserDataBySession());
+  function testGetuserBySession() {
+    $this->assertFalse(Session::getuserBySession());
   }
 
   # We try to resend the password. Email address will not be found, so we expect a false.

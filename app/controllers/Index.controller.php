@@ -280,7 +280,7 @@ class Index {
       if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
 					Cronjob::cleanup(array('media', 'bbcode'));
 					Cronjob::optimize();
-					Cronjob::backup($this->_aSession['userdata']['id']);
+					Cronjob::backup($this->_aSession['user']['id']);
       }
     }
   }
@@ -332,7 +332,7 @@ class Index {
    *
    */
   private function _checkForNewVersion() {
-    if ($this->_aSession['userdata']['role'] == 4 && ALLOW_VERSION_CHECK == true) {
+    if ($this->_aSession['user']['role'] == 4 && ALLOW_VERSION_CHECK == true) {
       $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
@@ -380,58 +380,58 @@ class Index {
    *
    * @access public
    * @see index.php
-   * @return array $this->_aSession['userdata']
+   * @return array $this->_aSession['user']
    *
    */
 	public function setUser() {
     # Set standard variables
-    $this->_aSession['userdata'] = & self::_resetUser();
+    $this->_aSession['user'] = & self::_resetUser();
 
     # Override them with user data
     # Get user data by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
-      $aUserData = & Model_User::getUserDataByToken(Helper::formatInput($this->_aRequest['api_token']));
+      $auser = & Model_User::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
 
     # Get user data by session
     else
-      $aUserData = & Model_Session::getUserDataBySession();
+      $auser = & Model_Session::getUserDataBySession();
 
-    if (is_array($aUserData))
-      $this->_aSession['userdata'] = & array_merge($this->_aSession['userdata'], $aUserData);
+    if (is_array($auser))
+      $this->_aSession['user'] = & array_merge($this->_aSession['user'], $auser);
 
     # Try to get facebook data
-    if ($this->_aSession['userdata']['id'] == 0) {
+    if ($this->_aSession['user']['id'] == 0) {
       $oFacebook = $this->getFacebookExtension();
 
       if ($oFacebook == true)
-        $aFacebookData = & $oFacebook->getUserData();
+        $aFacebookData = & $oFacebook->getuser();
 
       # Override empty data with facebook data
       if (isset($aFacebookData)) {
-        $this->_aSession['userdata']['facebook_id'] = isset($aFacebookData[0]['uid']) ?
+        $this->_aSession['user']['facebook_id'] = isset($aFacebookData[0]['uid']) ?
                 $aFacebookData[0]['uid'] :
                 '';
-        $this->_aSession['userdata']['email'] = isset($aFacebookData[0]['email']) ?
+        $this->_aSession['user']['email'] = isset($aFacebookData[0]['email']) ?
                 $aFacebookData[0]['email'] :
-                $this->_aSession['userdata']['email'];
-        $this->_aSession['userdata']['name'] = isset($aFacebookData[0]['first_name']) ?
+                $this->_aSession['user']['email'];
+        $this->_aSession['user']['name'] = isset($aFacebookData[0]['first_name']) ?
                 $aFacebookData[0]['first_name'] :
-                $this->_aSession['userdata']['name'];
-        $this->_aSession['userdata']['surname'] = isset($aFacebookData[0]['last_name']) ?
+                $this->_aSession['user']['name'];
+        $this->_aSession['user']['surname'] = isset($aFacebookData[0]['last_name']) ?
                 $aFacebookData[0]['last_name'] :
-                $this->_aSession['userdata']['surname'];
-        $this->_aSession['userdata']['role'] = isset($aFacebookData[0]['uid']) ?
+                $this->_aSession['user']['surname'];
+        $this->_aSession['user']['role'] = isset($aFacebookData[0]['uid']) ?
                 2 :
-                (int) $this->_aSession['userdata']['role'];
+                (int) $this->_aSession['user']['role'];
 
         unset($aFacebookData);
       }
     }
 
     # Set up full name finally
-    $this->_aSession['userdata']['full_name'] = & $this->_aSession['userdata']['name'] . ' ' . $this->_aSession['userdata']['surname'];
+    $this->_aSession['user']['full_name'] = & $this->_aSession['user']['name'] . ' ' . $this->_aSession['user']['surname'];
 
-    return $this->_aSession['userdata'];
+    return $this->_aSession['user'];
   }
 
   /**
@@ -446,7 +446,7 @@ class Index {
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
 			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' . WEBSITE_MODE . '|' .
-							substr(md5($this->_aSession['userdata']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
+							substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
 							substr(md5(CURRENT_URL), 0, 10));
 
 		# Direct to install
@@ -516,7 +516,7 @@ class Index {
   private function _showPlugins($sCachedHTML) {
     # Bugfix: Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
-    $this->_aSession['userdata'] = self::_resetUser();
+    $this->_aSession['user'] = self::_resetUser();
 
     if (preg_match('/<!-- plugin:analytics -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\Analytics')) {

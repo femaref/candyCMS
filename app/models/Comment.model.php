@@ -147,7 +147,7 @@ class Comment extends Main {
             '';
     $sAuthorEmail = isset($this->_aRequest['email']) ?
             Helper::formatInput($this->_aRequest['email']) :
-            $this->_aSession['userdata']['email'];
+            $this->_aSession['user']['email'];
     $iFacebookId = isset($this->_aRequest['facebook_id']) ?
             Helper::formatInput($this->_aRequest['facebook_id']) :
             '';
@@ -173,7 +173,7 @@ class Comment extends Main {
                                           :date,
                                           :parent_id )");
 
-      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['user']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('author_facebook_id', $iFacebookId, PDO::PARAM_INT);
       $oQuery->bindParam('author_name', $sAuthorName, PDO::PARAM_STR);
       $oQuery->bindParam('author_email', $sAuthorEmail, PDO::PARAM_STR);

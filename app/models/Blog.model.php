@@ -37,7 +37,7 @@ class Blog extends Main {
 
     if (empty($iId)) {
 			# Show unpublished items and entries with diffent languages to moderators or administrators only
-      $sWhere = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] < 3 ?
+      $sWhere = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] < 3 ?
 							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'" :
 							'';
 
@@ -106,7 +106,7 @@ class Blog extends Main {
     }
     else {
       # Show unpublished items to moderators or administrators only
-      $iPublished = $this->_aSession['userdata']['role'] >= 3 ? 0 : 1;
+      $iPublished = $this->_aSession['user']['role'] >= 3 ? 0 : 1;
 
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -195,7 +195,7 @@ class Blog extends Main {
                                           :date,
                                           :published )");
 
-      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['user']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('tags', Helper::formatInput($this->_aRequest['tags']), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser'], false), PDO::PARAM_STR);
@@ -241,7 +241,7 @@ class Blog extends Main {
             '0';
 
     $iUpdateAuthor = isset($this->_aRequest['show_update']) && $this->_aRequest['show_update'] == true ?
-            $this->_aSession['userdata']['id'] :
+            $this->_aSession['user']['id'] :
             (int) $this->_aRequest['author_id'];
 
     $iDate = isset($this->_aRequest['update_date']) && $this->_aRequest['update_date'] == true ?

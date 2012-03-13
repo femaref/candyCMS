@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE == 4}
+  {if $_SESSION.user.role == 4}
     <p class='center'>
       <a href='/user/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -22,7 +22,7 @@
         <th class='column-registered_since center'>{$lang.user.label.registered_since}</th>
         <th class='column-last_login center'>{$lang.user.label.last_login}</th>
         <th class='column-newsletter center'>{$lang.global.newsletter}</th>
-        {if $USER_ROLE == 4}
+        {if $_SESSION.user.role == 4}
           <th class='column-actions'></th>
         {/if}
       </tr>
@@ -66,7 +66,7 @@
               title='{if $u.receive_newsletter == 1}✔{else}✖{/if}' width='16'
               height='16' title='{if $u.receive_newsletter == 1}✔{else}✖{/if}' />
         </td>
-        {if $USER_ROLE == 4}
+        {if $_SESSION.user.role == 4}
           <td class='center'>
             <a href='/user/{$u.id}/update'>
               <img src='{$_PATH.images}/candy.global/spacer.png'

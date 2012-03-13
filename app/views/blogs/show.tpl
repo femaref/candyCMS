@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/blog/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -23,7 +23,7 @@
               {$lang.global.not_published}:&nbsp;
             {/if}
             <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
-            {if $USER_ROLE >= 3}
+            {if $_SESSION.user.role >= 3}
               <a href='/blog/{$b.id}/update'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-update js-tooltip'

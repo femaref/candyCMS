@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/content/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -20,7 +20,7 @@
         <th class='column-title'>{$lang.global.title}</th>
         <th class='column-date'>{$lang.global.date.date}</th>
         <th>{$lang.global.author}</th>
-        {if $USER_ROLE >= 3}
+        {if $_SESSION.user.role >= 3}
           <th class='column-published center'>{$lang.global.published}</th>
           <th class='column-actions'></th>
         {/if}
@@ -40,7 +40,7 @@
             {$c.name} {$c.surname}
           </a>
         </td>
-        {if $USER_ROLE >= 3}
+        {if $_SESSION.user.role >= 3}
           <td class='center'>
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-{if $c.published == true}success{else}close{/if}'

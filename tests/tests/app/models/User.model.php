@@ -36,7 +36,7 @@ class TestOfUserModel extends TestOfSessionModel {
         'use_gravatar' => 0,
         'section' => 'user');
 
-    $this->aSession['userdata'] = array(
+    $this->aSession['user'] = array(
         'email' => '',
         'facebook_id' => '',
         'id' => 0,
@@ -93,8 +93,8 @@ class TestOfUserModel extends TestOfSessionModel {
     $this->assertIsA($this->sToken, 'string');
   }
 
-  function testGetUserDataByToken() {
-    $this->assertIsA($this->oUser->getUserDataByToken($this->sToken), 'array');
+  function testGetuserByToken() {
+    $this->assertIsA($this->oUser->getuserByToken($this->sToken), 'array');
   }
 
   /*******************************************************

@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class="create">
       <a href='/calendar/create' data-role="button" data-theme="b" data-icon="plus">
         {$lang.global.create.entry}
@@ -25,7 +25,7 @@
     </div>
   {else}
     {foreach $calendar as $c}
-      <ul data-role="listview" data-inset="true" {if $USER_ROLE >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
+      <ul data-role="listview" data-inset="true" {if $_SESSION.user.role >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
         <li data-role="list-divider">
           {$c.month} {$c.year}
         </li>

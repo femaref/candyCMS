@@ -80,7 +80,7 @@ class User extends Main {
 			$this->setTitle(I18n::get('user.title.overview'));
 			$this->setDescription(I18n::get('user.title.overview'));
 
-			if ($this->_aSession['userdata']['role'] < 3)
+			if ($this->_aSession['user']['role'] < 3)
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 			else {
@@ -122,15 +122,15 @@ class User extends Main {
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
-		if ($this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] < 4) {
+		if ($this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] < 4) {
 			Helper::redirectTo('/user/update');
 			exit();
 		}
 
 		# Set user id of person to update
-		$iId =	$this->_iId !== $this->_aSession['userdata']['id'] && $this->_aSession['userdata']['role'] == 4 ?
+		$iId =	$this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4 ?
             $this->_iId :
-            $this->_aSession['userdata']['id'];
+            $this->_aSession['user']['id'];
 
 		# Fetch data from database
 		$aData = & $this->_oModel->getData($iId, false, true);
@@ -203,7 +203,7 @@ class User extends Main {
     # Check if old password is correct
     if (!empty($this->_aRequest['password_old']) &&
             md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-            $this->_aSession['userdata']['password'])
+            $this->_aSession['user']['password'])
       $this->_aError['password_old'] = I18n::get('error.user.update.password.old.wrong');
 
     # Check if new password fields match
@@ -214,14 +214,14 @@ class User extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->updatePassword((int) $this->_iId) === true) {
-      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['userdata']['id'] ?
+      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['user']['id'] ?
               (int) $this->_aRequest['id'] :
-              $this->_aSession['userdata']['id'];
+              $this->_aSession['user']['id'];
 
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
     }
@@ -265,11 +265,11 @@ class User extends Main {
 			$this->_aError['password'] = I18n::get('error.passwords');
 
 		# Admin does not need to confirm disclaimer
-		if ($this->_aSession['userdata']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
+		if ($this->_aSession['user']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
       $this->_aError['disclaimer'] = I18n::get('error.form.missing.terms');
 
     # Generate verification code for users (double-opt-in) when not created by admin.
-    $iVerificationCode = $this->_aSession['userdata']['role'] < 4 ? Helper::createRandomChar(12) : '';
+    $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
@@ -280,7 +280,7 @@ class User extends Main {
       $iUserId = $this->_oModel->getLastInsertId('users');
 
       # Send email if user has registered and creator is not an admin.
-      if ($this->_aSession['userdata']['role'] == 4)
+      if ($this->_aSession['user']['role'] == 4)
         $sMailMessage = '';
 
 			else {
@@ -293,14 +293,14 @@ class User extends Main {
 			Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$iUserId,
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
 			Mail::send(	Helper::formatInput($this->_aRequest['email']),
 									I18n::get('user.mail.subject'),
 									$sMailMessage,
 									WEBSITE_MAIL_NOREPLY);
 
-      return $this->_aSession['userdata']['role'] == 4 ?
+      return $this->_aSession['user']['role'] == 4 ?
               Helper::successMessage(I18n::get('success.create'), '/user') :
               Helper::successMessage(I18n::get('success.user.create'), '/');
 		}
@@ -348,13 +348,13 @@ class User extends Main {
 	 *
 	 */
 	public function update() {
-    if ($this->_iId > 0 && $this->_aSession['userdata']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
+    if ($this->_iId > 0 && $this->_aSession['user']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
       Helper::redirectTo('/user/update');
 
     if (empty($this->_iId))
-      $this->_iId = $this->_aSession['userdata']['id'];
+      $this->_iId = $this->_aSession['user']['id'];
 
-    if ($this->_aSession['userdata']['id'] == 0)
+    if ($this->_aSession['user']['id'] == 0)
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/');
 
     else
@@ -386,14 +386,14 @@ class User extends Main {
 			else
 				$this->_subscribeToNewsletter($this->_aRequest);
 
-			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['userdata']['id'] ?
+			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['user']['id'] ?
               (int) $this->_aRequest['id'] :
-              $this->_aSession['userdata']['id'];
+              $this->_aSession['user']['id'];
 
 			Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
 			return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
 		}
@@ -428,9 +428,9 @@ class User extends Main {
     $aUser = \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
-    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['userdata']['id'] == $this->_iId) {
+    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['user']['id'] == $this->_iId) {
       # Password matches with user password
-      if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['userdata']['password']) {
+      if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['user']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
@@ -448,7 +448,7 @@ class User extends Main {
         return Helper::errorMessage(I18n::get('error.user.destroy.password'), '/user/update#user-destroy');
 
       # We are admin and can delete users
-    } elseif ($this->_aSession['userdata']['role'] == 4) {
+    } elseif ($this->_aSession['user']['role'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
 				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
@@ -458,7 +458,7 @@ class User extends Main {
         # Destroy profile image
         $this->_destroyUserAvatars($this->_iId);
 
-        Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['userdata']['id']);
+        Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['user']['id']);
         return Helper::successMessage(I18n::get('success.destroy'), '/user');
       }
       else
@@ -483,10 +483,10 @@ class User extends Main {
 
 		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
 			# Get data from activating user
-			$aUserData = & $this->_oModel->getActivationData();
+			$auser = & $this->_oModel->getActivationData();
 
 			# Subscribe to MailChimp after email adress is confirmed
-			$this->_subscribeToNewsletter($aUserData);
+			$this->_subscribeToNewsletter($auser);
 
 			return Helper::successMessage(I18n::get('success.user.verification'), '/');
 		}

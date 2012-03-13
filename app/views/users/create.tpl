@@ -2,7 +2,7 @@
   <div class='page-header'>
     <h1>
       {$lang.global.registration}
-      {if !$USER_FACEBOOK_ID && !$USER_NAME && $_facebook_plugin_ == true}
+      {if !$_SESSION.user.facebook_id && !$_SESSION.user.name && $_SYSTEM.facebook_plugin == true}
         <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
       {/if}
     </h1>
@@ -54,7 +54,7 @@
         <input class='span4' name='password2' type='password' id='input-password2' required />
       </div>
     </div>
-    {if $USER_ROLE < 4}
+    {if $_SESSION.user.role < 4}
       <div id='js-modal' class='modal hide fade'>
         <div class="modal-header">
           <a class="close" data-dismiss="modal">×</a>

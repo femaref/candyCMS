@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/media/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'

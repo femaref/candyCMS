@@ -30,7 +30,7 @@ abstract class CandyUnitTest extends UnitTestCase {
 		$this->aRequest	= array();
 		$this->aFile			= array();
 		$this->aCookie		= array();
-		$this->aSession['userdata'] = array(
+		$this->aSession['user'] = array(
 				'email' => '',
 				'facebook_id' => '',
 				'id' => 0,

@@ -24,7 +24,7 @@ class TestOfSessionController extends WebTestCase {
     $aRequest = array('section' => 'session');
     $aFile    = array();
     $aCookie  = array();
-    $aSession['userdata'] = array(
+    $aSession['user'] = array(
       'email' => '',
       'facebook_id' => '',
       'id' => 0,

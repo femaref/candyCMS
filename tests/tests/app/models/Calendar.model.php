@@ -27,7 +27,7 @@ class TestOfCalendarModel extends UnitTestCase {
         'end_date' => '0000-00-00',
         'section' => 'calendar');
 
-    $aSession['userdata'] = array(
+    $aSession['user'] = array(
         'email' => '',
         'facebook_id' => '',
         'id' => 0,

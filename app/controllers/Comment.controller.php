@@ -146,7 +146,7 @@ class Comment extends Main {
    */
   public function create($sInputName) {
 		if (isset($this->_aRequest[$sInputName]))
-			return	$this->_aSession['userdata']['role'] == 0 &&
+			return	$this->_aSession['user']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
 							WEBSITE_MODE !== 'test' ?
@@ -154,7 +154,7 @@ class Comment extends Main {
 							$this->_create(false);
 
 		else {
-			$bShowCaptcha = $this->_aSession['userdata']['role'] == 0 ? true : false;
+			$bShowCaptcha = $this->_aSession['user']['role'] == 0 ? true : false;
 			return $this->_showFormTemplate($bShowCaptcha);
 		}
 	}
@@ -174,7 +174,7 @@ class Comment extends Main {
     $this->_setError('parent_id', I18n::get('error.missing.id'));
     $this->_setError('content');
 
-    if ($this->_aSession['userdata']['role'] == 0)
+    if ($this->_aSession['user']['role'] == 0)
       $this->_setError('name');
 
     if (isset($this->_aError))
@@ -184,7 +184,7 @@ class Comment extends Main {
       $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
-        Log::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['userdata']['id']);
+        Log::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else
@@ -205,7 +205,7 @@ class Comment extends Main {
     $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['userdata']['id']);
+      Log::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['user']['id']);
       return Helper::successMessage(I18n::get('success.destroy'), $sRedirect);
     }
     else

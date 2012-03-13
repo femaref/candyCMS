@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class="create">
       <a href='/blog/create' data-role="button" data-theme="b" data-icon="plus">
         {$lang.global.create.entry}

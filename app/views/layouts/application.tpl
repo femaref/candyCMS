@@ -24,7 +24,7 @@
       {/if}
 
       {* If we want to use a facebook plugin, provide tracking data. *}
-      {if $_facebook_plugin_ == true}
+      {if $_SYSTEM.facebook_plugin == true}
         <meta property="fb:admins" content="{$PLUGIN_FACEBOOK_ADMIN_ID}"/>
         <meta property="fb:app_id" content="{$PLUGIN_FACEBOOK_APP_ID}"/>
       {/if}
@@ -78,7 +78,7 @@
               </li>
             </ul>
             <ul class="nav pull-right">
-              {if $USER_ID == 0}
+              {if $_SESSION.user.id == 0}
                 <li{if $_REQUEST.controller == 'session'} class='active'{/if}>
                   <a href='/session'>{$lang.global.login}</a>
                 </li>
@@ -89,7 +89,7 @@
               {else}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle='dropdown'>
-                    <strong>{$lang.global.welcome} {$USER_NAME}!</strong>
+                    <strong>{$lang.global.welcome} {$_SESSION.user.name}!</strong>
                     <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
@@ -99,7 +99,7 @@
                     <li>
                       <a href='/session/destroy'>{$lang.global.logout}</a>
                     </li>
-                    {if $USER_ROLE >= 3}
+                    {if $_SESSION.user.role >= 3}
                       <li class="divider"></li>
                       <li>
                         <a href='/media' title='{$lang.global.manager.media}'>
@@ -111,7 +111,7 @@
                           {$lang.global.manager.content}
                         </a>
                       </li>
-                      {if $USER_ROLE == 4}
+                      {if $_SESSION.user.role == 4}
                         <li>
                           <a href='/log' title='{$lang.global.logs}'>
                             {$lang.global.logs}
@@ -176,7 +176,7 @@
           </section>
           <section id="settings" class="span8">
             <ul>
-              {if $USER_ROLE < 1}
+              {if $_SESSION.user.role < 1}
                 <li>
                   <a href='/newsletter' title='{$lang.newsletter.title.subscribe}'>
                     {$lang.newsletter.title.subscribe}

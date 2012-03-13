@@ -28,11 +28,11 @@
             {$c.content}
           </div>
           <footer>
-            {if $USER_ROLE >= 3 && $c.author_email}
+            {if $_SESSION.user.role >= 3 && $c.author_email}
               <a href='mailto:{$c.author_email}'>{$c.author_email}</a>
               &nbsp;
             {/if}
-            {if $USER_ROLE >= 3 && $c.author_ip}
+            {if $_SESSION.user.role >= 3 && $c.author_ip}
               <span>{$c.author_ip}</span>
               &nbsp;
             {/if}
@@ -44,7 +44,7 @@
                    width='16' height='16'
                    title='{$lang.global.quote.quote}' />
             </a>
-            {if $USER_ROLE >= 3}
+            {if $_SESSION.user.role >= 3}
               &nbsp;
               <a href="#" onclick="confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
                 <img src='{$_PATH.images}/candy.global/spacer.png'

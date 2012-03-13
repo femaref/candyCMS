@@ -235,7 +235,7 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['userdata']['id']);
+      Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['user']['id']);
       return Helper::successMessage(I18n::get('success.create'), '/gallery/' . $iId);
     }
 
@@ -266,7 +266,7 @@ class Gallery extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
@@ -291,7 +291,7 @@ class Gallery extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_iId,
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/gallery');
     }
@@ -349,7 +349,7 @@ class Gallery extends Main {
    *
    */
   public function createFile() {
-    if ($this->_aSession['userdata']['role'] < 3)
+    if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
     else {
@@ -361,7 +361,7 @@ class Gallery extends Main {
           Log::insert($this->_aRequest['controller'],
 											'createfile',
 											(int) $this->_aRequest['id'],
-											$this->_aSession['userdata']['id']);
+											$this->_aSession['user']['id']);
 
           return Helper::successMessage(I18n::get('success.file.upload'), '/gallery/' . $this->_iId);
         }
@@ -415,7 +415,7 @@ class Gallery extends Main {
    *
    */
   public function updateFile() {
-    if ($this->_aSession['userdata']['role'] < 3)
+    if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/gallery');
 
     else {
@@ -426,7 +426,7 @@ class Gallery extends Main {
           Log::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											(int) $this->_iId,
-											$this->_aSession['userdata']['id']);
+											$this->_aSession['user']['id']);
 
           return Helper::successMessage(I18n::get('success.update'), '/gallery');
         }
@@ -446,7 +446,7 @@ class Gallery extends Main {
    *
    */
   public function destroyFile() {
-    if ($this->_aSession['userdata']['role'] < 3)
+    if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
 
     else {
@@ -456,7 +456,7 @@ class Gallery extends Main {
         Log::insert($this->_aRequest['controller'],
 										$this->_aRequest['action'],
 										(int) $this->_iId,
-										$this->_aSession['userdata']['id']);
+										$this->_aSession['user']['id']);
 
 				unset($this->_iId);
         return Helper::successMessage(I18n::get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);

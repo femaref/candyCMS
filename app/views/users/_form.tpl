@@ -7,7 +7,7 @@
       <li{if $_REQUEST['action'] == 'update'} class='active'{/if}>
         <a href='#user-personal' data-toggle='tab'>{$lang.user.title.personal_data}</a>
       </li>
-      {if $USER_ID == $uid}
+      {if $_SESSION.user.id == $uid}
         <li{if $_REQUEST['action'] == 'password'} class='active'{/if}>
           <a href='#user-password' data-toggle='tab'>{$lang.user.title.password}</a>
         </li>
@@ -18,7 +18,7 @@
           {elseif $_REQUEST['action'] == 'avatar'}class='active'{/if}>
         <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
       </li>
-      {if $USER_ROLE < 4}
+      {if $_SESSION.user.role < 4}
         <li{if $_REQUEST['action'] == 'destroy'} class='active'{/if}>
           <a href='#user-destroy' data-toggle='tab'>{$lang.user.title.account}</a>
         </li>
@@ -102,7 +102,7 @@
                     type='checkbox' class='checkbox' {if $receive_newsletter == 1}checked{/if} />
           </div>
         </div>
-        {if $USER_ROLE == 4 && $USER_ID !== $uid}
+        {if $_SESSION.user.role == 4 && $_SESSION.user.id !== $uid}
           <div class='control-group'>
             <label for='input-role' class='control-label'>
               {$lang.global.user.role}
@@ -127,7 +127,7 @@
     </div>
 
   {* Password *}
-  {if $USER_ID == $uid}
+  {if $_SESSION.user.id == $uid}
     <div class="tab-pane{if $_REQUEST['action'] == 'password'} active{/if}" id='user-password'>
       <form method='post' action='/user/{$uid}/password' class='form-horizontal'>
         <div class='control-group{if isset($error.password_old)} alert alert-error{/if}'>
@@ -211,7 +211,7 @@
     </div>
 
   {* Destroy account *}
-  {if $USER_ROLE < 4}
+  {if $_SESSION.user.role < 4}
     <div class="tab-pane{if $_REQUEST['action'] == 'destroy'} active{/if}" id='user-destroy'>
       <form method='post' action='/user/{$uid}/destroy' class='form-horizontal'>
         <p class='alert alert-danger'>

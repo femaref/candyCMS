@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/calendar/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -69,7 +69,7 @@
                 {/if}
               </td>
               <td class='center'>
-                {if $USER_ROLE >= 3}
+                {if $_SESSION.user.role >= 3}
                   <a href='/calendar/{$d.id}/update'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-update js-tooltip'

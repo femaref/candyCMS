@@ -273,7 +273,7 @@ abstract class Main {
       $this->oSmarty->clearCompiledTemplate();
     }
 
-    foreach ($this->_aSession['userdata'] as $sKey => $sData)
+    foreach ($this->_aSession['user'] as $sKey => $sData)
       $this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
     # Global variables
@@ -462,7 +462,7 @@ abstract class Main {
 	 *
 	 */
 	public function create($sInputName, $iUserRole = 3) {
-		if ($this->_aSession['userdata']['role'] < $iUserRole)
+		if ($this->_aSession['user']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else
@@ -481,7 +481,7 @@ abstract class Main {
 	 *
 	 */
 	public function update($sInputName, $iUserRole = 3) {
-		if ($this->_aSession['userdata']['role'] < $iUserRole)
+		if ($this->_aSession['user']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else
@@ -499,7 +499,7 @@ abstract class Main {
 	 *
 	 */
 	public function destroy($iUserRole = 3) {
-		return	$this->_aSession['userdata']['role'] < $iUserRole ?
+		return	$this->_aSession['user']['role'] < $iUserRole ?
             Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
 	}

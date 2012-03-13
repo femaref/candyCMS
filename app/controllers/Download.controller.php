@@ -131,7 +131,7 @@ class Download extends Main {
           Log::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											$this->_oModel->getLastInsertId('downloads'),
-											$this->_aSession['userdata']['id']);
+											$this->_aSession['user']['id']);
 
           return Helper::successMessage(I18n::get('success.create'), '/download');
         }
@@ -164,7 +164,7 @@ class Download extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), '/download');
     }
@@ -188,7 +188,7 @@ class Download extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/download');
     }

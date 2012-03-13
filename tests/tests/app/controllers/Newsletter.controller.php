@@ -38,8 +38,8 @@ class WebTestOfNewsletterController extends CandyWebTest {
    */
 	function testSubscribe() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
-				'name' => md5($this->aSession['userdata']['name'] . time()),
-				'surname' => md5($this->aSession['userdata']['surname'] . time()),
+				'name' => md5($this->aSession['user']['name'] . time()),
+				'surname' => md5($this->aSession['user']['surname'] . time()),
 				'email' => time() . '_' . WEBSITE_MAIL_NOREPLY,
         'subscribe_newsletter' => 'formdata'
 		));
@@ -50,8 +50,8 @@ class WebTestOfNewsletterController extends CandyWebTest {
 
 	function testSubscribeWithWrongEmailAddress() {
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
-				'name' => md5($this->aSession['userdata']['name'] . time()),
-				'surname' => md5($this->aSession['userdata']['surname'] . time()),
+				'name' => md5($this->aSession['user']['name'] . time()),
+				'surname' => md5($this->aSession['user']['surname'] . time()),
 				'email' => str_replace('@', '', WEBSITE_MAIL_NOREPLY),
         'subscribe_newsletter' => 'formdata'
 		));

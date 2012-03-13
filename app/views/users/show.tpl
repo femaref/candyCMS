@@ -3,7 +3,7 @@
     <div class='page-header'>
       <h1>
         {$u.full_name}
-        {if $USER_ROLE == 4 || $u.id == $USER_ID}
+        {if $_SESSION.user.role == 4 || $u.id == $_SESSION.user.id}
           <a href='/user/{$_REQUEST.id}/update'>
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-update js-tooltip'

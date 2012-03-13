@@ -67,7 +67,6 @@ class Dispatcher {
         $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       }
 
-      # Some files are missing. Quit work!
       else {
         # Bugfix: Fix exceptions when upload file is missing
         if(substr(strtolower($sController), 0, 6) !== 'upload')
@@ -82,6 +81,7 @@ class Dispatcher {
       Helper::redirectTo('/error/404');
       exit('Controller not found.');
     }
+
     $this->oController->__init();
     return $this->oController;
   }

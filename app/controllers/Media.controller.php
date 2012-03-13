@@ -29,7 +29,7 @@ class Media extends Main {
    *
    */
   public function create() {
-    if ($this->_aSession['userdata']['role'] < 3)
+    if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
@@ -86,7 +86,7 @@ class Media extends Main {
    *
    */
   protected function _show() {
-    if ($this->_aSession['userdata']['role'] < 3)
+    if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
@@ -152,7 +152,7 @@ class Media extends Main {
    *
    */
   public function destroy() {
-		if ($this->_aSession['userdata']['role'] < 3)
+		if ($this->_aSession['user']['role'] < 3)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 		else {

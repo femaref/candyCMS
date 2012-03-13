@@ -29,7 +29,7 @@ class Content extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-    $iPublished = isset($this->_aSession['userdata']['role']) && $this->_aSession['userdata']['role'] > 3 ? 0 : 1;
+    $iPublished = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] > 3 ? 0 : 1;
 
     if (empty($iId)) {
       try {
@@ -137,7 +137,7 @@ class Content extends Main {
                                           :date,
                                           :published)");
 
-      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['user']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);
@@ -186,7 +186,7 @@ class Content extends Main {
                                       WHERE
                                         id = :where");
 
-      $oQuery->bindParam('author_id', $this->_aSession['userdata']['id'], PDO::PARAM_INT);
+      $oQuery->bindParam('author_id', $this->_aSession['user']['id'], PDO::PARAM_INT);
       $oQuery->bindParam('title', Helper::formatInput($this->_aRequest['title'], false), PDO::PARAM_STR);
       $oQuery->bindParam('teaser', Helper::formatInput($this->_aRequest['teaser']), PDO::PARAM_STR);
       $oQuery->bindParam('keywords', Helper::formatInput($this->_aRequest['keywords']), PDO::PARAM_STR);

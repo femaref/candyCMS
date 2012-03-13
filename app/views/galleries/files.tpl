@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/gallery/{$_REQUEST.id}/createfile'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -21,7 +21,7 @@
         <small>
           ({$file_no} {$lang.global.files})
         </small>
-        {if $USER_ROLE >= 3}
+        {if $_SESSION.user.role >= 3}
           <a href='/gallery/{$_REQUEST.id}/update'>
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-update js-tooltip'
@@ -47,7 +47,7 @@
               rel='images' title='{$f.content}'>
               <img src='{$f.url_thumb}' alt='{$f.file}' title='' class='js-image' />
             </a>
-            {if $USER_ROLE >= 3}
+            {if $_SESSION.user.role >= 3}
               <p class='center'>
                 <a href='/gallery/{$f.id}/updatefile'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'

@@ -4,7 +4,7 @@
       <header class='page-header'>
         <h1>
           {$c.title}
-          {if $USER_ROLE >= 3}
+          {if $_SESSION.user.role >= 3}
             <a href='/content/{$c.id}/update'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'

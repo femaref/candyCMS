@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/download/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -47,13 +47,13 @@
             <td>{$f.date}</td>
             <td>
               {$f.size}
-              {if $USER_ROLE >= 3}
+              {if $_SESSION.user.role >= 3}
                 <br />
                 {$f.downloads} {$lang.global.downloads}
               {/if}
             </td>
             <td class='center'>
-              {if $USER_ROLE >= 3}
+              {if $_SESSION.user.role >= 3}
                 <a href='/download/{$f.id}/update'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'

@@ -27,7 +27,7 @@ class Log extends Main {
    *
    */
   protected function _show() {
-    if ($this->_aSession['userdata']['role'] < 4)
+    if ($this->_aSession['user']['role'] < 4)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
@@ -72,7 +72,7 @@ class Log extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_iId,
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/log');
     }

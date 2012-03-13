@@ -163,9 +163,10 @@ class Upload {
 	 */
   public function uploadAvatarFile($bReturnPath = true) {
     $this->_sFileExtension = strtolower(substr(strrchr($this->_aFile['image']['name'], '.'), 1));
-    $this->_sFileName = isset($this->_aRequest['id']) && $this->_aSession['userdata']['role'] == 4 ?
+    $this->_sFileName = isset($this->_aRequest['id']) && $this->_aSession['user']['role'] == 4 ?
             (int) $this->_aRequest['id'] :
-            $this->_aSession['userdata']['id'];
+            $this->_aSession['user']['id'];
+
     $this->_sUploadFolder = 'user';
     $this->_sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName);
 

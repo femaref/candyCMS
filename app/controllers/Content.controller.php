@@ -118,7 +118,7 @@ class Content extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId('contents'),
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.create'), '/content');
     }
@@ -148,7 +148,7 @@ class Content extends Main {
       Log::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
-									$this->_aSession['userdata']['id']);
+									$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), $sRedirect);
     }
@@ -170,7 +170,7 @@ class Content extends Main {
       Log::insert($this->_aRequest['controller'],
 							$this->_aRequest['action'],
 							(int) $this->_aRequest['id'],
-							$this->_aSession['userdata']['id']);
+							$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/content');
     }

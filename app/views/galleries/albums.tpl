@@ -1,5 +1,5 @@
 {strip}
-  {if $USER_ROLE >= 3}
+  {if $_SESSION.user.role >= 3}
     <p class='center'>
       <a href='/gallery/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -23,7 +23,7 @@
         <header>
           <h2>
             <a href='{$a.url}'>{$a.title}</a>
-            {if $USER_ROLE >= 3}
+            {if $_SESSION.user.role >= 3}
               <a href='/gallery/{$a.id}/createfile'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-create js-tooltip'

@@ -229,7 +229,7 @@ class Session extends Main {
 	 */
   public function destroy() {
 		# Facebook logout
-		if ($this->_aSession['userdata']['role'] == 2) {
+		if ($this->_aSession['user']['role'] == 2) {
 			$this->_aSession['facebook']->getLogoutUrl();
 			session_destroy();
 			unset($this->_aSession, $_SESSION);

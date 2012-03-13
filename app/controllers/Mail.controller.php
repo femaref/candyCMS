@@ -89,7 +89,7 @@ class Mail extends Main {
 	 */
   public function create() {
 		if (isset($this->_aRequest['create_mail'])) {
-			return	$this->_aSession['userdata']['role'] == 0 &&
+			return	$this->_aSession['user']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
 							WEBSITE_MODE !== 'test' ?
@@ -97,7 +97,7 @@ class Mail extends Main {
 							$this->_create(false);
 		}
 		else
-			return $this->_showCreateMailTemplate($this->_aSession['userdata']['role'] == 0 ? true : false);
+			return $this->_showCreateMailTemplate($this->_aSession['user']['role'] == 0 ? true : false);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class Mail extends Main {
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
 										(string) $this->_aRequest['email'] :
-										$this->_aSession['userdata']['email']);
+										$this->_aSession['user']['email']);
 
 		$this->oSmarty->assign('subject', isset($this->_aRequest['subject']) ?
 										(string) $this->_aRequest['subject'] :
@@ -191,8 +191,8 @@ class Mail extends Main {
       $oModel = new $oClass($this->_aRequest, $this->_aSession);
       $aRow = $oModel::getUserNamesAndEmail($this->_iId);
 
-      $sSendersName = isset($this->_aSession['userdata']['name']) ?
-              $this->_aSession['userdata']['name'] :
+      $sSendersName = isset($this->_aSession['user']['name']) ?
+              $this->_aSession['user']['name'] :
               I18n::get('global.system');
 
       $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
