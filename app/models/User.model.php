@@ -594,7 +594,7 @@ class User extends Main {
    * @see app/controllers/Index.controller.php
 	 *
    */
-  public static function getuserByToken($sApiToken) {
+  public static function getUserByToken($sApiToken) {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
@@ -609,7 +609,7 @@ class User extends Main {
                                                 1");
 
       $oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
-      $bReturn = $oQuery->execute();
+      $oQuery->execute();
 
       return $oQuery->fetch(PDO::FETCH_ASSOC);
     }

@@ -30,7 +30,7 @@ class Session extends Main {
    * @see app/controllers/Index.controller.php
 	 *
    */
-  public static function getUserDataBySession() {
+  public static function getUserBySession() {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 

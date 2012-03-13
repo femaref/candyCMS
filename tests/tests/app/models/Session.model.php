@@ -49,7 +49,7 @@ class TestOfSessionModel extends UnitTestCase {
 
   # Session will not be found, so we expect no return.
   function testGetuserBySession() {
-    $this->assertFalse(Session::getuserBySession());
+    $this->assertFalse(Session::getUserBySession());
   }
 
   # We try to resend the password. Email address will not be found, so we expect a false.

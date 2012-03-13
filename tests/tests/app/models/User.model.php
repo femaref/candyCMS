@@ -94,7 +94,7 @@ class TestOfUserModel extends TestOfSessionModel {
   }
 
   function testGetuserByToken() {
-    $this->assertIsA($this->oUser->getuserByToken($this->sToken), 'array');
+    $this->assertIsA($this->oUser->getUserByToken($this->sToken), 'array');
   }
 
   /*******************************************************

@@ -390,14 +390,14 @@ class Index {
     # Override them with user data
     # Get user data by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
-      $auser = & Model_User::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      $aUser = & Model_User::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
 
     # Get user data by session
     else
-      $auser = & Model_Session::getUserDataBySession();
+      $aUser = & Model_Session::getUserBySession();
 
-    if (is_array($auser))
-      $this->_aSession['user'] = & array_merge($this->_aSession['user'], $auser);
+    if (is_array($aUser))
+      $this->_aSession['user'] = & array_merge($this->_aSession['user'], $aUser);
 
     # Try to get facebook data
     if ($this->_aSession['user']['id'] == 0) {

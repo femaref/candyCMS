@@ -482,11 +482,8 @@ class User extends Main {
 			return Helper::errorMessage(I18n::get('error.missing.id'), '/');
 
 		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
-			# Get data from activating user
-			$auser = & $this->_oModel->getActivationData();
-
-			# Subscribe to MailChimp after email adress is confirmed
-			$this->_subscribeToNewsletter($auser);
+			# Subscribe to MailChimp after email address is confirmed
+			$this->_subscribeToNewsletter($this->_oModel->getActivationData());
 
 			return Helper::successMessage(I18n::get('success.user.verification'), '/');
 		}
