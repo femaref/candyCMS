@@ -31,7 +31,7 @@ class Dispatcher {
 	 * @param array $aCookie alias for $_COOKIE
 	 *
 	 */
-	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+	public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
 		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
@@ -68,9 +68,12 @@ class Dispatcher {
       }
 
       # Some files are missing. Quit work!
-      else
-        throw new AdvancedException('Controller not found:' . PATH_STANDARD .
-                '/app/controllers/' . $sController . '.controller.php');
+      else {
+        # Bugfix: Fix exceptions when upload file is missing
+        if(substr(strtolower($sController), 0, 6) !== 'upload')
+          throw new AdvancedException('Controller not found:' . PATH_STANDARD .
+                  '/app/controllers/' . $sController . '.controller.php');
+      }
     }
     catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
@@ -103,18 +106,13 @@ class Dispatcher {
       case 'destroy':
 
         $this->oController->setContent($this->oController->destroy());
-        $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['controller']) . '.title.destroy'));
-        $this->oController->setKeywords($this->oController->getKeywords());
-        $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['controller']) . '.title.destroy'));
 
         break;
 
       default:
       case 'show':
+
         $this->oController->setContent($this->oController->show());
-        $this->oController->setDescription($this->oController->getDescription());
-        $this->oController->setKeywords($this->oController->getKeywords());
-        $this->oController->setTitle($this->oController->getTitle());
 
         break;
 
@@ -132,9 +130,6 @@ class Dispatcher {
       case 'xml':
 
         $this->oController->setContent($this->oController->showXML());
-        $this->oController->setDescription($this->oController->getDescription());
-        $this->oController->setKeywords($this->oController->getKeywords());
-        $this->oController->setTitle($this->oController->getTitle());
 
         break;
     }

@@ -222,7 +222,7 @@ error:
     create:
       email: An account with that Email does already exist. If you lost your password, you can recover it at the login.
     destroy:
-      password: Your account could not be deleted. Wrond password.
+      password: Your account could not be deleted. Wrong password.
     update:
       terms: You need the rights to upload the image.
       password:

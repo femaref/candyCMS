@@ -77,7 +77,7 @@ class Upload {
 	 * @param string $sRename new file name
 	 *
 	 */
-  public function __construct($aRequest, $aSession, $aFile, $sRename = '') {
+  public function __construct(&$aRequest, &$aSession, &$aFile, &$sRename = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aSession	= & $aSession;
     $this->_aFile     = & $aFile;

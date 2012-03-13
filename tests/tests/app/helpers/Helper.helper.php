@@ -48,18 +48,18 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertFalse(Helper::checkEmailAddress('admin'));
   }
 
-  private function containsNumber($sString) {
+  private function _containsNumber($sString) {
     for ($iI = 0; $iI < strlen($sString); $iI++)
       if (is_numeric($sString[$iI]))
         return true;
-    return false;
   }
 
   function testCreateRandomChar() {
     $this->assertEqual(strlen(Helper::createRandomChar(10)), '10');
     $this->assertEqual(strlen(Helper::createRandomChar(3)), '3');
-    $this->assertTrue($this->containsNumber(Helper::createRandomChar(10, true)));
-    //speakable passwords shall not start with numbers
+    $this->assertTrue($this->_containsNumber(Helper::createRandomChar(10, true)));
+
+    # speakable passwords shall not start with numbers
     $pwd = Helper::createRandomChar(10, true);
     $this->assertFalse(is_numeric($pwd[0]));
   }
@@ -75,11 +75,13 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
 
   function testCreateAvatarURLs() {
     $arr = array();
+
     $x = Helper::createAvatarURLs($arr, 0, '', false);
     $this->assertEqual($arr['avatar_32'], Helper::getAvatar(32, 0));
     $this->assertEqual($arr['avatar_64'], Helper::getAvatar(64, 0));
     $this->assertEqual($arr['avatar_100'], Helper::getAvatar(100, 0));
     $this->assertEqual($arr['avatar_popup'], Helper::getAvatar('popup', 0));
+
     $this->assertNotNull($arr['avatar_32']);
     $this->assertNotNull($arr['avatar_64']);
     $this->assertNotNull($arr['avatar_100']);

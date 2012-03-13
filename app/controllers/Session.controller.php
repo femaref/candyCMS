@@ -232,14 +232,14 @@ class Session extends Main {
 		if ($this->_aSession['userdata']['role'] == 2) {
 			$this->_aSession['facebook']->getLogoutUrl();
 			session_destroy();
-			unset($_SESSION);
+			unset($this->_aSession, $_SESSION);
 			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
 		}
 
 		# Standard member
 		elseif ($this->_oModel->destroy() === true) {
 			session_destroy();
-			unset($_SESSION);
+			unset($this->_aSession, $_SESSION);
 			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
 		}
 

@@ -159,7 +159,7 @@ abstract class Main {
 	 * @param array $aCookie alias for $_COOKIE
 	 *
 	 */
-	public function __construct($aRequest, $aSession, $aFile = '', $aCookie = '') {
+	public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
 		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
 		$this->_aFile			= & $aFile;
@@ -189,10 +189,8 @@ abstract class Main {
    */
   public function __destruct() {
     # Only reload language each time the controller is activated in development mode.
-		if (WEBSITE_MODE == 'development')
-			I18n::unsetLanguage();
-
-		unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+    if (WEBSITE_MODE == 'development')
+      I18n::unsetLanguage();
   }
 
   /**
@@ -585,4 +583,28 @@ abstract class Main {
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);
   }
+
+  /**
+   * Return the current request.
+   *
+   * @access public
+   * @return array $this->_aRequest
+   * @todo test
+   *
+   */
+  #public function getRequest() {
+  #  return $this->_aRequest;
+  #}
+
+  /**
+   * Return the current session.
+   *
+   * @access public
+   * @return array $this->_aSession
+   * @todo test
+   *
+   */
+  #public function getSession() {
+  #  return $this->_aSession;
+  #}
 }
