@@ -2,7 +2,7 @@
   {if $USER_ROLE == 4}
     <p class='center'>
       <a href='/user/create'>
-        <img src='%PATH_IMAGES%/candy.global/spacer.png'
+        <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -60,7 +60,7 @@
           {$u.last_login}
         </td>
         <td class='center'>
-          <img src='%PATH_IMAGES%/candy.global/spacer.png'
+          <img src='{$_PATH.images}/candy.global/spacer.png'
               class='icon-{if $u.receive_newsletter == 1}success{else}close{/if}'
               alt='{if $u.receive_newsletter == 1}✔{else}✖{/if}' width='16'
               title='{if $u.receive_newsletter == 1}✔{else}✖{/if}' width='16'
@@ -69,7 +69,7 @@
         {if $USER_ROLE == 4}
           <td class='center'>
             <a href='/user/{$u.id}/update'>
-              <img src='%PATH_IMAGES%/candy.global/spacer.png'
+              <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
                   title='{$lang.global.update.update}'
@@ -77,7 +77,7 @@
             </a>
             &nbsp;
             <a href='#' onclick="confirmDestroy('/user/{$u.id}/destroy')">
-              <img src='%PATH_IMAGES%/candy.global/spacer.png'
+              <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'
                   title='{$lang.global.destroy.destroy}'
@@ -88,8 +88,8 @@
       </tr>
     {/foreach}
   </table>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.fancybox{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
     $('.js-fancybox').fancybox({ nextEffect : 'fade', prevEffect : 'fade' });
     $('table').tablesorter();

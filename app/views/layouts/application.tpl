@@ -5,7 +5,7 @@
         xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
       {* Production mode: Use compiled CSS *}
-      <link href='%PATH_CSS%/core/application{$_compress_files_suffix_}.css'
+      <link href='{$_PATH.css}/core/application{$_compress_files_suffix_}.css'
             rel='stylesheet' type='text/css' media='screen, projection'/>
 
       <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
@@ -31,7 +31,7 @@
 
       {* Basic stuff *}
       <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
-      <link href='%PATH_PUBLIC%/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
+      <link href='{$_PATH.public}/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
 
       {* Include jQuery and its components *}
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1{$_compress_files_suffix_}.js"></script>
@@ -39,7 +39,7 @@
       {* Fallback if CDN is not available. Also include language parts. *}
       <script type="text/javascript">
         if (typeof jQuery == 'undefined')
-          document.write(unescape("%3Cscript src='%PATH_JS%/core/jquery.1.7.1{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
+          document.write(unescape("%3Cscript src='{$_PATH.js}/core/jquery.1.7.1{$_compress_files_suffix_}.js' type='text/javascript'%3E%3C/script%3E"));
         var lang = {$_json_language_};
       </script>
 
@@ -190,11 +190,11 @@
       </div>
 
       {* Add bootstrap support *}
-      <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.dropdown{$_compress_files_suffix_}.js'></script>
-      <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
+      <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.dropdown{$_compress_files_suffix_}.js'></script>
+      <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tooltip{$_compress_files_suffix_}.js'></script>
 
       {* Own JS and plugins *}
-      <script type='text/javascript' src='%PATH_JS%/core/scripts{$_compress_files_suffix_}.js'></script>
+      <script type='text/javascript' src='{$_PATH.js}/core/scripts{$_compress_files_suffix_}.js'></script>
       <!-- plugin:analytics -->
       <!-- plugin:piwikanalytics -->
       <!-- plugin:facebook -->

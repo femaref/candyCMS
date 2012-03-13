@@ -62,5 +62,5 @@
       </div>
     </div>
   </div>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tabs{$_compress_files_suffix_}.js'></script>
 {/strip}

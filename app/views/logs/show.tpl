@@ -44,7 +44,7 @@
         </td>
         <td class='center'>
           <a href="#" onclick="confirmDestroy('/log/{$l.id}/destroy')">
-            <img src='%PATH_IMAGES%/candy.global/spacer.png'
+            <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-destroy js-tooltip'
                 alt='{$lang.global.destroy.destroy}'
                 title='{$lang.global.destroy.destroy}'
@@ -55,15 +55,15 @@
     {/foreach}
   </table>
   {$_pages_}
-  <script src='%PATH_JS%/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
     $(document).ready(function(){
       $('table').infinitescroll({
         navSelector  : 'div.pagination',
         nextSelector : 'div.pagination a:first',
         itemSelector : 'table tbody tr',
-        loading : { msgText : '', img: '%PATH_IMAGES%/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
+        loading : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
       });
     });
 

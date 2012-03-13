@@ -38,7 +38,7 @@
             {/if}
             <a href='#create' rel='nofollow'
               onclick="quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
-              <img src='%PATH_IMAGES%/candy.global/spacer.png'
+              <img src='{$_PATH.images}/candy.global/spacer.png'
                    class='icon-quote js-tooltip'
                    alt='{$lang.global.quote.quote}'
                    width='16' height='16'
@@ -47,7 +47,7 @@
             {if $USER_ROLE >= 3}
               &nbsp;
               <a href="#" onclick="confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
-                <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-destroy js-tooltip'
                     alt='{$lang.global.destroy.destroy}'
                     title='{$lang.global.destroy.destroy}'
@@ -60,14 +60,14 @@
     </div>
   </div>
   {$_pages_}
-  <script src='%PATH_JS%/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
+  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_compress_files_suffix_}.js' type='text/javascript'></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#js-commments').infinitescroll({
         navSelector  : "div.pagination",
         nextSelector : "div.pagination a:first",
         itemSelector : "#js-commments article",
-        loading : { msgText : '', img: "%PATH_IMAGES%/candy.global/loading.gif", loadingText  : '', finishedMsg  : '' }
+        loading : { msgText : '', img: "{$_PATH.images}/candy.global/loading.gif", loadingText  : '', finishedMsg  : '' }
       });
     });
   </script>

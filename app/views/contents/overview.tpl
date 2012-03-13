@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/content/create'>
-        <img src='%PATH_IMAGES%/candy.global/spacer.png'
+        <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -42,14 +42,14 @@
         </td>
         {if $USER_ROLE >= 3}
           <td class='center'>
-            <img src='%PATH_IMAGES%/candy.global/spacer.png'
+            <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-{if $c.published == true}success{else}close{/if}'
                 alt='{if $c.published == true}✔{else}✖{/if}' height='16'
                 title='{if $c.published == true}✔{else}✖{/if}' width='16' />
           </td>
           <td>
             <a href='/content/{$c.id}/update'>
-              <img src='%PATH_IMAGES%/candy.global/spacer.png'
+              <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
                   title='{$lang.global.update.update}'
@@ -57,7 +57,7 @@
             </a>
             &nbsp;
             <a href='#' onclick="confirmDestroy('/content/{$c.id}/destroy')">
-              <img src='%PATH_IMAGES%/candy.global/spacer.png'
+              <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'
                   title='{$lang.global.destroy.destroy}'
@@ -68,7 +68,7 @@
       </tr>
     {/foreach}
   </table>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
   <script type='text/javascript'>
     $('table').tablesorter();
   </script>

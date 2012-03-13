@@ -292,23 +292,23 @@ abstract class Main {
       $this->oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', PLUGIN_FACEBOOK_APP_ID); # required for facebook actions
     }
 
-		# Define smarty constants
-		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
-		$this->oSmarty->assign('MOBILE', MOBILE);
-		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
-		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
-		$this->oSmarty->assign('VERSION', VERSION);
-		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
-		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
-		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
-		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
-		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
-		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
+    # Define smarty constants
+    $this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
+    $this->oSmarty->assign('MOBILE', MOBILE);
+    $this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
+    $this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
+    $this->oSmarty->assign('VERSION', VERSION);
+    $this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
+    $this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
+    $this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
+    $this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
+    $this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
+    $this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
 
-		foreach ($this->_aSession['userdata'] as $sKey => $sData)
-			$this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
+    foreach ($this->_aSession['userdata'] as $sKey => $sData)
+      $this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
-		# Define system variables
+    # Define system variables
 		$this->oSmarty->assign('_date_', date('Y-m-d'));
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES === true ? '.min' : '');
 		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
@@ -321,9 +321,45 @@ abstract class Main {
 
 		# Set up javascript language
 		$this->oSmarty->assign('lang', I18n::getArray());
+    
+    $this->oSmarty->assign('_PATH', $this->getPaths());
 
 		return $this->oSmarty;
 	}
+
+  /**
+   * Generate all Path-Variables that could be useful for Smarty Templates
+   * 
+   * @return array Array with Paths for 'images', 'js', 'less', 'css', 'templates', 'upload', 'public'
+   */
+  public function getPaths() {
+    # Check for template files
+    # *********************************************
+    # Use an external CDN within a custom template
+    $aPaths = array("css" => "css", "images" => "images", "less" => "less", "js" => "js");
+    if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
+      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
+      foreach ($aPaths as $sKey => $sValue)
+        $aPaths[$sKey] = $sPath . '/' . $sValue;
+    }
+    # Use our public folder within a custom template
+    elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
+      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
+      foreach ($aPaths as $sKey => $sValue)
+        $aPaths[$sKey] = ( @is_dir(substr($sPath, 1) . '/css') ? $sPath : WEBSITE_CDN ) . '/' . $sValue;
+    }
+    # Use standard folders
+    else {
+      foreach ($aPaths as $sKey => $sValue)
+        $aPaths[$sKey] = WEBSITE_CDN . '/' . $sValue;
+    }
+    
+    return $aPaths + array("public" => WEBSITE_CDN,
+                          "template" => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
+                          "upload" => PATH_UPLOAD);
+
+    return $aPaths;
+  }
 
 	/**
 	 * Set meta description.

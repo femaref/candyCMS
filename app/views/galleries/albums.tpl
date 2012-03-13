@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/gallery/create'>
-        <img src='%PATH_IMAGES%/candy.global/spacer.png'
+        <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -25,14 +25,14 @@
             <a href='{$a.url}'>{$a.title}</a>
             {if $USER_ROLE >= 3}
               <a href='/gallery/{$a.id}/createfile'>
-                <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-create js-tooltip'
                     alt='{$lang.gallery.files.title.create}'
                     title='{$lang.gallery.files.title.create}'
                     width='16' height='16' />
               </a>
               <a href='/gallery/{$a.id}/update'>
-                <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-update js-tooltip'
                     alt='{$lang.global.update.update}'
                     title='{$lang.global.update.update}'

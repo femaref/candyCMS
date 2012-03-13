@@ -499,56 +499,17 @@ class Index {
       $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 
-		# Build URLs
-		$sCachedHTML = str_replace('%PATH_PUBLIC%', WEBSITE_CDN, $sCachedHTML);
-		$sCachedHTML = str_replace('%PATH_TEMPLATE%', WEBSITE_CDN . '/templates/' . PATH_TEMPLATE, $sCachedHTML);
-		$sCachedHTML = str_replace('%PATH_UPLOAD%', PATH_UPLOAD, $sCachedHTML);
-
-		# Check for template files
-    # *********************************************
-    # Use an external CDN within a custom template
-    if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
-      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
-
-      $sCachedCss     = $sPath . '/css';
-      $sCachedImages  = $sPath . '/images';
-      $sCachedLess    = $sPath . '/less';
-      $sCachedJs      = $sPath . '/js';
-    }
-    # Use our public folder within a custom template
-    elseif(PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) !== 'http') {
-      $sPath    = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
-
-      $sCachedCss     = @is_dir(substr($sPath, 1) . '/css') ? $sPath . '/css' : WEBSITE_CDN . '/css';
-      $sCachedImages  = @is_dir(substr($sPath, 1) . '/images') ? $sPath . '/images' : WEBSITE_CDN . '/images';
-      $sCachedLess    = @is_dir(substr($sPath, 1) . '/less') ? $sPath . '/less' : WEBSITE_CDN . '/less';
-      $sCachedJs      = @is_dir(substr($sPath, 1) . '/js') ? $sPath . '/js' : WEBSITE_CDN . '/js';
-    }
-
-    # Use standard folders
-    else {
-      $sCachedCss     = WEBSITE_CDN . '/css';
-      $sCachedImages  = WEBSITE_CDN . '/images';
-      $sCachedLess    = WEBSITE_CDN . '/less';
-      $sCachedJs      = WEBSITE_CDN . '/js';
-    }
-
-    $sCachedHTML = str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
-    $sCachedHTML = str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
-
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
-		# Compile CSS when in development mode and clearing the cache
-    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($sCachedLess . '/core/application.less'))) {
+    # Compile CSS when in development mode and clearing the cache
+    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($aPaths['less'] . '/core/application.less'))) {
       require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
 
       try {
-        @unlink(Helper::removeSlash($sCachedCss . '/core/application.css'));
-        lessc::ccompile(Helper::removeSlash($sCachedLess . '/core/application.less'),
-                Helper::removeSlash($sCachedCss . '/core/application.css'));
+        @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));
+        lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/core/application.less'),
+                Helper::removeSlash($aPaths['css'] . '/core/application.css'));
       }
       catch (AdvancedException $e) {
         die($e->getMessage());
