@@ -88,12 +88,9 @@ class Gallery extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-
       # Collect data array
-      $sAlbumName					= $this->_oModel->getAlbumName($this->_iId);
-      $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId);
+      $sAlbumName					= & $this->_oModel->getAlbumName($this->_iId);
+      $sAlbumDescription	= & $this->_oModel->getAlbumContent($this->_iId);
 
       $this->setDescription($sAlbumDescription);
       $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
@@ -107,6 +104,8 @@ class Gallery extends Main {
 				$this->oSmarty->assign('gallery_content', $sAlbumDescription);
 			}
 
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 
@@ -114,8 +113,6 @@ class Gallery extends Main {
     elseif (!empty($this->_iId) && isset($this->_aRequest['album_id'])) {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
-
-			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			$aData = & $this->_oModel->getFileData($this->_iId);
 
@@ -136,11 +133,12 @@ class Gallery extends Main {
 
         $this->oSmarty->assign('i', $aData);
 
+        $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
       else {
         header('Status: 404 Not Found');
-        header("HTTP/1.0 404 Not Found");
+        header('HTTP/1.0 404 Not Found');
         Helper::redirectTo('/error/404');
       }
     }
@@ -150,9 +148,6 @@ class Gallery extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'albums');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-
 			$this->setDescription(I18n::get('global.gallery'));
 			$this->setTitle(I18n::get('global.gallery'));
 
@@ -161,6 +156,8 @@ class Gallery extends Main {
 				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/gallery'));
 			}
 
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }

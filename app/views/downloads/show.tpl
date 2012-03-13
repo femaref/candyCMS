@@ -70,7 +70,7 @@
                       width='16' height='16' />
                 </a>
               {else}
-                <a href="{$f.url}" target="_blank">
+                <a href='{$f.url}'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                        class="icon-download js-tooltip"
                        alt='{$lang.global.download}'

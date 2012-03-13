@@ -227,8 +227,11 @@ class Helper {
     elseif ($iSize >= 1073741824)
       return round(($iSize / 1073741824), 2) . ' GB';
 
-    else
+    elseif($iSize > 0)
       return round($iSize, 2) . ' Byte';
+
+    #else
+    #  throw new AdvancedException('File does not exist:' . $sPath);
   }
 
 	/**

@@ -20,7 +20,6 @@ use CandyCMS\Model\Session as Model_Session;
 use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Controller\Cronjob as Cronjob;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
-use lessc;
 use Routes;
 use sfYaml;
 
@@ -32,9 +31,8 @@ require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
 require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
-require_once PATH_STANDARD . '/lib/routes/Routes.php';
-//require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/lib/routes/Routes.php';
 
 class Index {
 
@@ -502,20 +500,6 @@ class Index {
 
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
-
-    # Compile CSS when in development mode and clearing the cache
-    if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($aPaths['less'] . '/core/application.less'))) {
-      require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
-
-      try {
-        @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));
-        lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/core/application.less'),
-                Helper::removeSlash($aPaths['css'] . '/core/application.css'));
-      }
-      catch (AdvancedException $e) {
-        die($e->getMessage());
-      }
-    }
 
 		header('Content-Type: text/html; charset=utf-8');
     return $sCachedHTML;
