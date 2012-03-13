@@ -177,10 +177,14 @@ class Pagination {
    */
   public function showPages($sController = '') {
 		if($this->_iPages > 1) {
-			$this->_oSmarty->assign('page_current', $this->_iCurrentPage);
-			$this->_oSmarty->assign('page_last', $this->_iPages);
-			$this->_oSmarty->assign('_action_url_', !empty($sController) ? $sController : Helper::formatInput($this->_aRequest['controller']));
-			$this->_oSmarty->assign('_public_folder_', WEBSITE_CDN . '/public/images');
+
+      $aPage = array(
+          'last'        => $this->_iPages,
+          'controller'  => !empty($sController) ?
+                  $sController :
+                  Helper::formatInput($this->_aRequest['controller']));
+
+      $this->_oSmarty->assign('_PAGE', $aPage);
 
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
 			return $this->_oSmarty->fetch('show.tpl');
@@ -193,13 +197,11 @@ class Pagination {
    * @access public
    * @param string $sController controller to show for RSS
    * @return string HTML content if there are more than one pages
+   * @todo remove i18n when smarty instance is done
    *
    */
   public function showSurrounding($sController = 'blog') {
 		if($this->_iPages > 1) {
-			$iNext = '';
-			$iPrevious = '';
-
 			if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
 				$iNext = $this->_iCurrentPage + 1;
 
@@ -210,11 +212,14 @@ class Pagination {
 			$oI18n = new I18n(WEBSITE_LANGUAGE);
 			$this->_oSmarty->assign('lang', $oI18n->getArray());
 
-			$this->_oSmarty->assign('_page_entries_', $this->_iEntries);
-			$this->_oSmarty->assign('_page_limit_', $this->_iLimit);
-			$this->_oSmarty->assign('_page_next_', $iNext);
-			$this->_oSmarty->assign('_page_previous_', $iPrevious);
-			$this->_oSmarty->assign('_rss_section_', $sController);
+      $aPage = array(
+          'entries'     => $this->_iEntries,
+          'limit'       => $this->_iLimit,
+          'next'        => isset($iNext) ? $iNext : '',
+          'previous'    => isset($iPrevious) ? $iPrevious : '',
+          'controller'  => $sController);
+
+			$this->_oSmarty->assign('_PAGE', $aPage);
 
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
 			return $this->_oSmarty->fetch('surrounding.tpl');

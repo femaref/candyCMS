@@ -1,19 +1,19 @@
 {strip}
   <ul class='pager clearfix'>
-    {if $_page_previous_}
+    {if $_PAGE.previous}
       <li class='previous'>
-        <a href='/{$_REQUEST.controller}/page/{$_page_previous_}' rel='prev'>&larr; {$lang.pages.previous}</a>
+        <a href='/{$_REQUEST.controller}/page/{$_PAGE.previous}' rel='prev'>&larr; {$lang.pages.previous}</a>
       </li>
     {/if}
-    {if $_page_next_ && $_page_entries_ > $_page_limit_}
+    {if $_PAGE.next && $_PAGE.entries > $_PAGE.limit}
       <li class='next'>
-        <a href='/{$_REQUEST.controller}/page/{$_page_next_}' rel='next'>{$lang.pages.next} &rarr;</a>
+        <a href='/{$_REQUEST.controller}/page/{$_PAGE.next}' rel='next'>{$lang.pages.next} &rarr;</a>
       </li>
     {/if}
   </ul>
   <p class='center'>
-    {if $_rss_section_}
-      <a href='/rss/{$_rss_section_}'>
+    {if $_PAGE.controller}
+      <a href='/rss/{$_PAGE.controller}'>
         <img src='%PATH_IMAGES%/candy.global/spacer.png' class='icon-rss js-tooltip'
             title='{$lang.global.rss}' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
