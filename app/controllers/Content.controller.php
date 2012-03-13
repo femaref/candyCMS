@@ -53,8 +53,11 @@ class Content extends Main {
 					$this->setKeywords($aData[$this->_iId]['keywords']);
 					$this->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
 				}
-				else
+				else {
+          header('Status: 404 Not Found');
+          header("HTTP/1.0 404 Not Found");
 					Helper::redirectTo('/error/404');
+        }
 			}
 
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
