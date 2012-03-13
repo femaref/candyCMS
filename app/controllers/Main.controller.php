@@ -19,8 +19,9 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Model\Session as Session;
 use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use MCAPI;
-use Smarty;
+//use Smarty;
 
 require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
@@ -264,20 +265,7 @@ abstract class Main {
 	 */
 	protected function _setSmarty() {
 		# Initialize smarty
-		$this->oSmarty = new Smarty();
-		$this->oSmarty->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
-		$this->oSmarty->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
-		$this->oSmarty->setPluginsDir(PATH_STANDARD . '/lib/smarty/plugins');
-		$this->oSmarty->setTemplateDir(PATH_STANDARD . '/app/views');
-
-		$this->oSmarty->merge_compiled_includes = true;
-		$this->oSmarty->use_sub_dirs = true;
-
-    # Only compile our templates on production mode.
-    if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging') {
-			$this->oSmarty->setCompileCheck(false);
-			$this->oSmarty->setCacheModifiedCheck(true);
-		}
+		$this->oSmarty = SmartySingleton::getInstance();
 
     # Clear cache on development mode or when we force it via a request.
     if (isset($this->_aRequest['clearcache']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
@@ -285,41 +273,12 @@ abstract class Main {
       $this->oSmarty->clearCompiledTemplate();
     }
 
-    $bUseFacebook = class_exists('\CandyCMS\Plugin\Controller\FacebookCMS') ? true : false;
-
-    if($bUseFacebook === true) {
-      $this->oSmarty->assign('PLUGIN_FACEBOOK_ADMIN_ID', PLUGIN_FACEBOOK_ADMIN_ID); # required for meta only
-      $this->oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', PLUGIN_FACEBOOK_APP_ID); # required for facebook actions
-    }
-
-		# Define smarty constants
-		$this->oSmarty->assign('CURRENT_URL', CURRENT_URL);
-		$this->oSmarty->assign('MOBILE', MOBILE);
-		$this->oSmarty->assign('MOBILE_DEVICE', MOBILE_DEVICE);
-		$this->oSmarty->assign('THUMB_DEFAULT_X', THUMB_DEFAULT_X);
-		$this->oSmarty->assign('VERSION', VERSION);
-		$this->oSmarty->assign('WEBSITE_COMPRESS_FILES', WEBSITE_COMPRESS_FILES);
-		$this->oSmarty->assign('WEBSITE_LANGUAGE', WEBSITE_LANGUAGE);
-		$this->oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
-		$this->oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
-		$this->oSmarty->assign('WEBSITE_NAME', WEBSITE_NAME);
-		$this->oSmarty->assign('WEBSITE_URL', WEBSITE_URL);
-
-		foreach ($this->_aSession['userdata'] as $sKey => $sData)
-			$this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
-
-		# Define system variables
-		$this->oSmarty->assign('_date_', date('Y-m-d'));
-		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES === true ? '.min' : '');
-		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
-		$this->oSmarty->assign('_json_language_', I18n::getJson());
+    foreach ($this->_aSession['userdata'] as $sKey => $sData)
+      $this->oSmarty->assign('USER_' . strtoupper($sKey), $sData);
 
     # Global variables
 		$this->oSmarty->assign('_REQUEST', $this->_aRequest);
 		$this->oSmarty->assign('_SESSION', $this->_aSession);
-
-		# Set up javascript language
-		$this->oSmarty->assign('lang', I18n::getArray());
 
 		return $this->oSmarty;
 	}

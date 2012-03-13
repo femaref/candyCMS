@@ -14,6 +14,7 @@ namespace CandyCMS\Helper;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Pagination {
 
@@ -116,11 +117,9 @@ class Pagination {
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
 
-    $this->_oSmarty = new \Smarty();
-    $this->_oSmarty->cache_dir    = CACHE_DIR;
-    $this->_oSmarty->compile_dir  = COMPILE_DIR;
+    $this->_oSmarty = SmartySingleton::getInstance();
 
-    $this->_oSmarty->assign('_REQUEST', $this->_aRequest);
+    // $this->_oSmarty->assign('_REQUEST', $this->_aRequest);
   }
 
 	/**
@@ -173,6 +172,7 @@ class Pagination {
    * @access public
    * @param string $sController controller to show.
    * @return string HTML content if there are more than one pages
+   * @todo public folder? same as _PATH.public??
    *
    */
   public function showPages($sController = '') {

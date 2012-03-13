@@ -133,7 +133,7 @@
       {/if}
     </div>
   </form>
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.typeahead{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.typeahead{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
   <script type='text/javascript'>
     $(document).ready(function(){
@@ -151,7 +151,7 @@
         document_base_url : '{$WEBSITE_URL}',
         entity_encoding : 'raw',
         height : '300px',
-        content_css : '%PATH_CSS%/core/tinymce{$_compress_files_suffix_}.css'
+        content_css : '{$_PATH.css}/core/tinymce{$_SYSTEM.compress_files_suffix}.css'
       });
     });
 

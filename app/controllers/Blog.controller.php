@@ -28,19 +28,13 @@ class Blog extends Main {
   protected function _show() {
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
-		# If data is not found, redirect to 404
-		if (empty($this->_aData[1]['id']) && !empty($this->_iId)) {
+    # If data is not found, redirect to 404
+    if (empty($this->_aData[1]['id']) && !empty($this->_iId)) {
       header('Status: 404 Not Found');
-			header("HTTP/1.0 404 Not Found");
-			Helper::redirectTo('/error/404');
+      header("HTTP/1.0 404 Not Found");
+      Helper::redirectTo('/error/404');
     }
-
-		else {
-			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
-
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-
+    else {
       # Load comments
       if (!empty($this->_iId)) {
         $sClass = $this->__autoload('Comment');
@@ -59,8 +53,11 @@ class Blog extends Main {
 
       $this->oSmarty->assign('blog', $this->_aData);
 
-			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
+      $sTemplateDir   = Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
   }
 
   /**

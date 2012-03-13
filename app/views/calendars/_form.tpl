@@ -31,7 +31,7 @@
       </label>
       <div class='controls'>
         <input type='date' name='start_date' id='input-start_date' value="{$start_date}"
-              min='{$_date_}' class='span4 required' autocomplete required />
+              min='{$_SYSTEM.date}' class='span4 required' autocomplete required />
         {if isset($error.start_date)}
           <span class='help-inline'>{$error.start_date}</span>
         {/if}
@@ -46,7 +46,7 @@
       </label>
       <div class='controls'>
         <input type='date' name='end_date' id='input-end_date' value="{$end_date}"
-              class='span4' min='{$_date_}' autocomplete />
+              class='span4' min='{$_SYSTEM.date}' autocomplete />
         {if isset($error.end_date)}
           <span class='help-inline'>{$error.end_date}</span>
         {/if}

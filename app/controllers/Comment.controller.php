@@ -172,10 +172,9 @@ class Comment extends Main {
    */
   protected function _create($bShowCaptcha = true) {
     $this->_setError('parent_id', I18n::get('error.missing.id'));
-    $this->_setError('name');
     $this->_setError('content');
 
-    if ($this->_aSession['userdata']['id'] < 1)
+    if ($this->_aSession['userdata']['role'] == 0)
       $this->_setError('name');
 
     if (isset($this->_aError))

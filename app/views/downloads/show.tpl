@@ -2,7 +2,7 @@
   {if $USER_ROLE >= 3}
     <p class='center'>
       <a href='/download/create'>
-        <img src='%PATH_IMAGES%/candy.global/spacer.png'
+        <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
@@ -34,7 +34,7 @@
         {foreach $d.files as $f}
           <tr>
             <td class='center'>
-              <img src='%PATH_IMAGES%/candy.files/{$f.extension}.png'
+              <img src='{$_PATH.images}/candy.files/{$f.extension}.png'
                   width='32' height='32' alt='{$f.extension}' />
             </td>
             <td class='left'>
@@ -55,7 +55,7 @@
             <td class='center'>
               {if $USER_ROLE >= 3}
                 <a href='/download/{$f.id}/update'>
-                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                  <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
                       title='{$lang.global.update.update}'
@@ -63,7 +63,7 @@
                 </a>
                 &nbsp;
                 <a href="#" onclick="confirmDestroy('/download/{$f.id}/destroy')">
-                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                  <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
                       title='{$lang.global.destroy.destroy}'
@@ -71,7 +71,7 @@
                 </a>
               {else}
                 <a href="{$f.url}" target="_blank">
-                  <img src='%PATH_IMAGES%/candy.global/spacer.png'
+                  <img src='{$_PATH.images}/candy.global/spacer.png'
                        class="icon-download js-tooltip"
                        alt='{$lang.global.download}'
                        title='{$lang.global.download}'
@@ -85,7 +85,7 @@
       </table>
     {/foreach}
   {/if}
-  <script type='text/javascript' src='%PATH_JS%/core/jquery.tablesorter{$_compress_files_suffix_}.js'></script>
+  <script type='text/javascript' src='{$_PATH.js}/core/jquery.tablesorter{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type='text/javascript'>
     $('table').tablesorter();
   </script>

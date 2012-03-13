@@ -100,7 +100,6 @@ class Dispatcher {
 
         $this->oController->setContent($this->oController->create('create_' . strtolower($this->_aRequest['controller'])));
         $this->oController->setDescription(I18n::get(strtolower($this->_aRequest['controller']) . '.title.create'));
-        $this->oController->setKeywords($this->oController->getKeywords());
         $this->oController->setTitle(I18n::get(strtolower($this->_aRequest['controller']) . '.title.create'));
 
         break;
@@ -122,8 +121,7 @@ class Dispatcher {
 
         $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['controller'])));
         $this->oController->setDescription(
-                str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
-        $this->oController->setKeywords($this->oController->getKeywords());
+                str_replace('%p', $this->oController->getDescription(), I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
         $this->oController->setTitle(
                 str_replace('%p', $this->oController->getTitle(), I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
 
