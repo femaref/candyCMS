@@ -91,7 +91,7 @@ abstract class Main {
 	 * @param array $aFile alias for $_FILE
    *
    */
-  public function __construct($aRequest = '', $aSession = '', $aFile = '') {
+  public function __construct(&$aRequest = '', &$aSession = '', &$aFile = '') {
 		$this->_aRequest	= & $aRequest;
 		$this->_aSession	= & $aSession;
     $this->_aFile     = & $aFile;

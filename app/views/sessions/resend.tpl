@@ -21,8 +21,8 @@
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
-        <input class='required span4 focused' name='email' type='email'
-               title='' id='input-email' autofocus required />
+        <input class='required span4 focused' name='email' type='text'
+               title='' id='input-email' autofocus />
         {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
       </div>
     </div>

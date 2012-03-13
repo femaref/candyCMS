@@ -29,14 +29,21 @@ class Blog extends Main {
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
     # If data is not found, redirect to 404
-    if (empty($this->_aData[1]['id']) && !empty($this->_iId)) {
+    if (!$this->_aData[1]['id'] && $this->_iId) {
       header('Status: 404 Not Found');
-      header("HTTP/1.0 404 Not Found");
+      header('HTTP/1.0 404 Not Found');
       Helper::redirectTo('/error/404');
     }
     else {
-      # Load comments
-      if (!empty($this->_iId)) {
+      $sTemplateDir   = Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->setDescription($this->_setBlogDescription());
+      $this->setKeywords($this->_setBlogKeywords());
+      $this->setTitle($this->_setBlogTitle());
+
+			# Load comments
+      if ($this->_iId) {
         $sClass = $this->__autoload('Comment');
         $oComments = new $sClass($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
@@ -47,14 +54,7 @@ class Blog extends Main {
       else
         $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
 
-      $this->setDescription($this->_setBlogDescription());
-      $this->setKeywords($this->_setBlogKeywords());
-      $this->setTitle($this->_setBlogTitle());
-
       $this->oSmarty->assign('blog', $this->_aData);
-
-      $sTemplateDir   = Helper::getTemplateDir($this->_sTemplateFolder, 'show');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
@@ -71,8 +71,8 @@ class Blog extends Main {
     if (isset($this->_aRequest['page']) && $this->_aRequest['page'] > 1)
       return I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
-    elseif (!empty($this->_iId)) {
-      if (isset($this->_aData[1]['teaser']) && !empty($this->_aData[1]['teaser']))
+    elseif ($this->_iId) {
+      if (isset($this->_aData[1]['teaser']) && $this->_aData[1]['teaser'])
         return $this->_removeHighlight($this->_aData[1]['teaser']);
 
       elseif (isset($this->_aData[1]['title']))
@@ -93,7 +93,7 @@ class Blog extends Main {
    *
    */
   private function _setBlogKeywords() {
-    if (!empty($this->_iId) && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
+    if ($this->_iId && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
       return $this->_aData[1]['keywords'];
   }
 
@@ -114,7 +114,7 @@ class Blog extends Main {
       return I18n::get('global.tag') . ': ' . $this->_aRequest['search'];
 
     # default blog entry
-    elseif (!empty($this->_iId))
+    elseif ($this->_iId)
       return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blog');
 
     # show overview with pages
@@ -135,7 +135,7 @@ class Blog extends Main {
    */
   protected function _showFormTemplate() {
     # Update
-    if (!empty($this->_iId)) {
+    if ($this->_iId) {
       $aData = & $this->_oModel->getData($this->_iId, true);
       $this->setTitle($aData['title']);
     }
@@ -167,7 +167,7 @@ class Blog extends Main {
     foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
 		$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
@@ -191,7 +191,7 @@ class Blog extends Main {
 		$this->_setError('title');
 		$this->_setError('content');
 
-		if (isset($this->_aError))
+		if ($this->_aError)
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
@@ -218,7 +218,7 @@ class Blog extends Main {
   protected function _update() {
     $this->_setError('title');
 
-    if (isset($this->_aError))
+    if ($this->_aError)
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {

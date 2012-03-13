@@ -171,8 +171,8 @@ success:
   password:
     create: You got a mail with a new password.
   user:
-    create: Congratulations! You are now a registered user and should have received an Email to confirm your Email address.
-    verification: Thank you. Your Email has been verified!
+    create: Congratulations! You are now a registered user and should have received an email to confirm your email address.
+    verification: Thank you. Your email has been verified!
 
 error:
   404:
@@ -192,7 +192,7 @@ error:
     missing:
       category: Please select a category.
       content: Please enter content.
-      email: Please enter your Email.
+      email: Please enter your email.
       file: Please select file.
       name: Please enter your name.
       terms: You must accept the terms and conditions!
@@ -200,8 +200,8 @@ error:
       password: Please enter a password.
       subject: Please enter a subject.
   mail:
-    create: Mail delivery failed. If the Email is correct, please contact Admin.
-    format: This Email is not valid!
+    create: Mail delivery failed. If the email is correct, please contact Admin.
+    format: This email is not valid!
   missing:
     action: Aborting action due to missing parameters!
     id: Wrong or no ID submitted.
@@ -214,13 +214,13 @@ error:
     template: This template is not available!
   passwords: Passwords do not match, please retype.
   session:
-    create: Please check your Email and password. Also, is your Email verified?
+    create: Please check your email and password. Also, is your email account verified?
     create_first: Please login first!
   standard: An error occured!
   sql: This SQL query caused an error.
   user:
     create:
-      email: An account with that Email does already exist. If you lost your password, you can recover it at the login.
+      email: An account with that email does already exist. If you lost your password, you can recover it at the login.
     destroy:
       password: Your account could not be deleted. Wrong password.
     update:
@@ -256,7 +256,7 @@ calendar:
 
 comment:
   info:
-    email: Your Email will not be published.
+    email: Your email will not be published.
   title:
     create: Create comment
     destroy: Delete comment
@@ -341,7 +341,7 @@ search:
 
 session:
   password:
-    info: Enter your Email and we will send you a new password within a few minutes.
+    info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
     mail:
       body: "Hello %u!\r\n\r\nYou can login via following password: <em>%p</em> %SIGNATURE %NOREPLY"
@@ -350,14 +350,14 @@ session:
   verification:
     info: Resend the verification code.
     label:
-      create: Send Email
+      create: Send email
     mail:
-      body: "Hello %u!\r\n\r\nPlease click this link to verifiy your Email: %v %SIGNATURE %NOREPLY"
-      subject: Your Email verification for %WEBSITE_NAME
-    title: Resend Email verification
+      body: "Hello %u!\r\n\r\nPlease click this link to verifiy your email: %v %SIGNATURE %NOREPLY"
+      subject: Your email verification for %WEBSITE_NAME
+    title: Resend email verification
 
 user:
-  contact_via_email: "Click to send %u an Email!"
+  contact_via_email: "Click to send %u an email!"
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
     gravatar:  "If you don't want to upload a profile image, you can use <a href='http://gravatar.com' target='_blank'>Gravatar.com</a> instead. The displayed image is shown above."
@@ -383,7 +383,7 @@ user:
     registered_since: Registered since
     update: Update profile
   mail:
-    body: "Hello %u!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your Email address via this link: %v %SIGNATURE %NOREPLY"
+    body: "Hello %u!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your email address via this link: %v %SIGNATURE %NOREPLY"
     subject: Your registration at %WEBSITE_NAME.
   title:
     account: Delete account

@@ -234,9 +234,9 @@ abstract class Main {
 	 *
 	 */
   public function __init() {
-    $oModel = $this->__autoload($this->_aRequest['controller'], true);
+    $oModel = & $this->__autoload($this->_aRequest['controller'], true);
 
-    if (!empty($oModel))
+    if ($oModel)
       $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
   }
 
@@ -295,11 +295,12 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string meta description
+	 * @todo does i18n fail?
 	 *
 	 */
 	public function getDescription() {
 		# Show default description if this is our landing page or we got no descrption.
-		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || empty($this->_sDescription))
+		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || !$this->_sDescription)
 			return I18n::get('website.description');
 
 		# We got no description. Fall back to default description.
@@ -323,10 +324,11 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string meta keywords
+	 * @todo why are keywords not working? I18n fails.
 	 *
 	 */
 	public function getKeywords() {
-		return !empty($this->_sKeywords) ? $this->_sKeywords : I18n::get('website.keywords');
+		return $this->_sKeywords ? $this->_sKeywords : I18n::get('website.keywords');
 	}
 
 	/**
@@ -345,6 +347,7 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string page title
+	 * @todo does i18n fail?
 	 *
 	 */
 	public function getTitle() {
@@ -352,7 +355,7 @@ abstract class Main {
 			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
 
 		else
-			return !empty($this->_sTitle) ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['controller']));
+			return $this->_sTitle ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['controller']));
 	}
 
 	/**
@@ -382,11 +385,11 @@ abstract class Main {
 	 * Give back ID.
 	 *
 	 * @access public
-	 * @return integer id
+	 * @return integer $this->_iId
 	 *
 	 */
 	public function getId() {
-		return !empty($this->_iId) ? $this->_iId : '';
+		return $this->_iId;
 	}
 
 	/**
@@ -414,12 +417,12 @@ abstract class Main {
 	 */
 	protected function _setError($sField, $sMessage = '') {
 		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError[$sField] = empty($sMessage) ?
+			$this->_aError[$sField] = !$sMessage ?
 							I18n::get('error.form.missing.' . strtolower($sField)) :
 							$sMessage;
 
     # Bugfix: Don't try to validate email on comment post.
-		if (isset($this->_aRequest['email']) && Helper::checkEmailAddress($this->_aRequest['email'] == false) &&
+		if (isset($this->_aRequest['email']) && !Helper::checkEmailAddress($this->_aRequest['email']) &&
 						'blog' !== $this->_aRequest['controller'])
 			$this->_aError['email'] = I18n::get('error.form.missing.email');
 	}
@@ -537,28 +540,4 @@ abstract class Main {
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);
   }
-
-  /**
-   * Return the current request.
-   *
-   * @access public
-   * @return array $this->_aRequest
-   * @todo test
-   *
-   */
-  #public function getRequest() {
-  #  return $this->_aRequest;
-  #}
-
-  /**
-   * Return the current session.
-   *
-   * @access public
-   * @return array $this->_aSession
-   * @todo test
-   *
-   */
-  #public function getSession() {
-  #  return $this->_aSession;
-  #}
 }

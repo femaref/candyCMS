@@ -118,24 +118,21 @@ class Session extends Main {
 	 *
 	 */
 	public function resendPassword() {
-		$this->__autoload('Mail');
-
-		# If there is no email request then show form template
-		if (!isset($this->_aRequest['email']))
-			return $this->_showCreateResendActionsTemplate();
-
-		# Check format of email
-		else
+		if (isset($this->_aRequest['email']))
 			$this->_setError('email');
+
+		else
+			return $this->_showCreateResendActionsTemplate();
 
 		if (isset($this->_aError))
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
+			$this->__autoload('Mail');
 			$sNewPasswordClean = Helper::createRandomChar(10, true);
 			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
-			if ($aData == true) {
+			if (!empty($aData)) {
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));
 				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
@@ -150,7 +147,7 @@ class Session extends Main {
 			}
 			else
 				# Replace error message with message, that email could not be found
-				return Helper::errorMessage(I18n::get('error.sql'), '/');
+				return Helper::errorMessage('Account not found!', '/');
 		}
 	}
 
@@ -163,23 +160,20 @@ class Session extends Main {
 	 *
 	 */
 	public function resendVerification() {
-		$this->__autoload('Mail');
-
-		# If there is no email request then show form template
-		if (!isset($this->_aRequest['email']))
-			return $this->_showCreateResendActionsTemplate();
-
-		# Check format of email
-		else
+		if (isset($this->_aRequest['email']))
 			$this->_setError('email');
+
+		else
+			return $this->_showCreateResendActionsTemplate();
 
 		if (isset($this->_aError))
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
-			$aData = $this->_oModel->resendVerification();
+			$this->__autoload('Mail');
+			$aData = & $this->_oModel->resendVerification();
 
-			if (is_array($aData)) {
+			if (!empty($aData)) {
 				$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
 
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.verification.mail.body'));
@@ -208,8 +202,6 @@ class Session extends Main {
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-    $this->_setError('email');
-
 		if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
