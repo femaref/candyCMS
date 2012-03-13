@@ -446,7 +446,7 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' .
+			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' . WEBSITE_MODE . '|' .
 							substr(md5($this->_aSession['userdata']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
 							substr(md5(CURRENT_URL), 0, 10));
 
