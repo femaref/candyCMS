@@ -77,6 +77,8 @@ class Dispatcher {
     }
     catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
+      header('Status: 404 Not Found');
+			header("HTTP/1.0 404 Not Found");
       Helper::redirectTo('/error/404');
       exit('Controller not found.');
     }

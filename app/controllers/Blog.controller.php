@@ -29,8 +29,11 @@ class Blog extends Main {
     $this->_aData = & $this->_oModel->getData($this->_iId);
 
 		# If data is not found, redirect to 404
-		if (empty($this->_aData[1]['id']) && !empty($this->_iId))
+		if (empty($this->_aData[1]['id']) && !empty($this->_iId)) {
+      header('Status: 404 Not Found');
+			header("HTTP/1.0 404 Not Found");
 			Helper::redirectTo('/error/404');
+    }
 
 		else {
 			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');

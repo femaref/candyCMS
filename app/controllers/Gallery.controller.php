@@ -138,8 +138,11 @@ class Gallery extends Main {
 
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
-      else
+      else {
+        header('Status: 404 Not Found');
+        header("HTTP/1.0 404 Not Found");
         Helper::redirectTo('/error/404');
+      }
     }
 
     # Album overview
