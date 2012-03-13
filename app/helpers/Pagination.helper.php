@@ -89,7 +89,7 @@ class Pagination {
 	 * @param integer $iLimit limit of entries per page.
 	 *
 	 */
-  public function __construct($aRequest, $iEntries, $iLimit = 10) {
+  public function __construct(&$aRequest, $iEntries, $iLimit = 10) {
     $this->_aRequest	= & $aRequest;
 		$this->_iEntries	= & $iEntries;
 		$this->_iLimit		= & $iLimit;

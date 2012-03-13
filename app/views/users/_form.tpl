@@ -222,7 +222,7 @@
             {$lang.global.password.password}
           </label>
           <div class='controls'>
-            <input name='password' type='password' id='input-password' />
+            <input name='password' type='password' id='input-password' class='span4' />
           </div>
         </div>
         <div class='form-actions'>

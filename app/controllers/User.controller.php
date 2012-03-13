@@ -425,7 +425,7 @@ class User extends Main {
 	 *
 	 */
 	public function destroy() {
-    $aUser = MODEL::getUserNamesAndEmail($this->_iId);
+    $aUser = \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
     if (isset($this->_aRequest['destroy_user']) && $this->_aSession['userdata']['id'] == $this->_iId) {

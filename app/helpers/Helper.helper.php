@@ -30,10 +30,10 @@ class Helper {
    *
    */
   public static function successMessage($sMessage, $sRedirectTo = '') {
-    $_SESSION['flash_message']['type']      = 'success';
-    $_SESSION['flash_message']['message']   = $sMessage;
-    $_SESSION['flash_message']['headline']  = '';
-    $_SESSION['flash_message']['show']      = '0';
+    $_SESSION['flash_message'] = array(
+        'type'    => 'success',
+        'message' => $sMessage,
+        'headline'=> '');
 
     return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : true;
   }
@@ -49,10 +49,10 @@ class Helper {
    *
    */
   public static function errorMessage($sMessage, $sRedirectTo = '') {
-    $_SESSION['flash_message']['type']      = 'error';
-    $_SESSION['flash_message']['message']   = $sMessage;
-    $_SESSION['flash_message']['headline']  = I18n::get('error.standard');
-    $_SESSION['flash_message']['show']			= '0';
+    $_SESSION['flash_message'] = array(
+        'type'    => 'error',
+        'message' => $sMessage,
+        'headline'=> I18n::get('error.standard'));
 
     return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : false;
   }
@@ -94,13 +94,13 @@ class Helper {
    *
    */
   public static function createRandomChar($iLength, $bSpeakable = false) {
-    $sChars = 'BCDFGHJKLMNPQRSTVWXZbcdfghjkmnpqrstvwxz';
-    $sVocals = 'AaEeiOoUuYy';
+    $sChars   = 'BCDFGHJKLMNPQRSTVWXZbcdfghjkmnpqrstvwxz';
+    $sVocals  = 'AaEeiOoUuYy';
     $sNumbers = '123456789';
 
     $sString = '';
 
-    if (!$bSpeakable) {
+    if ($bSpeakable === false) {
       $sChars .= $sVocals . $sNumbers;
       for ($iI = 1; $iI <= $iLength; $iI++) {
         $iTemp = rand(0, strlen($sChars) - 1);
@@ -109,21 +109,26 @@ class Helper {
     }
     else {
       $iI = 1;
+
       while ($iI < $iLength) {
         if ($iI % 5 == 0) {
           $sString .= $sNumbers[rand(0, strlen($sNumbers) - 1)];
           $iI++;
         }
         else {
-          //vocal
+          # Vocal
           $sString .= $sChars[rand(0, strlen($sChars) - 1)];
-          //if we have more chars to put, use a vocal, otherwise use numbers to fill the string
+
+          # If we have more chars to put, use a vocal, otherwise use numbers to fill the string
           if ($iI < $iLength - 1)
             $sString .= $sVocals[rand(0, strlen($sVocals) - 1)];
-          else if ($iI < $iLength)
+
+          elseif ($iI < $iLength)
             $sString .= $sNumbers[rand(0, strlen($sNumbers) - 1)];
+
           else
             $iI--;
+
           $iI += 2;
         }
       }

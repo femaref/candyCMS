@@ -83,7 +83,7 @@ class Index {
 	 * @param array $aCookie alias for $_COOKIE
 	 *
 	 */
-	public function __construct($aRequest, $aSession = '', $aFile = '', $aCookie = '') {
+	public function __construct(&$aRequest, &$aSession = '', &$aFile = '', &$aCookie = '') {
     $this->_aRequest	= & $aRequest;
     $this->_aSession	= & $aSession;
     $this->_aFile			= & $aFile;
@@ -105,7 +105,6 @@ class Index {
    *
    */
   public function __destruct() {
-    unset($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
   }
 
   /**
@@ -172,12 +171,12 @@ class Index {
    */
 	public function getRoutes() {
 		# Cache routes for performance reasons
-		if(!isset($_SESSION['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
+		if(!isset($this->_aSession['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
-			$_SESSION['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
+			$this->_aSession['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
 		}
 
-		Routes::add($_SESSION['routes']);
+		Routes::add($this->_aSession['routes']);
 
     if (!defined('WEBSITE_LANDING_PAGE'))
       define('WEBSITE_LANDING_PAGE', Routes::route('/'));
@@ -321,8 +320,8 @@ class Index {
 				'type'			=> '',
 				'message'		=> '',
 				'headline'	=> '');
-		unset($_SESSION['flash_message']);
 
+		unset($this->_aSession['flash_message']);
 		return $aFlashMessage;
 	}
 
@@ -462,6 +461,10 @@ class Index {
       $oDispatcher->getAction();
     }
 
+    # Override current requests and session
+    #$this->_aRequest = & $oDispatcher->oController->getRequest();
+    #$this->_aRequest = & $oDispatcher->oController->getSession();
+
     # Minimal settings for AJAX-request
 		if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])
 			$sCachedHTML = $oDispatcher->oController->getContent();
@@ -530,10 +533,10 @@ class Index {
       $sCachedJs      = WEBSITE_CDN . '/js';
     }
 
-    $sCachedHTML = & str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
-    $sCachedHTML = & str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
-    $sCachedHTML = & str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
-    $sCachedHTML = & str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_CSS%', $sCachedCss, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_IMAGES%', $sCachedImages, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_LESS%', $sCachedLess, $sCachedHTML);
+    $sCachedHTML = str_replace('%PATH_JS%', $sCachedJs, $sCachedHTML);
 
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
