@@ -313,7 +313,6 @@ abstract class Main {
 		$this->oSmarty->assign('_compress_files_suffix_', WEBSITE_COMPRESS_FILES === true ? '.min' : '');
 		$this->oSmarty->assign('_facebook_plugin_', $bUseFacebook);
 		$this->oSmarty->assign('_json_language_', I18n::getJson());
-		$this->oSmarty->assign('_pubdate_', date('r'));
 
     # Global variables
 		$this->oSmarty->assign('_REQUEST', $this->_aRequest);
