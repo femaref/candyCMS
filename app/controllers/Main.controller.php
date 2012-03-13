@@ -280,7 +280,7 @@ abstract class Main {
 		}
 
     # Clear cache on development mode or when we force it via a request.
-    if (isset($this->_aRequest['clearcache']) || WEBSITE_MODE == 'development') {
+    if (isset($this->_aRequest['clearcache']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
       $this->oSmarty->clearAllCache();
       $this->oSmarty->clearCompiledTemplate();
     }

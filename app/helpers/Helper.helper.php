@@ -216,7 +216,7 @@ class Helper {
 	 *
 	 */
   public static function getFileSize($sPath) {
-    $iSize = @filesize(Helper::removeSlash($sPath));
+    $iSize = filesize(Helper::removeSlash($sPath));
 
     if ($iSize > 1024 && $iSize < 1048576)
       return round(($iSize / 1024), 2) . ' KB';
@@ -261,7 +261,7 @@ class Helper {
 					return PATH_STANDARD . '/app/views/' . $sFolder;
 			}
 		}
-		catch (Exception $e) {
+		catch (AdvancedException $e) {
 			$e->getMessage();
 		}
 	}
