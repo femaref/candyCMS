@@ -10,26 +10,21 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Blog.model.php';
+require_once PATH_STANDARD . '/app/models/Contents.model.php';
 
-use \CandyCMS\Model\Blog as Blog;
+use \CandyCMS\Model\Contents as Contents;
 
-class UnitTestOfBlogModel extends CandyUnitTest {
+class UnitTestOfContentModel extends CandyUnitTest {
 
   function setUp() {
     $this->aRequest = array(
-        'title'       => 'Title',
-        'tags'        => 'Tags',
-        'teaser'      => 'Teaser',
-        'content'     => 'Blog',
-        'date'        => '0',
-        'keywords'    => 'Keywords',
-        'published'   => 0,
-        'author_id'   => 0,
-        'controller'  => 'blog',
-        'language'    => 'en');
+        'title'     => 'Title',
+        'teaser'    => 'Teaser',
+        'content'   => 'Content',
+        'keywords'  => 'Keywords',
+        'controller'=> 'contents');
 
-    $this->oObject = new Blog($this->aRequest, $this->aSession);
+    $this->oObject = new Contents($this->aRequest, $this->aSession);
   }
 
 	function tearDown() {
@@ -39,7 +34,7 @@ class UnitTestOfBlogModel extends CandyUnitTest {
   function testCreate() {
     $this->assertTrue($this->oObject->create());
 
-    $this->iLastInsertId = (int) Blog::getLastInsertId();
+    $this->iLastInsertId = (int) Contents::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 

@@ -10,17 +10,17 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Error.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Errors.controller.php';
 require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
-use \CandyCMS\Controller\Error as Error;
+use \CandyCMS\Controller\Errors as Errors;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfErrorController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'error';
-		$this->oObject = new Error($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'errors';
+		$this->oObject = new Errors($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

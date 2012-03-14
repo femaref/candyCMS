@@ -98,7 +98,7 @@ define('ALLOW_ADDONS', false);
 # Tell the allowed plugins seperated by comma
 # DEFAULT: 'Bbcode,FormatTimestamp,Headlines,Archive,Analytics'
 # OTHER OFFICIALLY SUPPORTED PLUGINS: Facebook, Cronjob, Piwik
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
 
 # ------------------------------------------------------------------------------
 

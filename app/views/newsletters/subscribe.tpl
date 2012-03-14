@@ -28,7 +28,7 @@
       </label>
       <div class='controls'>
         <input type='email' name='email' id='input-email'
-              class='span4 required focused' />
+              class='span4 required focused' required />
         {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
       </div>
     </div>
