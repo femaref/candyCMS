@@ -105,9 +105,14 @@ class Image {
    *
    */
   private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
+    //is this upscaling?
     if ($iX > $this->_aInfo[0] && $iY > $this->_aInfo[1]) {
-      $iX = $this->_aInfo[0];
-      $iY = $this->_aInfo[1];
+      //only prevent upscaling on sizes bigger than thumbnail
+      if ($iX > THUMB_DEFAULT_X && $iY > THUMB_DEFAULT_Y) {
+        //do not scale those pictures at all... (might be even smaller than thumbnail size)
+        $iX = $this->_aInfo[0];
+        $iY = $this->_aInfo[1];
+      }
     }
     $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' .
 						$this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
