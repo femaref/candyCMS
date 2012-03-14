@@ -16,14 +16,13 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
-class Site extends Main {
+class Sites extends Main {
 
   /**
    * @todo
    */
   protected function _show() {
     $sSite = isset($this->_aRequest['site']) ?(string) $this->_aRequest['site'] : '';
-
     if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl')) {
       header('Status: 404 Not Found');
 			header("HTTP/1.0 404 Not Found");

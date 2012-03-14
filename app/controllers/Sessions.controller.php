@@ -99,7 +99,7 @@ class Sessions extends Main {
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->setDescription(I18n::get('global.login'));
@@ -205,7 +205,7 @@ class Sessions extends Main {
 		if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'resend');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'resend');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

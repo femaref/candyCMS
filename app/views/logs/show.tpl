@@ -27,7 +27,7 @@
           <a href='/users/{$l.uid}'>{$l.full_name}</a>
         </td>
         <td>
-          {$l.section_name}
+          {$l.controller_name}
         </td>
         <td>
           {$l.action_name}
@@ -43,7 +43,7 @@
           {/if}
         </td>
         <td class='center'>
-          <a href="#" onclick="confirmDestroy('/log/{$l.id}/destroy')">
+          <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$l.id}/destroy')">
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-destroy js-tooltip'
                 alt='{$lang.global.destroy.destroy}'

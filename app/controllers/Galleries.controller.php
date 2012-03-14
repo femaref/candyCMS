@@ -20,20 +20,6 @@ use Smarty;
 class Galleries extends Main {
 
   /**
-   * Include the gallery model.
-   *
-   * @access public
-   *
-   */
-  public function __init() {
-    $sModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
-
-    # Override template folder because controller name and view name don't match.
-    $this->_sTemplateFolder = 'galleries';
-  }
-
-  /**
    * Route to right action.
    *
    * @access public
@@ -84,7 +70,7 @@ class Galleries extends Main {
   protected function _show() {
     # Album images
     if ($this->_iId && !isset($this->_aRequest['album_id'])) {
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'files');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'files');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
 
       # Collect data array
@@ -110,7 +96,7 @@ class Galleries extends Main {
 
     # Specific image
     elseif ($this->_iId && isset($this->_aRequest['album_id'])) {
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'image');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'image');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
 
 			$aData = $this->_oModel->getFileData($this->_iId);
@@ -144,7 +130,7 @@ class Galleries extends Main {
 
     # Album overview
     else {
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'albums');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
 
 			$this->setDescription(I18n::get('global.gallery'));
@@ -185,7 +171,7 @@ class Galleries extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form_album');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -270,7 +256,7 @@ class Galleries extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form_file');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_file');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

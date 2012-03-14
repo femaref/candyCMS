@@ -35,19 +35,6 @@ class Searches extends Main {
   protected $_sSearch;
 
 	/**
-	 * Include the search model.
-	 *
-	 * @access public
-	 *
-	 */
-  public function __init() {
-    $sModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
-
-    $this->_sTemplateFolder = 'searches';
-  }
-
-	/**
 	 * Show search results.
 	 *
 	 * @access protected
@@ -72,7 +59,7 @@ class Searches extends Main {
       $this->setDescription($this->_sHeadline);
       $this->setTitle($this->_sHeadline);
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -91,7 +78,7 @@ class Searches extends Main {
     $this->setDescription(I18n::get('global.search'));
     $this->setTitle(I18n::get('global.search'));
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

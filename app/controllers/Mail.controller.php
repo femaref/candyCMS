@@ -135,7 +135,7 @@ class Mail extends Main {
     $this->setDescription(I18n::get('global.contact'));
     $this->setTitle(I18n::get('global.contact'));
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -224,7 +224,7 @@ class Mail extends Main {
   private function _showSuccessMessage() {
     $this->setTitle(I18n::get('mail.info.redirect'));
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'success');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);

@@ -51,7 +51,7 @@ class Medias extends Main {
    *
    */
   private function _showUploadFileTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
@@ -139,7 +139,7 @@ class Medias extends Main {
       $this->setDescription(I18n::get('global.manager.media'));
       $this->setTitle(I18n::get('global.manager.media'));
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);

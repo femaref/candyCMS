@@ -35,7 +35,7 @@ class Blogs extends Main {
       Helper::redirectTo('/errors/404');
     }
     else {
-      $sTemplateDir   = Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->setDescription($this->_setBlogsDescription());
@@ -170,7 +170,7 @@ class Blogs extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-		$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+		$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

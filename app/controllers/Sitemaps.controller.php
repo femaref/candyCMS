@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use Smarty;
 
-class Sitemap extends Main {
+class Sitemaps extends Main {
 
 	/**
 	 * Show the sitemap as XML. Site is cached for one hour.
@@ -27,16 +27,17 @@ class Sitemap extends Main {
   protected function _showXML() {
     Header('Content-Type: text/xml');
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'xml');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
-    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-      $this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-      $this->_getSitemap();
-    }
+		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+			$this->_getSitemap();
+		}
+
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
@@ -51,7 +52,7 @@ class Sitemap extends Main {
 	 *
 	 */
   protected function _show() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);

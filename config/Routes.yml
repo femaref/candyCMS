@@ -2,7 +2,6 @@
 "/": blogs
 
 # Shared behaviour
-"(:alpha).xml": controller=$1&action=xml&ajax=1
 "(:alpha)/page/(:num)": controller=$1&page=$2
 "(:alpha)/(create|update|destroy)": controller=$1&action=$2
 "(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
@@ -10,26 +9,30 @@
 "(:alpha)/(:num)/page/(:num)": controller=$1&id=$2&page=$3
 
 # Special behaviour
-"blogs/(:num)": controller=blogs&id=$1&page=1
-"blogs/(:num)/(:any)": controller=blogs&id=$1&page=1
+"blogs/(:num)": controller=blogs&id=$1&page=1 # Fix for ajax use
+"blogs/(:num)/(:any)": controller=blogs&id=$1&page=1 # Fix for ajax use
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
 "comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2
 "galleries": controller=galleries&page=1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
 "language/(:alpha)": language=$1
+"logs(\/)": controller=logs&page=1 # Fix for ajax use
 "mails/(:num)/ajax": controller=mails&id=$1&ajax=1
 "medias/(:any)/destroy": controller=medias&action=destroy&file=$1
 "rss/(:alpha)": controller=rss&section=$1
 "rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
 "searches/(:any)": controller=searches&search=$1
 "sessions/(password|verification)": controller=sessions&action=$1
+"sites/(:alnum)": controller=sites&site=$1
+"sitemap.xml": controller=sitemaps&action=xml&ajax=1
 "users/(:num)/(:alpha)": controller=users&action=$2&id=$1
 "users/(:alnum)/verification": controller=users&action=verification&code=$1
 
 # Magic rule
 "(:alpha)/(:num)": controller=$1&id=$2
 "(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3
+"(:alpha).xml": controller=$1&action=xml&ajax=1
 
 # Fixes
 "blogs/(:any)": controller=blogs&search=$1

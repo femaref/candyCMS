@@ -2247,7 +2247,7 @@ body { padding-top:60px; }
 a:active, a:link { outline:none; }
 th.headerSortUp, th.headerSortDown { background-color:#eeeeee; }
 th:hover, th:hover { cursor:pointer; }
-.tags a:first-child, h1 small, h1 img, h2 img, #search .btn { margin-left:5px; }
+.tags a:first-child, h1 small, h1 img, h2 img, #searches .btn { margin-left:5px; }
 p.center img, .btn { margin-right:5px; }
 #create_mail { min-width:600px; }
 #infscr-loading { text-align:center; }
