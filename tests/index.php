@@ -83,16 +83,16 @@ class AllFileTests extends TestSuite {
 //		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletter.controller.php');
 
     # RSS
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
 
 		# Search
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Search.model.php');
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Search.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Searches.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Searches.controller.php');
 
     # Session
 
     # Sitemap
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemap.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
 
     # User
 	}

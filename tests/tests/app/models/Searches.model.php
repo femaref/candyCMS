@@ -10,15 +10,15 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Search.model.php';
+require_once PATH_STANDARD . '/app/models/Searches.model.php';
 
-use \CandyCMS\Model\Search as Search;
+use \CandyCMS\Model\Searches as Searches;
 
 class TestOfSearchModel extends CandyUnitTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'search';
-		$this->oObject = new Search($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'searches';
+		$this->oObject = new Searches($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

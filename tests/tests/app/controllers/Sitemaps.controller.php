@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Sitemap.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Sitemaps.controller.php';
 
-use \CandyCMS\Controller\Sitemap as Sitemap;
+use \CandyCMS\Controller\Sitemaps as Sitemaps;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfSitemapController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'sitemap';
-		$this->oObject = new Sitemap($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'sitemaps';
+		$this->oObject = new Sitemaps($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
