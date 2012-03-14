@@ -94,7 +94,7 @@ class Sessions extends Main {
 	 *
 	 */
   public function _show() {
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
@@ -115,6 +115,7 @@ class Sessions extends Main {
 	 * @access public
 	 * @return string HTML
 	 * @todo better error messages
+   * @todo refactor to two methods
 	 *
 	 */
 	public function resendPassword() {
@@ -157,6 +158,7 @@ class Sessions extends Main {
 	 * @access public
 	 * @return string HTML
 	 * @todo better error messages
+   * @todo refactor to two methods
 	 *
 	 */
 	public function resendVerification() {
@@ -202,7 +204,7 @@ class Sessions extends Main {
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-		if (!empty($this->_aError))
+		if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'resend');

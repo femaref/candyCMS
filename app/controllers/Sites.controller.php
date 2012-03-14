@@ -19,10 +19,12 @@ use Smarty;
 class Sites extends Main {
 
   /**
-   * @todo
+   * @todo documentation
+   *
    */
   protected function _show() {
-    $sSite = isset($this->_aRequest['site']) ?(string) $this->_aRequest['site'] : '';
+    $sSite = isset($this->_aRequest['site']) ? (string) $this->_aRequest['site'] : '';
+
     if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl')) {
       header('Status: 404 Not Found');
 			header("HTTP/1.0 404 Not Found");
@@ -35,7 +37,6 @@ class Sites extends Main {
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(300);
-
     return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');
   }
 }

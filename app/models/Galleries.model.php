@@ -198,10 +198,11 @@ class Galleries extends Main {
    * @static
    * @access public
    * @param integer $iId album ID
+   * @param array $aRequest current request
    * @return string album name
    *
    */
-  public static function getAlbumName($iId) {
+  public static function getAlbumName($iId, $aRequest = '') {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
@@ -218,8 +219,8 @@ class Galleries extends Main {
     }
 
     # Do we need to highlight text?
-    $sHighlight = isset($_REQUEST['highlight']) && !empty($_REQUEST['highlight']) ?
-            $_REQUEST['highlight'] :
+    $sHighlight = isset($aRequest['highlight']) ?
+            $aRequest['highlight'] :
             '';
 
     if ($bReturn === true)
@@ -232,10 +233,11 @@ class Galleries extends Main {
    * @static
    * @access public
    * @param integer $iId album ID
+   * @param array $aRequest current request
    * @return string content/destription
    *
    */
-  public static function getAlbumContent($iId) {
+  public static function getAlbumContent($iId, $aRequest = '') {
     if (empty(parent::$_oDbStatic))
       parent::_connectToDatabase();
 
@@ -252,8 +254,8 @@ class Galleries extends Main {
     }
 
     # Do we need to highlight text?
-    $sHighlight = isset($_REQUEST['highlight']) && !empty($_REQUEST['highlight']) ?
-            $_REQUEST['highlight'] :
+    $sHighlight = isset($aRequest['highlight']) ?
+            $aRequest['highlight'] :
             '';
 
     if ($bReturn === true)

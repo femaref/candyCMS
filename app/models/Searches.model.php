@@ -51,10 +51,12 @@ class Searches extends Main {
         # Build table names and order them
         if ($sTable == 'gallery_albums') {
           $this->_aData[$sTable]['controller'] = 'galleries';
-          $this->_aData[$sTable]['title'] = I18n::get('global.image.images');
+          $this->_aData[$sTable]['title'] = I18n::get('global.albums');
         }
-        else
+        else {
+          $this->_aData[$sTable]['controller'] = $sTable;
           $this->_aData[$sTable]['title'] = I18n::get('global.' . strtolower($sTable));
+        }
 
 				$iEntries = 0;
         foreach ($aResult as $aRow) {

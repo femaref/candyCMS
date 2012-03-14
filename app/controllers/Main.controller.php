@@ -16,7 +16,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Session as Session;
 use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;

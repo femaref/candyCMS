@@ -69,7 +69,7 @@ class Medias extends Main {
   private function _proceedUpload() {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
-    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $sFolder = isset($this->_aRequest['folder']) ?
             Helper::formatInput($this->_aRequest['folder']) :
             $this->_aRequest['controller'];

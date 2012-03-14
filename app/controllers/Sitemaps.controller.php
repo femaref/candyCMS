@@ -30,18 +30,15 @@ class Sitemaps extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(1800); # 30 minutes
-
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
 			$this->_getSitemap();
 		}
 
-
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(1800); # 30 minutes
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
-    exit();
+    exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
 
 	/**
@@ -55,14 +52,12 @@ class Sitemaps extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(180);
-
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->_getSitemap();
 
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(180);
     $this->oSmarty->setTemplateDir($sTemplateDir);
-
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 

@@ -42,15 +42,6 @@ class Upload {
 	private $_sFileName;
 
 	/**
-	 * new name of the file
-	 *
-	 * @var string
-	 * @access private
-	 *
-	 */
-	private $_sRename;
-
-	/**
 	 * name of the upload folder
 	 *
 	 * @var string
@@ -77,11 +68,10 @@ class Upload {
 	 * @param string $sRename new file name
 	 *
 	 */
-  public function __construct(&$aRequest, &$aSession, &$aFile, &$sRename = '') {
+  public function __construct(&$aRequest, &$aSession, &$aFile) {
     $this->_aRequest  = & $aRequest;
     $this->_aSession	= & $aSession;
     $this->_aFile     = & $aFile;
-    $this->_sRename   = & $sRename;
 
     require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
   }
@@ -101,11 +91,11 @@ class Upload {
         $this->_sFileName       = Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
         $this->_sFileExtension  = strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
 
-        if (!empty($this->_sRename) && $iI == 0)
-          $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '.' . $this->_sFileExtension;
+        if (!empty($this->_aRequest['rename']) && $iI == 0)
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) . '.' . $this->_sFileExtension;
 
-        elseif (!empty($this->_sRename) && $iI > 0)
-          $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '_' . $iI . '.' . $this->_sFileExtension;
+        elseif (!empty($this->_aRequest['rename']) && $iI > 0)
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) . '_' . $iI . '.' . $this->_sFileExtension;
 
 
         $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);

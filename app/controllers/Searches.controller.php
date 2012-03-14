@@ -19,14 +19,6 @@ use Smarty;
 class Searches extends Main {
 
 	/**
-	 * Search headline.
-	 *
-	 * @var string
-	 * @access protected
-	 */
-  protected $_sHeadline;
-
-	/**
 	 * Search string.
 	 *
 	 * @var string
@@ -47,17 +39,16 @@ class Searches extends Main {
       return $this->_showFormTemplate();
 
     else {
-      $sString = & Helper::formatInput($this->_aRequest['search']);
+      $sString = Helper::formatInput($this->_aRequest['search']);
 
-      $this->_sHeadline = str_replace('%s', $sString, I18n::get('search.title.show'));
+      $sHeadline = str_replace('%s', $sString, I18n::get('search.title.show'));
 
       $this->oSmarty->assign('string', $sString);
       $this->oSmarty->assign('tables', $this->_oModel->getData($sString,
 							array('blogs', 'contents', 'downloads', 'gallery_albums')));
 
-      # Create page title and description
-      $this->setDescription($this->_sHeadline);
-      $this->setTitle($this->_sHeadline);
+      $this->setDescription($sHeadline);
+      $this->setTitle($sHeadline);
 
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');

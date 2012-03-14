@@ -74,10 +74,10 @@ class Galleries extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
 
       # Collect data array
-      $sAlbumName					= $this->_oModel->getAlbumName($this->_iId);
-      $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId);
+      $sAlbumName					= $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
+      $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
 
-      $this->setDescription($sAlbumDescription);
+      $this->setDescription($this->_removeHighlight($sAlbumDescription));
       $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
@@ -152,15 +152,13 @@ class Galleries extends Main {
    *
    * @access protected
    * @return string HTML content
+   * @todo set title and description. this didn't work atm.
    *
    */
   protected function _showFormTemplate() {
     $aData = $this->_oModel->getData($this->_iId, true);
 
-    if ($this->_iId)
-      $this->setTitle($aData['title']);
-
-    else {
+    if (!$this->_iId) {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
@@ -200,27 +198,16 @@ class Galleries extends Main {
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
 
-      $sPathThumbS = $sPath . '/32';
-      $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
-      $sPathThumbP = $sPath . '/popup';
-      $sPathThumbO = $sPath . '/original';
+      $aThumbs = array('32', THUMB_DEFAULT_X, 'popup', 'original');
+      foreach($aThumbs as $sFolder) {
+        if (!is_dir($sPath . '/' . $sFolder))
+          mkdir($sPath . '/' . $sFolder, 0755);
+      }
 
-      if (!is_dir($sPath))
-        mkdir($sPath, 0755);
-
-      if (!is_dir($sPathThumbS))
-        mkdir($sPathThumbS, 0755);
-
-      if (!is_dir($sPathThumbL))
-        mkdir($sPathThumbL, 0755);
-
-      if (!is_dir($sPathThumbP))
-        mkdir($sPathThumbP, 0755);
-
-      if (!is_dir($sPathThumbO))
-        mkdir($sPathThumbO, 0755);
-
-      Logs::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['user']['id']);
+      Logs::insert( $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    $iId,
+                    $this->_aSession['user']['id']);
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller'] . '/' . $iId);
     }
 
@@ -234,26 +221,29 @@ class Galleries extends Main {
    *
    * @access protected
    * @return string HTML content
+   * @see app/helper/Image.helper.php
    *
    */
   protected function _showFormFileTemplate() {
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
       $aDetails = $this->_oModel->getFileDetails($this->_iId);
+
       $this->oSmarty->assign('content', Helper::formatOutput($aDetails['content']));
       $this->oSmarty->assign('album_id', Helper::formatOutput($aDetails['album_id']));
     }
+
     # Create
     else {
-      # See helper/Image.helper.php for details!
       # r = resize, c = cut
       $this->oSmarty->assign('default', isset($this->_aRequest['cut']) ?
 											Helper::formatInput($this->_aRequest['cut']) :
 											'c');
+
       $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
     }
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
@@ -271,6 +261,7 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo _createFile
    *
    */
   public function createFile() {
@@ -283,10 +274,10 @@ class Galleries extends Main {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
           # Log uploaded image. Request ID = album id
-          Logs::insert($this->_aRequest['controller'],
-											'createfile',
-											(int) $this->_aRequest['id'],
-											$this->_aSession['user']['id']);
+          Logs::insert( $this->_aRequest['controller'],
+                        'createfile',
+                        (int) $this->_aRequest['id'],
+                        $this->_aSession['user']['id']);
 
           return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
                   '/' . $this->_iId);
@@ -339,6 +330,7 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @ _updateFile
    *
    */
   public function updateFile() {
@@ -370,6 +362,7 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo _destroyFile
    *
    */
   public function destroyFile() {

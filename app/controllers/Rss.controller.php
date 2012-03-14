@@ -67,8 +67,7 @@ class Rss extends Main {
 		}
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
-		exit();
+		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
 	}
 
   /**
@@ -106,7 +105,6 @@ class Rss extends Main {
     }
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
-		exit();
+		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
 }

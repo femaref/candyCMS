@@ -55,7 +55,7 @@ class Newsletters extends Main {
    *
    */
   protected function _showFormTemplate() {
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'subscribe');

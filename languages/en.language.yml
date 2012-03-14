@@ -6,6 +6,7 @@ global:
   about: About
   action: Action
   album: Album
+  albums: Albums
   api_token: API-Token
   archive: Archive
   author: Author
@@ -56,7 +57,6 @@ global:
   image:
     click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
     image: Image
-    images: Images
   in: in
   keywords: Keywords
   language: Language
