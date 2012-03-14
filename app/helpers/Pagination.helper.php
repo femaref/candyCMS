@@ -169,6 +169,9 @@ class Pagination {
 	/**
    * Show all page numbers as a link.
    *
+   * Note that if you want to use ajax requests for loading pages, you have to set up $sController manually
+   * and prefix it with a slash. Mainly that would be "showPages('/' . $this->_aRequest['controller'])".
+   *
    * @access public
    * @param string $sController controller to show.
    * @return string HTML content if there are more than one pages

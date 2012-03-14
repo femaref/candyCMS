@@ -29,7 +29,7 @@ class Contents extends Main {
     if (empty($this->_iId)) {
       $this->setTitle(I18n::get('global.manager.content'));
 
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -38,7 +38,7 @@ class Contents extends Main {
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
@@ -90,7 +90,7 @@ class Contents extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

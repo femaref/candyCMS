@@ -47,7 +47,12 @@ class Dispatcher {
    *
    */
   public function getController() {
-    $sController = (string) ucfirst(strtolower($this->_aRequest['controller']));
+    # Bugfix: Avoid problems with logs being redirected to a dir on server
+    $this->_aRequest['controller'] = substr($this->_aRequest['controller'], -1) == '/' ?
+            substr((string) $this->_aRequest['controller'], 0, strlen($this->_aRequest['controller']) - 1) :
+            (string) $this->_aRequest['controller'];
+
+    $sController = & ucfirst(strtolower($this->_aRequest['controller']));
 
     try {
       # Are addons for existing controllers available? If yes, use them.
@@ -63,7 +68,7 @@ class Dispatcher {
       elseif (file_exists(PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php')) {
         require_once PATH_STANDARD . '/app/controllers/' . $sController . '.controller.php';
 
-        $sClassName = '\CandyCMS\Controller\\' . (string) ucfirst($this->_aRequest['controller']);
+        $sClassName = '\CandyCMS\Controller\\' . $sController;
         $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       }
 

@@ -24,7 +24,6 @@ class Rss extends Main {
    *
    */
   public function __init() {
-    $this->_sTemplateFolder = 'rss';
     Header('Content-Type: application/rss+xml');
   }
 
@@ -56,7 +55,7 @@ class Rss extends Main {
 
     $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'default');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'default');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
 
 		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
@@ -86,7 +85,7 @@ class Rss extends Main {
 
     $this->setTitle(I18n::get('global.gallery') . ': ' . $aData[$this->_iId]['title']);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'media');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'media');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);

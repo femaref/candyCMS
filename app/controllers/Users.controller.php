@@ -84,7 +84,7 @@ class Users extends Main {
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
 			else {
-        $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
+        $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
         $this->oSmarty->assign('user', $this->_oModel->getData());
@@ -94,7 +94,7 @@ class Users extends Main {
 			}
 		}
 		else {
-			$sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
@@ -151,7 +151,7 @@ class Users extends Main {
 
 		$this->oSmarty->assign('uid', $iId);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, '_form');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -331,7 +331,7 @@ class Users extends Main {
     if (!empty($this->_aError))
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'create');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -423,6 +423,7 @@ class Users extends Main {
 	 * @access public
 	 * @return boolean status message
    * @todo check if there is an addon for this model
+   * @todo _destroy
 	 *
 	 */
 	public function destroy() {

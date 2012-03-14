@@ -22,7 +22,6 @@ class Logs extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo fix route at .htaccess
    *
    */
   protected function _show() {
@@ -30,11 +29,14 @@ class Logs extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      $this->oSmarty->assign('logs', $this->_oModel->getData());
-      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages());
-
-      $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+      $this->setTitle(I18n::get('global.logs'));
+      $this->setDescription(I18n::get('global.logs'));
+
+      $this->oSmarty->assign('logs', $this->_oModel->getData());
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

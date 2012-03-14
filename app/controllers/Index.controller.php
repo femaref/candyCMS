@@ -468,10 +468,6 @@ class Index {
       $oDispatcher->getAction();
     }
 
-    # Override current requests and session
-    #$this->_aRequest = & $oDispatcher->oController->getRequest();
-    #$this->_aRequest = & $oDispatcher->oController->getSession();
-
     # Minimal settings for AJAX-request
 		if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])
 			$sCachedHTML = $oDispatcher->oController->getContent();

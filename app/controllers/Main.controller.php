@@ -174,9 +174,6 @@ abstract class Main {
 
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
-    # Set our default template folder.
-    $this->_sTemplateFolder = (string)$this->_aRequest['controller'];
-
     $this->_setI18n();
     $this->_setSmarty();
 	}
@@ -234,7 +231,7 @@ abstract class Main {
 	 *
 	 */
   public function __init() {
-    $sModel = & $this->__autoload($this->_aRequest['controller'], true);
+    $sModel = $this->__autoload($this->_aRequest['controller'], true);
 
     if ($sModel)
       $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
