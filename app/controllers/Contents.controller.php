@@ -26,23 +26,12 @@ class Contents extends Main {
    *
    */
   protected function _show() {
-    if (empty($this->_iId)) {
-      $this->setTitle(I18n::get('global.manager.content'));
-
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
-
-      $this->oSmarty->assign('contents', $this->_oModel->getData($this->_iId));
-
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-    }
-    else {
+    if ($this->_iId) {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$aData = & $this->_oModel->getData($this->_iId);
+				$aData = $this->_oModel->getData($this->_iId);
 				$this->oSmarty->assign('contents', $aData);
 
 				if (!empty($aData)) {
@@ -59,8 +48,18 @@ class Contents extends Main {
 
 			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
-
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
+    else {
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
+
+      $this->setTitle(I18n::get('global.manager.content'));
+
+      $this->oSmarty->assign('contents', $this->_oModel->getData($this->_iId));
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
   }
 
@@ -72,7 +71,10 @@ class Contents extends Main {
    *
    */
   protected function _showFormTemplate() {
-    if (!empty($this->_iId)) {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
+    if ($this->_iId) {
       $aData = $this->_oModel->getData($this->_iId, true);
       $this->setTitle($aData['title']);
     }
@@ -87,11 +89,8 @@ class Contents extends Main {
     foreach($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

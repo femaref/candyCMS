@@ -76,7 +76,7 @@ class Calendars extends Main {
                                         ON
                                           c.author_id=u.id
 																				WHERE
-																					start_date > NOW()
+																					c.start_date > NOW()
                                         ORDER BY
                                           c.start_date ASC,
                                           c.title ASC");

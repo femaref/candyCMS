@@ -26,7 +26,7 @@ class Blogs extends Main {
    *
    */
   protected function _show() {
-    $this->_aData = & $this->_oModel->getData($this->_iId);
+    $this->_aData = $this->_oModel->getData($this->_iId);
 
     # If data is not found, redirect to 404
     if (!$this->_aData[1]['id'] && $this->_iId) {
@@ -134,9 +134,12 @@ class Blogs extends Main {
    *
    */
   protected function _showFormTemplate() {
+		$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
     # Update
     if ($this->_iId) {
-      $aData = & $this->_oModel->getData($this->_iId, true);
+      $aData = $this->_oModel->getData($this->_iId, true);
       $this->setTitle($aData['title']);
     }
 
@@ -169,9 +172,6 @@ class Blogs extends Main {
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-		$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

@@ -61,9 +61,12 @@ class Calendars extends Main {
 	 *
 	 */
 	protected function _showFormTemplate() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
 		# Update
-		if (!empty($this->_iId))
-			$aData = & $this->_oModel->getData($this->_iId, true);
+		if ($this->_iId)
+			$aData = $this->_oModel->getData($this->_iId, true);
 
 		# Create
 		else {
@@ -76,11 +79,8 @@ class Calendars extends Main {
 		foreach ($aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 
-		if (!empty($this->_aError))
+		if ($this->_aError)
 			$this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -89,63 +89,26 @@ class Calendars extends Main {
   /**
 	 * Create a download entry.
 	 *
-	 * Check if required data is given or throw an error instead.
-	 * If data is given, activate the model, insert them into the database and redirect afterwards.
-	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo remove when start date is set
 	 *
 	 */
 	protected function _create() {
-		$this->_setError('title');
 		$this->_setError('start_date');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
-
-		elseif ($this->_oModel->create() === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-			Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_oModel->getLastInsertId('calendars'),
-									$this->_aSession['user']['id']);
-
-			return Helper::successMessage(I18n::get('success.create'), '/calendars');
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/calendars');
+		return parent::_create();
 	}
 
 	/**
 	 * Update a calendar entry.
 	 *
-	 * Activate model, insert data into the database and redirect afterwards.
-	 *
 	 * @access protected
 	 * @return boolean status of model action
-   * @todo remove when start_date is set
 	 *
 	 */
 	protected function _update() {
-		$this->_setError('title');
 		$this->_setError('start_date');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
-
-		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-			Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-			return Helper::successMessage(I18n::get('success.update'), '/calendars');
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/calendars');
+		return parent::_update();
 	}
 }

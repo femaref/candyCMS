@@ -513,10 +513,10 @@ abstract class Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-			Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_oModel->getLastInsertId($this->_aRequest['controller']),
-									$this->_aSession['user']['id']);
+			Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										$this->_oModel->getLastInsertId($this->_aRequest['controller']),
+										$this->_aSession['user']['id']);
 
 			return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
 		}
@@ -542,10 +542,10 @@ abstract class Main {
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
+      Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										(int) $this->_aRequest['id'],
+										$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'),
               '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
@@ -569,10 +569,10 @@ abstract class Main {
     if($this->_oModel->destroy($this->_iId) === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_iId,
-									$this->_aSession['user']['id']);
+      Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										$this->_iId,
+										$this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
     }

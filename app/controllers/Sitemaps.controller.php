@@ -25,10 +25,10 @@ class Sitemaps extends Main {
 	 *
 	 */
   protected function _showXML() {
-    Header('Content-Type: text/xml');
-
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
+
+    Header('Content-Type: text/xml');
 
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);

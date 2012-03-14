@@ -50,22 +50,22 @@ class Rss extends Main {
    *
    */
   private function _showDefault() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'default');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
+
     $sModel = $this->__autoload('Blogs', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
     $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'default');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
-
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-		$this->oSmarty->setCacheLifetime(60);
 
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('data', $oModel->getData());
 			$this->oSmarty->assign('_title_', $this->getTitle());
 		}
 
+
+		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+		$this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
 	}
@@ -78,17 +78,14 @@ class Rss extends Main {
    *
    */
   private function _showMedia() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'media');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
+
     $sModel = $this->__autoload('Galleries', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
     $aData = $oModel->getData($this->_iId, false, true);
 
     $this->setTitle(I18n::get('global.gallery') . ': ' . $aData[$this->_iId]['title']);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'media');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
-
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-    $this->oSmarty->setCacheLifetime(60);
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = & $aData[$this->_iId]['files'];
@@ -104,6 +101,8 @@ class Rss extends Main {
       $this->oSmarty->assign('data', $aData);
     }
 
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+    $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }

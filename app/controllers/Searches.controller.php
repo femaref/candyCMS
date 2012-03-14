@@ -39,8 +39,10 @@ class Searches extends Main {
       return $this->_showFormTemplate();
 
     else {
-      $sString = Helper::formatInput($this->_aRequest['search']);
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
+      $sString = Helper::formatInput($this->_aRequest['search']);
       $sHeadline = str_replace('%s', $sString, I18n::get('search.title.show'));
 
       $this->oSmarty->assign('string', $sString);
@@ -49,9 +51,6 @@ class Searches extends Main {
 
       $this->setDescription($sHeadline);
       $this->setTitle($sHeadline);
-
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -66,13 +65,13 @@ class Searches extends Main {
 	 *
 	 */
   protected function _showFormTemplate() {
-    $this->setDescription(I18n::get('global.search'));
-    $this->setTitle(I18n::get('global.search'));
-
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
+    $this->setDescription(I18n::get('global.search'));
+    $this->setTitle(I18n::get('global.search'));
+
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }

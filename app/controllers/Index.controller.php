@@ -30,7 +30,6 @@ require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
 require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
-require_once PATH_STANDARD . '/lib/routes/Routes.php';
 
 class Index {
 
@@ -96,7 +95,7 @@ class Index {
     $this->_aCookie		= & $aCookie;
 
     $this->getConfigFiles(array('Plugins', 'Mailchimp'));
-    $this->_aPlugins = & $this->getPlugins(ALLOW_PLUGINS);
+    $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
     $this->getCronjob();
@@ -178,6 +177,7 @@ class Index {
 	public function getRoutes() {
 		# Cache routes for performance reasons
 		if(!isset($this->_aSession['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
+			require_once PATH_STANDARD . '/lib/routes/Routes.php';
 			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
 			$this->_aSession['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
 		}
@@ -230,13 +230,16 @@ class Index {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
-			exit();
+			exit;
     }
 
     # There is no request, but there might be a cookie instead.
     else {
-      $aRequest		= isset($this->_aCookie) && is_array($this->_aCookie) ? array_merge($this->_aRequest, $this->_aCookie) : $this->_aRequest;
-      $sLanguage	= isset($aRequest['default_language']) &&
+      $aRequest	= isset($this->_aCookie) && is_array($this->_aCookie) ?
+							array_merge($this->_aRequest, $this->_aCookie) :
+							$this->_aRequest;
+
+      $sLanguage = isset($aRequest['default_language']) &&
               file_exists(PATH_STANDARD . '/languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
               (string) $aRequest['default_language'] :
               strtolower(substr(DEFAULT_LANGUAGE, 0, 2));
@@ -393,7 +396,7 @@ class Index {
    */
 	public function setUser() {
     # Set standard variables
-    $this->_aSession['user'] = & self::_resetUser();
+    $this->_aSession['user'] = self::_resetUser();
 
     # Override them with user data
     # Get user data by token
@@ -412,7 +415,7 @@ class Index {
       $oFacebook = $this->getFacebookExtension();
 
       if ($oFacebook == true)
-        $aFacebookData = & $oFacebook->getuser();
+        $aFacebookData = $oFacebook->getuser();
 
       # Override empty data with facebook data
       if (isset($aFacebookData)) {
@@ -437,7 +440,7 @@ class Index {
     }
 
     # Set up full name finally
-    $this->_aSession['user']['full_name'] = & $this->_aSession['user']['name'] . ' ' . $this->_aSession['user']['surname'];
+    $this->_aSession['user']['full_name'] = $this->_aSession['user']['name'] . ' ' . $this->_aSession['user']['surname'];
 
     return $this->_aSession['user'];
   }
@@ -474,9 +477,11 @@ class Index {
 
     # HTML with template
 		else {
+      $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
 
       # Get flash messages (success and error)
-      $aFlashMessages = & $this->_getFlashMessage();
+      $aFlashMessages = $this->_getFlashMessage();
       $oDispatcher->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
       $oDispatcher->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
       $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
@@ -494,9 +499,6 @@ class Index {
 			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());
 			$oDispatcher->oController->oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
       $oDispatcher->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
-
-      $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
 
       $oDispatcher->oController->oSmarty->setTemplateDir($sTemplateDir);
       $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

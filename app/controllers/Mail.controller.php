@@ -111,6 +111,9 @@ class Mail extends Main {
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
 		$oUser = $this->__autoload('Users', true);
 
     $this->oSmarty->assign('contact', $oUser::getUserNamesAndEmail($this->_iId));
@@ -129,14 +132,11 @@ class Mail extends Main {
 		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
 			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $this->setDescription(I18n::get('global.contact'));
     $this->setTitle(I18n::get('global.contact'));
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -201,9 +201,9 @@ class Mail extends Main {
 
       # Mail to, Subject, Message, Reply to
       $bStatus = Mail::send(isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
-								$sSubject,
-								Helper::formatInput($this->_aRequest['content']),
-								Helper::formatInput($this->_aRequest['email']));
+							$sSubject,
+							Helper::formatInput($this->_aRequest['content']),
+							Helper::formatInput($this->_aRequest['email']));
 
       if ($bStatus == true) {
         Logs::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
@@ -222,10 +222,10 @@ class Mail extends Main {
 	 *
    */
   private function _showSuccessMessage() {
-    $this->setTitle(I18n::get('mail.info.redirect'));
-
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
+
+    $this->setTitle(I18n::get('mail.info.redirect'));
 
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -287,7 +287,7 @@ class Mail extends Main {
       $oMail->Subject = $sSubject;
       $oMail->MsgHTML(nl2br($sMessage));
 
-      if(!empty($sAttachment))
+      if($sAttachment)
         $oMail->AddAttachment($sAttachment);
 
       return $oMail->Send();

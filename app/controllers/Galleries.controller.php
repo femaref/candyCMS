@@ -156,9 +156,13 @@ class Galleries extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $aData = $this->_oModel->getData($this->_iId, true);
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
 
-    if (!$this->_iId) {
+    if ($this->_iId)
+			$aData = $this->_oModel->getData($this->_iId, true);
+
+		else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
     }
@@ -169,18 +173,12 @@ class Galleries extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
-
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**
    * Create a gallery album.
-   *
-   * Check if required data is given or throw an error instead.
-   * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -208,6 +206,7 @@ class Galleries extends Main {
                     $this->_aRequest['action'],
                     $iId,
                     $this->_aSession['user']['id']);
+
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller'] . '/' . $iId);
     }
 
@@ -225,6 +224,9 @@ class Galleries extends Main {
    *
    */
   protected function _showFormFileTemplate() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_file');
+
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
       $aDetails = $this->_oModel->getFileDetails($this->_iId);
@@ -245,9 +247,6 @@ class Galleries extends Main {
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_file');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -283,8 +282,8 @@ class Galleries extends Main {
                   '/' . $this->_iId);
         }
         else
-          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] . '/' .
-                  $this->_iId . '/createfile');
+          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
+									'/' . $this->_iId . '/createfile');
       }
       else
         return $this->_showFormFileTemplate();
@@ -326,8 +325,6 @@ class Galleries extends Main {
   /**
    * Update a gallery entry.
    *
-   * Activate model, insert data into the database and redirect afterwards.
-   *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    * @ _updateFile
@@ -358,7 +355,7 @@ class Galleries extends Main {
   }
 
   /**
-   * Activate model, delete data from database and redirect afterwards.
+	 * Destroy a gallery entry.
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).

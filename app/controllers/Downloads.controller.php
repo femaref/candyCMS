@@ -29,37 +29,33 @@ class Downloads extends Main {
    */
   protected function _show() {
     # Direct download for this id
-    if (!empty($this->_iId)) {
-      $sFile = & $this->_oModel->getFileName($this->_iId);
+    if ($this->_iId) {
+      $sFile = $this->_oModel->getFileName($this->_iId);
 
       # Update download count
       $this->_oModel->updateDownloadCount($this->_iId);
 
       # Get mime type
       if(function_exists('finfo_open')) {
-        $oInfo = finfo_open(FILEINFO_MIME_TYPE);
-        $sMimeType = finfo_file($oInfo, Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
+        $sMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE),
+								Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
         header('Content-type: ' . $sMimeType);
       }
 
       # Send file directly
       header('Content-Disposition: attachment; filename="' . $sFile . '"');
-      readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
-
-      # No more actions down here
-      exit();
+      exit(readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)));
     }
     # Overview
     else {
 			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
 
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
   }
@@ -72,8 +68,11 @@ class Downloads extends Main {
    *
    */
   protected function _showFormTemplate() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
     # Update
-    if (!empty($this->_iId))
+    if ($this->_iId)
       $aData = $this->_oModel->getData($this->_iId, true);
 
     # Create
@@ -88,11 +87,8 @@ class Downloads extends Main {
     foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -110,6 +106,7 @@ class Downloads extends Main {
    */
   protected function _create() {
     $this->_setError('title');
+    $this->_setError('category');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();
@@ -118,9 +115,9 @@ class Downloads extends Main {
 			require_once PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
       # Set up upload helper and rename file to title
-      $oUploadFile = & new Upload($this->_aRequest,
-																	$this->_aSession, $this->_aFile,
-																	Helper::formatInput($this->_aRequest['title']));
+      $oUploadFile = new Upload($this->_aRequest,
+																$this->_aSession, $this->_aFile,
+																Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFile('download') === true) {

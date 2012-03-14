@@ -69,7 +69,7 @@ class Medias extends Main {
   private function _proceedUpload() {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
-    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+    $oUpload = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $sFolder = isset($this->_aRequest['folder']) ?
             Helper::formatInput($this->_aRequest['folder']) :
             $this->_aRequest['controller'];
@@ -93,6 +93,9 @@ class Medias extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
+      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
 			require PATH_STANDARD . '/app/helpers/Image.helper.php';
 
       $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller']);
@@ -117,18 +120,19 @@ class Medias extends Main {
           $aImgDim = getImageSize($sPath);
 
           if (!file_exists(PATH_UPLOAD . '/temp/' . $this->_aRequest['controller'] . '/' . $sFile)) {
-            $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
+            $oImage = & new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32', $this->_aRequest['controller']);
           }
         }
         else
           $aImgDim = '';
-          $aFiles[] = array(
-              'name'  => $sFile,
-              'cdate' => Helper::formatTimestamp(filectime($sPath), 1),
-              'size'  => Helper::getFileSize($sPath),
-              'type'  => $sFileType,
-              'dim'   => $aImgDim
+
+				$aFiles[] = array(
+						'name'  => $sFile,
+						'cdate' => Helper::formatTimestamp(filectime($sPath), 1),
+						'size'  => Helper::getFileSize($sPath),
+						'type'  => $sFileType,
+						'dim'   => $aImgDim
         );
       }
 
@@ -138,9 +142,6 @@ class Medias extends Main {
 
       $this->setDescription(I18n::get('global.manager.media'));
       $this->setTitle(I18n::get('global.manager.media'));
-
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

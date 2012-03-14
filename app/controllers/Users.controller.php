@@ -15,7 +15,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use MCAPI;
 use Smarty;
 
 class Users extends Main {
@@ -76,7 +75,24 @@ class Users extends Main {
 	 *
 	 */
 	protected function _show() {
-		if (empty($this->_iId)) {
+		if ($this->_iId) {
+			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+        $aData = $this->_oModel->getData($this->_iId);
+        $this->oSmarty->assign('user', $aData);
+
+        $this->setTitle($aData[1]['full_name']);
+        $this->setDescription($aData[1]['full_name']);
+      }
+
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		}
+		else {
 			$this->setTitle(I18n::get('user.title.overview'));
 			$this->setDescription(I18n::get('user.title.overview'));
 
@@ -93,23 +109,6 @@ class Users extends Main {
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
 		}
-		else {
-			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
-
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-
-      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $aData = & $this->_oModel->getData($this->_iId);
-        $this->oSmarty->assign('user', $aData);
-
-        $this->setTitle($aData[1]['full_name']);
-        $this->setDescription($aData[1]['full_name']);
-      }
-
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
 	}
 
 	/**
@@ -121,6 +120,9 @@ class Users extends Main {
 	 *
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
 		# Avoid URL manipulation
 		if ($this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] < 4) {
 			Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
@@ -133,26 +135,24 @@ class Users extends Main {
             $this->_aSession['user']['id'];
 
 		# Fetch data from database
-		$aData = & $this->_oModel->getData($iId, false, true);
+		$aData = $this->_oModel->getData($iId, false, true);
 
     # Add the gravatar_urls, so the user can preview those
     Helper::createAvatarURLs($aData, $aData['id'], $aData['email'], true);
 
 		# Override if we want to use request
-		if ($bUseRequest == true) {
+		if ($bUseRequest === true) {
 			foreach ($aData as $sColumn => $sData)
 				$aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
 		}
+
 		foreach ($aData as $sColumn => $sData)
 			$this->oSmarty->assign($sColumn, $sData);
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
 		$this->oSmarty->assign('uid', $iId);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -163,12 +163,13 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @todo _updateAvatar? $this->_aError?
 	 *
 	 */
 	public function updateAvatar() {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
-    $oUpload = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $this->_setError('terms', I18n::get('error.file.upload'));
 
     if (!isset($this->_aFile['image']))
@@ -178,10 +179,12 @@ class Users extends Main {
       return $this->_showFormTemplate();
 
     elseif ($oUpload->uploadAvatarFile(false) === true)
-      return Helper::successMessage(I18n::get('success.upload'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+      return Helper::successMessage(I18n::get('success.upload'), '/' .
+							$this->_aRequest['controller'] . '/' . $this->_iId);
 
     else
-      return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.file.upload'), '/' .
+							$this->_aRequest['controller'] . '/' . $this->_iId);
   }
 
 	/**
@@ -189,6 +192,7 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return string HTML content
+	 * @todo $this->_aError to setError
 	 *
 	 */
   public function updatePassword() {
@@ -218,15 +222,17 @@ class Users extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
-      Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_iId,
-									$this->_aSession['user']['id']);
+      Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										(int) $this->_iId,
+										$this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+      return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] .
+							'/' . $this->_iId);
     }
     else
-      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
+							$this->_iId);
   }
 
 	/**
@@ -277,8 +283,6 @@ class Users extends Main {
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       $this->__autoload('Mails');
 
-      $iUserId = $this->_oModel->getLastInsertId('users');
-
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
         $sMailMessage = '';
@@ -290,10 +294,10 @@ class Users extends Main {
         $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
       }
 
-			Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$iUserId,
-									$this->_aSession['user']['id']);
+			Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										$this->_oModel->getLastInsertId('users'),
+										$this->_aSession['user']['id']);
 
 			Mail::send(	Helper::formatInput($this->_aRequest['email']),
 									I18n::get('user.mail.subject'),
@@ -316,6 +320,9 @@ class Users extends Main {
 	 *
 	 */
 	protected function _showCreateUserTemplate() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
 										'');
@@ -328,11 +335,8 @@ class Users extends Main {
 										Helper::formatInput($this->_aRequest['email']) :
 										'');
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -406,6 +410,7 @@ class Users extends Main {
 	 *
 	 * @access private
 	 * @param integer $iId user id.
+	 * @todo foreach statement
 	 *
 	 */
 	private function _destroyUserAvatars($iId) {

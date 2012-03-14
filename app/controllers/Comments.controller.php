@@ -87,6 +87,9 @@ class Comments extends Main {
    *
    */
   protected function _show() {
+		$sTemplateDir		= Helper::getTemplateDir('comments', 'show');
+		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+
 		$this->oSmarty->assign('comments',
 						$this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
 
@@ -102,9 +105,6 @@ class Comments extends Main {
 		# Do we need pages?
 		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blogs/' . $this->_iId));
 
-		$sTemplateDir		= Helper::getTemplateDir('comments', 'show');
-		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
-
 		$this->oSmarty->setTemplateDir($sTemplateDir);
 		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comment');
   }
@@ -118,6 +118,9 @@ class Comments extends Main {
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
+    $sTemplateDir		= Helper::getTemplateDir('comments', '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+
     $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '');
     $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
@@ -125,11 +128,8 @@ class Comments extends Main {
     if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
       $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
 
-    if (!empty($this->_aError))
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
-
-    $sTemplateDir		= Helper::getTemplateDir('comments', '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -163,7 +163,6 @@ class Comments extends Main {
    * Create a blog entry.
    *
    * Check if required data is given or throw an error instead.
-   * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
    * @param boolean $bShowCaptcha show captcha?
@@ -177,10 +176,10 @@ class Comments extends Main {
     if ($this->_aSession['user']['role'] == 0)
       $this->_setError('name');
 
-    if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email']))
+    if (isset($this->_aRequest['email']))
       $this->_setError('email');
 
-    if (isset($this->_aError))
+    if ($this->_aError)
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
@@ -198,8 +197,6 @@ class Comments extends Main {
   /**
    * Delete a a comment.
    *
-   * Activate model, delete data from database and redirect afterwards.
-   *
    * @access protected
    * @return boolean status of model action
    *
@@ -208,7 +205,11 @@ class Comments extends Main {
     $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Logs::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['user']['id']);
+      Logs::insert(	'comment',
+										'destroy',
+										(int) $this->_aRequest['id'],
+										$this->_aSession['user']['id']);
+
       return Helper::successMessage(I18n::get('success.destroy'), $sRedirect);
     }
     else

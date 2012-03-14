@@ -94,13 +94,13 @@ class Sessions extends Main {
 	 *
 	 */
   public function _show() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
-
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->setDescription(I18n::get('global.login'));
     $this->setTitle(I18n::get('global.login'));
@@ -130,8 +130,8 @@ class Sessions extends Main {
 
 		else {
 			$this->__autoload('Mails');
-			$sNewPasswordClean = & Helper::createRandomChar(10, true);
-			$aData = & $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
+			$sNewPasswordClean = Helper::createRandomChar(10, true);
+			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
 			if (!empty($aData)) {
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));
@@ -204,11 +204,11 @@ class Sessions extends Main {
 	 *
 	 */
   private function _showCreateResendActionsTemplate() {
-		if ($this->_aError)
-      $this->oSmarty->assign('error', $this->_aError);
-
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'resend');
+
+		if ($this->_aError)
+      $this->oSmarty->assign('error', $this->_aError);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
