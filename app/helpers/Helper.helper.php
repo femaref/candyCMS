@@ -463,7 +463,7 @@ class Helper {
     $sStr = str_replace('ß', 'ss', $sStr);
 
 		# Remove non alpha chars
-		$sStr = preg_replace("/[^a-zA-Z0-9\s]/", '', $sStr);
+		$sStr = preg_replace("/[^a-zA-Z0-9\.\s]/", '', $sStr);
 
 		# Remove spaces
     $sStr = str_replace(' ', '_', $sStr);
