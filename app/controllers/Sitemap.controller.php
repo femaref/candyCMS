@@ -24,24 +24,24 @@ class Sitemap extends Main {
 	 * @return string XML content
 	 *
 	 */
-	protected function _showXML() {
-		Header('Content-Type: text/xml');
+  protected function _showXML() {
+    Header('Content-Type: text/xml');
 
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'xml');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
 
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-		$this->oSmarty->setCacheLifetime(1800); # 30 minutes
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(1800); # 30 minutes
 
-		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-			$this->_getSitemap();
-		}
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+      $this->_getSitemap();
+    }
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
-		exit();
-	}
+    exit();
+  }
 
 	/**
 	 * Show the sitemap as HTML. Site is cached for one minute.
@@ -50,19 +50,20 @@ class Sitemap extends Main {
 	 * @return string HTML content
 	 *
 	 */
-	protected function _show() {
+  protected function _show() {
     $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-		$this->oSmarty->setCacheLifetime(180);
+    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+    $this->oSmarty->setCacheLifetime(180);
 
-		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
-			$this->_getSitemap();
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      $this->_getSitemap();
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
+
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-	}
+  }
 
 	/**
 	 * Generate the sitemap. Query tables and build structure.

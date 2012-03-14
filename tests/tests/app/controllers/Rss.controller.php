@@ -35,7 +35,7 @@ class WebTestOfRssController extends CandyWebTest {
 	}
 
 	function testMedia() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/gallery/1'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/galleries/1'));
 		$this->assertResponse(200);
 		$this->assertText('982e960e18');
 		$this->assertText('782c660e17');

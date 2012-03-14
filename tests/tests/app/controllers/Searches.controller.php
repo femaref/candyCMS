@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Search.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Searches.controller.php';
 
-use \CandyCMS\Controller\Search as Search;
+use \CandyCMS\Controller\Searches as Searches;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfSearchController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'search';
-		$this->oObject = new Search($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'searches';
+		$this->oObject = new Searches($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
