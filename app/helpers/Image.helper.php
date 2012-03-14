@@ -105,6 +105,10 @@ class Image {
    *
    */
   private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
+    if ($iX > $this->_aInfo[0] && $iY > $this->_aInfo[1]) {
+      $iX = $this->_aInfo[0];
+      $iY = $this->_aInfo[1];
+    }
     $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' .
 						$this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
@@ -117,7 +121,7 @@ class Image {
     elseif ($this->_sImgType == 'gif')
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
 
-    $oNewImg = imagecreatetruecolor($this->_iImageWidth, $this->_iImageHeight);
+    $oNewImg = imagecreatetruecolor($iX, $iY);
     $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
 
     imagefill($oNewImg, 0, 0, $oBg);
@@ -166,7 +170,7 @@ class Image {
     $this->_iImageWidth   = $iX;
     $this->_iImageHeight  = $iY;
 
-    return $this->_createImage($iX, $iY, 0, 0);
+    return $this->_createImage($this->_iImageWidth, $this->_iImageHeight, 0, 0);
   }
 
 	/**
