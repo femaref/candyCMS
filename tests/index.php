@@ -21,7 +21,6 @@ require_once PATH_STANDARD . '/tests/candy/Candy.web.php';
 require_once PATH_STANDARD . '/config/Candy.inc.php';
 
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
-require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
 define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
@@ -37,6 +36,7 @@ class AllFileTests extends TestSuite {
 		$this->TestSuite('All tests');
 
     # Helpers
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');

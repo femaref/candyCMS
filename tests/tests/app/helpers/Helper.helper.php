@@ -45,6 +45,8 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertFalse(Helper::checkEmailAddress('a@b.c'));
     //should fail becaus tld is too long (2-6)
     $this->assertFalse(Helper::checkEmailAddress('a@b.cdefghi'));
+    $this->assertFalse(Helper::checkEmailAddress('a  b@domain.com'));
+    $this->assertFalse(Helper::checkEmailAddress('admindomain.com'));
     $this->assertFalse(Helper::checkEmailAddress('admin'));
   }
 
