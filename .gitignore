@@ -10,3 +10,4 @@ upload/*
 logs/*
 version.txt
 public/templates/*
+.project
