@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-class Content extends Main {
+class Contents extends Main {
 
   /**
    * Get content entry or content overview data. Depends on available ID.
@@ -99,7 +99,7 @@ class Content extends Main {
 
       else {
         $iId = $aRow['id'];
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'content');
+        $this->_aData[$iId] = $this->_formatForOutput($aRow);
       }
     }
 

@@ -1,5 +1,5 @@
 {strip}
-  <form method='post' action='/session/{$_REQUEST.action}' class='form-horizontal'>
+  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.action}' class='form-horizontal'>
     <div class='page-header'>
       <h1>
         {if $_REQUEST.action == 'verification'}

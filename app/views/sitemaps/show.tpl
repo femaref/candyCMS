@@ -16,13 +16,13 @@
     </ul>
     <div class='tab-content'>
       <div class='tab-pane active' id='sitemap-blog'>
-        {if !$blog}
+        {if !$blogs}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>
           </div>
         {else}
           <ol>
-            {foreach $blog as $b}
+            {foreach $blogs as $b}
               <li>
                 <a href='{$b.url}'>{$b.title}</a>
               </li>
@@ -31,13 +31,13 @@
         {/if}
       </div>
       <div class='tab-pane' id='sitemap-content'>
-        {if !$content}
+        {if !$contents}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>
           </div>
         {else}
           <ol>
-            {foreach $content as $c}
+            {foreach $contents as $c}
               <li>
                 <a href='{$c.url}'>{$c.title}</a>
               </li>
@@ -46,13 +46,13 @@
         {/if}
       </div>
       <div class='tab-pane' id='sitemap-gallery'>
-        {if !$gallery}
+        {if !$galleries}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>
           </div>
         {else}
           <ol>
-            {foreach $gallery as $g}
+            {foreach $galleries as $g}
               <li>
                 <a href='{$g.url}'>{$g.title}</a>
               </li>

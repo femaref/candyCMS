@@ -175,7 +175,7 @@ abstract class Main {
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
     # Set our default template folder.
-    $this->_sTemplateFolder = isset($this->_aRequest['controller']) ? (string)$this->_aRequest['controller'] . 's' : '';
+    $this->_sTemplateFolder = (string)$this->_aRequest['controller'];
 
     $this->_setI18n();
     $this->_setSmarty();
@@ -234,10 +234,10 @@ abstract class Main {
 	 *
 	 */
   public function __init() {
-    $oModel = & $this->__autoload($this->_aRequest['controller'], true);
+    $sModel = & $this->__autoload($this->_aRequest['controller'], true);
 
-    if ($oModel)
-      $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
+    if ($sModel)
+      $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -351,12 +351,13 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		if($this->_aRequest['controller'] == 'error')
-			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
+    if ($this->_aRequest['controller'] == 'errors')
+      return I18n::get('error.' . $this->_aRequest['id'] . '.title');
 
-		else
-			return $this->_sTitle ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['controller']));
-	}
+    else
+      return $this->_sTitle ? $this->_sTitle :
+              I18n::get('global.' . strtolower(substr($this->_aRequest['controller'], 0, strlen($this->_aRequest['controller']) - 1)));
+  }
 
 	/**
 	 * Set the page content.
@@ -469,8 +470,6 @@ abstract class Main {
 	}
 
 	/**
-	 * Update an action.
-	 *
 	 * Update entry or show form template if we have enough rights.
 	 *
 	 * @access public
@@ -488,8 +487,6 @@ abstract class Main {
 	}
 
 	/**
-	 * Delete an action.
-	 *
 	 * Delete entry if we have enough rights.
 	 *
 	 * @access public
@@ -503,6 +500,91 @@ abstract class Main {
             $this->_destroy();
 	}
 
+  /**
+   * Create an entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, activate the model, insert them into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _create() {
+		$this->_setError('title');
+
+		if ($this->_aError)
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->create() === true) {
+			Logs::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									$this->_oModel->getLastInsertId($this->_aRequest['controller']),
+									$this->_aSession['user']['id']);
+
+			return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
+		}
+		else
+			return Helper::errorMessage(I18n::get('error.sql.query'), '/' . $this->_aRequest['controller']);
+	}
+
+  /**
+   * Update an entry.
+   *
+   * Activate model, insert data into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _update() {
+    $this->_setError('title');
+
+    if ($this->_aError)
+      return $this->_showFormTemplate();
+
+    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+
+      Logs::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.update'),
+              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+    }
+
+    else
+      return Helper::errorMessage(I18n::get('error.sql'),
+              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+  }
+
+  /**
+   * Destroy an entry.
+   *
+   * Activate model, delete data from database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _destroy() {
+    if($this->_oModel->destroy($this->_iId) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+
+      Logs::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									$this->_iId,
+									$this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
+    }
+
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+  }
+
 	/**
    * Subscribe to newsletter list.
    *
@@ -513,7 +595,6 @@ abstract class Main {
 	 *
    */
   protected static function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
-    require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
@@ -534,7 +615,6 @@ abstract class Main {
    *
    */
   protected static function _unsubscribeFromNewsletter($sEmail) {
-    require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);

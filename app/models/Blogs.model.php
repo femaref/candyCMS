@@ -19,7 +19,7 @@ use PDO;
 
 require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
-class Blog extends Main {
+class Blogs extends Main {
 
   /**
    * Get blog entry or blog overview data. Depends on available ID.
@@ -96,7 +96,7 @@ class Blog extends Main {
         # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
 
-        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blogs');
         $this->_aData[$iDate]['tags']           = explode(', ', $aRow['tags']);
         $this->_aData[$iDate]['tags_raw']       = $aRow['tags'];
         $this->_aData[$iDate]['date_modified']  = !empty($aRow['date_modified']) ?

@@ -17,7 +17,7 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-class Search extends Main {
+class Searches extends Main {
 
   /**
    * Get search information from tables.

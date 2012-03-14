@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class='center'>
-      <a href='/download/create'>
+      <a href='/{$_REQUEST.controller}/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -13,12 +13,12 @@
   <div class='page-header'>
     <h1>{$lang.global.downloads}</h1>
   </div>
-  {if !$download}
+  {if !$downloads}
     <div class='alert alert-warning'>
       <h4>{$lang.error.missing.entries}</h4>
     </div>
   {else}
-    {foreach $download as $d}
+    {foreach $downloads as $d}
       <h2>{$d.category}</h2>
       <table class='table tablesorter'>
         <thead>
@@ -54,7 +54,7 @@
             </td>
             <td class='center'>
               {if $_SESSION.user.role >= 3}
-                <a href='/download/{$f.id}/update'>
+                <a href='/{$_REQUEST.controller}/{$f.id}/update'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
@@ -62,7 +62,7 @@
                       width='16' height='16' />
                 </a>
                 &nbsp;
-                <a href="#" onclick="confirmDestroy('/download/{$f.id}/destroy')">
+                <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.id}/destroy')">
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'

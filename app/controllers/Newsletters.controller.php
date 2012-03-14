@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-class Newsletter extends Main {
+class Newsletters extends Main {
 
   /**
    * Redirect to create method due to logic at the dispatcher.
@@ -44,7 +44,7 @@ class Newsletter extends Main {
 		else
 			return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
 							Helper::successMessage(I18n::get('success.newsletter.create'), '/') :
-							Helper::errorMessage(I18n::get('error.standard'), '/newsletter');
+							Helper::errorMessage(I18n::get('error.standard'), '/' . $this->_aRequest['controller']);
 	}
 
   /**

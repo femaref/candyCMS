@@ -12,11 +12,10 @@
 
 namespace CandyCMS\Controller;
 
-use CandyCMS\Controller\Search as Search;
 use CandyCMS\Helper\Helper as Helper;
 use Smarty;
 
-class Error extends Main {
+class Errors extends Main {
 
 	/**
 	 * Show a 404 error when a page is not available or found.

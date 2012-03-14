@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class='center'>
-      <a href='/blog/create'>
+      <a href='/{$_REQUEST.controller}/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -10,21 +10,21 @@
       </a>
     </p>
   {/if}
-  {if !$blog}
+  {if !$blogs}
     <div class='alert alert-warning'>
       <h4>{$lang.error.missing.entries}</h4>
     </div>
   {else}
-    {foreach $blog as $b}
+    {foreach $blogs as $b}
       <article class='blogs'>
         <header class='page-header'>
           <h2>
             {if $b.published == false}
               {$lang.global.not_published}:&nbsp;
             {/if}
-            <a href='/blog/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
+            <a href='/{$_REQUEST.controller}/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
             {if $_SESSION.user.role >= 3}
-              <a href='/blog/{$b.id}/update'>
+              <a href='/{$_REQUEST.controller}/{$b.id}/update'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-update js-tooltip'
                     alt='{$lang.global.update.update}'
@@ -40,7 +40,7 @@
             &nbsp;
             {$lang.global.by}
             &nbsp;
-            <a href='/user/{$b.author_id}/{$b.encoded_full_name}' rel='author'>{$b.full_name}</a>
+            <a href='/users/{$b.author_id}/{$b.encoded_full_name}' rel='author'>{$b.full_name}</a>
             {if $b.date_modified != ''}
               &nbsp;
               - {$lang.global.last_update}: {$b.date_modified}
@@ -58,7 +58,7 @@
             {$lang.global.tags.tags}:
             {if $b.tags[0] !== ''}
               {foreach from=$b.tags item=t name=tags}
-                <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/blog/{$t}'>
+                <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>
                   {$t}
                 </a>
                 {if !$t@last}, {/if}
@@ -66,7 +66,7 @@
             {/if}
           </div>
           <div class='span4 comments right'>
-            <a href='/blog/{$b.id}/{$b.encoded_title}#comments'>
+            <a href='/{$_REQUEST.controller}/{$b.id}/{$b.encoded_title}#comments'>
               {$b.comment_sum} {$lang.global.comments}
             </a>
           </div>

@@ -25,7 +25,7 @@ class Rss extends Main {
    */
   public function __init() {
     $this->_sTemplateFolder = 'rss';
-    #Header('Content-Type: application/rss+xml');
+    Header('Content-Type: application/rss+xml');
   }
 
   /**
@@ -36,7 +36,7 @@ class Rss extends Main {
    *
    */
   protected function _show() {
-    if ($this->_aRequest['section'] == 'gallery' && $this->_iId > 0)
+    if ($this->_aRequest['section'] == 'galleries' && $this->_iId > 0)
       $this->_showMedia();
 
     else
@@ -51,7 +51,7 @@ class Rss extends Main {
    *
    */
   private function _showDefault() {
-    $sModel = $this->__autoload('Blog', true);
+    $sModel = $this->__autoload('Blogs', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
     $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
@@ -80,7 +80,7 @@ class Rss extends Main {
    *
    */
   private function _showMedia() {
-    $sModel = $this->__autoload('Gallery', true);
+    $sModel = $this->__autoload('Galleries', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
     $aData = $oModel->getData($this->_iId, false, true);
 

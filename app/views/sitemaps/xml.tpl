@@ -6,41 +6,41 @@
     <changefreq>hourly</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/newsletter</loc>
+    <loc>{$WEBSITE_URL}/newsletters</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/sitemap</loc>
+    <loc>{$WEBSITE_URL}/sitemaps</loc>
     <priority>0.75</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/search</loc>
+    <loc>{$WEBSITE_URL}/searches</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/session/create</loc>
+    <loc>{$WEBSITE_URL}/sessions/create</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/session/password</loc>
+    <loc>{$WEBSITE_URL}/sessions/password</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/session/verification</loc>
+    <loc>{$WEBSITE_URL}/sessions/verification</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
   <url>
-    <loc>{$WEBSITE_URL}/user/create</loc>
+    <loc>{$WEBSITE_URL}/users/create</loc>
     <priority>0.1</priority>
     <changefreq>never</changefreq>
   </url>
-  {foreach $blog as $b}
+  {foreach $blogs as $b}
     <url>
       <loc>{$b.url}</loc>
       <priority>{$b.priority}</priority>
@@ -48,7 +48,7 @@
       <lastmod>{$b.date_w3c}</lastmod>
     </url>
   {/foreach}
-  {foreach $content as $c}
+  {foreach $contents as $c}
     <url>
       <loc>{$c.url}</loc>
       <priority>{$c.priority}</priority>
@@ -56,7 +56,7 @@
       <lastmod>{$c.date_w3c}</lastmod>
     </url>
   {/foreach}
-  {foreach $gallery as $g}
+  {foreach $galleries as $g}
     <url>
       <loc>{$g.url}</loc>
       <priority>{$g.priority}</priority>

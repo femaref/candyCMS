@@ -2,7 +2,8 @@
   <div class='page-header'>
     <h1>{$lang.media.title.create}</h1>
   </div>
-  <form action='/media/create' method='post' enctype='multipart/form-data' class='form-horizontal'>
+  <form action='/{$_REQUEST.controller}/{$_REQUEST.action}' method='post'
+        enctype='multipart/form-data' class='form-horizontal'>
     <div class='control-group'>
       <label for='input-file' class='control-label'>
         {$lang.media.label.choose} <span title='{$lang.global.required}'>*</span>

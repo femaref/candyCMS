@@ -27,7 +27,7 @@ final class FacebookCMS extends Facebook {
   /**
    * Identifier for Template Replacements
    */
-  const identifier = 'facebook';
+  const IDENTIFIER = 'facebook';
 
 	/**
 	 *

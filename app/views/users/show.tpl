@@ -4,7 +4,7 @@
       <h1>
         {$u.full_name}
         {if $_SESSION.user.role == 4 || $u.id == $_SESSION.user.id}
-          <a href='/user/{$_REQUEST.id}/update'>
+          <a href='/users/{$_REQUEST.id}/update'>
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-update js-tooltip'
                 alt='{$lang.global.update.update}'

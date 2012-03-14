@@ -18,7 +18,7 @@ use PDO;
 
 require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
-class Log extends Main {
+class Logs extends Main {
 
   /**
    * Get log overview data.

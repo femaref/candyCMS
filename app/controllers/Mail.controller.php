@@ -111,7 +111,7 @@ class Mail extends Main {
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
-		$oUser = $this->__autoload('User', true);
+		$oUser = $this->__autoload('Users', true);
 
     $this->oSmarty->assign('contact', $oUser::getUserNamesAndEmail($this->_iId));
 		$this->oSmarty->assign('content', isset($this->_aRequest['content']) ?
@@ -187,7 +187,7 @@ class Mail extends Main {
 
     else {
       # Select user name and surname
-      $oClass = $this->__autoload('User', true);
+      $oClass = $this->__autoload('Users', true);
       $oModel = & new $oClass($this->_aRequest, $this->_aSession);
       $aRow = $oModel::getUserNamesAndEmail($this->_iId);
 
@@ -206,7 +206,7 @@ class Mail extends Main {
 								Helper::formatInput($this->_aRequest['email']));
 
       if ($bStatus == true) {
-        Log::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
+        Logs::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
 				return $this->_showSuccessMessage();
       }
 			else

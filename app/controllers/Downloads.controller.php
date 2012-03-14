@@ -16,10 +16,9 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use CandyCMS\Model\Download as Model;
 use Smarty;
 
-class Download extends Main {
+class Downloads extends Main {
 
   /**
    * Download entry or show download overview (depends on a given ID or not).
@@ -39,13 +38,13 @@ class Download extends Main {
       # Get mime type
       if(function_exists('finfo_open')) {
         $oInfo = finfo_open(FILEINFO_MIME_TYPE);
-        $sMimeType = finfo_file($oInfo, Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
+        $sMimeType = finfo_file($oInfo, Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
         header('Content-type: ' . $sMimeType);
       }
 
       # Send file directly
       header('Content-Disposition: attachment; filename="' . $sFile . '"');
-      readfile(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
+      readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
 
       # No more actions down here
       exit();
@@ -59,7 +58,7 @@ class Download extends Main {
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
-				$this->oSmarty->assign('download', $this->_oModel->getData($this->_iId));
+				$this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
 
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
@@ -128,71 +127,18 @@ class Download extends Main {
 				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
-          Log::insert($this->_aRequest['controller'],
+          Logs::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											$this->_oModel->getLastInsertId('downloads'),
 											$this->_aSession['user']['id']);
 
-          return Helper::successMessage(I18n::get('success.create'), '/download');
+          return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
         }
         else
-          return Helper::errorMessage(I18n::get('error.sql'), '/download');
+          return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
       }
       else
-        return Helper::errorMessage(I18n::get('error.missing.file'), '/download');
+        return Helper::errorMessage(I18n::get('error.missing.file'), '/' . $this->_aRequest['controller']);
     }
-  }
-
-  /**
-   * Update a download entry.
-   *
-   * Activate model, insert data into the database and redirect afterwards.
-   *
-   * @access protected
-   * @return boolean status of model action
-   *
-   */
-  protected function _update() {
-    $this->_setError('title');
-
-    if (isset($this->_aError))
-      return $this->_showFormTemplate();
-
-    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.update'), '/download');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), '/download');
-  }
-
-  /**
-   * Delete a download entry.
-   *
-   * Activate model, delete data from database and redirect afterwards.
-   *
-   * @access protected
-   * @return boolean status of model action
-   *
-   */
-  protected function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.destroy'), '/download');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), '/download');
   }
 }

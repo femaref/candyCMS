@@ -20,12 +20,18 @@ require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
 
 class SmartySingleton extends Smarty {
 
+  /**
+   *
+   * @var static
+   *
+   */
   private static $oInstance = null;
 
   /**
    * Get the Smarty Instance
    *
-   * @return Object the Smarty Instance that was found or generated
+   * @return object self::$oInstance Smarty instance that was found or generated
+   *
    */
   public static function getInstance() {
     if (self::$oInstance === null)

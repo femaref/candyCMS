@@ -24,7 +24,7 @@
         <tr>
       {/if}
         <td class='left'>
-          <a href='/user/{$l.uid}'>{$l.full_name}</a>
+          <a href='/users/{$l.uid}'>{$l.full_name}</a>
         </td>
         <td>
           {$l.section_name}

@@ -16,18 +16,16 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Dispatcher as Dispatcher;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Session as Model_Session;
-use CandyCMS\Model\User as Model_User;
 use CandyCMS\Plugin\Controller\Cronjob as Cronjob;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 use Routes;
 use sfYaml;
 
 require_once PATH_STANDARD . '/app/models/Main.model.php';
-require_once PATH_STANDARD . '/app/models/Session.model.php';
+require_once PATH_STANDARD . '/app/models/Sessions.model.php';
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Session.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Sessions.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Logs.controller.php';
 require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Dispatcher.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
@@ -390,6 +388,7 @@ class Index {
    * @access public
    * @see index.php
    * @return array $this->_aSession['user']
+   * @todo check if there are addons for this models
    *
    */
 	public function setUser() {
@@ -399,11 +398,11 @@ class Index {
     # Override them with user data
     # Get user data by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
-      $aUser = & Model_User::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
 
     # Get user data by session
     else
-      $aUser = & Model_Session::getUserBySession();
+      $aUser = \CandyCMS\Model\Sessions::getUserBySession();
 
     if (is_array($aUser))
       $this->_aSession['user'] = & array_merge($this->_aSession['user'], $aUser);
@@ -515,7 +514,8 @@ class Index {
 	}
 
   /**
-   * Get plugin placeholders, Render needed Plugins and Replace Placeholders. This is done at the end of execution for performance reasons.
+   * Get plugin placeholders, Render needed Plugins and Replace Placeholders.
+   * This is done at the end of execution for performance reasons.
    *
    * @access private
    * @param string $sCachedHTML
@@ -528,13 +528,16 @@ class Index {
     $this->_aSession['user'] = self::_resetUser();
 
     foreach ($this->_aPlugins as $sPlugin) {
-      $sPluginNamespace = '\CandyCMS\Plugin\Controller\\'.$sPlugin;
+      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob')
+        continue;
+
+      $sPluginNamespace = '\CandyCMS\Plugin\Controller\\' . $sPlugin;
+
       if (class_exists($sPluginNamespace)) {
         $oPlugin = & new $sPluginNamespace();
-        if (preg_match('/<!-- plugin:'.$oPlugin::identifier.' -->/', $sCachedHTML)) {
-          $sCachedHTML = & str_replace('<!-- plugin:'.$oPlugin::identifier.' -->',
-							$oPlugin->show(),
-							$sCachedHTML);
+
+        if (preg_match('/<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->/', $sCachedHTML)) {
+          $sCachedHTML = str_replace('<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->', $oPlugin->show(), $sCachedHTML);
         }
       }
     }

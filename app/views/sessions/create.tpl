@@ -1,5 +1,5 @@
 {strip}
-  <form action='/session/create' method='post' data-ajax='false' class='form-horizontal'>
+  <form action='/{$_REQUEST.controller}/create' method='post' data-ajax='false' class='form-horizontal'>
     <div class='page-header'>
       <h1>{$lang.global.login}</h1>
     </div>
@@ -29,7 +29,7 @@
     </div>
   </form>
   <div class='center'>
-    <a href='/session/password' class='btn'>{$lang.session.password.title}</a>
-    <a href='/session/verification' class='btn'>{$lang.session.verification.title}</a>
+    <a href='/{$_REQUEST.controller}/password' class='btn'>{$lang.session.password.title}</a>
+    <a href='/{$_REQUEST.controller}/verification' class='btn'>{$lang.session.verification.title}</a>
   </div>
 {/strip}

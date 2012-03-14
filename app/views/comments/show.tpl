@@ -11,7 +11,7 @@
             <a href='#{$c.id}' name='{$c.id}' class='count'>{$c.loop+$comment_number}</a>
             <img class='thumbnail' src='{$c.avatar_64}' width='40' height='40' alt='' />
             {if $c.user_id > 0}
-              <a href='/user/{$c.user_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
+              <a href='/users/{$c.user_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
             {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
               <a href='{$c.author_website}' rel='nofollow'>
                 {$c.author_name}
@@ -46,7 +46,7 @@
             </a>
             {if $_SESSION.user.role >= 3}
               &nbsp;
-              <a href="#" onclick="confirmDestroy('/comment/{$c.id}/destroy/{$c.parent_id}')">
+              <a href="#" onclick="confirmDestroy('/comments/{$c.id}/destroy/{$c.parent_id}')">
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-destroy js-tooltip'
                     alt='{$lang.global.destroy.destroy}'

@@ -1,5 +1,5 @@
 {strip}
-  <form action='/gallery/{$_REQUEST.id}/{$_REQUEST.action}' method='post'
+  <form action='/{$_REQUEST.controller}/{$_REQUEST.id}/{$_REQUEST.action}' method='post'
         enctype='multipart/form-data' class='form-horizontal'>
     <div class='page-header'>
       <h1>
@@ -47,11 +47,11 @@
             value="{if $_REQUEST.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}" />
       {if $_REQUEST.action == 'updatefile'}
         <input type='button' value='{$lang.global.destroy.destroy}' class='btn btn-danger'
-        onclick="confirmDestroy('/gallery/{$_REQUEST.id}/destroyfile?album_id={$album_id}')" />
+        onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroyfile?album_id={$album_id}')" />
         <input class='btn' type='reset' value='{$lang.global.reset}' />
         <input type='hidden' value='{$_REQUEST.id}' name='id' />
       {/if}
-      <input type='hidden' value='formdata' name='{$_REQUEST.action}_gallery' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
     </div>
   </form>
   <script type='text/javascript'>

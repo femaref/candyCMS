@@ -8,7 +8,7 @@
       {/if}
     </h1>
   </div>
-  <form method='post' action='/content/{$_REQUEST.action}' class='form-horizontal'>
+  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.action}' class='form-horizontal'>
     <fieldset>
       <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
         <label for='input-title' class='control-label'>
@@ -76,10 +76,10 @@
       <div class='form-actions'>
         <input type='submit' class='btn btn-primary'
               value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
-        <input type='hidden' value='formdata' name='{$_REQUEST.action}_content' />
+        <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
         {if $_REQUEST.action == 'update'}
           <input type='button' class='btn btn-danger' value='{$lang.content.title.destroy}'
-                onclick="confirmDestroy('/content/{$_REQUEST.id}/destroy')" />
+                onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value='{$_REQUEST.id}' name='id' />
         {/if}

@@ -19,8 +19,11 @@ final class Headlines {
 
   /**
    * Identifier for Template Replacements
+   *
+   * @var constant
+   *
    */
-  const identifier = 'headlines';
+  const IDENTIFIER = 'headlines';
 
 	/**
 	 * Show the (cached) headlines.

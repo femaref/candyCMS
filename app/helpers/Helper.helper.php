@@ -166,7 +166,7 @@ class Helper {
 	 *
 	 */
   public static function getAvatar($iSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
-    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $iSize . '/' . $iUserId);
+    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/users/' . $iSize . '/' . $iUserId);
 
 		if ($bUseGravatar == false && file_exists($sFilePath . '.jpg'))
 			return '/' . $sFilePath . '.jpg';

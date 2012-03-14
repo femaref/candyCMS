@@ -19,8 +19,11 @@ final class Piwik {
 
   /**
    * Identifier for Template Replacements
+   *
+   * @var constant
+   *
    */
-  const identifier = 'piwik';
+  const IDENTIFIER = 'piwik';
 
   public final static function show() {
     $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');

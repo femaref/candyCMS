@@ -13,10 +13,6 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Model\Blog as Model_Blog;
-use CandyCMS\Model\Content as Model_Content;
-use CandyCMS\Model\Download as Model_Download;
-use CandyCMS\Model\Gallery as Model_Gallery;
 use Smarty;
 
 class Sitemap extends Main {
@@ -75,17 +71,17 @@ class Sitemap extends Main {
 	 *
 	 */
 	private function _getSitemap() {
-		$sModel		= $this->__autoload('Blog', true);
-		$oBlog		= & new $sModel($this->_aRequest, $this->_aSession);
+		$sModel     = $this->__autoload('Blogs', true);
+		$oBlogs     = & new $sModel($this->_aRequest, $this->_aSession);
 
-		$sModel		= $this->__autoload('Content', true);
-		$oContent = & new $sModel($this->_aRequest, $this->_aSession);
+		$sModel     = $this->__autoload('Contents', true);
+		$oContents  = & new $sModel($this->_aRequest, $this->_aSession);
 
-		$sModel		= $this->__autoload('Gallery', true);
-		$oGallery = & new $sModel($this->_aRequest, $this->_aSession);
+		$sModel     = $this->__autoload('Galleries', true);
+		$oGalleries = & new $sModel($this->_aRequest, $this->_aSession);
 
-		$this->oSmarty->assign('blog', $oBlog->getData('', false, 1000));
-		$this->oSmarty->assign('content', $oContent->getData('', false, 1000));
-		$this->oSmarty->assign('gallery', $oGallery->getData('', false, false, 1000));
+		$this->oSmarty->assign('blogs', $oBlogs->getData('', false, 1000));
+		$this->oSmarty->assign('contents', $oContents->getData('', false, 1000));
+		$this->oSmarty->assign('galleries', $oGalleries->getData('', false, false, 1000));
 	}
 }

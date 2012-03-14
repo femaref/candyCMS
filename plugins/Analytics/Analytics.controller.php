@@ -20,7 +20,7 @@ final class Analytics {
   /**
    * Identifier for Template Replacements
    */
-  const identifier = 'analytics';
+  const IDENTIFIER = 'analytics';
 
   public final static function show() {
     $sTemplateDir   = Helper::getPluginTemplateDir('analytics', 'show');
