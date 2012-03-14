@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-class Blog extends Main {
+class Blogs extends Main {
 
   /**
    * Show blog entry or blog overview (depends on a given ID or not).
@@ -32,19 +32,19 @@ class Blog extends Main {
     if (!$this->_aData[1]['id'] && $this->_iId) {
       header('Status: 404 Not Found');
       header('HTTP/1.0 404 Not Found');
-      Helper::redirectTo('/error/404');
+      Helper::redirectTo('/errors/404');
     }
     else {
       $sTemplateDir   = Helper::getTemplateDir($this->_sTemplateFolder, 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-      $this->setDescription($this->_setBlogDescription());
-      $this->setKeywords($this->_setBlogKeywords());
-      $this->setTitle($this->_setBlogTitle());
+      $this->setDescription($this->_setBlogsDescription());
+      $this->setKeywords($this->_setBlogsKeywords());
+      $this->setTitle($this->_setBlogsTitle());
 
 			# Load comments
       if ($this->_iId) {
-        $sClass = $this->__autoload('Comment');
+        $sClass = $this->__autoload('Comments');
         $oComments = & new $sClass($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
@@ -54,7 +54,7 @@ class Blog extends Main {
       else
         $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
 
-      $this->oSmarty->assign('blog', $this->_aData);
+      $this->oSmarty->assign('blogs', $this->_aData);
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
@@ -67,7 +67,7 @@ class Blog extends Main {
    * @return string meta description
    *
    */
-  private function _setBlogDescription() {
+  private function _setBlogsDescription() {
     if (isset($this->_aRequest['page']) && $this->_aRequest['page'] > 1)
       return I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
@@ -79,7 +79,7 @@ class Blog extends Main {
         return $this->_removeHighlight($this->_aData[1]['title']);
 
       else
-        return $this->_setBlogTitle();
+        return $this->_setBlogsTitle();
     }
     else
       return I18n::get('global.blog');
@@ -92,7 +92,7 @@ class Blog extends Main {
    * @return string meta keywords
    *
    */
-  private function _setBlogKeywords() {
+  private function _setBlogsKeywords() {
     if ($this->_iId && isset($this->_aData[1]['tags']) && !empty($this->_aData[1]['tags']))
       return $this->_aData[1]['keywords'];
   }
@@ -104,7 +104,7 @@ class Blog extends Main {
    * @return string title
    *
    */
-  private function _setBlogTitle() {
+  private function _setBlogsTitle() {
     # Create blog entry.
     if (isset($this->_aRequest['action']) && 'create' == $this->_aRequest['action'])
       return $this->_aRequest['title'];
@@ -176,33 +176,4 @@ class Blog extends Main {
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
-
-  /**
-   * Create a blog entry.
-   *
-   * Check if required data is given or throw an error instead.
-   * If data is given, activate the model, insert them into the database and redirect afterwards.
-   *
-   * @access protected
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo remove when renamed
-   *
-   */
-  protected function _create() {
-		$this->_setError('title');
-
-		if ($this->_aError)
-			return $this->_showFormTemplate();
-
-		elseif ($this->_oModel->create() === true) {
-			Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_oModel->getLastInsertId('blogs'),
-									$this->_aSession['user']['id']);
-
-			return Helper::successMessage(I18n::get('success.create'), '/blog');
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
-	}
 }

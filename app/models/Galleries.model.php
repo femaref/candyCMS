@@ -19,7 +19,7 @@ use PDO;
 
 require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
-class Gallery extends Main {
+class Galleries extends Main {
   /**
    *
    * @access private
@@ -103,7 +103,7 @@ class Gallery extends Main {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'gallery');
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'galleries');
         $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($aRow['id'], $bAdvancedImageInformation) : '';
       }
     }
@@ -154,14 +154,14 @@ class Gallery extends Main {
     $iLoop = 0;
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
-      $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/gallery/' . $aRow['album_id']);
+      $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/galleries/' . $aRow['album_id']);
       $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
       $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
       $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'gallery');
-      $this->_aThumbs[$iId]['url']          = '/gallery/' . $aRow['album_id'] . '/image/' . $iId;
+      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'galleries');
+      $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
       $this->_aThumbs[$iId]['url_32']       = $sUrl32;
       $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;
       $this->_aThumbs[$iId]['url_popup']    = $sUrlPopup;
@@ -175,7 +175,8 @@ class Gallery extends Main {
       if ($bAdvancedImageInformation == true) {
         $aPopupSize = getimagesize(Helper::removeSlash($sUrlPopup));
         $aThumbSize = getimagesize(Helper::removeSlash($sUrlThumb));
-        $iImageSize = filesize(Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $aRow['album_id'] . '/popup/' . $aRow['file']));
+        $iImageSize = filesize(Helper::removeSlash(PATH_UPLOAD . '/galleries/' .
+                $aRow['album_id'] . '/popup/' . $aRow['file']));
 
         $this->_aThumbs[$iId]['popup_width']  = $aPopupSize[0];
         $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
@@ -404,7 +405,7 @@ class Gallery extends Main {
    *
    */
   public function destroy($iId) {
-    $sPath = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . (int) $iId);
+    $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . (int) $iId);
 
     # Fetch all images
     try {
@@ -605,7 +606,7 @@ class Gallery extends Main {
 
     if ($bReturn === true) {
       foreach ($aResult as $aRow) {
-        $sPath = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $aRow['album_id']);
+        $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $aRow['album_id']);
         @unlink($sPath . '/32/' . $aRow['file']);
         @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
         @unlink($sPath . '/popup/' . $aRow['file']);

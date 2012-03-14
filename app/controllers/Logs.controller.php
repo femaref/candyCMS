@@ -15,15 +15,14 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-require_once PATH_STANDARD . '/app/models/Log.model.php';
-
-class Log extends Main {
+class Logs extends Main {
 
   /**
    * Show log overview if we have admin rights.
    *
    * @access protected
    * @return string HTML content
+   * @todo fix route at .htaccess
    *
    */
   protected function _show() {
@@ -57,26 +56,8 @@ class Log extends Main {
    *
    */
   public static function insert($sControllerName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
-    return \CandyCMS\Model\Log::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
-  }
+    require_once PATH_STANDARD . '/app/models/Logs.model.php';
 
-  /**
-   * Activate model, delete data from database and redirect afterwards.
-   *
-   * @access protected
-   * @return boolean status of model action.
-   *
-   */
-  protected function _destroy() {
-    if ($this->_oModel->destroy($this->_iId) === true) {
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_iId,
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.destroy'), '/log');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), '/log');
+    return \CandyCMS\Model\Logs::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
 }

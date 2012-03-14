@@ -18,7 +18,7 @@ use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
 use Smarty;
 
-class Media extends Main {
+class Medias extends Main {
 
   /**
    * Upload media file.
@@ -35,8 +35,8 @@ class Media extends Main {
     else {
       if (isset($this->_aRequest['create_file']))
 				return $this->_proceedUpload() === true ?
-								Helper::successMessage(I18n::get('success.file.upload'), '/media') :
-								Helper::errorMessage(I18n::get('error.file.upload'), '/media');
+								Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller']) :
+								Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller']);
 
       else
         return $this->_showUploadFileTemplate();
@@ -70,7 +70,9 @@ class Media extends Main {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aRequest['rename']);
-    $sFolder = isset($this->_aRequest['folder']) ? Helper::formatInput($this->_aRequest['folder']) : 'media';
+    $sFolder = isset($this->_aRequest['folder']) ?
+            Helper::formatInput($this->_aRequest['folder']) :
+            $this->_aRequest['controller'];
 
     if (!is_dir($sFolder))
       mkdir(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder, 0777));
@@ -83,6 +85,7 @@ class Media extends Main {
    *
    * @access protected
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo rename temp
    *
    */
   protected function _show() {
@@ -92,7 +95,7 @@ class Media extends Main {
     else {
 			require PATH_STANDARD . '/app/helpers/Image.helper.php';
 
-      $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/media');
+      $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller']);
       $oDir = opendir($sOriginalPath);
 
       $aFiles = array();
@@ -113,9 +116,9 @@ class Media extends Main {
         if ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'png' || $sFileType == 'gif') {
           $aImgDim = getImageSize($sPath);
 
-          if (!file_exists(PATH_UPLOAD . '/temp/media/' . $sFile)) {
+          if (!file_exists(PATH_UPLOAD . '/temp/' . $this->_aRequest['controller'] . '/' . $sFile)) {
             $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
-            $oImage->resizeAndCut('32', 'media');
+            $oImage->resizeAndCut('32', $this->_aRequest['controller']);
           }
         }
         else
@@ -152,18 +155,18 @@ class Media extends Main {
    *
    */
   public function destroy() {
-		if ($this->_aSession['user']['role'] < 3)
-			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+    if ($this->_aSession['user']['role'] < 3)
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-		else {
-			$sPath = Helper::removeSlash(PATH_UPLOAD . '/media/' . $this->_aRequest['file']);
+    else {
+      $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['file']);
 
-			if (is_file($sPath)) {
-				unlink($sPath);
-				return Helper::successMessage(I18n::get('success.file.destroy'), '/media');
-			}
-			else
-				return Helper::errorMessage(I18n::get('error.missing.file'), '/media');
-		}
-	}
+      if (is_file($sPath)) {
+        unlink($sPath);
+        return Helper::successMessage(I18n::get('success.file.destroy'), '/' . $this->_aRequest['controller']);
+      }
+      else
+        return Helper::errorMessage(I18n::get('error.missing.file'), '/' . $this->_aRequest['controller']);
+    }
+  }
 }

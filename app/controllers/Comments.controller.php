@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 
-class Comment extends Main {
+class Comments extends Main {
 
   /**
    * The provided blog data.
@@ -74,7 +74,7 @@ class Comment extends Main {
   public function __init($aParentData = '') {
 		require_once PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
-    $oModel = $this->__autoload('Comment', true);
+    $oModel = $this->__autoload('Comments', true);
     $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
 		$this->_aParentData = & $aParentData;
 	}
@@ -100,7 +100,7 @@ class Comment extends Main {
 						($this->_oModel->oPagination->getCurrentPage() * LIMIT_COMMENTS) - LIMIT_COMMENTS);
 
 		# Do we need pages?
-		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blog/' . $this->_iId));
+		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blogs/' . $this->_iId));
 
 		$sTemplateDir		= Helper::getTemplateDir('comments', 'show');
 		$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
@@ -181,10 +181,10 @@ class Comment extends Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'] . '#create';
+      $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
-        Log::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
+        Logs::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else
@@ -202,10 +202,10 @@ class Comment extends Main {
    *
    */
   protected function _destroy() {
-    $sRedirect = '/blog/' . (int) $this->_aRequest['parent_id'];
+    $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      Log::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['user']['id']);
+      Logs::insert('comment', 'destroy', (int) $this->_aRequest['id'], $this->_aSession['user']['id']);
       return Helper::successMessage(I18n::get('success.destroy'), $sRedirect);
     }
     else
@@ -237,6 +237,6 @@ class Comment extends Main {
       }
     }
     else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/blog/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/blogs/' . $this->_iId);
   }
 }

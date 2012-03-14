@@ -175,7 +175,7 @@ abstract class Main {
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
     # Set our default template folder.
-    $this->_sTemplateFolder = isset($this->_aRequest['controller']) ? (string)$this->_aRequest['controller'] . 's' : '';
+    $this->_sTemplateFolder = (string)$this->_aRequest['controller'];
 
     $this->_setI18n();
     $this->_setSmarty();
@@ -351,12 +351,13 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-		if($this->_aRequest['controller'] == 'error')
-			return I18n::get('error.' . $this->_aRequest['id'] . '.title');
+    if ($this->_aRequest['controller'] == 'errors')
+      return I18n::get('error.' . $this->_aRequest['id'] . '.title');
 
-		else
-			return $this->_sTitle ? $this->_sTitle : I18n::get('global.' . strtolower($this->_aRequest['controller']));
-	}
+    else
+      return $this->_sTitle ? $this->_sTitle :
+              I18n::get('global.' . strtolower(substr($this->_aRequest['controller'], 0, strlen($this->_aRequest['controller']) - 1)));
+  }
 
 	/**
 	 * Set the page content.
@@ -516,7 +517,7 @@ abstract class Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-			Log::insert($this->_aRequest['controller'],
+			Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId($this->_aRequest['controller']),
 									$this->_aSession['user']['id']);
@@ -545,7 +546,7 @@ abstract class Main {
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['controller'],
+      Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['user']['id']);
@@ -572,7 +573,7 @@ abstract class Main {
     if($this->_oModel->destroy($this->_iId) === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-      Log::insert($this->_aRequest['controller'],
+      Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_iId,
 									$this->_aSession['user']['id']);
@@ -594,7 +595,6 @@ abstract class Main {
 	 *
    */
   protected static function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
-    require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
@@ -615,7 +615,6 @@ abstract class Main {
    *
    */
   protected static function _unsubscribeFromNewsletter($sEmail) {
-    require_once PATH_STANDARD . '/config/Mailchimp.inc.php';
     require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);

@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 
-class Session extends Main {
+class Sessions extends Main {
 
   /**
    * Route to right action.
@@ -72,7 +72,7 @@ class Session extends Main {
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	private function _create() {
+	protected function _create() {
 		$this->_setError('email');
 		$this->_setError('password');
 
@@ -83,7 +83,7 @@ class Session extends Main {
 			return Helper::successMessage(I18n::get('success.session.create'), '/');
 
 		else
-			return Helper::errorMessage(I18n::get('error.session.create'), '/session/create');
+			return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller']);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
-			$this->__autoload('Mail');
+			$this->__autoload('Mails');
 			$sNewPasswordClean = & Helper::createRandomChar(10, true);
 			$aData = & $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
@@ -142,7 +142,7 @@ class Session extends Main {
 																									WEBSITE_MAIL_NOREPLY);
 
 				return $bStatus === true ?
-								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
+								Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller']) :
 								Helper::errorMessage(I18n::get('error.mail.create')) . $this->_show();
 			}
 			else
@@ -170,7 +170,7 @@ class Session extends Main {
 			return $this->_showCreateResendActionsTemplate();
 
 		else {
-			$this->__autoload('Mail');
+			$this->__autoload('Mails');
 			$aData = & $this->_oModel->resendVerification();
 
 			if (!empty($aData)) {
@@ -185,7 +185,7 @@ class Session extends Main {
 																									WEBSITE_MAIL_NOREPLY);
 
 				return $bStatus === true ?
-								Helper::successMessage(I18n::get('success.mail.create'), '/session/create') :
+								Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller']) :
 								$this->_show();
 			}
 			else

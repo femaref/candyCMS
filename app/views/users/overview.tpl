@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role == 4}
     <p class='center'>
-      <a href='/user/create'>
+      <a href='/{$_REQUEST.controller}/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -37,7 +37,7 @@
           </a>
         </td>
         <td>
-          <a href='/user/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
+          <a href='/{$_REQUEST.controller}/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
           <br />
           {if $u.role == 1}
             ({$lang.global.user.roles.1})
@@ -68,7 +68,7 @@
         </td>
         {if $_SESSION.user.role == 4}
           <td class='center'>
-            <a href='/user/{$u.id}/update'>
+            <a href='/{$_REQUEST.controller}/{$u.id}/update'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
@@ -76,7 +76,7 @@
                   width='16' height='16' />
             </a>
             &nbsp;
-            <a href='#' onclick="confirmDestroy('/user/{$u.id}/destroy')">
+            <a href='#' onclick="confirmDestroy('/{$_REQUEST.controller}/{$u.id}/destroy')">
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'

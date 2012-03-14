@@ -18,7 +18,7 @@ use CandyCMS\Helper\Upload as Upload;
 use MCAPI;
 use Smarty;
 
-class User extends Main {
+class Users extends Main {
 
   /**
    * Route to right action.
@@ -123,7 +123,7 @@ class User extends Main {
 	protected function _showFormTemplate($bUseRequest = false) {
 		# Avoid URL manipulation
 		if ($this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] < 4) {
-			Helper::redirectTo('/user/update');
+			Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
 			exit();
 		}
 
@@ -178,10 +178,10 @@ class User extends Main {
       return $this->_showFormTemplate();
 
     elseif ($oUpload->uploadAvatarFile(false) === true)
-      return Helper::successMessage(I18n::get('success.upload'), '/user/' . $this->_iId);
+      return Helper::successMessage(I18n::get('success.upload'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
 
     else
-      return Helper::errorMessage(I18n::get('error.file.upload'), '/user/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
   }
 
 	/**
@@ -218,15 +218,15 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
-      Log::insert($this->_aRequest['controller'],
+      Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
 									$this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
+      return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
     }
     else
-      return Helper::errorMessage(I18n::get('error.sql'), '/user/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
   }
 
 	/**
@@ -275,7 +275,7 @@ class User extends Main {
 			return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
-      $this->__autoload('Mail');
+      $this->__autoload('Mails');
 
       $iUserId = $this->_oModel->getLastInsertId('users');
 
@@ -290,7 +290,7 @@ class User extends Main {
         $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
       }
 
-			Log::insert($this->_aRequest['controller'],
+			Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$iUserId,
 									$this->_aSession['user']['id']);
@@ -301,7 +301,7 @@ class User extends Main {
 									WEBSITE_MAIL_NOREPLY);
 
       return $this->_aSession['user']['role'] == 4 ?
-              Helper::successMessage(I18n::get('success.create'), '/user') :
+              Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']) :
               Helper::successMessage(I18n::get('success.user.create'), '/');
 		}
 		else
@@ -349,7 +349,7 @@ class User extends Main {
 	 */
 	public function update() {
     if ($this->_iId > 0 && $this->_aSession['user']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
-      Helper::redirectTo('/user/update');
+      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
 
     if (empty($this->_iId))
       $this->_iId = $this->_aSession['user']['id'];
@@ -390,15 +390,15 @@ class User extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
-			Log::insert($this->_aRequest['controller'],
+			Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_iId,
 									$this->_aSession['user']['id']);
 
-			return Helper::successMessage(I18n::get('success.update'), '/user/' . $this->_iId);
+			return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
 		}
 		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/user/' . $this->_iId);
+			return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
 	}
 
 	/**
@@ -409,12 +409,12 @@ class User extends Main {
 	 *
 	 */
 	private function _destroyUserAvatars($iId) {
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/32/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/64/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/100/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/200/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/popup/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/user/original/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/32/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/64/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/100/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/200/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/popup/' . (int) $iId . '.jpg'));
+		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/original/' . (int) $iId . '.jpg'));
 	}
 
 	/**
@@ -422,10 +422,11 @@ class User extends Main {
 	 *
 	 * @access public
 	 * @return boolean status message
+   * @todo check if there is an addon for this model
 	 *
 	 */
 	public function destroy() {
-    $aUser = \CandyCMS\Model\User::getUserNamesAndEmail($this->_iId);
+    $aUser = \CandyCMS\Model\Users::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
     if (isset($this->_aRequest['destroy_user']) && $this->_aSession['user']['id'] == $this->_iId) {
@@ -442,10 +443,11 @@ class User extends Main {
           return Helper::successMessage(I18n::get('success.destroy'), '/');
         }
         else
-          return Helper::errorMessage(I18n::get('error.sql'), '/user/update');
+          return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/update');
 
       } else
-        return Helper::errorMessage(I18n::get('error.user.destroy.password'), '/user/update#user-destroy');
+        return Helper::errorMessage(I18n::get('error.user.destroy.password'), '/' .
+                $this->_aRequest['controller'] . '/update#user-destroy');
 
       # We are admin and can delete users
     } elseif ($this->_aSession['user']['role'] == 4) {
@@ -458,11 +460,11 @@ class User extends Main {
         # Destroy profile image
         $this->_destroyUserAvatars($this->_iId);
 
-        Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['user']['id']);
-        return Helper::successMessage(I18n::get('success.destroy'), '/user');
+        Logs::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['user']['id']);
+        return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
       }
       else
-        return Helper::errorMessage(I18n::get('error.sql'), '/user');
+        return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
     }
 
     # No admin and not the active user

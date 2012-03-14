@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class='center'>
-      <a href='/calendar/create'>
+      <a href='/{$_REQUEST.controller}/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -21,13 +21,13 @@
   </div>
   {if isset($_REQUEST.id)}
     <p class='center'>
-      <a href='/calendar/{$_REQUEST.id - 1}/archive' rel='prev'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id - 1}/archive' rel='prev'>
         &laquo; {$_REQUEST.id - 1}
       </a>
       &nbsp;&nbsp;
       <strong>{$_REQUEST.id}</strong>
       &nbsp;&nbsp;
-      <a href='/calendar/{$_REQUEST.id + 1}/archive' rel='next'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id + 1}/archive' rel='next'>
         {$_REQUEST.id + 1} &raquo;
       </a>
     </p>
@@ -70,7 +70,7 @@
               </td>
               <td class='center'>
                 {if $_SESSION.user.role >= 3}
-                  <a href='/calendar/{$d.id}/update'>
+                  <a href='/{$_REQUEST.controller}/{$d.id}/update'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-update js-tooltip'
                         alt='{$lang.global.update.update}'
@@ -78,7 +78,7 @@
                         width='16' height='16' />
                   </a>
                   &nbsp;
-                  <a href="#" onclick="confirmDestroy('/calendar/{$d.id}/destroy')">
+                  <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$d.id}/destroy')">
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-destroy js-tooltip'
                         alt='{$lang.global.destroy.destroy}'
@@ -86,7 +86,7 @@
                         width='16' height='16' />
                   </a>
                 {else}
-                  <a href='/calendar/{$d.id}'>
+                  <a href='/{$_REQUEST.controller}/{$d.id}'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-calendar_add'
                         alt='{$lang.calendar.title.create}'
@@ -102,7 +102,7 @@
   {/if}
   {if !isset($_REQUEST.action)}
     <p class='center'>
-      <a href="/calendar/{$smarty.now|date_format:'%Y'}/archive" class='btn'>
+      <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive' class='btn'>
         {$lang.global.archive}
       </a>
     </p>

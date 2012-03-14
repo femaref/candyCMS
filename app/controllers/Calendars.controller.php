@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
-class Calendar extends Main {
+class Calendars extends Main {
 
 	/**
 	 * Show calendar overview.
@@ -94,6 +94,7 @@ class Calendar extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo remove when start date is set
 	 *
 	 */
 	protected function _create() {
@@ -106,15 +107,15 @@ class Calendar extends Main {
 		elseif ($this->_oModel->create() === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-			Log::insert($this->_aRequest['controller'],
+			Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									$this->_oModel->getLastInsertId('calendars'),
 									$this->_aSession['user']['id']);
 
-			return Helper::successMessage(I18n::get('success.create'), '/calendar');
+			return Helper::successMessage(I18n::get('success.create'), '/calendars');
 		}
 		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
+			return Helper::errorMessage(I18n::get('error.sql'), '/calendars');
 	}
 
 	/**
@@ -124,6 +125,7 @@ class Calendar extends Main {
 	 *
 	 * @access protected
 	 * @return boolean status of model action
+   * @todo remove when start_date is set
 	 *
 	 */
 	protected function _update() {
@@ -136,38 +138,14 @@ class Calendar extends Main {
 		elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-			Log::insert($this->_aRequest['controller'],
+			Logs::insert($this->_aRequest['controller'],
 									$this->_aRequest['action'],
 									(int) $this->_aRequest['id'],
 									$this->_aSession['user']['id']);
 
-			return Helper::successMessage(I18n::get('success.update'), '/calendar');
+			return Helper::successMessage(I18n::get('success.update'), '/calendars');
 		}
 		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
-	}
-
-	/**
-	 * Delete a calendar entry.
-	 *
-	 * Activate model, delete data from database and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
-	protected function _destroy() {
-		if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-			Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-			return Helper::successMessage(I18n::get('success.destroy'), '/calendar');
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/calendar');
+			return Helper::errorMessage(I18n::get('error.sql'), '/calendars');
 	}
 }

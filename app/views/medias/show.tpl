@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class='center'>
-      <a href='/media/create'>
+      <a href='/{$_REQUEST.controller}/create'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -34,7 +34,7 @@
           <tr>
             <td class='center'>
               {if ($f.type == 'jpg' || $f.type == 'jpeg' || $f.type == 'gif' || $f.type == 'png')}
-                <img src='{$_PATH.upload}/temp/media/{$f.name}' class='thumbnail'
+                <img src='{$_PATH.upload}/temp/{$_REQUEST.controller}/{$f.name}' class='thumbnail'
                     width='32' height='32' alt='{$f.type}' />
               {else}
                 <img src='{$_PATH.images}/files/{$f.type}.png' class='thumbnail'
@@ -43,18 +43,18 @@
             </td>
             <td>
               {if ($f.type == 'png' || $f.type == 'gif' || $f.type == 'jpg' || $f.type == 'jpeg')}
-                <a href='{$_PATH.upload}/media/{$f.name}'
+                <a href='{$_PATH.upload}/{$_REQUEST.controller}/{$f.name}'
                   class='js-fancybox'
                   rel='image'
                   title='{$f.name} - ({$f.dim[0]} x {$f.dim[1]} px)'>
                   {$f.name}
                 </a> ({$f.dim[0]} x {$f.dim[1]} px)
               {else}
-                <a href='{$_PATH.upload}/media/{$f.name}'>
+                <a href='{$_PATH.upload}/{$_REQUEST.controller}/{$f.name}'>
                   {$f.name}
                 </a>
               {/if}
-              <input type='text' class='copybox' value='{$_PATH.upload}/media/{$f.name}'
+              <input type='text' class='copybox' value='{$_PATH.upload}/{$_REQUEST.controller}/{$f.name}'
                     onclick='this.focus();this.select();' />
             </td>
             <td>
@@ -64,7 +64,7 @@
               {$f.cdate}
             </td>
             <td>
-              <a href="#" onclick="confirmDestroy('/media/{$f.name}/destroy')">
+              <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.name}/destroy')">
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-destroy js-tooltip'
                     alt='{$lang.global.destroy.destroy}'

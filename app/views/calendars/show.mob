@@ -1,20 +1,20 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class="create">
-      <a href='/calendar/create' data-role="button" data-theme="b" data-icon="plus">
+      <a href='/{$_REQUEST.controller}/create' data-role="button" data-theme="b" data-icon="plus">
         {$lang.global.create.entry}
       </a>
     </p>
   {/if}
   {if isset($_REQUEST.id)}
     <p class='center'>
-      <a href='/calendar/{$_REQUEST.id - 1}/archive' rel='prev'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id - 1}/archive' rel='prev'>
         &laquo; {$_REQUEST.id - 1}
       </a>
       &nbsp;&nbsp;
       <strong>{$_REQUEST.id}</strong>
       &nbsp;&nbsp;
-      <a href='/calendar/{$_REQUEST.id + 1}/archive' rel='next'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id + 1}/archive' rel='next'>
         {$_REQUEST.id + 1} &raquo;
       </a>
     </p>
@@ -53,7 +53,7 @@
   {/if}
   {if !isset($_REQUEST.action)}
     <p class="center">
-      <a href="/calendar/{$smarty.now|date_format:'%Y'}/archive">{$lang.global.archive}</a>
+      <a href="/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive">{$lang.global.archive}</a>
     </p>
   {/if}
 {/strip}

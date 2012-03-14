@@ -8,7 +8,7 @@
       {/if}
     </h1>
   </div>
-  <form method='post' action='/blog/{$_REQUEST.action}' class='form-horizontal'>
+  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.action}' class='form-horizontal'>
     <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title' class='control-label'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
@@ -120,16 +120,16 @@
       {if isset($author_id)}
         <input type='hidden' value='{$author_id}' name='author_id' />
       {/if}
-      <input type='hidden' value='formdata' name='{$_REQUEST.action}_blog' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
       {if $_REQUEST.action == 'create'}
-      <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
+        <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
       {elseif $_REQUEST.action == 'update'}
-      <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
-        <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}'
-               onclick="confirmDestroy('/blog/{$_REQUEST.id}/destroy')" />
-        <input type='reset' class='btn' value='{$lang.global.reset}' />
-        <input type='hidden' value='{$_REQUEST.id}' name='id' />
-        <input type='hidden' value='{$date}' name='date' />
+        <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
+          <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}'
+                onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
+          <input type='reset' class='btn' value='{$lang.global.reset}' />
+          <input type='hidden' value='{$_REQUEST.id}' name='id' />
+          <input type='hidden' value='{$date}' name='date' />
       {/if}
     </div>
   </form>

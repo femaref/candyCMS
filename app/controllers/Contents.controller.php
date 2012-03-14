@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use Smarty;
 
-class Content extends Main {
+class Contents extends Main {
 
   /**
    * Show content entry or content overview (depends on a given ID or not).
@@ -33,7 +33,7 @@ class Content extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
-      $this->oSmarty->assign('content', $this->_oModel->getData($this->_iId));
+      $this->oSmarty->assign('contents', $this->_oModel->getData($this->_iId));
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
@@ -55,8 +55,8 @@ class Content extends Main {
 				}
 				else {
           header('Status: 404 Not Found');
-          header("HTTP/1.0 404 Not Found");
-					Helper::redirectTo('/error/404');
+          header('HTTP/1.0 404 Not Found');
+					Helper::redirectTo('/errors/404');
         }
 			}
 
@@ -95,86 +95,5 @@ class Content extends Main {
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-  }
-
-  /**
-   * Create a content entry.
-   *
-   * Check if required data is given or throw an error instead.
-   * If data is given, activate the model, insert them into the database and redirect afterwards.
-   *
-   * @access protected
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   *
-   */
-  protected function _create() {
-    $this->_setError('title');
-    $this->_setError('content');
-
-    if (isset($this->_aError))
-      return $this->_showFormTemplate();
-
-    elseif ($this->_oModel->create() === true) {
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									$this->_oModel->getLastInsertId('contents'),
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.create'), '/content');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), '/content');
-  }
-
-  /**
-   * Activate model, insert data into the database and redirect afterwards.
-   *
-   * @access protected
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   *
-   */
-  protected function _update() {
-    $this->_setError('title');
-    $this->_setError('content');
-
-    $sRedirect = '/content/' . (int) $this->_aRequest['id'];
-
-    if (isset($this->_aError))
-      return $this->_showFormTemplate();
-
-    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.update'), $sRedirect);
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
-  }
-
-  /**
-   * Activate model, delete data from database and redirect afterwards.
-   *
-   * @access protected
-   * @return boolean status of model action
-   *
-   */
-  protected function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-							$this->_aRequest['action'],
-							(int) $this->_aRequest['id'],
-							$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.destroy'), '/content');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql'), '/content');
   }
 }

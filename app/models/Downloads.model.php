@@ -17,7 +17,7 @@ use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Helper\Upload as Upload;
 use PDO;
 
-class Download extends Main {
+class Downloads extends Main {
 
   /**
    * Get download data.
@@ -59,8 +59,9 @@ class Download extends Main {
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, 'download');
-        $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/download/' . $aRow['file']);
+        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow);
+        $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/' .
+                $this->_aRequest['controller'] . '/' . $aRow['file']);
       }
     }
     else {
@@ -255,8 +256,8 @@ class Download extends Main {
     $aFile = $this->getData($iId);
     $sFile = $aFile['file'];
 
-    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile)))
-      unlink(Helper::removeSlash(PATH_UPLOAD . '/download/' . $sFile));
+    if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)))
+      unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
 
     return $bReturn;
   }

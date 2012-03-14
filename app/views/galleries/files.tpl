@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class='center'>
-      <a href='/gallery/{$_REQUEST.id}/createfile'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id}/createfile'>
         <img src='{$_PATH.images}/candy.global/spacer.png'
             class='icon-create'
             alt='{$lang.global.create.entry}'
@@ -22,7 +22,7 @@
           ({$file_no} {$lang.global.files})
         </small>
         {if $_SESSION.user.role >= 3}
-          <a href='/gallery/{$_REQUEST.id}/update'>
+          <a href='/{$_REQUEST.controller}/{$_REQUEST.id}/update'>
             <img src='{$_PATH.images}/candy.global/spacer.png'
                 class='icon-update js-tooltip'
                 alt='{$lang.global.update.update}'
@@ -49,14 +49,14 @@
             </a>
             {if $_SESSION.user.role >= 3}
               <p class='center'>
-                <a href='/gallery/{$f.id}/updatefile'>
+                <a href='/{$_REQUEST.controller}/{$f.id}/updatefile'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
                       title='{$lang.global.update.update}'
                       width='16' height='16' />
                 </a>
-                <a href='#' onclick="confirmDestroy('/gallery/{$f.id}/destroyfile?album_id={$_REQUEST.id}')">
+                <a href='#' onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.id}/destroyfile?album_id={$_REQUEST.id}')">
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
@@ -69,7 +69,7 @@
         {/foreach}
       </ul>
     <p class='center'>
-      <a href='/rss/gallery/{$_REQUEST.id}' class='js-tooltip' title='{$lang.global.rss}'>
+      <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}' class='js-tooltip' title='{$lang.global.rss}'>
         <img src='{$_PATH.images}/candy.global/spacer.png' class='icon-rss' alt='{$lang.global.rss}' width='16' height='16' />
       </a>
     </p>

@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
 use PDO;
 
-class User extends Main {
+class Users extends Main {
 
   /**
    * Get user name, surname and email from user ID.
@@ -445,6 +445,8 @@ class User extends Main {
    * @access public
    * @param string $sVerificationCode Code to remove.
    * @return boolean status of query
+   * @todo prove if session has a addon
+   *
    */
   public function verifyEmail($sVerificationCode) {
 		try {
@@ -482,7 +484,7 @@ class User extends Main {
 
 				# Prepare for first login
 				$this->_aData['verification_code'] = '';
-				Session::create($this->_aData);
+				Sessions::create($this->_aData);
 
 				return $oQuery->execute();
 			}

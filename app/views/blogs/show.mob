@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
     <p class="create">
-      <a href='/blog/create' data-role="button" data-theme="b" data-icon="plus">
+      <a href='/{$_REQUEST.controller}/create' data-role="button" data-theme="b" data-icon="plus">
         {$lang.global.create.entry}
       </a>
     </p>
@@ -9,7 +9,7 @@
   {* blog overview *}
   {if !$_REQUEST.id}
     <ul data-role="listview">
-      {foreach $blog as $b}
+      {foreach $blogs as $b}
         <li role="heading" data-role="list-divider">
           {$b.datetime}
           {if $b.date_modified != ''}
@@ -33,7 +33,7 @@
     </ul>
   {* single blog entry *}
   {else}
-    {foreach $blog as $b}
+    {foreach $blogs as $b}
       {if !$b.id}
         <div class='error' title='{$lang.error.missing.entry}'>
           <h4>{$lang.global.missing.entry}</h4>
@@ -51,7 +51,7 @@
             <p>
               {$lang.global.tags.tags}:
               {foreach from=$b.tags item=t name=tags}
-                <a title='{$lang.global.tags.info}: {$t}' href='/blog/{$t}'>{$t}</a>
+                <a title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>{$t}</a>
               {/foreach}
             </p>
           {/if}

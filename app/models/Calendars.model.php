@@ -17,7 +17,7 @@ use CandyCMS\Helper\I18n as I18n;
 use DateTime;
 use PDO;
 
-class Calendar extends Main {
+class Calendars extends Main {
 
 	/**
 	 * Get calendar data.
@@ -99,7 +99,7 @@ class Calendar extends Main {
 				$this->_aData[$sDate]['month']	= $sMonth;
 				$this->_aData[$sDate]['year']		= $sYear;
 
-				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, 'calendar');
+				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow);
 				$this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
 				if ($aRow['end_date'] > 0)

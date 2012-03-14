@@ -166,7 +166,7 @@ class Helper {
 	 *
 	 */
   public static function getAvatar($iSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
-    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/user/' . $iSize . '/' . $iUserId);
+    $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/users/' . $iSize . '/' . $iUserId);
 
 		if ($bUseGravatar == false && file_exists($sFilePath . '.jpg'))
 			return '/' . $sFilePath . '.jpg';
@@ -463,7 +463,7 @@ class Helper {
     $sStr = str_replace('ß', 'ss', $sStr);
 
 		# Remove non alpha chars
-		$sStr = preg_replace("/[^a-zA-Z0-9\s]/", '', $sStr);
+		$sStr = preg_replace("/[^a-zA-Z0-9\.\s]/", '', $sStr);
 
 		# Remove spaces
     $sStr = str_replace(' ', '_', $sStr);

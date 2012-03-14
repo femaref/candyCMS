@@ -1,11 +1,11 @@
 {strip}
-  {foreach $content as $c}
+  {foreach $contents as $c}
     <article class='contents'>
       <header class='page-header'>
         <h1>
           {$c.title}
           {if $_SESSION.user.role >= 3}
-            <a href='/content/{$c.id}/update'>
+            <a href='/{$_REQUEST.controller}/{$c.id}/update'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
@@ -23,7 +23,7 @@
           &nbsp;
           {$lang.global.by}
           &nbsp;
-          <a href='/user/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
+          <a href='/users/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
         </p>
       </header>
       {if $c.teaser !== ''}

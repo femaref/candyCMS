@@ -28,7 +28,7 @@
   <div class='tab-content'>
     {* Account data *}
     <div class="tab-pane{if $_REQUEST['action'] == 'update'} active{/if}" id='user-personal'>
-      <form method='post' action='/user/{$uid}/update' class='form-horizontal'>
+      <form method='post' action='/{$_REQUEST.controller}/{$uid}/update' class='form-horizontal'>
         <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
           <label for='input-name' class='control-label'>
             {$lang.global.name} <span title='{$lang.global.required}'>*</span>
@@ -129,7 +129,7 @@
   {* Password *}
   {if $_SESSION.user.id == $uid}
     <div class="tab-pane{if $_REQUEST['action'] == 'password'} active{/if}" id='user-password'>
-      <form method='post' action='/user/{$uid}/password' class='form-horizontal'>
+      <form method='post' action='/{$_REQUEST.controller}/{$uid}/password' class='form-horizontal'>
         <div class='control-group{if isset($error.password_old)} alert alert-error{/if}'>
           <label for='input-password_old' class='control-label'>
             {$lang.user.label.password.old} <span title='{$lang.global.required}'>*</span>
@@ -169,7 +169,7 @@
 
   {* Avatar *}
     <div class="tab-pane{if $_REQUEST['action'] == 'avatar'} active{/if}" id='user-image'>
-      <form enctype='multipart/form-data' method='post' action='/user/{$uid}/avatar'
+      <form enctype='multipart/form-data' method='post' action='/{$_REQUEST.controller}/{$uid}/avatar'
             class='form-horizontal'>
         <div class='control-group{if isset($error.image)} alert alert-error{/if}'>
           <label for='input-image' class='control-label'>
@@ -213,7 +213,7 @@
   {* Destroy account *}
   {if $_SESSION.user.role < 4}
     <div class="tab-pane{if $_REQUEST['action'] == 'destroy'} active{/if}" id='user-destroy'>
-      <form method='post' action='/user/{$uid}/destroy' class='form-horizontal'>
+      <form method='post' action='/{$_REQUEST.controller}/{$uid}/destroy' class='form-horizontal'>
         <p class='alert alert-danger'>
           {$lang.user.info.destroy_account}
         </p>

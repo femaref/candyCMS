@@ -2,7 +2,7 @@
   <div class='page-header'>
     <h1>{$lang.global.download}</h1>
   </div>
-  <form action='/download/{$_REQUEST.action}' method='post'
+  <form action='/{$_REQUEST.controller}/{$_REQUEST.action}' method='post'
         enctype='multipart/form-data' class='form-horizontal'>
     {if $_REQUEST.action == 'create'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
@@ -63,13 +63,13 @@
       </div>
     {/if}
     <div class="form-actions">
-      <input type='hidden' value='formdata' name='{$_REQUEST.action}_download' />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
       <input type='submit' class='btn btn-primary'
             value='{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}' />
       {if $_REQUEST.action == 'update'}
         <input type='button' class='btn btn-danger'
               value='{$lang.global.destroy.destroy}'
-              onclick="confirmDestroy('/download/{$_REQUEST.id}/destroy')" />
+              onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
         <input type='hidden' value='{$_REQUEST.id}' name='id' />
         <input type='reset' class='btn' value='{$lang.global.reset}' />
       {/if}

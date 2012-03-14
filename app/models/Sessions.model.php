@@ -14,12 +14,9 @@ namespace CandyCMS\Model;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Pagination as Pagination;
-use CandyCMS\Model\User as User;
 use PDO;
 
-require_once PATH_STANDARD . '/app/models/User.model.php';
-
-class Session extends Main {
+class Sessions extends Main {
 
   /**
    * Fetch all user data of active session.
@@ -75,7 +72,8 @@ class Session extends Main {
    */
   public function create($aUser = '') {
 		if (empty($aUser)) {
-			$oModel = new User($this->_aRequest, $this->_aSession);
+      $sModel = $this->__autoload('Users', true);
+			$oModel = & new $sModel($this->_aRequest, $this->_aSession);
 			$aUser	= $oModel->getLoginData();
 		}
 
@@ -123,11 +121,13 @@ class Session extends Main {
 	 * @access public
 	 * @param string $sPassword new password if we want to resend it
 	 * @return boolean|array status of query or user array
+   * @todo look for addons at model
 	 *
 	 */
 	public function resendPassword($sPassword = '') {
-		$aData = User::getVerificationData($this->_aRequest['email']);
-		return empty($aData['name']) ? false : User::setPassword($this->_aRequest['email'], $sPassword);
+    $this->__autoload('Users', true);
+		$aData = Users::getVerificationData($this->_aRequest['email']);
+		return empty($aData['name']) ? false : Users::setPassword($this->_aRequest['email'], $sPassword);
 	}
 
 	/**
@@ -135,10 +135,12 @@ class Session extends Main {
 	 *
 	 * @access public
 	 * @return boolean|array status of query or user array
+   * @todo look at addons for model
 	 *
 	 */
 	public function resendVerification() {
-		$aData = User::getVerificationData($this->_aRequest['email']);
+    $this->__autoload('Users', true);
+		$aData = Users::getVerificationData($this->_aRequest['email']);
 		return empty($aData['verification_code']) ? false : $aData;
 	}
 

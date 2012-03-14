@@ -91,17 +91,15 @@ class Upload {
 	 *
 	 * @access public
 	 * @param string $sFolder name of upload folder
-	 * @see app/controller/Media.controller.php
+	 * @see app/controller/Medias.controller.php
 	 * @return boolean status of upload.
 	 *
 	 */
-  public function uploadFile($sFolder = 'media') {
+  public function uploadFile($sFolder = 'medias') {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
-			$bReturn = false;
-
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
-        $this->_sFileName       = & Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
-        $this->_sFileExtension  = & strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
+        $this->_sFileName       = Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
+        $this->_sFileExtension  = strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
 
         if (!empty($this->_sRename) && $iI == 0)
           $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '.' . $this->_sFileExtension;
@@ -109,11 +107,10 @@ class Upload {
         elseif (!empty($this->_sRename) && $iI > 0)
           $this->_sFileName = Helper::replaceNonAlphachars($this->_sRename) . '_' . $iI . '.' . $this->_sFileExtension;
 
-        $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);
-        $bReturn = & move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
-      }
 
-      return $bReturn;
+        $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);
+        return move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
+      }
     }
   }
 
@@ -122,7 +119,7 @@ class Upload {
 	 *
 	 * @access public
 	 * @param string $sResize cut or resize the image?!
-	 * @see app/controller/Gallery.controller.php
+	 * @see app/controller/Galleries.controller.php
 	 * @return boolean status of upload
 	 *
 	 */
@@ -157,7 +154,7 @@ class Upload {
 	 *
 	 * @access public
 	 * @param boolean $bReturnPath return path information?!
-	 * @see app/controller/User.controller.php
+	 * @see app/controller/Users.controller.php
 	 * @return string|boolean user avatar path or boolean status if upload.
 	 *
 	 */

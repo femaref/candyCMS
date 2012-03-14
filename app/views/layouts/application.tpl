@@ -30,7 +30,7 @@
       {/if}
 
       {* Basic stuff *}
-      <link href='/rss/blog' rel='alternate' type='application/rss+xml' title='RSS'/>
+      <link href='/rss' rel='alternate' type='application/rss+xml' title='RSS'/>
       <link href='{$_PATH.public}/favicon.ico' rel='shortcut icon' type='image/x-icon'/>
 
       {* Include jQuery and its components *}
@@ -61,30 +61,30 @@
               {/if}
             </a>
             <ul class="nav">
-              <li{if $_REQUEST.controller == 'blog'} class='active'{/if}>
-                <a href='/blog'>{$lang.global.blog}</a>
+              <li{if $_REQUEST.controller == 'blogs'} class='active'{/if}>
+                <a href='/blogs'>{$lang.global.blog}</a>
               </li>
-              <li{if $_REQUEST.controller == 'gallery'} class='active'{/if}>
-                <a href='/gallery'>{$lang.global.gallery}</a>
+              <li{if $_REQUEST.controller == 'galleries'} class='active'{/if}>
+                <a href='/galleries'>{$lang.global.gallery}</a>
               </li>
-              <li{if $_REQUEST.controller == 'calendar'} class='active'{/if}>
-                <a href='/calendar'>{$lang.global.calendar}</a>
+              <li{if $_REQUEST.controller == 'calendars'} class='active'{/if}>
+                <a href='/calendars'>{$lang.global.calendar}</a>
               </li>
-              <li{if $_REQUEST.controller == 'download'} class='active'{/if}>
-                <a href='/download'>{$lang.global.download}</a>
+              <li{if $_REQUEST.controller == 'downloads'} class='active'{/if}>
+                <a href='/downloads'>{$lang.global.download}</a>
               </li>
-              <li{if $_REQUEST.controller == 'search'} class='active'{/if}>
-                <a href='/search'>{$lang.global.search}</a>
+              <li{if $_REQUEST.controller == 'searches'} class='active'{/if}>
+                <a href='/searches'>{$lang.global.search}</a>
               </li>
             </ul>
             <ul class="nav pull-right">
               {if $_SESSION.user.id == 0}
-                <li{if $_REQUEST.controller == 'session'} class='active'{/if}>
-                  <a href='/session'>{$lang.global.login}</a>
+                <li{if $_REQUEST.controller == 'sessions'} class='active'{/if}>
+                  <a href='/sessions'>{$lang.global.login}</a>
                 </li>
                 <li class="divider-vertical"/>
-                <li{if $_REQUEST.controller == 'user' && isset($_REQUEST.action) && $_REQUEST.action == 'create'} class='active'{/if}>
-                  <a href='/user/create'>{$lang.global.register}</a>
+                <li{if $_REQUEST.controller == 'users' && isset($_REQUEST.action) && $_REQUEST.action == 'create'} class='active'{/if}>
+                  <a href='/users/create'>{$lang.global.register}</a>
                 </li>
               {else}
                 <li class="dropdown">
@@ -94,31 +94,31 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li>
-                      <a href='/user/update'>{$lang.global.settings}</a>
+                      <a href='/users/update'>{$lang.global.settings}</a>
                     </li>
                     <li>
-                      <a href='/session/destroy'>{$lang.global.logout}</a>
+                      <a href='/sessions/destroy'>{$lang.global.logout}</a>
                     </li>
                     {if $_SESSION.user.role >= 3}
                       <li class="divider"></li>
                       <li>
-                        <a href='/media' title='{$lang.global.manager.media}'>
+                        <a href='/medias' title='{$lang.global.manager.media}'>
                           {$lang.global.manager.media}
                         </a>
                       </li>
                       <li>
-                        <a href='/content' title='{$lang.global.manager.content}'>
+                        <a href='/contents' title='{$lang.global.manager.content}'>
                           {$lang.global.manager.content}
                         </a>
                       </li>
                       {if $_SESSION.user.role == 4}
                         <li>
-                          <a href='/log' title='{$lang.global.logs}'>
+                          <a href='/logs' title='{$lang.global.logs}'>
                             {$lang.global.logs}
                           </a>
                         </li>
                         <li>
-                          <a href='/user' title='{$lang.global.manager.user}'>
+                          <a href='/users' title='{$lang.global.manager.user}'>
                             {$lang.global.manager.user}
                           </a>
                         </li>
@@ -178,7 +178,7 @@
             <ul>
               {if $_SESSION.user.role < 1}
                 <li>
-                  <a href='/newsletter' title='{$lang.newsletter.title.subscribe}'>
+                  <a href='/newsletters' title='{$lang.newsletter.title.subscribe}'>
                     {$lang.newsletter.title.subscribe}
                   </a>
                 </li>

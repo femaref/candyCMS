@@ -14,10 +14,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Model\Search as Model;
 use Smarty;
 
-class Search extends Main {
+class Searches extends Main {
 
 	/**
 	 * Search headline.
@@ -42,8 +41,8 @@ class Search extends Main {
 	 *
 	 */
   public function __init() {
-    $oModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
+    $sModel = $this->__autoload($this->_aRequest['controller'], true);
+    $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
     $this->_sTemplateFolder = 'searches';
   }

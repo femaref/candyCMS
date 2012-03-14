@@ -17,7 +17,7 @@ use CandyCMS\Helper\Pagination as Pagination;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
 use PDO;
 
-class Comment extends Main {
+class Comments extends Main {
 
   /**
    * Get comment data.
@@ -69,7 +69,7 @@ class Comment extends Main {
 
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
-      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
+      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blogs');
     }
 
     # We crawl the facebook avatars

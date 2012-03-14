@@ -59,7 +59,7 @@
     <div class='form-actions'>
       <input type='submit' value='{$lang.comment.title.create}' data-theme='b' class='btn btn-primary' />
       <input type='reset' value='{$lang.global.reset}' class='btn' />
-      <input type='hidden' value='formdata' name='create_comment' />
+      <input type='hidden' value='formdata' name='create_comments' />
       <input type='hidden' value='{$_REQUEST.id}' name='parent_id' />
     </div>
   </form>

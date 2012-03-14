@@ -172,12 +172,14 @@ abstract class Main {
    *
    * @access protected
    * @param array $aRow array with data to format
-   * @param string $sSection name of the controller we are working in
+   * @param string $sController name of the controller we are working in
 	 * @param boolean $bNl2br format string to br
    * @return array $aData rebuild data
    *
    */
-  protected function _formatForOutput($aRow, $sSection, $bNl2br = false) {
+  protected function _formatForOutput($aRow, $sController = '', $bNl2br = false) {
+    $sController = !$sController ? $this->_aRequest['controller'] : $sController;
+
     $aData = '';
 
     foreach ($aRow as $sColumn => $mData)
@@ -260,7 +262,7 @@ abstract class Main {
     $aData['encoded_title']			= isset($aRow['title']) ? urlencode($aRow['title']) : '';
 
     # URL to entry
-    $aData['url_clean']   = WEBSITE_URL . '/' . $sSection . '/' . $aRow['id'];
+    $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aRow['id'];
     $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_title'];
     $aData['encoded_url'] = urlencode($aData['url']);
 

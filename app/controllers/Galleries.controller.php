@@ -17,7 +17,7 @@ use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
 use Smarty;
 
-class Gallery extends Main {
+class Galleries extends Main {
 
   /**
    * Include the gallery model.
@@ -119,7 +119,7 @@ class Gallery extends Main {
       $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
 
       # Absolute URL for image information
-      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $this->_aRequest['album_id'] .
+      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['album_id'] .
               '/popup/' . $aData['file']);
 
       if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
@@ -138,7 +138,7 @@ class Gallery extends Main {
       else {
         header('Status: 404 Not Found');
         header('HTTP/1.0 404 Not Found');
-        Helper::redirectTo('/error/404');
+        Helper::redirectTo('/errors/404');
       }
     }
 
@@ -152,7 +152,7 @@ class Gallery extends Main {
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$this->oSmarty->assign('albums', $this->_oModel->getData());
-				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/gallery'));
+				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
 			}
 
       $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
@@ -212,7 +212,7 @@ class Gallery extends Main {
 			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
-      $sPath  = Helper::removeSlash(PATH_UPLOAD . '/gallery/' . $iId);
+      $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
 
       $sPathThumbS = $sPath . '/32';
       $sPathThumbL = $sPath . '/' . THUMB_DEFAULT_X;
@@ -234,7 +234,7 @@ class Gallery extends Main {
       if (!is_dir($sPathThumbO))
         mkdir($sPathThumbO, 0755);
 
-      Log::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['user']['id']);
+      Logs::insert($this->_aRequest['controller'], $this->_aRequest['action'], $iId, $this->_aSession['user']['id']);
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller'] . '/' . $iId);
     }
 
@@ -297,15 +297,17 @@ class Gallery extends Main {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
           # Log uploaded image. Request ID = album id
-          Log::insert($this->_aRequest['controller'],
+          Logs::insert($this->_aRequest['controller'],
 											'createfile',
 											(int) $this->_aRequest['id'],
 											$this->_aSession['user']['id']);
 
-          return Helper::successMessage(I18n::get('success.file.upload'), '/gallery/' . $this->_iId);
+          return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
+                  '/' . $this->_iId);
         }
         else
-          return Helper::errorMessage(I18n::get('error.file.upload'), '/gallery/' . $this->_iId . '/createfile');
+          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] . '/' .
+                  $this->_iId . '/createfile');
       }
       else
         return $this->_showFormFileTemplate();
@@ -362,7 +364,7 @@ class Gallery extends Main {
         if ($this->_oModel->updateFile($this->_iId) === true) {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-          Log::insert($this->_aRequest['controller'],
+          Logs::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
 											(int) $this->_iId,
 											$this->_aSession['user']['id']);
@@ -386,22 +388,25 @@ class Gallery extends Main {
    */
   public function destroyFile() {
     if ($this->_aSession['user']['role'] < 3)
-      return Helper::errorMessage(I18n::get('error.missing.permission'), '/gallery/' . (int) $this->_aRequest['album_id']);
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/' .
+              $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['album_id']);
 
     else {
       if($this->_oModel->destroyFile($this->_iId) === true) {
 				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-        Log::insert($this->_aRequest['controller'],
+        Logs::insert($this->_aRequest['controller'],
 										$this->_aRequest['action'],
 										(int) $this->_iId,
 										$this->_aSession['user']['id']);
 
 				unset($this->_iId);
-        return Helper::successMessage(I18n::get('success.destroy'), '/gallery/' . (int) $this->_aRequest['album_id']);
+        return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller'] . '/' .
+                (int) $this->_aRequest['album_id']);
       }
       else
-        return Helper::errorMessage(I18n::get('error.sql'), '/gallery/' . (int) $this->_aRequest['album_id']);
+        return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
+                (int) $this->_aRequest['album_id']);
     }
   }
 }

@@ -1,5 +1,5 @@
 {strip}
-  {foreach $content as $c}
+  {foreach $contents as $c}
     <header>
       <h1>{$c.title}</h1>
     </header>
