@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Content.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Contents.controller.php';
 
-use \CandyCMS\Controller\Content as Content;
+use \CandyCMS\Controller\Contents as Contents;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfContentController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'content';
-		$this->oObject = new Content($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'contents';
+		$this->oObject = new Contents($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

@@ -32,21 +32,18 @@ class Contents extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'overview');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      $this->oSmarty->assign('contents', $this->_oModel->getData($this->_iId));
+      $this->oSmarty->assign('content', $this->_oModel->getData($this->_iId));
 
+      $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
       $sTemplateDir		= Helper::getTemplateDir($this->_sTemplateFolder, 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$aData = & $this->_oModel->getData($this->_iId);
-				$this->oSmarty->assign('content', $aData);
+				$this->oSmarty->assign('contents', $aData);
 
 				if (!empty($aData)) {
 					$this->setDescription($aData[$this->_iId]['teaser']);
@@ -59,6 +56,9 @@ class Contents extends Main {
 					Helper::redirectTo('/errors/404');
         }
 			}
+
+			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setTemplateDir($sTemplateDir);
 
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}

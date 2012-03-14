@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Comment.model.php';
+require_once PATH_STANDARD . '/app/models/Comments.model.php';
 
-use \CandyCMS\Model\Comment as Comment;
+use \CandyCMS\Model\Comments as Comments;
 
 class UnitTestOfCommentModel extends CandyUnitTest {
 
@@ -25,13 +25,13 @@ class UnitTestOfCommentModel extends CandyUnitTest {
         'content'		=> 'Content',
         'parent_id' => 0);
 
-    $this->oObject = new Comment($this->aRequest, $this->aSession);
+    $this->oObject = new Comments($this->aRequest, $this->aSession);
   }
 
   function testCreate() {
     $this->assertTrue($this->oObject->create());
 
-    $this->iLastInsertId = (int) Comment::getLastInsertId();
+    $this->iLastInsertId = (int) Comments::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 

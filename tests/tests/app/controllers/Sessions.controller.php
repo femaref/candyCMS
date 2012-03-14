@@ -11,9 +11,9 @@
 
 require_once('lib/simpletest/web_tester.php');
 require_once('lib/simpletest/reporter.php');
-require_once('app/controllers/Session.controller.php');
+require_once('app/controllers/Sessions.controller.php');
 
-use CandyCMS\Controller\Session as Session;
+use CandyCMS\Controller\Sessions as Sessions;
 use CandyCMS\Helper\I18n as I18n;
 
 class TestOfSessionController extends WebTestCase {
@@ -35,7 +35,7 @@ class TestOfSessionController extends WebTestCase {
       'full_name' => ''
     );
 
-    $this->oSession = new Session($aRequest, $aSession, $aFile, $aCookie);
+    $this->oSessions = new Sessions($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testShow() {

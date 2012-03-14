@@ -13,7 +13,7 @@
 "blogs/(:num)": controller=blogs&id=$1&page=1
 "blogs/(:num)/(:any)": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
-"comments/(:num)/destroy/(:num)": controller=comment&action=destroy&id=$1&parent_id=$2
+"comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2
 "galleries": controller=galleries&page=1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2

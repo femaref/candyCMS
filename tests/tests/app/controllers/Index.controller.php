@@ -11,7 +11,7 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Index.controller.php';
-require_once PATH_STANDARD . '/app/models/Session.model.php';
+require_once PATH_STANDARD . '/app/models/Sessions.model.php';
 
 use \CandyCMS\Controller\Index as Index;
 use \CandyCMS\Helper\I18n as I18n;
@@ -35,8 +35,11 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testGetPlugins() {
+    $aPlugins = $aPlugins = explode(',', ALLOW_PLUGINS);
+
 		$this->assertTrue($this->oObject->getPlugins(ALLOW_PLUGINS));
-	}
+    $this->assertEqual($aPlugins, $this->oObject->getPlugins(ALLOW_PLUGINS));
+  }
 
 	function testGetRoutes() {
 		$this->assertIsA($this->oObject->getRoutes(), 'array');

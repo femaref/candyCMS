@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Comment.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Comments.controller.php';
 
-use \CandyCMS\Controller\Comment as Comment;
+use \CandyCMS\Controller\Comments as Comments;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfCommentController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'blog';
-		$this->oObject = new Comment($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'blogs';
+		$this->oObject = new Comments($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
@@ -59,7 +59,7 @@ class WebTestOfCommentController extends CandyWebTest {
 	}
 
 	function testDestroy() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/comment/1/destroy/1'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/comments/1/destroy/1'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}

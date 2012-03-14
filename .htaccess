@@ -5,9 +5,9 @@
 #AddHandler php53-cgi .php
 
 # Custom error pages
-ErrorDocument 404 /error/404
-ErrorDocument 422 /error/422
-ErrorDocument 500 /error/500
+ErrorDocument 404 /errors/404
+ErrorDocument 422 /errors/422
+ErrorDocument 500 /errors/500
 
 # Hide files for non script access
 <FilesMatch "\.(sql|gz|tpl|mob|ini|yml|php|log)$">
@@ -22,8 +22,7 @@ ErrorDocument 500 /error/500
 Options +FollowSymLinks
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -s [OR]
-RewriteCond %{REQUEST_FILENAME} -l [OR]
-RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME} -l
 RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 
