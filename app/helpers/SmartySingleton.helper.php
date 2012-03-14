@@ -141,6 +141,16 @@ class SmartySingleton extends Smarty {
         'template'  => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
         'upload'    => PATH_UPLOAD);
   }
+
+  /**
+   * delete this variable from memory...
+   *
+   */
+  public function __destruct() {
+    parent::__destruct();
+
+    self::$oInstance = null;
+  }
 }
 
 ?>
