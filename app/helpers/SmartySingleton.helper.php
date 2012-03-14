@@ -100,7 +100,7 @@ class SmartySingleton extends Smarty {
    */
   public function getPaths() {
     # Use an external CDN within a custom template
-    $aPaths = array('css' => 'css', 'images' => 'images', 'js' => 'js');
+    $aPaths = array('css' => 'css', 'less' => 'less', 'images' => 'images', 'js' => 'js');
 
     if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
@@ -123,11 +123,6 @@ class SmartySingleton extends Smarty {
         $aPaths[$sKey] = WEBSITE_CDN . '/' . $sValue;
     }
 
-    return $aPaths + array(
-        'public'    => WEBSITE_CDN,
-        'template'  => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
-        'upload'    => PATH_UPLOAD);
-
     # Compile CSS when in development mode and clearing the cache
     if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($aPaths['less'] . '/core/application.less'))) {
       require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
@@ -141,7 +136,10 @@ class SmartySingleton extends Smarty {
       }
     }
 
-    return $aPaths;
+    return $aPaths + array(
+        'public'    => WEBSITE_CDN,
+        'template'  => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
+        'upload'    => PATH_UPLOAD);
   }
 }
 
