@@ -17,6 +17,11 @@ use Smarty;
 
 final class Piwik {
 
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'piwik';
+
   public final static function show() {
     $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');

@@ -14,6 +14,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ * @todo show should generate help page with all supported bbcodes
  *
  */
 
@@ -24,6 +25,11 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\Image as Image;
 
 final class Bbcode {
+
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'bbcode';
 
   /**
    * Search and replace BB code.

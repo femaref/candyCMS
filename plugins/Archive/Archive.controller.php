@@ -18,6 +18,11 @@ use Smarty;
 
 final class Archive {
 
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'archive';
+
 	/**
 	 * Show the (cached) archive.
 	 *

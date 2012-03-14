@@ -24,6 +24,11 @@ require_once PATH_STANDARD . '/lib/facebook/facebook.php';
 
 final class FacebookCMS extends Facebook {
 
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'facebook';
+
 	/**
 	 *
 	 * @param type $sKey

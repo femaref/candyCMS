@@ -17,6 +17,11 @@ use Smarty;
 
 final class Analytics {
 
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'analytics';
+
   public final static function show() {
     $sTemplateDir   = Helper::getPluginTemplateDir('analytics', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');

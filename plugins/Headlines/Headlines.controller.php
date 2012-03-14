@@ -17,6 +17,11 @@ use Smarty;
 
 final class Headlines {
 
+  /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'headlines';
+
 	/**
 	 * Show the (cached) headlines.
 	 *

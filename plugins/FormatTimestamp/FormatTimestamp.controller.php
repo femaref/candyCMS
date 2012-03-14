@@ -18,6 +18,11 @@ use CandyCMS\Helper\I18n as I18n;
 final class FormatTimestamp {
 
   /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'formatTimestamp';
+
+  /**
    *
    * @param type $iTime
    * @param type $iOptions

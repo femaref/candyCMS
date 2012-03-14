@@ -72,6 +72,15 @@ class Index {
 	 */
   protected $_oObject;
 
+  /**
+   * Saves loaded Plugins
+   *
+   * @var array
+   * @access private
+   *
+   */
+  private $_aPlugins;
+
 	/**
 	 * Initialize the software by adding input params.
 	 *
@@ -89,7 +98,7 @@ class Index {
     $this->_aCookie		= & $aCookie;
 
     $this->getConfigFiles(array('Plugins', 'Mailchimp'));
-    $this->getPlugins(ALLOW_PLUGINS);
+    $this->_aPlugins = & $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
     $this->getCronjob();
@@ -158,7 +167,7 @@ class Index {
       }
     }
 
-    return true;
+    return $aPlugins;
   }
 
   /**
@@ -506,7 +515,7 @@ class Index {
 	}
 
   /**
-   * Get and replace plugin placeholders. This is done at the end of execution for performance reasons.
+   * Get plugin placeholders, Render needed Plugins and Replace Placeholders. This is done at the end of execution for performance reasons.
    *
    * @access private
    * @param string $sCachedHTML
@@ -518,44 +527,16 @@ class Index {
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
     $this->_aSession['user'] = self::_resetUser();
 
-    if (preg_match('/<!-- plugin:analytics -->/', $sCachedHTML) &&
-						class_exists('\CandyCMS\Plugin\Controller\Analytics')) {
-      $oAnalytics = & new \CandyCMS\Plugin\Controller\Analytics();
-      $sCachedHTML = & str_replace('<!-- plugin:analytics -->',
-							$oAnalytics->show(),
+    foreach ($this->_aPlugins as $sPlugin) {
+      $sPluginNamespace = '\CandyCMS\Plugin\Controller\\'.$sPlugin;
+      if (class_exists($sPluginNamespace)) {
+        $oPlugin = & new $sPluginNamespace();
+        if (preg_match('/<!-- plugin:'.$oPlugin::identifier.' -->/', $sCachedHTML)) {
+          $sCachedHTML = & str_replace('<!-- plugin:'.$oPlugin::identifier.' -->',
+							$oPlugin->show(),
 							$sCachedHTML);
-    }
-
-    if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) &&
-						class_exists('\CandyCMS\Plugin\Controller\Archive')) {
-      $oArchive = & new \CandyCMS\Plugin\Controller\Archive();
-      $sCachedHTML = & str_replace('<!-- plugin:archive -->',
-							$oArchive->show($this->_aRequest, $this->_aSession),
-							$sCachedHTML);
-    }
-
-    if (preg_match('/<!-- plugin:headlines -->/', $sCachedHTML) &&
-						class_exists('\CandyCMS\Plugin\Controller\Headlines')) {
-      $oHeadlines = new \CandyCMS\Plugin\Controller\Headlines();
-      $sCachedHTML = & str_replace('<!-- plugin:headlines -->',
-							$oHeadlines->show($this->_aRequest, $this->_aSession),
-							$sCachedHTML);
-    }
-
-    if (preg_match('/<!-- plugin:facebook -->/', $sCachedHTML) &&
-						class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
-			$oFacebook = & new \CandyCMS\Plugin\Controller\FacebookCMS();
-      $sCachedHTML = & str_replace('<!-- plugin:facebook -->',
-							$oFacebook->show(),
-							$sCachedHTML);
-    }
-
-    if (preg_match('/<!-- plugin:piwik -->/', $sCachedHTML) &&
-						class_exists('\CandyCMS\Plugin\Controller\Piwik')) {
-      $oPiwik = & new \CandyCMS\Plugin\Controller\Piwik();
-      $sCachedHTML = & str_replace('<!-- plugin:piwik -->',
-							$oPiwik->show(),
-							$sCachedHTML);
+        }
+      }
     }
 
     return $sCachedHTML;

@@ -22,6 +22,11 @@ if (file_exists('app/controllers/Mail.controller.php'))
 final class Cronjob {
 
   /**
+   * Identifier for Template Replacements
+   */
+  const identifier = 'cronjob';
+
+  /**
    * @todo
    * @todo add helper
    */
