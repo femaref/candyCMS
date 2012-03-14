@@ -177,6 +177,9 @@ class Comment extends Main {
     if ($this->_aSession['user']['role'] == 0)
       $this->_setError('name');
 
+    if (isset($this->_aRequest['email']) && !empty($this->_aRequest['email']))
+      $this->_setError('email');
+
     if (isset($this->_aError))
       return $this->_showFormTemplate($bShowCaptcha);
 
@@ -233,7 +236,7 @@ class Comment extends Main {
 
       else {
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
-        return Helper::errorMessage(I18n::get('error.captcha.incorrect')) . $this->_showFormTemplate(true);
+        return Helper::errorMessage(I18n::get('error.captcha.incorrect')) . $this->_create(true);
       }
     }
     else

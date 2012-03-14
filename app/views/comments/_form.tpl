@@ -29,7 +29,7 @@
         {/if}
       </div>
     </div>
-    <div class='control-group'>
+    <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email}
       </label>
@@ -40,6 +40,7 @@
         {else}
           <input type='email' class='span4' value="{if isset($email)}{$email}{/if}"
                 name='email' id='input-email' />
+          {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
         {/if}
       </div>
     </div>

@@ -421,10 +421,10 @@ abstract class Main {
 							I18n::get('error.form.missing.' . strtolower($sField)) :
 							$sMessage;
 
-    # Bugfix: Don't try to validate email on comment post.
-		if (isset($this->_aRequest['email']) && !Helper::checkEmailAddress($this->_aRequest['email']) &&
-						'blog' !== $this->_aRequest['controller'])
-			$this->_aError['email'] = I18n::get('error.form.missing.email');
+    if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
+      $this->_aError['email'] = !$sMessage ?
+              I18n::get('error.mail.format') :
+              $sMessage;
 	}
 
   /**

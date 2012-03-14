@@ -8,9 +8,9 @@
         <script type="text/javascript">var RecaptchaOptions = { lang:'{$WEBSITE_LANGUAGE}',theme:'white' };</script>
         {$_captcha_}
         {if isset($error.captcha)}
-          <p class='help-block'>
+          <span class='help-inline'>
             {$error.captcha}
-          </p>
+          </span>
         {/if}
       </div>
     </div>
