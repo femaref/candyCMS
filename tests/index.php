@@ -92,7 +92,7 @@ class AllFileTests extends TestSuite {
     # Session
 
     # Sitemap
-		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemap.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
 
     # User
 	}
