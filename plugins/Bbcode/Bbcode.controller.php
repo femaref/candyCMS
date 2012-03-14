@@ -60,10 +60,10 @@ final class Bbcode {
     $sStr = preg_replace('#\[anchor:(.*)\]#Uis', '<a name="\1"></a>', $sStr);
 
     # Load specific icon
-    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="%PATH_IMAGES%/candy.global/spacer.png" class="icon-\1" />', $sStr);
+    $sStr = preg_replace('#\[icon:(.*)\]#Uis', '<img src="{$_PATH.images}/candy.global/spacer.png" class="icon-\1" />', $sStr);
 
     # Insert uploaded image
-    $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="%PATH_IMAGES%/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
+    $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="{$_PATH.images}/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
     # Replace images with image tag (every location allowed, but external is very slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {

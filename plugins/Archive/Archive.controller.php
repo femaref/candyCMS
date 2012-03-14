@@ -14,7 +14,7 @@ namespace CandyCMS\Plugin\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 final class Archive {
 
@@ -39,14 +39,8 @@ final class Archive {
     $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-		$oSmarty = new Smarty();
-		$oSmarty->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
-		$oSmarty->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
-		$oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+		$oSmarty = SmartySingleton::getInstance();
 		$oSmarty->setTemplateDir($sTemplateDir);
-
-		$oSmarty->merge_compiled_includes = true;
-		$oSmarty->use_sub_dirs = true;
 
 		if (!$oSmarty->isCached($sTemplateFile, 'blog|' . WEBSITE_LOCALE . '|archive')) {
 			require_once PATH_STANDARD . '/app/models/Blog.model.php';
