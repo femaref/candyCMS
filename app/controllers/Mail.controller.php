@@ -188,7 +188,7 @@ class Mail extends Main {
     else {
       # Select user name and surname
       $oClass = $this->__autoload('User', true);
-      $oModel = new $oClass($this->_aRequest, $this->_aSession);
+      $oModel = & new $oClass($this->_aRequest, $this->_aSession);
       $aRow = $oModel::getUserNamesAndEmail($this->_iId);
 
       $sSendersName = isset($this->_aSession['user']['name']) ?
@@ -255,7 +255,7 @@ class Mail extends Main {
 		$sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
 		$sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
 
-    $oMail = new \PHPMailer(true);
+    $oMail = & new \PHPMailer(true);
 
     if (SMTP_ENABLE == true)
       $oMail->IsSMTP();

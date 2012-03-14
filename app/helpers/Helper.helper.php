@@ -100,7 +100,7 @@ class Helper {
 
     $sString = '';
 
-    if (!$bSpeakable) {
+    if ($bSpeakable === false) {
       $sChars .= $sVocals . $sNumbers;
       for ($iI = 1; $iI <= $iLength; $iI++) {
         $iTemp = rand(0, strlen($sChars) - 1);

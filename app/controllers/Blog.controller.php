@@ -45,7 +45,7 @@ class Blog extends Main {
 			# Load comments
       if ($this->_iId) {
         $sClass = $this->__autoload('Comment');
-        $oComments = new $sClass($this->_aRequest, $this->_aSession);
+        $oComments = & new $sClass($this->_aRequest, $this->_aSession);
         $oComments->__init($this->_aData);
         $this->oSmarty->assign('_blog_footer_', $oComments->show());
       }

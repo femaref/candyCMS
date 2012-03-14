@@ -75,7 +75,7 @@ class Comment extends Main {
 		require_once PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
     $oModel = $this->__autoload('Comment', true);
-    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+    $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
 		$this->_aParentData = & $aParentData;
 	}
 

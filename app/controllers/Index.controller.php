@@ -296,7 +296,7 @@ class Index {
    */
   public function getFacebookExtension() {
     if (class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
-      $this->_aSession['facebook'] = new FacebookCMS(array(
+      $this->_aSession['facebook'] = & new FacebookCMS(array(
 					'appId' => PLUGIN_FACEBOOK_APP_ID,
 					'secret' => PLUGIN_FACEBOOK_SECRET,
 					'cookie' => true
@@ -455,7 +455,7 @@ class Index {
 
     # Start the dispatcher and grab the controller.
     else {
-      $oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+      $oDispatcher = & new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
       $oDispatcher->getController();
       $oDispatcher->getAction();
     }
@@ -520,7 +520,7 @@ class Index {
 
     if (preg_match('/<!-- plugin:analytics -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\Analytics')) {
-      $oAnalytics = new \CandyCMS\Plugin\Controller\Analytics();
+      $oAnalytics = & new \CandyCMS\Plugin\Controller\Analytics();
       $sCachedHTML = & str_replace('<!-- plugin:analytics -->',
 							$oAnalytics->show(),
 							$sCachedHTML);
@@ -528,7 +528,7 @@ class Index {
 
     if (preg_match('/<!-- plugin:archive -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\Archive')) {
-      $oArchive = new \CandyCMS\Plugin\Controller\Archive();
+      $oArchive = & new \CandyCMS\Plugin\Controller\Archive();
       $sCachedHTML = & str_replace('<!-- plugin:archive -->',
 							$oArchive->show($this->_aRequest, $this->_aSession),
 							$sCachedHTML);
@@ -544,7 +544,7 @@ class Index {
 
     if (preg_match('/<!-- plugin:facebook -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
-			$oFacebook = new \CandyCMS\Plugin\Controller\FacebookCMS();
+			$oFacebook = & new \CandyCMS\Plugin\Controller\FacebookCMS();
       $sCachedHTML = & str_replace('<!-- plugin:facebook -->',
 							$oFacebook->show(),
 							$sCachedHTML);
@@ -552,7 +552,7 @@ class Index {
 
     if (preg_match('/<!-- plugin:piwik -->/', $sCachedHTML) &&
 						class_exists('\CandyCMS\Plugin\Controller\Piwik')) {
-      $oPiwik = new \CandyCMS\Plugin\Controller\Piwik();
+      $oPiwik = & new \CandyCMS\Plugin\Controller\Piwik();
       $sCachedHTML = & str_replace('<!-- plugin:piwik -->',
 							$oPiwik->show(),
 							$sCachedHTML);

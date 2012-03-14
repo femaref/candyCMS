@@ -119,9 +119,9 @@ class Download extends Main {
 			require_once PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
       # Set up upload helper and rename file to title
-      $oUploadFile = new Upload($this->_aRequest,
-																$this->_aSession, $this->_aFile,
-																Helper::formatInput($this->_aRequest['title']));
+      $oUploadFile = & new Upload($this->_aRequest,
+																	$this->_aSession, $this->_aFile,
+																	Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFile('download') === true) {

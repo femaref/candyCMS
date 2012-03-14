@@ -50,7 +50,7 @@ class Blog extends Main {
       try {
         $oQuery		= $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult	= $oQuery->fetchColumn();
-        $this->oPagination = new Pagination($this->_aRequest, (int)$iResult, $iLimit);
+        $this->oPagination = & new Pagination($this->_aRequest, (int)$iResult, $iLimit);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());

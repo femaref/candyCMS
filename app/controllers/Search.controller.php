@@ -43,7 +43,7 @@ class Search extends Main {
 	 */
   public function __init() {
     $oModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+    $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
 
     $this->_sTemplateFolder = 'searches';
   }

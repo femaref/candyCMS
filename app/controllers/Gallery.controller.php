@@ -28,7 +28,7 @@ class Gallery extends Main {
    */
   public function __init() {
     $oModel = $this->__autoload($this->_aRequest['controller'], true);
-    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+    $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
 
     # Override template folder because controller name and view name don't match.
     $this->_sTemplateFolder = 'galleries';
@@ -391,7 +391,7 @@ class Gallery extends Main {
         $aFile['error']     = $this->_aFile['file']['error'][$iI];
         $aFile['size']      = $this->_aFile['file']['size'][$iI];
 
-        $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $aFile);
+        $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $aFile);
 
         if ($oUploadFile->uploadGalleryFile() === true)
           $this->_oModel->createFile($oUploadFile->getId(), $oUploadFile->getExtension());

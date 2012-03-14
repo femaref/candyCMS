@@ -52,7 +52,7 @@ class Rss extends Main {
    */
   private function _showDefault() {
     $sModel = $this->__autoload('Blog', true);
-    $oModel = new $sModel($this->_aRequest, $this->_aSession);
+    $oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
     $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
 
@@ -81,7 +81,7 @@ class Rss extends Main {
    */
   private function _showMedia() {
     $sModel = $this->__autoload('Gallery', true);
-    $oModel = new $sModel($this->_aRequest, $this->_aSession);
+    $oModel = & new $sModel($this->_aRequest, $this->_aSession);
     $aData = $oModel->getData($this->_iId, false, true);
 
     $this->setTitle(I18n::get('global.gallery') . ': ' . $aData[$this->_iId]['title']);

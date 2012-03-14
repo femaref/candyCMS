@@ -129,8 +129,8 @@ class Session extends Main {
 
 		else {
 			$this->__autoload('Mail');
-			$sNewPasswordClean = Helper::createRandomChar(10, true);
-			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
+			$sNewPasswordClean = & Helper::createRandomChar(10, true);
+			$aData = & $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
 			if (!empty($aData)) {
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));

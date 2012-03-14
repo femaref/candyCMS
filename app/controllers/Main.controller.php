@@ -237,7 +237,7 @@ abstract class Main {
     $oModel = & $this->__autoload($this->_aRequest['controller'], true);
 
     if ($oModel)
-      $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
+      $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -251,7 +251,7 @@ abstract class Main {
 		if (!defined('WEBSITE_LANGUAGE'))
 			define('WEBSITE_LANGUAGE', 'en');
 
-		self::$oI18n = new I18n(WEBSITE_LANGUAGE);
+		self::$oI18n = & new I18n(WEBSITE_LANGUAGE);
 		return self::$oI18n;
 	}
 

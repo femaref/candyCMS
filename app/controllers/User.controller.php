@@ -168,7 +168,7 @@ class User extends Main {
 	public function updateAvatar() {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
-    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+    $oUpload = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $this->_setError('terms', I18n::get('error.file.upload'));
 
     if (!isset($this->_aFile['image']))

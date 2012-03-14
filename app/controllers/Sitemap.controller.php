@@ -76,13 +76,13 @@ class Sitemap extends Main {
 	 */
 	private function _getSitemap() {
 		$sModel		= $this->__autoload('Blog', true);
-		$oBlog		= new $sModel($this->_aRequest, $this->_aSession);
+		$oBlog		= & new $sModel($this->_aRequest, $this->_aSession);
 
 		$sModel		= $this->__autoload('Content', true);
-		$oContent = new $sModel($this->_aRequest, $this->_aSession);
+		$oContent = & new $sModel($this->_aRequest, $this->_aSession);
 
 		$sModel		= $this->__autoload('Gallery', true);
-		$oGallery = new $sModel($this->_aRequest, $this->_aSession);
+		$oGallery = & new $sModel($this->_aRequest, $this->_aSession);
 
 		$this->oSmarty->assign('blog', $oBlog->getData('', false, 1000));
 		$this->oSmarty->assign('content', $oContent->getData('', false, 1000));
