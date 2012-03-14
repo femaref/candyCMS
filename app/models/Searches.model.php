@@ -50,16 +50,11 @@ class Searches extends Main {
 
         # Build table names and order them
         if ($sTable == 'gallery_albums') {
-          $this->_aData[$sTable]['controller'] = 'gallery';
-          $this->_aData[$sTable]['title'] = I18n::get('global.gallery');
+          $this->_aData[$sTable]['controller'] = 'galleries';
+          $this->_aData[$sTable]['title'] = I18n::get('global.image.images');
         }
-        else {
-          # Get table name from language files
-          $iTableLen = strlen($sTable) - 1;
-          $sTableSingular = substr($sTable, 0, $iTableLen);
-          $this->_aData[$sTable]['controller'] = $sTableSingular;
-          $this->_aData[$sTable]['title'] = I18n::get('global.' . strtolower($sTableSingular));
-        }
+        else
+          $this->_aData[$sTable]['title'] = I18n::get('global.' . strtolower($sTable));
 
 				$iEntries = 0;
         foreach ($aResult as $aRow) {
@@ -67,7 +62,7 @@ class Searches extends Main {
             continue;
 
           $iDate = $aRow['date'];
-          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTableSingular);
+          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTable);
 					++$iEntries;
         }
 

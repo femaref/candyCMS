@@ -13,6 +13,7 @@ global:
   bbcode:
     help: How to use bbcode.
   blog: Blog
+  blogs: Blogs
   by: by
   category: Category
   calendar: Calender
@@ -55,6 +56,7 @@ global:
   image:
     click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
     image: Image
+    images: Images
   in: in
   keywords: Keywords
   language: Language

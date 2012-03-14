@@ -24,7 +24,7 @@
               {foreach $table as $data}
                 {if $data.id > 0}
                   <li>
-                    <a href="/{$table.controller}/{$data.id}/highlight/{$string}">
+                    <a href='/{$table.controller}/{$data.id}/highlight/{$string}'>
                       {$data.title}
                     </a>,
                     &nbsp;

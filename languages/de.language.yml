@@ -13,6 +13,7 @@ global:
   bbcode:
     help: Weiterführende Informationen zur Verwendung von BB-Code.
   blog: Blog
+  blogs: Blogeinträge
   by: von
   category: Kategorie
   calendar: Kalender
@@ -55,6 +56,7 @@ global:
   image:
     click_to_enlarge: "Klicken Sie auf das Bild, um es auf %w x %h Pixel zu vergrößern!"
     image: Bild
+    images: Bilder
   in: in
   keywords: Schlagworte
   language: Sprache

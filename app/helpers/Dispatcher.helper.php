@@ -47,12 +47,7 @@ class Dispatcher {
    *
    */
   public function getController() {
-    # Bugfix: Avoid problems with logs being redirected to a dir on server
-    $this->_aRequest['controller'] = substr($this->_aRequest['controller'], -1) == '/' ?
-            substr((string) $this->_aRequest['controller'], 0, strlen($this->_aRequest['controller']) - 1) :
-            (string) $this->_aRequest['controller'];
-
-    $sController = & ucfirst(strtolower($this->_aRequest['controller']));
+    $sController = & ucfirst(strtolower((string) $this->_aRequest['controller']));
 
     try {
       # Are addons for existing controllers available? If yes, use them.

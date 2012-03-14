@@ -32,7 +32,7 @@ class Contents extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
-      $this->oSmarty->assign('content', $this->_oModel->getData($this->_iId));
+      $this->oSmarty->assign('contents', $this->_oModel->getData($this->_iId));
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

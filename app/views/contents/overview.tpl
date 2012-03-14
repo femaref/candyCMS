@@ -26,7 +26,7 @@
         {/if}
       </tr>
     </thead>
-    {foreach $content as $c}
+    {foreach $contents as $c}
       <tr>
         <td>{$c.id}</td>
         <td>
