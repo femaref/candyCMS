@@ -234,10 +234,10 @@ abstract class Main {
 	 *
 	 */
   public function __init() {
-    $oModel = & $this->__autoload($this->_aRequest['controller'], true);
+    $sModel = & $this->__autoload($this->_aRequest['controller'], true);
 
-    if ($oModel)
-      $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
+    if ($sModel)
+      $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
   }
 
 	/**
@@ -469,8 +469,6 @@ abstract class Main {
 	}
 
 	/**
-	 * Update an action.
-	 *
 	 * Update entry or show form template if we have enough rights.
 	 *
 	 * @access public
@@ -488,8 +486,6 @@ abstract class Main {
 	}
 
 	/**
-	 * Delete an action.
-	 *
 	 * Delete entry if we have enough rights.
 	 *
 	 * @access public
@@ -502,6 +498,91 @@ abstract class Main {
             Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
 	}
+
+  /**
+   * Create an entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, activate the model, insert them into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _create() {
+		$this->_setError('title');
+
+		if ($this->_aError)
+			return $this->_showFormTemplate();
+
+		elseif ($this->_oModel->create() === true) {
+			Log::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									$this->_oModel->getLastInsertId($this->_aRequest['controller']),
+									$this->_aSession['user']['id']);
+
+			return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
+		}
+		else
+			return Helper::errorMessage(I18n::get('error.sql.query'), '/' . $this->_aRequest['controller']);
+	}
+
+  /**
+   * Update an entry.
+   *
+   * Activate model, insert data into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _update() {
+    $this->_setError('title');
+
+    if ($this->_aError)
+      return $this->_showFormTemplate();
+
+    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+
+      Log::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									(int) $this->_aRequest['id'],
+									$this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.update'),
+              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+    }
+
+    else
+      return Helper::errorMessage(I18n::get('error.sql'),
+              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+  }
+
+  /**
+   * Destroy an entry.
+   *
+   * Activate model, delete data from database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _destroy() {
+    if($this->_oModel->destroy($this->_iId) === true) {
+			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+
+      Log::insert($this->_aRequest['controller'],
+									$this->_aRequest['action'],
+									$this->_iId,
+									$this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
+    }
+
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+  }
 
 	/**
    * Subscribe to newsletter list.

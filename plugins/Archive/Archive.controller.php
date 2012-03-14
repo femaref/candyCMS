@@ -21,7 +21,7 @@ final class Archive {
   /**
    * Identifier for Template Replacements
    */
-  const identifier = 'archive';
+  const IDENTIFIER = 'archive';
 
 	/**
 	 * Show the (cached) archive.

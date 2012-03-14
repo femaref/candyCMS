@@ -515,7 +515,8 @@ class Index {
 	}
 
   /**
-   * Get plugin placeholders, Render needed Plugins and Replace Placeholders. This is done at the end of execution for performance reasons.
+   * Get plugin placeholders, Render needed Plugins and Replace Placeholders.
+   * This is done at the end of execution for performance reasons.
    *
    * @access private
    * @param string $sCachedHTML
@@ -528,13 +529,16 @@ class Index {
     $this->_aSession['user'] = self::_resetUser();
 
     foreach ($this->_aPlugins as $sPlugin) {
-      $sPluginNamespace = '\CandyCMS\Plugin\Controller\\'.$sPlugin;
+      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob')
+        continue;
+
+      $sPluginNamespace = '\CandyCMS\Plugin\Controller\\' . $sPlugin;
+
       if (class_exists($sPluginNamespace)) {
         $oPlugin = & new $sPluginNamespace();
-        if (preg_match('/<!-- plugin:'.$oPlugin::identifier.' -->/', $sCachedHTML)) {
-          $sCachedHTML = & str_replace('<!-- plugin:'.$oPlugin::identifier.' -->',
-							$oPlugin->show(),
-							$sCachedHTML);
+
+        if (preg_match('/<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->/', $sCachedHTML)) {
+          $sCachedHTML = str_replace('<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->', $oPlugin->show(), $sCachedHTML);
         }
       }
     }

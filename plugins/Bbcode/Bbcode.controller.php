@@ -27,11 +27,6 @@ use CandyCMS\Helper\Image as Image;
 final class Bbcode {
 
   /**
-   * Identifier for Template Replacements
-   */
-  const identifier = 'bbcode';
-
-  /**
    * Search and replace BB code.
    *
    * @static

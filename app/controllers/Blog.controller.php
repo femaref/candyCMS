@@ -185,11 +185,11 @@ class Blog extends Main {
    *
    * @access protected
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo remove when renamed
    *
    */
   protected function _create() {
 		$this->_setError('title');
-		$this->_setError('content');
 
 		if ($this->_aError)
 			return $this->_showFormTemplate();
@@ -205,57 +205,4 @@ class Blog extends Main {
 		else
 			return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
 	}
-
-  /**
-   * Update a blog entry.
-   *
-   * Activate model, insert data into the database and redirect afterwards.
-   *
-   * @access protected
-   * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   *
-   */
-  protected function _update() {
-    $this->_setError('title');
-
-    if ($this->_aError)
-      return $this->_showFormTemplate();
-
-    elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.update'), '/blog/' . (int) $this->_aRequest['id']);
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
-  }
-
-  /**
-   * Delete a blog entry.
-   *
-   * Activate model, delete data from database and redirect afterwards.
-   *
-   * @access protected
-   * @return boolean status of model action
-   *
-   */
-  protected function _destroy() {
-    if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
-
-      Log::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_aRequest['id'],
-									$this->_aSession['user']['id']);
-
-			return Helper::successMessage(I18n::get('success.destroy'), '/blog');
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.sql.query'), '/blog');
-  }
 }
