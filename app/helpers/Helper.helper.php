@@ -35,7 +35,7 @@ class Helper {
         'message' => $sMessage,
         'headline'=> '');
 
-    return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : true;
+    return $sRedirectTo ? Helper::redirectTo ($sRedirectTo) : true;
   }
 
   /**
@@ -54,7 +54,7 @@ class Helper {
         'message' => $sMessage,
         'headline'=> I18n::get('error.standard'));
 
-    return !empty($sRedirectTo) ? Helper::redirectTo ($sRedirectTo) : false;
+    return $sRedirectTo ? Helper::redirectTo ($sRedirectTo) : false;
   }
 
   /**
@@ -80,7 +80,7 @@ class Helper {
    *
    */
   public static function checkEmailAddress($sMail) {
-    return preg_match("/^([a-zA-Z0-9])+(\.?[a-zA-Z0-9_-]+)*@([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,6}$/", $sMail) ? true : false;
+    return preg_match("/^([a-zA-Z0-9])+(\.?[a-zA-Z0-9_-]+)*@([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,6}$/", $sMail);
 	}
 
   /**
@@ -100,7 +100,7 @@ class Helper {
 
     $sString = '';
 
-    if ($bSpeakable === false) {
+    if (!$bSpeakable) {
       $sChars .= $sVocals . $sNumbers;
       for ($iI = 1; $iI <= $iLength; $iI++) {
         $iTemp = rand(0, strlen($sChars) - 1);
@@ -337,7 +337,7 @@ class Helper {
 	 */
   public static function formatInput($sStr, $bDisableHTML = true) {
     try {
-      if (is_string($sStr) == false && is_int($sStr) == false && $bDisableHTML == true)
+      if (!is_string($sStr) && !is_int($sStr) && $bDisableHTML === true)
         throw new AdvancedException('Input seems not valid.');
 
       if ($bDisableHTML === true)
@@ -407,15 +407,15 @@ class Helper {
 	 *
 	 */
   public static function formatOutput($sStr, $sHighlight = '') {
-    if (!empty($sHighlight))
+    if ($sHighlight)
       $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
 
     if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
       $oBbcode = new Bbcode();
       return $oBbcode->getFormatedText($sStr);
     }
-    else
-      return $sStr;
+
+		return $sStr;
   }
 
 	/**

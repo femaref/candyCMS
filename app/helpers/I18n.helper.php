@@ -47,7 +47,7 @@ class I18n {
 	 *
 	 */
 	public static function getArray($sPart = '') {
-		return empty($sPart) ? $_SESSION['lang'] : $_SESSION['lang'][$sPart];
+		return !$sPart ? $_SESSION['lang'] : $_SESSION['lang'][$sPart];
 	}
 
 	/**
