@@ -32,16 +32,16 @@ class Users extends Main {
 
         case 'avatar':
 
-          $this->setDescription(I18n::get('user.title.avatar'));
-          $this->setTitle(I18n::get('user.title.avatar'));
+          $this->setDescription(I18n::get('users.title.avatar'));
+          $this->setTitle(I18n::get('users.title.avatar'));
           return $this->updateAvatar();
 
           break;
 
         case 'password':
 
-          $this->setDescription(I18n::get('user.title.password'));
-          $this->setTitle(I18n::get('user.title.password'));
+          $this->setDescription(I18n::get('users.title.password'));
+          $this->setTitle(I18n::get('users.title.password'));
           return $this->updatePassword();
 
           break;
@@ -94,8 +94,8 @@ class Users extends Main {
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 		else {
-			$this->setTitle(I18n::get('user.title.overview'));
-			$this->setDescription(I18n::get('user.title.overview'));
+			$this->setTitle(I18n::get('users.title.overview'));
+			$this->setDescription(I18n::get('users.title.overview'));
 
 			if ($this->_aSession['user']['role'] < 3)
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
@@ -291,7 +291,7 @@ class Users extends Main {
 			else {
         $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
 
-        $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), I18n::get('user.mail.body'));
+        $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), I18n::get('users.mail.body'));
         $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
       }
 
@@ -301,7 +301,7 @@ class Users extends Main {
 										$this->_aSession['user']['id']);
 
 			Mails::send(	Helper::formatInput($this->_aRequest['email']),
-									I18n::get('user.mail.subject'),
+									I18n::get('users.mail.subject'),
 									$sMailMessage,
 									WEBSITE_MAIL_NOREPLY);
 
@@ -325,8 +325,8 @@ class Users extends Main {
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     if ($this->_aSession['user']['role'] == 4) {
-      $this->setTitle(I18n::get('user.title.create'));
-      $this->setDescription(I18n::get('user.title.create'));
+      $this->setTitle(I18n::get('users.title.create'));
+      $this->setDescription(I18n::get('users.title.create'));
     }
     else {
       $this->setTitle(I18n::get('global.registration'));

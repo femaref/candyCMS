@@ -236,7 +236,7 @@ error:
         old:
           empty: Bitte tragen Sie Ihr altes Passwort ein!
           wrong: Ihr altes Passwort stimmt leider nicht!
-      verification: Sie konnten nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
+    verification: Sie konnten nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
 
 blogs:
   info:
