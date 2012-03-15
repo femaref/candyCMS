@@ -44,13 +44,13 @@ final class Headlines {
 		$oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
 
-    if (!$oSmarty->isCached($sTemplateFile, 'blog|' . WEBSITE_LOCALE . '|headlines')) {
-			require_once PATH_STANDARD . '/app/models/Blog.model.php';
-			$oModel = new \CandyCMS\Model\Blog($aRequest, $aSession);
+    if (!$oSmarty->isCached($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|headlines')) {
+			require_once PATH_STANDARD . '/app/models/Blogs.model.php';
+			$oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
 
 			$oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
 		}
 
-    return $oSmarty->fetch($sTemplateFile, 'blog|' . WEBSITE_LOCALE . '|headlines');
+    return $oSmarty->fetch($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|headlines');
   }
 }
