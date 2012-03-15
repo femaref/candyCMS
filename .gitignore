@@ -1,13 +1,12 @@
-config/Mailchimp.inc.php
-config/Facebook.inc.php
 .DS_Store
 nbproject/*
 backup/*
 compile/*
 cache/*
-config/*
+config/*inc.php
 upload/*
 logs/*
 version.txt
 public/templates/*
 .project
+!/config/samples/

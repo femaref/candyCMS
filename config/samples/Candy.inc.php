@@ -11,8 +11,8 @@
 define('SQL_HOST', 'localhost');
 define('SQL_USER', 'root');
 define('SQL_PASSWORD', '');
-define('SQL_DB', 'cms_new');
-define('SQL_PREFIX', '');
+define('SQL_DB', '');
+define('SQL_PREFIX', 'candy_');
 define('SQL_PORT', '3306');
 
 # ------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ define('SMTP_PORT', '');
 
 # Define the ABSOLUTE path of your website.
 # EXAMPLE: http://www.google.com
-define('WEBSITE_URL', 'http://phpcms.localhost');
+define('WEBSITE_URL', 'http://domain.tld');
 
 # ------------------------------------------------------------------------------
 
@@ -54,20 +54,20 @@ define('WEBSITE_NAME', 'CandyCMS');
 # ------------------------------------------------------------------------------
 
 # Define an admin email for system responses
-define('WEBSITE_MAIL', 'marco@empuxa.com');
+define('WEBSITE_MAIL', 'admin@domain.tld');
 
 # ------------------------------------------------------------------------------
 
 # Define a noreply email for spam etc.
 # EXAMPLE: no-reply@mydomain.tld
-define('WEBSITE_MAIL_NOREPLY', 'no-reply@candycms.com');
+define('WEBSITE_MAIL_NOREPLY', 'no-reply@domain.tld');
 
 # ------------------------------------------------------------------------------
 
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ define('DEFAULT_TIME_FORMAT', '%H:%M %p');
 # DEFAULT: None. Create one before you install this software
 # NOTE: AVOID THE CHANGE OF THIS HASH AFTER USERS HAVE REGISTERED OR YOU WILL
 # DESTROY THEIR LOGINS!
-define('RANDOM_HASH', '');
+define('RANDOM_HASH', 'funky but secure md5 hash');
 
 # ------------------------------------------------------------------------------
 
@@ -194,15 +194,15 @@ define('COMPILE_DIR', 'compile');
 
 # Limit of blog entries per page
 # DEFAULT: 8
-define('LIMIT_BLOG', 2);
+define('LIMIT_BLOG', 8);
 
 # Limit of comments per page
 # DEFAULT: 10
-define('LIMIT_COMMENTS', 8);
+define('LIMIT_COMMENTS', 10);
 
 # Limit of gallery albums per page
 # DEFAULT: 10
-define('LIMIT_ALBUMS', 2);
+define('LIMIT_ALBUMS', 10);
 
 # ------------------------------------------------------------------------------
 
