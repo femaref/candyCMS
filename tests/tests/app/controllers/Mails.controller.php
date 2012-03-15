@@ -42,7 +42,7 @@ class WebTestOfMailController extends CandyWebTest {
 		)));
 
 		$this->assertResponse(200);
-		$this->assertText(I18n::get('mail.info.title'));
+		$this->assertText(I18n::get('mails.info.title'));
 	}
 
 	function testCreateFail() {

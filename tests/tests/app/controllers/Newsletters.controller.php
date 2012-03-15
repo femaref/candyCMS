@@ -30,7 +30,7 @@ class WebTestOfNewsletterController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText(I18n::get('newsletter.title.subscribe'));
+		$this->assertText(I18n::get('newsletters.title.subscribe'));
 	}
 
   /**
