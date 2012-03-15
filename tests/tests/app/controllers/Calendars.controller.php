@@ -58,14 +58,26 @@ class WebTestOfCalendarsController extends CandyWebTest {
 	}
 
 	function testCreate() {
-    //TODO
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+		$this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    // @todo create with proper rights
 	}
 
 	function testUpdate() {
-    //TODO
-	}
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/update'));
+		$this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    // @todo update with proper rights
+  }
 
 	function testDestroy() {
-		//TODO
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/destroy'));
+		$this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    // @todo delete with proper rights
 	}
 }
