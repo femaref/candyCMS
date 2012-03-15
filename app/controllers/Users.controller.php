@@ -72,6 +72,7 @@ class Users extends Main {
 	 *
 	 * @access protected
 	 * @return string HTML content
+   * @todo user not found should display different page?
 	 *
 	 */
 	protected function _show() {
@@ -368,7 +369,7 @@ class Users extends Main {
       $this->_iId = $this->_aSession['user']['id'];
 
     if ($this->_aSession['user']['id'] == 0)
-      return Helper::errorMessage(I18n::get('error.session.create_first'), '/');
+      return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions');
 
     else
       return isset($this->_aRequest['update_user']) ? $this->_update() : $this->_showFormTemplate();
@@ -520,6 +521,12 @@ class Users extends Main {
     $this->_setError('email');
     $this->_setError('password');
 
-    return !isset($this->_aError) ? $this->_oModel->getToken() : json_encode(array('success', false));
+    if (!$this->_aError)
+      $sToken = $this->_oModel->getToken();
+    
+    if (isset($sToken) && !empty($sToken))
+      return json_encode(array('success' => true, "token" => $sToken));
+    else
+      return json_encode(array('success' => false));
   }
 }

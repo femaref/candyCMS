@@ -549,10 +549,10 @@ class Users extends Main {
    * Get the API token of a user.
    *
    * @access public
-   * @return string token or null
+   * @return string the token or empty string
    *
    */
-	public function getToken($bReturnJSON = true) {
+	public function getToken() {
 		try {
 			$oQuery = $this->_oDb->prepare("SELECT
                                         api_token
@@ -571,14 +571,7 @@ class Users extends Main {
 			$oQuery->execute();
       $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
-      if($bReturnJSON == true) {
-        return  !empty($aData['api_token']) ?
-                json_encode(array('success' => true, 'token' => $aData['api_token'])) :
-                json_encode(array('success' => false));
-      }
-
-      else
-        return $aData['api_token'];
+      return !empty($aData['api_token']) ? $aData['api_token'] : '';
 		}
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0095 - ' . $p->getMessage());

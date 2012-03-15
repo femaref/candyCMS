@@ -42,9 +42,9 @@ final class Archive {
 		$oSmarty = SmartySingleton::getInstance();
 		$oSmarty->setTemplateDir($sTemplateDir);
 
-		if (!$oSmarty->isCached($sTemplateFile, 'blog|' . WEBSITE_LOCALE . '|archive')) {
-			require_once PATH_STANDARD . '/app/models/Blog.model.php';
-			$oModel = new \CandyCMS\Model\Blog($aRequest, $aSession);
+		if (!$oSmarty->isCached($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|archive')) {
+			require_once PATH_STANDARD . '/app/models/Blogs.model.php';
+			$oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
 			$aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
 			$aMonth = array();
@@ -62,6 +62,6 @@ final class Archive {
 			$oSmarty->assign('data', $aMonth);
 		}
 
-		return $oSmarty->fetch($sTemplateFile, 'blog|' . WEBSITE_LOCALE . '|archive');
+		return $oSmarty->fetch($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|archive');
 	}
 }

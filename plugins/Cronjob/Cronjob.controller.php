@@ -12,12 +12,12 @@
 
 namespace CandyCMS\Plugin;
 
-use CandyCMS\Controller\Mail as Mail;
+use CandyCMS\Controller\Mails as Mails;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use PDO;
 
-if (file_exists('app/controllers/Mail.controller.php'))
-  require_once 'app/controllers/Mail.controller.php';
+if (!class_exists('Mails') && file_exists('app/controllers/Mails.controller.php'))
+  require 'app/controllers/Mails.controller.php';
 
 final class Cronjob {
 
@@ -256,7 +256,7 @@ final class Cronjob {
     }
 
     # Send the backup via mail
-    if (class_exists('Mail') && CRONJOB_SEND_PER_MAIL == true)
+    if (class_exists('Mails') && CRONJOB_SEND_PER_MAIL == true)
       Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
 
     # Write into backup log

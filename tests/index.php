@@ -74,7 +74,7 @@ class AllFileTests extends TestSuite {
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
 
     # Mail
-	//	$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
 
     # Main
 

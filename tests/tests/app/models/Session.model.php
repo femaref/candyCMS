@@ -48,7 +48,7 @@ class TestOfSessionModel extends UnitTestCase {
   }
 
   # Session will not be found, so we expect no return.
-  function testGetuserBySession() {
+  function testGetUserBySession() {
     $this->assertFalse(Session::getUserBySession());
   }
 
