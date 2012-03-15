@@ -99,7 +99,8 @@ class AllFileTests extends TestSuite {
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
 
     # User
-    # todo
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Users.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Users.controller.php');
 	}
 }
 

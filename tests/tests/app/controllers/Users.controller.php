@@ -32,11 +32,11 @@ class WebTestOfUserController extends CandyWebTest {
     # Show user with id
     #@todo user not found?
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
-    $this->assertText(I18n::get('user.label.registered_since')); # "registered at"
+    $this->assertText(I18n::get('users.label.registered_since')); # "registered at"
     $this->assertResponse('200');
 
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
-    $this->assertText(I18n::get('user.label.registered_since')); # "registered at"
+    $this->assertText(I18n::get('users.label.registered_since')); # "registered at"
     $this->assertText('Administrator c2f9619961');
     $this->assertResponse('200');
   }
