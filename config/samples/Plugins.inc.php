@@ -1,8 +1,13 @@
 <?php
 
-/*
+/**
+ * Configure your plugins.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
+ * 
  */
 
 # Limit of TODO
