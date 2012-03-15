@@ -299,7 +299,7 @@ class Users extends Main {
 										$this->_oModel->getLastInsertId('users'),
 										$this->_aSession['user']['id']);
 
-			Mail::send(	Helper::formatInput($this->_aRequest['email']),
+			Mails::send(	Helper::formatInput($this->_aRequest['email']),
 									I18n::get('user.mail.subject'),
 									$sMailMessage,
 									WEBSITE_MAIL_NOREPLY);
