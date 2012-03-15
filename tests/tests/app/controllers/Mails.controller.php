@@ -51,7 +51,7 @@ class WebTestOfMailController extends CandyWebTest {
 		)));
 
 		$this->assertResponse(200);
-		$this->assertText(I18n::get('error.form.missing.email'));
+		$this->assertText(I18n::get('error.mail.format'));
 		$this->assertText(I18n::get('error.form.missing.content'));
 	}
 }
