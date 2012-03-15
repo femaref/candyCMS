@@ -10,15 +10,15 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Gallery.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Galleries.controller.php';
 
-use \CandyCMS\Controller\Gallery as Gallery;
+use \CandyCMS\Controller\Galleries as Galleries;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfGalleryController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'gallery';
+		$this->aRequest['controller'] = 'galleries';
 	}
 
 	function tearDown() {

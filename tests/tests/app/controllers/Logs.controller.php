@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Log.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Logs.controller.php';
 
-use \CandyCMS\Controller\Log as Log;
+use \CandyCMS\Controller\Logs as Logs;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfLogController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'log';
-		$this->oObject = new Log($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'logs';
+		$this->oObject = new Logs($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

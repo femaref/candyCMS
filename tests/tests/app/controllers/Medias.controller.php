@@ -11,16 +11,16 @@
  */
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Media.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Medias.controller.php';
 
-use \CandyCMS\Controller\Media as Media;
+use \CandyCMS\Controller\Medias as Medias;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfMediaController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'media';
-		$this->oObject = new Media($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'medias';
+		$this->oObject = new Medias($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

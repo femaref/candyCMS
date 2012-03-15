@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Gallery.model.php';
+require_once PATH_STANDARD . '/app/models/Galleries.model.php';
 
-use \CandyCMS\Model\Gallery as Gallery;
+use \CandyCMS\Model\Galleries as Galleries;
 
 class UnitTestOfGalleryModel extends CandyUnitTest {
 
@@ -22,15 +22,15 @@ class UnitTestOfGalleryModel extends CandyUnitTest {
         'title'     => 'Title',
         'content'   => 'Content',
         'id'        => 0,
-        'controller'=> 'gallery');
+        'controller'=> 'galleries');
 
-    $this->oObject = new Gallery($this->aRequest, $this->aSession);
+    $this->oObject = new Galleries($this->aRequest, $this->aSession);
   }
 
   function testCreate() {
     $this->assertTrue($this->oObject->create());
 
-    $this->iLastInsertId = (int) Gallery::getLastInsertId();
+    $this->iLastInsertId = (int) Galleries::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
@@ -58,7 +58,7 @@ class UnitTestOfGalleryModel extends CandyUnitTest {
   function testCreateFile() {
     $this->assertTrue($this->oObject->createFile('test.test', 'test'));
 
-    $this->iLastInsertId = (int) Gallery::getLastInsertId();
+    $this->iLastInsertId = (int) Galleries::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 

@@ -10,16 +10,16 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Download.controller.php';
+require_once PATH_STANDARD . '/app/controllers/Downloads.controller.php';
 
-use \CandyCMS\Controller\Download as Download;
+use \CandyCMS\Controller\Downloads as Downloads;
 use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfDownloadController extends CandyWebTest {
 
 	function setUp() {
-		$this->aRequest['controller'] = 'download';
-		$this->oObject = new Download($this->aRequest, $this->aSession);
+		$this->aRequest['controller'] = 'downloads';
+		$this->oObject = new Downloads($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {

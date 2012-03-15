@@ -59,28 +59,30 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Contents.controller.php');
 
 		# Download
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Download.model.php');
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Download.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/models/Downloads.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Downloads.controller.php');
 
 		# Error
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Errors.controller.php');
 
 		# Gallery
-//    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Gallery.model.php');
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Gallery.controller.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Galleries.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Galleries.controller.php');
 
     # Log
-//    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Log.model.php');
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Log.controller.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Logs.model.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
 
     # Mail
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mail.controller.php');
+	//	$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
+
+    # Main
 
     # Media
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Media.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php');
 
     # Newsletter
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletter.controller.php');
+		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
 
     # RSS
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');

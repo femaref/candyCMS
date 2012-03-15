@@ -10,23 +10,23 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Log.model.php';
+require_once PATH_STANDARD . '/app/models/Logs.model.php';
 
-use \CandyCMS\Model\Log as Log;
+use \CandyCMS\Model\Logs as Logs;
 
 class UnitTestOfLogModel extends CandyUnitTest {
 
   function setUp() {
 
-    $this->aRequest = array('section' => 'log');
+    $this->aRequest = array('section' => 'logs');
 
-    $this->oObject = new Log($this->aRequest, $this->aSession);
+    $this->oObject = new Logs($this->aRequest, $this->aSession);
   }
 
   function testCreate() {
-    $this->assertTrue(Log::insert('test', 'create', 1, 0, time(), time()));
+    $this->assertTrue(Logs::insert('test', 'create', 1, 0, time(), time()));
 
-    $this->iLastInsertId = (int) Log::getLastInsertId();
+    $this->iLastInsertId = (int) Logs::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
