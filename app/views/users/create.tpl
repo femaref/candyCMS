@@ -8,7 +8,7 @@
     </h1>
   </div>
   <form method='post' class='form-horizontal'>
-    <div class='control-group {if isset($error.name)}error{/if}'>
+    <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
       <label for='input-name' class='control-label'>
         {$lang.global.name} <span title='{$lang.global.required}'>*</span>
       </label>
@@ -24,7 +24,7 @@
       </label>
       <div class='controls'>
         <input class='span4' name='surname'
-               value='{$surname}' id='input-surname' type='text' required />
+               value='{$surname}' id='input-surname' type='text'  />
         {if isset($error.surname)}<span class='help-inline'>{$error.surname}</span>{/if}
       </div>
     </div>
@@ -80,7 +80,7 @@
     <div class="form-actions">
       <input type='submit' class="btn btn-primary" value='{$lang.global.register}' />
       <input type='reset' class='btn' />
-      <input type='hidden' value='formdata' name='create_user' />
+      <input type='hidden' value='formdata' name='create_users' />
     </div>
   </form>
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.modal{$_SYSTEM.compress_files_suffix}.js'></script>

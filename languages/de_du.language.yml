@@ -191,17 +191,17 @@ error:
     type: Es wurde ein falscher Dateityp hochgeladen!
     upload: Es gab einen Fehler beim Upload!
   form:
-    title: "Bitte fülle folgende Felder aus:"
     missing:
-      category: Bitte wähle eine Kategorie!
-      content: Bitte fülle den Inhalt aus!
-      email: Bitte gib deine E-Mail-Adresse an!
-      file: Bitte gib eine Datei zum Upload an!
-      name: Bitte gib deinen Namen an!
-      terms: Bitte den Nutzungsbedingungen zustimmen!
-      title: Bitte gib einen Titel an!
-      password: Bitte gib ein Passwort an!
-      subject: Bitte gib einen Betreff ein!
+      category: Bitte wähle eine Kategorie.
+      content: Bitte fülle den Inhalt aus.
+      email: Bitte gib deine E-Mail-Adresse an.
+      file: Bitte gib eine Datei zum Upload an.
+      name: Bitte gib deinen Namen an.
+      terms: Bitte den Nutzungsbedingungen zustimmen.
+      title: Bitte gib einen Titel an.
+      password: Bitte gib ein Passwort an.
+      standard: Bitte fülle dieses Feld aus.
+      subject: Bitte gib einen Betreff ein.
   mail:
     create: Die E-Mail konnte nicht verschickt werden. Bitte überprüfe ggf. deine E-Mail-Adresse und falls diese korrekt sein sollte, kontaktiere den Admin.
     format: Dies ist keine gültige E-Mail-Adresse!

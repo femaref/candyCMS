@@ -414,15 +414,20 @@ abstract class Main {
 	 *
 	 */
 	protected function _setError($sField, $sMessage = '') {
-		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-			$this->_aError[$sField] = !$sMessage ?
-							I18n::get('error.form.missing.' . strtolower($sField)) :
-							$sMessage;
-
     if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
       $this->_aError['email'] = !$sMessage ?
               I18n::get('error.mail.format') :
               $sMessage;
+
+		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField])) {
+      $sStandardMessage = I18n::get('error.form.missing.' . strtolower($sField)) ?
+              I18n::get('error.form.missing.' . strtolower($sField)) :
+              I18n::get('error.form.missing.standard');
+
+      $this->_aError[$sField] = !$sMessage ?
+              $sStandardMessage :
+              $sMessage;
+    }
 	}
 
   /**

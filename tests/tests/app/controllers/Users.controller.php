@@ -44,9 +44,26 @@ class WebTestOfUserController extends CandyWebTest {
    *@todo validation
    */
   function testCreate() {
+    # Page is reachable
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
     $this->assertNoText(I18n::get('error.missing.permission'));
     $this->assertResponse('200');
+
+    # Missing fields
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create', array(
+				'create_users' => 'formdata'
+		)));
+
+		$this->assertResponse(200);
+		#$this->assertText(I18n::get('error.form.missing.name'));
+    #$this->showSource();
+		#$this->assertText(I18n::get('error.form.missing.surname'));
+		#$this->assertText(I18n::get('error.form.missing.email'));
+		#$this->assertText(I18n::get('error.form.missing.passwort'));
+
+    # Passwords not identical
+
+    # Disclaimer not read
   }
 
   function testUpdate() {

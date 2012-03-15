@@ -191,16 +191,16 @@ error:
     type: You uploaded an illegal filetype. Only *.jpg is allowed!
     upload: An error occured during upload.
   form:
-    title: "Please fill out the following information:"
     missing:
       category: Please select a category.
       content: Please enter content.
       email: Please enter your email.
       file: Please select file.
       name: Please enter your name.
-      terms: You must accept the terms and conditions!
+      terms: You must accept the terms and conditions.
       title: Please enter a title.
       password: Please enter a password.
+      standard: Please fill out this information.
       subject: Please enter a subject.
   mail:
     create: Mail delivery failed. If the email is correct, please contact Admin.
