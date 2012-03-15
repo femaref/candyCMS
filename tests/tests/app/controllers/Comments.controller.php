@@ -37,7 +37,7 @@ class WebTestOfCommentController extends CandyWebTest {
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
 				'name' => 'Name',
 				'content' => 'Test',
-				'create_comment' => 'formdata',
+				'create_comments' => 'formdata',
 				'parent_id' => '1'
 		)));
 
@@ -50,7 +50,7 @@ class WebTestOfCommentController extends CandyWebTest {
 	 */
 	function testCreateFail() {
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
-				'create_comment' => 'formdata'
+				'create_comments' => 'formdata'
 		)));
 
 		$this->assertResponse(200);
