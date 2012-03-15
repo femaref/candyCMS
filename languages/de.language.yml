@@ -52,6 +52,7 @@ global:
   file: Datei
   files: Dateien
   gallery: Galerie
+  galleries: Galerien
   headlines: Überschriften
   id: ID
   image:
@@ -216,6 +217,7 @@ error:
     template: Es wurde keine passendes Template gefunden!
   passwords: Bitte geben Sie zwei identische Passwörter an!
   session:
+    account: Es wurde kein Nutzer mit dieser E-Mail-Adresse gefunden!
     create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls Sie Ihre E-Mail-Adresse noch nicht bestätigt haben, machen Sie dies bitte vor dem Login.
     create_first: Bitte loggen Sie sich zuerst ein!
   standard: Es trat ein Fehler auf!
@@ -236,7 +238,7 @@ error:
           wrong: Ihr altes Passwort stimmt leider nicht!
       verification: Sie konnten nicht freigeschaltet werden, da kein Account mit einem solchen Code vorhanden ist!
 
-blog:
+blogs:
   info:
     keywords: Geben Sie die wichtigsten Schlagworte dieses Eintrags an.
     tag: Trennen Sie die Kategorien durch Komma u. Leerzeichen ("Tag, Tag2").
@@ -248,7 +250,7 @@ blog:
     destroy: Blogeintrag löschen
     update: '"%p" bearbeiten'
 
-calendar:
+calendars:
   info:
     date_format: 'Datumsformat: "YYYY-MM-DD"'
   title:
@@ -256,14 +258,14 @@ calendar:
     update: Termin bearbeiten
     destroy: Termin löschen
 
-comment:
+comments:
   info:
     email: Die E-Mail-Adresse wird nicht veröffentlicht.
   title:
     create: Kommentar erstellen
     destroy: Kommentar löschen
 
-content:
+contents:
   info:
     keywords: Geben Sie die wichtigsten Schlagworte dieser Seite an.
     teaser: Schreiben Sie eine Zusammenfassung für die Suchmaschinen.
@@ -273,7 +275,7 @@ content:
     destroy: Seite löschen
     update: Bearbeiten
 
-download:
+downloads:
   label:
     choose: Datei auswählen
   title:
@@ -286,7 +288,7 @@ cronjob:
     body: Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n
     subject: Sicherungskopie vom %d
 
-gallery:
+galleries:
   albums:
     title:
       create: Album erstellen
@@ -302,7 +304,7 @@ gallery:
       destroy: Bild löschen
       update: Bild bearbeiten
 
-mail:
+mails:
   body:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
     signature: <p>Viel Spaß wünscht Ihnen das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
@@ -312,7 +314,7 @@ mail:
   subject:
     by: Neue Nachricht von %u
 
-media:
+medias:
   info:
     upload: Bitte seien Sie sich bewusst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören können! Gleichnamige Dateien werden beim Upload überschrieben.
   label:
@@ -322,7 +324,7 @@ media:
     create: Datei hochladen
     destroy: Datei löschen
 
-newsletter:
+newsletters:
   info:
     subscribe: Tragen Sie hier Ihre E-Mail-Adresse ein. Nach dem Absenden erhalten Sie umgehend eine E-Mail mit einem Link, durch den Sie die Echtheit Ihrer E-Mail-Adresse bestätigen können. Möchten Sie den Newsletter abbestellen, so tragen Sie sich bitte am Ende eines Newsletters aus.
   title:
@@ -332,16 +334,16 @@ pages:
   next: Ältere Beiträge
   previous: Neuere Beiträge
 
-search:
+searches:
   label:
     terms: Suchbegriffe
   title:
     create: Suche
     show: Suchergebnisse für "%s"
   info:
-    fail: "Es wurden keine Einträge zu dem Begriff: '<strong>%b</strong>' gefunden.<br /> <a href='/search' title='Suche'>Erneut suchen.</a>"
+    fail: "Es wurden keine Einträge zu dem Begriff: '<strong>%b</strong>' gefunden.<br /> <a href='/searches' title='Suche'>Erneut suchen.</a>"
 
-session:
+sessions:
   password:
     info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
@@ -358,7 +360,7 @@ session:
       subject: Ihre E-Mail-Bestätigung für %WEBSITE_NAME
     title: E-Mail-Bestätigung erneut zusenden
 
-user:
+users:
   contact_via_email: "Klicken Sie hier, um %u eine E-Mail zu schicken!"
   info:
     destroy_account: Bitte geben Sie zur eigenen Sicherheit Ihr aktuelles Passwort ein. Sobald Sie auf "Account löschen" klicken wird Ihr Zugang gelöscht und ist nicht wiederherstellbar!

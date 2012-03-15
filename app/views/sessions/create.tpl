@@ -29,7 +29,7 @@
     </div>
   </form>
   <div class='center'>
-    <a href='/{$_REQUEST.controller}/password' class='btn'>{$lang.session.password.title}</a>
-    <a href='/{$_REQUEST.controller}/verification' class='btn'>{$lang.session.verification.title}</a>
+    <a href='/{$_REQUEST.controller}/password' class='btn'>{$lang.sessions.password.title}</a>
+    <a href='/{$_REQUEST.controller}/verification' class='btn'>{$lang.sessions.verification.title}</a>
   </div>
 {/strip}

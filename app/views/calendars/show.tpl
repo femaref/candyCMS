@@ -89,7 +89,7 @@
                   <a href='/{$_REQUEST.controller}/{$d.id}'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-calendar_add'
-                        alt='{$lang.calendar.title.create}'
+                        alt='{$lang.calendars.title.create}'
                         width='16' height='16' />
                   </a>
                 {/if}

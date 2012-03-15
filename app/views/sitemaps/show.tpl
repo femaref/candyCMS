@@ -5,17 +5,17 @@
   <div class='tabbable'>
     <ul class='nav nav-tabs'>
       <li class='active'>
-        <a href='#sitemap-blog' data-toggle='tab'>{$lang.global.blog}</a>
+        <a href='#sitemap-blogs' data-toggle='tab'>{$lang.global.blogs}</a>
       </li>
       <li>
-        <a href='#sitemap-content' data-toggle='tab'>{$lang.global.content}</a>
+        <a href='#sitemap-contents' data-toggle='tab'>{$lang.global.contents}</a>
       </li>
       <li>
-        <a href='#sitemap-gallery' data-toggle='tab'>{$lang.global.gallery}</a>
+        <a href='#sitemap-galleries' data-toggle='tab'>{$lang.global.galleries}</a>
       </li>
     </ul>
     <div class='tab-content'>
-      <div class='tab-pane active' id='sitemap-blog'>
+      <div class='tab-pane active' id='sitemap-blogs'>
         {if !$blogs}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>
@@ -30,7 +30,7 @@
           </ol>
         {/if}
       </div>
-      <div class='tab-pane' id='sitemap-content'>
+      <div class='tab-pane' id='sitemap-contents'>
         {if !$contents}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>
@@ -45,7 +45,7 @@
           </ol>
         {/if}
       </div>
-      <div class='tab-pane' id='sitemap-gallery'>
+      <div class='tab-pane' id='sitemap-galleries'>
         {if !$galleries}
           <div class='alert alert-warning'>
             <h4>{$lang.error.missing.entries}</h4>

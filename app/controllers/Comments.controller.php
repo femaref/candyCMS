@@ -106,7 +106,7 @@ class Comments extends Main {
 		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blogs/' . $this->_iId));
 
 		$this->oSmarty->setTemplateDir($sTemplateDir);
-		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comment');
+		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comments');
   }
 
   /**
@@ -176,7 +176,7 @@ class Comments extends Main {
     if ($this->_aSession['user']['role'] == 0)
       $this->_setError('name');
 
-    if (isset($this->_aRequest['email']))
+    if (isset($this->_aRequest['email']) && $this->_aRequest['email'])
       $this->_setError('email');
 
     if ($this->_aError)

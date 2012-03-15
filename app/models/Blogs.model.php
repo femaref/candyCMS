@@ -148,7 +148,7 @@ class Blogs extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $this->_aData[1] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[1] = $this->_formatForOutput($aRow, 'blogs');
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];
         $this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?

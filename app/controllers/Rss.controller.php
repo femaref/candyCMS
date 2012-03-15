@@ -56,7 +56,7 @@ class Rss extends Main {
     $sModel = $this->__autoload('Blogs', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
-    $this->setTitle(I18n::get('global.blog') . ' - ' . WEBSITE_NAME);
+    $this->setTitle(I18n::get('global.blogs') . ' - ' . WEBSITE_NAME);
 
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('data', $oModel->getData());

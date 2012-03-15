@@ -2,7 +2,7 @@
   <a name='create'></a>
   <div class='page-header'>
     <h2>
-      {$lang.comment.title.create}
+      {$lang.comments.title.create}
     </h2>
   </div>
   <form method='post' data-ajax='false' class='form-horizontal'>
@@ -58,7 +58,7 @@
     </div>
     {include file='../layouts/_recaptcha.tpl'}
     <div class='form-actions'>
-      <input type='submit' value='{$lang.comment.title.create}' data-theme='b' class='btn btn-primary' />
+      <input type='submit' value='{$lang.comments.title.create}' data-theme='b' class='btn btn-primary' />
       <input type='reset' value='{$lang.global.reset}' class='btn' />
       <input type='hidden' value='formdata' name='create_comments' />
       <input type='hidden' value='{$_REQUEST.id}' name='parent_id' />

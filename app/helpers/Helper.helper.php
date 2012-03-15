@@ -496,4 +496,32 @@ class Helper {
   public static function addSlash($sStr) {
     return substr($sStr, 0, 1) == '/' ? $sStr : '/' . $sStr;
   }
+
+  /**
+   * @todo test and documentation
+   */
+  public static function pluralize($sStr) {
+    if (substr($sStr, -1) == 's')
+      return $sStr;
+
+    elseif (substr($sStr, -1) == 'h')
+      return $sStr . 'es';
+
+    elseif (substr($sStr, -1) == 'y')
+      return $sStr . 'ies';
+  }
+
+  /**
+   * @todo test and documentation
+   */
+  public function singleize($sStr) {
+    if (substr($sStr, -3) == 'ies')
+      return substr($sStr, 0, -3) . 'y';
+
+    elseif (substr($sStr, -2) == 'es')
+      return substr($sStr, 0, -2);
+
+    elseif (substr($sStr, -1) == 's' && substr($sStr, -1) !== 'ss')
+      return substr($sStr, 0, -1);
+  }
 }

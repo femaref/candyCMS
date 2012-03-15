@@ -178,8 +178,8 @@
             <ul>
               {if $_SESSION.user.role < 1}
                 <li>
-                  <a href='/newsletters' title='{$lang.newsletter.title.subscribe}'>
-                    {$lang.newsletter.title.subscribe}
+                  <a href='/newsletters' title='{$lang.newsletters.title.subscribe}'>
+                    {$lang.newsletters.title.subscribe}
                   </a>
                 </li>
               {/if}

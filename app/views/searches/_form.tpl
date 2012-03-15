@@ -5,7 +5,7 @@
     </div>
     <div class='control-group'>
       <label for='input-search' class='control-label'>
-        {$lang.search.label.terms} <span title='{$lang.global.required}'>*</span>
+        {$lang.searches.label.terms} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>
         <input type='search' class='span4 focused' name='search'

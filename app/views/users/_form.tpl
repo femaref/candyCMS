@@ -1,26 +1,26 @@
 {strip}
   <div class='page-header'>
-    <h1>{$lang.user.title.update}</h1>
+    <h1>{$lang.users.title.update}</h1>
   </div>
   <div class='tabbable'>
     <ul class='nav nav-tabs'>
       <li{if $_REQUEST['action'] == 'update'} class='active'{/if}>
-        <a href='#user-personal' data-toggle='tab'>{$lang.user.title.personal_data}</a>
+        <a href='#user-personal' data-toggle='tab'>{$lang.users.title.personal_data}</a>
       </li>
       {if $_SESSION.user.id == $uid}
         <li{if $_REQUEST['action'] == 'password'} class='active'{/if}>
-          <a href='#user-password' data-toggle='tab'>{$lang.user.title.password}</a>
+          <a href='#user-password' data-toggle='tab'>{$lang.users.title.password}</a>
         </li>
       {/if}
       <li id='js-avatar_tab'
           {if $_REQUEST['action'] == 'avatar' && $use_gravatar == 1}class='active hide'
           {elseif $use_gravatar == 1}class='hide'
           {elseif $_REQUEST['action'] == 'avatar'}class='active'{/if}>
-        <a href='#user-image' data-toggle='tab'>{$lang.user.title.image}</a>
+        <a href='#user-image' data-toggle='tab'>{$lang.users.title.image}</a>
       </li>
       {if $_SESSION.user.role < 4}
         <li{if $_REQUEST['action'] == 'destroy'} class='active'{/if}>
-          <a href='#user-destroy' data-toggle='tab'>{$lang.user.title.account}</a>
+          <a href='#user-destroy' data-toggle='tab'>{$lang.users.title.account}</a>
         </li>
       {/if}
     </ul>
@@ -60,7 +60,7 @@
         </div>
         <div class='control-group'>
           <label for='input-use_gravatar' class='control-label'>
-            {$lang.user.label.gravatar}
+            {$lang.users.label.gravatar}
           </label>
           <div class='controls'>
             <input type='checkbox'
@@ -78,13 +78,13 @@
               </a>
             </div>
             <p id='js-gravatar_help' class='help-block{if $use_gravatar == 1} hide{/if}'>
-              {$lang.user.info.gravatar}
+              {$lang.users.info.gravatar}
             </p>
           </div>
         </div>
         <div class='control-group'>
           <label for='input-content' class='control-label'>
-            {$lang.user.label.content.update}
+            {$lang.users.label.content.update}
           </label>
           <div class='controls'>
             <textarea name='content' rows='6' class='span4' id='input-content'>
@@ -95,7 +95,7 @@
         </div>
         <div class='control-group'>
           <label for='input-receive_newsletter' class='control-label'>
-            {$lang.user.label.newsletter}
+            {$lang.users.label.newsletter}
           </label>
           <div class='controls'>
             <input name='receive_newsletter' id='input-receive_newsletter' value='1'
@@ -118,7 +118,7 @@
           </div>
         {/if}
         <div class='form-actions'>
-          <input type='submit' class='btn btn-primary' value='{$lang.user.label.update}' />
+          <input type='submit' class='btn btn-primary' value='{$lang.users.label.update}' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value="{$email}" name='email' />
           <input type='hidden' value='formdata' name='update_user' />
@@ -132,7 +132,7 @@
       <form method='post' action='/{$_REQUEST.controller}/{$uid}/password' class='form-horizontal'>
         <div class='control-group{if isset($error.password_old)} alert alert-error{/if}'>
           <label for='input-password_old' class='control-label'>
-            {$lang.user.label.password.old} <span title='{$lang.global.required}'>*</span>
+            {$lang.users.label.password.old} <span title='{$lang.global.required}'>*</span>
           </label>
           <div class='controls'>
             <input name='password_old' id='input-password_old' type='password'
@@ -142,7 +142,7 @@
         </div>
         <div class='control-group{if isset($error.password_new)} alert alert-error{/if}'>
           <label for='input-password_new' class='control-label'>
-            {$lang.user.label.password.new} <span title='{$lang.global.required}'>*</span>
+            {$lang.users.label.password.new} <span title='{$lang.global.required}'>*</span>
           </label>
           <div class='controls'>
             <input name='password_new' id='input-password_new' type='password'
@@ -160,7 +160,7 @@
           </div>
         </div>
         <div class='form-actions'>
-          <input type='submit' class='btn btn-primary' value='{$lang.user.label.password.create}' />
+          <input type='submit' class='btn btn-primary' value='{$lang.users.label.password.create}' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
         </div>
       </form>
@@ -173,7 +173,7 @@
             class='form-horizontal'>
         <div class='control-group{if isset($error.image)} alert alert-error{/if}'>
           <label for='input-image' class='control-label'>
-            {$lang.user.label.image.choose}
+            {$lang.users.label.image.choose}
           </label>
           <div class='controls'>
             <input type='file' name='image' id='input-image' class='span4'
@@ -182,7 +182,7 @@
               <span class='help-inline'>{$error.image}</span>
             {/if}
             <span class='help-block'>
-              {$lang.user.info.image}
+              {$lang.users.info.image}
             </span>
           </div>
         </div>
@@ -194,7 +194,7 @@
             <label class='checkbox'>
               <input type='checkbox' class='checkbox' name='terms'
                     id='input-terms' value='1' />
-                {$lang.user.label.image.terms}
+                {$lang.users.label.image.terms}
             </label>
             {if isset($error.terms)}
               <span class='help-inline'>{$error.terms}</span>
@@ -202,7 +202,7 @@
           </div>
         </div>
         <div class='form-actions'>
-          <input type='submit' class='btn btn-primary' value='{$lang.user.title.image}' />
+          <input type='submit' class='btn btn-primary' value='{$lang.users.title.image}' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value='formdata' name='create_avatar' />
           <input type='hidden' name='MAX_FILE_SIZE' value='409600' />
@@ -215,7 +215,7 @@
     <div class="tab-pane{if $_REQUEST['action'] == 'destroy'} active{/if}" id='user-destroy'>
       <form method='post' action='/{$_REQUEST.controller}/{$uid}/destroy' class='form-horizontal'>
         <p class='alert alert-danger'>
-          {$lang.user.info.destroy_account}
+          {$lang.users.info.destroy_account}
         </p>
         <div class='control-group'>
           <label for='input-password' class='control-label'>
@@ -226,7 +226,7 @@
           </div>
         </div>
         <div class='form-actions'>
-          <input type='submit' class='btn btn-danger' value='{$lang.user.label.account.destroy}' />
+          <input type='submit' class='btn btn-danger' value='{$lang.users.label.account.destroy}' />
           <input type='hidden' value='formdata' name='destroy_user' />
         </div>
       </form>

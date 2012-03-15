@@ -2,9 +2,9 @@
   <div class='page-header'>
     <h1>
       {if $_REQUEST.action == 'create'}
-        {$lang.content.title.create}
+        {$lang.contents.title.create}
       {else}
-        {$lang.content.title.update|replace:'%p':$title}
+        {$lang.contents.title.update|replace:'%p':$title}
       {/if}
     </h1>
   </div>
@@ -33,7 +33,7 @@
                 id='input-teaser' />
           <span class='help-inline'></span>
           <p class='help-block'>
-            {$lang.blog.info.teaser}
+            {$lang.blogs.info.teaser}
           </p>
         </div>
       </div>
@@ -45,7 +45,7 @@
           <input name='keywords' value="{$keywords}" type='text'
                 class='span4' id='input-keywords' />
           <p class='help-block'>
-            {$lang.content.info.keywords}
+            {$lang.contents.info.keywords}
           </p>
         </div>
       </div>
@@ -78,7 +78,7 @@
               value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
         <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
         {if $_REQUEST.action == 'update'}
-          <input type='button' class='btn btn-danger' value='{$lang.content.title.destroy}'
+          <input type='button' class='btn btn-danger' value='{$lang.contents.title.destroy}'
                 onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value='{$_REQUEST.id}' name='id' />

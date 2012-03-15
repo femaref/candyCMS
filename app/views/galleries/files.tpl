@@ -6,7 +6,7 @@
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
-        {$lang.gallery.files.title.create}
+        {$lang.galleries.files.title.create}
       </a>
     </p>
   {/if}

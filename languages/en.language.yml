@@ -52,6 +52,7 @@ global:
   file: File
   files: Files
   gallery: Gallery
+  galleries: Galleries
   headlines: Headlines
   id: ID
   image:
@@ -216,6 +217,7 @@ error:
     template: This template is not available!
   passwords: Passwords do not match, please retype.
   session:
+    account: There is no account with such email address.
     create: Please check your email and password. Also, is your email account verified?
     create_first: Please login first!
   standard: An error occured!
@@ -236,7 +238,7 @@ error:
           wrong: Your old password was incorrect!
       verification: Could not verify your account. This code does not exist!
 
-blog:
+blogs:
   info:
     keywords: Please enter the most relevant keywords.
     tag: Seperate tags by comma and space, i.e. "tag1, tag2"
@@ -248,7 +250,7 @@ blog:
     destroy: Delete blog entry
     update: "Update: '%p'"
 
-calendar:
+calendars:
   info:
     date_format: 'Date format: "YYYY-MM-DD"'
   title:
@@ -256,14 +258,14 @@ calendar:
     update: Update appointment
     destroy: Delete appointment
 
-comment:
+comments:
   info:
     email: Your email will not be published.
   title:
     create: Create comment
     destroy: Delete comment
 
-content:
+contents:
   info:
     keywords: Enter the most important keywords.
     teaser: Write a teaser for SEO.
@@ -278,7 +280,7 @@ cronjob:
     body: Your backup has successfully been created and is available as attachment.\r\n
     subject: Backup from %d
 
-download:
+downloads:
   label:
     choose: Select file
   title:
@@ -286,7 +288,7 @@ download:
     destroy: Delete download
     update: Update download
 
-gallery:
+galleries:
   albums:
     title:
       create: Create album
@@ -302,7 +304,7 @@ gallery:
       destroy: Delete file
       update: Edit file
 
-mail:
+mails:
   body:
     no_reply: <p>(This is a generated Mail. Do not reply!)</p>
     signature: <p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>
@@ -312,7 +314,7 @@ mail:
   subject:
     by: New message from %u
 
-media:
+medias:
   info:
     upload: Make sure that your file(s) are virus-checked to avoid harm on your server!
   label:
@@ -322,7 +324,7 @@ media:
     create: Upload file
     destroy: Delete file
 
-newsletter:
+newsletters:
   info:
     subscribe: Please enter your information to subscribe to our newsletter. You can unsubscribe to this newsletter at the end of each mail.
   title:
@@ -332,16 +334,16 @@ pages:
   next: Next entries
   previous: Older entries
 
-search:
+searches:
   label:
     terms: Terms
   title:
     create: Search
     show: "Search results for '%s'"
   info:
-    fail: "There are no results for the term: '<strong>%b</strong>'.<br /><a href='/search'>Search again.</a>"
+    fail: "There are no results for the term: '<strong>%b</strong>'.<br /><a href='/searches'>Search again.</a>"
 
-session:
+sessions:
   password:
     info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
@@ -358,7 +360,7 @@ session:
       subject: Your email verification for %WEBSITE_NAME
     title: Resend email verification
 
-user:
+users:
   contact_via_email: "Click to send %u an email!"
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.

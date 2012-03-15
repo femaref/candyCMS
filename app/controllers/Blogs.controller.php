@@ -69,7 +69,7 @@ class Blogs extends Main {
    */
   private function _setBlogsDescription() {
     if (isset($this->_aRequest['page']) && $this->_aRequest['page'] > 1)
-      return I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . (int) $this->_aRequest['page'];
+      return I18n::get('global.blogs') . ' - ' . I18n::get('global.page') . ' ' . (int) $this->_aRequest['page'];
 
     elseif ($this->_iId) {
       if (isset($this->_aData[1]['teaser']) && $this->_aData[1]['teaser'])
@@ -82,7 +82,7 @@ class Blogs extends Main {
         return $this->_setBlogsTitle();
     }
     else
-      return I18n::get('global.blog');
+      return I18n::get('global.blogs');
   }
 
   /**
@@ -115,14 +115,14 @@ class Blogs extends Main {
 
     # default blog entry
     elseif ($this->_iId)
-      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blog');
+      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blogs');
 
     # show overview with pages
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
 			return $iPage > 1 ?
-							I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
-							I18n::get('global.blog');
+							I18n::get('global.blogs') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
+							I18n::get('global.blogs');
     }
   }
 

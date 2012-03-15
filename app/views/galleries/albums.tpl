@@ -6,7 +6,7 @@
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
-        {$lang.gallery.albums.title.create}
+        {$lang.galleries.albums.title.create}
       </a>
     </p>
   {/if}
@@ -27,8 +27,8 @@
               <a href='/{$_REQUEST.controller}/{$a.id}/createfile'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-create js-tooltip'
-                    alt='{$lang.gallery.files.title.create}'
-                    title='{$lang.gallery.files.title.create}'
+                    alt='{$lang.galleries.files.title.create}'
+                    title='{$lang.galleries.files.title.create}'
                     width='16' height='16' />
               </a>
               <a href='/{$_REQUEST.controller}/{$a.id}/update'>

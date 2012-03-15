@@ -127,7 +127,7 @@ class Comments extends Main {
         $iId = $aRow['id'];
         $iAuthorFacebookId = $aRow['author_facebook_id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blog');
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blogs');
         $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
         $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
       }

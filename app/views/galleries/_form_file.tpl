@@ -4,16 +4,16 @@
     <div class='page-header'>
       <h1>
         {if $_REQUEST.action == 'createfile'}
-          {$lang.gallery.files.title.create}
+          {$lang.galleries.files.title.create}
         {else}
-          {$lang.gallery.files.title.update}
+          {$lang.galleries.files.title.update}
         {/if}
       </h1>
     </div>
     {if $_REQUEST.action == 'createfile'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
-          {$lang.gallery.files.label.choose} <span title="{$lang.global.required}">*</span>
+          {$lang.galleries.files.label.choose} <span title="{$lang.global.required}">*</span>
         </label>
         <div class='controls'>
           <input class='span4 required' type='file' name='file[]'
@@ -27,8 +27,8 @@
         </label>
         <div class='controls'>
           <select name='cut' id="input-cut" class='span4 required'>
-            <option value='c' {if $default == 'c'}default='default'{/if}>{$lang.gallery.files.label.cut}</option>
-            <option value='r' {if $default == 'r'}default='default'{/if}>{$lang.gallery.files.label.resize}</option>
+            <option value='c' {if $default == 'c'}default='default'{/if}>{$lang.galleries.files.label.cut}</option>
+            <option value='r' {if $default == 'r'}default='default'{/if}>{$lang.galleries.files.label.resize}</option>
           </select>
         </div>
       </div>
@@ -44,7 +44,7 @@
     </div>
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary'
-            value="{if $_REQUEST.action == 'createfile'}{$lang.gallery.files.title.create}{else}{$lang.gallery.files.title.update}{/if}" />
+            value="{if $_REQUEST.action == 'createfile'}{$lang.galleries.files.title.create}{else}{$lang.galleries.files.title.update}{/if}" />
       {if $_REQUEST.action == 'updatefile'}
         <input type='button' value='{$lang.global.destroy.destroy}' class='btn btn-danger'
         onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroyfile?album_id={$album_id}')" />

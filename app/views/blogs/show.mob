@@ -6,7 +6,7 @@
       </a>
     </p>
   {/if}
-  {* blog overview *}
+  {* blogs overview *}
   {if !$_REQUEST.id}
     <ul data-role="listview">
       {foreach $blogs as $b}
@@ -31,7 +31,7 @@
         </li>
       {/foreach}
     </ul>
-  {* single blog entry *}
+  {* single blogs entry *}
   {else}
     {foreach $blogs as $b}
       {if !$b.id}

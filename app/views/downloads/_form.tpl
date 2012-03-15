@@ -7,7 +7,7 @@
     {if $_REQUEST.action == 'create'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>
-          {$lang.download.label.choose} <span title="{$lang.global.required}">*</span>
+          {$lang.downloads.label.choose} <span title="{$lang.global.required}">*</span>
         </label>
         <div class='controls'>
           <input class='input-file span4 required' type='file' name='file[]'

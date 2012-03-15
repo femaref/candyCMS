@@ -133,9 +133,6 @@ class Galleries extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
 
-			$this->setDescription(I18n::get('global.gallery'));
-			$this->setTitle(I18n::get('global.gallery'));
-
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$this->oSmarty->assign('albums', $this->_oModel->getData());
 				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
@@ -152,19 +149,24 @@ class Galleries extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo set title and description. this didn't work atm.
    *
    */
   protected function _showFormTemplate() {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
 
-    if ($this->_iId)
+    if ($this->_iId) {
 			$aData = $this->_oModel->getData($this->_iId, true);
 
+      $this->setTitle(I18n::get('galleries.albums.title.update'));
+      $this->setDescription(I18n::get('galleries.albums.title.update'));
+    }
 		else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+
+      $this->setTitle(I18n::get('galleries.albums.title.create'));
+      $this->setDescription(I18n::get('galleries.albums.title.create'));
     }
 
     foreach ($aData as $sColumn => $sData)
@@ -335,7 +337,7 @@ class Galleries extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/' . $this->_aRequest['controller']);
 
     else {
-      if (isset($this->_aRequest['updatefile_gallery'])) {
+      if (isset($this->_aRequest['updatefile_galleries'])) {
         if ($this->_oModel->updateFile($this->_iId) === true) {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 

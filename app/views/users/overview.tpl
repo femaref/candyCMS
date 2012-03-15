@@ -6,12 +6,12 @@
             class='icon-create'
             alt='{$lang.global.create.entry}'
             width='16' height='16' />
-        {$lang.user.title.create}
+        {$lang.users.title.create}
       </a>
     </p>
   {/if}
   <div class='page-header'>
-    <h1>{$lang.user.title.overview}</h1>
+    <h1>{$lang.users.title.overview}</h1>
   </div>
   <table class='table'>
     <thead>
@@ -19,8 +19,8 @@
         <th class='column-id headerSortDown'>{$lang.global.id}</th>
         <th class='column-icon'></th>
         <th class='column-name'>{$lang.global.name}</th>
-        <th class='column-registered_since center'>{$lang.user.label.registered_since}</th>
-        <th class='column-last_login center'>{$lang.user.label.last_login}</th>
+        <th class='column-registered_since center'>{$lang.users.label.registered_since}</th>
+        <th class='column-last_login center'>{$lang.users.label.last_login}</th>
         <th class='column-newsletter center'>{$lang.global.newsletter}</th>
         {if $_SESSION.user.role == 4}
           <th class='column-actions'></th>

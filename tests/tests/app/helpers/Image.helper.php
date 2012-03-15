@@ -18,7 +18,8 @@ use \CandyCMS\Helper\Image as Image;
 class UnitTestOfImageHelper extends CandyUnitTest {
 
   function setUp() {
-    $this->sImagePath = PATH_STANDARD . '/' . Helper::removeSlash(PATH_UPLOAD) . '/temp/media/test.png';
+    $this->sImagePath = PATH_STANDARD . '/' . Helper::removeSlash(PATH_UPLOAD) . '/temp/medias/test.png';
+
     $this->oObject = new Image('test',
             'temp',
             PATH_STANDARD . '/' . Helper::removeSlash(WEBSITE_CDN) . '/images/candy.global/spacer.png',
@@ -30,7 +31,7 @@ class UnitTestOfImageHelper extends CandyUnitTest {
   }
 
   function testResizeDefault() {
-    $this->assertIsA($this->oObject->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y, 'media'), 'string');
+    $this->assertIsA($this->oObject->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y, 'medias'), 'string');
     $aInfo = @getimagesize($this->sImagePath);
 
     $this->assertIsA($aInfo, 'array');
@@ -40,7 +41,7 @@ class UnitTestOfImageHelper extends CandyUnitTest {
   }
 
   function testResizeAndCut() {
-    $this->assertIsA($this->oObject->resizeAndCut(THUMB_DEFAULT_X, 'media'), 'string');
+    $this->assertIsA($this->oObject->resizeAndCut(THUMB_DEFAULT_X, 'medias'), 'string');
     $aInfo = @getimagesize($this->sImagePath);
 
     $this->assertIsA($aInfo, 'array');

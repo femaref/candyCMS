@@ -1,9 +1,9 @@
 {strip}
   <div class='page-header'>
-    <h1>{$lang.newsletter.title.subscribe}</h1>
+    <h1>{$lang.newsletters.title.subscribe}</h1>
   </div>
   <p>
-    {$lang.newsletter.info.subscribe}
+    {$lang.newsletters.info.subscribe}
   </p>
   <form method='post' class='form-horizontal'>
     <div class='control-group'>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class='form-actions'>
-      <input type='submit' class='btn btn-primary' value='{$lang.newsletter.title.subscribe}' />
+      <input type='submit' class='btn btn-primary' value='{$lang.newsletters.title.subscribe}' />
       <input type='hidden' value='formdata' name='subscribe_newsletter' />
     </div>
   </form>

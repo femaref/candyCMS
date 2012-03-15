@@ -114,7 +114,6 @@ class Sessions extends Main {
 	 *
 	 * @access public
 	 * @return string HTML
-	 * @todo better error messages
    * @todo refactor to two methods
 	 *
 	 */
@@ -147,8 +146,7 @@ class Sessions extends Main {
 								Helper::errorMessage(I18n::get('error.mail.create')) . $this->_show();
 			}
 			else
-				# Replace error message with message, that email could not be found
-				return Helper::errorMessage('Account not found!', '/');
+				return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller']);
 		}
 	}
 
@@ -157,7 +155,6 @@ class Sessions extends Main {
 	 *
 	 * @access public
 	 * @return string HTML
-	 * @todo better error messages
    * @todo refactor to two methods
 	 *
 	 */
@@ -191,8 +188,7 @@ class Sessions extends Main {
 								$this->_show();
 			}
 			else
-				# Replace error message with message, that email could not be found
-				return Helper::errorMessage(I18n::get('error.sql'), '/');
+				return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller']);
 		}
 	}
 

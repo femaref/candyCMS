@@ -3,17 +3,17 @@
     <div class='page-header'>
       <h1>
         {if $_REQUEST.action == 'verification'}
-          {$lang.session.verification.title}
+          {$lang.sessions.verification.title}
         {else}
-          {$lang.session.password.title}
+          {$lang.sessions.password.title}
         {/if}
       </h1>
     </div>
     <p>
       {if $_REQUEST.action == 'verification'}
-        {$lang.session.verification.info}
+        {$lang.sessions.verification.info}
       {else}
-        {$lang.session.password.info}
+        {$lang.sessions.password.info}
       {/if}
     </p>
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>

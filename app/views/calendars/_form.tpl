@@ -36,7 +36,7 @@
           <span class='help-inline'>{$error.start_date}</span>
         {/if}
         <p class='help-block'>
-          {$lang.calendar.info.date_format}
+          {$lang.calendars.info.date_format}
         </p>
       </div>
     </div>
@@ -51,7 +51,7 @@
           <span class='help-inline'>{$error.end_date}</span>
         {/if}
         <p class='help-block'>
-          {$lang.calendar.info.date_format}
+          {$lang.calendars.info.date_format}
         </p>
       </div>
     </div>

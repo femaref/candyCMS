@@ -255,7 +255,7 @@ abstract class Main {
 	 * Set up smarty.
 	 *
 	 * @access proteced
-	 * @return obj $this->oSmarty
+	 * @return object $this->oSmarty
 	 *
 	 */
 	protected function _setSmarty() {
@@ -283,7 +283,8 @@ abstract class Main {
 	 *
 	 */
 	public function setDescription($sDescription = '') {
-		$this->_sDescription = & $sDescription;
+    if ($sDescription)
+      $this->_sDescription = & $sDescription;
 	}
 
 	/**
@@ -291,7 +292,6 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string meta description
-	 * @todo does i18n fail?
 	 *
 	 */
 	public function getDescription() {
@@ -312,7 +312,8 @@ abstract class Main {
 	 *
 	 */
 	public function setKeywords($sKeywords = '') {
-		$this->_sKeywords = & $sKeywords;
+    if ($sKeywords)
+      $this->_sKeywords = & $sKeywords;
 	}
 
 	/**
@@ -320,7 +321,6 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string meta keywords
-	 * @todo why are keywords not working? I18n fails.
 	 *
 	 */
 	public function getKeywords() {
@@ -335,15 +335,16 @@ abstract class Main {
 	 *
 	 */
 	public function setTitle($sTitle = '') {
-		$this->_sTitle = & $sTitle;
-	}
+    if ($sTitle)
+      $this->_sTitle = & $sTitle;
+  }
 
 	/**
 	 * Give back the page title.
 	 *
 	 * @access public
 	 * @return string page title
-	 * @todo does i18n fail?
+   * @todo why is this still used two times?
 	 *
 	 */
 	public function getTitle() {
@@ -352,7 +353,7 @@ abstract class Main {
 
     else
       return $this->_sTitle ? $this->_sTitle :
-              I18n::get('global.' . strtolower(substr($this->_aRequest['controller'], 0, strlen($this->_aRequest['controller']) - 1)));
+              I18n::get('global.' . strtolower(Helper::singleize($this->_aRequest['controller'])));
   }
 
 	/**

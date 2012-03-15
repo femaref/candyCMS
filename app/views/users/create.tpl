@@ -61,7 +61,7 @@
           <h3>{$lang.global.terms.terms}</h3>
         </div>
         <div class="modal-body">
-          <p>{$lang.user.info.terms}</p>
+          <p>{$lang.users.info.terms}</p>
         </div>
       </div>
       <div class="control-group{if isset($error.disclaimer)} alert alert-error{/if}">

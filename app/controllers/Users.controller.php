@@ -323,6 +323,15 @@ class Users extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
+    if ($this->_aSession['user']['role'] == 4) {
+      $this->setTitle(I18n::get('user.title.create'));
+      $this->setDescription(I18n::get('user.title.create'));
+    }
+    else {
+      $this->setTitle(I18n::get('global.registration'));
+      $this->setDescription(I18n::get('global.registration'));
+    }
+
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
 										'');

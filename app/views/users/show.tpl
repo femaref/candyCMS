@@ -17,7 +17,7 @@
     <table class="table unstyled">
       <tr>
         <td>
-          {$lang.user.label.registered_since}
+          {$lang.users.label.registered_since}
         </td>
         <td>
           {$u.date}
@@ -40,7 +40,7 @@
       </tr>
       <tr>
         <td>
-          {$lang.user.label.last_login}
+          {$lang.users.label.last_login}
         </td>
         <td>
           {$u.last_login}
@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td>
-          {$lang.user.label.content.show|replace:'%u':$u.name}
+          {$lang.users.label.content.show|replace:'%u':$u.name}
         </td>
         <td>
           {$u.content}
@@ -61,7 +61,7 @@
         <td>
           {* Absolute URL due to fancybox bug *}
           <a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}'>
-            {$lang.user.contact_via_email|replace:'%u':$u.name}
+            {$lang.users.contact_via_email|replace:'%u':$u.name}
           </a>
         </td>
       </tr>

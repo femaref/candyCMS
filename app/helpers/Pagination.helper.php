@@ -118,8 +118,6 @@ class Pagination {
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
 
     $this->_oSmarty = SmartySingleton::getInstance();
-
-    // $this->_oSmarty->assign('_REQUEST', $this->_aRequest);
   }
 
 	/**
@@ -175,7 +173,6 @@ class Pagination {
    * @access public
    * @param string $sController controller to show.
    * @return string HTML content if there are more than one pages
-   * @todo public folder? same as _PATH.public??
    *
    */
   public function showPages($sController = '') {
@@ -200,20 +197,15 @@ class Pagination {
    * @access public
    * @param string $sController controller to show for RSS
    * @return string HTML content if there are more than one pages
-   * @todo remove i18n when smarty instance is done
    *
    */
-  public function showSurrounding($sController = 'blog') {
+  public function showSurrounding($sController = 'blogs') {
 		if($this->_iPages > 1) {
 			if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
 				$iNext = $this->_iCurrentPage + 1;
 
 			if ($this->_iCurrentPage > 1)
 				$iPrevious = $this->_iCurrentPage - 1;
-
-			# Set up language
-			$oI18n = new I18n(WEBSITE_LANGUAGE);
-			$this->_oSmarty->assign('lang', $oI18n->getArray());
 
       $aPage = array(
           'entries'     => $this->_iEntries,

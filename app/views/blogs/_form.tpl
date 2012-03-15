@@ -2,9 +2,9 @@
   <div class='page-header'>
     <h1>
       {if $_REQUEST.action == 'create'}
-        {$lang.blog.title.create}
+        {$lang.blogs.title.create}
       {else}
-        {$lang.blog.title.update|replace:'%p':$title}
+        {$lang.blogs.title.update|replace:'%p':$title}
       {/if}
     </h1>
   </div>
@@ -32,7 +32,7 @@
               id='input-teaser' />
         <span class='help-inline'></span>
         <p class='help-block'>
-          {$lang.blog.info.teaser}
+          {$lang.blogs.info.teaser}
         </p>
       </div>
     </div>
@@ -46,7 +46,7 @@
               data-source="{$_tags_}" data-items='8'
               class='span4' autocomplete='off' />
         <p class='help-block'>
-          {$lang.blog.info.tag}
+          {$lang.blogs.info.tag}
         </p>
       </div>
     </div>
@@ -56,9 +56,9 @@
       </label>
       <div class='controls'>
         <input name='keywords' value="{$keywords}" type='text' id='input-keywords'
-              title='{$lang.blog.info.keywords}' class='span4' />
+              title='{$lang.blogs.info.keywords}' class='span4' />
         <p class='help-block'>
-          {$lang.blog.info.keywords}
+          {$lang.blogs.info.keywords}
         </p>
       </div>
     </div>
@@ -99,7 +99,7 @@
     {if $_REQUEST.action == 'update'}
       <div class='control-group'>
         <label for='input-update_date' class='control-label'>
-          {$lang.blog.label.date}
+          {$lang.blogs.label.date}
         </label>
         <div class='controls'>
             <input name='update_date' value='1' type='checkbox'
@@ -125,7 +125,7 @@
         <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
       {elseif $_REQUEST.action == 'update'}
         <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
-          <input type='button' class='btn btn-danger' value='{$lang.blog.title.destroy}'
+          <input type='button' class='btn btn-danger' value='{$lang.blogs.title.destroy}'
                 onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value='{$_REQUEST.id}' name='id' />

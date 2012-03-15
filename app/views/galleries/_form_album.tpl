@@ -3,9 +3,9 @@
     <div class='page-header'>
       <h1>
         {if $_REQUEST.action == 'create'}
-          {$lang.gallery.albums.title.create}
+          {$lang.galleries.albums.title.create}
         {else}
-          {$lang.gallery.albums.title.update|replace:'%p':$title}
+          {$lang.galleries.albums.title.update|replace:'%p':$title}
         {/if}
       </h1>
     </div>
@@ -39,7 +39,7 @@
       <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
       {if $_REQUEST.action == 'update'}
         <input type='hidden' value='{$_REQUEST.id}' name='id' />
-        <input type='button' value='{$lang.gallery.albums.title.destroy}' class='btn btn-danger'
+        <input type='button' value='{$lang.galleries.albums.title.destroy}' class='btn btn-danger'
           onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
         <input type='reset' value='{$lang.global.reset}' class='btn' />
       {/if}
