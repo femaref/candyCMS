@@ -26,8 +26,8 @@
 "sessions/(password|verification)": controller=sessions&action=$1
 "sites/(:alnum)": controller=sites&site=$1
 "sitemap.xml": controller=sitemaps&action=xml&ajax=1
-"users/(:num)/(:alpha)": controller=users&action=$2&id=$1
 "users/(:alnum)/verification": controller=users&action=verification&code=$1
+"users/(:num)/(:alpha)": controller=users&action=$2&id=$1
 
 # Magic rule
 "(:alpha)/(:num)": controller=$1&id=$2
