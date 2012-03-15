@@ -34,6 +34,15 @@ class WebTestOfCalendarsController extends CandyWebTest {
     $this->assertResponse(200);
 	}
 
+  function testShowArchive() {
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2020/archive'));
+		$this->assertText('8f9e4a9962');
+		$this->assertText('2019');
+		$this->assertText('2021');
+    $this->assertText(I18n::get('global.archive'));
+    $this->assertResponse(200);
+  }
+
   function testShowWithId() {
     //get an entry
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
