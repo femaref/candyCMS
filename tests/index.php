@@ -49,6 +49,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blogs.controller.php');
 
     # Calendar
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Calendars.model.php');
 
     # Comment
     $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Comments.model.php');

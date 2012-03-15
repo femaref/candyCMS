@@ -40,6 +40,9 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertResponse('200');
   }
 
+  /**
+   *@todo validation
+   */
   function testCreate() {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
     $this->assertNoText(I18n::get('error.missing.permission'));
