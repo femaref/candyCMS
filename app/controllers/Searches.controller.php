@@ -31,7 +31,6 @@ class Searches extends Main {
 	 *
 	 * @access protected
 	 * @return string HTML content
-	 * @todo split functions (create / show)
 	 *
 	 */
   protected function _show() {

@@ -121,8 +121,8 @@ class Blogs extends Main {
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
 			return $iPage > 1 ?
-							I18n::get('global.blogs') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
-							I18n::get('global.blogs');
+							I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
+							I18n::get('global.blog');
     }
   }
 

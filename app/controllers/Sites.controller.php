@@ -19,7 +19,11 @@ use Smarty;
 class Sites extends Main {
 
   /**
-   * @todo documentation
+   * Print out a static page. An example would be "/site/welcome" when there is a template named
+	 * "welcome.tpl" in the static folder defined in the "config/Candy.inc.php" (PATH_STATIC).
+	 *
+	 * @access protected
+	 * @return string HTML content
    *
    */
   protected function _show() {

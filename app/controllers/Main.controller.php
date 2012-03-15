@@ -344,7 +344,6 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @return string page title
-   * @todo why is this still used two times?
 	 *
 	 */
 	public function getTitle() {

@@ -462,7 +462,7 @@ class Helper {
     $sStr = str_replace('ö', 'oe', $sStr);
     $sStr = str_replace('ß', 'ss', $sStr);
 
-		# Remove non alpha chars
+		# Remove non alpha chars exept the needed dot
 		$sStr = preg_replace("/[^a-zA-Z0-9\.\s]/", '', $sStr);
 
 		# Remove spaces
@@ -498,7 +498,14 @@ class Helper {
   }
 
   /**
-   * @todo test and documentation
+	 * Pluralize a string.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr
+	 * @return string pluralized string
+   * @todo test
+	 *
    */
   public static function pluralize($sStr) {
     if (substr($sStr, -1) == 's')
@@ -512,7 +519,15 @@ class Helper {
   }
 
   /**
-   * @todo test and documentation
+	 * Singleize a string.
+	 *
+	 * @static
+	 * @access public
+	 * @param string $sStr
+	 * @return string singleize string
+	 * @see app/controllers/Main.controller.php
+   * @todo test
+	 *
    */
   public function singleize($sStr) {
     if (substr($sStr, -3) == 'ies')
@@ -521,7 +536,7 @@ class Helper {
     elseif (substr($sStr, -2) == 'es')
       return substr($sStr, 0, -2);
 
-    elseif (substr($sStr, -1) == 's' && substr($sStr, -1) !== 'ss')
+    elseif (substr($sStr, -1) == 's' && substr($sStr, -2) !== 'ss')
       return substr($sStr, 0, -1);
   }
 }

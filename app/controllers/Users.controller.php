@@ -117,7 +117,6 @@ class Users extends Main {
 	 *
 	 * @access protected
 	 * @return string HTML content
-   * @todo set title and description
 	 *
 	 */
 	protected function _showFormTemplate($bUseRequest = false) {
@@ -416,32 +415,17 @@ class Users extends Main {
 	}
 
 	/**
-	 * Destroy user avatar images.
-	 *
-	 * @access private
-	 * @param integer $iId user id.
-	 * @todo foreach statement
-	 *
-	 */
-	private function _destroyUserAvatars($iId) {
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/32/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/64/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/100/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/200/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/popup/' . (int) $iId . '.jpg'));
-		@unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/original/' . (int) $iId . '.jpg'));
-	}
-
-	/**
 	 * Delete a user account.
 	 *
 	 * @access public
 	 * @return boolean status message
    * @todo check if there is an addon for this model
    * @todo _destroy
+	 * @todo rewrite?
 	 *
 	 */
 	public function destroy() {
+		require PATH_STANDARD . '/app/helpers/Upload.helper.php';
     $aUser = \CandyCMS\Model\Users::getUserNamesAndEmail($this->_iId);
 
     # We are a user and want to delete our account
@@ -455,7 +439,8 @@ class Users extends Main {
           $this->_unsubscribeFromNewsletter($aUser['email']);
 
           # Destroy profile image
-          $this->_destroyUserAvatars($this->_iId);
+					Upload::destroyAvatarFiles($this->_iId);
+
           return Helper::successMessage(I18n::get('success.destroy'), '/');
         }
         else
@@ -474,7 +459,7 @@ class Users extends Main {
         $this->_unsubscribeFromNewsletter($aUser['email']);
 
         # Destroy profile image
-        $this->_destroyUserAvatars($this->_iId);
+        Upload::destroyAvatarFiles($this->_iId);
 
         Logs::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['user']['id']);
         return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);

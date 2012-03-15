@@ -120,7 +120,7 @@ class Downloads extends Main {
 																Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
-      if ($oUploadFile->uploadFile('download') === true) {
+      if ($oUploadFile->uploadFiles('download') === true) {
 				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {

@@ -77,7 +77,7 @@ class Medias extends Main {
     if (!is_dir($sFolder))
       mkdir(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder, 0777));
 
-    return $oUpload->uploadFile($sFolder);
+    return $oUpload->uploadFiles($sFolder);
   }
 
   /**

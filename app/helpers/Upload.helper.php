@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ * @todo rewrite and keep it simpler?
  *
  */
 
@@ -85,17 +86,19 @@ class Upload {
 	 * @return boolean status of upload.
 	 *
 	 */
-  public function uploadFile($sFolder = 'medias') {
+  public function uploadFiles($sFolder = 'medias') {
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
       for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
         $this->_sFileName       = Helper::replaceNonAlphachars(strtolower($this->_aFile['file']['name'][$iI]));
         $this->_sFileExtension  = strtolower(substr(strrchr($this->_aFile['file']['name'][$iI], '.'), 1));
 
         if (!empty($this->_aRequest['rename']) && $iI == 0)
-          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) . '.' . $this->_sFileExtension;
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) .
+								'.' . $this->_sFileExtension;
 
         elseif (!empty($this->_aRequest['rename']) && $iI > 0)
-          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) . '_' . $iI . '.' . $this->_sFileExtension;
+          $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) .
+								'_' . $iI . '.' . $this->_sFileExtension;
 
 
         $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);
@@ -111,6 +114,8 @@ class Upload {
 	 * @param string $sResize cut or resize the image?!
 	 * @see app/controller/Galleries.controller.php
 	 * @return boolean status of upload
+	 * @todo put "for" in here?
+	 * @todo do we need class variables?
 	 *
 	 */
   public function uploadGalleryFile($sResize = '') {
@@ -154,17 +159,21 @@ class Upload {
             (int) $this->_aRequest['id'] :
             $this->_aSession['user']['id'];
 
-    $this->_sUploadFolder = 'user';
-    $this->_sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/original/' . $this->_sFileName);
+    $this->_sUploadFolder = 'users';
+    $this->_sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder .
+						'/original/' . $this->_sFileName);
 
     if ($this->_aFile['image']['size'] > 409600)
       return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
 
     else {
-      $this->_deleteAvatarFiles();
-      $bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath . '.' . $this->_sFileExtension);
+      $this->destroyAvatarFiles($this->_sFileName);
+      $bReturn = move_uploaded_file($this->_aFile['image']['tmp_name'], $this->_sFilePath .
+							'.' . $this->_sFileExtension);
 
-      $oImage = new Image($this->_sFileName, $this->_sUploadFolder, $this->_sFilePath . '.' . $this->_sFileExtension, $this->_sFileExtension);
+      $oImage = & new Image($this->_sFileName, $this->_sUploadFolder, $this->_sFilePath . '.' .
+							$this->_sFileExtension, $this->_sFileExtension);
+
       $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
       $oImage->resizeDefault(THUMB_DEFAULT_X);
       $oImage->resizeDefault('100');
@@ -178,27 +187,22 @@ class Upload {
 	/**
 	 * Delete user avatars.
    *
-	 * @access private
+	 * @static
+	 * @access public
+	 * @param string $sFileName name of the file
 	 *
 	 */
-  private function _deleteAvatarFiles() {
-    $aFileTypes = array('jpg', 'png', 'gif');
+  public static function destroyAvatarFiles($sFileName) {
+		$aFileTypes = array('jpg', 'png', 'gif');
+		$aFolders = array('original', 'popup', THUMB_DEFAULT_X, '100', '64', '32');
 
-    $aFiles = array('original/' . $this->_sFileName,
-        'popup/' . $this->_sFileName,
-        THUMB_DEFAULT_X . '/' . $this->_sFileName,
-        '100/' . $this->_sFileName,
-        '64/' . $this->_sFileName,
-        '32/' . $this->_sFileName
-    );
-
-    foreach ($aFileTypes as &$sExtension) {
-      foreach ($aFiles as &$sFile) {
-        if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $sFile . '.' . $sExtension)))
-          unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadFolder . '/' . $sFile . '.' . $sExtension));
-      }
-    }
-  }
+		foreach ($aFileTypes as &$sExtension) {
+			foreach ($aFolders as &$sFolder) {
+				if (is_file(Helper::removeSlash(PATH_UPLOAD . '/users/' . $sFolder . '/' . $sFileName . '.' . $sExtension)))
+					unlink(Helper::removeSlash(PATH_UPLOAD . '/users/' . $sFolder . '/' . $sFileName . '.' . $sExtension));
+			}
+		}
+	}
 
 	/**
 	 * Return the files extension.

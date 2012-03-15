@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Make Smarty Singleton Aware
+ * Make Smarty singleton aware.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Hauke Schade <http://hauke-schade.de>
  * @license MIT
  * @since 2.0
- * @todo documentation
  *
  */
 
@@ -23,13 +22,16 @@ class SmartySingleton extends Smarty {
   /**
    *
    * @var static
+	 * @access private
    *
    */
   private static $_oInstance = null;
 
   /**
-   * Get the Smarty Instance
+   * Get the Smarty instance
    *
+	 * @static
+	 * @access public
    * @return object self::$_oInstance Smarty instance that was found or generated
    *
    */
@@ -41,10 +43,11 @@ class SmartySingleton extends Smarty {
   }
 
   /**
-   * Construct, sets all default smarty values
-   *
+   * Set all default smarty values.
+	 *
+	 * @access public
    * @todo add session / request stuff from main
-   * @todo test
+	 *
    */
   public function __construct() {
     parent::__construct();
@@ -87,27 +90,39 @@ class SmartySingleton extends Smarty {
     $this->assign('WEBSITE_URL', WEBSITE_URL);
 
     # Define system variables
+    $this->assign('_PATH', $this->getPaths());
     $this->assign('_SYSTEM', array(
         'date'                  => date('Y-m-d'),
         'compress_files_suffix' => WEBSITE_COMPRESS_FILES === true ? '.min' : '',
         'facebook_plugin'       => $bUseFacebook,
         'json_language'         => I18n::getJson()));
 
-    # @todo
     $this->assign('lang', I18n::getArray());
-
-    $this->assign('_PATH', $this->getPaths());
   }
 
   /**
-   * Generate all Path-Variables that could be useful for Smarty Templates
+   * Delete this variable from memory...
+	 *
+	 * @access public
    *
+   */
+  public function __destruct() {
+    parent::__destruct();
+
+    self::$_oInstance = null;
+  }
+
+  /**
+   * Generate all path variables that could be useful for Smarty templates.
+	 *
+	 * @access public
    * @return array Array with Paths for 'images', 'js', 'less', 'css', 'templates', 'upload', 'public'
+	 *
    */
   public function getPaths() {
-    # Use an external CDN within a custom template
     $aPaths = array('css' => 'css', 'less' => 'less', 'images' => 'images', 'js' => 'js');
 
+    # Use an external CDN within a custom template
     if (PATH_TEMPLATE !== '' && substr(WEBSITE_CDN, 0, 4) == 'http') {
       $sPath = WEBSITE_CDN . '/templates/' . PATH_TEMPLATE;
 
@@ -146,16 +161,6 @@ class SmartySingleton extends Smarty {
         'public'    => WEBSITE_CDN,
         'template'  => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
         'upload'    => PATH_UPLOAD);
-  }
-
-  /**
-   * delete this variable from memory...
-   *
-   */
-  public function __destruct() {
-    parent::__destruct();
-
-    self::$_oInstance = null;
   }
 }
 
