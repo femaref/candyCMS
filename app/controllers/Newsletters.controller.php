@@ -39,7 +39,8 @@ class Newsletters extends Main {
 		$this->_setError('email');
 
 		if (isset($this->_aError))
-			return $this->_showFormTemplate();
+			return Helper::errorMessage(I18n::get('error.standard'), '') .
+              $this->_showFormTemplate();
 
 		else
 			return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
@@ -57,6 +58,10 @@ class Newsletters extends Main {
   protected function _showFormTemplate() {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'subscribe');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'subscribe');
+
+    $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
+    $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ? (string) $this->_aRequest['surname'] : '');
+    $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
