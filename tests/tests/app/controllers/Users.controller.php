@@ -64,8 +64,10 @@ class WebTestOfUserController extends CandyWebTest {
   }
 
   function testVerifyEmail() {
-    //@todo
-  }
+    $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/ThisIsNotAValidVerificationCode/verification'));
+    $this->assertResponse(200);
+		$this->assertText(I18n::get('error.user.verification'));
+ }
 
   function testGetToken() {
     $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/token', array(
