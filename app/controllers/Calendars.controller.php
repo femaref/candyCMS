@@ -87,7 +87,7 @@ class Calendars extends Main {
 	}
 
   /**
-	 * Create a download entry.
+	 * Create a calendar entry.
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).

@@ -176,4 +176,30 @@ class Blogs extends Main {
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
+
+  /**
+	 * Create a blog entry.
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+	protected function _create() {
+		$this->_setError('content');
+
+		return parent::_create();
+	}
+
+	/**
+	 * Update a blog entry.
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _update() {
+		$this->_setError('content');
+
+		return parent::_update();
+	}
 }
