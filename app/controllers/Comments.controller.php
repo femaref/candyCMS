@@ -222,7 +222,6 @@ class Comments extends Main {
    *
    * @access protected
    * @return boolean correctness of captcha
-   * @todo should redirect?? might not be needed
    *
    */
   protected function _checkCaptcha() {
@@ -242,6 +241,6 @@ class Comments extends Main {
       }
     }
     else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/blogs/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'));
   }
 }

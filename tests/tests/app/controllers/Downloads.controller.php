@@ -26,7 +26,7 @@ class WebTestOfDownloadController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShowDownloads() {
+	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('098dec456d');

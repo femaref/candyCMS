@@ -28,18 +28,17 @@ class WebTestOfBlogController extends CandyWebTest {
 	}
 
 	function testShow() {
+    # Overview
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('hs24br55e2');
 		$this->assertNoText('1d2275e170');
-	}
 
-	function testShowEntryWithShortId() {
+    # Short ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
 		$this->assertResponse(200);
-	}
 
-	function testShowEntryWithLongId() {
+    # Long ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/b3cf6b2dd0'));
 		$this->assertResponse(200);
 	}

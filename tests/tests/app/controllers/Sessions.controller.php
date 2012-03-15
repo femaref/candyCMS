@@ -20,6 +20,9 @@ class TestOfSessionController extends WebTestCase {
 
   public $osession;
 
+  /**
+   * @todo fix container
+   */
   function testConstructor() {
     $aRequest = array('section' => 'session');
     $aFile    = array();
@@ -44,6 +47,9 @@ class TestOfSessionController extends WebTestCase {
     $this->assertResponse('200');
   }
 
+  /**
+   * @todo correct format?
+   */
   function testCreate() {
     $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/session/create');

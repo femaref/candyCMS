@@ -25,19 +25,19 @@ class SmartySingleton extends Smarty {
    * @var static
    *
    */
-  private static $oInstance = null;
+  private static $_oInstance = null;
 
   /**
    * Get the Smarty Instance
    *
-   * @return object self::$oInstance Smarty instance that was found or generated
+   * @return object self::$_oInstance Smarty instance that was found or generated
    *
    */
   public static function getInstance() {
-    if (self::$oInstance === null)
-      self::$oInstance = new self();
+    if (self::$_oInstance === null)
+      self::$_oInstance = new self();
 
-    return self::$oInstance;
+    return self::$_oInstance;
   }
 
   /**
@@ -131,9 +131,7 @@ class SmartySingleton extends Smarty {
 
     # Compile CSS when in development mode and clearing the cache
     if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($aPaths['less'] . '/core/application.less'))) {
-      //this is only for development, so performance is not as important
-      if (!class_exists('lessc'))
-        require PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
+      require_once PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
 
       try {
         @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));
@@ -157,7 +155,7 @@ class SmartySingleton extends Smarty {
   public function __destruct() {
     parent::__destruct();
 
-    self::$oInstance = null;
+    self::$_oInstance = null;
   }
 }
 

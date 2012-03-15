@@ -33,7 +33,8 @@ class WebTestOfCommentController extends CandyWebTest {
     $this->assertResponse(200);
 	}
 
-	function testCreateSuccess() {
+	function testCreate() {
+    # Success
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
 				'name' => 'Name',
 				'content' => 'Test',
@@ -43,12 +44,8 @@ class WebTestOfCommentController extends CandyWebTest {
 
     $this->assertResponse(200);
 		$this->assertText(I18n::get('success.create'));
-	}
 
-	/**
-	 * @todo Check parent_id
-	 */
-	function testCreateFail() {
+    # Fail
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
 				'create_comments' => 'formdata'
 		)));

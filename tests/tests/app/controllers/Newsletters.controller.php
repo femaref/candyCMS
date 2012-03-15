@@ -37,6 +37,7 @@ class WebTestOfNewsletterController extends CandyWebTest {
    * @todo validate forms
    */
 	function testSubscribe() {
+    # Correct email
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'name' => md5($this->aSession['user']['name'] . time()),
 				'surname' => md5($this->aSession['user']['surname'] . time()),
@@ -46,9 +47,8 @@ class WebTestOfNewsletterController extends CandyWebTest {
 
 		$this->assertText(I18n::get('success.newsletter.create'));
 		$this->assertResponse(200);
-	}
 
-	function testSubscribeWithWrongEmailAddress() {
+    # Wrong email address
 		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
 				'name' => md5($this->aSession['user']['name'] . time()),
 				'surname' => md5($this->aSession['user']['surname'] . time()),

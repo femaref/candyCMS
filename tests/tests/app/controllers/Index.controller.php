@@ -116,18 +116,12 @@ class WebTestOfIndexController extends CandyWebTest {
 		$this->assertText('TEST'); # This should be on every page.
 	}
 
-	/**
-	 *@todo fix 404 to i18n
-	 */
 	function testShowNonExistingPage() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
 		$this->assertResponse(200);
 		$this->assertText('404');
 	}
 
-	/**
-	 *@todo fix 404 to i18n
-	 */
 	function testShowSampleAddon() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/sample'));
 		$this->assertResponse(200);

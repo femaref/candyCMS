@@ -26,18 +26,21 @@ class WebTestOfGalleryController extends CandyWebTest {
 	}
 
 	function testShow() {
+    # Show overview
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('6dffc4c552');
-	}
 
-	function testShowAlbum() {
+    # Show album
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
+		$this->assertResponse(200);
+		$this->assertText('982e960e18');
+
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/6dffc4c552'));
 		$this->assertResponse(200);
 		$this->assertText('982e960e18');
-	}
 
-	function testShowImage() {
+    # Show image
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/image/1'));
 		$this->assertResponse(200);
 		$this->assertText('782c660e17');
@@ -52,4 +55,8 @@ class WebTestOfGalleryController extends CandyWebTest {
 		$this->assertTrue(file_exists($sFile));
 		$this->assertTrue(unlink($sFile));
 	}
+
+  /**
+   * @todo create / update / destroy tests
+   */
 }

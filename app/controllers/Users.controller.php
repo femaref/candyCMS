@@ -523,9 +523,10 @@ class Users extends Main {
 
     if (!$this->_aError)
       $sToken = $this->_oModel->getToken();
-    
-    if (isset($sToken) && !empty($sToken))
-      return json_encode(array('success' => true, "token" => $sToken));
+
+    if (isset($sToken) && $sToken)
+      return json_encode(array('success' => true, 'token' => $sToken));
+
     else
       return json_encode(array('success' => false));
   }

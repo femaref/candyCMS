@@ -32,14 +32,12 @@ class WebTestOfContentController extends CandyWebTest {
 		$this->assertResponse(200);
 		$this->assertText('18855f87f2');
     $this->assertNoText('8f7fb844b0');
-	}
 
-	function testShowEntryWithShortId() {
+    # Short ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
 		$this->assertResponse(200);
-	}
 
-	function testShowEntryWithLongId() {
+    # Long ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/18855f87f2'));
 		$this->assertResponse(200);
 	}

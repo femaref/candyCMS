@@ -35,6 +35,7 @@ class WebTestOfMailController extends CandyWebTest {
 	}
 
 	function testCreateSuccess() {
+    # Success
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
 				'content' => 'Test',
@@ -43,9 +44,8 @@ class WebTestOfMailController extends CandyWebTest {
 
 		$this->assertResponse(200);
 		$this->assertText(I18n::get('mails.info.title'));
-	}
 
-	function testCreateFail() {
+    # Fail because fields are missing
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
 				'create_mail' => 'formdata'
 		)));

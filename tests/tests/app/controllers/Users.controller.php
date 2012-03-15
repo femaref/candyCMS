@@ -28,34 +28,33 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertResponse('200');
 	}
 
-  function testShowUsers() {
-    # Show user with id
-    #@todo user not found?
-    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
-    $this->assertText(I18n::get('users.label.registered_since')); # "registered at"
+  function testShow() {
+    # Short ID
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
+    $this->assertText('c2f9619961');
     $this->assertResponse('200');
 
-    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
-    $this->assertText(I18n::get('users.label.registered_since')); # "registered at"
-    $this->assertText('Administrator c2f9619961');
+    # Long ID
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/c2f9619961'));
+    $this->assertText('c2f9619961');
     $this->assertResponse('200');
   }
 
   function testCreate() {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
-    $this->assertNoText(I18n::get('error.missing.permission')); # user has no permission
+    $this->assertNoText(I18n::get('error.missing.permission'));
     $this->assertResponse('200');
   }
 
   function testUpdate() {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/0/update'));
-    $this->assertText(I18n::get('error.session.create_first')); # user has to login first
+    $this->assertText(I18n::get('error.session.create_first'));
     $this->assertResponse('200');
   }
 
   function testDestroy() {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/0/destroy'));
-    $this->assertText(I18n::get('error.missing.permission')); # user has no permission
+    $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse('200');
   }
 
@@ -73,6 +72,7 @@ class WebTestOfUserController extends CandyWebTest {
 				'email' => 'admin@example.com',
 				'password' => 'test'
 		)));
+
     $this->assertResponse(200);
 		$this->assertText('c2f9619961');
 		$this->assertText('"token"');
@@ -89,7 +89,7 @@ class WebTestOfUserController extends CandyWebTest {
 
     //test with a not existing
     $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/token', array(
-				'email' => 'admin@example.com',
+				'email' => 'nouser@example.com',
 				'password' => 'abc'
 		)));
     $this->assertResponse(200);
