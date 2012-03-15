@@ -145,18 +145,16 @@ class Comments extends Main {
    *
    */
   public function create($sInputName) {
-		if (isset($this->_aRequest[$sInputName]))
-			return	$this->_aSession['user']['role'] == 0 &&
+		$bShowCaptcha = $this->_aSession['user']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
-							WEBSITE_MODE !== 'test' ?
-							$this->_checkCaptcha() :
-							$this->_create(false);
+              WEBSITE_MODE !== 'test';
 
-		else {
-			$bShowCaptcha = $this->_aSession['user']['role'] == 0 ? true : false;
+ 		if (isset($this->_aRequest[$sInputName]))
+			return	$this->_create($bShowCaptcha);
+
+		else
 			return $this->_showFormTemplate($bShowCaptcha);
-		}
 	}
 
   /**
@@ -179,6 +177,9 @@ class Comments extends Main {
     if (isset($this->_aRequest['email']))
       $this->_setError('email');
 
+    if ($bShowCaptcha === true)
+      $this->_checkCaptcha();
+
     if ($this->_aError)
       return $this->_showFormTemplate($bShowCaptcha);
 
@@ -186,7 +187,7 @@ class Comments extends Main {
       $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
-        Logs::insert('comment', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
+        Logs::insert('comments', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else
@@ -220,8 +221,8 @@ class Comments extends Main {
    * Check if the entered captcha is correct.
    *
    * @access protected
-   * @return boolean|string status of create action (boolean),
-   * status of error message (boolean) or HTML content of form template (string).
+   * @return boolean correctness of captcha
+   * @todo should redirect?? might not be needed
    *
    */
   protected function _checkCaptcha() {
@@ -237,7 +238,7 @@ class Comments extends Main {
 
       else {
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
-        return Helper::errorMessage(I18n::get('error.captcha.incorrect')) . $this->_create(true);
+        return Helper::errorMessage(I18n::get('error.captcha.incorrect'));
       }
     }
     else
