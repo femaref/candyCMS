@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Download.model.php';
+require_once PATH_STANDARD . '/app/models/Downloads.model.php';
 
-use \CandyCMS\Model\Download as Download;
+use \CandyCMS\Model\Downloads as Downloads;
 
 class UnitTestOfDownloadModel extends CandyUnitTest {
 
@@ -22,9 +22,9 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
 				'content'   => 'Content',
 				'category'  => 'Category',
 				'downloads' => 0,
-				'controller'=> 'download');
+				'controller'=> 'downloads');
 
-		$this->oObject = new Download($this->aRequest, $this->aSession);
+		$this->oObject = new Downloads($this->aRequest, $this->aSession);
 	}
 
 	function tearDown() {
@@ -34,7 +34,7 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
   function testCreate() {
     $this->assertTrue($this->oObject->create('filename', 'extension'));
 
-    $this->iLastInsertId = (int) Download::getLastInsertId();
+    $this->iLastInsertId = (int) Downloads::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 
