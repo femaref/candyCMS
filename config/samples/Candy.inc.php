@@ -67,7 +67,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@domain.tld');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'staging');
+define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 
@@ -139,17 +139,15 @@ define('RANDOM_HASH', 'funky but secure md5 hash');
 # To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
 # register yourself and get an account
 
-# ------------------------------------------------------------------------------
-
 # Do you want to use a captcha? ReCaptcha account required!
 # DEFAULT: true
-define('RECAPTCHA_ENABLED', true);
+define('RECAPTCHA_ENABLED', false);
 
 # Enter given public key:
-define('RECAPTCHA_PUBLIC', '6LeElLwSAAAAALqrk7EvegSRhXivkHf-CZSai104');
+define('RECAPTCHA_PUBLIC', '');
 
 # Enter given private key:
-define('RECAPTCHA_PRIVATE', '6LeElLwSAAAAAEm2k4HEN_LiRtG-1QXU_ApVOUC0');
+define('RECAPTCHA_PRIVATE', '');
 
 # ------------------------------------------------------------------------------
 

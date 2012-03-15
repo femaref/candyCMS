@@ -39,7 +39,7 @@ class Newsletters extends Main {
 		$this->_setError('email');
 
 		if (isset($this->_aError))
-			return Helper::errorMessage(I18n::get('error.standard'), '') .
+			return Helper::errorMessage(I18n::get('error.standard')) .
               $this->_showFormTemplate();
 
 		else

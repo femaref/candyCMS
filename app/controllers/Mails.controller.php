@@ -18,7 +18,7 @@ use Smarty;
 
 require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
-class Mail extends Main {
+class Mails extends Main {
 
 	/**
 	 * ReCaptcha public key.
@@ -62,7 +62,7 @@ class Mail extends Main {
    */
   public function __init() {
     if (empty($this->_iId))
-      Helper::redirectTo('/mail/1');
+      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/1');
   }
 
   /**
@@ -166,7 +166,8 @@ class Mail extends Main {
       }
     }
     else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/mail/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/' .
+              $this->_aRequest['controller'] . '/' . $this->_iId);
   }
 
 	/**
@@ -200,7 +201,7 @@ class Mail extends Main {
               str_replace('%u', $sSendersName, I18n::get('mail.subject.by'));
 
       # Mail to, Subject, Message, Reply to
-      $bStatus = Mail::send(isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
+      $bStatus = Mails::send(isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
 							$sSubject,
 							Helper::formatInput($this->_aRequest['content']),
 							Helper::formatInput($this->_aRequest['email']));

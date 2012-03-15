@@ -137,7 +137,7 @@ class Sessions extends Main {
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));
 				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
 																									I18n::get('session.password.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);
@@ -181,7 +181,7 @@ class Sessions extends Main {
 				$sContent = str_replace('%u', $aData['name'], I18n::get('session.verification.mail.body'));
 				$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
-				$bStatus = Mail::send(Helper::formatInput($this->_aRequest['email']),
+				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
 																									I18n::get('session.verification.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);

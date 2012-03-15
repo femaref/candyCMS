@@ -43,7 +43,7 @@ class AdvancedException extends \Exception {
 				require_once PATH_STANDARD . '/app/controllers/Mail.controller.php';
 
 			$sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
-			return Mail::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
+			return Mails::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
 		}
 	}
 
