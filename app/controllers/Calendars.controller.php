@@ -14,7 +14,8 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
+//TODO why do i have to 'use' smartySingleton as smarty? oO
+use CandyCMS\Helper\SmartySingleton as Smarty;
 
 class Calendars extends Main {
 
@@ -26,16 +27,23 @@ class Calendars extends Main {
 	 *
 	 */
 	protected function _show() {
-    # Show .ics
+     # Show .ics
     if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
-			$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
+      $oData = $this->_oModel->getData($this->_iId);
+      
+      if (!isset($oData['id']))
+        return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
 
-      header('Content-type: text/calendar; charset=utf-8');
-      header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
+      else {
+        $this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
 
-      $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
-      $this->oSmarty->display('ics.tpl', UNIQUE_ID);
-			exit();
+        header('Content-type: text/calendar; charset=utf-8');
+        header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
+
+        $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
+        $this->oSmarty->display('ics.tpl', UNIQUE_ID);
+        exit();
+      }
     }
 
     # Show overview
@@ -49,7 +57,7 @@ class Calendars extends Main {
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
 
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 	}
 
