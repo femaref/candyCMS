@@ -2,22 +2,20 @@
 "/": blogs
 
 # Shared behaviour
+"(:alpha)/?": controller=$1&action=show
 "(:alpha)/page/(:num)": controller=$1&page=$2
 "(:alpha)/(create|update|destroy)": controller=$1&action=$2
 "(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
-"(:alpha)/(:num)/highlight/(:any)": controller=$1&id=$2&highlight=$3
-"(:alpha)/(:num)/page/(:num)": controller=$1&id=$2&page=$3
+"(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
 
 # Special behaviour
-"blogs/(:num)": controller=blogs&id=$1&page=1
-"blogs/(:num)/(:any)": controller=blogs&id=$1&page=1
+"blogs/(:num)(/(:any))?": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
 "comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2
 "galleries": controller=galleries&page=1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
 "language/(:alpha)": language=$1
-"logs(\/)": controller=logs&page=1
 "mails/(:num)/ajax": controller=mails&id=$1&ajax=1
 "medias/(:any)/destroy": controller=medias&action=destroy&file=$1
 "rss/(:alpha)": controller=rss&section=$1
