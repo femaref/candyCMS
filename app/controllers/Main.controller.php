@@ -131,16 +131,6 @@ abstract class Main {
   protected $_sTemplateFolder;
 
 	/**
-	 * I18n object.
-	 *
-	 * @var object
-	 * @access static
-	 * @static
-	 *
-	 */
-	static $oI18n;
-
-	/**
 	 * Smarty object.
 	 *
 	 * @var object
@@ -173,7 +163,6 @@ abstract class Main {
 
 		$this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
-    $this->_setI18n();
     $this->_setSmarty();
 	}
 
@@ -235,21 +224,6 @@ abstract class Main {
     if ($sModel)
       $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
   }
-
-	/**
-	 * Set up I18n.
-	 *
-	 * @access proteced
-	 * @return obj self::$oI18n
-	 *
-	 */
-  protected static function _setI18n() {
-		if (!defined('WEBSITE_LANGUAGE'))
-			define('WEBSITE_LANGUAGE', 'en');
-
-		self::$oI18n = & new I18n(WEBSITE_LANGUAGE);
-		return self::$oI18n;
-	}
 
 	/**
 	 * Set up smarty.

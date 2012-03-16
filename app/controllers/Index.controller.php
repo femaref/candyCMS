@@ -240,14 +240,16 @@ class Index {
 							array_merge($this->_aRequest, $this->_aCookie) :
 							$this->_aRequest;
 
-      $sLanguage = isset($aRequest['default_language']) &&
-              file_exists(PATH_STANDARD . '/languages/' . (string) $aRequest['default_language'] . '.language.yml') ?
-              (string) $aRequest['default_language'] :
-              strtolower(substr(DEFAULT_LANGUAGE, 0, 2));
+      if (isset($aRequest['default_language']) &&
+              file_exists(PATH_STANDARD . '/languages/' . strtolower((string) $aRequest['default_language']) . '.language.yml'))
+              $sLanguage = strtolower((string) $aRequest['default_language']);
+      else
+        $sLanguage = strtolower(DEFAULT_LANGUAGE);
+
     }
 
     # Set iso language codes
-    switch ($sLanguage) {
+    switch (substr($sLanguage, 0, 2)) {
       case 'de':
         $sLocale = 'de_DE';
         break;

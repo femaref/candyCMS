@@ -6,7 +6,7 @@ global:
   about: Über
   action: Aktion
   album: Album
-  album: Alben
+  albums: Alben
   api_token: API-Token
   archive: Archiv
   author: Autor
