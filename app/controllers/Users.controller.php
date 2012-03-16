@@ -246,7 +246,7 @@ class Users extends Main {
 	 *
 	 */
 	public function create() {
-		return isset($this->_aRequest['create_user']) ? $this->_create() : $this->_showCreateUserTemplate();
+		return isset($this->_aRequest['create_users']) ? $this->_create() : $this->_showCreateUserTemplate();
 	}
 
 	/**
