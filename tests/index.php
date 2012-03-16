@@ -29,6 +29,7 @@ define('MOBILE_DEVICE', false);
 define('UNIQUE_ID', 'tests');
 define('VERSION', '0');
 
+define('TESTFILE', '/private/var/tmp/test'.md5(time()));
 class AllFileTests extends TestSuite {
 
 	function __construct() {
@@ -40,6 +41,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php');
 
 		# Index
 		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');

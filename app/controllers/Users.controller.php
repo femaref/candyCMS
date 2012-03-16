@@ -27,7 +27,7 @@ class Users extends Main {
    *
    */
   public function show() {
-    if (isset($this->_aRequest['action'])) {
+    if (isset($this->_aRequest['action']) && $this->_aRequest['action'] !== 'show') {
       switch ($this->_aRequest['action']) {
 
         case 'avatar':

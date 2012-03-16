@@ -107,15 +107,18 @@ class Upload {
           $this->_sFileExtensions[$iI] = strtolower(substr(strrchr($this->_aFile[$sType]['name'], '.'), 1));
         }
 
+        if ($iPos = strrpos($this->_sFileNames[$iI], '.'))
+          $this->_sFileNames[$iI] = substr($this->_sFileNames[$iI], 0, $iPos);
+
         if (!empty($this->_aRequest['rename']))
           $this->_sFileNames[$iI] = Helper::replaceNonAlphachars($this->_aRequest['rename']) .
-                  ($iFileCount == 1 ? '' : '_' . $iI) .
-                  '.' . $this->_sFileExtensions[$iI];
+                  ($iFileCount == 1 ? '' : '_' . $iI);
 
         if ($bFilenameHashes)
-          $this->_sFileNames[$iI] = md5($this->_sFileNames[$iI] . rand(000, 999)) . $this->_sFileExtensions[$iI];
+          $this->_sFileNames[$iI] = md5($this->_sFileNames[$iI] . rand(000, 999));
 
-        $this->sFilePaths[$iI] = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileNames[$iI]);
+        $this->sFilePaths[$iI] = Helper::removeSlash(PATH_UPLOAD . '/' .  $sFolder . '/' .
+                                                    $this->_sFileNames[$iI] . $this->_sFileExtensions[$iI]);
 
 //        if (!file_exists(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/'))) {
 //          mkdir(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/', 0755));
@@ -255,8 +258,8 @@ class Upload {
   public function getIds($bWithExtension = true) {
     if ($bWithExtension) {
       $iCount = count($this->_sFileNames);
-      $aReturn = array($iCount);
-      for ($iI = 0; $iI < $iFileCount; $iI++)
+      $aReturn = array();
+      for ($iI = 0; $iI < $iCount; $iI++)
         $aReturn[$iI] = $this->_sFileNames[$iI] . '.' . $this->_sFileExtensions[$iI];
 
       return $aReturn;
