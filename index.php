@@ -48,7 +48,7 @@ else {
 }
 
 # Define current url
-define('CURRENT_URL', WEBSITE_URL . isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
+define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
 
 # Start user session.
 @session_start();
