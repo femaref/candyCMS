@@ -490,13 +490,14 @@ class Index {
       $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
       # Define meta elements
-			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
-			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
 			$oDispatcher->oController->oSmarty->assign('meta_og_description', $oDispatcher->oController->getDescription());
 			$oDispatcher->oController->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
 			$oDispatcher->oController->oSmarty->assign('meta_og_title', $oDispatcher->oController->getTitle());
 			$oDispatcher->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
+
+			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
+			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
 
       # System required variables
 			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());

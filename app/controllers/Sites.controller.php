@@ -36,9 +36,7 @@ class Sites extends Main {
       exit();
     }
 
-    $this->setDescription(ucfirst($sSite));
     $this->setTitle(ucfirst($sSite));
-
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(300);
     return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');

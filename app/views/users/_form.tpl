@@ -121,7 +121,7 @@
           <input type='submit' class='btn btn-primary' value='{$lang.users.label.update}' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
           <input type='hidden' value="{$email}" name='email' />
-          <input type='hidden' value='formdata' name='update_user' />
+          <input type='hidden' value='formdata' name='update_users' />
         </div>
       </form>
     </div>
@@ -227,7 +227,7 @@
         </div>
         <div class='form-actions'>
           <input type='submit' class='btn btn-danger' value='{$lang.users.label.account.destroy}' />
-          <input type='hidden' value='formdata' name='destroy_user' />
+          <input type='hidden' value='formdata' name='destroy_users' />
         </div>
       </form>
     </div>

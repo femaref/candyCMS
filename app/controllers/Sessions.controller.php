@@ -31,16 +31,14 @@ class Sessions extends Main {
 
         case 'password':
 
-          $this->setTitle(I18n::get('session.password.title'));
-          $this->setDescription(I18n::get('session.password.info'));
+          $this->setTitle(I18n::get('sessions.password.title'));
           return $this->resendPassword();
 
           break;
 
         case 'verification':
 
-          $this->setTitle(I18n::get('session.verification.title'));
-          $this->setDescription(I18n::get('session.verification.info'));
+          $this->setTitle(I18n::get('sessions.verification.title'));
           return $this->resendVerification();
 
           break;
@@ -102,9 +100,7 @@ class Sessions extends Main {
 
 		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
-    $this->setDescription(I18n::get('global.login'));
     $this->setTitle(I18n::get('global.login'));
-
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
@@ -133,11 +129,11 @@ class Sessions extends Main {
 			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
 			if (!empty($aData)) {
-				$sContent = str_replace('%u', $aData['name'], I18n::get('session.password.mail.body'));
+				$sContent = str_replace('%u', $aData['name'], I18n::get('sessions.password.mail.body'));
 				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
 				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
-																									I18n::get('session.password.mail.subject'),
+																									I18n::get('sessions.password.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);
 
@@ -175,11 +171,11 @@ class Sessions extends Main {
 			if (!empty($aData)) {
 				$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
 
-				$sContent = str_replace('%u', $aData['name'], I18n::get('session.verification.mail.body'));
+				$sContent = str_replace('%u', $aData['name'], I18n::get('sessions.verification.mail.body'));
 				$sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
 				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
-																									I18n::get('session.verification.mail.subject'),
+																									I18n::get('sessions.verification.mail.subject'),
 																									$sContent,
 																									WEBSITE_MAIL_NOREPLY);
 

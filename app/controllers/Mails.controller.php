@@ -135,7 +135,6 @@ class Mails extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $this->setDescription(I18n::get('global.contact'));
     $this->setTitle(I18n::get('global.contact'));
 
     $this->oSmarty->setTemplateDir($sTemplateDir);

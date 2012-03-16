@@ -32,7 +32,6 @@ class Users extends Main {
 
         case 'avatar':
 
-          $this->setDescription(I18n::get('users.title.avatar'));
           $this->setTitle(I18n::get('users.title.avatar'));
           return $this->updateAvatar();
 
@@ -40,7 +39,6 @@ class Users extends Main {
 
         case 'password':
 
-          $this->setDescription(I18n::get('users.title.password'));
           $this->setTitle(I18n::get('users.title.password'));
           return $this->updatePassword();
 
@@ -48,7 +46,6 @@ class Users extends Main {
 
         case 'token':
 
-          $this->setDescription(I18n::get('global.api_token'));
           $this->setTitle(I18n::get('global.api_token'));
           return $this->getToken();
 
@@ -56,7 +53,6 @@ class Users extends Main {
 
         case 'verification':
 
-          $this->setDescription(I18n::get('global.email.verification'));
           $this->setTitle(I18n::get('global.email.verification'));
           return $this->verifyEmail();
 
@@ -88,15 +84,11 @@ class Users extends Main {
         $this->oSmarty->assign('user', $aData);
 
         $this->setTitle($aData[1]['full_name']);
-        $this->setDescription($aData[1]['full_name']);
       }
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
 		else {
-			$this->setTitle(I18n::get('users.title.overview'));
-			$this->setDescription(I18n::get('users.title.overview'));
-
 			if ($this->_aSession['user']['role'] < 3)
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
@@ -106,6 +98,7 @@ class Users extends Main {
 
         $this->oSmarty->assign('user', $this->_oModel->getData());
 
+        $this->setTitle(I18n::get('users.title.overview'));
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 			}
@@ -245,7 +238,7 @@ class Users extends Main {
 	 *
 	 */
 	public function create() {
-		return isset($this->_aRequest['create_user']) ? $this->_create() : $this->_showCreateUserTemplate();
+		return isset($this->_aRequest['create_users']) ? $this->_create() : $this->_showCreateUserTemplate();
 	}
 
 	/**
@@ -259,10 +252,7 @@ class Users extends Main {
 	 *
 	 */
 	protected function _create() {
-		$this->_setError('name');
-		$this->_setError('surname');
-		$this->_setError('email');
-		$this->_setError('password');
+		$this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
 
 		if ($this->_oModel->getExistingUser($this->_aRequest['email']))
 			$this->_aError['email'] = I18n::get('error.user.create.email');
@@ -323,14 +313,11 @@ class Users extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
-    if ($this->_aSession['user']['role'] == 4) {
+    if ($this->_aSession['user']['role'] == 4)
       $this->setTitle(I18n::get('users.title.create'));
-      $this->setDescription(I18n::get('users.title.create'));
-    }
-    else {
+
+    else
       $this->setTitle(I18n::get('global.registration'));
-      $this->setDescription(I18n::get('global.registration'));
-    }
 
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :

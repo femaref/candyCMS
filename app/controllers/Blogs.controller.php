@@ -38,10 +38,6 @@ class Blogs extends Main {
       $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-      $this->setDescription($this->_setBlogsDescription());
-      $this->setKeywords($this->_setBlogsKeywords());
-      $this->setTitle($this->_setBlogsTitle());
-
 			# Load comments
       if ($this->_iId) {
         $sClass = $this->__autoload('Comments');
@@ -54,6 +50,9 @@ class Blogs extends Main {
       else
         $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
 
+      $this->setDescription($this->_setBlogsDescription())
+              ->setKeywords($this->_setBlogsKeywords())
+              ->setTitle($this->_setBlogsTitle());
       $this->oSmarty->assign('blogs', $this->_aData);
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

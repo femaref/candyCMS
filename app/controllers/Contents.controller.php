@@ -35,9 +35,9 @@ class Contents extends Main {
 				$this->oSmarty->assign('contents', $aData);
 
 				if (!empty($aData)) {
-					$this->setDescription($aData[$this->_iId]['teaser']);
-					$this->setKeywords($aData[$this->_iId]['keywords']);
-					$this->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+					$this->setDescription($aData[$this->_iId]['teaser'])
+                  ->setKeywords($aData[$this->_iId]['keywords'])
+                  ->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
 				}
 				else {
           header('Status: 404 Not Found');

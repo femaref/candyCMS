@@ -33,7 +33,6 @@ class Galleries extends Main {
 
         case 'createfile':
 
-          $this->setDescription(I18n::get('gallery.files.title.create'));
           $this->setTitle(I18n::get('gallery.files.title.create'));
           return $this->createFile();
 
@@ -41,7 +40,6 @@ class Galleries extends Main {
 
         case 'updatefile':
 
-          $this->setDescription(I18n::get('gallery.files.title.update'));
           $this->setTitle(I18n::get('gallery.files.title.update'));
           return $this->updateFile();
 
@@ -49,7 +47,6 @@ class Galleries extends Main {
 
         case 'destroyfile':
 
-          $this->setDescription(I18n::get('gallery.files.title.destroy'));
           $this->setTitle(I18n::get('gallery.files.title.destroy'));
           return $this->destroyFile();
 
@@ -77,8 +74,8 @@ class Galleries extends Main {
       $sAlbumName					= $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
       $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
 
-      $this->setDescription($this->_removeHighlight($sAlbumDescription));
-      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'))
+              ->setDescription($this->_removeHighlight($sAlbumDescription));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$aData = $this->_oModel->getThumbs($this->_iId);
@@ -101,9 +98,6 @@ class Galleries extends Main {
 
 			$aData = $this->_oModel->getFileData($this->_iId);
 
-      $this->setDescription($aData['content']);
-      $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
-
       # Absolute URL for image information
       $sUrl = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['album_id'] .
               '/popup/' . $aData['file']);
@@ -117,6 +111,9 @@ class Galleries extends Main {
         $aData['height'] = $aImageInfo[1];
 
         $this->oSmarty->assign('i', $aData);
+
+        $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file'])
+                ->setDescription($aData['content']);
 
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -159,14 +156,12 @@ class Galleries extends Main {
 			$aData = $this->_oModel->getData($this->_iId, true);
 
       $this->setTitle(I18n::get('galleries.albums.title.update'));
-      $this->setDescription(I18n::get('galleries.albums.title.update'));
     }
 		else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
 
       $this->setTitle(I18n::get('galleries.albums.title.create'));
-      $this->setDescription(I18n::get('galleries.albums.title.create'));
     }
 
     foreach ($aData as $sColumn => $sData)

@@ -96,6 +96,8 @@ class Medias extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
+      $this->setTitle(I18n::get('global.manager.media'));
+
 			require PATH_STANDARD . '/app/helpers/Image.helper.php';
 
       $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller']);
@@ -139,9 +141,6 @@ class Medias extends Main {
       closedir($oDir);
 
       $this->oSmarty->assign('files', $aFiles);
-
-      $this->setDescription(I18n::get('global.manager.media'));
-      $this->setTitle(I18n::get('global.manager.media'));
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

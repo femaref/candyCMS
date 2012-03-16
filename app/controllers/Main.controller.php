@@ -254,12 +254,15 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sDescription description to be set.
+   * @return object $this due to method chaining
 	 *
 	 */
 	public function setDescription($sDescription = '') {
     if ($sDescription)
       $this->_sDescription = & $sDescription;
-	}
+
+    return $this;
+  }
 
 	/**
 	 * Give back the meta description.
@@ -269,25 +272,31 @@ abstract class Main {
 	 *
 	 */
 	public function getDescription() {
-		# Show default description if this is our landing page or we got no descrption.
-		if (WEBSITE_LANDING_PAGE == substr($_SERVER['REQUEST_URI'], 1, strlen($_SERVER['REQUEST_URI'])) || !$this->_sDescription)
-			return I18n::get('website.description');
+    if(!$this->_sDescription) {
+      # Show default description if this is our landing page or we got no descrption.
+      if ($this->_aRequest['controller'] == $_SESSION['routes']['/'])
+        $this->setDescription(I18n::get('website.description'));
 
-		# We got no description. Fall back to default description.
-		else
-			return $this->_sDescription;
-	}
+      elseif (!$this->_sDescription)
+        $this->setDescription($this->getTitle());
+    }
+
+    return $this->_sDescription;
+  }
 
 	/**
 	 * Set meta keywords.
 	 *
 	 * @access public
 	 * @param string $sKeywords keywords to be set.
+   * @return object $this due to method chaining
 	 *
 	 */
 	public function setKeywords($sKeywords = '') {
     if ($sKeywords)
       $this->_sKeywords = & $sKeywords;
+
+    return $this;
 	}
 
 	/**
@@ -306,11 +315,14 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sTitle title to be set.
+   * @return object $this due to method chaining
 	 *
 	 */
 	public function setTitle($sTitle = '') {
     if ($sTitle)
       $this->_sTitle = & $sTitle;
+
+    return $this;
   }
 
 	/**
@@ -321,12 +333,16 @@ abstract class Main {
 	 *
 	 */
 	public function getTitle() {
-    if ($this->_aRequest['controller'] == 'errors')
-      return I18n::get('error.' . $this->_aRequest['id'] . '.title');
+    if(!$this->_sTitle) {
+      if ($this->_aRequest['controller'] == 'errors')
+        $this->setTitle(I18n::get('error.' . $this->_aRequest['id'] . '.title'));
 
-    else
-      return $this->_sTitle ? $this->_sTitle :
-              I18n::get('global.' . strtolower(Helper::singleize($this->_aRequest['controller'])));
+      else
+        $this->setTitle($this->_sTitle ? $this->_sTitle :
+                        I18n::get('global.' . strtolower(Helper::singleize($this->_aRequest['controller']))));
+    }
+
+    return $this->_sTitle;
   }
 
 	/**
@@ -335,10 +351,13 @@ abstract class Main {
 	 * @access public
 	 * @param string $sContent html content
 	 * @see app/helpers/Dispatcher.helper.php
+   * @return object $this due to method chaining
 	 *
 	 */
 	public function setContent($sContent) {
 		$this->_sContent = & $sContent;
+
+    return $this;
 	}
 
 	/**
@@ -384,22 +403,25 @@ abstract class Main {
 	 * @access protected
 	 * @param string $sField field to be checked
 	 * @param string $sMessage error to be displayed
+   * @return object $this due to method chaining
 	 *
 	 */
 	protected function _setError($sField, $sMessage = '') {
-		if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-      $sStandardMessage = I18n::get('error.form.missing.' . strtolower($sField)) ?
+    if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
+      $sError = I18n::get('error.form.missing.' . strtolower($sField)) ?
               I18n::get('error.form.missing.' . strtolower($sField)) :
               I18n::get('error.form.missing.standard');
 
     if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
-      $sStandardMessage = $sStandardMessage ? $sStandardMessage : I18n::get('error.mail.format');
+      $sError = $sError ? $sError : I18n::get('error.mail.format');
 
-    if ($sStandardMessage)
+    if ($sError)
       $this->_aError[$sField] = !$sMessage ?
-              $sStandardMessage :
+              $sError :
               $sMessage;
-	}
+
+    return $this;
+  }
 
   /**
    * Show a entry.

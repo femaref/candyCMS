@@ -32,13 +32,10 @@ class Logs extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-      # Override
-      $this->setTitle(I18n::get('global.logs'));
-      $this->setDescription(I18n::get('global.logs'));
-
       $this->oSmarty->assign('logs', $this->_oModel->getData());
       $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
 
+      $this->setTitle(I18n::get('global.logs'));
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
