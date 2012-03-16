@@ -8,6 +8,7 @@
  * @license MIT
  * @since 1.0
  *
+ * @todo small pictures (32,64) seem to fail (meaning having wrong offset) when uploading as avatar
  */
 
 namespace CandyCMS\Helper;
@@ -76,14 +77,17 @@ class Image {
 	 * Set up the new image.
 	 *
 	 * @access public
-	 * @param string $sId name of the file WITHOUT file extension
+	 * @param string $sId name of the file
    * @param string $sFolder folder to upload image to. Normally the controller name.
    * @param string $sOriginalPath path of the image to clone from
    * @param string $sImgType type of image
 	 *
 	 */
   public function __construct($sId, $sUploadDir, $sOriginalPath, $sImgType = 'jpg') {
-    $this->_sId           = & $sId;
+    if ($pos = strrpos($sId,'.'))
+      $this->_sId         = & substr($sId, 0,$pos);
+    else
+      $this->_sId         = & $sId;
     $this->_sOriginalPath = & $sOriginalPath;
     $this->_sUploadDir    = & $sUploadDir;
     $this->_sImgType      = & $sImgType;
