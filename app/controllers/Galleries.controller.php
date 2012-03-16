@@ -310,7 +310,7 @@ class Galleries extends Main {
       $iFileCount = count($oUploadFile);
       for ($iI = 0; $iI < $iFileCount; $iI++)
         if ($oUploadFile[$iI] === true)
-          $this->_oModel->createFile($aIds[$iI], $aExts[$iI]);
+          $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]);
 
       return true;
     }

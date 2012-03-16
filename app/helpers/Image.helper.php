@@ -84,10 +84,7 @@ class Image {
 	 *
 	 */
   public function __construct($sId, $sUploadDir, $sOriginalPath, $sImgType = 'jpg') {
-    if ($pos = strrpos($sId,'.'))
-      $this->_sId         = & substr($sId, 0,$pos);
-    else
-      $this->_sId         = & $sId;
+    $this->_sId           = & $sId;
     $this->_sOriginalPath = & $sOriginalPath;
     $this->_sUploadDir    = & $sUploadDir;
     $this->_sImgType      = & $sImgType;
