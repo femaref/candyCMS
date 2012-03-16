@@ -173,7 +173,7 @@ class Users extends Main {
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
-    elseif ($oUpload->uploadAvatarFile(false))
+    elseif ($oUpload->uploadAvatarFile(false) === true)
       return Helper::successMessage(I18n::get('success.upload'), '/' .
 							$this->_aRequest['controller'] . '/' . $this->_iId);
 

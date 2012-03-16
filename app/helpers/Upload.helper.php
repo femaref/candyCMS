@@ -203,6 +203,7 @@ class Upload {
       $this->_sUploadFolder = 'users';
       $aUploads = $this->uploadFiles($this->_sUploadFolder . '/original');
 
+      # @todo why jump out here?
       if ($aUploads[0] === false)
         return false;
 
