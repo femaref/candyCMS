@@ -262,7 +262,6 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo _createFile
    *
    */
   public function createFile() {
@@ -323,6 +322,9 @@ class Galleries extends Main {
   /**
    * Update a gallery entry.
    *
+   * Check if required data is given or throw an error instead.
+   * If data is given, calls _updateFile.
+   *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    * @todo _updateFile
@@ -334,7 +336,9 @@ class Galleries extends Main {
 
     else {
       if (isset($this->_aRequest['updatefile_galleries'])) {
-        if ($this->_oModel->updateFile($this->_iId) === true) {
+        $aDetails = $this->_oModel->getFileDetails($this->_iId);
+        $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
+        if ($this->_updateFile()) {
 					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
           Logs::insert($this->_aRequest['controller'],
@@ -342,13 +346,32 @@ class Galleries extends Main {
 											(int) $this->_iId,
 											$this->_aSession['user']['id']);
 
-          return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller']);
+          return Helper::successMessage(I18n::get('success.update'), $sRedirectPath);
         }
         else
-          return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+          return Helper::errorMessage(I18n::get('error.sql'), $sRedirectPath);
       }
       else
         return $this->_showFormFileTemplate();
+    }
+  }
+
+  /**
+   * Update a gallery entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, calls _destroyFile.
+   *
+   * @access private
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  private function _updateFile() {
+    if (isset($this->_aRequest['updatefile_galleries']))
+      return $this->_oModel->updateFile($this->_iId) === true;
+    else {
+      $this->_aError['file'] = I18n::get('error.form.missing.file');
+      return $this->_showFormFileTemplate();
     }
   }
 
@@ -357,7 +380,6 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo _destroyFile
    *
    */
   public function destroyFile() {
@@ -366,7 +388,7 @@ class Galleries extends Main {
               $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['album_id']);
 
     else {
-      if($this->_oModel->destroyFile($this->_iId) === true) {
+      if($this->_destroyFile() === true) {
 				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
         Logs::insert($this->_aRequest['controller'],
@@ -383,4 +405,16 @@ class Galleries extends Main {
                 (int) $this->_aRequest['album_id']);
     }
   }
+
+  /**
+	 * Destroy a gallery entry.
+   *
+   * @access private
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  private function _destroyFile() {
+    return $this->_oModel->destroyFile($this->_iId) === true;
+  }
+
 }
