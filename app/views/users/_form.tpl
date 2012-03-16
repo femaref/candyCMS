@@ -239,7 +239,7 @@
       var avatarIsChecked = $(this).is(':checked');
       $('#js-gravatar').toggleOpacity(avatarIsChecked);
       $('#js-gravatar_help').toggle('fast');
-      $('#js-avatar_tab').toggle(avatarIsChecked);
+      $('#js-avatar_tab').toggle(!avatarIsChecked);
     });
 
     $('#input-content').bind('keyup', function() {

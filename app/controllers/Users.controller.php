@@ -157,6 +157,7 @@ class Users extends Main {
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 * @todo _updateAvatar? $this->_aError?
+   * @todo unset gravatar?
 	 *
 	 */
 	public function updateAvatar() {
@@ -171,13 +172,13 @@ class Users extends Main {
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
-    elseif ($oUpload->uploadAvatarFile(false) === true)
+    elseif ($oUpload->uploadAvatarFile(false))
       return Helper::successMessage(I18n::get('success.upload'), '/' .
 							$this->_aRequest['controller'] . '/' . $this->_iId);
 
     else
       return Helper::errorMessage(I18n::get('error.file.upload'), '/' .
-							$this->_aRequest['controller'] . '/' . $this->_iId);
+							$this->_aRequest['controller'] . '/' . $this->_iId . '/update');
   }
 
 	/**

@@ -264,27 +264,24 @@ class Galleries extends Main {
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
-    else {
-      if (isset($this->_aRequest['createfile_gallery'])) {
-        if ($this->_createFile() === true) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+    if (!isset($this->_aRequest['createfile_gallery']))
+      return $this->_showFormFileTemplate();
 
-          # Log uploaded image. Request ID = album id
-          Logs::insert( $this->_aRequest['controller'],
-                        'createfile',
-                        (int) $this->_aRequest['id'],
-                        $this->_aSession['user']['id']);
+    if ($this->_createFile() === true) {
+      $this->oSmarty->clearCache(null, $this->_aRequest['controller']);
 
-          return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
-                  '/' . $this->_iId);
-        }
-        else
-          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
-									'/' . $this->_iId . '/createfile');
-      }
-      else
-        return $this->_showFormFileTemplate();
+      # Log uploaded image. Request ID = album id
+      Logs::insert( $this->_aRequest['controller'],
+                    'createfile',
+                    (int) $this->_aRequest['id'],
+                    $this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
+              '/' . $this->_iId);
     }
+    else
+      return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
+									'/' . $this->_iId . '/createfile');
   }
 
   /**
@@ -298,18 +295,17 @@ class Galleries extends Main {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
-      for ($iI = 0; $iI < count($this->_aFile['file']['name']); $iI++) {
-        $aFile['name']      = $this->_aFile['file']['name'][$iI];
-        $aFile['type']      = $this->_aFile['file']['type'][$iI];
-        $aFile['tmp_name']  = $this->_aFile['file']['tmp_name'][$iI];
-        $aFile['error']     = $this->_aFile['file']['error'][$iI];
-        $aFile['size']      = $this->_aFile['file']['size'][$iI];
+      $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $aFile);
 
-        $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $aFile);
+      $oUploadFile->uploadGalleryFiles();
 
-        if ($oUploadFile->uploadGalleryFile() === true)
-          $this->_oModel->createFile($oUploadFile->getId(), $oUploadFile->getExtension());
-      }
+      $aIds = $oUploadFile->getIds(false);
+      $aExts = $oUploadFile->getExtensions();
+
+      $iFileCount = count($oUploadFile);
+      for ($iI = 0; $iI < $iFileCount; $iI++)
+        if ($oUploadFile[$iI] === true)
+          $this->_oModel->createFile($aIds[$iI], $aExts[$iI]);
 
       return true;
     }
