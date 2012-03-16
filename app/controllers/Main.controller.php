@@ -393,11 +393,12 @@ abstract class Main {
               I18n::get('error.form.missing.standard');
 
     if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
-      $sStandardMessage = I18n::get('error.mail.format');
+      $sStandardMessage = $sStandardMessage ? $sStandardMessage : I18n::get('error.mail.format');
 
-    $this->_aError[$sField] = !$sMessage ?
-            $sStandardMessage :
-            $sMessage;
+    if ($sStandardMessage)
+      $this->_aError[$sField] = !$sMessage ?
+              $sStandardMessage :
+              $sMessage;
 	}
 
   /**
