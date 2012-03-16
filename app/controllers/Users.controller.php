@@ -461,7 +461,11 @@ class Users extends Main {
         # Destroy profile image
         Upload::destroyAvatarFiles($this->_iId);
 
-        Logs::insert($this->_aRequest['controller'], $this->_aRequest['action'], (int) $this->_iId, $this->_aSession['user']['id']);
+        Logs::insert( $this->_aRequest['controller'],
+                $this->_aRequest['action'],
+                (int) $this->_iId,
+                $this->_aSession['user']['id']);
+
         return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
       }
       else

@@ -529,7 +529,7 @@ class Helper {
    * @todo test
 	 *
    */
-  public function singleize($sStr) {
+  public static function singleize($sStr) {
     if (substr($sStr, -3) == 'ies')
       return substr($sStr, 0, -3) . 'y';
 

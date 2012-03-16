@@ -100,10 +100,11 @@ class Upload {
           $this->_sFileName = Helper::replaceNonAlphachars($this->_aRequest['rename']) .
 								'_' . $iI . '.' . $this->_sFileExtension;
 
-
         $this->sFilePath = Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/' . $this->_sFileName);
-        return move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
+        $bReturn = move_uploaded_file($this->_aFile['file']['tmp_name'][$iI], $this->sFilePath);
       }
+
+      return $bReturn;
     }
   }
 
@@ -120,6 +121,7 @@ class Upload {
 	 */
   public function uploadGalleryFile($sResize = '') {
     $this->_aRequest['cut'] = !empty($sResize) ? $sResize : $this->_aRequest['cut'];
+
 		$this->_sFileExtension	= strtolower(substr(strrchr($this->_aFile['name'], '.'), 1));
 		$this->_sFileName				= md5($this->_sFileName . rand(000, 999));
 		$this->_sUploadFolder		= 'gallery/' . (int) $this->_aRequest['id'];
