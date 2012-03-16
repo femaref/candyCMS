@@ -108,6 +108,7 @@ class Mails extends Main {
 	 * @access protected
 	 * @param boolean $bShowCaptcha show captcha or not.
 	 * @return string HTML content
+   * @todo rename to _show?
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {
@@ -115,8 +116,9 @@ class Mails extends Main {
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
 		$oUser = $this->__autoload('Users', true);
+    $aUser = $oUser::getUserNamesAndEmail($this->_iId);
 
-    $this->oSmarty->assign('contact', $oUser::getUserNamesAndEmail($this->_iId));
+    $this->oSmarty->assign('contact', $aUser);
 		$this->oSmarty->assign('content', isset($this->_aRequest['content']) ?
 										(string) $this->_aRequest['content'] :
 										'');
@@ -135,8 +137,8 @@ class Mails extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $this->setTitle(I18n::get('global.contact'));
-
+    $this->setTitle(I18n::get('global.contact') . ' ' . $aUser['name'] . ' ' . $aUser['surname'])
+            ->setDescription(str_replace('%u', $aUser['name'] . ' ' . $aUser['surname'], I18n::get('mails.description.show')));
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
@@ -179,8 +181,7 @@ class Mails extends Main {
 	 *
 	 */
   protected function _create($bShowCaptcha = true) {
-		$this->_setError('content');
-		$this->_setError('email');
+		$this->_setError('content')->_setError('email');
 
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);
@@ -207,7 +208,7 @@ class Mails extends Main {
 
       if ($bStatus == true) {
         Logs::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
-				return $this->_showSuccessMessage();
+				return $this->_showSuccessPage();
       }
 			else
 				Helper::errorMessage(I18n::get('error.mail.create'), '/');
@@ -221,12 +222,11 @@ class Mails extends Main {
    * @return string HTML success page.
 	 *
    */
-  private function _showSuccessMessage() {
+  private function _showSuccessPage() {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
 
-    $this->setTitle(I18n::get('mail.info.redirect'));
-
+    $this->setTitle(I18n::get('mail.success_page.title'));
     $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

@@ -1,7 +1,7 @@
 {strip}
   <div class='page-header'>
-    <h1>{$lang.mails.info.title}</h1>
+    <h1>{$lang.mails.success_page.title}</h1>
   </div>
-  <p>{$lang.mails.info.redirect}</p>
+  <p>{$lang.mails.success_page.redirect}</p>
   <meta http-equiv="refresh" content="15; url=/" >
 {/strip}

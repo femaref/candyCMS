@@ -47,7 +47,8 @@ class Searches extends Main {
       $this->oSmarty->assign('tables', $this->_oModel->getData($sString,
 							array('blogs', 'contents', 'downloads', 'gallery_albums')));
 
-      $this->setTitle(str_replace('%s', $sString, I18n::get('search.title.show')));
+      $this->setTitle(str_replace('%s', $sString, I18n::get('searches.title.show')))
+              ->setDescription(str_replace('%s', $sString, I18n::get('searches.description.show')));
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }

@@ -239,6 +239,8 @@ error:
     verification: Could not verify your account. This code does not exist!
 
 blogs:
+  description:
+    show: Blog
   info:
     keywords: Please enter the most relevant keywords.
     tag: Seperate tags by comma and space, i.e. "tag1, tag2"
@@ -251,6 +253,8 @@ blogs:
     update: "Update: '%p'"
 
 calendars:
+  description:
+    show: Calendar
   info:
     date_format: 'Date format: "YYYY-MM-DD"'
   title:
@@ -266,10 +270,11 @@ comments:
     destroy: Delete comment
 
 contents:
+  description:
+    show: Contents
   info:
     keywords: Enter the most important keywords.
     teaser: Write a teaser for SEO.
-    update: Update %p
   title:
     create: Create content
     destroy: Delete content
@@ -281,6 +286,8 @@ cronjob:
     subject: Backup from %d
 
 downloads:
+  description:
+    show: Downloads
   label:
     choose: Select file
   title:
@@ -290,11 +297,15 @@ downloads:
 
 galleries:
   albums:
+    description:
+      show: Albums
     title:
       create: Create album
       destroy: Destroy album
       update: "Update: '%p'"
   files:
+    description:
+      show: Gallery Images
     label:
       choose: Choose file(s)
       cut: Cut and resize
@@ -308,7 +319,9 @@ mails:
   body:
     no_reply: <p>(This is a generated Mail. Do not reply!)</p>
     signature: <p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>
-  info:
+  description:
+    show: Write a mail to %u.
+  success_page:
     title: "Thank you for your contact!"
     redirect: You will be redirect to the front page in 15 seconds.
   subject:
@@ -325,16 +338,20 @@ medias:
     destroy: Delete file
 
 newsletters:
+  description:
+    subscribe: Sign in to our newsletter to stay up to date.
   info:
     subscribe: Please enter your information to subscribe to our newsletter. You can unsubscribe to this newsletter at the end of each mail.
   title:
-    subscribe: Subscribe to newsletter
+    subscribe: Subscribe to our newsletter
 
 pages:
   next: Next entries
   previous: Older entries
 
 searches:
+  description:
+    show: "Search results for '%s'."
   label:
     terms: Terms
   title:
@@ -345,6 +362,7 @@ searches:
 
 sessions:
   password:
+    description: Here you can get a new password.
     info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
     mail:
@@ -352,6 +370,7 @@ sessions:
       subject: Your new password
     title: Lost password?
   verification:
+    description: "If you didn't get a registration mail, get a new one here."
     info: Resend the verification code.
     label:
       create: Send email
@@ -362,6 +381,9 @@ sessions:
 
 users:
   contact_via_email: "Click to send %u an email!"
+  description:
+    create: Create a new user profile.
+    show: User profile of %u.
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
     gravatar:  "If you don't want to upload a profile image, you can use <a href='http://gravatar.com' target='_blank'>Gravatar.com</a> instead. The displayed image is shown above."

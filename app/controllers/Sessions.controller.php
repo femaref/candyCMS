@@ -31,14 +31,16 @@ class Sessions extends Main {
 
         case 'password':
 
-          $this->setTitle(I18n::get('sessions.password.title'));
+          $this->setTitle(I18n::get('sessions.password.title'))
+                ->setDescription(I18n::get('sessions.password.description'));
           return $this->resendPassword();
 
           break;
 
         case 'verification':
 
-          $this->setTitle(I18n::get('sessions.verification.title'));
+          $this->setTitle(I18n::get('sessions.verification.title'))
+                ->setDescription(I18n::get('sessions.verification.description'));
           return $this->resendVerification();
 
           break;

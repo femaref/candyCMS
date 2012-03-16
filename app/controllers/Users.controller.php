@@ -83,7 +83,8 @@ class Users extends Main {
         $aData = $this->_oModel->getData($this->_iId);
         $this->oSmarty->assign('user', $aData);
 
-        $this->setTitle($aData[1]['full_name']);
+        $this->setTitle($aData[1]['full_name'])
+                ->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
       }
 
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -318,7 +319,9 @@ class Users extends Main {
       $this->setTitle(I18n::get('users.title.create'));
 
     else
-      $this->setTitle(I18n::get('global.registration'));
+      $this->setTitle(I18n::get('global.registration'))
+              ->setDescription(I18n::get('users.description.create'));
+
 
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :

@@ -239,6 +239,8 @@ error:
     verification: Nicht freigeschaltet werden, du konntest. Kein Account mit einem solchen Code gefunden werden konnte!
 
 blogs:
+  description:
+    show: Blog
   info:
     keywords: Die wichtigsten Schlagworte dieses Eintrags eingeben du musst.
     tag: Kategorien durch Komma u. Leerzeichen ("Tag, Tag2") trennen du musst.
@@ -251,6 +253,8 @@ blogs:
     update: '"%p" bearbeiten'
 
 calendars:
+  description:
+    show: Kalender
   info:
     date_format: 'Datumsformat: "YYYY-MM-DD"'
   title:
@@ -266,16 +270,19 @@ comments:
     destroy: Kommentar löschen
 
 content:
+  description:
+    show: Seitenübersicht
   info:
     keywords: Die wichtigsten Schlagworte dieser Seite angeben du musst.
     teaser: Eine Zusammenfassung für die Suchmaschinen schreiben du musst.
-
   title:
     create: Seite erstellen
     destroy: Seite löschen
     update: Bearbeiten
 
 downloads:
+  description:
+    show: Downloads
   label:
     choose: Datei auswählen
   title:
@@ -290,11 +297,15 @@ cronjob:
 
 galleries:
   albums:
+    description:
+      show: Albenübersicht
     title:
       create: Album erstellen
       destroy: Album löschen
       update: 'Album "%p" bearbeiten'
   files:
+    description:
+      show: Galerie-Bilder.
     label:
       choose: Datei(en) auswählen
       cut: Bild quadratisch zuschneiden
@@ -308,6 +319,8 @@ mails:
   body:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
     signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
+  description:
+    show: E-Mail schreiben an %u du machen sollen.
   info:
     title: "Vielen Dank für Deine Kontaktaufnahme!"
     redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
@@ -325,6 +338,8 @@ medias:
     destroy: Datei löschen
 
 newsletters:
+  description:
+    subscribe: Abonniere unseren Newsletter um über Neuigkeiten informiert zu werden.
   info:
     subscribe: Deine E-Mail-Adresse eintragen du kannst. Nach dem Absenden umgehend eine E-Mail mit einem Link du erhältst, durch den die Echtheit deiner E-Mail-Adresse bestätigen du kannst. Den Newsletter abbestellen du möchtest, so am Ende eines Newsletters austragen, du dich kannst.
   title:
@@ -335,6 +350,8 @@ pages:
   previous: Neuere Beiträge
 
 searches:
+  description:
+    show: Suchergebnisse für "%s"
   label:
     terms: Suchbegriffe
   title:
@@ -345,6 +362,7 @@ searches:
 
 sessions:
   password:
+    description: Auf dieser Seite neues Passwort anfordern du kannst.
     info: Deine registrierte E-Mail Adresse eintragen du musst. Dir ein neues Passwort innerhalb der nächsten Minuten zuschicken, wir tun.
     label: Passwort anfordern
     mail:
@@ -352,6 +370,7 @@ sessions:
       subject: Dein neues Passwort
     title: Passwort vergessen?
   verification:
+    description: Falls du keine E-Mail zur Bestätigung deiner Daten erhalten hast, sende sie dir hier erneut zu.
     info: Dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken lassen, du kannst.
     label:
       create: Bestätigungslink zuschicken
@@ -362,6 +381,9 @@ sessions:
 
 users:
   contact_via_email: "Klicke hier, um %u eine E-Mail zu schicken!"
+  description:
+    create: Nutzerkonto du erstellen können hier.
+    show: Nutzerprofil von %u.
   info:
     destroy_account: Zur eigenen Sicherheit dein aktuelles Passwort noch einmal eingeben, du musst. Sobald du auf "Account löschen" klicken du tust, dein Zugang gelöscht und nicht wiederherstellbar, er ist!
     gravatar: Wenn du aktivierst dieses Kästchen, automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild (s.o.) gesucht, es wird. Alternativ aber auch direkt ein Bild hochladen, du kannst.

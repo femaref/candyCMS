@@ -258,7 +258,7 @@ abstract class Main {
 	 *
 	 */
 	public function setDescription($sDescription = '') {
-    if ($sDescription)
+    if ($sDescription && !$this->_sDescription)
       $this->_sDescription = & $sDescription;
 
     return $this;
@@ -293,7 +293,7 @@ abstract class Main {
 	 *
 	 */
 	public function setKeywords($sKeywords = '') {
-    if ($sKeywords)
+    if ($sKeywords && !$this->_sKeywords)
       $this->_sKeywords = & $sKeywords;
 
     return $this;
@@ -319,7 +319,7 @@ abstract class Main {
 	 *
 	 */
 	public function setTitle($sTitle = '') {
-    if ($sTitle)
+    if ($sTitle && !$this->_sTitle)
       $this->_sTitle = & $sTitle;
 
     return $this;
@@ -349,7 +349,7 @@ abstract class Main {
 	 * Set the page content.
 	 *
 	 * @access public
-	 * @param string $sContent html content
+	 * @param string $sContent HTML content
 	 * @see app/helpers/Dispatcher.helper.php
    * @return object $this due to method chaining
 	 *
