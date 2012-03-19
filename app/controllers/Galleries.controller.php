@@ -189,7 +189,7 @@ class Galleries extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      $this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
@@ -264,11 +264,11 @@ class Galleries extends Main {
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
-    if (!isset($this->_aRequest['createfile_gallery']))
+    if (!isset($this->_aRequest['createfile_galleries']))
       return $this->_showFormFileTemplate();
 
     if ($this->_createFile() === true) {
-      $this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       # Log uploaded image. Request ID = album id
       Logs::insert( $this->_aRequest['controller'],
@@ -295,19 +295,22 @@ class Galleries extends Main {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
     if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
-      $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $aFile);
+      $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
 
-      $oUploadFile->uploadGalleryFiles();
+      $aReturnValues = $oUploadFile->uploadGalleryFiles();
 
       $aIds = $oUploadFile->getIds(false);
       $aExts = $oUploadFile->getExtensions();
 
-      $iFileCount = count($oUploadFile);
+      $iFileCount = count($aReturnValues);
+      $bReturnVal = true;
       for ($iI = 0; $iI < $iFileCount; $iI++)
-        if ($oUploadFile[$iI] === true)
+        if ($aReturnValues[$iI] === true)
           $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]);
+        else
+          $bReturnVal = false;
 
-      return true;
+      return $bReturnVal;
     }
     else {
       $this->_aError['file'] = I18n::get('error.form.missing.file');
@@ -335,7 +338,7 @@ class Galleries extends Main {
         $aDetails = $this->_oModel->getFileDetails($this->_iId);
         $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
         if ($this->_updateFile()) {
-					$this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
+					$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
           Logs::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
@@ -385,7 +388,7 @@ class Galleries extends Main {
 
     else {
       if($this->_destroyFile() === true) {
-				$this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
+				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         Logs::insert($this->_aRequest['controller'],
 										$this->_aRequest['action'],

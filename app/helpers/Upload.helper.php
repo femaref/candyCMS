@@ -93,10 +93,13 @@ class Upload {
   public function uploadFiles($sFolder = 'medias', $bFilenameHashes = false) {
     $sType = isset($this->_aFile['image']) ? 'image' : 'file';
     if (isset($this->_aFile[$sType]) && !empty($this->_aFile[$sType]['name'][0])) {
-      $iFileCount = count($this->_aFile[$sType]['name']) || 1;
-      $bReturn = array($iFileCount);
       $bIsArray = is_array($this->_aFile[$sType]['name']);
+      if ($bIsArray)
+        $iFileCount = count($this->_aFile[$sType]['name']);
+      else
+        $iFileCount = 1;
 
+      $bReturn = array();
       for ($iI = 0; $iI < $iFileCount; $iI++) {
         if ($bIsArray) {
           $this->_sFileNames[$iI] = Helper::replaceNonAlphachars(strtolower($this->_aFile[$sType]['name'][$iI]));
@@ -118,46 +121,43 @@ class Upload {
           $this->_sFileNames[$iI] = md5($this->_sFileNames[$iI] . rand(000, 999));
 
         $this->sFilePaths[$iI] = Helper::removeSlash(PATH_UPLOAD . '/' .  $sFolder . '/' .
-                                                    $this->_sFileNames[$iI] . $this->_sFileExtensions[$iI]);
-
+                                                    $this->_sFileNames[$iI] . '.' . $this->_sFileExtensions[$iI]);
 //        if (!file_exists(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/'))) {
 //          mkdir(Helper::removeSlash(PATH_UPLOAD . '/' . $sFolder . '/', 0755));
 //        }
 
         if ($bIsArray)
-          $bReturn[$iI] = move_uploaded_file($this->_aFile[$sType]['tmp_name'][$iI], $this->sFilePaths[$iI]) ? true : false;
+          $bReturn[$iI] = (move_uploaded_file($this->_aFile[$sType]['tmp_name'][$iI], $this->sFilePaths[$iI])) ? true : false;
         else
-          $bReturn[$iI] = move_uploaded_file($this->_aFile[$sType]['tmp_name'], $this->sFilePaths[$iI]) ? true : false;
+          $bReturn[$iI] = (move_uploaded_file($this->_aFile[$sType]['tmp_name'], $this->sFilePaths[$iI])) ? true : false;
       }
 
       return $bReturn;
     }
     else
-      return die($sType);
+      return die(print_r($this->_aFile));
   }
 
   /**
    * Upload files into an album. Resize and / or cut the files.
    *
    * @access public
-   * @param string $sResize cut or resize the image?!
+   * @param string $sResize cut or resize the images?!
    * @see app/controller/Galleries.controller.php
-   * @return boolean status of upload
-   * @todo put "for" in here?
-   * @todo do we need class variables?
+   * @return array boolean status of each upload
    *
    */
   public function uploadGalleryFiles($sResize = '') {
     $this->_aRequest['cut'] = !empty($sResize) ? $sResize : $this->_aRequest['cut'];
-    $this->_sUploadFolder = 'gallery/' . (int) $this->_aRequest['id'];
+    $this->_sUploadFolder = 'galleries/' . (int) $this->_aRequest['id'];
 
-    $aUploads = $this->uploadFiles('gallery/' . (int) $this->_aRequest['id'] . '/original', true);
+    $aUploads = $this->uploadFiles($this->_sUploadFolder . '/original', true);
 
     //do cuts and or resizes
     $iFileCount = count($aUploads);
     for ($iI = 0; $iI < $iFileCount; $iI++) {
       if ($aUploads[$iI] === true) {
-        $oImage = new Image($this->_sFileName[$iI], $this->_sUploadFolder, $this->sFilePath[$iI], $this->_sFileExtension[$iI]);
+        $oImage = new Image($this->_sFileNames[$iI], $this->_sUploadFolder, $this->sFilePaths[$iI], $this->_sFileExtensions[$iI]);
 
         if (isset($this->_aRequest['cut']) && 'c' == $this->_aRequest['cut'])
           $oImage->resizeAndCut(THUMB_DEFAULT_X);
