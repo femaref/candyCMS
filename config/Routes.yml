@@ -2,7 +2,7 @@
 "/": blogs
 
 # Shared behaviour
-"(:alpha)/?": controller=$1&action=show
+"(:alpha)/?": controller=$1&page=1
 "(:alpha)/page/(:num)": controller=$1&page=$2
 "(:alpha)/(create|update|destroy)": controller=$1&action=$2
 "(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3

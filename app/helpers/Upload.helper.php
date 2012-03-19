@@ -203,10 +203,11 @@ class Upload {
       $this->_sUploadFolder = 'users';
       $aUploads = $this->uploadFiles($this->_sUploadFolder . '/original');
 
-      # @todo why jump out here?
+      # upload might have failed
       if ($aUploads[0] === false)
         return false;
 
+      # upload was successfull
       $oImage = & new Image($this->_sFileNames[0], $this->_sUploadFolder, $this->sFilePaths[0], $this->_sFileExtensions[0]);
 
       $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
