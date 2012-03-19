@@ -25,7 +25,7 @@
     </div>
     <div class='form-actions'>
       <input type='submit' value='{$lang.global.login}' data-theme='b' class='btn btn-primary'/>
-      <input type='hidden' value='formdata' name='create_session' />
+      <input type='hidden' value='formdata' name='create_sessions' />
     </div>
   </form>
   <div class='center'>

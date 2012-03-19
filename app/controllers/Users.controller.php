@@ -26,41 +26,47 @@ class Users extends Main {
    *
    */
   public function show() {
-    if (isset($this->_aRequest['action']) && $this->_aRequest['action'] !== 'show') {
-      switch ($this->_aRequest['action']) {
+    if (!isset($this->_aRequest['action']))
+       $this->_aRequest['action'] = 'show';
 
-        case 'avatar':
 
-          $this->setTitle(I18n::get('users.title.avatar'));
-          return $this->updateAvatar();
+    switch ($this->_aRequest['action']) {
 
-          break;
+      case 'avatar':
 
-        case 'password':
+        $this->setTitle(I18n::get('users.title.avatar'));
+        return $this->updateAvatar();
 
-          $this->setTitle(I18n::get('users.title.password'));
-          return $this->updatePassword();
+        break;
 
-          break;
+      case 'password':
 
-        case 'token':
+        $this->setTitle(I18n::get('users.title.password'));
+        return $this->updatePassword();
 
-          $this->setTitle(I18n::get('global.api_token'));
-          return $this->getToken();
+        break;
 
-          break;
+      case 'token':
 
-        case 'verification':
+        $this->setTitle(I18n::get('global.api_token'));
+        return $this->getToken();
 
-          $this->setTitle(I18n::get('global.email.verification'));
-          return $this->verifyEmail();
+        break;
 
-          break;
-      }
-    }
-    else {
-      $this->oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_LIFETIME_SAVED);
-      return $this->_show();
+      case 'verification':
+
+        $this->setTitle(I18n::get('global.email.verification'));
+        return $this->verifyEmail();
+
+        break;
+
+      default:
+      case 'show':
+
+        $this->oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_LIFETIME_SAVED);
+        return $this->_show();
+
+        break;
     }
   }
 

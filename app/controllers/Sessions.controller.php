@@ -26,28 +26,34 @@ class Sessions extends Main {
    *
    */
   public function show() {
-    if (isset($this->_aRequest['action'])) {
-      switch ($this->_aRequest['action']) {
+    if (!isset($this->_aRequest['action']))
+      $this->_aRequest['action'] = 'show';
 
-        case 'password':
+    switch ($this->_aRequest['action']) {
 
-          $this->setTitle(I18n::get('sessions.password.title'));
-          $this->setDescription(I18n::get('sessions.password.description'));
-          return $this->resendPassword();
+      case 'password':
 
-          break;
+        $this->setTitle(I18n::get('sessions.password.title'));
+        $this->setDescription(I18n::get('sessions.password.description'));
+        return $this->resendPassword();
 
-        case 'verification':
+        break;
 
-          $this->setTitle(I18n::get('sessions.verification.title'));
-          $this->setDescription(I18n::get('sessions.verification.description'));
-          return $this->resendVerification();
+      case 'verification':
 
-          break;
-      }
+        $this->setTitle(I18n::get('sessions.verification.title'));
+        $this->setDescription(I18n::get('sessions.verification.description'));
+        return $this->resendVerification();
+
+        break;
+
+      default:
+      case 'show':
+
+        return $this->_showFormTemplate();
+
+        break;
     }
-    else
-      return $this->_showFormTemplate();
   }
 
 	/**
@@ -59,7 +65,7 @@ class Sessions extends Main {
 	 *
 	 */
   public function create() {
-		return isset($this->_aRequest['create_session']) ? $this->_create() : $this->_showFormTemplate();
+		return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
 	}
 
 	/**
