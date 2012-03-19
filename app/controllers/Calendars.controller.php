@@ -50,7 +50,6 @@ class Calendars extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			$this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       $this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))

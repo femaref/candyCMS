@@ -183,8 +183,9 @@ class Pagination {
 
       $this->_oSmarty->assign('_PAGE', $aPage);
 
+//      $this->_oSmarty->setCaching(SmartySingleton::CACHING_OFF);
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
-			return $this->_oSmarty->fetch('show.tpl');
+			return $this->_oSmarty->fetch('show.tpl', UNIQUE_ID);
 		}
   }
 
@@ -213,8 +214,9 @@ class Pagination {
 
 			$this->_oSmarty->assign('_PAGE', $aPage);
 
+//      $this->_oSmarty->setCaching(SmartySingleton::CACHING_OFF);
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
-			return $this->_oSmarty->fetch('surrounding.tpl');
+			return $this->_oSmarty->fetch('surrounding.tpl', UNIQUE_ID);
 		}
   }
 }

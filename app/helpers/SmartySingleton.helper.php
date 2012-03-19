@@ -171,4 +171,17 @@ class SmartySingleton extends Smarty {
         'template'  => WEBSITE_CDN . '/templates/' . PATH_TEMPLATE,
         'upload'    => PATH_UPLOAD);
   }
+
+  /**
+   * Clear the controller cache.
+   *
+   * @access public
+   * @param string $sController
+   *
+   */
+  public function clearCacheForController($sController) {
+    $this->clearCache(null, WEBSITE_MODE . '|' . $sController);
+  }
 }
+
+?>

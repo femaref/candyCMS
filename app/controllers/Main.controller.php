@@ -517,7 +517,7 @@ abstract class Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
-      $this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
 			Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],
@@ -546,7 +546,7 @@ abstract class Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],
@@ -573,7 +573,7 @@ abstract class Main {
    */
   protected function _destroy() {
     if($this->_oModel->destroy($this->_iId) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],

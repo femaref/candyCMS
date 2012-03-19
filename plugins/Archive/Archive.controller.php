@@ -43,7 +43,7 @@ final class Archive {
     $oSmarty->setTemplateDir($sTemplateDir);
     $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-    $sCacheId = 'blogs|' . WEBSITE_LOCALE . '|archive';
+    $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|archive';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
       require_once PATH_STANDARD . '/app/models/Blogs.model.php';
       $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);

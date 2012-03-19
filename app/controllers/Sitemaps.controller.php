@@ -13,7 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Sitemaps extends Main {
 
@@ -35,7 +35,7 @@ class Sitemaps extends Main {
 			$this->_getSitemap();
 		}
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(1800); # 30 minutes
     $this->oSmarty->setTemplateDir($sTemplateDir);
     exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
@@ -55,7 +55,7 @@ class Sitemaps extends Main {
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->_getSitemap();
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
     $this->oSmarty->setCacheLifetime(180);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

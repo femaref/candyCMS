@@ -8,13 +8,13 @@
  * @license MIT
  * @since 2.0
  *
+ * @todo test caching
  */
 
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
 
 require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 
@@ -228,7 +228,6 @@ class Mails extends Main {
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
 
     $this->setTitle(I18n::get('mail.success_page.title'));
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }

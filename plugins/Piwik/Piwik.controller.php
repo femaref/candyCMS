@@ -41,7 +41,7 @@ final class Piwik {
     $oSmarty->setTemplateDir($sTemplateDir);
     $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-    $sCacheId = 'plugins|' . WEBSITE_LOCALE . '|piwik';
+    $sCacheId = WEBSITE_MODE . '|plugins|' . WEBSITE_LOCALE . '|piwik';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
       $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
       $oSmarty->assign('PLUGIN_PIWIK_ID', PLUGIN_PIWIK_ID);

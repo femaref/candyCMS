@@ -16,7 +16,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Downloads extends Main {
 
@@ -54,7 +54,6 @@ class Downloads extends Main {
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 		}
@@ -121,7 +120,7 @@ class Downloads extends Main {
 
       # File is up so insert data into database
       if ($oUploadFile->uploadFiles('download') === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+				$this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
 
         if ($this->_oModel->create($oUploadFile->getId(false), $oUploadFile->getExtension()) === true) {
           Logs::insert($this->_aRequest['controller'],

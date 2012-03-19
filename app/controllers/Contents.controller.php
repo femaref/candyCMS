@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
 
 class Contents extends Main {
 
@@ -33,8 +32,7 @@ class Contents extends Main {
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
 
-        # @todo test this
-        if (!isset($aData['id']) || !$aData['id'])
+        if (!isset($aData) || !$aData[$this->_iId]['id'])
           Helper::redirectTo('/errors/404');
 
         $this->setDescription($aData[$this->_iId]['teaser'])
@@ -43,7 +41,6 @@ class Contents extends Main {
         $this->oSmarty->assign('contents', $aData);
       }
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }

@@ -13,7 +13,7 @@
 namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
-use Smarty;
+//use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Errors extends Main {
 
@@ -29,7 +29,6 @@ class Errors extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], $sError);
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, $sError);
 
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}

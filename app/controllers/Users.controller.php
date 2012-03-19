@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Users extends Main {
 
@@ -59,8 +59,10 @@ class Users extends Main {
           break;
       }
     }
-    else
+    else {
+      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       return $this->_show();
+    }
   }
 
 	/**
@@ -275,6 +277,7 @@ class Users extends Main {
 			return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
+      # @todo clearCache?
       $this->__autoload('Mails');
 
       # Send email if user has registered and creator is not an admin.
@@ -383,7 +386,7 @@ class Users extends Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->update((int) $this->_iId) === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       # Check if user wants to unsubscribe from mailchimp
 			if (!isset($this->_aRequest['receive_newsletter']))
@@ -426,7 +429,7 @@ class Users extends Main {
       # Password matches with user password
       if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['user']['password']) {
         if ($this->_oModel->destroy($this->_iId) === true) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+					$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
           # Unsubscribe from newsletter
           $this->_unsubscribeFromNewsletter($aUser['email']);
@@ -446,7 +449,7 @@ class Users extends Main {
       # We are admin and can delete users
     } elseif ($this->_aSession['user']['role'] == 4) {
       if ($this->_oModel->destroy($this->_iId) === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         # Unsubscribe from newsletter
         $this->_unsubscribeFromNewsletter($aUser['email']);

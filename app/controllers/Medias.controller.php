@@ -16,7 +16,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Medias extends Main {
 
@@ -54,7 +54,6 @@ class Medias extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
