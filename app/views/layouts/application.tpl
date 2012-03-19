@@ -80,7 +80,7 @@
             <ul class="nav pull-right">
               {if $_SESSION.user.id == 0}
                 <li{if $_REQUEST.controller == 'sessions'} class='active'{/if}>
-                  <a href='/sessions'>{$lang.global.login}</a>
+                  <a href='/sessions/create'>{$lang.global.login}</a>
                 </li>
                 <li class="divider-vertical"/>
                 <li{if $_REQUEST.controller == 'users' && isset($_REQUEST.action) && $_REQUEST.action == 'create'} class='active'{/if}>
