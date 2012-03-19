@@ -80,7 +80,7 @@ class Users extends Main {
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
 
-        if (!isset($aData['id']) || !$aData['id'])
+       if (!isset($aData) || !$aData[1]['id'])
           Helper::redirectTo('/errors/404');
 
         $this->oSmarty->assign('user', $aData);
@@ -89,7 +89,7 @@ class Users extends Main {
                 ->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
       }
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
