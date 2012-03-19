@@ -28,7 +28,6 @@ class Downloads extends Main {
    *
    */
   protected function _show() {
-    # Direct download for this id
     if ($this->_iId) {
       $sFile = $this->_oModel->getFileName($this->_iId);
 
@@ -46,7 +45,6 @@ class Downloads extends Main {
       header('Content-Disposition: attachment; filename="' . $sFile . '"');
       exit(readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)));
     }
-    # Overview
     else {
 			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');

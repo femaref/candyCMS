@@ -61,7 +61,7 @@ class Mails extends Main {
    *
    */
   public function __init() {
-    if (empty($this->_iId))
+    if (!$this->_iId)
       Helper::redirectTo('/' . $this->_aRequest['controller'] . '/1');
   }
 
@@ -138,8 +138,9 @@ class Mails extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $this->setTitle(I18n::get('global.contact') . ' ' . $aUser['name'] . ' ' . $aUser['surname'])
-            ->setDescription(str_replace('%u', $aUser['name'] . ' ' . $aUser['surname'], I18n::get('mails.description.show')));
+    $this->setTitle(I18n::get('global.contact') . ' ' . $aUser['name'] . ' ' . $aUser['surname']);
+    $this->setDescription(str_replace('%u', $aUser['name'] . ' ' . $aUser['surname'], I18n::get('mails.description.show')));
+
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }

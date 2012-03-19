@@ -31,23 +31,23 @@ class Sessions extends Main {
 
         case 'password':
 
-          $this->setTitle(I18n::get('sessions.password.title'))
-                ->setDescription(I18n::get('sessions.password.description'));
+          $this->setTitle(I18n::get('sessions.password.title'));
+          $this->setDescription(I18n::get('sessions.password.description'));
           return $this->resendPassword();
 
           break;
 
         case 'verification':
 
-          $this->setTitle(I18n::get('sessions.verification.title'))
-                ->setDescription(I18n::get('sessions.verification.description'));
+          $this->setTitle(I18n::get('sessions.verification.title'));
+          $this->setDescription(I18n::get('sessions.verification.description'));
           return $this->resendVerification();
 
           break;
       }
     }
     else
-      return $this->_show();
+      return $this->_showFormTemplate();
   }
 
 	/**
@@ -59,7 +59,7 @@ class Sessions extends Main {
 	 *
 	 */
   public function create() {
-		return isset($this->_aRequest['create_session']) ? $this->_create() : $this->_show();
+		return isset($this->_aRequest['create_session']) ? $this->_create() : $this->_showFormTemplate();
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Sessions extends Main {
 		$this->_setError('password');
 
 		if (isset($this->_aError))
-			return $this->_show();
+			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true)
 			return Helper::successMessage(I18n::get('success.session.create'), '/');
@@ -93,9 +93,9 @@ class Sessions extends Main {
 	 * @return string HTML content
 	 *
 	 */
-  public function _show() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+  public function _showFormTemplate() {
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);

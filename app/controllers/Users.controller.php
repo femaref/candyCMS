@@ -85,8 +85,8 @@ class Users extends Main {
 
         $this->oSmarty->assign('user', $aData);
 
-        $this->setTitle($aData[1]['full_name'])
-                ->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
+        $this->setTitle($aData[1]['full_name']);
+        $this->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
       }
 
       $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
@@ -324,8 +324,8 @@ class Users extends Main {
       $this->setTitle(I18n::get('users.title.create'));
 
     else
-      $this->setTitle(I18n::get('global.registration'))
-              ->setDescription(I18n::get('users.description.create'));
+      $this->setTitle(I18n::get('global.registration'));
+      $this->setDescription(I18n::get('users.description.create'));
 
 
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?

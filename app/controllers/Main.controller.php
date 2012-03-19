@@ -254,14 +254,11 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sDescription description to be set.
-   * @return object $this due to method chaining
 	 *
 	 */
 	public function setDescription($sDescription = '') {
     if ($sDescription && !$this->_sDescription)
       $this->_sDescription = & $sDescription;
-
-    return $this;
   }
 
 	/**
@@ -289,14 +286,11 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sKeywords keywords to be set.
-   * @return object $this due to method chaining
 	 *
 	 */
 	public function setKeywords($sKeywords = '') {
     if ($sKeywords && !$this->_sKeywords)
       $this->_sKeywords = & $sKeywords;
-
-    return $this;
 	}
 
 	/**
@@ -315,14 +309,11 @@ abstract class Main {
 	 *
 	 * @access public
 	 * @param string $sTitle title to be set.
-   * @return object $this due to method chaining
 	 *
 	 */
 	public function setTitle($sTitle = '') {
     if ($sTitle && !$this->_sTitle)
       $this->_sTitle = & $sTitle;
-
-    return $this;
   }
 
 	/**
@@ -351,13 +342,10 @@ abstract class Main {
 	 * @access public
 	 * @param string $sContent HTML content
 	 * @see app/helpers/Dispatcher.helper.php
-   * @return object $this due to method chaining
 	 *
 	 */
 	public function setContent($sContent) {
 		$this->_sContent = & $sContent;
-
-    return $this;
 	}
 
 	/**
@@ -460,6 +448,7 @@ abstract class Main {
 	 */
 	public function create($sInputName, $iUserRole = 3) {
     $this->oSmarty->setCaching(false);
+
 		if ($this->_aSession['user']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
@@ -478,6 +467,7 @@ abstract class Main {
 	 */
 	public function update($sInputName, $iUserRole = 3) {
     $this->oSmarty->setCaching(false);
+
 		if ($this->_aSession['user']['role'] < $iUserRole)
 			return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
@@ -495,6 +485,7 @@ abstract class Main {
 	 */
 	public function destroy($iUserRole = 3) {
     $this->oSmarty->setCaching(false);
+ 
 		return	$this->_aSession['user']['role'] < $iUserRole ?
             Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();

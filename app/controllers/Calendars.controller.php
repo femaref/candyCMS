@@ -27,10 +27,10 @@ class Calendars extends Main {
 	 */
 	protected function _show() {
      # Show .ics
-    if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
-      $oData = $this->_oModel->getData($this->_iId);
+    if ($this->_iId && !isset($this->_aRequest['action'])) {
+      $aData = $this->_oModel->getData($this->_iId);
 
-      if (!isset($oData['id']))
+      if (!isset($aData['id']))
         return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
 
       else {
@@ -40,8 +40,7 @@ class Calendars extends Main {
         header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
 
         $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
-        $this->oSmarty->display('ics.tpl', UNIQUE_ID);
-        exit();
+        exit($this->oSmarty->display('ics.tpl', UNIQUE_ID));
       }
     }
 
@@ -50,12 +49,11 @@ class Calendars extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 				$this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
 
-     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 	}
 

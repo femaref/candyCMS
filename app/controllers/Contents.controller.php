@@ -35,9 +35,10 @@ class Contents extends Main {
         if (!isset($aData) || !$aData[$this->_iId]['id'])
           Helper::redirectTo('/errors/404');
 
-        $this->setDescription($aData[$this->_iId]['teaser'])
-                ->setKeywords($aData[$this->_iId]['keywords'])
-                ->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+        $this->setDescription($aData[$this->_iId]['teaser']);
+        $this->setKeywords($aData[$this->_iId]['keywords']);
+        $this->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+
         $this->oSmarty->assign('contents', $aData);
       }
 

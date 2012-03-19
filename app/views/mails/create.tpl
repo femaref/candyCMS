@@ -33,7 +33,6 @@
     {include file='../layouts/_recaptcha.tpl'}
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.global.submit}' />
-      <input type='button' class='btn' value='{$lang.global.close}' onclick='$.fancybox.close()' />
       <input type='hidden' value='formdata' name='create_mail' />
     </div>
   </form>
