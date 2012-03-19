@@ -517,6 +517,8 @@ abstract class Main {
 			return $this->_showFormTemplate();
 
 		elseif ($this->_oModel->create() === true) {
+      $this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+
 			Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],
 										$this->_oModel->getLastInsertId($this->_aRequest['controller']),

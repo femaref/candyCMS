@@ -68,7 +68,6 @@ class Users extends Main {
 	 *
 	 * @access protected
 	 * @return string HTML content
-   * @todo user not found should display different page?
 	 *
 	 */
 	protected function _show() {
@@ -76,19 +75,22 @@ class Users extends Main {
 			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
 			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
+
+        if (!isset($aData['id']) || !$aData['id'])
+          Helper::redirectTo('/errors/404');
+
         $this->oSmarty->assign('user', $aData);
 
         $this->setTitle($aData[1]['full_name'])
                 ->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
       }
 
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
+    }
 		else {
 			if ($this->_aSession['user']['role'] < 3)
 				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
@@ -352,7 +354,7 @@ class Users extends Main {
 	 *
 	 */
 	public function update() {
-    if ($this->_iId > 0 && $this->_aSession['user']['id'] == $this->_iId && !isset($this->_aRequest['update_user']))
+    if ($this->_iId > 0 && $this->_aSession['user']['id'] == $this->_iId && !isset($this->_aRequest['update_users']))
       Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
 
     if (empty($this->_iId))
@@ -362,7 +364,7 @@ class Users extends Main {
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions');
 
     else
-      return isset($this->_aRequest['update_user']) ? $this->_update() : $this->_showFormTemplate();
+      return isset($this->_aRequest['update_users']) ? $this->_update() : $this->_showFormTemplate();
   }
 
 	/**

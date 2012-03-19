@@ -25,9 +25,11 @@ class AdvancedException extends \Exception {
 	 *
    */
   public static function reportBoth($sMessage) {
-		AdvancedException::sendAdminMail($sMessage);
-		AdvancedException::writeLog($sMessage);
-	}
+    AdvancedException::writeLog($sMessage);
+
+    if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging')
+      AdvancedException::sendAdminMail($sMessage);
+  }
 
   /**
    * Send an email to an administrator when an error occurs.
@@ -38,14 +40,12 @@ class AdvancedException extends \Exception {
    *
    */
   public static function sendAdminMail($sMessage) {
-		if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging') {
-			if (!class_exists('\CandyCMS\Controller\Mail'))
-				require_once PATH_STANDARD . '/app/controllers/Mail.controller.php';
+    if (!class_exists('\CandyCMS\Controller\Mail'))
+      require_once PATH_STANDARD . '/app/controllers/Mail.controller.php';
 
-			$sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
-			return Mails::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
-		}
-	}
+    $sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
+    return Mails::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
+  }
 
   /**
 	 * Write down an error message to own log.

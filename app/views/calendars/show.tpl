@@ -86,6 +86,7 @@
                         width='16' height='16' />
                   </a>
                 {else}
+                  {* @todo add title and alt tag that fits: "Download this event for iCalendar" *}
                   <a href='/{$_REQUEST.controller}/{$d.id}'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-calendar_add'

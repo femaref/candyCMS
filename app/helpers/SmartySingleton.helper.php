@@ -62,7 +62,10 @@ class SmartySingleton extends Smarty {
     $this->setPluginsDir(PATH_STANDARD . '/lib/smarty/plugins');
     $this->setTemplateDir(PATH_STANDARD . '/app/views');
 
-    #$this->merge_compiled_includes = true;
+    # See http://www.smarty.net/docs/en/variable.merge.compiled.includes.tpl
+    $this->merge_compiled_includes = true;
+
+    # Use a readable structure
     $this->use_sub_dirs = true;
 
     # Only compile our templates on production mode.
@@ -155,10 +158,11 @@ class SmartySingleton extends Smarty {
 
       try {
         @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));
-        lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/core/application.less'), Helper::removeSlash($aPaths['css'] . '/core/application.css'));
+        lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/core/application.less'),
+                Helper::removeSlash($aPaths['css'] . '/core/application.css'));
       }
       catch (AdvancedException $e) {
-        die($e->getMessage());
+        AdvancedException::reportBoth($e->getMessage());
       }
     }
 
@@ -168,5 +172,3 @@ class SmartySingleton extends Smarty {
         'upload'    => PATH_UPLOAD);
   }
 }
-
-?>

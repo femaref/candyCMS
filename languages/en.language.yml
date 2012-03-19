@@ -117,7 +117,7 @@ global:
   system: System
   tag: Tag
   tags:
-    info: Search for more entries with this tag.
+    info: Search for more entries with this tag
     tags: Tags
   teaser: Teaser
   terms:

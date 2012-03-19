@@ -14,7 +14,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * @todo show should generate help page with all supported bbcodes
+ * @see https://github.com/marcoraddatz/candyCMS/wiki/BBCode
  *
  */
 
@@ -32,7 +32,7 @@ final class Bbcode {
    * @static
    * @access public
    * @param string $sStr HTML to replace
-   * @return string $sStr replaced HTML
+   * @return string $sStr HTML with formated code
    *
    */
   private final static function _setFormatedText($sStr) {
@@ -60,7 +60,7 @@ final class Bbcode {
     # Insert uploaded image
     $sStr = preg_replace('#\[img:(.*)\]#Uis', '<img src="{$_PATH.images}/\1" alt="\1" style="vertical-align:baseline" />', $sStr);
 
-    # Replace images with image tag (every location allowed, but external is very slow)
+    # Replace images with image tag (every location allowed, but external is verrry slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
 			$sUrl[1] = Helper::removeSlash($sUrl[1]);
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
@@ -79,15 +79,13 @@ final class Bbcode {
 
       # We do not have a preview
       else {
-				if (!class_exists('\CandyCMS\Helper\Image'))
-					require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
+        require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
 
         if (!file_exists($sTempFilePath)) {
           $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);
           $oImage->resizeDefault(MEDIA_DEFAULT_X, '', 'bbcode');
         }
 
-        #$sTempFilePath = '/' . $sTempFilePath;
         $aNewInfo = @getimagesize($sTempFilePath);
 
         # Language
@@ -145,7 +143,7 @@ final class Bbcode {
 
     # Quote
     while (preg_match("/\[quote\]/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr) ||
-    preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
+      preg_match("/\[quote\=/isU", $sStr) && preg_match("/\[\/quote]/isU", $sStr)) {
       $sStr = preg_replace("/\[quote\](.*)\[\/quote]/isU", "<blockquote>\\1</blockquote>", $sStr);
       $sStr = preg_replace("/\[quote\=(.+)\](.*)\[\/quote]/isU", "<blockquote><h4>" . I18n::get('global.quote.by') . " \\1</h4>\\2</blockquote>", $sStr);
     }
@@ -154,7 +152,7 @@ final class Bbcode {
       $sStr = preg_replace("/\[toggle\=(.+)\](.*)\[\/toggle]/isU", "<span class='js-toggle-headline'><img src='%PATH_IMAGES%/candy.global/spacer.png' class='icon-toggle_max' alt='' /> \\1</span><div class=\"js-toggle-element\">\\2</div>", $sStr);
     }
 
-    # Fix quote bug and allow these tags only
+    # Fix quote and allow these tags
     $sStr = str_replace("&lt;blockquote&gt;", "<blockquote>", $sStr);
     $sStr = str_replace("&lt;/blockquote&gt;", "</blockquote>", $sStr);
     $sStr = str_replace("&lt;h4&gt;", "<h4>", $sStr);
@@ -164,10 +162,12 @@ final class Bbcode {
   }
 
   /**
+   * Return the formatted code.
+   *
    * @static
-   * @param type $sStr
-   * @return type
-   * @todo
+   * @access public
+   * @param string $sStr
+   * @return string HTML with formated code
    *
    */
   public final function getFormatedText($sStr) {

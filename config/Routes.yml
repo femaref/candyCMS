@@ -9,7 +9,6 @@
 "(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
 
 # Special behaviour
-# @todo we need page=1 on logs
 "blogs/(:num)(/(:any))?": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
 "comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2

@@ -109,11 +109,8 @@ class Pagination {
     if ($this->_iCurrentPage > $this->_iPages)
       $this->_iCurrentPage = $this->_iPages;
 
-    if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages) {
-      header('Status: 404 Not Found');
-			header('HTTP/1.0 404 Not Found');
+    if (isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] > $this->_iPages)
       return Helper::redirectTo('/errors/404');
-    }
 
     $this->_iOffset = ($this->_iCurrentPage - 1) * $this->_iLimit;
 

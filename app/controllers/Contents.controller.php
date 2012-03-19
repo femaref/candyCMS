@@ -31,24 +31,21 @@ class Contents extends Main {
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$aData = $this->_oModel->getData($this->_iId);
-				$this->oSmarty->assign('contents', $aData);
+        $aData = $this->_oModel->getData($this->_iId);
 
-				if (!empty($aData)) {
-					$this->setDescription($aData[$this->_iId]['teaser'])
-                  ->setKeywords($aData[$this->_iId]['keywords'])
-                  ->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
-				}
-				else {
-          header('Status: 404 Not Found');
-          header('HTTP/1.0 404 Not Found');
-					Helper::redirectTo('/errors/404');
-        }
-			}
+        # @todo test this
+        if (!isset($aData['id']) || !$aData['id'])
+          Helper::redirectTo('/errors/404');
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+        $this->setDescription($aData[$this->_iId]['teaser'])
+                ->setKeywords($aData[$this->_iId]['keywords'])
+                ->setTitle($this->_removeHighlight($aData[$this->_iId]['title']));
+        $this->oSmarty->assign('contents', $aData);
+      }
+
+      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');

@@ -118,11 +118,8 @@ class Galleries extends Main {
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
-      else {
-        header('Status: 404 Not Found');
-        header('HTTP/1.0 404 Not Found');
+      else
         Helper::redirectTo('/errors/404');
-      }
     }
 
     # Album overview
@@ -263,7 +260,7 @@ class Galleries extends Main {
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
-    if (!isset($this->_aRequest['createfile_gallery']))
+    if (!isset($this->_aRequest['createfile_galleries']))
       return $this->_showFormFileTemplate();
 
     if ($this->_createFile() === true) {
