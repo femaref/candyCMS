@@ -109,6 +109,7 @@ class Mails extends Main {
 	 * @param boolean $bShowCaptcha show captcha or not.
 	 * @return string HTML content
    * @todo rename to _show?
+   * @todo split functions
 	 *
 	 */
   protected function _showCreateMailTemplate($bShowCaptcha) {

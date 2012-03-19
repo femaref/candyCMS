@@ -7,10 +7,9 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
-require_once('lib/simpletest/web_tester.php');
-require_once('lib/simpletest/reporter.php');
 require_once('app/controllers/Sessions.controller.php');
 
 use CandyCMS\Controller\Sessions as Sessions;
@@ -18,37 +17,21 @@ use CandyCMS\Helper\I18n as I18n;
 
 class TestOfSessionController extends WebTestCase {
 
-  public $osession;
-
-  /**
-   * @todo fix container
-   */
   function testConstructor() {
-    $aRequest = array('section' => 'session');
-    $aFile    = array();
-    $aCookie  = array();
-    $aSession['user'] = array(
-      'email' => '',
-      'facebook_id' => '',
-      'id' => 0,
-      'name' => '',
-      'surname' => '',
-      'password' => '',
-      'role' => 0,
-      'full_name' => ''
-    );
+    $aRequest = array('section' => 'sessions');
 
-    $this->oSessions = new Sessions($aRequest, $aSession, $aFile, $aCookie);
+    $this->oObject = new Sessions($aRequest, $aSession, $aFile, $aCookie);
   }
 
   function testShow() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/session'));
+    $this->assertTrue($this->get(WEBSITE_URL . '/sessions'));
     $this->assertNoText(I18n::get('error.standard'));
     $this->assertResponse('200');
   }
 
   /**
    * @todo correct format?
+   * @todo validation
    */
   function testCreate() {
     $this->setMaximumRedirects(0);
@@ -56,10 +39,11 @@ class TestOfSessionController extends WebTestCase {
     #$this->assertFieldById('input-email');
     $this->assertFieldById('input-password');
 
-    $aParams = array('email' => 'email@example.com', 'password' => 'Password', 'formdata' => 'create_session');
-    $this->assertTrue($this->post(WEBSITE_URL . '/session/create', $aParams));
+    $aParams = array('email' => 'admin@example.com', 'password' => 'test', 'formdata' => 'create_sessions');
+    $this->assertTrue($this->post(WEBSITE_URL . '/sessions/create', $aParams));
     $this->assertResponse('200');
     $this->assertNoText(I18n::get('error.standard'));
+    #$this->assertText(I18n::get('error.standard')); # Welcome ...
   }
 
   function testDestroy() {

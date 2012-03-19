@@ -239,7 +239,7 @@ class Users extends Main {
 				$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 				$oQuery->execute();
 
-				$aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
+				$aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
 			}
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0083 - ' . $p->getMessage());

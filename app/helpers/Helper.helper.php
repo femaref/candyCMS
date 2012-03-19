@@ -66,9 +66,14 @@ class Helper {
    *
    */
   public static function redirectTo($sUrl) {
-		header('Location:' . $sUrl);
-		exit();
-	}
+    if ($sUrl == '/errors/404') {
+      header('Status: 404 Not Found');
+      header('HTTP/1.0 404 Not Found');
+    }
+
+    header('Location:' . $sUrl);
+    exit();
+  }
 
   /**
    * Check if the provided email address is in a correct format.

@@ -92,6 +92,7 @@ class Upload {
    */
   public function uploadFiles($sFolder = 'medias', $bFilenameHashes = false) {
     $sType = isset($this->_aFile['image']) ? 'image' : 'file';
+
     if (isset($this->_aFile[$sType]) && !empty($this->_aFile[$sType]['name'][0])) {
       $bIsArray = is_array($this->_aFile[$sType]['name']);
       if ($bIsArray)

@@ -23,44 +23,39 @@ class Blogs extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo implement caching
+   * @todo implement caching - this is now prepared
    *
    */
   protected function _show() {
-    $this->_aData = $this->_oModel->getData($this->_iId);
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-    # If data is not found, redirect to 404
-    if (!$this->_aData[1]['id'] && $this->_iId) {
-      header('Status: 404 Not Found');
-      header('HTTP/1.0 404 Not Found');
-      Helper::redirectTo('/errors/404');
+    # Load comments
+    if ($this->_iId) {
+      $this->_aData = $this->_oModel->getData($this->_iId);
+
+      if (!$this->_aData[1]['id'])
+        Helper::redirectTo('/errors/404');
+
+      $sClass = $this->__autoload('Comments');
+      $oComments = & new $sClass($this->_aRequest, $this->_aSession);
+      $oComments->__init($this->_aData);
+      $this->oSmarty->assign('_blog_footer_', $oComments->show());
     }
+
+    # Load blog pages
     else {
-      $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
-
-      # Load comments
-      if ($this->_iId) {
-        $sClass = $this->__autoload('Comments');
-        $oComments = & new $sClass($this->_aRequest, $this->_aSession);
-        $oComments->__init($this->_aData);
-        $this->oSmarty->assign('_blog_footer_', $oComments->show());
-      }
-
-      # Load blog pages
-      else
-        $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
-
-      $this->setDescription($this->_setBlogsDescription())
-              ->setKeywords($this->_setBlogsKeywords())
-              ->setTitle($this->_setBlogsTitle());
-      $this->oSmarty->assign('blogs', $this->_aData);
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-
-      # need to set this manually, because in comments this might have been disabled
-      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      $this->_aData = $this->_oModel->getData($this->_iId);
+      $this->oSmarty->assign('_blog_footer_', $this->_oModel->oPagination->showSurrounding());
     }
+
+    $this->setDescription($this->_setBlogsDescription())
+            ->setKeywords($this->_setBlogsKeywords())
+            ->setTitle($this->_setBlogsTitle());
+
+    $this->oSmarty->assign('blogs', $this->_aData);
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

@@ -6,8 +6,6 @@ class Routes {
 	protected static $routes = array();
 
 	public static function add($src, $dest = null) {
-		// TODO: Validate the routes?
-
 		if (is_array($src)) {
 			foreach ($src as $key => $val) {
 				static::$routes[$key] = $val;

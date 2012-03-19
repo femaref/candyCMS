@@ -28,12 +28,8 @@ class Sites extends Main {
   protected function _show() {
     $sSite = isset($this->_aRequest['site']) ? (string) $this->_aRequest['site'] : '';
 
-    if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl')) {
-      header('Status: 404 Not Found');
-			header("HTTP/1.0 404 Not Found");
+    if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl'))
       Helper::redirectTo('/errors/404');
-      exit();
-    }
 
     $this->setTitle(ucfirst($sSite));
     return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');

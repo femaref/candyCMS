@@ -56,8 +56,6 @@ class Rss extends Main {
     $sModel = $this->__autoload('Blogs', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
 
-    $this->setTitle(I18n::get('global.blogs') . ' - ' . WEBSITE_NAME);
-
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('data', $oModel->getData());
 			$this->oSmarty->assign('_title_', $this->getTitle());
@@ -84,8 +82,6 @@ class Rss extends Main {
     $sModel = $this->__autoload('Galleries', true);
     $oModel = & new $sModel($this->_aRequest, $this->_aSession);
     $aData = $oModel->getData($this->_iId, false, true);
-
-    $this->setTitle(I18n::get('global.gallery') . ': ' . $aData[$this->_iId]['title']);
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = & $aData[$this->_iId]['files'];

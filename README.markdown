@@ -4,16 +4,16 @@ CandyCMS Version 2.0
 What is CandyCMS?
 ------------------------------------------------------------------------------------------------------------------------
 
-CandyCMS is a modern PHP CMS with main focus on usability, speed and security.
+CandyCMS is a modern PHP CMS with its main focus on usability, speed and security.
 
-Its main functions are:
+It provides...
 
 - a blog that supports tags, comments, RSS and full social media integration
 - content pages
 - a gallery with multiple file upload (based on HTML5) and Media RSS
-- a calendar
+- a calendar with the option to download iCalendar events
 - a download section
-- easy user management
+- easy and simple user management
 - file management
 - newsletter management (uses [Mailchimp API](http://mailchimp.com))
 - a full log system
@@ -26,7 +26,7 @@ Additional reasons, why CandyCMS might be interesting for you
 - uses the [Smarty template engine](http://smarty.org) and lots of HTML5
 - supports [reCAPTCHA](http://recaptcha.org)
 - completely object oriented and use of MVC
-- easy to use addons or modify
+- easy to use addons or to modify the code
 - supports templates
 - clean URLs due to mod_rewrite
 - full Facebook integration
@@ -34,6 +34,7 @@ Additional reasons, why CandyCMS might be interesting for you
 - easy to update or migrate
 - SEO optimized (sitemap.xml and basic stuff)
 - 2click social share privacy
+- Tests for the whole core functions
 
 
 Requirements

@@ -120,11 +120,8 @@ class Galleries extends Main {
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
       }
-      else {
-        header('Status: 404 Not Found');
-        header('HTTP/1.0 404 Not Found');
+      else
         Helper::redirectTo('/errors/404');
-      }
     }
 
     # Album overview
