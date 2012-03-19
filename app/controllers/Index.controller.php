@@ -459,7 +459,7 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_ID'))
-			define('UNIQUE_ID', $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' . WEBSITE_MODE . '|' .
+			define('UNIQUE_ID', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|' .
 							substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
 							substr(md5(CURRENT_URL), 0, 10));
 
@@ -506,8 +506,7 @@ class Index {
       $oSmarty->assign('_update_available_', $this->_checkForNewVersion());
       $oSmarty->setTemplateDir($sTemplateDir);
 
-      $oSmarty->caching = false;
-      $sCachedHTML = $oSmarty->fetch($sTemplateFile);
+      $sCachedHTML = $oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')

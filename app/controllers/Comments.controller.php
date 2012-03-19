@@ -106,7 +106,8 @@ class Comments extends Main {
 		$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blogs/' . $this->_iId));
 
 		$this->oSmarty->setTemplateDir($sTemplateDir);
-		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comments');
+
+ 		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comments');
   }
 
   /**
@@ -150,7 +151,10 @@ class Comments extends Main {
 							MOBILE === false &&
               WEBSITE_MODE !== 'test';
 
- 		if (isset($this->_aRequest[$sInputName]))
+    #no caching for comments
+    $this->oSmarty->setCaching(false);
+
+    if (isset($this->_aRequest[$sInputName]))
 			return	$this->_create($bShowCaptcha);
 
 		else
@@ -187,7 +191,10 @@ class Comments extends Main {
       $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
+        $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
         Logs::insert('comments', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
+
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
       else
@@ -206,6 +213,8 @@ class Comments extends Main {
     $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'];
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      $this->oSmarty->clearCacheForController('blogs');
+
       Logs::insert(	'comment',
 										'destroy',
 										(int) $this->_aRequest['id'],

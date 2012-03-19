@@ -15,7 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Galleries extends Main {
 
@@ -28,6 +28,7 @@ class Galleries extends Main {
    */
   public function show() {
 		# Bugfix: Still display single image.
+
     if (isset($this->_aRequest['action']) && 'image' !== $this->_aRequest['action']) {
       switch ($this->_aRequest['action']) {
 
@@ -53,8 +54,10 @@ class Galleries extends Main {
           break;
       }
     }
-    else
+    else {
+      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       return $this->_show();
+    }
   }
 
   /**
@@ -86,7 +89,6 @@ class Galleries extends Main {
 				$this->oSmarty->assign('gallery_content', $sAlbumDescription);
 			}
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
@@ -135,7 +137,6 @@ class Galleries extends Main {
 				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
 			}
 
-      $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
@@ -188,7 +189,7 @@ class Galleries extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-			$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
@@ -267,7 +268,7 @@ class Galleries extends Main {
       return $this->_showFormFileTemplate();
 
     if ($this->_createFile() === true) {
-      $this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
 
       # Log uploaded image. Request ID = album id
       Logs::insert( $this->_aRequest['controller'],
@@ -334,7 +335,7 @@ class Galleries extends Main {
         $aDetails = $this->_oModel->getFileDetails($this->_iId);
         $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
         if ($this->_updateFile()) {
-					$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+					$this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
 
           Logs::insert($this->_aRequest['controller'],
 											$this->_aRequest['action'],
@@ -384,7 +385,7 @@ class Galleries extends Main {
 
     else {
       if($this->_destroyFile() === true) {
-				$this->oSmarty->clearCache(null, $this->_aRequest['controller']);
+				$this->oSmarty->clearCacheForConroller($this->_aRequest['controller']);
 
         Logs::insert($this->_aRequest['controller'],
 										$this->_aRequest['action'],

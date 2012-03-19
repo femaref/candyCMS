@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
 
 class Sites extends Main {
 
@@ -37,8 +36,6 @@ class Sites extends Main {
     }
 
     $this->setTitle(ucfirst($sSite));
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(300);
     return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');
   }
 }

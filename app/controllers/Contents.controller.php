@@ -14,7 +14,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
 
 class Contents extends Main {
 
@@ -46,7 +45,6 @@ class Contents extends Main {
         }
 			}
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
 			$this->oSmarty->setTemplateDir($sTemplateDir);
 			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }

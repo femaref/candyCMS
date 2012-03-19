@@ -14,7 +14,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Searches extends Main {
 
@@ -67,7 +67,6 @@ class Searches extends Main {
 
     $this->setTitle(I18n::get('global.search'));
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 }

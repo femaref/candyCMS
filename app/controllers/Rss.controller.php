@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Rss extends Main {
 
@@ -64,7 +64,7 @@ class Rss extends Main {
 		}
 
 
-		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+//		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
 		$this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
@@ -101,7 +101,7 @@ class Rss extends Main {
       $this->oSmarty->assign('data', $aData);
     }
 
-    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));

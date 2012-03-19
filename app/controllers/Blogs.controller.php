@@ -14,6 +14,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Blogs extends Main {
 
@@ -35,10 +36,10 @@ class Blogs extends Main {
       Helper::redirectTo('/errors/404');
     }
     else {
-      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
-			# Load comments
+      # Load comments
       if ($this->_iId) {
         $sClass = $this->__autoload('Comments');
         $oComments = & new $sClass($this->_aRequest, $this->_aSession);
@@ -55,8 +56,9 @@ class Blogs extends Main {
               ->setTitle($this->_setBlogsTitle());
       $this->oSmarty->assign('blogs', $this->_aData);
       $this->oSmarty->setTemplateDir($sTemplateDir);
-      # @todo why do we want this disabled? can manually delete cache 'blogs'-cachegroup and everything is good?
-      $this->oSmarty->setCaching(false);
+
+      # need to set this manually, because in comments this might have been disabled
+      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
@@ -121,9 +123,9 @@ class Blogs extends Main {
     # show overview with pages
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
-			return $iPage > 1 ?
-							I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
-							I18n::get('global.blog');
+      return $iPage > 1 ?
+              I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
+              I18n::get('global.blog');
     }
   }
 
@@ -135,8 +137,8 @@ class Blogs extends Main {
    *
    */
   protected function _showFormTemplate() {
-		$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
     if ($this->_iId) {
@@ -146,27 +148,27 @@ class Blogs extends Main {
 
     # Create
     else {
-      $aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $aData['keywords']   = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $aData['language']   = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
-      $aData['published']  = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
-      $aData['tags']       = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
-      $aData['teaser']     = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['content'] = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['keywords'] = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $aData['language'] = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
+      $aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+      $aData['tags'] = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+      $aData['teaser'] = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
 
-		# Get available languages
-		$aData['languages'] = array();
-		$oPathDir = opendir(PATH_STANDARD . '/languages');
-		while ($sFile = readdir($oPathDir)) {
-			if (substr($sFile, 0, 1) == '.' || substr($sFile, 0, 3) == 'de_')
-				continue;
+    # Get available languages
+    $aData['languages'] = array();
+    $oPathDir = opendir(PATH_STANDARD . '/languages');
+    while ($sFile = readdir($oPathDir)) {
+      if (substr($sFile, 0, 1) == '.' || substr($sFile, 0, 3) == 'de_')
+        continue;
 
-			array_push($aData['languages'], substr($sFile, 0, 2));
-		}
-		closedir($oPathDir);
+      array_push($aData['languages'], substr($sFile, 0, 2));
+    }
+    closedir($oPathDir);
 
     foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
@@ -179,28 +181,28 @@ class Blogs extends Main {
   }
 
   /**
-	 * Create a blog entry.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	protected function _create() {
-		$this->_setError('content');
+   * Create a blog entry.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _create() {
+    $this->_setError('content');
 
-		return parent::_create();
-	}
+    return parent::_create();
+  }
 
-	/**
-	 * Update a blog entry.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
-	protected function _update() {
-		$this->_setError('content');
+  /**
+   * Update a blog entry.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _update() {
+    $this->_setError('content');
 
-		return parent::_update();
-	}
+    return parent::_update();
+  }
 }
