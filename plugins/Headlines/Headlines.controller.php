@@ -16,41 +16,41 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 final class Headlines {
-
   /**
    * Identifier for Template Replacements
    *
    * @var constant
    *
    */
+
   const IDENTIFIER = 'headlines';
 
-	/**
-	 * Show the (cached) headlines.
-	 *
-	 * We use a new Smarty instance to avoid parsing the Main.controller due to performance reasons.
-	 *
-	 * @static
-	 * @access public
-	 * @param array $aRequest
-	 * @param array $aSession
-	 * @return string HTML
-	 *
-	 */
+  /**
+   * Show the (cached) headlines.
+   *
+   * @static
+   * @access public
+   * @param array $aRequest
+   * @param array $aSession
+   * @return string HTML
+   *
+   */
   public final static function show($aRequest, $aSession) {
-    $sTemplateDir   = Helper::getPluginTemplateDir('headlines', 'show');
-    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir = Helper::getPluginTemplateDir('headlines', 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
-		$oSmarty = SmartySingleton::getInstance();
+    $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-    if (!$oSmarty->isCached($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|headlines')) {
-			require_once PATH_STANDARD . '/app/models/Blogs.model.php';
-			$oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
+    $sCacheId = 'blogs|' . WEBSITE_LOCALE . '|headlines';
+    if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
+      require_once PATH_STANDARD . '/app/models/Blogs.model.php';
+      $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
 
-			$oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
-		}
+      $oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
+    }
 
-    return $oSmarty->fetch($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|headlines');
+    return $oSmarty->fetch($sTemplateFile, $sCacheId);
   }
 }

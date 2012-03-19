@@ -25,19 +25,29 @@ final class Piwik {
    */
   const IDENTIFIER = 'piwik';
 
+	/**
+	 * Get The HTML-Code for Piwik.
+	 *
+	 * @static
+	 * @access public
+	 * @return string HTML
+	 *
+	 */
   public final static function show() {
     $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-    if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik')) {
+    $sCacheId = 'plugins|' . WEBSITE_LOCALE . '|piwik';
+    if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
       $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
       $oSmarty->assign('PLUGIN_PIWIK_ID', PLUGIN_PIWIK_ID);
       $oSmarty->assign('PLUGIN_PIWIK_URL', PLUGIN_PIWIK_URL);
     }
 
-    return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|piwik');
+    return $oSmarty->fetch($sTemplateFile, $sCacheId);
   }
 }

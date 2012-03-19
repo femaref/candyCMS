@@ -14,8 +14,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-//TODO why do i have to 'use' smartySingleton as smarty? oO
-use CandyCMS\Helper\SmartySingleton as Smarty;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Calendars extends Main {
 
@@ -30,7 +29,7 @@ class Calendars extends Main {
      # Show .ics
     if (!empty($this->_iId) && !isset($this->_aRequest['action'])) {
       $oData = $this->_oModel->getData($this->_iId);
-      
+
       if (!isset($oData['id']))
         return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
 
@@ -51,7 +50,7 @@ class Calendars extends Main {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
+			$this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       $this->oSmarty->setTemplateDir($sTemplateDir);
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))

@@ -55,6 +55,8 @@ class Blogs extends Main {
               ->setTitle($this->_setBlogsTitle());
       $this->oSmarty->assign('blogs', $this->_aData);
       $this->oSmarty->setTemplateDir($sTemplateDir);
+      # @todo why do we want this disabled? can manually delete cache 'blogs'-cachegroup and everything is good?
+      $this->oSmarty->setCaching(false);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }

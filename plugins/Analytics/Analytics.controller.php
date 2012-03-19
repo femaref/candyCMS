@@ -26,14 +26,16 @@ final class Analytics {
     $sTemplateDir   = Helper::getPluginTemplateDir('analytics', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-		$oSmarty = SmartySingleton::getInstance();
-		$oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty = SmartySingleton::getInstance();
+    $oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-		if (!$oSmarty->isCached($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|analytics')) {
-			$oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
-			$oSmarty->assign('PLUGIN_ANALYTICS_TRACKING_CODE', PLUGIN_ANALYTICS_TRACKING_CODE);
-		}
+    $sCacheId = 'plugins|' . WEBSITE_LOCALE . '|analytics';
+    if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
+      $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
+      $oSmarty->assign('PLUGIN_ANALYTICS_TRACKING_CODE', PLUGIN_ANALYTICS_TRACKING_CODE);
+    }
 
-		return $oSmarty->fetch($sTemplateFile, 'layouts|' . WEBSITE_LOCALE . '|analytics');
-	}
+    return $oSmarty->fetch($sTemplateFile, $sCacheId);
+  }
 }

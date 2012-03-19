@@ -39,29 +39,31 @@ final class Archive {
     $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-		$oSmarty = SmartySingleton::getInstance();
-		$oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty = SmartySingleton::getInstance();
+    $oSmarty->setTemplateDir($sTemplateDir);
+    $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
 
-		if (!$oSmarty->isCached($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|archive')) {
-			require_once PATH_STANDARD . '/app/models/Blogs.model.php';
-			$oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
-			$aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
+    $sCacheId = 'blogs|' . WEBSITE_LOCALE . '|archive';
+    if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
+      require_once PATH_STANDARD . '/app/models/Blogs.model.php';
+      $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
+      $aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
-			$aMonth = array();
-			foreach ($aData as $aRow) {
-				# Date format the month
-				$sMonth = strftime('%m', $aRow['date_raw']);
-				$sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
-				$sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
+      $aMonth = array();
+      foreach ($aData as $aRow) {
+      # Date format the month
+        $sMonth = strftime('%m', $aRow['date_raw']);
+        $sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
+        $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
 
-				# Prepare array
-				$iId = $aRow['id'];
-				$aMonth[$sMonth][$iId] = $aRow;
-			}
+      # Prepare array
+        $iId = $aRow['id'];
+        $aMonth[$sMonth][$iId] = $aRow;
+      }
 
-			$oSmarty->assign('data', $aMonth);
-		}
+      $oSmarty->assign('data', $aMonth);
+    }
 
-		return $oSmarty->fetch($sTemplateFile, 'blogs|' . WEBSITE_LOCALE . '|archive');
+    return $oSmarty->fetch($sTemplateFile, $sCacheId);
 	}
 }

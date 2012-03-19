@@ -463,7 +463,7 @@ class Index {
 							substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
 							substr(md5(CURRENT_URL), 0, 10));
 
-		# Direct to install
+    # Direct to install
     if (strtolower($this->_aRequest['controller']) == 'install')
       Helper::redirectTo('/install/index.php');
 
@@ -475,43 +475,45 @@ class Index {
     }
 
     # Minimal settings for AJAX-request
-		if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])
-			$sCachedHTML = $oDispatcher->oController->getContent();
+    if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])
+      $sCachedHTML = $oDispatcher->oController->getContent();
 
     # HTML with template
-		else {
+    else {
       $sTemplateDir		= Helper::getTemplateDir('layouts', 'application');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
 
       # Get flash messages (success and error)
       $aFlashMessages = $this->_getFlashMessage();
-      $oDispatcher->oController->oSmarty->assign('_flash_type_', $aFlashMessages['type']);
-      $oDispatcher->oController->oSmarty->assign('_flash_message_', $aFlashMessages['message']);
-      $oDispatcher->oController->oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
+      $oSmarty = $oDispatcher->oController->oSmarty;
+      $oSmarty->assign('_flash_type_', $aFlashMessages['type']);
+      $oSmarty->assign('_flash_message_', $aFlashMessages['message']);
+      $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);
 
       # Define meta elements
-			$oDispatcher->oController->oSmarty->assign('meta_og_description', $oDispatcher->oController->getDescription());
-			$oDispatcher->oController->oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
-			$oDispatcher->oController->oSmarty->assign('meta_og_title', $oDispatcher->oController->getTitle());
-			$oDispatcher->oController->oSmarty->assign('meta_og_url', CURRENT_URL);
+      $oSmarty->assign('meta_og_description', $oDispatcher->oController->getDescription());
+      $oSmarty->assign('meta_og_site_name', WEBSITE_NAME);
+      $oSmarty->assign('meta_og_title', $oDispatcher->oController->getTitle());
+      $oSmarty->assign('meta_og_url', CURRENT_URL);
 
-			$oDispatcher->oController->oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
-			$oDispatcher->oController->oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
-			$oDispatcher->oController->oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
+      $oSmarty->assign('meta_description', $oDispatcher->oController->getDescription());
+      $oSmarty->assign('meta_expires', gmdate('D, d M Y H:i:s', time() + 60) . ' GMT');
+      $oSmarty->assign('meta_keywords', $oDispatcher->oController->getKeywords());
 
       # System required variables
-			$oDispatcher->oController->oSmarty->assign('_content_', $oDispatcher->oController->getContent());
-			$oDispatcher->oController->oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
-      $oDispatcher->oController->oSmarty->assign('_update_available_', $this->_checkForNewVersion());
+      $oSmarty->assign('_content_', $oDispatcher->oController->getContent());
+      $oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
+      $oSmarty->assign('_update_available_', $this->_checkForNewVersion());
+      $oSmarty->setTemplateDir($sTemplateDir);
 
-      $oDispatcher->oController->oSmarty->setTemplateDir($sTemplateDir);
-      $sCachedHTML = $oDispatcher->oController->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
+      $oSmarty->caching = false;
+      $sCachedHTML = $oSmarty->fetch($sTemplateFile);
+    }
 
     if (ALLOW_PLUGINS !== '' && WEBSITE_MODE !== 'test')
       $sCachedHTML = $this->_showPlugins($sCachedHTML);
 
-		header('Content-Type: text/html; charset=utf-8');
+    header('Content-Type: text/html; charset=utf-8');
     return $sCachedHTML;
 	}
 
