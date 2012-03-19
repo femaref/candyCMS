@@ -12,8 +12,6 @@
 
 namespace CandyCMS;
 
-use CandyCMS\Controller\Index as Index;
-
 # Override separator due to W3C compatibility.
 ini_set('arg_separator.output', '&amp;');
 
@@ -31,9 +29,13 @@ define('VERSION', '20111114');
 define('PATH_STANDARD', dirname(__FILE__));
 
 # Initialize software
-# @todo try / catch
-require PATH_STANDARD . '/config/Candy.inc.php';
-require PATH_STANDARD . '/app/controllers/Index.controller.php';
+try {
+  require PATH_STANDARD . '/config/Candy.inc.php';
+  require PATH_STANDARD . '/app/controllers/Index.controller.php';
+}
+catch (Exception $e) {
+  die($e->getMessage());
+}
 
 # Override the system variables in development mode.
 if (WEBSITE_MODE == 'test') {
@@ -83,20 +85,17 @@ define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false
 define('MOBILE_DEVICE', $bMobile);
 
 # Initialize software
-$oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new \CandyCMS\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 # If we are on a productive enviroment, make sure that we can't override the system.
-# *********************************************
 if (is_dir('install') && WEBSITE_MODE == 'production')
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
 
 # Also disable tools to avoid system crashes.
-# *********************************************
 if (is_dir('tools') && WEBSITE_MODE == 'production')
   exit('Please delete the tools folder.');
 
 # Disable tests on productive system.
-# *********************************************
 if (is_file('tests.php') && WEBSITE_MODE == 'production')
   exit('Please delete the tests enviroment (tests.php).');
 

@@ -468,7 +468,7 @@ class Users extends Main {
       exit('SQL error.');
     }
 
-		if (!empty($this->_aData['id'])) {
+		if ($this->_aData['id']) {
 			try {
 				$oQuery = $this->_oDb->prepare("UPDATE
                                           " . SQL_PREFIX . "users

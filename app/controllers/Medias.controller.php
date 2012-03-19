@@ -16,7 +16,6 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Image as Image;
 use CandyCMS\Helper\Upload as Upload;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Medias extends Main {
 

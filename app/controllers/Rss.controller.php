@@ -13,7 +13,6 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Rss extends Main {
 

@@ -15,7 +15,6 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 class Users extends Main {
 
@@ -60,7 +59,7 @@ class Users extends Main {
       }
     }
     else {
-      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
+      $this->oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_LIFETIME_SAVED);
       return $this->_show();
     }
   }
@@ -89,7 +88,6 @@ class Users extends Main {
         $this->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
       }
 
-      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }

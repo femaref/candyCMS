@@ -28,7 +28,6 @@ class Galleries extends Main {
    */
   public function show() {
 		# Bugfix: Still display single image.
-
     if (isset($this->_aRequest['action']) && 'image' !== $this->_aRequest['action']) {
       switch ($this->_aRequest['action']) {
 
