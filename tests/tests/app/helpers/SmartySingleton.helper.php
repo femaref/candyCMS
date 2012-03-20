@@ -16,13 +16,16 @@ use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 if (!defined('WEBSITE_LANGUAGE'))
   define('WEBSITE_LANGUAGE', 'en');
+
 if (!defined('WEBSITE_LOCALE'))
   define('WEBSITE_LOCALE', 'en_US');
 
 class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
 
 	function setUp() {
+    # Bugfix
     $_SESSION = array('lang' => null);
+
     $this->oObject = SmartySingleton::getInstance();
 	}
 
@@ -43,6 +46,7 @@ class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
     $aPaths = $this->oObject->getPaths();
     $aExpectedKeys = array('css', 'less', 'js', 'images', 'public', 'template', 'upload');
     $this->assertEqual(count($aPaths), count($aExpectedKeys));
+
     foreach ($aExpectedKeys as $sKey)
       $this->assertNotNull($aPaths[$sKey]);
   }

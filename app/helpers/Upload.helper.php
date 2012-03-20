@@ -198,8 +198,7 @@ class Upload {
       return Helper::errorMessage(LANG_ERROR_MEDIA_MAX_FILESIZE_REACHED);
 
     else {
-      //upload should overwrite existing files @todo test
-      //$this->destroyAvatarFiles($this->_aRequest['rename']);
+      $this->destroyAvatarFiles($this->_aRequest['rename']);
 
       $this->_sUploadFolder = 'users';
       $aUploads = $this->uploadFiles($this->_sUploadFolder . '/original');

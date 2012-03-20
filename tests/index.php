@@ -28,7 +28,6 @@ define('MOBILE', false);
 define('MOBILE_DEVICE', false);
 define('UNIQUE_ID', 'tests');
 define('VERSION', '0');
-
 define('TESTFILE', '/private/var/tmp/test'.md5(time()));
 
 class AllFileTests extends TestSuite {

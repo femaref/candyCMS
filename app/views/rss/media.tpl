@@ -3,7 +3,7 @@
     xmlns:media="http://search.yahoo.com/mrss/"
     xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{$_title_}</title>
+    <title>{$WEBSITE_NAME}</title>
     <description>{$_content_}</description>
     <language>{$WEBSITE_LANGUAGE}</language>
     <link>{$_link_}</link>

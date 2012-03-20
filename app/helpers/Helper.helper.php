@@ -218,7 +218,6 @@ class Helper {
 	 * @access public
 	 * @param string $sPath path of the file
 	 * @return string size of the file plus hardcoded ending
-   * @todo throw exception
 	 *
 	 */
   public static function getFileSize($sPath) {
@@ -236,8 +235,6 @@ class Helper {
     #elseif($iSize > 0)
     else
       return round($iSize, 2) . ' Byte';
-
-    #  throw new AdvancedException('File does not exist:' . $sPath);
   }
 
 	/**
@@ -506,34 +503,42 @@ class Helper {
 
   /**
 	 * Pluralize a string.
+   *
+   * Note that this is just a rudimentary funtion. F.e. "death", "boy" and "kiss" will not be pluralized corrctly.
 	 *
 	 * @static
 	 * @access public
 	 * @param string $sStr
 	 * @return string pluralized string
-   * @todo test
 	 *
    */
   public static function pluralize($sStr) {
-    if (substr($sStr, -1) == 's')
-      return $sStr;
-
-    elseif (substr($sStr, -1) == 'h')
+    if (substr($sStr, -1) == 'h' || substr($sStr, -2) == 'ss')
       return $sStr . 'es';
 
+    elseif (substr($sStr, -1) == 's')
+      return $sStr;
+
+    elseif (substr($sStr, -1) == 'e')
+      return $sStr . 's';
+
     elseif (substr($sStr, -1) == 'y')
-      return $sStr . 'ies';
+      return substr($sStr, 0, -1) . 'ies';
+
+    else
+      return $sStr;
   }
 
   /**
 	 * Singleize a string.
+   *
+   * Note that this is just a rudimentary funtion. F.e. "phase" and "boy" will not be pluralized corrctly.
 	 *
 	 * @static
 	 * @access public
 	 * @param string $sStr
 	 * @return string singleize string
 	 * @see app/controllers/Main.controller.php
-   * @todo test
 	 *
    */
   public static function singleize($sStr) {
@@ -545,5 +550,8 @@ class Helper {
 
     elseif (substr($sStr, -1) == 's' && substr($sStr, -2) !== 'ss')
       return substr($sStr, 0, -1);
+
+    else
+      return $sStr;
   }
 }
