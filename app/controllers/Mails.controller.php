@@ -73,7 +73,6 @@ class Mails extends Main {
    *
    */
   public function show() {
-    //this still remains since we have no show action right now...
     return $this->create();
   }
 
@@ -94,11 +93,9 @@ class Mails extends Main {
 							MOBILE === false &&
 							WEBSITE_MODE !== 'test';
 
-		if (isset($this->_aRequest['create_mails'])) {
-			return	$this->_create($bShowCaptcha);
-		}
-		else
-			return $this->_showCreateMailTemplate($bShowCaptcha);
+    return isset($this->_aRequest['create_mails']) ?
+            $this->_create($bShowCaptcha) :
+            $this->_showCreateMailTemplate($bShowCaptcha);
 	}
 
 	/**

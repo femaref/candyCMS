@@ -10,6 +10,7 @@
  *
  */
 
+require_once PATH_STANDARD . '/app/helpers/AdvancedException.helper.php';
 require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
 
 use \CandyCMS\Helper\Helper as Helper;
@@ -41,9 +42,11 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertFalse(Helper::checkEmailAddress('admin.@example.com'));
 
     $this->assertFalse(Helper::checkEmailAddress('admin@example'));
-    //should fail becaus tld is too short (2-6)
+
+    # should fail becaus tld is too short (2-6)
     $this->assertFalse(Helper::checkEmailAddress('a@b.c'));
-    //should fail becaus tld is too long (2-6)
+
+    # should fail becaus tld is too long (2-6)
     $this->assertFalse(Helper::checkEmailAddress('a@b.cdefghi'));
     $this->assertFalse(Helper::checkEmailAddress('a  b@domain.com'));
     $this->assertFalse(Helper::checkEmailAddress('admindomain.com'));
@@ -62,8 +65,8 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
     $this->assertTrue($this->_containsNumber(Helper::createRandomChar(10, true)));
 
     # speakable passwords shall not start with numbers
-    $pwd = Helper::createRandomChar(10, true);
-    $this->assertFalse(is_numeric($pwd[0]));
+    $aPassword = Helper::createRandomChar(10, true);
+    $this->assertFalse(is_numeric($aPassword[0]));
   }
 
   function testCreateLinkTo() {
@@ -99,6 +102,7 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   function testGetTemplateDir() {
     $this->assertPattern('/app\/views/i', Helper::getTemplateDir('layouts', 'application'));
     $this->assertPattern('/addons\/views/i', Helper::getTemplateDir('samples', 'show'));
+    $this->assertFalse(Helper::getTemplateDir(time(), time()));
   }
 
   function testGetTemplateType() {
@@ -107,21 +111,24 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
 
   function testGetPluginTemplateDir() {
     $this->assertPattern('/Headlines/i', Helper::getPluginTemplateDir('headlines', 'show'));
+    $this->assertFalse(Helper::getTemplateDir(time(), time()));
   }
 
   function testFormatInput() {
     $this->assertPattern('/&quot;/i', Helper::formatInput('"'));
     $this->assertPattern('/</i', Helper::formatInput('<', false));
+    $this->assertPattern('/&lt;/i', Helper::formatInput('<', true));
   }
 
   function testFormatTimestamp() {
-    $this->assertTrue(Helper::formatTimestamp(0) == strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 0));
-    $this->assertTrue(Helper::formatTimestamp(0, 1) == strftime(DEFAULT_DATE_FORMAT, 0));
-    $this->assertTrue(Helper::formatTimestamp(0, 2) == strftime(DEFAULT_TIME_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0), strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0, 1), strftime(DEFAULT_DATE_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0, 2), strftime(DEFAULT_TIME_FORMAT, 0));
   }
 
   function testFormatOutput() {
     $this->assertPattern('/<mark>/i', Helper::formatOutput('test', 'test'));
+    $this->assertNoPattern('/<mark>/i', Helper::formatOutput('test'));
   }
 
   function testGetLastEntry() {
@@ -129,7 +136,10 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testReplaceNonAlphachars() {
-    $this->assertPattern('/_/i', Helper::replaceNonAlphachars(' '));
+    $this->assertEqual('AeUeOeaeueoess', Helper::replaceNonAlphachars('ÄÜÖäüöß'));
+    $this->assertEqual('_', Helper::replaceNonAlphachars(' '));
+    $this->assertEqual('.', Helper::replaceNonAlphachars('.'));
+    $this->assertEqual('12345', Helper::replaceNonAlphachars('12345'));
   }
 
   function testRemoveSlash() {
@@ -140,5 +150,19 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   function testAddSlash() {
     $this->assertEqual(Helper::addSlash('test'), '/test');
     $this->assertEqual(Helper::addSlash('/test'), '/test');
+  }
+
+  function testPluralize() {
+    $this->assertEqual(Helper::pluralize('kiss'), 'kisses');
+    $this->assertEqual(Helper::pluralize('phase'), 'phases');
+    $this->assertEqual(Helper::pluralize('dish'), 'dishes');
+    $this->assertEqual(Helper::pluralize('judge'), 'judges');
+    $this->assertEqual(Helper::pluralize('baby'), 'babies');
+  }
+
+  function testSingleize() {
+    $this->assertEqual(Helper::singleize('babies'), 'baby');
+    $this->assertEqual(Helper::singleize('kiss'), 'kiss');
+    $this->assertEqual(Helper::singleize('searches'), 'search');
   }
 }
