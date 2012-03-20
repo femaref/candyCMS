@@ -197,6 +197,7 @@ error:
       email: Please enter your email.
       file: Please select file.
       name: Please enter your name.
+      surname: Please enter your surname.
       terms: You must accept the terms and conditions.
       title: Please enter a title.
       password: Please enter a password.
