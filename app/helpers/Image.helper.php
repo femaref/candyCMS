@@ -141,10 +141,12 @@ class Image {
    */
   public function resizeDefault($iDim, $iMaxHeight = '', $sFolder = '') {
     # Y bigger than X and max height
-    if ($this->_aInfo[1] > $this->_aInfo[0] && !$iMaxHeight) {
+    if ($this->_aInfo[1] > $this->_aInfo[0] && $iMaxHeight) {
       $iDstX = round($this->_aInfo[0] * ($iMaxHeight / $this->_aInfo[1]));
       $iDstY = $iMaxHeight;
     }
+
+    # X bigger than Y
     else {
       $iDstX = $iDim;
       $iDstY = round($this->_aInfo[1] * ($iDim / $this->_aInfo[0]));
