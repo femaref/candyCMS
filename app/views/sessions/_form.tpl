@@ -10,7 +10,7 @@
       <div class='controls'>
         <input name='email' class='focused required span4' type='email' value='{$email}'
               id='input-email' autofocus required />
-        {if isset($error.email)}<span class='help-inline'>{$error.name}</span>{/if}
+        {if isset($error.email)}<span class='help-inline'>{$error.email}</span>{/if}
       </div>
     </div>
     <div class='control-group{if isset($error.password)} alert alert-error{/if}'>

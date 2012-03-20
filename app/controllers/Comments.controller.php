@@ -14,55 +14,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Plugin\Controller\Recaptcha as Recaptcha;
 
 class Comments extends Main {
-
-  /**
-   * The provided blog data.
-   *
-   * @var array
-   * @access private
-	 *
-   */
-  private $_aParentData;
-
-  /**
-   * ReCaptcha public key.
-   *
-   * @var string
-   * @access protected
-   * @see config/Candy.inc.php
-	 *
-   */
-  protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
-
-  /**
-   * ReCaptcha private key.
-   *
-   * @var string
-   * @access protected
-   * @see config/Candy.inc.php
-	 *
-   */
-  protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
-
-  /**
-   * ReCaptcha object.
-   *
-   * @var object
-   * @access protected
-	 *
-   */
-  protected $_oRecaptchaResponse = '';
-
-  /**
-   * Provided ReCaptcha error message.
-   *
-   * @var string
-   * @access protected
-	 *
-   */
-  protected $_sRecaptchaError = '';
 
   /**
    * Include the content model.
@@ -72,8 +26,6 @@ class Comments extends Main {
    *
    */
   public function __init($aParentData = '') {
-		require_once PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
-
     $oModel = $this->__autoload('Comments', true);
     $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
 		$this->_aParentData = & $aParentData;
@@ -127,8 +79,8 @@ class Comments extends Main {
     $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
 
-    if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
-      $this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+    if ($bShowCaptcha === true)
+      $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
@@ -147,10 +99,9 @@ class Comments extends Main {
    *
    */
   public function create($sInputName) {
-		$bShowCaptcha = $this->_aSession['user']['role'] == 0 &&
-							RECAPTCHA_ENABLED === true &&
-							MOBILE === false &&
-              WEBSITE_MODE !== 'test';
+    $bShowCaptcha = class_exists('\CandyCMS\Plugin\Controller\Recaptcha') ?
+                      $this->_aSession['user']['role'] == 0 && SHOW_CAPTCHA :
+                      false;
 
     #no caching for comments
     $this->oSmarty->setCaching(false);
@@ -182,8 +133,8 @@ class Comments extends Main {
     if (isset($this->_aRequest['email']) && $this->_aRequest['email'])
       $this->_setError('email');
 
-    if ($bShowCaptcha === true)
-      $this->_checkCaptcha();
+    if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
+      $this->_aError['captcha'] = I18n::get('error.captcha.loading');
 
     if ($this->_aError)
       return $this->_showFormTemplate($bShowCaptcha);
@@ -225,32 +176,5 @@ class Comments extends Main {
     }
     else
       return Helper::errorMessage(I18n::get('error.sql'), $sRedirect);
-  }
-
-  /**
-   * Check if the entered captcha is correct.
-   *
-   * @access protected
-   * @return boolean correctness of captcha
-   *
-   */
-  protected function _checkCaptcha() {
-    if (isset($this->_aRequest['recaptcha_response_field'])) {
-      $this->_oRecaptchaResponse = recaptcha_check_answer (
-              $this->_sRecaptchaPrivateKey,
-              $_SERVER['REMOTE_ADDR'],
-              $this->_aRequest['recaptcha_challenge_field'],
-              $this->_aRequest['recaptcha_response_field']);
-
-      if ($this->_oRecaptchaResponse->is_valid)
-        return $this->_create(true);
-
-      else {
-        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
-        return Helper::errorMessage(I18n::get('error.captcha.incorrect'));
-      }
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'));
   }
 }

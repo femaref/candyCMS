@@ -37,4 +37,11 @@ define('PLUGIN_FACEBOOK_SECRET', '');
 define('PLUGIN_PIWIK_URL', '');
 define('PLUGIN_PIWIK_ID', '');
 
+# To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
+# register yourself and get an account
+
+## Recaptcha public and private key:
+define('PLUGIN_RECAPTCHA_PUBLIC_KEY', '');
+define('PLUGIN_RECAPTCHA_PRIVATE_KEY', '');
+
 ?>

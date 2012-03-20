@@ -27,35 +27,39 @@ class Galleries extends Main {
    *
    */
   public function show() {
-		# Bugfix: Still display single image.
-    if (isset($this->_aRequest['action']) && 'image' !== $this->_aRequest['action']) {
-      switch ($this->_aRequest['action']) {
+    if (!isset($this->_aRequest['action']))
+      $this->_aRequest['action'] = 'image';
 
-        case 'createfile':
+    switch ($this->_aRequest['action']) {
 
-          $this->setTitle(I18n::get('gallery.files.title.create'));
-          return $this->createFile();
+      case 'createfile':
 
-          break;
+        $this->setTitle(I18n::get('gallery.files.title.create'));
+        return $this->createFile();
 
-        case 'updatefile':
+        break;
 
-          $this->setTitle(I18n::get('gallery.files.title.update'));
-          return $this->updateFile();
+      case 'updatefile':
 
-          break;
+        $this->setTitle(I18n::get('gallery.files.title.update'));
+        return $this->updateFile();
 
-        case 'destroyfile':
+        break;
 
-          $this->setTitle(I18n::get('gallery.files.title.destroy'));
-          return $this->destroyFile();
+      case 'destroyfile':
 
-          break;
-      }
-    }
-    else {
-      $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
-      return $this->_show();
+        $this->setTitle(I18n::get('gallery.files.title.destroy'));
+        return $this->destroyFile();
+
+        break;
+
+      default:
+      case 'image':
+
+        $this->oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
+        return $this->_show();
+
+        break;
     }
   }
 
@@ -76,8 +80,8 @@ class Galleries extends Main {
       $sAlbumName					= $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
       $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
 
-      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'))
-              ->setDescription($this->_removeHighlight($sAlbumDescription));
+      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+      $this->setDescription($this->_removeHighlight($sAlbumDescription));
 
 			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 				$aData = $this->_oModel->getThumbs($this->_iId);
@@ -113,8 +117,8 @@ class Galleries extends Main {
 
         $this->oSmarty->assign('i', $aData);
 
-        $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file'])
-                ->setDescription($aData['content']);
+        $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
+        $this->setDescription($aData['content']);
 
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);

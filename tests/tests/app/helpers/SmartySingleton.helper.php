@@ -16,13 +16,16 @@ use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
 if (!defined('WEBSITE_LANGUAGE'))
   define('WEBSITE_LANGUAGE', 'en');
+
 if (!defined('WEBSITE_LOCALE'))
   define('WEBSITE_LOCALE', 'en_US');
 
 class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
 
 	function setUp() {
+    # Bugfix
     $_SESSION = array('lang' => null);
+
     $this->oObject = SmartySingleton::getInstance();
 	}
 
@@ -46,5 +49,18 @@ class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
 
     foreach ($aExpectedKeys as $sKey)
       $this->assertNotNull($aPaths[$sKey]);
+  }
+
+  function testClearCacheForController() {
+    # fill the cache
+    $oSmarty = SmartySingleton::getInstance();
+    $oSmarty->setCaching(SmartySingleton::CACHING_LIFETIME_SAVED);
+    $oSmarty->setTemplateDir(PATH_STANDARD . '/tests/tests/app/views');
+    $oSmarty->fetch('helloworld.tpl', 'test|mytest|hello');
+
+    $this->assertTrue(file_exists(PATH_STANDARD . '/' . CACHE_DIR . '/test/mytest/hello/'));
+
+    $aPaths = $this->oObject->clearCacheForController('mytest');
+    $this->assertFalse(file_exists(PATH_STANDARD . '/' . CACHE_DIR . '/test/mytest/hello/'));
   }
 }

@@ -28,7 +28,7 @@ class WebTestOfMailController extends CandyWebTest {
 	}
 
   function testShow() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/create'));
 		$this->assertText(I18n::get('global.contact'));
 		$this->assertText('c2f9619961');
 		$this->assertResponse('200');
@@ -36,18 +36,18 @@ class WebTestOfMailController extends CandyWebTest {
 
 	function testCreateSuccess() {
     # Success
-		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2', array(
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/create', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
 				'content' => 'Test',
-				'create_mail' => 'formdata'
+				'create_mails' => 'formdata'
 		)));
 
 		$this->assertResponse(200);
-		$this->assertText(I18n::get('mails.info.title'));
+		$this->assertText(I18n::get('mails.success_page.title'));
 
     # Fail because fields are missing
-		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
-				'create_mail' => 'formdata'
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/create', array(
+				'create_mails' => 'formdata'
 		)));
 
 		$this->assertResponse(200);
@@ -55,8 +55,8 @@ class WebTestOfMailController extends CandyWebTest {
 		$this->assertText(I18n::get('error.form.missing.content'));
 
         # Fail because fields are missing
-		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1', array(
-				'create_mail' => 'formdata',
+		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/create', array(
+				'create_mails' => 'formdata',
         'email' => 'wrongly..formated@email.com'
 		)));
 

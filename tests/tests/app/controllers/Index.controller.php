@@ -35,10 +35,8 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testGetPlugins() {
-    $aPlugins = $aPlugins = explode(',', ALLOW_PLUGINS);
-
-		$this->assertTrue($this->oObject->getPlugins(ALLOW_PLUGINS));
-    $this->assertEqual($aPlugins, $this->oObject->getPlugins(ALLOW_PLUGINS));
+    #null, because in testmode there are no plugins loaded
+		$this->assertNull($this->oObject->getPlugins(ALLOW_PLUGINS));
   }
 
 	function testGetRoutes() {

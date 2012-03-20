@@ -148,24 +148,28 @@ class Index {
    *
    */
   public static function getPlugins($sAllowedPlugins) {
-    $aPlugins = explode(',', $sAllowedPlugins);
+    if (WEBSITE_MODE !== 'test') {
+      $aPlugins = explode(',', $sAllowedPlugins);
 
-    foreach ($aPlugins as $sPluginName) {
-      try {
-        if (!file_exists(PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
-                        (string) ucfirst($sPluginName) . '.controller.php'))
-          throw new AdvancedException('Missing plugin: ' . ucfirst($sPluginName));
-        else
-          require_once PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
-                  (string) ucfirst($sPluginName) . '.controller.php';
+      foreach ($aPlugins as $sPluginName) {
+        try {
+          if (!file_exists(PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
+                          (string) ucfirst($sPluginName) . '.controller.php'))
+            throw new AdvancedException('Missing plugin: ' . ucfirst($sPluginName));
+          else
+            require_once PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
+                    (string) ucfirst($sPluginName) . '.controller.php';
+        }
+        catch (AdvancedException $e) {
+          die($e->getMessage());
+        }
       }
-      catch (AdvancedException $e) {
-        die($e->getMessage());
-      }
+
+      return $aPlugins;
     }
-
-    return $aPlugins;
   }
+
+
 
   /**
    * Read the routes from Routes.yml and set request params.
@@ -531,7 +535,7 @@ class Index {
     $this->_aSession['user'] = self::_resetUser();
 
     foreach ($this->_aPlugins as $sPlugin) {
-      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob')
+      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob' ||  $sPlugin == 'Recaptcha')
         continue;
 
       $sPluginNamespace = '\CandyCMS\Plugin\Controller\\' . $sPlugin;

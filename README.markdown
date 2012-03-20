@@ -57,7 +57,8 @@ the existing "app", "lib" and "plugin" folders before. Please also take a look a
 
 Credits
 ------------------------------------------------------------------------------------------------------------------------
-Icons were created by [icondock.com](http://icondock.com) and [famfamfam.com](http://famfamfam.com).
+Icons were created by [icondock.com](http://icondock.com) and [famfamfam.com](http://famfamfam.com). Big thanks to
+Hauke Schade who gave great feedback and built many impressive features.
 
 
 License

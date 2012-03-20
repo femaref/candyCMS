@@ -2,7 +2,7 @@
   <div class='page-header'>
     <h1>{$lang.global.contact} {$contact.name} {$contact.surname}</h1>
   </div>
-  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.id}'
+  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.id}/create'
         id='create_mail' class='form-horizontal'>
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
@@ -30,10 +30,10 @@
         {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
       </div>
     </div>
-    {include file='../layouts/_recaptcha.tpl'}
+    {if isset($_captcha_)}{$_captcha_}{/if}
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.global.submit}' />
-      <input type='hidden' value='formdata' name='create_mail' />
+      <input type='hidden' value='formdata' name='create_mails' />
     </div>
   </form>
 {/strip}

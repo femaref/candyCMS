@@ -40,30 +40,43 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertResponse('200');
   }
 
-  /**
-   *@todo validation
-   */
   function testCreate() {
     # Page is reachable
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
     $this->assertNoText(I18n::get('error.missing.permission'));
     $this->assertResponse('200');
+    $this->assertField('name', '');
+    $this->assertField('surname', '');
+    $this->assertField('password', '');
+    $this->assertField('password2', '');
 
-    # Missing fields
-		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create', array(
-				'create_users' => 'formdata'
-		)));
-
+    # try without filling out anything
+    $this->click(I18n::get('global.register'));
 		$this->assertResponse(200);
-		#$this->assertText(I18n::get('error.form.missing.name'));
-    #$this->showSource();
-		#$this->assertText(I18n::get('error.form.missing.surname'));
-		#$this->assertText(I18n::get('error.form.missing.email'));
-		#$this->assertText(I18n::get('error.form.missing.passwort'));
+    $this->assertText(I18n::get('error.form.missing.name'));
+    $this->assertText(I18n::get('error.form.missing.surname'));
+    $this->assertText(I18n::get('error.form.missing.email'));
+    $this->assertText(I18n::get('error.form.missing.password'));
+
+    $this->setField('name', 'Max');
+    $this->setField('surname', 'Mustermann');
+    $this->setField('email', WEBSITE_MAIL);
+    $this->setField('password', 'abc');
+    $this->setField('password2', 'def');
 
     # Passwords not identical
+    $this->click(I18n::get('global.register'));
+    $this->assertText(I18n::get('error.passwords'));
 
-    # Disclaimer not read
+    $this->setField('password', 'abc');
+    $this->setField('password2', 'def');
+
+    # Disclaimer not set
+    $this->click(I18n::get('global.register'));
+    $this->assertText(I18n::get('error.form.missing.terms'));
+
+    # @todo actual login...
+
   }
 
   function testUpdate() {
@@ -122,5 +135,9 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/token'));
     $this->assertResponse(200);
 		$this->assertText('"success":false');
+  }
+
+  function testVerification() {
+    # @todo
   }
 }

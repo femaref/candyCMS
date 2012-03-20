@@ -60,7 +60,7 @@
         </td>
         <td>
           {* Absolute URL due to fancybox bug *}
-          <a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}'>
+          <a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}/create'>
             {$lang.users.contact_via_email|replace:'%u':$u.name}
           </a>
         </td>
