@@ -91,7 +91,7 @@ class Sessions extends Main {
 			return Helper::successMessage(I18n::get('success.session.create'), '/');
 
 		else
-			return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller']);
+			return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller'] . '/create');
 	}
 
 	/**
