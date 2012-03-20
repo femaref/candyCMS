@@ -30,7 +30,7 @@
         {if isset($error.content)}<span class='help-inline'>{$error.content}</span>{/if}
       </div>
     </div>
-    {include file='../layouts/_recaptcha.tpl'}
+    {if isset($_captcha_)}{$_captcha_}{/if}
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.global.submit}' />
       <input type='hidden' value='formdata' name='create_mails' />
