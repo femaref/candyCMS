@@ -58,189 +58,212 @@ class Sessions extends Main {
     }
   }
 
-	/**
-	 * Create a session or show template instead.
-	 * We must override the main method due to a diffent required user right.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Create a session or show template instead.
+   * We must override the main method due to a diffent required user right.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function create() {
-		return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
-	}
+    return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
+  }
 
-	/**
-	 * Create a session.
-	 *
-	 * Check if required data is given or throw an error instead.
-	 * If data is given, create session.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	protected function _create() {
-		$this->_setError('email');
-		$this->_setError('password');
+  /**
+   * Create a session.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, create session.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  protected function _create() {
+    $this->_setError('email');
+    $this->_setError('password');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
+    if (isset($this->_aError))
+      return $this->_showFormTemplate();
 
-		elseif ($this->_oModel->create() === true)
-			return Helper::successMessage(I18n::get('success.session.create'), '/');
+    elseif ($this->_oModel->create() === true)
+      return Helper::successMessage(I18n::get('success.session.create'), '/');
 
-		else
-			return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller'] . '/create');
-	}
+    else
+      return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller'] . '/create');
+  }
 
-	/**
-	 * Build form template to create a session.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Build form template to create a session.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function _showFormTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
+    $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
 
     $this->setTitle(I18n::get('global.login'));
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-	}
+  }
 
-	/**
-	 * Resend password.
-	 *
-	 * @access public
-	 * @return string HTML
-   * @todo refactor to two methods
-   * @todo refactor
-	 *
-	 */
-	public function resendPassword() {
-		if (isset($this->_aRequest['email']))
-			$this->_setError('email');
+  /**
+   * Resend password or show form.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function resendPassword() {
+    if (isset($this->_aRequest['email']))
+      return $this->_resendPassword();
 
-		else
-			return $this->_showCreateResendActionsTemplate();
+    else
+      return $this->_showCreateResendActionsTemplate();
+  }
 
-		if (isset($this->_aError))
-			return $this->_showCreateResendActionsTemplate();
+  /**
+   * Resend password.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, try to send mail.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  protected function _resendPassword() {
+    $this->_setError('email');
 
-		else {
-			$this->__autoload('Mails');
-			$sNewPasswordClean = Helper::createRandomChar(10, true);
-			$aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
+    if (isset($this->_aError))
+      return $this->_showCreateResendActionsTemplate();
 
-			if (!empty($aData)) {
-				$sContent = str_replace('%u', $aData['name'], I18n::get('sessions.password.mail.body'));
-				$sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+    $this->__autoload('Mails');
+    $sNewPasswordClean = Helper::createRandomChar(10, true);
+    $aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
-				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
-																									I18n::get('sessions.password.mail.subject'),
-																									$sContent,
-																									WEBSITE_MAIL_NOREPLY);
+    if (!empty($aData)) {
+      $sContent = str_replace('%u', $aData['name'], I18n::get('sessions.password.mail.body'));
+      $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
 
-				return $bStatus === true ?
-								Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller']) :
-								Helper::errorMessage(I18n::get('error.mail.create')) . $this->_show();
-			}
-			else
-				return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller']);
-		}
-	}
+      $bStatus = Mails::send(
+              Helper::formatInput($this->_aRequest['email']),
+              I18n::get('sessions.password.mail.subject'),
+              $sContent,
+              WEBSITE_MAIL_NOREPLY);
 
-	/**
-	 * Resend verification.
-	 *
-	 * @access public
-	 * @return string HTML
-   * @todo refactor to two methods
-	 *
-	 */
-	public function resendVerification() {
-		if (isset($this->_aRequest['email']))
-			$this->_setError('email');
+      return $bStatus === true ?
+              Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller'] . '/create') :
+              Helper::errorMessage(I18n::get('error.mail.create'), '/' . $this->_aRequest['controller'] . '/create');
+    }
+    else
+      return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller'] . '/create');
+  }
 
-		else
-			return $this->_showCreateResendActionsTemplate();
+  /**
+   * Resend verification or show Form.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
+  public function resendVerification() {
+    if (isset($this->_aRequest['email']))
+      return $this->_resendVerification();
 
-		if (isset($this->_aError))
-			return $this->_showCreateResendActionsTemplate();
+    else
+      return $this->_showCreateResendActionsTemplate();
+  }
 
-		else {
-			$this->__autoload('Mails');
-			$aData = & $this->_oModel->resendVerification();
+  /**
+   * Resend verification.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, try to send mail.
+   *
+   * @access protected
+   * @return string HTML
+   *
+   */
+  protected function _resendVerification() {
+    $this->_setError('email');
 
-			if (!empty($aData)) {
-				$sVerificationUrl = Helper::createLinkTo('user/' . $aData['verification_code'] . '/verification');
+    if (isset($this->_aError))
+      return $this->_showCreateResendActionsTemplate();
 
-				$sContent = str_replace('%u', $aData['name'], I18n::get('sessions.verification.mail.body'));
-				$sContent = str_replace('%v', $sVerificationUrl, $sContent);
+    $this->__autoload('Mails');
+    $aData = & $this->_oModel->resendVerification();
 
-				$bStatus = Mails::send(Helper::formatInput($this->_aRequest['email']),
-																									I18n::get('sessions.verification.mail.subject'),
-																									$sContent,
-																									WEBSITE_MAIL_NOREPLY);
+    if (!empty($aData)) {
+      $sVerificationUrl = Helper::createLinkTo('users/' . $aData['verification_code'] . '/verification');
 
-				return $bStatus === true ?
-								Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller']) :
-								$this->_show();
-			}
-			else
-				return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller']);
-		}
-	}
+      $sContent = str_replace('%u', $aData['name'], I18n::get('sessions.verification.mail.body'));
+      $sContent = str_replace('%v', $sVerificationUrl, $sContent);
 
-	/**
-	 * Build form template to resend verification or resend password.
-	 *
-	 * @access private
-	 * @return string HTML content
-	 *
-	 */
+      $bStatus = Mails::send(
+              Helper::formatInput($this->_aRequest['email']),
+              I18n::get('sessions.verification.mail.subject'),
+              $sContent,
+              WEBSITE_MAIL_NOREPLY);
+
+      return $bStatus === true ?
+              Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller'] . '/create') :
+              Helper::errorMessage(I18n::get('error.mail.create'), '/' . $this->_aRequest['controller'] . '/create');
+    }
+    else
+      return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller'] . '/create');
+  }
+
+  /**
+   * Build form template to resend verification or resend password.
+   *
+   * @access private
+   * @return string HTML content
+   *
+   */
   private function _showCreateResendActionsTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'resend');
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'resend');
 
-		if ($this->_aError)
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-	}
+  }
 
-	/**
-	 * Destroy user session.
-	 *
-	 * @access public
-	 * @return boolean status of model action
-	 *
-	 */
+  /**
+   * Destroy user session.
+   *
+   * @access public
+   * @return boolean status of model action
+   *
+   */
   public function destroy() {
-		# Facebook logout
-		if ($this->_aSession['user']['role'] == 2) {
-			$this->_aSession['facebook']->getLogoutUrl();
-			session_destroy();
-			unset($this->_aSession, $_SESSION);
-			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
-		}
+    # Facebook logout
+    if ($this->_aSession['user']['role'] == 2) {
+      $this->_aSession['facebook']->getLogoutUrl();
+      session_destroy();
+      unset($this->_aSession, $_SESSION);
+      return Helper::successMessage(I18n::get('success.session.destroy'), '/');
+    }
 
-		# Standard member
-		elseif ($this->_oModel->destroy() === true) {
-			session_destroy();
-			unset($this->_aSession, $_SESSION);
-			return Helper::successMessage(I18n::get('success.session.destroy'), '/');
-		}
+    # Standard member
+    elseif ($this->_oModel->destroy() === true) {
+      session_destroy();
+      unset($this->_aSession, $_SESSION);
+      return Helper::successMessage(I18n::get('success.session.destroy'), '/');
+    }
 
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/');
-	}
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), '/');
+  }
 }
