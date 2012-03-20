@@ -39,7 +39,7 @@ class WebTestOfMailController extends CandyWebTest {
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2/create', array(
 				'email' => WEBSITE_MAIL_NOREPLY,
 				'content' => 'Test',
-				'create_mail' => 'formdata'
+				'create_mails' => 'formdata'
 		)));
 
 		$this->assertResponse(200);
@@ -47,7 +47,7 @@ class WebTestOfMailController extends CandyWebTest {
 
     # Fail because fields are missing
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/create', array(
-				'create_mail' => 'formdata'
+				'create_mails' => 'formdata'
 		)));
 
 		$this->assertResponse(200);
@@ -56,7 +56,7 @@ class WebTestOfMailController extends CandyWebTest {
 
         # Fail because fields are missing
 		$this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/create', array(
-				'create_mail' => 'formdata',
+				'create_mails' => 'formdata',
         'email' => 'wrongly..formated@email.com'
 		)));
 
