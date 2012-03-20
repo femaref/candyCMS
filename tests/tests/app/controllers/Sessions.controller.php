@@ -9,18 +9,20 @@
  * @since 2.0
  *
  */
-
 require_once('app/controllers/Sessions.controller.php');
 
 use CandyCMS\Controller\Sessions as Sessions;
 use CandyCMS\Helper\I18n as I18n;
 
-class TestOfSessionController extends WebTestCase {
+class WebTestOfSessionController extends CandyWebTest {
 
-  function testConstructor() {
-    $aRequest = array('section' => 'sessions');
+  function setUp() {
+    $this->aRequest['controller'] = 'sessions';
+    $this->oObject = new Sessions($this->aRequest, $this->aSession);
+  }
 
-    $this->oObject = new Sessions($aRequest, $aSession, $aFile, $aCookie);
+  function tearDown() {
+    parent::tearDown();
   }
 
   function testShow() {
@@ -29,26 +31,49 @@ class TestOfSessionController extends WebTestCase {
     $this->assertResponse('200');
   }
 
-  /**
-   * @todo correct format?
-   * @todo validation
-   */
   function testCreate() {
-    $this->setMaximumRedirects(0);
-    $this->get(WEBSITE_URL . '/session/create');
-    #$this->assertFieldById('input-email');
-    $this->assertFieldById('input-password');
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create');
+    $this->assertField("email", '');
+    $this->assertField('password', '');
 
-    $aParams = array('email' => 'admin@example.com', 'password' => 'test', 'formdata' => 'create_sessions');
-    $this->assertTrue($this->post(WEBSITE_URL . '/sessions/create', $aParams));
-    $this->assertResponse('200');
-    $this->assertNoText(I18n::get('error.standard'));
-    #$this->assertText(I18n::get('error.standard')); # Welcome ...
+    # login with no input
+    $this->click(I18n::get('global.login'));
+
+    $this->assertText(I18n::get('error.form.missing.email'));
+    $this->assertText(I18n::get('error.form.missing.password'));
+
+    $this->assertTrue($this->setField('email', 'admin@wrongexample.com'));
+    $this->setField('password', 'test');
+
+    # login with wrong input
+    $this->clickSubmit(I18n::get('global.login'));
+
+    $this->assertText(I18n::get('error.session.create'));
+
+    $this->setField('email', 'admin@example.com');
+    $this->setField('password', 'test');
+
+    # login with correct input
+    $this->click(I18n::get('global.login'));
+
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('success.session.create'));
+
+    # logout
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy');
   }
 
   function testDestroy() {
     $this->setMaximumRedirects(0);
-    $this->get(WEBSITE_URL . '/session/destroy');
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy');
     $this->assertResponse('302');
+  }
+
+  function testResendPassword() {
+    # @todo
+  }
+
+  function testVerification() {
+    # @todo
   }
 }
