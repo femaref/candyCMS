@@ -430,6 +430,8 @@ class Helper {
 	 * @access public
 	 * @param string $sTable table to fetch data from
 	 * @return integer latest ID
+   *
+   * @todo really create new PDO?
 	 *
 	 */
   public static function getLastEntry($sTable) {

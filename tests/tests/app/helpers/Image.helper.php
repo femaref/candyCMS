@@ -46,7 +46,7 @@ class UnitTestOfImageHelper extends CandyUnitTest {
 
     $this->assertIsA($aInfo, 'array');
     $this->assertEqual($aInfo[0], THUMB_DEFAULT_X);
-    $this->assertEqual($aInfo[1], THUMB_DEFAULT_Y);
+    $this->assertEqual($aInfo[1], THUMB_DEFAULT_X);
     $this->assertTrue(unlink($this->sImagePath));
   }
 }

@@ -106,7 +106,7 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testGetPluginTemplateDir() {
-    $this->assertPattern('/Headlines/i', Helper::getPluginTemplateDir('headlines', 'show'));
+    $this->assertPattern('/Headlines\/views/i', Helper::getPluginTemplateDir('headlines', 'show'));
   }
 
   function testFormatInput() {
@@ -115,13 +115,14 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testFormatTimestamp() {
-    $this->assertTrue(Helper::formatTimestamp(0) == strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 0));
-    $this->assertTrue(Helper::formatTimestamp(0, 1) == strftime(DEFAULT_DATE_FORMAT, 0));
-    $this->assertTrue(Helper::formatTimestamp(0, 2) == strftime(DEFAULT_TIME_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0), strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0, 1), strftime(DEFAULT_DATE_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(0, 2), strftime(DEFAULT_TIME_FORMAT, 0));
   }
 
   function testFormatOutput() {
     $this->assertPattern('/<mark>/i', Helper::formatOutput('test', 'test'));
+    $this->assertNoPattern('/<mark>/i', Helper::formatOutput('te', 'test'));
   }
 
   function testGetLastEntry() {
@@ -130,6 +131,7 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
 
   function testReplaceNonAlphachars() {
     $this->assertPattern('/_/i', Helper::replaceNonAlphachars(' '));
+    $this->assertPattern('/abc123.fgssz_17ae_troedeloeoe_/i', Helper::replaceNonAlphachars('abc123.fgßz 17ä trödelöö '));
   }
 
   function testRemoveSlash() {
