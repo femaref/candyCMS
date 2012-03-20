@@ -9,7 +9,7 @@
  * @since 1.0
  *
  * @todo small pictures (32,64) seem to fail (meaning having wrong offset) when uploading as avatar
- * 
+ *
  */
 
 namespace CandyCMS\Helper;
@@ -24,20 +24,6 @@ class Image {
 	 *
    */
   protected $_aInfo;
-
-  /**
-   * @var integer
-   * @access protected
-	 *
-   */
-  protected $_iImageWidth;
-
-  /**
-   * @var integer
-   * @access protected
-	 *
-   */
-  protected $_iImageHeight;
 
   /**
    * @var string
@@ -101,23 +87,16 @@ class Image {
    * Create the new image with given params.
    *
    * @access private
-   * @param array $aParams width and height params
-   * @param string $sFolder folder to upload image to. Normally the controller name.
+   * @param integer $iSrcX x-coordinate of source point
+   * @param integer $iSrcY y-coordinate of source point
+   * @param integer $iDstX destination width
+   * @param integer $iDstY destination height
    * @return string $sPath path of the new image
    *
    */
-  private function _createImage($iX, $iY, $iSrcX, $iSrcY) {
-    //is this upscaling?
-    if ($iX > $this->_aInfo[0] && $iY > $this->_aInfo[1]) {
-      //only prevent upscaling on sizes bigger than thumbnail
-      if ($iX > THUMB_DEFAULT_X && $iY > THUMB_DEFAULT_Y) {
-        //do not scale those pictures at all... (might be even smaller than thumbnail size)
-        $iX = $this->_aInfo[0];
-        $iY = $this->_aInfo[1];
-      }
-    }
+  private function _createImage($iSrcX, $iSrcY, $iDstX, $iDstY) {
     $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_sUploadDir . '/' .
-						$this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
+                    $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
@@ -128,11 +107,11 @@ class Image {
     elseif ($this->_sImgType == 'gif')
       $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
 
-    $oNewImg = imagecreatetruecolor($iX, $iY);
+    $oNewImg = imagecreatetruecolor($this->_iImageWidth, $this->_iImageHeight);
     $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
 
     imagefill($oNewImg, 0, 0, $oBg);
-    imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iX, $iY, $this->_aInfo[0], $this->_aInfo[1]);
+    imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iDstX, $iDstY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
       ImageJPEG($oNewImg, $sPath, 75);
@@ -154,30 +133,28 @@ class Image {
    * Proportional resizing.
    *
    * @access public
-   * @param integer $iWidth width of the new image
+   * @param integer $iDim width of the new image
    * @param integer $iMaxHeight maximum height of the new image
    * @param string $sFolder folder of the new image
    * @return string $sPath path of the new image
    *
    */
-  public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
+  public function resizeDefault($iDim, $iMaxHeight = '', $sFolder = '') {
     # Y bigger than X and max height
-    if ($this->_aInfo[1] > $this->_aInfo[0] && !empty($iMaxHeight)) {
-      $iFactor = $iMaxHeight / $this->_aInfo[1];
-      $iX = round($this->_aInfo[0] * $iFactor);
-      $iY = $iMaxHeight;
+    if ($this->_aInfo[1] > $this->_aInfo[0] && !$iMaxHeight) {
+      $iDstX = round($this->_aInfo[0] * ($iMaxHeight / $this->_aInfo[1]));
+      $iDstY = $iMaxHeight;
     }
     else {
-      $iFactor = $iWidth / $this->_aInfo[0];
-      $iX = $iWidth;
-      $iY = round($this->_aInfo[1] * $iFactor);
+      $iDstX = $iDim;
+      $iDstY = round($this->_aInfo[1] * ($iDim / $this->_aInfo[0]));
     }
 
-    $this->_sFolder = empty($sFolder) ? $iWidth : $sFolder;
-    $this->_iImageWidth   = $iX;
-    $this->_iImageHeight  = $iY;
+    $this->_iImageWidth   = $iDstX;
+    $this->_iImageHeight  = $iDstY;
+    $this->_sFolder = empty($sFolder) ? $iDim : $sFolder;
 
-    return $this->_createImage($this->_iImageWidth, $this->_iImageHeight, 0, 0);
+    return $this->_createImage(0, 0, $iDstX, $iDstY);
   }
 
 	/**
@@ -190,29 +167,28 @@ class Image {
    *
    */
   public function resizeAndCut($iDim, $sFolder = '') {
-    $iX = $iDim;
-    $iY = $iDim;
-    $iSrcX = 0;
-    $iSrcY = 0;
-
     # Y bigger than X
     if ($this->_aInfo[1] > $this->_aInfo[0]) {
+      $iSrcX = 0;
       $iSrcY = ($this->_aInfo[1] - $this->_aInfo[0]) / 2;
-      $iFactor = $iDim / $this->_aInfo[0];
-      $iY = round($this->_aInfo[1] * $iFactor);
+
+      $iDstX = $iDim;
+      $iDstY = round($this->_aInfo[1] * ($iDim / $this->_aInfo[0]));
     }
 
     # X bigger than Y
     else {
       $iSrcX = ($this->_aInfo[0] - $this->_aInfo[1]) / 2;
-      $iFactor = $iDim / $this->_aInfo[1];
-      $iX = round($this->_aInfo[0] * $iFactor);
+      $iSrcY = 0;
+
+      $iDstX = round($this->_aInfo[0] * ($iDim / $this->_aInfo[1]));
+      $iDstY = $iDim;
     }
 
-    $this->_sFolder = empty($sFolder) ? $iDim : $sFolder;
     $this->_iImageWidth   = $iDim;
     $this->_iImageHeight  = $iDim;
+    $this->_sFolder = empty($sFolder) ? $iDim : $sFolder;
 
-    return $this->_createImage($iX, $iY, $iSrcX, $iSrcY);
+    return $this->_createImage($iSrcX, $iSrcY, $iDstX, $iDstY);
   }
 }

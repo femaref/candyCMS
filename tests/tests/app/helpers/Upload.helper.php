@@ -19,6 +19,7 @@ class UnitTestOfUploadHelper extends CandyUnitTest {
   function setUp() {
     if (!file_exists(TESTFILE))
       touch(TESTFILE);
+
     $file = array(
         'image' => array (
             'name' => 'test.png',
@@ -26,6 +27,7 @@ class UnitTestOfUploadHelper extends CandyUnitTest {
             'type' => 'image/png',
             'error' => 0,
             'size' => 0));
+ 
     $this->oObject = new Upload($this->_aRequest, $this->_aSession, $file);
   }
 

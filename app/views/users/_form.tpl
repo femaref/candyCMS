@@ -188,7 +188,7 @@
         </div>
         <div class='control-group{if isset($error.terms)} alert alert-error{/if}'>
           <label for='input-terms' class='control-label'>
-            {$lang.global.terms.terms}
+            {$lang.global.terms.terms} <span title='{$lang.global.required}'>*</span>
           </label>
           <div class='controls'>
             <label class='checkbox'>

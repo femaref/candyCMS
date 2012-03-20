@@ -24,6 +24,7 @@ final class Recaptcha {
 	 * @var string
 	 * @access protected
 	 * @see config/Plugins.inc.php
+   *
 	 */
 	protected $_sPublicKey = PLUGIN_RECAPTCHA_PUBLIC_KEY;
 
@@ -33,6 +34,7 @@ final class Recaptcha {
 	 * @var string
 	 * @access protected
 	 * @see config/Plugins.inc.php
+   *
 	 */
 	protected $_sPrivateKey = PLUGIN_RECAPTCHA_PRIVATE_KEY;
 
@@ -41,6 +43,7 @@ final class Recaptcha {
 	 *
 	 * @var object
 	 * @access protected
+   *
 	 */
 	protected $_oResponse = '';
 
@@ -49,11 +52,12 @@ final class Recaptcha {
 	 *
 	 * @var string
 	 * @access protected
+   * 
 	 */
 	protected $_sError = '';
 
   /**
-   * Identifier for Template Replacements
+   * Identifier for template replacements
    *
    * @var constant
    *
@@ -91,6 +95,9 @@ final class Recaptcha {
     return self::$_oInstance;
   }
 
+  /**
+   * @todo documentation
+   */
   public function __construct() {
     require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
 

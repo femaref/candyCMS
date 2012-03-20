@@ -57,11 +57,8 @@ class Rss extends Main {
 
 		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
 			$this->oSmarty->assign('data', $oModel->getData());
-			$this->oSmarty->assign('_title_', $this->getTitle());
 		}
 
-
-//		$this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
 		$this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
@@ -91,12 +88,10 @@ class Rss extends Main {
       $this->oSmarty->assign('_locale_', WEBSITE_LOCALE);
       $this->oSmarty->assign('_link_', Helper::removeSlash($aData[$this->_iId]['url']));
       $this->oSmarty->assign('_pubdate_', $aData[$this->_iId]['datetime_rss']);
-      $this->oSmarty->assign('_title_', $this->getTitle());
 
       $this->oSmarty->assign('data', $aData);
     }
 
-//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
     $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
