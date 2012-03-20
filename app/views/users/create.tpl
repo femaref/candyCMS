@@ -74,6 +74,7 @@
                 {$lang.global.terms.read}
               </a>
             </label>
+            {if isset($error.disclaimer)}<span class='help-inline'>{$error.disclaimer}</span>{/if}
           </div>
       </div>
     {/if}

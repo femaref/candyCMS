@@ -39,5 +39,8 @@ class UnitTestOfI18nHelper extends CandyUnitTest {
     $this->assertFalse(I18n::get('test'));
   }
 
-  function testUnsetLanguage() {}
+  function testUnsetLanguage() {
+    I18n::unsetLanguage();
+    $this->assertFalse(isset($_SESSION['lang']));
+  }
 }

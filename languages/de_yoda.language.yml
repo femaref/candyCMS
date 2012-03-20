@@ -198,6 +198,7 @@ error:
       email: Deine E-Mail-Adresse angeben du musst!
       file: Eine Datei zum Hochladen angeben du musst!
       name: Deinen Namen angeben du musst!
+      surname: Geben Sie bitte Ihren Nachnamen an.
       terms: Den Nutzungsbedingungen zustimmen du musst!
       title: Einen Titel angeben du musst!
       password: Ein Passwort angeben du musst!
