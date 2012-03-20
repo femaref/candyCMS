@@ -194,18 +194,17 @@ class Mails extends Main {
     else {
       # Select user name and surname
       $oClass = $this->__autoload('Users', true);
-      $oModel = & new $oClass($this->_aRequest, $this->_aSession);
-      $aRow = $oModel::getUserNamesAndEmail($this->_iId);
+      $sModel = & new $oClass($this->_aRequest, $this->_aSession);
+      $aRow = $sModel::getUserNamesAndEmail($this->_iId);
 
       $sSendersName = isset($this->_aSession['user']['name']) ?
               $this->_aSession['user']['name'] :
               I18n::get('global.system');
 
-      $sSubject = isset($this->_aRequest['subject']) && !empty($this->_aRequest['subject']) ?
+      $sSubject = isset($this->_aRequest['subject']) && $this->_aRequest['subject'] ?
               Helper::formatInput($this->_aRequest['subject']) :
-              str_replace('%u', $sSendersName, I18n::get('mail.subject.by'));
+              str_replace('%u', $sSendersName, I18n::get('mails.subject.by'));
 
-      # Mail to, Subject, Message, Reply to
       $bStatus = Mails::send(isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
 							$sSubject,
 							Helper::formatInput($this->_aRequest['content']),
@@ -231,7 +230,7 @@ class Mails extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
 
-    $this->setTitle(I18n::get('mail.success_page.title'));
+    $this->setTitle(I18n::get('mails.success_page.title'));
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
@@ -245,35 +244,27 @@ class Mails extends Main {
    * @param string $sReplyTo email address the user can reply to
    * @param string $sAttachment path to the attachment
    * @return type
+   * @see lib/phpmailer/class.phpmailer.php
 	 *
    */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
-    require_once 'lib/phpmailer/class.phpmailer.php';
-
-		# Parse message and replace with (footer) variables
-		$sMessage = str_replace('%NOREPLY', I18n::get('mail.body.no_reply'), $sMessage);
-		$sMessage = str_replace('%SIGNATURE', I18n::get('mail.body.signature'), $sMessage);
+		$sMessage = str_replace('%NOREPLY', I18n::get('mails.body.no_reply'), $sMessage);
+		$sMessage = str_replace('%SIGNATURE', I18n::get('mails.body.signature'), $sMessage);
 		$sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
 		$sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
 
-		$sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
-		$sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
-
-    $oMail = & new \PHPMailer(true);
-
-    if (SMTP_ENABLE == true)
-      $oMail->IsSMTP();
-    else
-      $oMail->IsMail();
-
     try {
-      if (SMTP_ENABLE == true) {
+      require_once 'lib/phpmailer/class.phpmailer.php';
+      $oMail = & new \PHPMailer(true);
+
+      if (SMTP_ENABLE === true) {
+        $oMail->IsSMTP();
+
         if (WEBSITE_MODE == 'development') {
           $oMail->SMTPDebug = 1;
           $oMail->SMTPAuth  = false;
         }
         else {
-          # disables SMTP debug information (for testing)
           $oMail->SMTPDebug = 0;
           $oMail->SMTPAuth  = true;
         }
@@ -283,6 +274,8 @@ class Mails extends Main {
         $oMail->Username = SMTP_USER;
         $oMail->Password = SMTP_PASSWORD;
       }
+      else
+        $oMail->IsMail();
 
       $oMail->CharSet = 'utf-8';
       $oMail->AddReplyTo($sReplyTo);
@@ -291,13 +284,14 @@ class Mails extends Main {
       $oMail->Subject = $sSubject;
       $oMail->MsgHTML(nl2br($sMessage));
 
-      if($sAttachment)
+      if ($sAttachment)
         $oMail->AddAttachment($sAttachment);
 
       return $oMail->Send();
     }
-    catch (phpmailerException $e) {
-      return $e->errorMessage();
+    catch (AdvancedException $e) {
+      AdvancedException::writeLog($e->errorMessage());
+      exit('Mail error.');
     }
   }
 }
