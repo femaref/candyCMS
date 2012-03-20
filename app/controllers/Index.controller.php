@@ -167,6 +167,8 @@ class Index {
     return $aPlugins;
   }
 
+
+
   /**
    * Read the routes from Routes.yml and set request params.
 	 *
@@ -531,7 +533,7 @@ class Index {
     $this->_aSession['user'] = self::_resetUser();
 
     foreach ($this->_aPlugins as $sPlugin) {
-      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob')
+      if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob' ||  $sPlugin == 'Recaptcha')
         continue;
 
       $sPluginNamespace = '\CandyCMS\Plugin\Controller\\' . $sPlugin;

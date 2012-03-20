@@ -15,44 +15,9 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
-
-require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
+use CandyCMS\Plugin\Controller\Recaptcha as Recaptcha;
 
 class Mails extends Main {
-
-	/**
-	 * ReCaptcha public key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Candy.inc.php
-	 */
-	protected $_sRecaptchaPublicKey = RECAPTCHA_PUBLIC;
-
-	/**
-	 * ReCaptcha private key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Candy.inc.php
-	 */
-	protected $_sRecaptchaPrivateKey = RECAPTCHA_PRIVATE;
-
-	/**
-	 * ReCaptcha object.
-	 *
-	 * @var object
-	 * @access protected
-	 */
-	protected $_oRecaptchaResponse = '';
-
-	/**
-	 * Provided ReCaptcha error message.
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected $_sRecaptchaError = '';
 
   /**
    * Redirect to admin if no ID is given.
@@ -89,10 +54,9 @@ class Mails extends Main {
 	 *
 	 */
   public function create() {
-    $bShowCaptcha = $this->_aSession['user']['role'] == 0 &&
-							RECAPTCHA_ENABLED === true &&
-							MOBILE === false &&
-							WEBSITE_MODE !== 'test';
+    $bShowCaptcha = class_exists('\CandyCMS\Plugin\Controller\Recaptcha') ?
+                      $this->_aSession['user']['role'] == 0 && SHOW_CAPTCHA :
+                      false;
 
 		if (isset($this->_aRequest['create_mails'])) {
 			return	$this->_create($bShowCaptcha);
@@ -133,8 +97,8 @@ class Mails extends Main {
 										(string) $this->_aRequest['subject'] :
 										'');
 
-		if ($bShowCaptcha === true && RECAPTCHA_ENABLED === true && WEBSITE_MODE !== 'test')
-			$this->oSmarty->assign('_captcha_', recaptcha_get_html($this->_sRecaptchaPublicKey, $this->_sRecaptchaError));
+    if ($bShowCaptcha === true)
+      $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
@@ -144,33 +108,6 @@ class Mails extends Main {
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-  }
-
-	/**
-	 * Check if the entered captcha is correct.
-	 *
-	 * @access protected
-	 * @return boolean status of captcha validation.
-	 *
-	 */
-  protected function _checkCaptcha() {
-    if (isset($this->_aRequest['recaptcha_response_field'])) {
-      $this->_oRecaptchaResponse = recaptcha_check_answer (
-              $this->_sRecaptchaPrivateKey,
-              $_SERVER['REMOTE_ADDR'],
-              $this->_aRequest['recaptcha_challenge_field'],
-              $this->_aRequest['recaptcha_response_field']);
-
-      if ($this->_oRecaptchaResponse->is_valid)
-        return true;
-
-      else {
-        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
-        return Helper::errorMessage(I18n::get('error.captcha.incorrect'));
-      }
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'));
   }
 
 	/**
@@ -185,8 +122,8 @@ class Mails extends Main {
   protected function _create($bShowCaptcha = true) {
 		$this->_setError('content')->_setError('email');
 
-    if ($bShowCaptcha)
-      $this->_checkCaptcha();
+    if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
+      $this->_aError['captcha'] = I18n::get('error.captcha.loading');
 
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);

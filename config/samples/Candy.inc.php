@@ -136,21 +136,6 @@ define('RANDOM_HASH', 'funky but secure md5 hash');
 
 # ------------------------------------------------------------------------------
 
-# To avoid spam, we use reCaptcha (http://www.google.com/recaptcha). Get there,
-# register yourself and get an account
-
-# Do you want to use a captcha? ReCaptcha account required!
-# DEFAULT: true
-define('RECAPTCHA_ENABLED', false);
-
-# Enter given public key:
-define('RECAPTCHA_PUBLIC', '');
-
-# Enter given private key:
-define('RECAPTCHA_PRIVATE', '');
-
-# ------------------------------------------------------------------------------
-
 # Set maximum image/video width (MEDIA_DEFAULT_X) and height (MEDIA_DEFAULT_Y) in px.
 # Larger images and videos will be reseized or scaled down!
 # DEFAULT: 660
