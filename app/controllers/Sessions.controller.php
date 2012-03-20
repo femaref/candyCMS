@@ -121,6 +121,7 @@ class Sessions extends Main {
 	 * @access public
 	 * @return string HTML
    * @todo refactor to two methods
+   * @todo refactor
 	 *
 	 */
 	public function resendPassword() {

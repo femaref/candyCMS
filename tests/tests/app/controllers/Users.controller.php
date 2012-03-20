@@ -136,4 +136,8 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertResponse(200);
 		$this->assertText('"success":false');
   }
+
+  function testVerification() {
+    # @todo
+  }
 }

@@ -43,15 +43,15 @@ class WebTestOfSessionController extends CandyWebTest {
     $this->assertText(I18n::get('error.form.missing.password'));
 
     $this->assertTrue($this->setField('email', 'admin@wrongexample.com'));
-    $this->setField('password', 'test');
+    $this->assertTrue($this->setField('password', 'test'));
 
     # login with wrong input
     $this->clickSubmit(I18n::get('global.login'));
 
     $this->assertText(I18n::get('error.session.create'));
 
-    $this->setField('email', 'admin@example.com');
-    $this->setField('password', 'test');
+    $this->assertTrue($this->setField('email', 'admin@example.com'));
+    $this->assertTrue($this->setField('password', 'test'));
 
     # login with correct input
     $this->click(I18n::get('global.login'));
@@ -70,10 +70,44 @@ class WebTestOfSessionController extends CandyWebTest {
   }
 
   function testResendPassword() {
-    # @todo
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create');
+    $this->assertText(I18n::get('sessions.password.title'));
+    $this->click(I18n::get('sessions.password.title'));
+    $this->assertField('email', '');
+
+    # try to resend without email
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.form.missing.email'));
+
+    $this->assertTrue($this->setField('email', 'this aint an email adress'));
+    # try to resend with wrong email
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.mail.format'));
+
+    $this->assertTrue($this->setField('email', WEBSITE_MAIL));
+    # try to resend with proper email that is not in the system (hopefully)
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.session.account'));
   }
 
-  function testVerification() {
-    # @todo
+  function testResendVerification() {
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create');
+    $this->assertText(I18n::get('sessions.verification.title'));
+    $this->click(I18n::get('sessions.verification.title'));
+    $this->assertField('email', '');
+
+    # try to resend without email
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.form.missing.email'));
+
+    $this->assertTrue($this->setField('email', 'this aint an email adress'));
+    # try to resend with wrong email
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.mail.format'));
+
+    $this->assertTrue($this->setField('email', WEBSITE_MAIL));
+    # try to resend with proper email that is not in the system (hopefully)
+    $this->click(I18n::get('global.submit'));
+    $this->assertText(I18n::get('error.session.account'));
   }
 }
