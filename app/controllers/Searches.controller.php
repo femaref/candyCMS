@@ -33,7 +33,7 @@ class Searches extends Main {
 	 *
 	 */
   protected function _show() {
-    if (!isset($this->_aRequest['search']) || empty($this->_aRequest['search']))
+    if (!isset($this->_aRequest['search']) || !$this->_aRequest['search'])
       return $this->_showFormTemplate();
 
     else {
