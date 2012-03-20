@@ -43,6 +43,7 @@ class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
     $aPaths = $this->oObject->getPaths();
     $aExpectedKeys = array('css', 'less', 'js', 'images', 'public', 'template', 'upload');
     $this->assertEqual(count($aPaths), count($aExpectedKeys));
+
     foreach ($aExpectedKeys as $sKey)
       $this->assertNotNull($aPaths[$sKey]);
   }
