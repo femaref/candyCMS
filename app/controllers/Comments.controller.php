@@ -243,7 +243,7 @@ class Comments extends Main {
               $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_oRecaptchaResponse->is_valid)
-        return $this->_create(true);
+        return true;
 
       else {
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');

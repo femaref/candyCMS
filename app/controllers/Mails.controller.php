@@ -62,7 +62,7 @@ class Mails extends Main {
    */
   public function __init() {
     if (!$this->_iId)
-      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/1');
+      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/1/create');
   }
 
   /**
@@ -73,6 +73,7 @@ class Mails extends Main {
    *
    */
   public function show() {
+    //this still remains since we have no show action right now...
     return $this->create();
   }
 
@@ -88,16 +89,16 @@ class Mails extends Main {
 	 *
 	 */
   public function create() {
-		if (isset($this->_aRequest['create_mail'])) {
-			return	$this->_aSession['user']['role'] == 0 &&
+    $bShowCaptcha = $this->_aSession['user']['role'] == 0 &&
 							RECAPTCHA_ENABLED === true &&
 							MOBILE === false &&
-							WEBSITE_MODE !== 'test' ?
-							$this->_checkCaptcha() :
-							$this->_create(false);
+							WEBSITE_MODE !== 'test';
+
+		if (isset($this->_aRequest['create_mails'])) {
+			return	$this->_create($bShowCaptcha);
 		}
 		else
-			return $this->_showCreateMailTemplate($this->_aSession['user']['role'] == 0 ? true : false);
+			return $this->_showCreateMailTemplate($bShowCaptcha);
 	}
 
 	/**
@@ -149,11 +150,11 @@ class Mails extends Main {
 	 * Check if the entered captcha is correct.
 	 *
 	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 * @return boolean status of captcha validation.
 	 *
 	 */
   protected function _checkCaptcha() {
-    if( isset($this->_aRequest['recaptcha_response_field']) ) {
+    if (isset($this->_aRequest['recaptcha_response_field'])) {
       $this->_oRecaptchaResponse = recaptcha_check_answer (
               $this->_sRecaptchaPrivateKey,
               $_SERVER['REMOTE_ADDR'],
@@ -161,16 +162,15 @@ class Mails extends Main {
               $this->_aRequest['recaptcha_response_field']);
 
       if ($this->_oRecaptchaResponse->is_valid)
-        return $this->_create(true);
+        return true;
 
       else {
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
-        return $this->_showCreateMailTemplate(true);
+        return Helper::errorMessage(I18n::get('error.captcha.incorrect'));
       }
     }
     else
-      return Helper::errorMessage(I18n::get('error.captcha.loading'), '/' .
-              $this->_aRequest['controller'] . '/' . $this->_iId);
+      return Helper::errorMessage(I18n::get('error.captcha.loading'));
   }
 
 	/**
@@ -184,6 +184,9 @@ class Mails extends Main {
 	 */
   protected function _create($bShowCaptcha = true) {
 		$this->_setError('content')->_setError('email');
+
+    if ($bShowCaptcha)
+      $this->_checkCaptcha();
 
 		if (isset($this->_aError))
 			return $this->_showCreateMailTemplate($bShowCaptcha);
