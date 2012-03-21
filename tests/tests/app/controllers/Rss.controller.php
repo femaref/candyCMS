@@ -40,4 +40,22 @@ class WebTestOfRssController extends CandyWebTest {
 		$this->assertText('982e960e18');
 		$this->assertText('782c660e17');
 	}
+
+  function testCreate() {
+    # there is no create
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+    $this->assert404();
+  }
+
+  function testUpdate() {
+    # there is no update
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
+    $this->assert404();
+  }
+
+  function testDestroy() {
+    # there is no destroy
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
+    $this->assert404();
+  }
 }

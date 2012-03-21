@@ -23,6 +23,7 @@ class Errors extends Main {
 	 * @param string $sError error to display
 	 * @return string HTML content
 	 *
+   * @todo send appropriate headers (404)
 	 */
 	protected function _show($sError = '404') {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], $sError);

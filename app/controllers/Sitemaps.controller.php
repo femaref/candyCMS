@@ -80,4 +80,34 @@ class Sitemaps extends Main {
 		$this->oSmarty->assign('contents', $oContents->getData('', false, 1000));
 		$this->oSmarty->assign('galleries', $oGalleries->getData('', false, false, 1000));
 	}
+
+  /**
+   * There is no Create Action for the Sitemap Controller
+   *
+   * @access public
+   * 
+   */
+  public function create() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no Update Action for the Sitemap Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no Destroy Action for the Sitemap Controller
+   *
+   * @access public
+   *
+   */
+  public function destroy() {
+    Helper::redirectTo('/errors/404');
+  }
 }

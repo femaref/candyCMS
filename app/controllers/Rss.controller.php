@@ -96,4 +96,36 @@ class Rss extends Main {
     $this->oSmarty->setTemplateDir($sTemplateDir);
 		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
+
+  /**
+   * There is no Create Action for the RSS Controller
+   * This rule is obsolete since there is a route 'rss/(:alpha)' but that might change to 'rss/galleries'
+   *
+   * @access public
+   *
+   */
+  public function create() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no Update Action for the RSS Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no Destroy Action for the RSS Controller
+   *
+   * @access public
+   *
+   */
+  public function destroy() {
+    Helper::redirectTo('/errors/404');
+  }
+
 }

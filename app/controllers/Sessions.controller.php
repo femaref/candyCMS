@@ -52,7 +52,7 @@ class Sessions extends Main {
       default:
       case 'show':
 
-        return $this->_showFormTemplate();
+        return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
 
         break;
     }
@@ -245,6 +245,7 @@ class Sessions extends Main {
    *
    * @access public
    * @return boolean status of model action
+   * @todo refactor to two methods?
    *
    */
   public function destroy() {
@@ -265,5 +266,15 @@ class Sessions extends Main {
 
     else
       return Helper::errorMessage(I18n::get('error.sql'), '/');
+  }
+
+  /**
+   * There is no Update Action for the Sessions Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
   }
 }

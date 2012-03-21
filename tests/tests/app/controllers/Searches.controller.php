@@ -28,12 +28,12 @@ class WebTestOfSearchController extends CandyWebTest {
 	}
 
 	function testShow() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
-		$this->assertResponse(200);
-		$this->assertText(I18n::get('global.search'));
-	}
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('global.search'));
+  }
 
-	function testSearch() {
+  function testSearch() {
     # test the form
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
     $this->assertField('search', '');
@@ -50,4 +50,19 @@ class WebTestOfSearchController extends CandyWebTest {
 		$this->assertResponse(200);
 		$this->assertText('(1)');
   }
+
+  function testDestroy() {
+    #destroy action should search instead
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('global.search'));
+  }
+
+  function testUpdate() {
+    #update action should search instead
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('global.search'));
+  }
+
 }
