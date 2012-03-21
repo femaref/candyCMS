@@ -2,7 +2,7 @@
   <div class='page-header'>
     <h1>{$lang.global.contact} {$contact.name} {$contact.surname}</h1>
   </div>
-  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.id}/create'
+  <form method='post' action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}create'
         id='create_mail' class='form-horizontal'>
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
