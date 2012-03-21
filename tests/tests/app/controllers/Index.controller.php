@@ -116,8 +116,7 @@ class WebTestOfIndexController extends CandyWebTest {
 
 	function testShowNonExistingPage() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . md5(RANDOM_HASH)));
-		$this->assertResponse(200);
-		$this->assertText('404');
+		$this->assert404();
 	}
 
 	function testShowSampleAddon() {

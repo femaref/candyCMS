@@ -60,4 +60,24 @@ class Logs extends Main {
 
     return \CandyCMS\Model\Logs::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
   }
+
+  /**
+   * There is no create Action for the sitemaps Controller
+   *
+   * @access public
+   *
+   */
+  public function create() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no update Action for the sitemaps Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
 }

@@ -27,9 +27,28 @@ class WebTestOfErrorController extends CandyWebTest {
 		parent::tearDown();
 	}
 
-	function testShow404() {
+	function testShow() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+    $this->assert404();
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/404'));
-		$this->assertResponse(200);
-		$this->assertText(I18n::get('error.404.title'));
+		$this->assert404();
 	}
+
+  function testCreate() {
+    # there is no create
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+    $this->assert404();
+  }
+
+  function testUpdate() {
+    # there is no update
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
+    $this->assert404();
+  }
+
+  function testDestroy() {
+    # there is no destroy
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
+    $this->assert404();
+  }
 }

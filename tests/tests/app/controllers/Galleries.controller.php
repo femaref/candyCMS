@@ -9,7 +9,6 @@
  * @since 2.0
  *
  */
-
 require_once PATH_STANDARD . '/app/controllers/Galleries.controller.php';
 
 use \CandyCMS\Controller\Galleries as Galleries;
@@ -17,46 +16,84 @@ use \CandyCMS\Helper\I18n as I18n;
 
 class WebTestOfGalleryController extends CandyWebTest {
 
-	function setUp() {
-		$this->aRequest['controller'] = 'galleries';
-	}
+  function setUp() {
+    $this->aRequest['controller'] = 'galleries';
+  }
 
-	function tearDown() {
-		parent::tearDown();
-	}
+  function tearDown() {
+    parent::tearDown();
+  }
 
-	function testShow() {
+  function testShow() {
     # Show overview
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
-		$this->assertResponse(200);
-		$this->assertText('6dffc4c552');
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+    $this->assertResponse(200);
+    $this->assertText('6dffc4c552');
 
     # Show album
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
-		$this->assertResponse(200);
-		$this->assertText('982e960e18');
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
+    $this->assertResponse(200);
+    $this->assertText('982e960e18');
 
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/6dffc4c552'));
-		$this->assertResponse(200);
-		$this->assertText('982e960e18');
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/6dffc4c552'));
+    $this->assertResponse(200);
+    $this->assertText('982e960e18');
 
     # Show image
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/image/1'));
-		$this->assertResponse(200);
-		$this->assertText('782c660e17');
-	}
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/image/1'));
+    $this->assertResponse(200);
+    $this->assertText('782c660e17');
+  }
 
-	function testDirIsWritable() {
-		$sFile = PATH_STANDARD . '/upload/' . $this->aRequest['controller'] . '/test.log';
-		$oFile = fopen($sFile, 'a');
-		fwrite($oFile, 'Is writeable.' . "\n");
-		fclose($oFile);
+  function testDirIsWritable() {
+    $sFile = PATH_STANDARD . '/upload/' . $this->aRequest['controller'] . '/test.log';
+    $oFile = fopen($sFile, 'a');
+    fwrite($oFile, 'Is writeable.' . "\n");
+    fclose($oFile);
 
-		$this->assertTrue(file_exists($sFile));
-		$this->assertTrue(unlink($sFile));
-	}
+    $this->assertTrue(file_exists($sFile));
+    $this->assertTrue(unlink($sFile));
+  }
 
-  /**
-   * @todo create / update / destroy tests
-   */
+  function testCreate() {
+    # there is no create
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
+
+  function testUpdate() {
+    # there is no update
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
+
+  function testDestroy() {
+    # there is no destroy
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
+
+  function testCreateFile() {
+    # there is no create
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/createfile'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
+
+  function testUpdateFile() {
+    # there is no update
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/updatefile'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
+
+  function testDestroyFile() {
+    # there is no destroy
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroyfile'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+  }
 }

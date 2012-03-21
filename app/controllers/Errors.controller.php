@@ -32,4 +32,34 @@ class Errors extends Main {
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
 	}
+
+  /**
+   * There is no create Action for the errors Controller
+   *
+   * @access public
+   *
+   */
+  public function create() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no update Action for the errors Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no destroy Action for the errors Controller
+   *
+   * @access public
+   *
+   */
+  public function destroy() {
+    Helper::redirectTo('/errors/404');
+  }
 }

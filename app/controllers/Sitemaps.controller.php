@@ -82,17 +82,17 @@ class Sitemaps extends Main {
 	}
 
   /**
-   * There is no Create Action for the Sitemap Controller
+   * There is no create Action for the sitemaps Controller
    *
    * @access public
-   * 
+   *
    */
   public function create() {
     Helper::redirectTo('/errors/404');
   }
 
   /**
-   * There is no Update Action for the Sitemap Controller
+   * There is no update Action for the sitemaps Controller
    *
    * @access public
    *
@@ -102,7 +102,7 @@ class Sitemaps extends Main {
   }
 
   /**
-   * There is no Destroy Action for the Sitemap Controller
+   * There is no destroy Action for the sitemaps Controller
    *
    * @access public
    *

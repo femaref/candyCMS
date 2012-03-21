@@ -7,8 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- *
- * @todo recaptcha for registration?
  */
 
 namespace CandyCMS\Controller;
