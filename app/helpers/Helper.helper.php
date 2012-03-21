@@ -267,7 +267,7 @@ class Helper {
 		}
 		catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
-			exit($e->getMessage());
+//			exit($e->getMessage());
 		}
 	}
 
