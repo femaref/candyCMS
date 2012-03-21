@@ -71,8 +71,7 @@ class Helper {
       header('HTTP/1.0 404 Not Found');
     }
 
-    header('Location:' . $sUrl);
-    exit();
+    exit(header('Location:' . $sUrl));
   }
 
   /**
@@ -232,7 +231,6 @@ class Helper {
     elseif ($iSize >= 1073741824)
       return round(($iSize / 1073741824), 2) . ' GB';
 
-    #elseif($iSize > 0)
     else
       return round($iSize, 2) . ' Byte';
   }
@@ -268,7 +266,8 @@ class Helper {
 			}
 		}
 		catch (AdvancedException $e) {
-			$e->getMessage();
+      AdvancedException::reportBoth($e->getMessage());
+			exit($e->getMessage());
 		}
 	}
 
@@ -292,8 +291,9 @@ class Helper {
 			else
 				return $sFile . '.tpl';
 		}
-		catch (Exception $e) {
-			$e->getMessage();
+		catch (AdvancedException $e) {
+      AdvancedException::reportBoth($e->getMessage());
+			exit($e->getMessage());
 		}
 	}
 
@@ -322,8 +322,9 @@ class Helper {
 					return PATH_STANDARD . '/plugins/' . ucfirst($sFolder) . '/views';
 			}
 		}
-		catch (Exception $e) {
-			$e->getMessage();
+		catch (AdvancedException $e) {
+      AdvancedException::reportBoth($e->getMessage());
+			exit($e->getMessage());
 		}
 	}
 
@@ -345,9 +346,10 @@ class Helper {
       if ($bDisableHTML === true)
         $sStr = & htmlspecialchars($sStr);
     }
-    catch (AdvancedException $e) {
+		catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
-    }
+			exit($e->getMessage());
+		}
 
     # Fix quotes to avoid problems with inputs
     return trim(str_replace('"', "&quot;", $sStr));

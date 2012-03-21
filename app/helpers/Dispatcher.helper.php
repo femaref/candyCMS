@@ -47,7 +47,7 @@ class Dispatcher {
    *
    */
   public function getController() {
-    $sController = & ucfirst(strtolower((string) $this->_aRequest['controller']));
+    $sController = ucfirst(strtolower((string) $this->_aRequest['controller']));
 
     try {
       # Are addons for existing controllers available? If yes, use them.
@@ -77,7 +77,6 @@ class Dispatcher {
     catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
       Helper::redirectTo('/errors/404');
-      exit('Controller not found.');
     }
 
     $this->oController->__init();
