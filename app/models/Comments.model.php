@@ -234,9 +234,14 @@ class Comments extends Main {
   }
 
   /**
-   * @todo documentaton
+   * Return the parent ID of a comment.
+   *
+   * @static
+   * @access public
+   * @param integer $iId comment ID to get data from
+   * @return integer $aResult['parent_id']
    * @todo test
-   * @param type $iId
+   *
    */
   public static function getParentId($iId) {
     if (empty(parent::$_oDbStatic))

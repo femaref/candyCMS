@@ -73,7 +73,7 @@ class Newsletters extends Main {
   }
 
   /**
-   * There is no Update Action for the Newsletters Controller
+   * There is no update action for the newsletters controller.
    *
    * @access public
    *
@@ -83,7 +83,7 @@ class Newsletters extends Main {
   }
 
   /**
-   * There is no Destroy Action for the Newsletters Controller
+   * There is no destroy action for the newsletters controller.
    *
    * @access public
    *
@@ -91,5 +91,4 @@ class Newsletters extends Main {
   public function destroy() {
     Helper::redirectTo('/errors/404');
   }
-
 }

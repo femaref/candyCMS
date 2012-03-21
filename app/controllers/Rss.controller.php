@@ -98,7 +98,7 @@ class Rss extends Main {
   }
 
   /**
-   * There is no Create Action for the RSS Controller
+   * There is no create action for the RSS controller.
    * This rule is obsolete since there is a route 'rss/(:alpha)' but that might change to 'rss/galleries'
    *
    * @access public
@@ -109,7 +109,7 @@ class Rss extends Main {
   }
 
   /**
-   * There is no Update Action for the RSS Controller
+   * There is no update action for the RSS controller.
    *
    * @access public
    *
@@ -119,7 +119,7 @@ class Rss extends Main {
   }
 
   /**
-   * There is no Destroy Action for the RSS Controller
+   * There is no destroy action for the RSS controller.
    *
    * @access public
    *
@@ -127,5 +127,4 @@ class Rss extends Main {
   public function destroy() {
     Helper::redirectTo('/errors/404');
   }
-
 }

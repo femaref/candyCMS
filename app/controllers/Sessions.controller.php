@@ -169,18 +169,16 @@ class Sessions extends Main {
   }
 
   /**
-   * Resend verification or show Form.
+   * Resend verification or show form.
    *
    * @access public
    * @return string HTML
    *
    */
   public function resendVerification() {
-    if (isset($this->_aRequest['email']))
-      return $this->_resendVerification();
-
-    else
-      return $this->_showCreateResendActionsTemplate();
+    return isset($this->_aRequest['email']) ?
+            $this->_resendVerification() :
+            $this->_showCreateResendActionsTemplate();
   }
 
   /**
@@ -241,6 +239,16 @@ class Sessions extends Main {
   }
 
   /**
+   * There is no update action for the sessions controller.
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
    * Destroy user session.
    *
    * @access public
@@ -266,15 +274,5 @@ class Sessions extends Main {
 
     else
       return Helper::errorMessage(I18n::get('error.sql'), '/');
-  }
-
-  /**
-   * There is no Update Action for the Sessions Controller
-   *
-   * @access public
-   *
-   */
-  public function update() {
-    Helper::redirectTo('/errors/404');
   }
 }

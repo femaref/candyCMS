@@ -116,33 +116,31 @@ class Sessions extends Main {
 	}
 
 	/**
-	 * Resend password.
-	 *
-	 * @access public
-	 * @param string $sPassword new password if we want to resend it
-	 * @return boolean|array status of query or user array
-   * @todo look for addons at model
-	 *
-	 */
-	public function resendPassword($sPassword = '') {
-    $this->__autoload('Users', true);
-		$aData = Users::getVerificationData($this->_aRequest['email']);
-		return empty($aData['name']) ? false : Users::setPassword($this->_aRequest['email'], $sPassword);
-	}
+   * Resend password.
+   *
+   * @access public
+   * @param string $sPassword new password if we want to resend it
+   * @return boolean|array status of query or user array
+   *
+   */
+  public function resendPassword($sPassword = '') {
+    $sModel = $this->__autoload('Users');
+    $aData = $sModel::getVerificationData($this->_aRequest['email']);
+    return empty($aData['name']) ? false : Users::setPassword($this->_aRequest['email'], $sPassword);
+  }
 
-	/**
-	 * Resend verification.
-	 *
-	 * @access public
-	 * @return boolean|array status of query or user array
-   * @todo look at addons for model
-	 *
-	 */
-	public function resendVerification() {
-    $this->__autoload('Users', true);
-		$aData = Users::getVerificationData($this->_aRequest['email']);
-		return empty($aData['verification_code']) ? false : $aData;
-	}
+  /**
+   * Resend verification.
+   *
+   * @access public
+   * @return boolean|array status of query or user array
+   *
+   */
+  public function resendVerification() {
+    $sModel = $this->__autoload('Users');
+    $aData = $sModel::getVerificationData($this->_aRequest['email']);
+    return empty($aData['verification_code']) ? false : $aData;
+  }
 
 	/**
    * Destroy a user session and logout.

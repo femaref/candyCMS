@@ -8,8 +8,6 @@
  * @license MIT
  * @since 1.0
  *
- * @todo small pictures (32,64) seem to fail (meaning having wrong offset) when uploading as avatar
- *
  */
 
 namespace CandyCMS\Helper;

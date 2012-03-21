@@ -484,7 +484,9 @@ class Users extends Main {
 
 				# Prepare for first login
 				$this->_aData['verification_code'] = '';
-				Sessions::create($this->_aData);
+
+        $sModel = $this->__autoload('Sessions');
+        $sModel::create($this->_aData);
 
 				return $oQuery->execute();
 			}
