@@ -1,18 +1,10 @@
 # Define the landing page
 "/": blogs
 
-# Shared behaviour
-"(:alpha)/?": controller=$1&page=1
-"(:alpha)/page/(:num)": controller=$1&page=$2
-"(:alpha)/(create|update|destroy)": controller=$1&action=$2
-"(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
-"(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
-
 # Special behaviour
 "blogs/(:num)(/(:any))?": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
 "comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2
-"galleries": controller=galleries&page=1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
 "language/(:alpha)": language=$1
@@ -27,6 +19,13 @@
 "users/(:num)/token": controller=users&action=token&id=$1&ajax=1
 "users/(:alnum)/verification": controller=users&action=verification&code=$1
 "users/(:num)/(:alpha)": controller=users&action=$2&id=$1
+
+# Shared behaviour
+"(:alpha)/?": controller=$1&page=1
+"(:alpha)/page/(:num)": controller=$1&page=$2
+"(:alpha)/(create|update|destroy)": controller=$1&action=$2
+"(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
+"(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
 
 # Magic rule
 "(:alpha)/(:num)": controller=$1&id=$2
