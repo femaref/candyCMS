@@ -34,10 +34,13 @@ class WebTestOfSearchController extends CandyWebTest {
 	}
 
 	function testSearch() {
-		$this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
-				'search' => md5(RANDOM_HASH)
-		));
+    # test the form
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+    $this->assertField('search', '');
 
+    # search for md5(Random_Hash)
+    $this->assertTrue($this->setField('search', md5(RANDOM_HASH)));
+    $this->click(I18n::get('global.search'));
 		$this->assertText(md5(RANDOM_HASH));
 		$this->assertResponse(200);
 	}
