@@ -112,14 +112,14 @@ abstract class Main {
   }
 
   /**
-   * Connect to database.
+   * Get a Singleton database PDO Object.
    *
    * @static
-   * @access protected
+   * @access public
    * @return object PDO
    *
    */
-  protected static function _connectToDatabase() {
+  public static function _connectToDatabase() {
 		if (empty(self::$_oDbStatic)) {
 			try {
 				self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE,
@@ -142,10 +142,11 @@ abstract class Main {
    * Disconnect from database.
    *
    * @static
+   * @access public
    * @return boolean
    *
    */
-  protected static function _disconnectFromDatabase() {
+  public static function _disconnectFromDatabase() {
     return self::$_oDbStatic = null;
   }
 

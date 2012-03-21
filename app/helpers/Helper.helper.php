@@ -429,17 +429,13 @@ class Helper {
 	 * @access public
 	 * @param string $sTable table to fetch data from
 	 * @return integer latest ID
-   *
-   * @todo really create new PDO?
 	 *
 	 */
   public static function getLastEntry($sTable) {
 		try {
-			$oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
-			$oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$oDb = \CandyCMS\Model\Main::_connectToDatabase();
 			$oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
 			$aRow = $oQuery->fetch();
-			$oDb = null;
 
 			return $aRow['id'];
 		}
