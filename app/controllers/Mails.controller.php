@@ -225,4 +225,24 @@ class Mails extends Main {
       exit('Mail error.');
     }
   }
+
+  /**
+   * There is no update Action for the mails Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no destroy Action for the mails Controller
+   *
+   * @access public
+   *
+   */
+  public function destroy() {
+    Helper::redirectTo('/errors/404');
+  }
 }

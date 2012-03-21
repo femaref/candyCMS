@@ -46,7 +46,7 @@
             </a>
             {if $_SESSION.user.role >= 3}
               &nbsp;
-              <a href="#" onclick="confirmDestroy('/comments/{$c.id}/destroy/{$c.parent_id}')">
+              <a href="#" onclick="confirmDestroy('/comments/{$c.id}/destroy')">
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-destroy js-tooltip'
                     alt='{$lang.global.destroy.destroy}'
