@@ -30,6 +30,10 @@ class Downloads extends Main {
     if ($this->_iId) {
       $sFile = $this->_oModel->getFileName($this->_iId);
 
+      # if file not found, redirect user to overview
+      if (!$sFile)
+        return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
+
       # Update download count
       $this->_oModel->updateDownloadCount($this->_iId);
 
