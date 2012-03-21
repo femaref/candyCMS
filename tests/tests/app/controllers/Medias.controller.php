@@ -40,13 +40,13 @@ class WebTestOfMediaController extends CandyWebTest {
 	}
 
 	function testUpdate() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/update'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
 		$this->assertText(I18n::get('error.missing.permission'));
 		$this->assertResponse('200');
 	}
 
 	function testDestroy() {
-		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy'));
+		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
 		$this->assertText(I18n::get('error.missing.permission'));
 		$this->assertResponse('200');
 	}
