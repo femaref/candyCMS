@@ -2,10 +2,10 @@
 "/": blogs
 
 # Special behaviour
-"blogs/(:num)/(create|update|destroy)": controller=blogs&id=$1&action=$2&page=1
+"blogs/(:num)/(update|destroy)": controller=blogs&id=$1&action=$2&page=1
 "blogs/(:num)(/[\d\w]+)?": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
-"comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1&parent_id=$2
+"comments/(:num)/destroy/(:num)": controller=comments&action=destroy&id=$1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
 "language/(:alpha)": language=$1
@@ -23,8 +23,8 @@
 # Shared behaviour
 "(:alpha)/?": controller=$1&page=1
 "(:alpha)/page/(:num)": controller=$1&page=$2
-"(:alpha)/(create|update|destroy)": controller=$1&action=$2
-"(:alpha)/(:num)/(create|update|destroy)": controller=$1&id=$2&action=$3
+"(:alpha)/create": controller=$1&action=create
+"(:alpha)/(:num)/(update|destroy)": controller=$1&id=$2&action=$3
 "(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
 
 # Magic rule
