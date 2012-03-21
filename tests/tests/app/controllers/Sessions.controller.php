@@ -26,9 +26,10 @@ class WebTestOfSessionController extends CandyWebTest {
   }
 
   function testShow() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/sessions'));
-    $this->assertNoText(I18n::get('error.standard'));
-    $this->assertResponse('200');
+    # for now, this should be a redirect
+    $this->setMaximumRedirects(0);
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller']);
+    $this->assertResponse(302);
   }
 
   function testCreate() {
@@ -110,4 +111,10 @@ class WebTestOfSessionController extends CandyWebTest {
     $this->click(I18n::get('global.submit'));
     $this->assertText(I18n::get('error.session.account'));
   }
+
+  function testUpdate() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
+    $this->assert404();
+  }
+
 }

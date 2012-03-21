@@ -25,7 +25,7 @@ class Newsletters extends Main {
    *
    */
   public function show() {
-    return $this->create('subscribe_newsletter', 0);
+    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
   }
 
   /**
@@ -66,9 +66,30 @@ class Newsletters extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $this->setTitle(I18n::get('newsletters.title.subscribe'))
-            ->setDescription(I18n::get('newsletters.description.subscribe'));
+    $this->setTitle(I18n::get('newsletters.title.subscribe'));
+    $this->setDescription(I18n::get('newsletters.description.subscribe'));
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
+
+  /**
+   * There is no Update Action for the Newsletters Controller
+   *
+   * @access public
+   *
+   */
+  public function update() {
+    Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * There is no Destroy Action for the Newsletters Controller
+   *
+   * @access public
+   *
+   */
+  public function destroy() {
+    Helper::redirectTo('/errors/404');
+  }
+
 }

@@ -11,7 +11,6 @@
 "language/(:alpha)": language=$1
 "mails/(:num)/ajax": controller=mails&id=$1&ajax=1
 "medias/(:any)/destroy": controller=medias&action=destroy&file=$1
-"rss/(:alpha)": controller=rss&section=$1
 "rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
 "searches/(:any)": controller=searches&search=$1
 "sessions/(password|verification)": controller=sessions&action=$1

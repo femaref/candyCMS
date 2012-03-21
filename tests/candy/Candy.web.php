@@ -54,4 +54,9 @@ abstract class CandyWebTest extends WebTestCase {
 	function removeFile($sPath) {
 		return unlink(PATH_STANDARD . '/' . $sPath . '/test_generated.log');
 	}
+
+  function assert404() {
+    $this->assertText(\CandyCMS\Helper\I18n::get('error.404.title'));
+    # $this->assertResponse(404);
+  }
 }
