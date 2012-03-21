@@ -232,4 +232,34 @@ class Comments extends Main {
       exit('SQL error.');
     }
   }
+
+  /**
+   * @todo documentaton
+   * @todo test
+   * @param type $iId
+   */
+  public static function getParentId($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::_connectToDatabase();
+
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                                parent_id
+                                              FROM
+                                                " . SQL_PREFIX . "comments
+                                              WHERE
+                                                id = :id
+                                              LIMIT 1");
+
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->execute();
+
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $aResult['parent_id'];
+    }
+    catch (\PDOException $p) {
+      AdvancedException::reportBoth('0103 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
+  }
 }

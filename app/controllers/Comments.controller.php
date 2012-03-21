@@ -28,6 +28,7 @@ class Comments extends Main {
   public function __init($aParentData = '') {
     $oModel = $this->__autoload('Comments', true);
     $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
+
 		$this->_aParentData = & $aParentData;
 	}
 
@@ -162,7 +163,7 @@ class Comments extends Main {
    *
    */
   protected function _destroy() {
-    $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'];
+    $sRedirect = '/blogs/' . $this->_oModel->getParentId((int) $this->_aRequest['id']);
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
       $this->oSmarty->clearCacheForController('blogs');

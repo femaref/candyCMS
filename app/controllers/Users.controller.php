@@ -125,12 +125,6 @@ class Users extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
-		# Avoid URL manipulation
-		if ($this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] < 4) {
-			Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
-			exit();
-		}
-
 		# Set user id of person to update
 		$iId =	$this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4 ?
             $this->_iId :
@@ -361,14 +355,11 @@ class Users extends Main {
 	 *
 	 */
 	public function update() {
-    if ($this->_iId > 0 && $this->_aSession['user']['id'] == $this->_iId && !isset($this->_aRequest['update_users']))
-      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/update');
-
-    if (empty($this->_iId))
-      $this->_iId = $this->_aSession['user']['id'];
-
     if ($this->_aSession['user']['id'] == 0)
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions');
+
+    elseif ($this->_aSession['user']['id'] !== $this->_iId && $this->_aSession['user']['role'] < 4)
+      return Helper::errorMessage(I18n::get('error.missing.permission'));
 
     else
       return isset($this->_aRequest['update_users']) ? $this->_update() : $this->_showFormTemplate();
