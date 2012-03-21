@@ -65,9 +65,8 @@ class WebTestOfSessionController extends CandyWebTest {
   }
 
   function testDestroy() {
-    $this->setMaximumRedirects(0);
     $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy');
-    $this->assertResponse('302');
+    $this->assertResponse('200');
   }
 
   function testResendPassword() {
@@ -116,5 +115,4 @@ class WebTestOfSessionController extends CandyWebTest {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
     $this->assert404();
   }
-
 }

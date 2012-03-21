@@ -12,7 +12,7 @@
 "medias/(:any)/destroy": controller=medias&action=destroy&file=$1
 "rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
 "searches/(:any)": controller=searches&search=$1
-"sessions/(password|verification)": controller=sessions&action=$1
+"sessions/(password|verification|destroy)": controller=sessions&action=$1
 "sites/(:alnum)": controller=sites&site=$1
 "sitemap.xml": controller=sitemaps&action=xml&ajax=1
 "users/(:num)/token": controller=users&action=token&id=$1&ajax=1
