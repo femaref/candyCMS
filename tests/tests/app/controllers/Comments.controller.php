@@ -60,10 +60,6 @@ class WebTestOfCommentController extends CandyWebTest {
 	}
 
 	function testDestroy() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/comments/1/destroy/1'));
-    $this->assertText(I18n::get('error.missing.permission'));
-    $this->assertResponse(200);
-
     $this->assertTrue($this->get(WEBSITE_URL . '/comments/1/destroy'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);

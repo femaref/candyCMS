@@ -56,42 +56,36 @@ class WebTestOfGalleryController extends CandyWebTest {
   }
 
   function testCreate() {
-    # there is no create
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
   }
 
   function testUpdate() {
-    # there is no update
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
   }
 
   function testDestroy() {
-    # there is no destroy
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
   }
 
   function testCreateFile() {
-    # there is no create
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/createfile'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
   }
 
   function testUpdateFile() {
-    # there is no update
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/updatefile'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
   }
 
   function testDestroyFile() {
-    # there is no destroy
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroyfile'));
     $this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
