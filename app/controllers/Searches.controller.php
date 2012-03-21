@@ -34,7 +34,7 @@ class Searches extends Main {
 	 */
   protected function _show() {
     if (!isset($this->_aRequest['search']) || !$this->_aRequest['search'])
-      return $this->_showFormTemplate();
+      return $this->_create();
 
     else {
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
@@ -54,6 +54,18 @@ class Searches extends Main {
     }
   }
 
+  /**
+   * show the search form, this is a create action since it creates a new search.
+   *
+   * @access protected
+   * @return string HTML content.
+   *
+   */
+  protected function _create() {
+    $this->oSmarty->setCaching(false);
+    return $this->_formTemplate();
+  }
+
 	/**
 	 * Provide a search form template.
 	 *
@@ -61,7 +73,7 @@ class Searches extends Main {
 	 * @return string HTML content
 	 *
 	 */
-  protected function _showFormTemplate() {
+  protected function _formTemplate() {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
