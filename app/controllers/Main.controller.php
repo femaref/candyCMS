@@ -395,8 +395,8 @@ abstract class Main {
 	 *
 	 */
 	protected function _setError($sField, $sMessage = '') {
-    if ($sField === 'file') {
-      if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name'][0]))
+    if ($sField === 'file' || $sField === 'image') {
+      if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name']))
           $this->_aError[$sField] = $sMessage ?
                 $sMessage :
                 I18n::get('error.form.missing.file');
