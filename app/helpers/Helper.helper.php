@@ -69,9 +69,14 @@ class Helper {
     if ($sUrl == '/errors/404') {
       header('Status: 404 Not Found');
       header('HTTP/1.0 404 Not Found');
-    }
 
-    exit(header('Location:' . $sUrl));
+      $bIsCrawler = defined('CRAWLERS') ? (preg_match('/'.CRAWLERS.'/', $_SERVER['HTTP_USER_AGENT']) > 0) : false;
+      if (!$bIsCrawler)
+        exit(header('Location:' . $sUrl));
+    }
+    else
+
+      exit(header('Location:' . $sUrl));
   }
 
   /**
