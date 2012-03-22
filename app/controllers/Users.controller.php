@@ -15,6 +15,7 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Helper\Upload as Upload;
+use CandyCMS\Plugin\Controller\Recaptcha as Recaptcha;
 
 class Users extends Main {
 
@@ -242,8 +243,15 @@ class Users extends Main {
 	 *
 	 */
 	public function create() {
-		return isset($this->_aRequest['create_users']) ? $this->_create() : $this->_showCreateUserTemplate();
-	}
+    #logged in users should not have a recaptcha field since we can assume that these are real humans
+    $bShowCaptcha = class_exists('\CandyCMS\Plugin\Controller\Recaptcha') ?
+            $this->_aSession['user']['role'] == 0 && SHOW_CAPTCHA :
+            false;
+
+    return isset($this->_aRequest['create_users']) ?
+            $this->_create($bShowCaptcha) :
+            $this->_showCreateUserTemplate($bShowCaptcha);
+  }
 
 	/**
 	 * Create a user.
@@ -255,7 +263,7 @@ class Users extends Main {
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
 	 *
 	 */
-	protected function _create() {
+	protected function _create($bShowCaptcha) {
 		$this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
 
 		if ($this->_oModel->getExistingUser($this->_aRequest['email']))
@@ -268,8 +276,8 @@ class Users extends Main {
 		if ($this->_aSession['user']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
       $this->_aError['disclaimer'] = I18n::get('error.form.missing.terms');
 
-    # Generate verification code for users (double-opt-in) when not created by admin.
-    $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
+    if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
 
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
@@ -277,6 +285,9 @@ class Users extends Main {
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       # @todo clearCache?
       $this->__autoload('Mails');
+
+      # Generate verification code for users (double-opt-in) when not created by admin.
+      $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
@@ -314,7 +325,7 @@ class Users extends Main {
 	 * @return string HTML content
 	 *
 	 */
-	protected function _showCreateUserTemplate() {
+	protected function _showCreateUserTemplate($bShowCaptcha) {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
@@ -325,6 +336,7 @@ class Users extends Main {
       $this->setTitle(I18n::get('global.registration'));
       $this->setDescription(I18n::get('users.description.create'));
 
+    if ($bShowCaptcha) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
 		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
 										Helper::formatInput($this->_aRequest['name']) :
