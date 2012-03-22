@@ -282,15 +282,15 @@ class Users extends Main {
     if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
 
+    # Generate verification code for users (double-opt-in) when not created by admin.
+    $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
+
 		if (isset($this->_aError))
 			return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       # @todo clearCache?
       $this->__autoload('Mails');
-
-      # Generate verification code for users (double-opt-in) when not created by admin.
-      $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
