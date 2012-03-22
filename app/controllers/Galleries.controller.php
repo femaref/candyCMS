@@ -64,7 +64,7 @@ class Galleries extends Main {
   }
 
   /**
-   * Show gallery album or album overview (depends on a given ID or not).
+   * Show image, gallery album or overview (depends on a given ID and album_id).
    *
    * @access protected
    * @return string HTML content
@@ -72,74 +72,100 @@ class Galleries extends Main {
    */
   protected function _show() {
     # Album images
-    if ($this->_iId && !isset($this->_aRequest['album_id'])) {
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'files');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'files');
-
-      # Collect data array
-      $sAlbumName					= $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
-      $sAlbumDescription	= $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
-
-      $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
-      $this->setDescription($this->_removeHighlight($sAlbumDescription));
-
-			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$aData = $this->_oModel->getThumbs($this->_iId);
-
-				$this->oSmarty->assign('files', $aData);
-				$this->oSmarty->assign('file_no', count($aData));
-				$this->oSmarty->assign('gallery_name', $sAlbumName);
-				$this->oSmarty->assign('gallery_content', $sAlbumDescription);
-			}
-
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-    }
+    if ($this->_iId && !isset($this->_aRequest['album_id'])) $this->_showAlbum();
 
     # Specific image
-    elseif ($this->_iId && isset($this->_aRequest['album_id'])) {
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'image');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'image');
-
-			$aData = $this->_oModel->getFileData($this->_iId);
-
-      # Absolute URL for image information
-      $sUrl = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['album_id'] .
-              '/popup/' . $aData['file']);
-
-      if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
-        # Get image information
-        $aImageInfo = getimagesize($sUrl);
-
-        $aData['url']    = Helper::addSlash($sUrl);
-        $aData['width']  = $aImageInfo[0];
-        $aData['height'] = $aImageInfo[1];
-
-        $this->oSmarty->assign('i', $aData);
-
-        $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
-        $this->setDescription($aData['content']);
-
-        $this->oSmarty->setTemplateDir($sTemplateDir);
-        return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-      }
-      else
-        Helper::redirectTo('/errors/404');
-    }
+    elseif ($this->_iId && isset($this->_aRequest['album_id'])) return $this->_showImage();
 
     # Album overview
-    else {
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'albums');
+    else return $this->_showOverview();
+  }
 
-			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-				$this->oSmarty->assign('albums', $this->_oModel->getData());
-				$this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
-			}
+  /**
+   * Show Overview of Albums.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
+  protected function _showOverview() {
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'albums');
 
-			$this->oSmarty->setTemplateDir($sTemplateDir);
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $this->oSmarty->assign('albums', $this->_oModel->getData());
+      $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/' . $this->_aRequest['controller']));
+    }
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+  }
+
+  /**
+   * Show Overview of Images in one Album.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
+  protected function _showAlbum() {
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'files');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'files');
+
+    # Collect data array
+    $sAlbumName = $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
+    $sAlbumDescription = $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
+
+    $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
+    $this->setDescription($this->_removeHighlight($sAlbumDescription));
+
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $aData = $this->_oModel->getThumbs($this->_iId);
+
+      $this->oSmarty->assign('files', $aData);
+      $this->oSmarty->assign('file_no', count($aData));
+      $this->oSmarty->assign('gallery_name', $sAlbumName);
+      $this->oSmarty->assign('gallery_content', $sAlbumDescription);
+    }
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+  }
+
+  /**
+   * Show one specific Image.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
+  protected function _showImage() {
+    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'image');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'image');
+
+    $aData = $this->_oModel->getFileData($this->_iId);
+
+    # Absolute URL for image information
+    $sUrl = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['album_id'] .
+                    '/popup/' . $aData['file']);
+
+    if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
+      # Get image information
+      $aImageInfo = getimagesize($sUrl);
+
+      $aData['url'] = Helper::addSlash($sUrl);
+      $aData['width'] = $aImageInfo[0];
+      $aData['height'] = $aImageInfo[1];
+
+      $this->oSmarty->assign('i', $aData);
+
+      $this->setTitle(I18n::get('global.image.image') . ': ' . $aData['file']);
+      $this->setDescription($aData['content']);
+
+      $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
+    else Helper::redirectTo('/errors/404');
   }
 
   /**
