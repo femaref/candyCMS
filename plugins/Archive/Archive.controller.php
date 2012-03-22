@@ -36,8 +36,8 @@ final class Archive {
 	 *
 	 */
   public final function show($aRequest, $aSession) {
-    $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir = Helper::getPluginTemplateDir('archive', 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
@@ -51,12 +51,12 @@ final class Archive {
 
       $aMonth = array();
       foreach ($aData as $aRow) {
-      # Date format the month
+        # Date format the month
         $sMonth = strftime('%m', $aRow['date_raw']);
         $sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
         $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
 
-      # Prepare array
+        # Prepare array
         $iId = $aRow['id'];
         $aMonth[$sMonth][$iId] = $aRow;
       }
@@ -65,5 +65,5 @@ final class Archive {
     }
 
     return $oSmarty->fetch($sTemplateFile, $sCacheId);
-	}
+  }
 }

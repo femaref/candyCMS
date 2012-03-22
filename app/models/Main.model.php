@@ -108,7 +108,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
-    return $this->disconnectFromDatabase();
+    # not unsetting the database, because it is unset by index.controller
   }
 
   /**

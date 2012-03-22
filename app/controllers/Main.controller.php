@@ -173,9 +173,6 @@ abstract class Main {
    *
    */
   public function __destruct() {
-    # Only reload language each time the controller is activated in development mode.
-    if (WEBSITE_MODE == 'development')
-      I18n::unsetLanguage();
   }
 
   /**
