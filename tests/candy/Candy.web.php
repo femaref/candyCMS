@@ -59,4 +59,34 @@ abstract class CandyWebTest extends WebTestCase {
     $this->assertText(\CandyCMS\Helper\I18n::get('error.404.title'));
     # $this->assertResponse(404);
   }
+
+  function loginAsUserWithRole($role = 4) {
+    switch ($role) {
+      case 1:
+        $email = 'member@example.com';
+        break;
+      case 2:
+        $email = 'facebook@example.com';
+        break;
+      case 3:
+        $email = 'moderator@example.com';
+        break;
+      default:
+      case 4:
+        $email = 'admin@example.com';
+        break;
+    }
+    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create');
+    $this->assertTrue($this->setField('email', $email));
+    $this->assertTrue($this->setField('password', 'test'));
+
+    # login with correct input
+    $this->click(I18n::get('global.login'));
+    $this->assertText(I18n::get('success.session.create'));
+  }
+
+  function logout() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy'));
+  }
+
 }

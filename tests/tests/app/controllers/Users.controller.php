@@ -75,7 +75,7 @@ class WebTestOfUserController extends CandyWebTest {
     $this->click(I18n::get('global.register'));
     $this->assertText(I18n::get('error.form.missing.terms'));
 
-    # @todo actual login...
+    # @todo actual registration...
 
   }
 
