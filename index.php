@@ -96,7 +96,7 @@ if (is_dir('tools') && WEBSITE_MODE == 'production')
   exit('Please delete the tools folder.');
 
 # Disable tests on productive system.
-if (is_file('tests.php') && WEBSITE_MODE == 'production')
+if (is_dir('tests') && WEBSITE_MODE == 'production')
   exit('Please delete the tests enviroment (tests.php).');
 
 # Print out HTML
