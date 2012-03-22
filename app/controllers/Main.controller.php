@@ -395,19 +395,25 @@ abstract class Main {
 	 *
 	 */
 	protected function _setError($sField, $sMessage = '') {
-    if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
-      $sError = I18n::get('error.form.missing.' . strtolower($sField)) ?
-              I18n::get('error.form.missing.' . strtolower($sField)) :
-              I18n::get('error.form.missing.standard');
+    if ($sField === 'file') {
+      if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name'][0]))
+          $this->_aError[$sField] = $sMessage ?
+                $sMessage :
+                I18n::get('error.form.missing.file');
+    }
+    else {
+      if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
+          $sError = I18n::get('error.form.missing.' . strtolower($sField)) ?
+                I18n::get('error.form.missing.' . strtolower($sField)) :
+                I18n::get('error.form.missing.standard');
 
-    if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
-      $sError = $sError ? $sError : I18n::get('error.mail.format');
+      if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
+          $sError = $sError ? $sError : I18n::get('error.mail.format');
 
-    if ($sError)
-      $this->_aError[$sField] = !$sMessage ?
-              $sError :
-              $sMessage;
-
+      if ($sError) $this->_aError[$sField] = !$sMessage ?
+                $sError :
+                $sMessage;
+    }
     return $this;
   }
 
@@ -476,20 +482,20 @@ abstract class Main {
 	}
 
 	/**
-	 * Delete entry if we have enough rights.
-	 *
-	 * @access public
-	 * @param integer $iUserRole required user right
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
-	public function destroy($iUserRole = 3) {
+   * Delete entry if we have enough rights.
+   *
+   * @access public
+   * @param integer $iUserRole required user right
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
+  public function destroy($iUserRole = 3) {
     $this->oSmarty->setCaching(false);
- 
-		return	$this->_aSession['user']['role'] < $iUserRole ?
+
+    return $this->_aSession['user']['role'] < $iUserRole ?
             Helper::errorMessage(I18n::get('error.missing.permission'), '/') :
             $this->_destroy();
-	}
+  }
 
   /**
    * Create an entry.
