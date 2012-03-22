@@ -258,15 +258,13 @@ class Sessions extends Main {
     # Facebook logout
     if ($this->_aSession['user']['role'] == 2) {
       $this->_aSession['facebook']->getLogoutUrl();
-      session_destroy();
-      unset($this->_aSession, $_SESSION);
+      unset($this->_aSession['user']);
       return Helper::successMessage(I18n::get('success.session.destroy'), '/');
     }
 
     # Standard member
-    elseif ($this->_oModel->destroy() === true) {
-      session_destroy();
-      unset($this->_aSession, $_SESSION);
+    elseif ($this->_aSession['user']['role'] > 0 && $this->_oModel->destroy() === true) {
+      unset($this->_aSession['user']);
       return Helper::successMessage(I18n::get('success.session.destroy'), '/');
     }
 
