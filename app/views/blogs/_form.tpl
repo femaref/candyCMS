@@ -82,7 +82,7 @@
       <div class='controls'>
         <select name='language' class='span4' id='input-language'>
           {foreach $languages as $l}
-            <option value='{$l}' {if $l == $language}selected='selected'{/if}>{$l}</option>
+            <option value='{$l}' {if $l == $WEBSITE_LANGUAGE}selected='selected'{/if}>{$l}</option>
           {/foreach}
         </select>
       </div>
