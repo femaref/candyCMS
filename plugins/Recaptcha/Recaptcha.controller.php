@@ -16,6 +16,9 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use CandyCMS\Helper\I18n as I18n;
 
+if (!defined('SHOW_CAPTCHA'))
+  define('SHOW_CAPTCHA', MOBILE === false && WEBSITE_MODE !== 'test');
+
 final class Recaptcha {
 
 	/**
@@ -52,7 +55,7 @@ final class Recaptcha {
 	 *
 	 * @var string
 	 * @access protected
-   * 
+   *
 	 */
 	protected $_sError = '';
 
@@ -100,9 +103,6 @@ final class Recaptcha {
    */
   public function __construct() {
     require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
-
-    if (!defined('SHOW_CAPTCHA'))
-      define('SHOW_CAPTCHA', MOBILE === false && WEBSITE_MODE !== 'test');
   }
 
 	/**
