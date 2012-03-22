@@ -29,7 +29,7 @@ class Sessions extends Main {
    */
   public static function getUserBySession() {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT

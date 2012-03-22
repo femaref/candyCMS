@@ -99,7 +99,7 @@ class Downloads extends Main {
 	 */
 	public static function getFileName($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
@@ -273,7 +273,7 @@ class Downloads extends Main {
    */
   public static function updateDownloadCount($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("UPDATE

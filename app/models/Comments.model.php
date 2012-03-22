@@ -245,7 +245,7 @@ class Comments extends Main {
    */
   public static function getParentId($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT

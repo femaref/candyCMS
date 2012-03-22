@@ -29,7 +29,7 @@ class Users extends Main {
    */
   public static function getUserNamesAndEmail($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
@@ -62,7 +62,7 @@ class Users extends Main {
    */
   public static function getExistingUser($sEmail) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
@@ -99,7 +99,7 @@ class Users extends Main {
 	 */
 	public static function getVerificationData($sEmail) {
 		if (empty(parent::$_oDbStatic))
-			parent::_connectToDatabase();
+			parent::connectToDatabase();
 
 		try {
 			$oQuery = parent::$_oDbStatic->prepare("SELECT
@@ -134,7 +134,7 @@ class Users extends Main {
    */
 	public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
 		if (empty(parent::$_oDbStatic))
-			parent::_connectToDatabase();
+			parent::connectToDatabase();
 
     $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
 
@@ -593,7 +593,7 @@ class Users extends Main {
    */
   public static function getUserByToken($sApiToken) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT

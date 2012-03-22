@@ -433,7 +433,7 @@ class Helper {
 	 */
   public static function getLastEntry($sTable) {
 		try {
-			$oDb = \CandyCMS\Model\Main::_connectToDatabase();
+			$oDb = \CandyCMS\Model\Main::connectToDatabase();
 			$oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
 			$aRow = $oQuery->fetch();
 

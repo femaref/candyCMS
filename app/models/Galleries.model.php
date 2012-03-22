@@ -7,7 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * 
+ *
  */
 
 namespace CandyCMS\Model;
@@ -205,7 +205,7 @@ class Galleries extends Main {
    */
   public static function getAlbumName($iId, $aRequest = '') {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
@@ -240,7 +240,7 @@ class Galleries extends Main {
    */
   public static function getAlbumContent($iId, $aRequest = '') {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
@@ -274,7 +274,7 @@ class Galleries extends Main {
    */
   public static function getFileDetails($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT album_id, content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
@@ -303,7 +303,7 @@ class Galleries extends Main {
    */
   public static function getFileData($iId) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT * FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");

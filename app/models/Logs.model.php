@@ -96,7 +96,7 @@ class Logs extends Main {
    */
   public static function insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd) {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
     $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
