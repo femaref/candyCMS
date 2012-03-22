@@ -223,7 +223,7 @@ class Galleries extends Main {
       $aThumbs = array('32', THUMB_DEFAULT_X, 'popup', 'original');
       foreach($aThumbs as $sFolder) {
         if (!is_dir($sPath . '/' . $sFolder))
-          mkdir($sPath . '/' . $sFolder, 0755);
+          mkdir($sPath . '/' . $sFolder, 0755, true);
       }
 
       Logs::insert( $this->_aRequest['controller'],
