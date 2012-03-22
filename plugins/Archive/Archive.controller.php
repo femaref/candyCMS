@@ -33,6 +33,7 @@ final class Archive {
 	 * @param array $aRequest
 	 * @param array $aSession
 	 * @return string HTML
+   * @todo check if there are model addons
 	 *
 	 */
   public final function show($aRequest, $aSession) {
@@ -45,18 +46,18 @@ final class Archive {
 
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|archive';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
+
       require_once PATH_STANDARD . '/app/models/Blogs.model.php';
       $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
       $aData = $oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT);
 
-      $aMonth = array();
       foreach ($aData as $aRow) {
-      # Date format the month
+        # Date format the month
         $sMonth = strftime('%m', $aRow['date_raw']);
         $sMonth = substr($sMonth, 0, 1) == 0 ? substr($sMonth, 1, 2) : $sMonth;
         $sMonth = I18n::get('global.months.' . $sMonth) . ' ' . strftime('%Y', $aRow['date_raw']);
 
-      # Prepare array
+        # Prepare array
         $iId = $aRow['id'];
         $aMonth[$sMonth][$iId] = $aRow;
       }

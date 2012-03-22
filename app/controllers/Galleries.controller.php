@@ -415,5 +415,4 @@ class Galleries extends Main {
   private function _destroyFile() {
     return $this->_oModel->destroyFile($this->_iId) === true;
   }
-
 }
