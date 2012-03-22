@@ -7,7 +7,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
- * @todo rewrite and keep it simpler?
  *
  */
 

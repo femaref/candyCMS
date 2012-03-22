@@ -407,28 +407,78 @@ class Users extends Main {
   }
 
   /**
+   * Update the Gravatar status of a user.
+   *
+   * This is needed if the user has chosen to use a Gravatar first and then wants to update his profile
+   * with a custom avatar. If he'd upload an image and didn't save his changings to not use a Gravatar any
+   * longer, the avatar wouldn't be shown. We now force the status to update if he uploads an image.
+   *
+   * @static
+   * @access public
+   * @param integer $iId user ID
+   * @param integer $iUseGravatar do we want to use a Gravatar?
+   * @return boolean status of query
+   * @todo documentation
+   * @todo test
+   *
+   */
+  public static function updateGravatar($iId, $iUseGravatar = 0) {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
+
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
+                                                " . SQL_PREFIX . "users
+                                              SET
+                                                use_gravatar = :use_gravatar
+                                              WHERE
+                                                id = :id");
+
+      $oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+
+      return $oQuery->execute();
+    }
+    catch (\PDOException $p) {
+      try {
+        parent::$_oDbStatic->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0106 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0107 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
+  }
+
+  /**
    * Destroy a user.
    *
+   * @static
    * @access public
    * @param integer $iId ID to update
    * @return boolean status of query
    *
    */
-  public function destroy($iId) {
+  public static function destroy($iId) {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
+
 		try {
-			$oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "users
-                                      WHERE
-                                        id = :id
-                                      LIMIT
-                                        1");
+			$oQuery = parent::$_oDbStatic->prepare("DELETE FROM
+                                                " . SQL_PREFIX . "users
+                                              WHERE
+                                                id = :id
+                                              LIMIT
+                                                1");
 
 			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 			return $oQuery->execute();
 		}
     catch (\PDOException $p) {
       try {
-        $this->_oDb->rollBack();
+        parent::$_oDbStatic->rollBack();
       }
       catch (\Exception $e) {
         AdvancedException::reportBoth('0089 - ' . $e->getMessage());
@@ -445,7 +495,6 @@ class Users extends Main {
    * @access public
    * @param string $sVerificationCode Code to remove.
    * @return boolean status of query
-   * @todo prove if session has a addon
    *
    */
   public function verifyEmail($sVerificationCode) {

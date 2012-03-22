@@ -94,7 +94,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li>
-                      <a href='/users/update'>{$lang.global.settings}</a>
+                      <a href='/users/{$_SESSION.user.id}/update'>{$lang.global.settings}</a>
                     </li>
                     <li>
                       <a href='/sessions/destroy'>{$lang.global.logout}</a>

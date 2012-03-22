@@ -160,25 +160,28 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 * @todo _updateAvatar? $this->_aError?
-   * @todo unset gravatar?
+	 * @todo _updateAvatar?
 	 *
 	 */
 	public function updateAvatar() {
-    require PATH_STANDARD . '/app/helpers/Upload.helper.php';
-
-    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $this->_setError('terms', I18n::get('error.file.upload'));
 
+    require PATH_STANDARD . '/app/helpers/Upload.helper.php';
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+
+    # Bugfix: We must set $this->_aError due to $this->_aFile instead of $this->_aRequest
     if (!isset($this->_aFile['image']))
       $this->_aError['image'] = I18n::get('error.form.missing.file');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
-    elseif ($oUpload->uploadAvatarFile(false) === true)
+    elseif ($oUpload->uploadAvatarFile(false) === true) {
+      $this->_oModel->updateGravatar($this->_iId);
+
       return Helper::successMessage(I18n::get('success.upload'), '/' .
 							$this->_aRequest['controller'] . '/' . $this->_iId);
+    }
 
     else
       return Helper::errorMessage(I18n::get('error.file.upload'), '/' .
@@ -190,7 +193,6 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return string HTML content
-	 * @todo $this->_aError to setError
 	 *
 	 */
   public function updatePassword() {
@@ -261,6 +263,7 @@ class Users extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   * @todo bugfix
 	 *
 	 */
 	protected function _create($bShowCaptcha) {

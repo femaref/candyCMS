@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  *
- * @todo test caching
  */
 
 namespace CandyCMS\Controller;
