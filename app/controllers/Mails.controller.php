@@ -169,6 +169,8 @@ class Mails extends Main {
     $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'success');
 
+    $this->oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_LIFETIME_SAVED);
+
     $this->setTitle(I18n::get('mails.success_page.title'));
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
