@@ -467,16 +467,10 @@ class Index {
 							substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
 							substr(md5(CURRENT_URL), 0, 10));
 
-    # Direct to install
-    if (strtolower($this->_aRequest['controller']) == 'install')
-      Helper::redirectTo('/install/index.php');
-
     # Start the dispatcher and grab the controller.
-    else {
-      $oDispatcher = & new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
-      $oDispatcher->getController();
-      $oDispatcher->getAction();
-    }
+    $oDispatcher = & new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+    $oDispatcher->getController();
+    $oDispatcher->getAction();
 
     # Minimal settings for AJAX-request
     if (isset($this->_aRequest['ajax']) && true == $this->_aRequest['ajax'])

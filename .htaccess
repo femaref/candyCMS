@@ -21,9 +21,17 @@ ErrorDocument 500 /errors/500
 
 Options +FollowSymLinks
 RewriteEngine On
+
+# redirect existing files and symbolic links
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l
 RewriteRule ^.*$ - [NC,L]
+
+# rewrite tools and install folders
+RewriteRule tools - [NC,L]
+RewriteRule install - [NC,L]
+
+# rewrite all other calls to our index.php
 RewriteRule ^.*$ index.php [NC,L]
 
 # Force the latest IE version, in various cases when it may fall back to IE7 mode
