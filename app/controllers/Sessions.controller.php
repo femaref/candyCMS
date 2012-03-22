@@ -262,7 +262,6 @@ class Sessions extends Main {
    *
    * @access public
    * @return boolean status of model action
-   * @todo refactor to two methods?
    *
    */
   public function destroy() {

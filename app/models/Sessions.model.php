@@ -29,7 +29,7 @@ class Sessions extends Main {
    */
   public static function getUserBySession() {
     if (empty(parent::$_oDbStatic))
-      parent::_connectToDatabase();
+      parent::connectToDatabase();
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
@@ -145,18 +145,22 @@ class Sessions extends Main {
 	/**
    * Destroy a user session and logout.
    *
+   * @static
    * @access public
    * @return boolean status of query
 	 *
    */
-  public function destroy() {
+  public static function destroy() {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
+
     try {
-      $oQuery = $this->_oDb->prepare("UPDATE
-                                        " . SQL_PREFIX . "sessions
-                                      SET
-                                        session = :session_null
-                                      WHERE
-                                        session = :session_id");
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
+                                                " . SQL_PREFIX . "sessions
+                                              SET
+                                                session = :session_null
+                                              WHERE
+                                                session = :session_id");
 
       $sNull = 'NULL';
       $iSessionId = session_id();
@@ -167,7 +171,7 @@ class Sessions extends Main {
     }
     catch (\PDOException $p) {
       try {
-        $this->_oDb->rollBack();
+        parent::$_oDbStatic->rollBack();
       }
       catch (\Exception $e) {
         AdvancedException::reportBoth('0075 - ' . $e->getMessage());

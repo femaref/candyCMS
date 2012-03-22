@@ -97,7 +97,7 @@ abstract class Main {
     $this->_aFile     = & $aFile;
 
     $this->_iId = isset($this->_aRequest['id']) && !isset($this->_iId) ? (int) $this->_aRequest['id'] : '';
-    $this->_oDb = $this->_connectToDatabase();
+    $this->_oDb = $this->connectToDatabase();
   }
 
   /**
@@ -108,7 +108,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
-    return $this->_disconnectFromDatabase();
+    return $this->disconnectFromDatabase();
   }
 
   /**
@@ -119,7 +119,7 @@ abstract class Main {
    * @return object PDO
    *
    */
-  public static function _connectToDatabase() {
+  public static function connectToDatabase() {
 		if (empty(self::$_oDbStatic)) {
 			try {
 				self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE,
@@ -146,7 +146,7 @@ abstract class Main {
    * @return boolean
    *
    */
-  public static function _disconnectFromDatabase() {
+  public static function disconnectFromDatabase() {
     return self::$_oDbStatic = null;
   }
 

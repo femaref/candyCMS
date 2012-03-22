@@ -70,12 +70,14 @@ class Helper {
       header('Status: 404 Not Found');
       header('HTTP/1.0 404 Not Found');
 
-      $bIsCrawler = defined('CRAWLERS') ? (preg_match('/'.CRAWLERS.'/', $_SERVER['HTTP_USER_AGENT']) > 0) : false;
+      $bIsCrawler = defined('CRAWLERS') ?
+              preg_match('/' . CRAWLERS . '/', $_SERVER['HTTP_USER_AGENT']) > 0 :
+              false;
+
       if (!$bIsCrawler)
         exit(header('Location:' . $sUrl));
     }
     else
-
       exit(header('Location:' . $sUrl));
   }
 
@@ -438,14 +440,14 @@ class Helper {
 	 */
   public static function getLastEntry($sTable) {
 		try {
-			$oDb = \CandyCMS\Model\Main::_connectToDatabase();
+			$oDb = \CandyCMS\Model\Main::connectToDatabase();
 			$oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
 			$aRow = $oQuery->fetch();
 
 			return $aRow['id'];
 		}
 		catch (AdvancedException $e) {
-			AdvancedException::reportBoth('0103 - ' . $e->getMessage());
+			AdvancedException::reportBoth('0104 - ' . $e->getMessage());
 			exit('SQL error.');
 		}
 	}

@@ -91,7 +91,6 @@ class Medias extends Main {
    *
    * @access protected
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo rename temp?
    *
    */
   protected function _show() {

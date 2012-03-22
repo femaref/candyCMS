@@ -8,7 +8,6 @@
  * @license MIT
  * @since 2.0
  *
- * @todo test caching
  */
 
 namespace CandyCMS\Controller;
@@ -71,10 +70,12 @@ class Mails extends Main {
     $aUser = $oUser::getUserNamesAndEmail($this->_iId);
 
     if (!$aUser) {
-      if ($this->_iId) Helper::redirectTo('/errors/404');
-      else $aUser = array('name' => 'Administrator');
-    }
+      if ($this->_iId)
+        Helper::redirectTo('/errors/404');
 
+      else
+        $aUser['name'] = I18n::get('global.system');
+    }
 
     $this->oSmarty->assign('contact', $aUser);
     $this->oSmarty->assign('content',
@@ -92,9 +93,11 @@ class Mails extends Main {
                     (string) $this->_aRequest['subject'] :
                     '');
 
-    if ($bShowCaptcha === true) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
+    if ($bShowCaptcha === true)
+      $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
-    if ($this->_aError) $this->oSmarty->assign('error', $this->_aError);
+    if ($this->_aError)
+      $this->oSmarty->assign('error', $this->_aError);
 
     $this->setTitle(I18n::get('global.contact') . ' ' . $aUser['name'] . ' ' . $aUser['surname']);
     $this->setDescription(str_replace('%u', $aUser['name'] . ' ' . $aUser['surname'],
@@ -119,7 +122,8 @@ class Mails extends Main {
     if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
         $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
 
-    if (isset($this->_aError)) return $this->_showCreateMailTemplate($bShowCaptcha);
+    if (isset($this->_aError))
+      return $this->_showCreateMailTemplate($bShowCaptcha);
 
     else {
       # Select user name and surname
@@ -128,7 +132,8 @@ class Mails extends Main {
       $aRow = $sModel::getUserNamesAndEmail($this->_iId);
 
       # if id is specified, but user not found => 404
-      if (!$aRow && $this->_iId) Helper::redirectTo('/errors/404');
+      if (!$aRow && $this->_iId)
+        Helper::redirectTo('/errors/404');
 
       $sSendersName = isset($this->_aSession['user']['name']) ?
               $this->_aSession['user']['name'] :
@@ -139,16 +144,17 @@ class Mails extends Main {
               str_replace('%u', $sSendersName, I18n::get('mails.subject.by'));
 
       $bStatus = Mails::send(
-                      isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
+              isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,
               $sSubject,
-                      Helper::formatInput($this->_aRequest['content']),
+              Helper::formatInput($this->_aRequest['content']),
               Helper::formatInput($this->_aRequest['email']));
 
       if ($bStatus == true) {
         Logs::insert($this->_aRequest['controller'], 'create', (int) $this->_iId);
         return $this->_showSuccessPage();
       }
-      else Helper::errorMessage(I18n::get('error.mail.create'), '/users/' . $this->_iId);
+      else
+        Helper::errorMessage(I18n::get('error.mail.create'), '/users/' . $this->_iId);
     }
   }
 
@@ -216,7 +222,8 @@ class Mails extends Main {
       $oMail->Subject = $sSubject;
       $oMail->MsgHTML(nl2br($sMessage));
 
-      if ($sAttachment) $oMail->AddAttachment($sAttachment);
+      if ($sAttachment)
+        $oMail->AddAttachment($sAttachment);
 
       return $oMail->Send();
     }
