@@ -44,8 +44,10 @@ class Comments extends Main {
     $sTemplateDir = Helper::getTemplateDir('comments', 'show');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
-    $this->oSmarty->assign('comments',
-            $this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $this->oSmarty->assign('comments',
+              $this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
+    }
 
     # Set author of blog entry
     $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
@@ -64,6 +66,7 @@ class Comments extends Main {
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
 
+    # we can leave caching on, the form itself will turn caching off, but that is a different template
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID) . $this->create('create_comments');
   }
 
@@ -147,6 +150,7 @@ class Comments extends Main {
       $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . '#create';
 
       if ($this->_oModel->create() === true) {
+        #this also clears cache for our comments, since they are stored in the blogs namespace
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         Logs::insert('comments', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
@@ -169,6 +173,7 @@ class Comments extends Main {
     $sRedirect = '/blogs/' . $this->_oModel->getParentId((int) $this->_aRequest['id']);
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
+      #this also clears cache for our comments, since they are stored in the blogs namespace
       $this->oSmarty->clearCacheForController('blogs');
 
       Logs::insert(	'comment',
