@@ -29,7 +29,7 @@ class WebTestOfCommentController extends CandyWebTest {
 
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
-		$this->assertText('7c883dc7d2');
+		$this->assertText(I18n::get('global.comments'));
     $this->assertResponse(200);
 	}
 
