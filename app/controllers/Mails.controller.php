@@ -121,7 +121,7 @@ class Mails extends Main {
     $this->_setError('content')->_setError('email');
 
     if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
-        $this->_aError['captcha'] = I18n::get('error.captcha.loading');
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
 
     if (isset($this->_aError))
       return $this->_showCreateMailTemplate($bShowCaptcha);

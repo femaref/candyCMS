@@ -15,6 +15,7 @@ use CandyCMS\Controller\Main as Main;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
+use CandyCMS\Plugin\Controller\Recaptcha as Recaptcha;
 
 class Sessions extends Main {
 
@@ -121,11 +122,11 @@ class Sessions extends Main {
    *
    */
   public function resendPassword() {
-    if (isset($this->_aRequest['email']))
-      return $this->_resendPassword();
+    $bShowCaptcha = class_exists('\CandyCMS\Plugin\Controller\Recaptcha') ? SHOW_CAPTCHA : false;
 
-    else
-      return $this->_showCreateResendActionsTemplate();
+    return isset($this->_aRequest['email']) ?
+            $this->_resendPassword($bShowCaptcha) :
+            $this->_showCreateResendActionsTemplate($bShowCaptcha);
   }
 
   /**
@@ -138,11 +139,14 @@ class Sessions extends Main {
    * @return string HTML
    *
    */
-  protected function _resendPassword() {
+  protected function _resendPassword($bShowCaptcha) {
     $this->_setError('email');
 
+    if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
+
     if (isset($this->_aError))
-      return $this->_showCreateResendActionsTemplate();
+      return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
     $this->__autoload('Mails');
     $sNewPasswordClean = Helper::createRandomChar(10, true);
@@ -174,9 +178,11 @@ class Sessions extends Main {
    *
    */
   public function resendVerification() {
+    $bShowCaptcha = class_exists('\CandyCMS\Plugin\Controller\Recaptcha') ? SHOW_CAPTCHA : false;
+
     return isset($this->_aRequest['email']) ?
-            $this->_resendVerification() :
-            $this->_showCreateResendActionsTemplate();
+            $this->_resendVerification($bShowCaptcha) :
+            $this->_showCreateResendActionsTemplate($bShowCaptcha);
   }
 
   /**
@@ -189,11 +195,14 @@ class Sessions extends Main {
    * @return string HTML
    *
    */
-  protected function _resendVerification() {
+  protected function _resendVerification($bShowCaptcha) {
     $this->_setError('email');
 
+    if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
+        $this->_aError['captcha'] = I18n::get('error.captcha.incorrect');
+
     if (isset($this->_aError))
-      return $this->_showCreateResendActionsTemplate();
+      return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
     $this->__autoload('Mails');
     $aData = & $this->_oModel->resendVerification();
@@ -225,9 +234,11 @@ class Sessions extends Main {
    * @return string HTML content
    *
    */
-  private function _showCreateResendActionsTemplate() {
+  private function _showCreateResendActionsTemplate($bShowCaptcha) {
     $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'resend');
+
+    if ($bShowCaptcha) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
@@ -258,15 +269,13 @@ class Sessions extends Main {
     # Facebook logout
     if ($this->_aSession['user']['role'] == 2) {
       $this->_aSession['facebook']->getLogoutUrl();
-      session_destroy();
-      unset($this->_aSession, $_SESSION);
+      unset($this->_aSession['user']);
       return Helper::successMessage(I18n::get('success.session.destroy'), '/');
     }
 
     # Standard member
-    elseif ($this->_oModel->destroy() === true) {
-      session_destroy();
-      unset($this->_aSession, $_SESSION);
+    elseif ($this->_aSession['user']['role'] > 0 && $this->_oModel->destroy() === true) {
+      unset($this->_aSession['user']);
       return Helper::successMessage(I18n::get('success.session.destroy'), '/');
     }
 

@@ -29,8 +29,8 @@ class Contents extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
-    $iPublished = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] > 3 ? 0 : 1;
-
+    $iPublished = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] >= 3 ? 0 : 1;
+    
     if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -48,9 +48,10 @@ class Contents extends Main {
                                           published >= :published
                                         ORDER BY
                                           c.title ASC
-                                        LIMIT " . $iLimit);
+                                        LIMIT :limit");
 
         $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
+        $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
         $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);

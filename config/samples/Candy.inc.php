@@ -190,4 +190,13 @@ define('LIMIT_ALBUMS', 10);
 
 # ------------------------------------------------------------------------------
 
+
+# List of Webcrawlers
+# used for sending 404 instead of showing the 404 page
+define('CRAWLERS', 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|' .
+                    'ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|' .
+                    'Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby');
+
+# ------------------------------------------------------------------------------
+
 ?>
