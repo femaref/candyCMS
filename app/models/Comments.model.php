@@ -33,6 +33,10 @@ class Comments extends Main {
     $this->oPagination = new Pagination($this->_aRequest, $iEntries, $iLimit);
 
     try {
+      $sOrder = defined('COMMENTS_SORTING') && (COMMENTS_SORTING == 'ASC' || COMMENTS_SORTING == "DESC")?
+                  COMMENTS_SORTING :
+                  'ASC';
+
       $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
                                         u.name,
@@ -49,8 +53,8 @@ class Comments extends Main {
                                       WHERE
                                         c.parent_id = :parent_id
                                       ORDER BY
-                                        c.date ASC,
-                                        c.id ASC
+                                        c.date " . $sOrder . ",
+                                        c.id " . $sOrder . "
                                       LIMIT
                                         :offset,
                                         :limit");
