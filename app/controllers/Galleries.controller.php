@@ -72,7 +72,7 @@ class Galleries extends Main {
    */
   protected function _show() {
     # Album images
-    if ($this->_iId && !isset($this->_aRequest['album_id'])) $this->_showAlbum();
+    if ($this->_iId && !isset($this->_aRequest['album_id'])) return $this->_showAlbum();
 
     # Specific image
     elseif ($this->_iId && isset($this->_aRequest['album_id'])) return $this->_showImage();
