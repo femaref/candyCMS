@@ -72,25 +72,29 @@ class Galleries extends Main {
    */
   protected function _show() {
     # Album images
-    if ($this->_iId && !isset($this->_aRequest['album_id'])) return $this->_showAlbum();
+    if ($this->_iId && !isset($this->_aRequest['album_id']))
+      $this->_showAlbum();
+
 
     # Specific image
-    elseif ($this->_iId && isset($this->_aRequest['album_id'])) return $this->_showImage();
+    elseif ($this->_iId && isset($this->_aRequest['album_id']))
+      return $this->_showImage();
 
     # Album overview
-    else return $this->_showOverview();
+    else
+      return $this->_showOverview();
   }
 
   /**
-   * Show Overview of Albums.
+   * Show overview of albums.
    *
    * @access protected
    * @return string HTML content
    *
    */
   protected function _showOverview() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'albums');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'albums');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'albums');
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $this->oSmarty->assign('albums', $this->_oModel->getData());
@@ -102,15 +106,15 @@ class Galleries extends Main {
   }
 
   /**
-   * Show Overview of Images in one Album.
+   * Show overview of images in one album.
    *
    * @access protected
    * @return string HTML content
    *
    */
   protected function _showAlbum() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'files');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'files');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'files');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'files');
 
     # Collect data array
     $sAlbumName = $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
@@ -140,8 +144,8 @@ class Galleries extends Main {
    *
    */
   protected function _showImage() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'image');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'image');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'image');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'image');
 
     $aData = $this->_oModel->getFileData($this->_iId);
 
@@ -165,7 +169,9 @@ class Galleries extends Main {
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
-    else Helper::redirectTo('/errors/404');
+
+    else
+      Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -220,6 +226,7 @@ class Galleries extends Main {
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
 
+      # Create missing thumb folders.
       $aThumbs = array('32', THUMB_DEFAULT_X, 'popup', 'original');
       foreach($aThumbs as $sFolder) {
         if (!is_dir($sPath . '/' . $sFolder))
@@ -443,5 +450,4 @@ class Galleries extends Main {
   private function _destroyFile() {
     return $this->_oModel->destroyFile($this->_iId) === true;
   }
-
 }
