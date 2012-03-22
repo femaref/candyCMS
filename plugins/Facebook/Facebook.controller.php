@@ -85,7 +85,7 @@ final class FacebookCMS extends Facebook {
 
     $sCacheId = WEBSITE_MODE . '|plugins|' . WEBSITE_LOCALE . '|facebook';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
-      $oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', defined(PLUGIN_FACEBOOK_APP_ID)? PLUGIN_FACEBOOK_APP_ID : '');
+      $oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', defined('PLUGIN_FACEBOOK_APP_ID')? PLUGIN_FACEBOOK_APP_ID : '');
       $oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
     }
 
