@@ -165,13 +165,10 @@ class Users extends Main {
 	 */
 	public function updateAvatar() {
     $this->_setError('terms', I18n::get('error.file.upload'));
+    $this->_setError('image');
 
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
     $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
-
-    # Bugfix: We must set $this->_aError due to $this->_aFile instead of $this->_aRequest
-    if (!isset($this->_aFile['image']))
-      $this->_aError['image'] = I18n::get('error.form.missing.file');
 
     if (isset($this->_aError))
       return $this->_showFormTemplate();

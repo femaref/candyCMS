@@ -37,8 +37,8 @@ final class Archive {
 	 *
 	 */
   public final function show($aRequest, $aSession) {
-    $sTemplateDir		= Helper::getPluginTemplateDir('archive', 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir = Helper::getPluginTemplateDir('archive', 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
@@ -66,5 +66,5 @@ final class Archive {
     }
 
     return $oSmarty->fetch($sTemplateFile, $sCacheId);
-	}
+  }
 }

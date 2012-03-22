@@ -75,6 +75,7 @@ class Galleries extends Main {
     if ($this->_iId && !isset($this->_aRequest['album_id']))
       $this->_showAlbum();
 
+
     # Specific image
     elseif ($this->_iId && isset($this->_aRequest['album_id']))
       return $this->_showImage();
@@ -229,7 +230,7 @@ class Galleries extends Main {
       $aThumbs = array('32', THUMB_DEFAULT_X, 'popup', 'original');
       foreach($aThumbs as $sFolder) {
         if (!is_dir($sPath . '/' . $sFolder))
-          mkdir($sPath . '/' . $sFolder, 0755);
+          mkdir($sPath . '/' . $sFolder, 0755, true);
       }
 
       Logs::insert( $this->_aRequest['controller'],
@@ -285,8 +286,7 @@ class Galleries extends Main {
   /**
    * Create a gallery entry.
    *
-   * Check if required data is given or throw an error instead.
-   * If data is given, activate the model, insert them into the database and redirect afterwards.
+   * Create entry or show form template if we have enough rights.
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -296,28 +296,16 @@ class Galleries extends Main {
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
-    if (!isset($this->_aRequest['createfile_galleries']))
-      return $this->_showFormFileTemplate();
-
-    if ($this->_createFile() === true) {
-      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
-
-      # Log uploaded image. Request ID = album id
-      Logs::insert( $this->_aRequest['controller'],
-                    'createfile',
-                    (int) $this->_aRequest['id'],
-                    $this->_aSession['user']['id']);
-
-      return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
-              '/' . $this->_iId);
-    }
-    else
-      return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
-									'/' . $this->_iId . '/createfile');
+    return isset($this->_aRequest['createfile_galleries']) ?
+            $this->_createFile() :
+            $this->_showFormFileTemplate();
   }
 
   /**
-   * Upload each selected file.
+   * Create a gallery entry.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, upload each selected file, insert them into the database and redirect afterwards.
    *
    * @access private
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -326,7 +314,12 @@ class Galleries extends Main {
   private function _createFile() {
     require PATH_STANDARD . '/app/helpers/Upload.helper.php';
 
-    if (isset($this->_aFile['file']) && !empty($this->_aFile['file']['name'][0])) {
+    $this->_setError('file');
+
+    if ($this->_aError)
+      return $this->_showFormFileTemplate();
+
+    else {
       $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $aReturnValues = $oUploadFile->uploadGalleryFiles();
@@ -338,23 +331,35 @@ class Galleries extends Main {
       $bReturnVal = true;
       for ($iI = 0; $iI < $iFileCount; $iI++)
         if ($aReturnValues[$iI] === true)
-          $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]);
+          $bReturnVal = $bReturnVal && $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]);
         else
           $bReturnVal = false;
 
-      return $bReturnVal;
-    }
-    else {
-      $this->_aError['file'] = I18n::get('error.form.missing.file');
-      return $this->_showFormFileTemplate();
+      if ($bReturnVal) {
+        $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
+        # Log uploaded image. Request ID = album id
+        Logs::insert($this->_aRequest['controller'],
+                'createfile',
+                (int) $this->_aRequest['id'],
+                $this->_aSession['user']['id']);
+
+
+        return Helper::successMessage(I18n::get('success.file.upload'),
+                        '/' . $this->_aRequest['controller'] .
+                        '/' . $this->_iId);
+      }
+      else
+          return Helper::errorMessage(I18n::get('error.file.upload'),
+                        '/' . $this->_aRequest['controller'] .
+                        '/' . $this->_iId . '/createfile');
     }
   }
 
   /**
    * Update a gallery entry.
    *
-   * Check if required data is given or throw an error instead.
-   * If data is given, calls _updateFile.
+   * calls _updateFile if data is given, otherwise calls _showFormFileTemplate()
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -366,44 +371,42 @@ class Galleries extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/' . $this->_aRequest['controller']);
 
     else {
-      if (isset($this->_aRequest['updatefile_galleries'])) {
-        $aDetails = $this->_oModel->getFileDetails($this->_iId);
-        $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
-        if ($this->_updateFile()) {
-					$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
-
-          Logs::insert($this->_aRequest['controller'],
-											$this->_aRequest['action'],
-											(int) $this->_iId,
-											$this->_aSession['user']['id']);
-
-          return Helper::successMessage(I18n::get('success.update'), $sRedirectPath);
-        }
-        else
-          return Helper::errorMessage(I18n::get('error.sql'), $sRedirectPath);
-      }
-      else
-        return $this->_showFormFileTemplate();
+      return isset($this->_aRequest['updatefile_galleries']) ?
+              $this->_updateFile() :
+              $this->_showFormFileTemplate();
     }
   }
 
   /**
    * Update a gallery entry.
    *
-   * Check if required data is given or throw an error instead.
-   * If data is given, calls _destroyFile.
+   * Activate model, Update data in the database and redirect afterwards.
    *
    * @access private
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
   private function _updateFile() {
-    if (isset($this->_aRequest['updatefile_galleries']))
-      return $this->_oModel->updateFile($this->_iId) === true;
-    else {
-      $this->_aError['file'] = I18n::get('error.form.missing.file');
+  //  $this->_setError('content');
+
+    if ($this->_aError)
       return $this->_showFormFileTemplate();
+
+    $aDetails = $this->_oModel->getFileDetails($this->_iId);
+    $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
+
+    if ($this->_oModel->updateFile($this->_iId) === true) {
+			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
+      Logs::insert(	$this->_aRequest['controller'],
+										$this->_aRequest['action'],
+										(int) $this->_aRequest['id'],
+										$this->_aSession['user']['id']);
+
+      return Helper::successMessage(I18n::get('success.update'), $sRedirectPath);
     }
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirectPath);
   }
 
   /**
