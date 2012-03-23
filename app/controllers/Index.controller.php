@@ -463,7 +463,6 @@ class Index {
   *
   * @access public
   * @return string $sCachedHTML The whole HTML code of our application.
-  *
   */
   public function show() {
     # Set a caching / compile ID

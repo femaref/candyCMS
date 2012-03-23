@@ -19,7 +19,7 @@ use PDO;
 
 class Calendars extends Main {
 
-	/**
+  /**
 	 * Get calendar data.
 	 *
 	 * @access private

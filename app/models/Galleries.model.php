@@ -21,6 +21,7 @@ use PDO;
 require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
 class Galleries extends Main {
+
   /**
    *
    * @access private

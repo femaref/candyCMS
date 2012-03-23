@@ -17,7 +17,7 @@ use CandyCMS\Helper\I18n as I18n;
 
 class Calendars extends Main {
 
-	/**
+  /**
 	 * Show calendar overview.
 	 *
 	 * @access protected

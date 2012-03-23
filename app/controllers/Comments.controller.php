@@ -153,7 +153,10 @@ class Comments extends Main {
         #this also clears cache for our comments, since they are stored in the blogs namespace
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
-        Logs::insert('comments', 'create', Helper::getLastEntry('comments'), $this->_aSession['user']['id']);
+        Logs::insert( 'comments',
+                'create',
+                Helper::getLastEntry('comments'),
+                $this->_aSession['user']['id']);
 
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }
@@ -176,7 +179,7 @@ class Comments extends Main {
       #this also clears cache for our comments, since they are stored in the blogs namespace
       $this->oSmarty->clearCacheForController('blogs');
 
-      Logs::insert(	'comment',
+      Logs::insert( 'comments',
 										'destroy',
 										(int) $this->_aRequest['id'],
 										$this->_aSession['user']['id']);
