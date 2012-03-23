@@ -411,22 +411,22 @@ class Helper {
 	 *
 	 * @static
 	 * @access public
-	 * @param string $sStr string to format
+	 * @param mixed $mStr string to format
 	 * @param string $sHighlight string to highlight
 	 * @see plugins/controllers/Bbcode.controller.php
 	 * @return string $sStr formatted string
 	 *
 	 */
-  public static function formatOutput($sStr, $sHighlight = '') {
+  public static function formatOutput($mStr, $sHighlight = '') {
     if ($sHighlight)
-      $sStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $sStr);
+      $mStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $mStr);
 
     if (class_exists('\CandyCMS\Plugin\Bbcode') == true) {
       $oBbcode = new Bbcode();
-      return $oBbcode->getFormatedText($sStr);
+      return $oBbcode->getFormatedText($mStr);
     }
 
-		return $sStr;
+		return $mStr;
   }
 
 	/**

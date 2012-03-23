@@ -370,7 +370,8 @@ class Users extends Main {
     if ($this->_aSession['user']['id'] == 0)
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions/create');
 
-    elseif ($this->_aSession['user']['id'] !== $this->_iId && $this->_aSession['user']['role'] < 4)
+    # Bugfix
+    elseif ($this->_aSession['user']['id'] <> $this->_iId && $this->_aSession['user']['role'] < 4)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
     else
