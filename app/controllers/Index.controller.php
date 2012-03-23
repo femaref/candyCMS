@@ -16,9 +16,9 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Dispatcher as Dispatcher;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use CandyCMS\Plugin\Controller\Cronjob as Cronjob;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use Routes;
 use sfYaml;
 
@@ -460,11 +460,12 @@ class Index {
   }
 
   /**
-  * Show the application.tpl with all header and footer data such as meta tags etc.
-  *
-  * @access public
-  * @return string $sCachedHTML The whole HTML code of our application.
-  */
+   * Show the application.tpl with all header and footer data such as meta tags etc.
+   *
+   * @access public
+   * @return string $sCachedHTML The whole HTML code of our application.
+   *
+   */
   public function show() {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.

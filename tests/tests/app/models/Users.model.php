@@ -19,22 +19,23 @@ use \CandyCMS\Model\Sessions as Sessions;
 
 class UnitTestOfUserModel extends CandyUnitTest {
 
-  public $sToken;
+  public $oSession;
 
   function setUp() {
 
     $this->aRequest = array(
-        'email' => 'email@example.com',
-        'password' => 'Password',
-        'name' => 'Name',
-        'content' => 'Content',
-        'surname' => 'Surname',
+        'email'         => 'email@example.com',
+        'password'      => 'Password',
+        'name'          => 'Name',
+        'content'       => 'Content',
+        'surname'       => 'Surname',
         'receive_newsltter' => 0,
-        'role' => 0,
-        'use_gravatar' => 0,
-        'section' => 'user');
+        'role'          => 0,
+        'use_gravatar'  => 0,
+        'controller'    => 'users');
 
     $this->oObject = new Users($this->aRequest, $this->aSession);
+    $this->oSession = new Sessions($this->aRequest, $this->aSession);
   }
 
   function testFullFeaturedUserCreationVerificationAndDeletion() {
@@ -65,26 +66,24 @@ class UnitTestOfUserModel extends CandyUnitTest {
     $this->assertIsA($this->oObject->getLoginData(), 'array');
 
     # Get user token.
-    $this->sToken = $this->oObject->getToken(false);
-    $this->assertIsA($this->sToken, 'string');
+    $sToken = $this->oObject->getToken(false);
+    $this->assertIsA($sToken, 'string');
 
-    $this->assertIsA($this->oObject->getUserByToken($this->sToken), 'array');
+    $this->assertIsA($this->oObject->getUserByToken($sToken), 'array');
 
-    /** *****************************************************
+    /*******************************************************
      * Session verification test start
-     * **************************************************** */
+     * *****************************************************/
 
     # Try to login, but there's still the verification code.
-    $this->oSession = new Sessions($this->aRequest, $this->aSession);
     $this->assertFalse($this->oSession->create(), 'Session created.');
 
     # Resend verification data. Works, because it's not empty.
-    $this->oSession = new Sessions($this->aRequest, $this->aSession);
     $this->assertIsA($this->oSession->resendVerification(), 'array');
 
-    /** *****************************************************
+    /*******************************************************
      * Session verification test end
-     * **************************************************** */
+     * *****************************************************/
 
     # Try to verify the verification_code.
     $this->assertFalse($this->oObject->verifyEmail('000100010001'));
@@ -94,30 +93,29 @@ class UnitTestOfUserModel extends CandyUnitTest {
     $this->assertIsA($this->oObject->getActivationData(), 'array');
 
     # Update user.
-    $this->assertTrue($this->oObject->update($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' updated.');
+    $this->assertTrue($this->oObject->update($this->iLastInsertId));
 
-    /** *****************************************************
+    # Update Gravatar
+    $this->assertTrue($this->oObject->updateGravatar($this->iLastInsertId));
+
+    /*******************************************************
      * Session verification test start
-     * **************************************************** */
+     * *****************************************************/
 
     # Create a session with existing user data.
-    $this->oSession = new Sessions($this->aRequest, $this->aSession);
     $this->assertTrue($this->oSession->create($this->aRequest));
 
     # We try to resend the password.
-    $this->oSession = new Sessions($this->aRequest, $this->aSession);
     $this->assertTrue($this->oSession->resendPassword());
 
     # We try to resend the verification. Verification code is already empty.
-    $this->oSession = new Sessions($this->aRequest, $this->aSession);
     $this->assertFalse($this->oSession->resendVerification());
 
-    /*     * *****************************************************
+    /*******************************************************
      * Session verification test end
-     * **************************************************** */
+     * *****************************************************/
 
     # Destory our built user.
-    $this->assertTrue($this->oObject->destroy($this->iLastInsertId), 'User #' . $this->iLastInsertId . ' destroyed.');
+    $this->assertTrue($this->oObject->destroy($this->iLastInsertId));
   }
-
 }

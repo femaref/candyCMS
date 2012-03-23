@@ -154,9 +154,9 @@ class Comments extends Main {
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         Logs::insert( 'comments',
-                'create',
-                Helper::getLastEntry('comments'),
-                $this->_aSession['user']['id']);
+                      'create',
+                      Helper::getLastEntry('comments'),
+                      $this->_aSession['user']['id']);
 
         return Helper::successMessage(I18n::get('success.create'), $sRedirect);
       }

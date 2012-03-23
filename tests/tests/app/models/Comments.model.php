@@ -11,6 +11,7 @@
  */
 
 require_once PATH_STANDARD . '/app/models/Comments.model.php';
+require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
 
 use \CandyCMS\Model\Comments as Comments;
 
@@ -23,7 +24,7 @@ class UnitTestOfCommentModel extends CandyUnitTest {
         'name'			=> 'Name',
         'email'			=> 'email@example.com',
         'content'		=> 'Content',
-        'parent_id' => 0);
+        'parent_id' => '666');
 
     $this->oObject = new Comments($this->aRequest, $this->aSession);
   }
@@ -37,6 +38,10 @@ class UnitTestOfCommentModel extends CandyUnitTest {
 
   function testGetData() {
     $this->assertIsA($this->oObject->getData(0, 1, 1), 'array');
+  }
+
+  function testGetParentId() {
+    $this->assertEqual($this->oObject->getParentId($this->iLastInsertId), '666');
   }
 
   function testDestroy() {

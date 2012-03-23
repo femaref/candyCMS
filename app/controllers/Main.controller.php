@@ -16,9 +16,9 @@ namespace CandyCMS\Controller;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use CandyCMS\Plugin\Bbcode as Bbcode;
 use CandyCMS\Plugin\FacebookCMS as FacebookCMS;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use MCAPI;
 
 require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
@@ -342,7 +342,6 @@ abstract class Main {
 	}
 
 	/**
-	 *
 	 * Give back the page content (HTML).
 	 *
 	 * @access public
@@ -388,12 +387,13 @@ abstract class Main {
 	 *
 	 */
 	protected function _setError($sField, $sMessage = '') {
-    if ($sField === 'file' || $sField === 'image') {
+    if ($sField == 'file' || $sField == 'image') {
       if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name']))
           $this->_aError[$sField] = $sMessage ?
                 $sMessage :
                 I18n::get('error.form.missing.file');
     }
+
     else {
       if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
           $sError = I18n::get('error.form.missing.' . strtolower($sField)) ?
@@ -403,10 +403,10 @@ abstract class Main {
       if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
           $sError = $sError ? $sError : I18n::get('error.mail.format');
 
-      if ($sError) $this->_aError[$sField] = !$sMessage ?
-                $sError :
-                $sMessage;
+      if ($sError)
+        $this->_aError[$sField] = !$sMessage ? $sError : $sMessage;
     }
+
     return $this;
   }
 
@@ -495,14 +495,15 @@ abstract class Main {
    * Clear all Caches for given Controllers
    *
    * @access private
-   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
+   * @param string|array $mAdditionalCaches specify aditional caches to clear on success
    *
    */
-  private function _clearCaches($aAdditionalCaches) {
-    if (gettype($aAdditionalCaches) === 'string')
-      $this->oSmarty->clearCacheForController($aAdditionalCaches);
+  private function _clearCaches($mAdditionalCaches) {
+    if (gettype($mAdditionalCaches) === 'string')
+      $this->oSmarty->clearCacheForController($mAdditionalCaches);
+
     else
-      foreach ($aAdditionalCaches as $sCache)
+      foreach ($mAdditionalCaches as $sCache)
         $this->oSmarty->clearCacheForController($sCache);
   }
 
@@ -513,11 +514,11 @@ abstract class Main {
    * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
-   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
+   * @param string|array $mAdditionalCaches specify aditional caches to clear on success
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _create($aAdditionalCaches = null) {
+  protected function _create($mAdditionalCaches = null) {
     $this->_setError('title');
 
     if ($this->_aError)
@@ -525,9 +526,10 @@ abstract class Main {
 
     elseif ($this->_oModel->create() === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
       # clear additional caches if given
-      if ($aAdditionalCaches)
-        $this->_clearCaches($aAdditionalCaches);
+      if ($mAdditionalCaches)
+        $this->_clearCaches($mAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
@@ -536,6 +538,7 @@ abstract class Main {
 
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
     }
+
     else
       return Helper::errorMessage(I18n::get('error.sql.query'), '/' . $this->_aRequest['controller']);
   }
@@ -546,11 +549,11 @@ abstract class Main {
    * Activate model, insert data into the database and redirect afterwards.
    *
    * @access protected
-   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
+   * @param string|array $mAdditionalCaches specify aditional caches to clear on success
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _update($aAdditionalCaches = null) {
+  protected function _update($mAdditionalCaches = null) {
     $this->_setError('title');
 
     $sRedirectURL = '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'];
@@ -560,9 +563,10 @@ abstract class Main {
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
       # clear additional caches if given
-      if ($aAdditionalCaches)
-        $this->_clearCaches($aAdditionalCaches);
+      if ($mAdditionalCaches)
+        $this->_clearCaches($mAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
@@ -582,16 +586,17 @@ abstract class Main {
    * Activate model, delete data from database and redirect afterwards.
    *
    * @access protected
-   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
+   * @param string|array $mAdditionalCaches specify aditional caches to clear on success
    * @return boolean status of model action
    *
    */
-  protected function _destroy($aAdditionalCaches = null) {
+  protected function _destroy($mAdditionalCaches = null) {
     if ($this->_oModel->destroy($this->_iId) === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
       # clear additional caches if given
-      if ($aAdditionalCaches)
-        $this->_clearCaches($aAdditionalCaches);
+      if ($mAdditionalCaches)
+        $this->_clearCaches($mAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
