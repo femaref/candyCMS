@@ -494,6 +494,22 @@ abstract class Main {
             $this->_destroy();
   }
 
+
+  /**
+   * Clear all Caches for given Controllers
+   *
+   * @access private
+   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
+   *
+   */
+  private function _clearCaches($aAdditionalCaches) {
+    if (gettype($aAdditionalCaches) === 'string')
+      $this->oSmarty->clearCacheForController($aAdditionalCaches);
+    else
+      foreach ($aAdditionalCaches as $sCache)
+        $this->oSmarty->clearCacheForController($sCache);
+  }
+
   /**
    * Create an entry.
    *
@@ -501,11 +517,11 @@ abstract class Main {
    * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
-   * @param $bRedirect default: true whether the redirect should happen
+   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _create($bRedirect = true) {
+  protected function _create($aAdditionalCaches = null) {
     $this->_setError('title');
 
     if ($this->_aError)
@@ -513,16 +529,19 @@ abstract class Main {
 
     elseif ($this->_oModel->create() === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      # clear additional caches if given
+      if ($aAdditionalCaches)
+        $this->_clearCaches($aAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
               $this->_oModel->getLastInsertId($this->_aRequest['controller']),
               $this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.create'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+      return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
     }
     else
-      return Helper::errorMessage(I18n::get('error.sql.query'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+      return Helper::errorMessage(I18n::get('error.sql.query'), '/' . $this->_aRequest['controller']);
   }
 
   /**
@@ -531,31 +550,34 @@ abstract class Main {
    * Activate model, insert data into the database and redirect afterwards.
    *
    * @access protected
-   * @param $bRedirect default: true whether the redirect should happen
+   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _update($bRedirect = true) {
+  protected function _update($aAdditionalCaches = null) {
     $this->_setError('title');
+
+    $sRedirectURL = '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'];
 
     if ($this->_aError)
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      # clear additional caches if given
+      if ($aAdditionalCaches)
+        $this->_clearCaches($aAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
               (int) $this->_aRequest['id'],
               $this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.update'),
-                      $bRedirect ? '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'] : '');
+      return Helper::successMessage(I18n::get('success.update'), $sRedirectURL);
     }
 
     else
-      return Helper::errorMessage(I18n::get('error.sql'),
-                      $bRedirect ? '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'] : '');
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirectURL);
   }
 
   /**
@@ -564,24 +586,27 @@ abstract class Main {
    * Activate model, delete data from database and redirect afterwards.
    *
    * @access protected
-   * @param $bRedirect default: true whether the redirect should happen
+   * @param $aAdditionalCaches string|array specify aditional caches to clear on success
    * @return boolean status of model action
    *
    */
-  protected function _destroy($bRedirect = true) {
+  protected function _destroy($aAdditionalCaches = null) {
     if ($this->_oModel->destroy($this->_iId) === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      # clear additional caches if given
+      if ($aAdditionalCaches)
+        $this->_clearCaches($aAdditionalCaches);
 
       Logs::insert($this->_aRequest['controller'],
               $this->_aRequest['action'],
               $this->_iId,
               $this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.destroy'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
     }
 
     else
-      return Helper::errorMessage(I18n::get('error.sql'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
   }
 
 	/**

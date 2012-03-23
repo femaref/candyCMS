@@ -101,12 +101,7 @@ class Contents extends Main {
 	protected function _create() {
 		$this->_setError('content');
 
-    $bReturnValue = parent::_create(false);
-
-    if ($bReturnValue)
-      $this->oSmarty->clearCacheForController('searches');
-
-    return Helper::redirectTo('/' . $this->_aRequest['controller']);
+    return parent::_create('searches');
 	}
 
 	/**
@@ -119,12 +114,7 @@ class Contents extends Main {
 	protected function _update() {
 		$this->_setError('content');
 
-    $bReturnValue = parent::_update(false);
-
-    if ($bReturnValue)
-      $this->oSmarty->clearCacheForController('searches');
-
-    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+    return parent::_update('searches');
 	}
 
   /**
@@ -135,11 +125,6 @@ class Contents extends Main {
 	 *
 	 */
 	protected function _destroy() {
-    $bReturnValue = parent::_destroy(false);
-
-    if ($bReturnValue)
-      $this->oSmarty->clearCacheForController('searches');
-
-    return Helper::redirectTo('/' . $this->_aRequest['controller']);
+    return parent::_destroy('searches');
 	}
 }
