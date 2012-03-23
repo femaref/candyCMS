@@ -157,10 +157,12 @@
           <div class='controls'>
             <input name='password_new2' id='input-password_new2' type='password'
                   class='span4 required' required />
+            {if isset($error.password_new2)}<span class='help-inline'>{$error.password_new2}</span>{/if}
           </div>
         </div>
         <div class='form-actions'>
           <input type='submit' class='btn btn-primary' value='{$lang.users.label.password.create}' />
+          <input type='hidden' value='formdata' name='update_password' />
           <input type='reset' class='btn' value='{$lang.global.reset}' />
         </div>
       </form>
