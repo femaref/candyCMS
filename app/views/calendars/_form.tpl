@@ -2,8 +2,9 @@
   <div class='page-header'>
     <h1>{$lang.global.calendar}</h1>
   </div>
-  <form action='/{$_REQUEST.controller}/{$_REQUEST.action}' method='post' class='form-horizontal'>
-    <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
+  <form method='post' class='form-horizontal'
+        action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}{$_REQUEST.action}'>
+     <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
       <label for='input-title'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
       </label>

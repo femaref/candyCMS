@@ -2,8 +2,8 @@
   <div class='page-header'>
     <h1>{$lang.global.download}</h1>
   </div>
-  <form action='/{$_REQUEST.controller}/{$_REQUEST.action}' method='post'
-        enctype='multipart/form-data' class='form-horizontal'>
+  <form method='post' class='form-horizontal' enctype='multipart/form-data'
+        action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}{$_REQUEST.action}'>
     {if $_REQUEST.action == 'create'}
       <div class='control-group{if isset($error.file)} alert alert-error{/if}'>
         <label for='input-file' class='control-label'>

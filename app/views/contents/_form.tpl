@@ -8,7 +8,8 @@
       {/if}
     </h1>
   </div>
-  <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.action}' class='form-horizontal'>
+  <form  method='post' class='form-horizontal'
+        action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}{$_REQUEST.action}'>
     <fieldset>
       <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
         <label for='input-title' class='control-label'>
