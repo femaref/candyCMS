@@ -514,8 +514,9 @@ class Index {
       $oSmarty->assign('_content_', $oDispatcher->oController->getContent());
       $oSmarty->assign('_title_', $oDispatcher->oController->getTitle());
       $oSmarty->assign('_update_available_', $this->_checkForNewVersion());
-      $oSmarty->setTemplateDir($sTemplateDir);
 
+      $oSmarty->setTemplateDir($sTemplateDir);
+      $oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_OFF);
       $sCachedHTML = $oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
 
