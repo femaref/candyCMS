@@ -33,9 +33,9 @@ class Comments extends Main {
     $this->oPagination = new Pagination($this->_aRequest, $iEntries, $iLimit);
 
     try {
-      $sOrder = defined('COMMENTS_SORTING') && (COMMENTS_SORTING == 'ASC' || COMMENTS_SORTING == "DESC") ?
-                  COMMENTS_SORTING :
-                  'ASC';
+      $sOrder = defined('COMMENTS_SORTING') && (COMMENTS_SORTING == 'ASC' || COMMENTS_SORTING == 'DESC') ?
+              COMMENTS_SORTING :
+              'ASC';
 
       $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
