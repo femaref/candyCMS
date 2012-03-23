@@ -119,6 +119,7 @@ class Users extends Main {
 	 * Build form template to create or update a user.
 	 *
 	 * @access protected
+   * @param boolean $bUseRequest whether the Displayed Data should be overwritten by Query Result
 	 * @return string HTML content
 	 *
 	 */
@@ -160,10 +161,25 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 * @todo _updateAvatar?
 	 *
 	 */
 	public function updateAvatar() {
+    return isset($this->_aRequest['create_avatar']) ?
+            $this->_updateAvatar() :
+            $this->_showFormTemplate();
+  }
+
+	/**
+	 * Upload user profile image.
+   *
+   * Check for required Fields, show Form if Fields are missing,
+   * otherwise upload new Avatar, unset Gravatar on success and redirect to user Profile
+	 *
+	 * @access protected
+	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
+	 *
+	 */
+	public function _updateAvatar() {
     $this->_setError('terms', I18n::get('error.file.upload'));
     $this->_setError('image');
 
@@ -193,29 +209,43 @@ class Users extends Main {
 	 *
 	 */
   public function updatePassword() {
+    return isset($this->_aRequest['update_password']) ?
+            $this->_updatePassword() :
+            $this->_showFormTemplate();
+  }
+
+	/**
+	 * Update a users password.
+	 *
+   * Check for required Fields, show Form if Fields are missing or wrong,
+   * otherwise change the password and redirect to user Profile
+	 *
+	 * @access protected
+	 * @return string HTML content
+	 *
+	 */
+  protected function _updatePassword() {
     # Check if old password is set
-    if (empty($this->_aRequest['password_old']))
-      $this->_aError['password_old'] = I18n::get('error.user.update.password.old.empty');
-
+    $this->_setError('password_old', I18n::get('error.user.update.password.old.empty'));
     # Check if new password fields aren't empty
-    if (empty($this->_aRequest['password_new']) || empty($this->_aRequest['password_new2']))
-      $this->_aError['password_new'] = I18n::get('error.user.update.password.new.empty');
+    $this->_setError('password_new', I18n::get('error.user.update.password.new.empty'));
+    $this->_setError('password_new2', I18n::get('error.user.update.password.new.empty'));
 
-    # Check if old password is correct
-    if (!empty($this->_aRequest['password_old']) &&
-            md5(RANDOM_HASH . $this->_aRequest['password_old']) !==
-            $this->_aSession['user']['password'])
+    # Check if old password is correct, emptyness is checked by _setError
+    if (md5(RANDOM_HASH . $this->_aRequest['password_old']) !== $this->_aSession['user']['password'])
       $this->_aError['password_old'] = I18n::get('error.user.update.password.old.wrong');
 
     # Check if new password fields match
     if ($this->_aRequest['password_new'] !== $this->_aRequest['password_new2'])
       $this->_aError['password_new'] = I18n::get('error.user.update.password.new.match');
 
+    $sRedirectURL = '/' . $this->_aRequest['controller'] . '/';
+
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->updatePassword((int) $this->_iId) === true) {
-      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['user']['id'] ?
+      $this->_iId = isset($this->_aRequest['id']) ?
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
@@ -224,12 +254,10 @@ class Users extends Main {
 										(int) $this->_iId,
 										$this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] .
-							'/' . $this->_iId);
+      return Helper::successMessage(I18n::get('success.update'), $sRedirectURL . $this->_iId);
     }
     else
-      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
-							$this->_iId);
+      return Helper::errorMessage(I18n::get('error.sql'), $sRedirectURL . $this->_iId);
   }
 
 	/**
@@ -423,41 +451,48 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return boolean status message
-   * @todo check if there is an addon for this model
-   * @todo _destroy
-	 * @todo rewrite?
 	 *
 	 */
-	public function destroy() {
+  public function destroy() {
+    return (isset($this->_aRequest['destroy_users']) && $this->_aSession['user']['id'] == $this->_iId) ||
+              $this->_aSession['user']['role'] == 4 ?
+            $this->_destroy() :
+            Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+  }
+
+	/**
+	 * Delete a user account.
+   *
+   * Check if the ids match or if the user is admin,
+   * delete the user from database and redirect afterwards
+	 *
+	 * @access protected
+	 * @return boolean status message
+	 *
+	 */
+	protected function _destroy() {
 		require PATH_STANDARD . '/app/helpers/Upload.helper.php';
-    $aUser = \CandyCMS\Model\Users::getUserNamesAndEmail($this->_iId);
+    $aUser = $this->_oModel->getUserNamesAndEmail($this->_iId);
 
-    # We are a user and want to delete our account
-    if (isset($this->_aRequest['destroy_user']) && $this->_aSession['user']['id'] == $this->_iId) {
-      # Password matches with user password
-      if (md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['user']['password']) {
-        if ($this->_oModel->destroy($this->_iId) === true) {
-					$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+    # is form submit and do ids match?
+    if (isset($this->_aRequest['destroy_users']) && $this->_aSession['user']['id'] == $this->_iId) {
+      $bCorrectPassword = md5(RANDOM_HASH . $this->_aRequest['password']) === $this->_aSession['user']['password'];
+      $sSuccessRedirectUrl = '/';
+      $sFailureRedirectUrl = '/' . $this->_aRequest['controller'] . '/' . $this->_aSession['user']['id'] . '/update#user-destroy';
+    }
+    # admin can delete everybody
+    else if ($this->_aSession['user']['role'] == 4) {
+      $bCorrectPassword = true;
+      $sSuccessRedirectUrl = '/' . $this->_aRequest['controller'];
+      $sFailureRedirectUrl = $sSuccessRedirectUrl;
+    }
+    # No admin and not the active user
+    else
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-          # Unsubscribe from newsletter
-          $this->_unsubscribeFromNewsletter($aUser['email']);
-
-          # Destroy profile image
-					Upload::destroyAvatarFiles($this->_iId);
-
-          return Helper::successMessage(I18n::get('success.destroy'), '/');
-        }
-        else
-          return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/update');
-
-      } else
-        return Helper::errorMessage(I18n::get('error.user.destroy.password'), '/' .
-                $this->_aRequest['controller'] . '/update#user-destroy');
-
-      # We are admin and can delete users
-    } elseif ($this->_aSession['user']['role'] == 4) {
+    if ($bCorrectPassword === true) {
       if ($this->_oModel->destroy($this->_iId) === true) {
-				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+        $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         # Unsubscribe from newsletter
         $this->_unsubscribeFromNewsletter($aUser['email']);
@@ -465,20 +500,13 @@ class Users extends Main {
         # Destroy profile image
         Upload::destroyAvatarFiles($this->_iId);
 
-        Logs::insert( $this->_aRequest['controller'],
-                $this->_aRequest['action'],
-                (int) $this->_iId,
-                $this->_aSession['user']['id']);
-
-        return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
+        return Helper::successMessage(I18n::get('success.destroy'), $sSuccessRedirectUrl);
       }
       else
-        return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+        return Helper::errorMessage(I18n::get('error.sql'), $sFailureRedirectUrl);
     }
-
-    # No admin and not the active user
     else
-      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+      return Helper::errorMessage(I18n::get('error.user.destroy.password'), $sFailureRedirectUrl);
   }
 
 	/**

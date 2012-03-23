@@ -37,7 +37,6 @@ class Comments extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo isCached?!
    *
    */
   protected function _show() {
