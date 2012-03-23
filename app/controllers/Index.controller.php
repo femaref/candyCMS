@@ -18,6 +18,7 @@ use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\I18n as I18n;
 use CandyCMS\Plugin\Controller\Cronjob as Cronjob;
 use CandyCMS\Plugin\Controller\FacebookCMS as FacebookCMS;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use Routes;
 use sfYaml;
 
@@ -479,6 +480,8 @@ class Index {
                 substr(md5(CURRENT_URL), 0, 10));
 
     # Start the dispatcher and grab the controller.
+    $oSmarty = SmartySingleton::getInstance();
+    $oSmarty->setRequestAndSession($this->_aRequest, $this->_aSession);
     $oDispatcher = & new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
     $oDispatcher->getController();
     $oDispatcher->getAction();
@@ -494,7 +497,6 @@ class Index {
 
       # Get flash messages (success and error)
       $aFlashMessages = $this->_getFlashMessage();
-      $oSmarty = $oDispatcher->oController->oSmarty;
       $oSmarty->assign('_flash_type_', $aFlashMessages['type']);
       $oSmarty->assign('_flash_message_', $aFlashMessages['message']);
       $oSmarty->assign('_flash_headline_', $aFlashMessages['headline']);

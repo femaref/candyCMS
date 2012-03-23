@@ -239,10 +239,6 @@ abstract class Main {
       $this->oSmarty->clearCompiledTemplate();
     }
 
-    # Global variables
-		$this->oSmarty->assign('_REQUEST', $this->_aRequest);
-		$this->oSmarty->assign('_SESSION', $this->_aSession);
-
 		return $this->oSmarty;
 	}
 

@@ -63,4 +63,12 @@ class UnitTestOfSmartySingletonHelper extends CandyUnitTest {
     $aPaths = $this->oObject->clearCacheForController('mytest');
     $this->assertFalse(file_exists(PATH_STANDARD . '/' . CACHE_DIR . '/test/mytest/hello/'));
   }
+
+  function testSetRequestAndSession() {
+    $this->assertNull($this->oObject->getTemplateVars('_REQUEST'));
+    $this->assertNull($this->oObject->getTemplateVars('_SESSION'));
+    $this->oObject->setRequestAndSession($this->aRequest, $this->aSession);
+    $this->assertNotNull($this->oObject->getTemplateVars('_REQUEST'));
+    $this->assertNotNull($this->oObject->getTemplateVars('_SESSION'));
+  }
 }

@@ -36,17 +36,29 @@ class SmartySingleton extends Smarty {
    *
    */
   public static function getInstance() {
-    if (self::$_oInstance === null)
+    if (self::$_oInstance === null) {
       self::$_oInstance = new self();
+    }
 
     return self::$_oInstance;
+  }
+
+  /**
+   * Assign the Session and the Request Object to Smarty
+   *
+   * @param array $aRequest the Request Array
+   * @param array $aSession  the Session Array
+   * @access public
+   */
+  public function setRequestAndSession(&$aRequest = null, &$aSession = null) {
+		$this->assignByRef('_REQUEST', $aRequest);
+		$this->assignByRef('_SESSION', $aSession);
   }
 
   /**
    * Set all default smarty values.
 	 *
 	 * @access public
-   * @todo add session / request stuff from main
 	 *
    */
   public function __construct() {
