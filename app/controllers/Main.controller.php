@@ -501,28 +501,29 @@ abstract class Main {
    * If data is given, activate the model, insert them into the database and redirect afterwards.
    *
    * @access protected
+   * @param $bRedirect default: true whether the redirect should happen
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _create() {
-		$this->_setError('title');
+  protected function _create($bRedirect = true) {
+    $this->_setError('title');
 
-		if ($this->_aError)
-			return $this->_showFormTemplate();
+    if ($this->_aError)
+      return $this->_showFormTemplate();
 
-		elseif ($this->_oModel->create() === true) {
+    elseif ($this->_oModel->create() === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
-			Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										$this->_oModel->getLastInsertId($this->_aRequest['controller']),
-										$this->_aSession['user']['id']);
+      Logs::insert($this->_aRequest['controller'],
+              $this->_aRequest['action'],
+              $this->_oModel->getLastInsertId($this->_aRequest['controller']),
+              $this->_aSession['user']['id']);
 
-			return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql.query'), '/' . $this->_aRequest['controller']);
-	}
+      return Helper::successMessage(I18n::get('success.create'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+    }
+    else
+      return Helper::errorMessage(I18n::get('error.sql.query'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
+  }
 
   /**
    * Update an entry.
@@ -530,30 +531,31 @@ abstract class Main {
    * Activate model, insert data into the database and redirect afterwards.
    *
    * @access protected
+   * @param $bRedirect default: true whether the redirect should happen
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-  protected function _update() {
+  protected function _update($bRedirect = true) {
     $this->_setError('title');
 
     if ($this->_aError)
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->update((int) $this->_aRequest['id']) === true) {
-			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
-      Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										(int) $this->_aRequest['id'],
-										$this->_aSession['user']['id']);
+      Logs::insert($this->_aRequest['controller'],
+              $this->_aRequest['action'],
+              (int) $this->_aRequest['id'],
+              $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'),
-              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+                      $bRedirect ? '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'] : '');
     }
 
     else
       return Helper::errorMessage(I18n::get('error.sql'),
-              '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+                      $bRedirect ? '/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id'] : '');
   }
 
   /**
@@ -562,23 +564,24 @@ abstract class Main {
    * Activate model, delete data from database and redirect afterwards.
    *
    * @access protected
+   * @param $bRedirect default: true whether the redirect should happen
    * @return boolean status of model action
    *
    */
-  protected function _destroy() {
-    if($this->_oModel->destroy($this->_iId) === true) {
-			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+  protected function _destroy($bRedirect = true) {
+    if ($this->_oModel->destroy($this->_iId) === true) {
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
-      Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										$this->_iId,
-										$this->_aSession['user']['id']);
+      Logs::insert($this->_aRequest['controller'],
+              $this->_aRequest['action'],
+              $this->_iId,
+              $this->_aSession['user']['id']);
 
-      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
+      return Helper::successMessage(I18n::get('success.destroy'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
     }
 
     else
-      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+      return Helper::errorMessage(I18n::get('error.sql'), $bRedirect ? '/' . $this->_aRequest['controller'] : '');
   }
 
 	/**

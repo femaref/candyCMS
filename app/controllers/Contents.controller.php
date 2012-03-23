@@ -101,7 +101,12 @@ class Contents extends Main {
 	protected function _create() {
 		$this->_setError('content');
 
-		return parent::_create();
+    $bReturnValue = parent::_create(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller']);
 	}
 
 	/**
@@ -114,6 +119,27 @@ class Contents extends Main {
 	protected function _update() {
 		$this->_setError('content');
 
-		return parent::_update();
+    $bReturnValue = parent::_update(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+	}
+
+  /**
+	 * Destroy a content entry.
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _destroy() {
+    $bReturnValue = parent::_destroy(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller']);
 	}
 }

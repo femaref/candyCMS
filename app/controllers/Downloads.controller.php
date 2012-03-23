@@ -124,6 +124,7 @@ class Downloads extends Main {
       $aRetVals = $oUploadFile->uploadFiles('downloads');
       if ($aRetVals[0] === true) {
 				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+        $this->oSmarty->clearCacheForController('searches');
 
         $aIds = $oUploadFile->getIds(false);
         $aExts = $oUploadFile->getExtensions();
@@ -143,4 +144,37 @@ class Downloads extends Main {
         return Helper::errorMessage(I18n::get('error.missing.file'), '/' . $this->_aRequest['controller']);
     }
   }
+
+	/**
+	 * Update a download entry.
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _update() {
+    $bReturnValue = parent::_update(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+	}
+
+  /**
+	 * Destroy a download entry.
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _destroy() {
+    $bReturnValue = parent::_destroy(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller']);
+	}
+
 }

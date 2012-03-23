@@ -73,8 +73,7 @@ class Galleries extends Main {
   protected function _show() {
     # Album images
     if ($this->_iId && !isset($this->_aRequest['album_id']))
-      $this->_showAlbum();
-
+      return $this->_showAlbum();
 
     # Specific image
     elseif ($this->_iId && isset($this->_aRequest['album_id']))
@@ -222,6 +221,7 @@ class Galleries extends Main {
 
     elseif ($this->_oModel->create() === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController('searches');
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
@@ -450,4 +450,39 @@ class Galleries extends Main {
   private function _destroyFile() {
     return $this->_oModel->destroyFile($this->_iId) === true;
   }
+
+	/**
+	 * Update an album .
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _update() {
+		$this->_setError('content');
+
+    $bReturnValue = parent::_update(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['id']);
+	}
+
+  /**
+	 * Destroy an album.
+	 *
+	 * @access protected
+	 * @return boolean status of model action
+	 *
+	 */
+	protected function _destroy() {
+    $bReturnValue = parent::_destroy(false);
+
+    if ($bReturnValue)
+      $this->oSmarty->clearCacheForController('searches');
+
+    return Helper::redirectTo('/' . $this->_aRequest['controller']);
+	}
+
 }
