@@ -431,20 +431,6 @@ class Galleries extends Main {
     }
 
     if ($bReturn === true) {
-      foreach ($aResult as $aRow) {
-        @unlink($sPath . '/32/' . $aRow['file']);
-        @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
-        @unlink($sPath . '/popup/' . $aRow['file']);
-        @unlink($sPath . '/original/' . $aRow['file']);
-      }
-
-      # Destroy Folders
-      @rmdir($sPath . '/32/');
-      @rmdir($sPath . '/' . THUMB_DEFAULT_X);
-      @rmdir($sPath . '/popup');
-      @rmdir($sPath . '/original');
-      @rmdir($sPath);
-
       # Destroy files from database
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
@@ -454,6 +440,16 @@ class Galleries extends Main {
 
         $oQuery->bindParam('album_id', $iId);
         $oQuery->execute();
+
+        $aSizes = array ('32', 'popup', 'original', THUMB_DEFAULT_X);
+        foreach ($aSizes as $sSize) {
+          # destroy files from disk
+          foreach ($aResult as $aRow)
+            @unlink($sPath . '/' . $sSize . '/' . $aRow['file']);
+
+          # Destroy Folders
+          @rmdir($sPath . '/' . $sSize);
+        }
       }
       catch (\PDOException $p) {
         try {
@@ -477,7 +473,9 @@ class Galleries extends Main {
                                           1");
 
         $oQuery->bindParam('album_id', $iId);
-        return $oQuery->execute();
+        $bReturn = $oQuery->execute();
+        @rmdir($sPath);
+        return $bReturn;
       }
       catch (\PDOException $p) {
         try {
@@ -609,14 +607,6 @@ class Galleries extends Main {
     }
 
     if ($bReturn === true) {
-      foreach ($aResult as $aRow) {
-        $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $aRow['album_id']);
-        @unlink($sPath . '/32/' . $aRow['file']);
-        @unlink($sPath . '/' . THUMB_DEFAULT_X . '/' . $aRow['file']);
-        @unlink($sPath . '/popup/' . $aRow['file']);
-        @unlink($sPath . '/original/' . $aRow['file']);
-      }
-
       try {
         $oQuery = $this->_oDb->prepare("DELETE FROM
                                           " . SQL_PREFIX . "gallery_files
@@ -626,7 +616,17 @@ class Galleries extends Main {
                                           1");
 
         $oQuery->bindParam('id', $iId);
-        return $oQuery->execute();
+        $bReturn = $oQuery->execute();
+
+        if ($bReturn) {
+          $aSizes = array ('32', 'popup', 'original', THUMB_DEFAULT_X);
+          foreach ($aResult as $aRow) {
+            $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $aRow['album_id']);
+            foreach ($aSizes as $sSize)
+              @unlink($sPath . '/' . $sSize . '/' . $aRow['file']);
+          }
+        }
+        return $bReturn;
       }
       catch (\PDOException $p) {
         try {
