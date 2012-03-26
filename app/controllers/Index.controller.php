@@ -215,10 +215,8 @@ class Index {
 			$this->_aRequest['controller'] = isset($this->_aRequest['controller']) ? $this->_aRequest['controller'] : $sRoutemap;
 
     # Show files from public folder (robots.txt, human.txt and favicon.ico)
-    if(preg_match('/\./', $this->_aRequest['controller'])) {
-      echo file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']);
-      exit;
-    }
+    if(preg_match('/\./', $this->_aRequest['controller']))
+      exit(file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']));
 
 		return $this->_aRequest;
 	}
@@ -405,7 +403,6 @@ class Index {
    * @access public
    * @see index.php
    * @return array $this->_aSession['user']
-   * @todo check if there are addons for this models
    *
    */
 	public function setUser() {
@@ -414,12 +411,27 @@ class Index {
 
     # Override them with user data
     # Get user data by token
-    if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
-      $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+    if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
+      if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
+        require_once PATH_STANDARD . '/addons/models/Users.model.php';
+        $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      }
+
+      else {
+        require_once PATH_STANDARD . '/app/models/Users.model.php';
+        $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      }
+    }
 
     # Get user data by session
-    else
+    else {
+      if (file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
+        require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
+        $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
+      }
+
       $aUser = \CandyCMS\Model\Sessions::getUserBySession();
+    }
 
     if (is_array($aUser))
       $this->_aSession['user'] = & array_merge($this->_aSession['user'], $aUser);

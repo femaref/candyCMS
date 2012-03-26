@@ -19,9 +19,9 @@ class TestOfSessionsModel extends UnitTestCase {
   function testConstructor() {
 
     $this->aRequest = array(
-        'email' => 'email@example.com',
-        'password' => 'Password',
-        'section' => 'search');
+        'email'       => 'email@example.com',
+        'password'    => 'Password',
+        'controller'  => 'sessions');
 
     $this->oObject = new Sessions($this->aRequest, $this->aSession);
   }
