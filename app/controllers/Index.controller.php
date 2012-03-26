@@ -412,25 +412,23 @@ class Index {
 
     # Override them with user data
     # Get user data by token
-    if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
-      if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
-        require_once PATH_STANDARD . '/addons/models/Users.model.php';
+    if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
+      require_once PATH_STANDARD . '/addons/models/Users.model.php';
+
+      if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
-      }
-      else {
-        require_once PATH_STANDARD . '/app/models/Users.model.php';
-        $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
-      }
-    }
-
-    # Get user data by session
-    else {
-      if (file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
-        require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
+      else
+        # Get user data by session
         $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
-      }
+    }
+    else {
+      require_once PATH_STANDARD . '/app/models/Users.model.php';
 
-      $aUser = \CandyCMS\Model\Sessions::getUserBySession();
+      if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
+        $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      else
+        # Get user data by session
+        $aUser = \CandyCMS\Model\Sessions::getUserBySession();
     }
 
     if (is_array($aUser))
