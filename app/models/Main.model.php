@@ -178,9 +178,6 @@ abstract class Main {
    * @return array $aData rebuild data
    *
    */
-  protected function _formatForOutput(&$aData, $sController = '', $bNl2br = false) {
-    $aData = '';
-
     $sController = !$sController ? $this->_aRequest['controller'] : $sController;
 
     foreach ($aData as $sColumn => $mData)
@@ -188,43 +185,45 @@ abstract class Main {
 
     # Format data
     if (isset($aData['date'])) {
-      $aData['time'] = Helper::formatTimestamp($aData['date'], 2);
-      $aData['date'] = Helper::formatTimestamp($aData['date'], 1);
-      $aData['date_raw'] = (int) $aData['date'];
-      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
+      $iTimestamp = $aData['date'];
+      $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
+      $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
+      $aData['date_raw'] = (int) $iTimestamp;
+      $aData['date_w3c'] = date('Y-m-d', $iTimestamp);
 
-      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
+      $aData['datetime'] = Helper::formatTimestamp($iTimestamp);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $iTimestamp);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $iTimestamp);
 
       # SEO optimization
+      $iTimestampNow = time();
       # Entry is less than a day old
-      if(time() - $aData['date'] < 86400) {
+      if($iTimestampNow - $iTimestamp < 86400) {
         $aData['changefreq']  = 'hourly';
         $aData['priority']    = '1.0';
       }
       # Entry is younger than a week
-      elseif(time() - $aData['date'] < 86400 * 7) {
+      elseif($iTimestampNow - $iTimestamp < 86400 * 7) {
         $aData['changefreq']  = 'daily';
         $aData['priority']    = '0.9';
       }
       # Entry is younger than a month
-      elseif(time() - $aData['date'] < 86400 * 31) {
+      elseif($iTimestampNow - $iTimestamp < 86400 * 31) {
         $aData['changefreq']  = 'weekly';
         $aData['priority']    = '0.75';
       }
       # Entry is younger than three month
-      elseif(time() - $aData['date'] < 86400 * 90) {
+      elseif($iTimestampNow - $iTimestamp < 86400 * 90) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.6';
       }
       # Entry is younger than half a year
-      elseif(time() - $aData['date'] < 86400 * 180) {
+      elseif($iTimestampNow - $iTimestamp < 86400 * 180) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.4';
       }
       # Entry is younger than a year
-      elseif(time() - $aData['date'] < 86400 * 360) {
+      elseif($iTimestampNow - $iTimestamp < 86400 * 360) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.25';
       }
