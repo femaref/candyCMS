@@ -94,13 +94,15 @@ class Contents extends Main {
       }
     }
 
+    $aInts = array('id', 'uid', 'author_id');
+    $aBools = array('published');
     foreach ($aResult as $aRow) {
       if ($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
         $iId = $aRow['id'];
-        $this->_aData[$iId] = $this->_formatForOutput($aRow);
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts, $aBools);
       }
     }
 

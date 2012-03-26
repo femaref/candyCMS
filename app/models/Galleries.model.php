@@ -102,10 +102,11 @@ class Galleries extends Main {
       $this->_aData = $this->_formatForUpdate($aResult[0]);
 
     else {
+      $aInts = array('id', 'author_id', 'uid', 'files_sum');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'galleries');
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'galleries', $aInts);
         $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($aRow['id'], $bAdvancedImageInformation) : '';
       }
     }
@@ -154,6 +155,7 @@ class Galleries extends Main {
     }
 
     $iLoop = 0;
+    $aInts = array('id', 'album_id', 'author_id');
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
       $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/galleries/' . $aRow['album_id']);
@@ -162,7 +164,7 @@ class Galleries extends Main {
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
       $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'galleries');
+      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'galleries', $aInts);
       $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
       $this->_aThumbs[$iId]['url_32']       = $sUrl32;
       $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;

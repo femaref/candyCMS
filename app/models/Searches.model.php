@@ -33,6 +33,7 @@ class Searches extends Main {
     if (empty($aTables))
       $aTables = array('blogs', 'contents');
 
+    $aInts = array('id', 'author_id');
     foreach ($aTables as $sTable) {
       try {
         $this->oQuery = $this->_oDb->query("SELECT
@@ -64,7 +65,7 @@ class Searches extends Main {
             continue;
 
           $iDate = $aRow['date'];
-          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTable);
+          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $sTable, $aInts);
 					++$iEntries;
         }
 

@@ -54,12 +54,13 @@ class Downloads extends Main {
         exit('SQL error.');
       }
 
+      $aInts = array('id', 'author_id', 'downloads', 'uid');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow);
+        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
         $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/' .
                 $this->_aRequest['controller'] . '/' . $aRow['file']);
       }
@@ -71,7 +72,9 @@ class Downloads extends Main {
                                         FROM
                                           " . SQL_PREFIX . "downloads
                                         WHERE
-                                          id = :id");
+                                          id = :id
+                                        LIMIT
+                                          1");
 
         $oQuery->bindParam('id', $iId);
         $oQuery->execute();

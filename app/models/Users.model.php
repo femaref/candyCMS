@@ -214,16 +214,19 @@ class Users extends Main {
         exit('SQL error.');
       }
 
+      $aInts = array('id', 'role');
+      $aBools = array('use_gravatar', 'receive_newsletter');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'users');
+
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'users', $aInts, $aBools);
         $this->_aData[$iId]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }
     }
     else {
       try {
-				$oQuery = $this->_oDb->prepare("SELECT
+        $oQuery = $this->_oDb->prepare("SELECT
                                           u.*,
                                           s.date as last_login
                                         FROM
@@ -238,21 +241,23 @@ class Users extends Main {
                                           s.date DESC
                                         LIMIT 1");
 
-				$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-				$oQuery->execute();
+        $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+        $oQuery->execute();
 
-				$aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
-			}
+        $aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
+      }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0083 - ' . $p->getMessage());
         exit('SQL error.');
       }
 
-			if ($bUpdate === true)
-				$this->_aData = $this->_formatForUpdate($aRow);
+      if ($bUpdate === true)
+        $this->_aData = $this->_formatForUpdate($aRow);
 
-			else {
-				$this->_aData[1] = $this->_formatForOutput($aRow, 'users');
+      else {
+        $aInts = array('id', 'role');
+        $aBools = array('use_gravatar', 'receive_newsletter');
+        $this->_aData[1] = $this->_formatForOutput($aRow, 'users', $aInts, $aBools);
         $this->_aData[1]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }
     }

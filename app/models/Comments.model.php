@@ -71,9 +71,10 @@ class Comments extends Main {
       exit('SQL error.');
     }
 
+    $aInts = array('id', 'parent_id', 'author_id', 'author_facebook_id', 'user_id');
+    $aBools = array('use_gravatar');
     foreach ($aResult as $aRow) {
-      $iId = $aRow['id'];
-      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blogs');
+      $this->_aData[$aRow['id']] = $this->_formatForOutput($aRow, 'blogs', $aInts, $aBools);
     }
 
     # We crawl the facebook avatars
@@ -131,7 +132,6 @@ class Comments extends Main {
         $iId = $aRow['id'];
         $iAuthorFacebookId = $aRow['author_facebook_id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'blogs');
         $this->_aData[$iId]['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
         $this->_aData[$iId]['author_website'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
       }

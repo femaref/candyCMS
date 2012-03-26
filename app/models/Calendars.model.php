@@ -90,6 +90,7 @@ class Calendars extends Main {
         exit('SQL error.');
       }
 
+      $aInts = array('id', 'author_id');
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
 				$sMonth = I18n::get('global.months.' . $aRow['start_month']);
@@ -99,7 +100,7 @@ class Calendars extends Main {
 				$this->_aData[$sDate]['month']	= $sMonth;
 				$this->_aData[$sDate]['year']		= $sYear;
 
-				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow);
+				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
 				$this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
 				if ($aRow['end_date'] > 0)
@@ -129,7 +130,9 @@ class Calendars extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $this->_aData = $this->_formatForOutput($aRow, 'calendar');
+        $aInts = array('id', 'author_id');
+
+        $this->_aData = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
 
         # Overide for iCalendar specs
         $this->_aData['start_date'] = str_replace('-', '', $aRow['start_date']);
