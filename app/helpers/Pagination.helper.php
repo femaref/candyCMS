@@ -183,7 +183,6 @@ class Pagination {
 
       $this->_oSmarty->assign('_PAGE', $aPage);
 
-//      $this->_oSmarty->setCaching(SmartySingleton::CACHING_OFF);
 			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
 			return $this->_oSmarty->fetch('show.tpl', UNIQUE_ID);
 		}
@@ -198,25 +197,22 @@ class Pagination {
    *
    */
   public function showSurrounding($sController = 'blogs') {
-		if($this->_iPages > 1) {
-			if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
-				$iNext = $this->_iCurrentPage + 1;
+    if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
+      $iNext = $this->_iCurrentPage + 1;
 
-			if ($this->_iCurrentPage > 1)
-				$iPrevious = $this->_iCurrentPage - 1;
+    if ($this->_iCurrentPage > 1)
+      $iPrevious = $this->_iCurrentPage - 1;
 
-      $aPage = array(
-          'entries'     => $this->_iEntries,
-          'limit'       => $this->_iLimit,
-          'next'        => isset($iNext) ? $iNext : '',
-          'previous'    => isset($iPrevious) ? $iPrevious : '',
-          'controller'  => $sController);
+    $aPage = array(
+        'entries'     => $this->_iEntries,
+        'limit'       => $this->_iLimit,
+        'next'        => isset($iNext) ? $iNext : '',
+        'previous'    => isset($iPrevious) ? $iPrevious : '',
+        'controller'  => $sController);
 
-			$this->_oSmarty->assign('_PAGE', $aPage);
+    $this->_oSmarty->assign('_PAGE', $aPage);
 
-//      $this->_oSmarty->setCaching(SmartySingleton::CACHING_OFF);
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
-			return $this->_oSmarty->fetch('surrounding.tpl', UNIQUE_ID);
-		}
+    $this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
+    return $this->_oSmarty->fetch('surrounding.tpl', UNIQUE_ID);
   }
 }

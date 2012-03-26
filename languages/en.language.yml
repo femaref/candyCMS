@@ -17,7 +17,7 @@ global:
   blogs: Blogs
   by: by
   category: Category
-  calendar: Calender
+  calendar: Calendar
   captcha: Captcha
   close: Close
   comments: Comments
@@ -257,7 +257,7 @@ calendars:
     show: Calendar
   info:
     date_format: 'Date format: "YYYY-MM-DD"'
-    ics: 'Download this Event and add it to your Calendar Application'
+    ics: 'Download this event and add it to your calendar application'
   title:
     create: Add appointment
     update: Update appointment
@@ -359,7 +359,7 @@ searches:
     create: Search
     show: "Search results for '%s'"
   info:
-    fail: "There are no results for the term: '<strong>%b</strong>'.<br /><a href='/searches'>Search again.</a>"
+    fail: "There are no results for the term: '<strong>%s</strong>'.<br /><a href='/searches'>Search again.</a>"
 
 sessions:
   password:

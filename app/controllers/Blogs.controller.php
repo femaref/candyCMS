@@ -114,14 +114,14 @@ class Blogs extends Main {
 
     # default blog entry
     elseif ($this->_iId)
-      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . I18n::get('global.blogs');
+      return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . Helper::singleize(I18n::get('global.blogs'));
 
     # show overview with pages
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
       return $iPage > 1 ?
-              I18n::get('global.blog') . ' - ' . I18n::get('global.page') . ' ' . $iPage :
-              I18n::get('global.blog');
+              Helper::singleize(I18n::get('global.blog')) . ' - ' . I18n::get('global.page') . ' ' . $iPage :
+              Helper::singleize(I18n::get('global.blog'));
     }
   }
 
