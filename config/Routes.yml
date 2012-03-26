@@ -10,6 +10,7 @@
 "language/(:alpha)": language=$1
 "mails/(:num)/create": controller=mails&action=create&id=$1
 "medias/(:any)/destroy": controller=medias&action=destroy&file=$1
+"rss/(:alpha)": controller=rss&section=$1&id=$2
 "rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
 "searches/(:any)": controller=searches&search=$1
 "sessions/(password|verification|destroy)": controller=sessions&action=$1
