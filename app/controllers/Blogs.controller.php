@@ -22,8 +22,6 @@ class Blogs extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @todo test caching for overview
-   * @todo implement cache for single entry
    *
    */
   protected function _show() {

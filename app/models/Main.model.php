@@ -176,11 +176,10 @@ abstract class Main {
    * @param array $aInts identifiers, which should be cast to int
    * @param array $aBools identifiers, which should be cast to bool
    * @param string $sController name of the controller we are working in
-	 * @param boolean $bNl2br format string to br
    * @return array $aData rebuild data
    *
    */
-  protected function _formatForOutput(&$aData, $aInts = array('id'), $aBools = null, $sController = '', $bNl2br = false) {
+  protected function _formatForOutput(&$aData, $aInts = array('id'), $aBools = null, $sController = '') {
     $sController = !$sController ? $this->_aRequest['controller'] : $sController;
 
     foreach ($aData as $sColumn => $mData)
@@ -291,9 +290,6 @@ abstract class Main {
       $aData['teaser']  = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
       $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
     }
-
-		if ($bNl2br == true)
-			nl2br($aData['content']);
 
     return $aData;
   }
