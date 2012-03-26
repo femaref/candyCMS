@@ -33,13 +33,15 @@ class Medias extends Main {
 
     else {
       if (isset($this->_aRequest['create_file'])) {
-        $aReturn = $this->_proceedUpload();
-        $iCount = count($aReturn);
+        $aReturn  = $this->_proceedUpload();
+        $iCount   = count($aReturn);
         $bAllTrue = true;
+
         for ($iI = 0; $iI < $iCount; $iI++) {
           if ($aReturn[$iI] === false)
             $bAllTrue = false;
         }
+
  				return $bAllTrue === true ?
 								Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller']) :
 								Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller']);

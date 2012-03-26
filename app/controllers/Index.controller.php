@@ -240,7 +240,6 @@ class Index {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
-			exit;
     }
 
     # There is no request, but there might be a cookie instead.
@@ -362,12 +361,9 @@ class Index {
       $sVersionContent = $sVersionContent > VERSION ? (int) $sVersionContent : '';
     }
 
-    $sUpdateUrl = Helper::createLinkTo('http://www.candycms.com', true);
-    $sLangUpdateAvailable = isset($sVersionContent) && !empty($sVersionContent) ?
-            I18n::get('global.update.available', $sVersionContent, $sUpdateUrl) :
+    return isset($sVersionContent) && !empty($sVersionContent) ?
+            I18n::get('global.update.available', $sVersionContent, Helper::createLinkTo('http://www.candycms.com', true)) :
             '';
-
-    return $sLangUpdateAvailable;
   }
 
   /**
@@ -410,24 +406,25 @@ class Index {
     # Set standard variables
     $this->_aSession['user'] = self::_resetUser();
 
-    # Override them with user data
-    # Get user data by token
-    if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
-      require_once PATH_STANDARD . '/addons/models/Users.model.php';
-
-      if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
+    # Get user by token
+    if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
+      if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
+        require_once PATH_STANDARD . '/addons/models/Users.model.php';
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
-      else
-        # Get user data by session
-        $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
-    }
-    else {
-      require_once PATH_STANDARD . '/app/models/Users.model.php';
-
-      if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token']))
+      }
+      else {
+        require_once PATH_STANDARD . '/models/Users.model.php';
         $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
+      }
+    }
+
+    # Get user by session
+    else {
+      if (file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
+        require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
+        $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
+      }
       else
-        # Get user data by session
         $aUser = \CandyCMS\Model\Sessions::getUserBySession();
     }
 
