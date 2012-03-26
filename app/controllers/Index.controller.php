@@ -416,7 +416,6 @@ class Index {
         require_once PATH_STANDARD . '/addons/models/Users.model.php';
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
-
       else {
         require_once PATH_STANDARD . '/app/models/Users.model.php';
         $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));

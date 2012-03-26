@@ -85,15 +85,16 @@ class Blogs extends Main {
                                         " . $this->oPagination->getOffset() . ",
                                         " . $this->oPagination->getLimit());
 
-        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0001 - ' . $p->getMessage());
         exit('SQL error.');
       }
 
-      $aInts = array('id', 'uid', 'author_id', 'comment_sum');
+      $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
       $aBools = array('published', 'use_gravatar');
+
       foreach ($aResult as $aRow) {
         # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
@@ -140,7 +141,7 @@ class Blogs extends Main {
         $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0002 - ' . $p->getMessage());
@@ -151,7 +152,7 @@ class Blogs extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $aInts = array('id', 'uid', 'author_id', 'comment_sum');
+        $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
         $aBools = array('published', 'use_gravatar');
 
         $this->_aData[1] = $this->_formatForOutput($aRow, $aInts, $aBools);
