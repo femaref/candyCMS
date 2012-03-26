@@ -98,7 +98,7 @@ class Blogs extends Main {
         # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
 
-        $this->_aData[$iDate] = $this->_formatForOutput($aRow, 'blogs', $aInts, $aBools);
+        $this->_aData[$iDate] = $this->_formatForOutput($aRow, $aInts, $aBools);
         $this->_aData[$iDate]['tags_raw']       = $aRow['tags'];
         $this->_aData[$iDate]['tags']           = explode(', ', $aRow['tags']);
         $this->_aData[$iDate]['date_modified']  = !empty($aRow['date_modified']) ?
@@ -153,7 +153,7 @@ class Blogs extends Main {
         $aInts = array('id', 'uid', 'author_id', 'comment_sum');
         $aBools = array('published', 'use_gravatar');
 
-        $this->_aData[1] = $this->_formatForOutput($aRow, 'blogs', $aInts, $aBools);
+        $this->_aData[1] = $this->_formatForOutput($aRow, $aInts, $aBools);
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];
         $this->_aData[1]['date_modified'] = !empty($aRow['date_modified']) ?

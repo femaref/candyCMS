@@ -73,7 +73,7 @@ class Logs extends Main {
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
 
-      $this->_aData[$iId] = $this->_formatForOutput($aRow, 'logs', $aInts);
+      $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts);
       $this->_aData[$iId]['time_start'] = & Helper::formatTimestamp($aRow['time_start']);
       $this->_aData[$iId]['time_end']   = & Helper::formatTimestamp($aRow['time_end']);
     }

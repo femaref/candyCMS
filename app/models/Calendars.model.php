@@ -100,7 +100,7 @@ class Calendars extends Main {
 				$this->_aData[$sDate]['month']	= $sMonth;
 				$this->_aData[$sDate]['year']		= $sYear;
 
-				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
+				$this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $aInts);
 				$this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
 				if ($aRow['end_date'] > 0)
@@ -132,7 +132,7 @@ class Calendars extends Main {
       else {
         $aInts = array('id', 'author_id');
 
-        $this->_aData = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
+        $this->_aData = $this->_formatForOutput($aRow, $aInts);
 
         # Overide for iCalendar specs
         $this->_aData['start_date'] = str_replace('-', '', $aRow['start_date']);

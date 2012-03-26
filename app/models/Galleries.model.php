@@ -106,7 +106,7 @@ class Galleries extends Main {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, 'galleries', $aInts);
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts);
         $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($aRow['id'], $bAdvancedImageInformation) : '';
       }
     }
@@ -164,7 +164,7 @@ class Galleries extends Main {
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
       $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
 
-      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, 'galleries', $aInts);
+      $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, $aInts);
       $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
       $this->_aThumbs[$iId]['url_32']       = $sUrl32;
       $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;

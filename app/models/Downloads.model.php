@@ -60,7 +60,8 @@ class Downloads extends Main {
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts);
+
+        $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, $aInts);
         $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/' .
                 $this->_aRequest['controller'] . '/' . $aRow['file']);
       }

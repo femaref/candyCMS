@@ -74,7 +74,7 @@ class Comments extends Main {
     $aInts = array('id', 'parent_id', 'author_id', 'author_facebook_id', 'user_id');
     $aBools = array('use_gravatar');
     foreach ($aResult as $aRow) {
-      $this->_aData[$aRow['id']] = $this->_formatForOutput($aRow, 'blogs', $aInts, $aBools);
+      $this->_aData[$aRow['id']] = $this->_formatForOutput($aRow, $aInts, $aBools);
     }
 
     # We crawl the facebook avatars

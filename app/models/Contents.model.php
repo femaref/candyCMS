@@ -102,7 +102,8 @@ class Contents extends Main {
 
       else {
         $iId = $aRow['id'];
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, $this->_aRequest['controller'], $aInts, $aBools);
+
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts, $aBools);
       }
     }
 

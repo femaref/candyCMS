@@ -173,14 +173,14 @@ abstract class Main {
    *
    * @access protected
    * @param array $aData array with data to format
+   * @param array $aInts identifiers, which should be cast to int
+   * @param array $aBools identifiers, which should be cast to bool
    * @param string $sController name of the controller we are working in
 	 * @param boolean $bNl2br format string to br
-   * @param array $aInts identifiers, which shoudl be cast to int
-   * @param array $aInts identifiers, which shoudl be cast to bool
    * @return array $aData rebuild data
    *
    */
-  protected function _formatForOutput(&$aData, $sController = '', $aInts = array('id'), $aBools = null, $bNl2br = false) {
+  protected function _formatForOutput(&$aData, $aInts = array('id'), $aBools = null, $sController = '', $bNl2br = false) {
     $sController = !$sController ? $this->_aRequest['controller'] : $sController;
 
     foreach ($aData as $sColumn => $mData)
