@@ -234,6 +234,8 @@ class Users extends Main {
                                           s.user_id = u.id
                                         WHERE
                                           u.id = :id
+                                        ORDER BY
+                                          s.date DESC
                                         LIMIT 1");
 
 				$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
