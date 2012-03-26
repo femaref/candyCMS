@@ -34,7 +34,7 @@
     </div>
     <div class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.newsletters.title.subscribe}' />
-      <input type='hidden' value='formdata' name='subscribe_newsletter' />
+      <input type='hidden' value='formdata' name='subscribe_newsletters' />
     </div>
   </form>
 {/strip}

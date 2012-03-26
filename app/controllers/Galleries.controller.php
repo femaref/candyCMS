@@ -363,7 +363,6 @@ class Galleries extends Main {
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo _updateFile
    *
    */
   public function updateFile() {

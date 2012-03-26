@@ -30,6 +30,9 @@ class WebTestOfNewsletterController extends CandyWebTest {
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
     $this->assertResponse(200);
     $this->assertText(I18n::get('newsletters.title.subscribe'));
+    $this->assertField('name', '');
+    $this->assertField('surname', '');
+    $this->assertField('email', '');
   }
 
   function testShow() {
@@ -39,29 +42,23 @@ class WebTestOfNewsletterController extends CandyWebTest {
     $this->assertResponse(302);
   }
 
-  /**
-   * @todo validate forms
-   */
   function testSubscribe() {
-    # Correct email
-    $this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
-        'name' => md5($this->aSession['user']['name'] . time()),
-        'surname' => md5($this->aSession['user']['surname'] . time()),
-        'email' => time() . '_' . WEBSITE_MAIL_NOREPLY,
-        'subscribe_newsletter' => 'formdata'
-    ));
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+    $this->assertTrue($this->setField('name', md5($this->aSession['user']['name'] . time())));
+    $this->assertTrue($this->setField('surname', md5($this->aSession['user']['surname'] . time())));
+    $this->assertTrue($this->setField('email', time() . '_' . WEBSITE_MAIL_NOREPLY));
 
+    $this->click(I18n::get('newsletters.title.subscribe'));
     $this->assertText(I18n::get('success.newsletter.create'));
     $this->assertResponse(200);
 
     # Wrong email address
-    $this->post(WEBSITE_URL . '/' . $this->aRequest['controller'], array(
-        'name' => md5($this->aSession['user']['name'] . time()),
-        'surname' => md5($this->aSession['user']['surname'] . time()),
-        'email' => str_replace('@', '', WEBSITE_MAIL_NOREPLY),
-        'subscribe_newsletter' => 'formdata'
-    ));
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
+    $this->assertTrue($this->setField('name', md5($this->aSession['user']['name'] . time())));
+    $this->assertTrue($this->setField('surname', md5($this->aSession['user']['surname'] . time())));
+    $this->assertTrue($this->setField('email', str_replace('@', '', WEBSITE_MAIL_NOREPLY)));
 
+    $this->click(I18n::get('newsletters.title.subscribe'));
     $this->assertText(I18n::get('error.standard'));
     $this->assertResponse(200);
   }

@@ -245,7 +245,6 @@ class Comments extends Main {
    * @access public
    * @param integer $iId comment ID to get data from
    * @return integer $aResult['parent_id']
-   * @todo test
    *
    */
   public static function getParentId($iId) {
