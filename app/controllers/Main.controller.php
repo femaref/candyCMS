@@ -264,7 +264,7 @@ abstract class Main {
 	public function getDescription() {
     if(!$this->_sDescription) {
       # Show default description if this is our landing page or we got no descrption.
-      if ($this->_aRequest['controller'] == $_SESSION['routes']['/'])
+      if ($this->_aRequest['controller'] == $this->_aSession['routes']['/'])
         $this->setDescription(I18n::get('website.description'));
 
       elseif (!$this->_sDescription)

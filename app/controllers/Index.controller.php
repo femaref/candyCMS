@@ -240,7 +240,6 @@ class Index {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
       Helper::redirectTo('/');
-			exit;
     }
 
     # There is no request, but there might be a cookie instead.
@@ -362,12 +361,9 @@ class Index {
       $sVersionContent = $sVersionContent > VERSION ? (int) $sVersionContent : '';
     }
 
-    $sUpdateUrl = Helper::createLinkTo('http://www.candycms.com', true);
-    $sLangUpdateAvailable = isset($sVersionContent) && !empty($sVersionContent) ?
-            I18n::get('global.update.available', $sVersionContent, $sUpdateUrl) :
+    return isset($sVersionContent) && !empty($sVersionContent) ?
+            I18n::get('global.update.available', $sVersionContent, Helper::createLinkTo('http://www.candycms.com', true)) :
             '';
-
-    return $sLangUpdateAvailable;
   }
 
   /**
@@ -429,8 +425,8 @@ class Index {
         require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
         $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
       }
-
-      $aUser = \CandyCMS\Model\Sessions::getUserBySession();
+      else
+        $aUser = \CandyCMS\Model\Sessions::getUserBySession();
     }
 
     if (is_array($aUser))

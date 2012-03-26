@@ -80,7 +80,6 @@ if(!isset($_REQUEST['mobile']))
 else
   $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
 
-# Spread this information.
 define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
 define('MOBILE_DEVICE', $bMobile);
 
