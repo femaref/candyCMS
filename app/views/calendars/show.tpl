@@ -69,6 +69,13 @@
                 {/if}
               </td>
               <td class='center'>
+                {* @todo add title and alt tag that fits: "Download this event for iCalendar" *}
+                <a href='/{$_REQUEST.controller}/{$d.id}'>
+                  <img src='{$_PATH.images}/candy.global/spacer.png'
+                      class='icon-calendar_add'
+                      alt='{$lang.calendars.title.create}'
+                      width='16' height='16' />
+                </a>
                 {if $_SESSION.user.role >= 3}
                   <a href='/{$_REQUEST.controller}/{$d.id}/update'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
@@ -83,14 +90,6 @@
                         class='icon-destroy js-tooltip'
                         alt='{$lang.global.destroy.destroy}'
                         title='{$lang.global.destroy.destroy}'
-                        width='16' height='16' />
-                  </a>
-                {else}
-                  {* @todo add title and alt tag that fits: "Download this event for iCalendar" *}
-                  <a href='/{$_REQUEST.controller}/{$d.id}'>
-                    <img src='{$_PATH.images}/candy.global/spacer.png'
-                        class='icon-calendar_add'
-                        alt='{$lang.calendars.title.create}'
                         width='16' height='16' />
                   </a>
                 {/if}

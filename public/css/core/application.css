@@ -2257,8 +2257,8 @@ p img, footer img { vertical-align:bottom; }
 #blogs .blogs h2 { font-size:30px; }
 #blogs .blogs .page-header { padding-bottom:0px; }
 #calendars .column-date { width:30%; }
-#calendars .column-description { width:60%; }
-#calendars .column-actions { width:10%; }
+#calendars .column-description { width:55%; }
+#calendars .column-actions { width:15%; }
 #comments {
   clear:both;
   padding:10px 0px;
