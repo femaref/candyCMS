@@ -186,7 +186,7 @@ class Blogs extends Main {
   protected function _create() {
     $this->_setError('content');
 
-    return parent::_create('searches');
+    return parent::_create(array('searches', 'rss'));
   }
 
   /**
@@ -199,7 +199,7 @@ class Blogs extends Main {
   protected function _update() {
     $this->_setError('content');
 
-    return parent::_update('searches');
+    return parent::_update(array('searches', 'rss'));
   }
 
   /**
@@ -210,6 +210,6 @@ class Blogs extends Main {
    *
    */
   protected function _destroy() {
-    return parent::_destroy('searches');
+    return parent::_destroy(array('searches', 'rss'));
   }
 }
