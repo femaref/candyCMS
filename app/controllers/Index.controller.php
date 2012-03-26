@@ -406,20 +406,19 @@ class Index {
     # Set standard variables
     $this->_aSession['user'] = self::_resetUser();
 
-    # Override them with user data
-    # Get user data by token
+    # Get user by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
       if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
         require_once PATH_STANDARD . '/addons/models/Users.model.php';
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
       else {
-        require_once PATH_STANDARD . '/app/models/Users.model.php';
+        require_once PATH_STANDARD . '/models/Users.model.php';
         $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
     }
 
-    # Get user data by session
+    # Get user by session
     else {
       if (file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
         require_once PATH_STANDARD . '/addons/models/Sessions.model.php';

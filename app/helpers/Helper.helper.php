@@ -358,8 +358,13 @@ class Helper {
 			exit($e->getMessage());
 		}
 
+    # remove multiple spaces and newlines (3+)
+    $sStr = preg_replace('/\s(\s)\s+/', '$1$1', $sStr);
+    # replace all newlines
+    $sStr = str_replace("\n", "<br />", trim($sStr));
+
     # Fix quotes to avoid problems with inputs
-    return trim(str_replace('"', "&quot;", $sStr));
+    return str_replace('"', "&quot;", $sStr);
   }
 
 	/**

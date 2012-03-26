@@ -423,7 +423,6 @@ class Users extends Main {
    * @param integer $iUseGravatar do we want to use a Gravatar?
    * @return boolean status of query
    * @todo documentation
-   * @todo test
    *
    */
   public static function updateGravatar($iId, $iUseGravatar = 0) {
