@@ -114,11 +114,9 @@ class Dispatcher {
         break;
 
       case 'update':
-
-        $this->oController->setContent($this->oController->update('update_' . strtolower($this->_aRequest['controller'])));
-        $this->oController->setTitle(str_replace('%p', $this->oController->getTitle(),
-                I18n::get(strtolower($this->_aRequest['controller']) . '.title.update')));
-
+        $sController = strtolower($this->_aRequest['controller']);
+        $this->oController->setContent($this->oController->update('update_' . $sController));
+        $this->oController->setTitle(I18n::get($sController . '.title.update', $this->oController->getTitle()));
         break;
 
       case 'xml':

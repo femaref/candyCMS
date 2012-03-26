@@ -364,11 +364,12 @@ class Index {
       $sVersionContent = $sVersionContent > VERSION ? (int) $sVersionContent : '';
     }
 
+    $sUpdateUrl = Helper::createLinkTo('http://www.candycms.com', true);
     $sLangUpdateAvailable = isset($sVersionContent) && !empty($sVersionContent) ?
-            str_replace('%v', $sVersionContent, I18n::get('global.update.available')) :
+            I18n::get('global.update.available', $sVersionContent, $sUpdateUrl) :
             '';
 
-    return str_replace('%l', Helper::createLinkTo('http://www.candycms.com', true), $sLangUpdateAvailable);
+    return $sLangUpdateAvailable;
   }
 
   /**

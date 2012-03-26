@@ -56,7 +56,7 @@ global:
   headlines: Headlines
   id: ID
   image:
-    click_to_enlarge: "Click on image to enlarge it up to %w x %h px."
+    click_to_enlarge: "Click on image to enlarge it up to %d x %d px."
     image: Image
   in: in
   keywords: Keywords
@@ -131,7 +131,7 @@ global:
   today: Today
   update:
     at: Updated at
-    available: There is an update for this software available (#%v). Please visit %l for more information.
+    available: There is an update for this software available (#%s). Please visit %s for more information.
     show: Show update?
     update: Update
   upload:
@@ -181,7 +181,6 @@ error:
   404:
     info: The requested URL was not found. Either you clicked on a faulty link, the page has been deleted or the URL has been entered incorrectly.
     title: Error 404
-  audio: Your browser does not support playback of this audio file. Please click <a href="%u">here</a> to download this file.
   captcha:
     incorrect: The code was incorrect!
     loading: Captcha could not be loaded, please activate Javascript!
@@ -251,7 +250,7 @@ blogs:
   title:
     create: Create blog entry
     destroy: Delete blog entry
-    update: "Update: '%p'"
+    update: "Update: '%s'"
 
 calendars:
   description:
@@ -304,7 +303,7 @@ galleries:
     title:
       create: Create album
       destroy: Destroy album
-      update: "Update: '%p'"
+      update: "Update: '%s'"
   files:
     description:
       show: Gallery Images
@@ -322,12 +321,12 @@ mails:
     no_reply: <p>(This is a generated Mail. Do not reply!)</p>
     signature: <p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>
   description:
-    show: Write a mail to %u.
+    show: Write a mail to %s.
   success_page:
     title: "Thank you for your contact!"
     redirect: You will be redirect to the front page in 15 seconds.
   subject:
-    by: New message from %u
+    by: New message from %s
 
 medias:
   info:
@@ -368,7 +367,7 @@ sessions:
     info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
     mail:
-      body: "Hello %u!\r\n\r\nYou can login via following password: <em>%p</em> %SIGNATURE %NOREPLY"
+      body: "Hello %s!\r\n\r\nYou can login via following password: <em>%s</em> %SIGNATURE %NOREPLY"
       subject: Your new password
     title: Lost password?
   verification:
@@ -377,15 +376,15 @@ sessions:
     label:
       create: Send email
     mail:
-      body: "Hello %u!\r\n\r\nPlease click this link to verifiy your email: %v %SIGNATURE %NOREPLY"
+      body: "Hello %s!\r\n\r\nPlease click this link to verifiy your email: %s %SIGNATURE %NOREPLY"
       subject: Your email verification for %WEBSITE_NAME
     title: Resend email verification
 
 users:
-  contact_via_email: "Click to send %u an email!"
+  contact_via_email: "Click to send %s an email!"
   description:
     create: Create a new user profile.
-    show: User profile of %u.
+    show: User profile of %s.
   info:
     destroy_account: Please enter your current password. After you click on "Delete Account", all your data will be permanently destroyed.
     gravatar:  "If you don't want to upload a profile image, you can use <a href='http://gravatar.com' target='_blank'>Gravatar.com</a> instead. The displayed image is shown above."
@@ -395,7 +394,7 @@ users:
     account:
       destroy: Delete account
     content:
-      show: About %u
+      show: About %s
       update: About you
     gravatar: Use Gravatar?
     image:
@@ -411,7 +410,7 @@ users:
     registered_since: Registered since
     update: Update profile
   mail:
-    body: "Hello %u!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your email address via this link: %v %SIGNATURE %NOREPLY"
+    body: "Hello %s!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your email address via this link: %s %SIGNATURE %NOREPLY"
     subject: Your registration at %WEBSITE_NAME.
   title:
     account: Delete account

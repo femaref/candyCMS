@@ -74,23 +74,32 @@ class I18n {
   public static function get($sLanguagePart) {
     $aLang = explode('.', $sLanguagePart);
 
-		if(isset($_SESSION['lang'])) {
-			$mTemp = $_SESSION['lang'];
-			foreach ($aLang as $sPart) {
-				if(!is_string($mTemp)) {
-					if (array_key_exists($sPart, $mTemp)) {
-						$mTemp = & $mTemp[$sPart];
-					}
-				}
-			}
+    if (isset($_SESSION['lang'])) {
+      $mTemp = $_SESSION['lang'];
+      foreach ($aLang as $sPart) {
+        if (!is_string($mTemp)) {
+          if (array_key_exists($sPart, $mTemp)) {
+            $mTemp = & $mTemp[$sPart];
+          }
+        }
+      }
 
-			try {
+      # do we have other parameters?
+      $iNumArgs = func_num_args();
+      if ($iNumArgs > 1) {
+        # use sprintf
+        $aArgs = func_get_args();
+        array_shift($aArgs);
+        $mTemp = vsprintf($mTemp, $aArgs);
+      }
+
+      try {
         return is_string($mTemp) ? (string) $mTemp : '';
-			}
-			catch (AdvancedException $e) {
-				die('No such translation: ' . $e->getMessage());
-			}
-		}
+      }
+      catch (AdvancedException $e) {
+        die('No such translation: ' . $e->getMessage());
+      }
+    }
   }
 
 	/**

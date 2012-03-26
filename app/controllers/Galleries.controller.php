@@ -187,7 +187,7 @@ class Galleries extends Main {
     if ($this->_iId) {
 			$aData = $this->_oModel->getData($this->_iId, true);
 
-      $this->setTitle(I18n::get('galleries.albums.title.update'));
+      $this->setTitle(I18n::get('galleries.albums.title.update', $aData['title']));
     }
 		else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';

@@ -322,8 +322,7 @@ abstract class Main {
         $this->setTitle(I18n::get('error.' . $this->_aRequest['id'] . '.title'));
 
       else
-        $this->setTitle($this->_sTitle ? $this->_sTitle :
-                        I18n::get('global.' . strtolower(Helper::singleize($this->_aRequest['controller']))));
+        $this->setTitle(I18n::get('global.' . strtolower(Helper::singleize($this->_aRequest['controller']))));
     }
 
     return $this->_sTitle;

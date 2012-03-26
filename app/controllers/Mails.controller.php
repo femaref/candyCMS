@@ -99,9 +99,9 @@ class Mails extends Main {
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-    $this->setTitle(I18n::get('global.contact') . ' ' . $aUser['name'] . ' ' . $aUser['surname']);
-    $this->setDescription(str_replace('%u', $aUser['name'] . ' ' . $aUser['surname'],
-                    I18n::get('mails.description.show')));
+    $sFullname = $aUser['name'] . ' ' . $aUser['surname'];
+    $this->setTitle(I18n::get('global.contact') . ' ' . $sFullname);
+    $this->setDescription(I18n::get('mails.description.show', $sFullname));
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -141,7 +141,7 @@ class Mails extends Main {
 
       $sSubject = isset($this->_aRequest['subject']) && $this->_aRequest['subject'] ?
               Helper::formatInput($this->_aRequest['subject']) :
-              str_replace('%u', $sSendersName, I18n::get('mails.subject.by'));
+              I18n::get('mails.subject.by', $sSendersName);
 
       $bStatus = Mails::send(
               isset($aRow['email']) ? $aRow['email'] : WEBSITE_MAIL,

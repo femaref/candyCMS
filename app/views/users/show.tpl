@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td>
-          {$lang.users.label.content.show|replace:'%u':$u.name}
+          {$lang.users.label.content.show|replace:'%s':$u.name}
         </td>
         <td>
           {$u.content}
@@ -61,7 +61,7 @@
         <td>
           {* Absolute URL due to fancybox bug *}
           <a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}/create'>
-            {$lang.users.contact_via_email|replace:'%u':$u.name}
+            {$lang.users.contact_via_email|replace:'%s':$u.name}
           </a>
         </td>
       </tr>

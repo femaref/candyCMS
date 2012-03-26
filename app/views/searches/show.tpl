@@ -39,7 +39,7 @@
     </div>
   {else}
     <div class='alert alert-warning'>
-      {$lang.searches.info.fail|replace:'%b':$string}
+      {$lang.searches.info.fail|replace:'%s':$string}
     </div>
   {/if}
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tabs{$_SYSTEM.compress_files_suffix}.js'></script>

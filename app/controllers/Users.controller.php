@@ -92,7 +92,7 @@ class Users extends Main {
         $this->oSmarty->assign('user', $aData);
 
         $this->setTitle($aData[1]['full_name']);
-        $this->setDescription(str_replace('%u', $aData[1]['full_name'], I18n::get('users.description.show')));
+        $this->setDescription(I18n::get('users.description.show', $aData[1]['full_name']));
       }
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -322,10 +322,9 @@ class Users extends Main {
         $sMailMessage = '';
 
 			else {
-        $sVerificationUrl = Helper::createLinkTo('user/' . $iVerificationCode . '/verification');
+        $sVerificationUrl = Helper::createLinkTo('users/' . $iVerificationCode . '/verification');
 
-        $sMailMessage = str_replace('%u', Helper::formatInput($this->_aRequest['name']), I18n::get('users.mail.body'));
-        $sMailMessage = str_replace('%v', $sVerificationUrl, $sMailMessage);
+        $sMailMessage = I18n::get('users.mail.body', Helper::formatInput($this->_aRequest['name']), $sVerificationUrl);
       }
 
 			Logs::insert(	$this->_aRequest['controller'],

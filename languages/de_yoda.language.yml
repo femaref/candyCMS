@@ -56,7 +56,7 @@ global:
   headlines: Überschriften
   id: ID
   image:
-    click_to_enlarge: "Um es auf %w x %h Pixel zu vergrößern, klicken auf das Bild, du musst!"
+    click_to_enlarge: "Um es auf %d x %d Pixel zu vergrößern, klicken auf das Bild, du musst!"
     image: Bild
   in: in
   keywords: Schlagworte
@@ -131,7 +131,7 @@ global:
   today: Heute
   update:
     at: Aktualisiert am
-    available: Ein Update (#%v) für diese Software verfügbar, es ist. Besuchen %l für weitere Informationen, du musst.
+    available: Ein Update (#%s) für diese Software verfügbar, es ist. Besuchen %s für weitere Informationen, du musst.
     show: Update anzeigen?
     update: Bearbeiten
   upload:
@@ -181,7 +181,6 @@ error:
   404:
     info: Die angeforderte URL nicht gefunden wurde. Entweder auf einen fehlerhaften Link geklickt Sie haben, die Seite gelöscht wurde oder die URL falsch eingegeben wurde.
     title: Error 404 - URL nicht gefunden
-  audio: Leider das Abspielen dieser Audiodatei nicht unterstützt dein Browser. Auf <a href="%u">diesen Link</a> du klicken musst, um herunterzuladen die Datei du kannst.
   captcha:
     incorrect: Der Code leider nicht korrekt war!
     loading: Captcha nicht geladen werden konnte, aktivieren Javascript du musst!
@@ -251,7 +250,7 @@ blogs:
   title:
     create: Blogeintrag hinzufügen
     destroy: Blogeintrag löschen
-    update: '"%p" bearbeiten'
+    update: '"%s" bearbeiten'
 
 calendars:
   description:
@@ -304,7 +303,7 @@ galleries:
     title:
       create: Album erstellen
       destroy: Album löschen
-      update: 'Album "%p" bearbeiten'
+      update: 'Album "%s" bearbeiten'
   files:
     description:
       show: Galerie-Bilder.
@@ -322,12 +321,12 @@ mails:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
     signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
   description:
-    show: E-Mail schreiben an %u du machen sollen.
+    show: E-Mail schreiben an %s du machen sollen.
   info:
     title: "Vielen Dank für Deine Kontaktaufnahme!"
     redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
   subject:
-    by: Neue Nachricht von %u
+    by: Neue Nachricht von %s
 
 medias:
   info:
@@ -368,7 +367,7 @@ sessions:
     info: Deine registrierte E-Mail Adresse eintragen du musst. Dir ein neues Passwort innerhalb der nächsten Minuten zuschicken, wir tun.
     label: Passwort anfordern
     mail:
-      body: "Hallo %u!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%p</em> %SIGNATURE %NOREPLY"
+      body: "Hallo %s!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %SIGNATURE %NOREPLY"
       subject: Dein neues Passwort
     title: Passwort vergessen?
   verification:
@@ -377,15 +376,15 @@ sessions:
     label:
       create: Bestätigungslink zuschicken
     mail:
-      body: "Hallo %u!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %v %SIGNATURE %NOREPLY"
+      body: "Hallo %s!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %s %SIGNATURE %NOREPLY"
       subject: Deine E-Mail-Bestätigung für %WEBSITE_NAME
     title: E-Mail-Bestätigung erneut zusenden
 
 users:
-  contact_via_email: "Klicke hier, um %u eine E-Mail zu schicken!"
+  contact_via_email: "Klicke hier, um %s eine E-Mail zu schicken!"
   description:
     create: Nutzerkonto du erstellen können hier.
-    show: Nutzerprofil von %u.
+    show: Nutzerprofil von %s.
   info:
     destroy_account: Zur eigenen Sicherheit dein aktuelles Passwort noch einmal eingeben, du musst. Sobald du auf "Account löschen" klicken du tust, dein Zugang gelöscht und nicht wiederherstellbar, er ist!
     gravatar: Wenn du aktivierst dieses Kästchen, automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild (s.o.) gesucht, es wird. Alternativ aber auch direkt ein Bild hochladen, du kannst.
@@ -395,7 +394,7 @@ users:
     account:
       destroy: Account löschen
     content:
-      show: Über %u
+      show: Über %s
       update: Über dich
     gravatar: Gravatar verwenden?
     image:
@@ -411,7 +410,7 @@ users:
     registered_since: Registriert seit
     update: Profil aktualisieren
   mail:
-    body: "Hallo %u!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %v %SIGNATURE %NOREPLY"
+    body: "Hallo %s!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %s %SIGNATURE %NOREPLY"
     subject: Deine Registrierung auf %WEBSITE_NAME.
   title:
     account: Account löschen

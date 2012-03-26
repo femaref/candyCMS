@@ -4,7 +4,7 @@
       {if $_REQUEST.action == 'create'}
         {$lang.blogs.title.create}
       {else}
-        {$lang.blogs.title.update|replace:'%p':$title}
+        {$lang.blogs.title.update|replace:'%s':$title}
       {/if}
     </h1>
   </div>

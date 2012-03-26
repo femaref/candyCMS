@@ -6,7 +6,7 @@
         {if $_REQUEST.action == 'create'}
           {$lang.galleries.albums.title.create}
         {else}
-          {$lang.galleries.albums.title.update|replace:'%p':$title}
+          {$lang.galleries.albums.title.update|replace:'%s':$title}
         {/if}
       </h1>
     </div>

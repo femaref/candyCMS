@@ -153,8 +153,7 @@ class Sessions extends Main {
     $aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
 
     if (!empty($aData)) {
-      $sContent = str_replace('%u', $aData['name'], I18n::get('sessions.password.mail.body'));
-      $sContent = str_replace('%p', $sNewPasswordClean, $sContent);
+      $sContent = I18n::get('sessions.password.mail.body', $aData['name'], $sNewPasswordClean);
 
       $bStatus = Mails::send(
               Helper::formatInput($this->_aRequest['email']),
@@ -210,8 +209,7 @@ class Sessions extends Main {
     if (!empty($aData)) {
       $sVerificationUrl = Helper::createLinkTo('users/' . $aData['verification_code'] . '/verification');
 
-      $sContent = str_replace('%u', $aData['name'], I18n::get('sessions.verification.mail.body'));
-      $sContent = str_replace('%v', $sVerificationUrl, $sContent);
+      $sContent = I18n::get('sessions.verification.mail.body', $aData['name'], $sVerificationUrl);
 
       $bStatus = Mails::send(
               Helper::formatInput($this->_aRequest['email']),
