@@ -21,8 +21,9 @@ class Routes {
 
 		if (static::$allow_query && strpos($uri, '?') !== false) {
 			// Break the query string off and attach later
-			$qs = '?' . parse_url($uri, PHP_URL_QUERY);
-			$uri = str_replace($qs, '', $uri);
+			$qs = parse_url($uri, PHP_URL_QUERY);
+			$uri = str_replace('?' . $qs, '', $uri);
+			$qs = '&' . $qs;
 		}
 
 		// Is there a literal match?
