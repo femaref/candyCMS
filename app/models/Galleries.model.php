@@ -106,7 +106,8 @@ class Galleries extends Main {
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts);
+        # need to specify 'galleries' because this might be called for rss feed generation
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts, null, 'galleries');
         $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($aRow['id'], $bAdvancedImageInformation) : '';
       }
     }
