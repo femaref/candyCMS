@@ -258,6 +258,7 @@ calendars:
     show: Calendar
   info:
     date_format: 'Date format: "YYYY-MM-DD"'
+    ics: 'Download this Event and add it to your Calendar Application'
   title:
     create: Add appointment
     update: Update appointment
