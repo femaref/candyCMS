@@ -83,6 +83,11 @@ else
 define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
 define('MOBILE_DEVICE', $bMobile);
 
+# page called by crawler?
+define('CRAWLER', defined('CRAWLERS') ?
+              preg_match('/' . CRAWLERS . '/', $_SERVER['HTTP_USER_AGENT']) > 0 :
+              false);
+
 # Initialize software
 $oIndex = new \CandyCMS\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
