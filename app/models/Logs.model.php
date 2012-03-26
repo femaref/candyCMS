@@ -29,6 +29,8 @@ class Logs extends Main {
    *
    */
   public function getData($iLimit = 50) {
+    $aInts = array('id', 'uid', 'user_id', 'action_id');
+
     try {
       $oQuery = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "logs");
       $iResult = $oQuery->fetchColumn();
@@ -69,7 +71,6 @@ class Logs extends Main {
       exit('SQL error.');
     }
 
-    $aInts = array('id', 'uid', 'user_id', 'action_id');
     foreach ($aResult as $aRow) {
       $iId = $aRow['id'];
 

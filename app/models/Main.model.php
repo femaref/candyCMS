@@ -191,6 +191,7 @@ abstract class Main {
       foreach ($aInts as $sIdent)
         if (isset($aData[$sIdent]))
           $aData[$sIdent] = (int) $aData[$sIdent];
+
     if ($aBools)
       foreach ($aBools as $sIdent)
         if (isset($aData[$sIdent]))

@@ -30,6 +30,9 @@ class Comments extends Main {
    *
    */
   public function getData($iId, $iEntries, $iLimit) {
+    $aInts  = array('id', 'parent_id', 'author_id', 'author_facebook_id', 'user_id');
+    $aBools = array('use_gravatar');
+
     $this->oPagination = new Pagination($this->_aRequest, $iEntries, $iLimit);
 
     try {
@@ -71,8 +74,6 @@ class Comments extends Main {
       exit('SQL error.');
     }
 
-    $aInts = array('id', 'parent_id', 'author_id', 'author_facebook_id', 'user_id');
-    $aBools = array('use_gravatar');
     foreach ($aResult as $aRow) {
       $this->_aData[$aRow['id']] = $this->_formatForOutput($aRow, $aInts, $aBools);
     }

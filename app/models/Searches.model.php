@@ -30,10 +30,11 @@ class Searches extends Main {
    *
    */
   public function getData($sSearch, $aTables = '', $sOrderBy = 'date DESC') {
+    $aInts = array('id', 'author_id');
+
     if (empty($aTables))
       $aTables = array('blogs', 'contents');
 
-    $aInts = array('id', 'author_id');
     foreach ($aTables as $sTable) {
       try {
         $this->oQuery = $this->_oDb->query("SELECT

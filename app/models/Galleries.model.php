@@ -41,6 +41,8 @@ class Galleries extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $bAdvancedImageInformation = false, $iLimit = LIMIT_ALBUMS) {
+    $aInts = array('id', 'author_id', 'uid', 'files_sum');
+
     $sWhere   = '';
     $iResult  = 0;
 
@@ -102,7 +104,6 @@ class Galleries extends Main {
       $this->_aData = $this->_formatForUpdate($aResult[0]);
 
     else {
-      $aInts = array('id', 'author_id', 'uid', 'files_sum');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
@@ -125,6 +126,8 @@ class Galleries extends Main {
    *
    */
   public function getThumbs($iId, $bAdvancedImageInformation = false) {
+    $aInts = array('id', 'album_id', 'author_id');
+
     # Clear existing array (fix, when we got no images at a gallery
     if (!empty($this->_aThumbs))
       unset($this->_aThumbs);
@@ -156,7 +159,6 @@ class Galleries extends Main {
     }
 
     $iLoop = 0;
-    $aInts = array('id', 'album_id', 'author_id');
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
       $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/galleries/' . $aRow['album_id']);

@@ -176,6 +176,8 @@ class Users extends Main {
    *
    */
   public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
+    $aInts  = array('id', 'role');
+    $aBools = array('use_gravatar', 'receive_newsletter');
 
 		if ($bForceNoId === true)
 			$iId = '';
@@ -214,8 +216,6 @@ class Users extends Main {
         exit('SQL error.');
       }
 
-      $aInts = array('id', 'role');
-      $aBools = array('use_gravatar', 'receive_newsletter');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
 
@@ -254,9 +254,6 @@ class Users extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $aInts = array('id', 'role');
-        $aBools = array('use_gravatar', 'receive_newsletter');
-
         $this->_aData[1] = $this->_formatForOutput($aRow, $aInts, $aBools);
         $this->_aData[1]['last_login'] = Helper::formatTimestamp($aRow['last_login']);
       }

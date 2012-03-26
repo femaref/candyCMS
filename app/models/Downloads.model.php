@@ -29,6 +29,8 @@ class Downloads extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false) {
+    $aInts = array('id', 'author_id', 'downloads', 'uid');
+
     if (empty($iId)) {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
@@ -54,13 +56,11 @@ class Downloads extends Main {
         exit('SQL error.');
       }
 
-      $aInts = array('id', 'author_id', 'downloads', 'uid');
       foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
         $sCategory = $aRow['category'];
 
         $this->_aData[$sCategory]['category'] = $sCategory; # Name category for overview
-
         $this->_aData[$sCategory]['files'][$iId] = $this->_formatForOutput($aRow, $aInts);
         $this->_aData[$sCategory]['files'][$iId]['size'] = Helper::getFileSize(PATH_UPLOAD . '/' .
                 $this->_aRequest['controller'] . '/' . $aRow['file']);
