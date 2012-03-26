@@ -258,6 +258,7 @@ calendars:
     show: Kalender
   info:
     date_format: 'Datumsformat: "YYYY-MM-DD"'
+    ics: 'Diesen Termin herunterladen und hinzufügen zu deiner Kalendar-Anwendung du kannst'
   title:
     create: Termin hinzufügen
     update: Termin bearbeiten
