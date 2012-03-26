@@ -29,6 +29,8 @@ class Calendars extends Main {
 	 *
 	 */
 	public function getData($iId = '', $bUpdate = false) {
+    $aInts = array('id', 'author_id');
+
 		if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
 			try {
 				if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
@@ -90,7 +92,6 @@ class Calendars extends Main {
         exit('SQL error.');
       }
 
-      $aInts = array('id', 'author_id');
 			foreach ($aResult as $aRow) {
 				$iId = $aRow['id'];
 				$sMonth = I18n::get('global.months.' . $aRow['start_month']);
@@ -130,8 +131,6 @@ class Calendars extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $aInts = array('id', 'author_id');
-
         $this->_aData = $this->_formatForOutput($aRow, $aInts);
 
         # Overide for iCalendar specs

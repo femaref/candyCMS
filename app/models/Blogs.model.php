@@ -32,6 +32,9 @@ class Blogs extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
+    $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
+    $aBools = array('published', 'use_gravatar');
+
     if(WEBSITE_MODE == 'test')
       $iLimit = 2;
 
@@ -92,9 +95,6 @@ class Blogs extends Main {
         exit('SQL error.');
       }
 
-      $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
-      $aBools = array('published', 'use_gravatar');
-
       foreach ($aResult as $aRow) {
         # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
@@ -152,9 +152,6 @@ class Blogs extends Main {
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
-        $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
-        $aBools = array('published', 'use_gravatar');
-
         $this->_aData[1] = $this->_formatForOutput($aRow, $aInts, $aBools);
         $this->_aData[1]['tags'] = explode(', ', $aRow['tags']);
         $this->_aData[1]['tags_raw'] = $aRow['tags'];

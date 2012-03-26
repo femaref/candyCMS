@@ -29,6 +29,9 @@ class Contents extends Main {
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
+    $aInts  = array('id', 'uid', 'author_id');
+    $aBools = array('published');
+
     $iPublished = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] >= 3 ? 0 : 1;
 
     if (empty($iId)) {
@@ -94,8 +97,6 @@ class Contents extends Main {
       }
     }
 
-    $aInts = array('id', 'uid', 'author_id');
-    $aBools = array('published');
     foreach ($aResult as $aRow) {
       if ($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
