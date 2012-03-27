@@ -344,7 +344,7 @@ class Helper {
   public static function formatInput($sStr, $bDisableHTML = true) {
     try {
       if (!is_string($sStr) && !is_int($sStr) && $bDisableHTML === true)
-        throw new AdvancedException('Input seems not valid.');
+        throw new AdvancedException('Input \'' . $sStr . '\' does not seem valid.');
 
       if ($bDisableHTML === true)
         $sStr = & htmlspecialchars($sStr);

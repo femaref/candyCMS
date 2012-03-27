@@ -22,13 +22,31 @@ class WebTestOfUserController extends CandyWebTest {
 	}
 
   function testShowOverview() {
-    # Show user overview
+    # users that are not logged in are not allow to see users overview
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
     $this->assertText(I18n::get('error.missing.permission')); # user has no permission
     $this->assertResponse('200');
+
+    # members and facebook members can not view users overview
+    $aRoles = array(1, 2);
+    foreach ($aRoles as $iRole) {
+      $this->loginAsUserWithRole($iRole);
+      $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+      $this->assertText(I18n::get('error.missing.permission'));
+      $this->logout();
+    }
+
+    # moderators and admins should see the overview
+    $aRoles = array(3, 4);
+    foreach ($aRoles as $iRole) {
+      $this->loginAsUserWithRole($iRole);
+      $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+      $this->assertText(I18n::get('users.title.overview'));
+      $this->logout();
+    }
 	}
 
-  function testShow() {
+  function testShowId() {
     # Short ID
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
     $this->assertText('c2f9619961');
@@ -75,8 +93,16 @@ class WebTestOfUserController extends CandyWebTest {
     $this->click(I18n::get('global.register'));
     $this->assertText(I18n::get('error.form.missing.terms'));
 
-    # @todo actual registration...
+    $this->setField('name', 'Max');
+    $this->setField('surname', 'Mustermann');
+    $this->setField('email', time() . WEBSITE_MAIL);
+    $this->setField('password', 'test');
+    $this->setField('password2', 'test');
+    $this->setField('disclaimer', '1');
 
+    # register should work
+    $this->click(I18n::get('global.register'));
+    $this->assertText(I18n::get('success.user.create'));
   }
 
   function testUpdate() {

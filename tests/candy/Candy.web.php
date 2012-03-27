@@ -13,6 +13,10 @@
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/app/models/Main.model.php';
 
+require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
+
+use \CandyCMS\Helper\I18n as I18n;
+
 abstract class CandyWebTest extends WebTestCase {
 
 	public $oObject;
@@ -76,17 +80,20 @@ abstract class CandyWebTest extends WebTestCase {
         $email = 'admin@example.com';
         break;
     }
-    $this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create');
-    $this->assertTrue($this->setField('email', $email));
-    $this->assertTrue($this->setField('password', 'test'));
-
-    # login with correct input
-    $this->click(I18n::get('global.login'));
+    # we need redirects for this
+    $this->setMaximumRedirects(3);
+    $this->post(WEBSITE_URL . '/sessions/create',
+            array('email' => $email,
+                  'password' => 'test',
+                  'create_sessions' => 'formadata'));
     $this->assertText(I18n::get('success.session.create'));
   }
 
   function logout() {
-    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/destroy'));
+    # we need redirects for this
+    $this->setMaximumRedirects(3);
+    $this->assertTrue($this->get(WEBSITE_URL . '/sessions/destroy'));
+    $this->assertText(I18n::get('success.session.destroy'));
   }
 
 }

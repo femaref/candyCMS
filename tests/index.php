@@ -36,82 +36,88 @@ class AllFileTests extends TestSuite {
 		parent::__construct();
 		$this->TestSuite('All tests');
 
-    # Helpers
-    # @todo AdvancedException
-    # @todo Dispatcher
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
-    # @todo Pagination
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php');
+    if (WEBSITE_MODE != 'test')
+      die('not in testing mode');
+    else {
 
-    # Blog
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blogs.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blogs.controller.php');
+      # Helpers
+      # @todo AdvancedException
+      # @todo Dispatcher
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
+      # @todo pagination
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php');
 
-    # Calendar
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Calendars.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Calendars.controller.php');
+      # Blog
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blogs.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blogs.controller.php');
 
-    # Comment
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Comments.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Comments.controller.php');
+      # Calendar
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Calendars.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Calendars.controller.php');
 
-    # Content
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Contents.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Contents.controller.php');
+      # Comment
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Comments.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Comments.controller.php');
 
-    # Download
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Downloads.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Downloads.controller.php');
+      # Content
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Contents.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Contents.controller.php');
 
-    # Error
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Errors.controller.php');
+      # Download
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Downloads.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Downloads.controller.php');
 
-    # Gallery
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Galleries.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Galleries.controller.php');
+      # Error
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Errors.controller.php');
 
-		# Index
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
+      # Gallery
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Galleries.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Galleries.controller.php');
 
-    # Log
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Logs.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
+      # Index
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
 
-    # Mail
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
+      # Log
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Logs.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
 
-    # Main
-    # @todo controller
+      # Mail
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
 
-    # Media
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php');
+      # Main
+      # @todo controller
 
-    # Newsletter
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
+      # Media
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php');
 
-    # RSS
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
+      # Newsletter
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
 
-    # Search
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Searches.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Searches.controller.php');
+      # RSS
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
 
-    # Session
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Sessions.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sessions.controller.php');
+      # Search
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Searches.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Searches.controller.php');
 
-    # Sitemap
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
+      # Session
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Sessions.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sessions.controller.php');
 
-    # Sites
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sites.controller.php');
+      # Sitemap
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
 
-    # User
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Users.model.php');
-    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Users.controller.php');
+      # Sites
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sites.controller.php');
+
+      # User
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Users.model.php');
+      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Users.controller.php');
+    }
+
 	}
 }
 

@@ -24,7 +24,8 @@ class UnitTestOfCommentModel extends CandyUnitTest {
         'name'			=> 'Name',
         'email'			=> 'email@example.com',
         'content'		=> 'Content',
-        'parent_id' => '666');
+        'parent_id' => '666',
+        'controller' => 'blogs');
 
     $this->oObject = new Comments($this->aRequest, $this->aSession);
   }
