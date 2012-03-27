@@ -30,15 +30,15 @@ class WebTestOfSitemapController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText('c11be3b344');
-		$this->assertText('18855f87f2');
-		$this->assertText('6dffc4c552');
+		$this->assertText('b3cf6b2dd0'); # Blogs
+		$this->assertText('18855f87f2'); # Contents
+		$this->assertText('6dffc4c552'); # Galleries
 	}
 
 	function testShowXML() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '.xml'));
 		$this->assertResponse(200);
-		$this->assertText('c11be3b344');
+		$this->assertText('b3cf6b2dd0');
 		$this->assertText('18855f87f2');
 		$this->assertText('6dffc4c552');
 		$this->assertText('hourly');

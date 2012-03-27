@@ -57,7 +57,7 @@ class Contents extends Main {
         $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
-        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0024 - ' . $p->getMessage());
@@ -89,7 +89,7 @@ class Contents extends Main {
         $oQuery->execute();
 
         # Bugfix: Give array to template to enable a loop.
-        $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+        $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0025 - ' . $p->getMessage());
@@ -104,7 +104,7 @@ class Contents extends Main {
       else {
         $iId = $aRow['id'];
 
-        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts, $aBools);
+        $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts, $aBools, 'contents');
       }
     }
 

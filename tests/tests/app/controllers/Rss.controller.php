@@ -30,7 +30,7 @@ class WebTestOfRssController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText('c11be3b344');
+		$this->assertText('b3cf6b2dd0');
 		$this->assertNoText('e12b3a84b2');
 	}
 
@@ -42,9 +42,10 @@ class WebTestOfRssController extends CandyWebTest {
 	}
 
   function testCreate() {
-    # there is no create
+    # there is no create, but we redirect to show
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create'));
-    $this->assert404();
+    $this->assertResponse(200);
+		$this->assertText('b3cf6b2dd0');
   }
 
   function testUpdate() {

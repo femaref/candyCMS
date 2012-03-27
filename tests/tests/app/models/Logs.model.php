@@ -17,8 +17,7 @@ use \CandyCMS\Model\Logs as Logs;
 class UnitTestOfLogModel extends CandyUnitTest {
 
   function setUp() {
-
-    $this->aRequest = array('section' => 'logs');
+    $this->aRequest = array('controller' => 'logs');
 
     $this->oObject = new Logs($this->aRequest, $this->aSession);
   }

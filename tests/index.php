@@ -42,7 +42,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
-    # @todo pagination
+    # @todo Pagination
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php');
     $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php');
 
@@ -81,7 +81,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
 
     # Mail
-//    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
 
     # Main
     # @todo controller
@@ -90,7 +90,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php');
 
     # Newsletter
-//		$this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
 
     # RSS
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
@@ -107,7 +107,7 @@ class AllFileTests extends TestSuite {
     $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
 
     # Sites
-    # @todo
+    $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sites.controller.php');
 
     # User
     $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Users.model.php');

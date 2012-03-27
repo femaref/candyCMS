@@ -29,6 +29,17 @@ class Newsletters extends Main {
   }
 
   /**
+   * Override standard create method due to different user rights.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
+  public function create() {
+    return parent::create('create_' . strtolower($this->_aRequest['controller']), 0);
+  }
+
+  /**
    * Create a newsletter subscription. Send email information to mailchimp servers.
    *
    * @access public
@@ -56,8 +67,8 @@ class Newsletters extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'subscribe');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'subscribe');
+    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
     $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ? (string) $this->_aRequest['surname'] : '');
