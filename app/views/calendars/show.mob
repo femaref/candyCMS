@@ -30,30 +30,30 @@
           {$c.month} {$c.year}
         </li>
         {foreach $c.dates as $d}
-          <li>
-            <h2>
-              {$d.title}
-            </h2>
-            <p>
-              {$d.start_date}
-              {if $d.end_date > 1}
-              -
-              {$d.end_date}
-              {/if}
-            </p>
-            {if $d.content}
+          <li data-icon='calendar-add' data-iconpos="left">
+            <a href='{$_REQUEST.controller}/{$d.id}' title='{$d.content}' data-ajax='false'>
+              <h2>
+                {$d.title}
+              </h2>
               <p>
-                {$d.content}
+                {$d.start_date}
+                {if $d.end_date > 1}
+                -
+                {$d.end_date}
+                {/if}
               </p>
-            {/if}
+              {if $d.content}
+                <p>
+                  {$d.content}
+                </p>
+              {/if}
+            </a>
           </li>
         {/foreach}
       </ul>
     {/foreach}
   {/if}
   {if !isset($_REQUEST.action)}
-    <p class='center'>
-      <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive'>{$lang.global.archive}</a>
-    </p>
+    <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive' data-role='button'>{$lang.global.archive}</a>
   {/if}
 {/strip}
