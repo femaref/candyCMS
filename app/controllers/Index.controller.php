@@ -23,7 +23,6 @@ use Routes;
 use sfYaml;
 
 require_once PATH_STANDARD . '/app/models/Main.model.php';
-require_once PATH_STANDARD . '/app/models/Sessions.model.php';
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/app/controllers/Sessions.controller.php';
 require_once PATH_STANDARD . '/app/controllers/Logs.controller.php';
@@ -413,7 +412,7 @@ class Index {
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
       else {
-        require_once PATH_STANDARD . '/models/Users.model.php';
+        require_once PATH_STANDARD . '/app/models/Users.model.php';
         $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
     }
@@ -424,8 +423,10 @@ class Index {
         require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
         $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
       }
-      else
+      else {
+        require_once PATH_STANDARD . '/app/models/Sessions.model.php';
         $aUser = \CandyCMS\Model\Sessions::getUserBySession();
+      }
     }
 
     if (is_array($aUser))
