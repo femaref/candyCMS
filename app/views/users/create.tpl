@@ -69,7 +69,7 @@
           {* Absolute URL due to fancybox bug *}
           <div class='controls'>
             <label class='checkbox'>
-              <input name='disclaimer' value='' type='checkbox' id='input-terms' required />
+              <input name='disclaimer' value='disclaimer' type='checkbox' id='input-terms' required />
               <a href='#js-modal' data-toggle="modal">
                 {$lang.global.terms.read}
               </a>

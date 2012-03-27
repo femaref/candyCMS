@@ -98,7 +98,7 @@ class WebTestOfUserController extends CandyWebTest {
     $this->setField('email', time() . WEBSITE_MAIL);
     $this->setField('password', 'test');
     $this->setField('password2', 'test');
-    $this->setField('disclaimer', '1');
+    $this->setField('disclaimer', 'disclaimer');
 
     # register should work
     $this->click(I18n::get('global.register'));
