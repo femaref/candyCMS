@@ -511,7 +511,6 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return boolean status of message
-   * @todo clear users cache
 	 *
 	 */
 	public function verifyEmail() {

@@ -90,8 +90,11 @@ class Sessions extends Main {
     if (isset($this->_aError))
       return $this->_showFormTemplate();
 
-    elseif ($this->_oModel->create() === true)
+    elseif ($this->_oModel->create() === true) {
+      # clear the cache for users, since a new session updates some users last login date
+      $this->oSmarty->clearCacheForController('users');
       return Helper::successMessage(I18n::get('success.session.create'), '/');
+    }
 
     else
       return Helper::errorMessage(I18n::get('error.session.create'), '/' . $this->_aRequest['controller'] . '/create');
