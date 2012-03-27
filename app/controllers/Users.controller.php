@@ -311,17 +311,15 @@ class Users extends Main {
     $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
 		if (isset($this->_aError))
-			return $this->_showCreateUserTemplate();
+      return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
       # @todo clearCache?
-      $this->__autoload('Mails');
-
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
         $sMailMessage = '';
 
-			else {
+      else {
         $sVerificationUrl = Helper::createLinkTo('users/' . $iVerificationCode . '/verification');
 
         $sMailMessage = I18n::get('users.mail.body', Helper::formatInput($this->_aRequest['name']), $sVerificationUrl);
@@ -332,7 +330,8 @@ class Users extends Main {
 										$this->_oModel->getLastInsertId('users'),
 										$this->_aSession['user']['id']);
 
-			Mails::send(	Helper::formatInput($this->_aRequest['email']),
+      $cMails = $this->__autoload('Mails');
+      $cMails::send( Helper::formatInput($this->_aRequest['email']),
 									I18n::get('users.mail.subject'),
 									$sMailMessage,
 									WEBSITE_MAIL_NOREPLY);

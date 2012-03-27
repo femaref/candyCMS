@@ -319,7 +319,7 @@ galleries:
 mails:
   body:
     no_reply: <p>(This is a generated Mail. Do not reply!)</p>
-    signature: <p>Enjoy your stay!<br />Your <a href="%WEBSITE_URL">%WEBSITE_NAME</a> - Team</p>
+    signature: <p>Enjoy your stay!<br />Your <a href="%%WEBSITE_URL">%%WEBSITE_NAME</a> - Team</p>
   description:
     show: Write a mail to %s.
   success_page:
@@ -367,7 +367,7 @@ sessions:
     info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
     mail:
-      body: "Hello %s!\r\n\r\nYou can login via following password: <em>%s</em> %SIGNATURE %NOREPLY"
+      body: "Hello %s!\r\n\r\nYou can login via following password: <em>%s</em> %%SIGNATURE %%NOREPLY"
       subject: Your new password
     title: Lost password?
   verification:
@@ -376,8 +376,8 @@ sessions:
     label:
       create: Send email
     mail:
-      body: "Hello %s!\r\n\r\nPlease click this link to verifiy your email: %s %SIGNATURE %NOREPLY"
-      subject: Your email verification for %WEBSITE_NAME
+      body: "Hello %s!\r\n\r\nPlease click this link to verifiy your email: %s %%SIGNATURE %%NOREPLY"
+      subject: Your email verification for %%WEBSITE_NAME
     title: Resend email verification
 
 users:
@@ -410,8 +410,8 @@ users:
     registered_since: Registered since
     update: Update profile
   mail:
-    body: "Hello %s!\r\n\r\nThank you for your registration at %WEBSITE_NAME. Before you can login, you must verify your email address via this link: %s %SIGNATURE %NOREPLY"
-    subject: Your registration at %WEBSITE_NAME.
+    body: "Hello %s!\r\n\r\nThank you for your registration at %%WEBSITE_NAME. Before you can login, you must verify your email address via this link: %s %%SIGNATURE %%NOREPLY"
+    subject: Your registration at %%WEBSITE_NAME.
   title:
     account: Delete account
     create: Create User

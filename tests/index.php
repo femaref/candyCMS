@@ -140,9 +140,7 @@ class AllFileTests extends TestSuite {
           else
             $this->addFile($sTestFile);
       }
-
     }
-
 	}
 }
 

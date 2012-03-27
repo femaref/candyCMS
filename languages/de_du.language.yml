@@ -319,7 +319,7 @@ galleries:
 mails:
   body:
     no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
-    signature: <p>Viel Spaß wünscht das Team von<br /><a href="%WEBSITE_URL">%WEBSITE_NAME</a></p>
+    signature: <p>Viel Spaß wünscht das Team von<br /><a href="%%WEBSITE_URL">%%WEBSITE_NAME</a></p>
   description:
     show: Schreibe eine E-Mail an %s.
   info:
@@ -367,7 +367,7 @@ sessions:
     info: Trage hier deine registrierte E-Mail Adresse ein und wir schicken dir ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
     mail:
-      body: "Hallo %s!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %SIGNATURE %NOREPLY"
+      body: "Hallo %s!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %%SIGNATURE %%NOREPLY"
       subject: Dein neues Passwort
     title: Passwort vergessen?
   verification:
@@ -376,8 +376,8 @@ sessions:
     label:
       create: Bestätigungslink zuschicken
     mail:
-      body: "Hallo %s!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %s %SIGNATURE %NOREPLY"
-      subject: Deine E-Mail-Bestätigung für %WEBSITE_NAME
+      body: "Hallo %s!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %s %%SIGNATURE %%NOREPLY"
+      subject: Deine E-Mail-Bestätigung für %%WEBSITE_NAME
     title: E-Mail-Bestätigung erneut zusenden
 
 users:
@@ -410,8 +410,8 @@ users:
     registered_since: Registriert seit
     update: Profil aktualisieren
   mail:
-    body: "Hallo %s!\r\n\r\nDanke für deine Registrierung auf %WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %s %SIGNATURE %NOREPLY"
-    subject: Deine Registrierung auf %WEBSITE_NAME.
+    body: "Hallo %s!\r\n\r\nDanke für deine Registrierung auf %%WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %s %%SIGNATURE %%NOREPLY"
+    subject: Deine Registrierung auf %%WEBSITE_NAME.
   title:
     account: Account löschen
     create: Benutzer hinzufügen
