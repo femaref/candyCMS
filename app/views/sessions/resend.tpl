@@ -1,14 +1,16 @@
 {strip}
   <form method='post' action='/{$_REQUEST.controller}/{$_REQUEST.action}' class='form-horizontal'>
-    <div class='page-header'>
-      <h1>
-        {if $_REQUEST.action == 'verification'}
-          {$lang.sessions.verification.title}
-        {else}
-          {$lang.sessions.password.title}
-        {/if}
-      </h1>
-    </div>
+    {if !$MOBILE}
+      <div class='page-header'>
+        <h1>
+          {if $_REQUEST.action == 'verification'}
+            {$lang.sessions.verification.title}
+          {else}
+            {$lang.sessions.password.title}
+          {/if}
+        </h1>
+      </div>
+    {/if}
     <p>
       {if $_REQUEST.action == 'verification'}
         {$lang.sessions.verification.info}

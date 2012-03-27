@@ -1,8 +1,10 @@
 {strip}
   <form method='post' class='form-horizontal'>
-    <div class='page-header'>
-      <h1>{$lang.global.search}</h1>
-    </div>
+    {if !$MOBILE}
+      <div class='page-header'>
+        <h1>{$lang.global.search}</h1>
+      </div>
+    {/if}
     <div class='control-group'>
       <label for='input-search' class='control-label'>
         {$lang.searches.label.terms} <span title='{$lang.global.required}'>*</span>

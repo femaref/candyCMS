@@ -1,8 +1,10 @@
 {strip}
   <form action='/{$_REQUEST.controller}/create' method='post' data-ajax='false' class='form-horizontal'>
-    <div class='page-header'>
-      <h1>{$lang.global.login}</h1>
-    </div>
+    {if !$MOBILE}
+      <div class='page-header'>
+        <h1>{$lang.global.login}</h1>
+      </div>
+    {/if}
     <div class='control-group{if isset($error.email)} alert alert-error{/if}'>
       <label for='input-email' class='control-label'>
         {$lang.global.email.email} <span title='{$lang.global.required}'>*</span>
@@ -28,8 +30,8 @@
       <input type='hidden' value='formdata' name='create_sessions' />
     </div>
   </form>
-  <div class='center'>
-    <a href='/{$_REQUEST.controller}/password' class='btn'>{$lang.sessions.password.title}</a>
-    <a href='/{$_REQUEST.controller}/verification' class='btn'>{$lang.sessions.verification.title}</a>
+  <div class='center' data-role="controlgroup">
+    <a href='/{$_REQUEST.controller}/password' class='btn' data-role="button">{$lang.sessions.password.title}</a>
+    <a href='/{$_REQUEST.controller}/verification' class='btn' data-role="button">{$lang.sessions.verification.title}</a>
   </div>
 {/strip}
