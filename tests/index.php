@@ -19,7 +19,7 @@ require_once PATH_STANDARD . '/tests/candy/Candy.unit.php';
 require_once PATH_STANDARD . '/tests/candy/Candy.web.php';
 
 require_once PATH_STANDARD . '/config/Candy.inc.php';
-
+require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
 require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
 
 define('CLEAR_CACHE', true);
@@ -40,82 +40,107 @@ class AllFileTests extends TestSuite {
       die('not in testing mode');
     else {
 
-      # Helpers
-      # @todo AdvancedException
-      # @todo Dispatcher
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php');
-      # @todo pagination
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php');
+      # All Tests
+      $aTests = array(
+          # @todo AdvancedException
+          # @todo Dispatcher
+          'Helper.helper'   => PATH_STANDARD . '/tests/tests/app/helpers/Helper.helper.php',
+          'I18n.helper'     => PATH_STANDARD . '/tests/tests/app/helpers/I18n.helper.php',
 
-      # Blog
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Blogs.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Blogs.controller.php');
+          'Image.helper'    => PATH_STANDARD . '/tests/tests/app/helpers/Image.helper.php',
+          # @todo pagination
+          'SmartySingleton' => PATH_STANDARD . '/tests/tests/app/helpers/SmartySingleton.helper.php',
+          'Upload.helper'   => PATH_STANDARD . '/tests/tests/app/helpers/Upload.helper.php',
 
-      # Calendar
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Calendars.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Calendars.controller.php');
+          'blogs'     => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Blogs.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Blogs.controller.php'),
 
-      # Comment
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Comments.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Comments.controller.php');
+          'calendars' => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Calendars.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Calendars.controller.php'),
 
-      # Content
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Contents.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Contents.controller.php');
+          'comments'  => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Comments.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Comments.controller.php'),
 
-      # Download
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Downloads.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Downloads.controller.php');
+          'contents'  => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Contents.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Contents.controller.php'),
 
-      # Error
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Errors.controller.php');
+          'downloads' => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Downloads.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Downloads.controller.php'),
 
-      # Gallery
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Galleries.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Galleries.controller.php');
+          'errors'    => PATH_STANDARD . '/tests/tests/app/controllers/Errors.controller.php',
 
-      # Index
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php');
+          'galleries' => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Galleries.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Galleries.controller.php'),
 
-      # Log
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Logs.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php');
+          'index'     =>  PATH_STANDARD . '/tests/tests/app/controllers/Index.controller.php',
 
-      # Mail
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php');
 
-      # Main
-      # @todo controller
+          'logs'      => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Logs.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Logs.controller.php'),
 
-      # Media
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php');
+          'mails'     => PATH_STANDARD . '/tests/tests/app/controllers/Mails.controller.php',
 
-      # Newsletter
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php');
+          # Main
+          # @todo controller
 
-      # RSS
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php');
+          'medias'    => PATH_STANDARD . '/tests/tests/app/controllers/Medias.controller.php',
 
-      # Search
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Searches.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Searches.controller.php');
+          'newsletters' => PATH_STANDARD . '/tests/tests/app/controllers/Newsletters.controller.php',
 
-      # Session
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Sessions.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sessions.controller.php');
+          'rss'       => PATH_STANDARD . '/tests/tests/app/controllers/Rss.controller.php',
 
-      # Sitemap
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php');
+          'searches'  => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Searches.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Searches.controller.php'),
 
-      # Sites
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Sites.controller.php');
+          'sessions'  => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Sessions.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Sessions.controller.php'),
 
-      # User
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/models/Users.model.php');
-      $this->addFile(PATH_STANDARD . '/tests/tests/app/controllers/Users.controller.php');
+          'sitemaps'  => PATH_STANDARD . '/tests/tests/app/controllers/Sitemaps.controller.php',
+
+          'sites'     => PATH_STANDARD . '/tests/tests/app/controllers/Sites.controller.php',
+
+          'users'     => array(
+                          PATH_STANDARD . '/tests/tests/app/models/Users.model.php',
+                          PATH_STANDARD . '/tests/tests/app/controllers/Users.controller.php'),
+      );
+
+      $argv = $_SERVER['argv'];
+      $iNumberOfArgs = count($argv);
+      # are there specific tests given?
+      if ($iNumberOfArgs > 1) {
+        array_shift($argv);
+        foreach ($argv as $sArg)
+          if ($aTests[$sArg]) {
+            # do the test
+            if (is_array($aTests[$sArg]))
+              foreach ($aTests[$sArg] as $sTest)
+                $this->addFile($sTest);
+            else
+              $this->addFile($aTests[$sArg]);
+          }
+          else
+            die($sArg . ' not found');
+      }
+      # no specific test given, run all of them
+      else {
+        foreach ($aTests as $sTestFile)
+            # do the test
+          if (is_array($sTestFile))
+            foreach ($sTestFile as $sTest)
+              $this->addFile($sTest);
+          else
+            $this->addFile($sTestFile);
+      }
+
     }
 
 	}
