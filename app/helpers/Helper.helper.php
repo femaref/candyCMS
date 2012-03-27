@@ -386,23 +386,27 @@ class Helper {
     if(!defined('WEBSITE_LOCALE'))
       define('WEBSITE_LOCALE', 'en_US');
 
-		# Set active locale
-		setlocale(LC_ALL, WEBSITE_LOCALE);
+    if ($iTime) {
+      # Set active locale
+      setlocale(LC_ALL, WEBSITE_LOCALE);
 
-		if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
-			$oDate = new FormatTimestamp();
-			return $oDate->getDate($iTime, $iOptions);
-		}
-		else {
-			if ($iOptions == 1)
-				return strftime(DEFAULT_DATE_FORMAT, $iTime);
+      if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
+        $oDate = new FormatTimestamp();
+        return $oDate->getDate($iTime, $iOptions);
+      }
+      else {
+        if ($iOptions == 1)
+          return strftime(DEFAULT_DATE_FORMAT, $iTime);
 
-			elseif($iOptions == 2)
-				return strftime(DEFAULT_TIME_FORMAT, $iTime);
+        elseif($iOptions == 2)
+          return strftime(DEFAULT_TIME_FORMAT, $iTime);
 
-			else
-				return strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, $iTime);
-		}
+        else
+          return strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, $iTime);
+      }
+    }
+    else
+      return '';
 	}
 
 	/**

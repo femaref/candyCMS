@@ -27,8 +27,8 @@ class WebTestOfUserController extends CandyWebTest {
     $this->assertText(I18n::get('error.missing.permission')); # user has no permission
     $this->assertResponse('200');
 
-    # members and facebook members can not view users overview
-    $aRoles = array(1, 2);
+    # members can not view users overview
+    $aRoles = array(1);
     foreach ($aRoles as $iRole) {
       $this->loginAsUserWithRole($iRole);
       $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
@@ -98,7 +98,7 @@ class WebTestOfUserController extends CandyWebTest {
     $this->setField('email', time() . WEBSITE_MAIL);
     $this->setField('password', 'test');
     $this->setField('password2', 'test');
-    $this->setField('disclaimer', '1');
+    $this->setField('disclaimer', 'disclaimer');
 
     # register should work
     $this->click(I18n::get('global.register'));

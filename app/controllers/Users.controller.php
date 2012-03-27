@@ -313,7 +313,8 @@ class Users extends Main {
       return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
-      # @todo clearCache of user overview?
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
         $sMailMessage = '';
@@ -520,6 +521,8 @@ class Users extends Main {
 		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
 			# Subscribe to MailChimp after email address is confirmed
 			$this->_subscribeToNewsletter($this->_oModel->getActivationData());
+
+      $this->oSmarty->clearCacheForController('users');
 
 			return Helper::successMessage(I18n::get('success.user.verification'), '/');
 		}

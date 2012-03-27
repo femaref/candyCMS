@@ -69,9 +69,6 @@ abstract class CandyWebTest extends WebTestCase {
       case 1:
         $email = 'member@example.com';
         break;
-      case 2:
-        $email = 'facebook@example.com';
-        break;
       case 3:
         $email = 'moderator@example.com';
         break;
@@ -92,7 +89,7 @@ abstract class CandyWebTest extends WebTestCase {
   function logout() {
     # we need redirects for this
     $this->setMaximumRedirects(3);
-    $this->assertTrue($this->get(WEBSITE_URL . '/sessions/destroy'));
+    $this->get(WEBSITE_URL . '/sessions/destroy');
     $this->assertText(I18n::get('success.session.destroy'));
   }
 

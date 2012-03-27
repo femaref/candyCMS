@@ -158,15 +158,12 @@ class Sessions extends Main {
       $oQuery = parent::$_oDbStatic->prepare("UPDATE
                                                 " . SQL_PREFIX . "sessions
                                               SET
-                                                session = :session_null
+                                                session = NULL
                                               WHERE
                                                 session = :session_id");
 
-      $sNull = 'NULL';
-      $iSessionId = session_id();
-      $oQuery->bindParam('session_null', $sNull, PDO::PARAM_NULL);
-      $oQuery->bindParam('session_id', $iSessionId, PDO::PARAM_STR);
-
+      $sSessionId = session_id();
+      $oQuery->bindParam('session_id', $sSessionId, PDO::PARAM_STR);
       return $oQuery->execute();
     }
     catch (\PDOException $p) {
