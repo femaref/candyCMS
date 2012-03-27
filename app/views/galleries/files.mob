@@ -1,10 +1,10 @@
 {strip}
   <ul data-role="listview">
     <li data-role="list-divider">
-    <h1>{$gallery_name}</h3>
-    {if $gallery_content}
-      <p>{$gallery_content}</p>
-    {/if}
+      <h1>{$gallery_name}</h3>
+      {if $gallery_content}
+        <p>{$gallery_content}</p>
+      {/if}
     </li>
     {if !$files}
       <div class='error' title="{$lang.error.gallery.no_files}">
@@ -14,7 +14,7 @@
       {foreach $files as $f}
         <li>
           <a href='{$f.url}' title='{$f.content}' data-ajax="false">
-            <img src='/{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' height="80" width="80" />
+            <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' height="80" width="80" />
             {if isset($f.content)}
               <h3>{$f.content}</h3>
             {/if}
@@ -24,6 +24,7 @@
       {/foreach}
     {/if}
   </ul>
+  {* @todo fix view *}
   <p class="center">
     <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'>
       <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
