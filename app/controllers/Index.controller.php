@@ -162,6 +162,7 @@ class Index {
           if (!file_exists(PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
                           (string) ucfirst($sPluginName) . '.controller.php'))
             throw new AdvancedException('Missing plugin: ' . ucfirst($sPluginName));
+
           else
             require_once PATH_STANDARD . '/plugins/' . (string) ucfirst($sPluginName) . '/' .
                     (string) ucfirst($sPluginName) . '.controller.php';
@@ -284,6 +285,7 @@ class Index {
     if (!defined('WEBSITE_LOCALE'))
       define('WEBSITE_LOCALE', $sLocale);
 
+    setlocale(LC_ALL, WEBSITE_LOCALE);
     return WEBSITE_LOCALE;
 	}
 
@@ -298,7 +300,7 @@ class Index {
   public function getCronjob($bForceAction = false) {
     if (class_exists('\CandyCMS\Plugin\Controller\Cronjob')) {
       if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
-					Cronjob::cleanup(array('media', 'bbcode'));
+					Cronjob::cleanup(array('medias', 'bbcode'));
 					Cronjob::optimize();
 					Cronjob::backup($this->_aSession['user']['id']);
       }
@@ -479,14 +481,17 @@ class Index {
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_PREFIX'))
 			define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|');
-		if (!defined('UNIQUE_ID'))
+
+		if (!defined('UNIQUE_ID')) {
       # bugfix, searches has some post data, on which it determines what to show... all other controllers have a unique path
       if ($this->_aRequest['controller'] == 'searches')
         define('UNIQUE_ID', UNIQUE_PREFIX . Helper::replaceNonAlphachars ($this->_aRequest['search']));
+
       else
         define('UNIQUE_ID', UNIQUE_PREFIX .
                 substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
                 substr(md5(CURRENT_URL), 0, 10));
+    }
 
     # Start the dispatcher and grab the controller.
     $oSmarty = SmartySingleton::getInstance();

@@ -382,14 +382,7 @@ class Helper {
 	 *
 	 */
   public static function formatTimestamp($iTime, $iOptions = 0) {
-    # Fallback for unit testing
-    if(!defined('WEBSITE_LOCALE'))
-      define('WEBSITE_LOCALE', 'en_US');
-
     if ($iTime) {
-      # Set active locale
-      setlocale(LC_ALL, WEBSITE_LOCALE);
-
       if (class_exists('\CandyCMS\Plugin\FormatTimestamp') == true) {
         $oDate = new FormatTimestamp();
         return $oDate->getDate($iTime, $iOptions);
@@ -405,8 +398,6 @@ class Helper {
           return strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, $iTime);
       }
     }
-    else
-      return '';
 	}
 
 	/**

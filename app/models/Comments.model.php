@@ -208,9 +208,11 @@ class Comments extends Main {
   /**
    * Delete a comment.
    *
+   * @static
    * @access public
    * @param integer $iId ID to delete
    * @return boolean status of query
+   * @todo remove this function and use main
    *
    */
   public function destroy($iId) {

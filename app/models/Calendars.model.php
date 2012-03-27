@@ -247,17 +247,17 @@ class Calendars extends Main {
 	 *
 	 */
 	public function destroy($iId) {
-		try {
-			$oQuery = $this->_oDb->prepare("DELETE FROM
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
                                         " . SQL_PREFIX . "calendars
                                       WHERE
                                         id = :id
                                       LIMIT
                                         1");
 
-			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-			return $oQuery->execute();
-		}
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      return $oQuery->execute();
+    }
     catch (\PDOException $p) {
       try {
         $this->_oDb->rollBack();
