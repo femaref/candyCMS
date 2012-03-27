@@ -121,9 +121,9 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testFormatTimestamp() {
-    $this->assertEqual(Helper::formatTimestamp(0), strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 0));
-    $this->assertEqual(Helper::formatTimestamp(0, 1), strftime(DEFAULT_DATE_FORMAT, 0));
-    $this->assertEqual(Helper::formatTimestamp(0, 2), strftime(DEFAULT_TIME_FORMAT, 0));
+    $this->assertEqual(Helper::formatTimestamp(1), strftime(DEFAULT_DATE_FORMAT . ', ' . DEFAULT_TIME_FORMAT, 1));
+    $this->assertEqual(Helper::formatTimestamp(1, 1), strftime(DEFAULT_DATE_FORMAT, 1));
+    $this->assertEqual(Helper::formatTimestamp(1, 2), strftime(DEFAULT_TIME_FORMAT, 1));
   }
 
   function testFormatOutput() {

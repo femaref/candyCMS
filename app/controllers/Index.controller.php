@@ -284,6 +284,7 @@ class Index {
     if (!defined('WEBSITE_LOCALE'))
       define('WEBSITE_LOCALE', $sLocale);
 
+    setlocale(LC_ALL, WEBSITE_LOCALE);
     return WEBSITE_LOCALE;
 	}
 

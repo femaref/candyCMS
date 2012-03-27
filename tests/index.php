@@ -29,6 +29,9 @@ define('MOBILE_DEVICE', false);
 define('UNIQUE_ID', 'tests');
 define('VERSION', '0');
 define('TESTFILE', '/private/var/tmp/test'.md5(time()));
+define('WEBSITE_LOCALE', 'en_US');
+
+setlocale(LC_ALL, WEBSITE_LOCALE);
 
 class AllFileTests extends TestSuite {
 
