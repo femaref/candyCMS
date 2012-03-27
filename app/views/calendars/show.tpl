@@ -63,7 +63,7 @@
                 <strong>
                   {$d.title}
                 </strong>
-                {if $d.content !== ''}
+                {if $d.content}
                   <br />
                   {$d.content}
                 {/if}

@@ -20,7 +20,7 @@
           <a href='{$b.url}' title='{$b.title}'>
             <h3>{$b.title}</h3>
             <p>
-              {if $b.teaser !== ''}
+              {if $b.teaser}
                 {$b.teaser}
               {else}
                 {$b.content}
@@ -42,12 +42,12 @@
         <header>
           <h1>{$b.title}</h1>
         </header>
-        {if $b.teaser !== ''}
+        {if $b.teaser}
           <h3>{$b.teaser}</h3>
         {/if}
         {$b.content}
         <footer>
-          {if $b.tags[0] !== ''}
+          {if $b.tags[0]}
             <p>
               {$lang.global.tags.tags}:
               {foreach from=$b.tags item=t name=tags}

@@ -38,7 +38,7 @@ class WebTestOfNewsletterController extends CandyWebTest {
   function testShow() {
     #should redirect to create
     $this->setMaximumRedirects(0);
-    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'])); # @todo throws error
     $this->assertResponse(302);
   }
 

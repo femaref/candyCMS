@@ -47,7 +47,7 @@
             {/if}
           </p>
         </header>
-        {if $b.teaser !== ''}
+        {if $b.teaser}
           <p class='summary'>
             {$b.teaser}
           </p>
@@ -56,7 +56,7 @@
         <footer class='row'>
           <div class='span4 tags'>
             {$lang.global.tags.tags}:
-            {if $b.tags[0] !== ''}
+            {if $b.tags[0]}
               {foreach from=$b.tags item=t name=tags}
                 <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>
                   {$t}

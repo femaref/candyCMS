@@ -26,7 +26,7 @@
           <a href='/users/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
         </p>
       </header>
-      {if $c.teaser !== ''}
+      {if $c.teaser}
         <p class='summary'>{$c.teaser}</p>
       {/if}
       {$c.content}

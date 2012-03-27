@@ -3,7 +3,7 @@
     <header>
       <h1>{$c.title}</h1>
     </header>
-    {if $c.teaser !== ''}
+    {if $c.teaser}
       <h3>{$c.teaser}</h3>
     {/if}
     {$c.content}

@@ -24,6 +24,9 @@ final class FormatTimestamp {
    * @return type
    */
   private final function _setDate($iTime, $iOptions) {
+    if(!$iTime)
+      return;
+
 		$sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
 
 		if(date('Ymd', $iTime) == date('Ymd', time()))

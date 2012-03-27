@@ -41,7 +41,7 @@
               {$d.end_date}
               {/if}
             </p>
-            {if $d.content !== ''}
+            {if $d.content}
               <p>
                 {$d.content}
               </p>

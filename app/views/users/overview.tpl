@@ -50,14 +50,18 @@
           {/if}
         </td>
         <td class='center'>
-          {if $u.verification_code !== ''}
+          {if $u.verification_code}
             <span style='text-decoration:line-through'>{$u.date}</span>
           {else}
             {$u.date}
           {/if}
         </td>
         <td class='center'>
-          {$u.last_login}
+          {if $u.last_login}
+            {$u.last_login}
+          {else}
+            -
+          {/if}
         </td>
         <td class='center'>
           <img src='{$_PATH.images}/candy.global/spacer.png'

@@ -39,7 +39,7 @@
             </td>
             <td class='left'>
               <a href='{$f.url}' target='_blank'>{$f.title}</a>
-              {if $f.content !== ''}
+              {if $f.content}
                 <br />
                 {$f.content}
               {/if}
