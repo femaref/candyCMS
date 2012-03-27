@@ -81,8 +81,8 @@ class Users extends Main {
       if (isset($aResult['email']) && !empty($aResult['email']))
         return true;
     }
-    catch (\PDOException $p) {
-      AdvancedException::reportBoth('0078 - ' . $p->getMessage());
+    catch (AdvancedException $e) {
+      AdvancedException::reportBoth('0078 - ' . $e->getMessage());
       exit('SQL error.');
     }
   }

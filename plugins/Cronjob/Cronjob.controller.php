@@ -10,24 +10,29 @@
 # intervals in the "config/Candy.inc.php" and lean back.
 # Fix for install script
 
-namespace CandyCMS\Plugin;
+namespace CandyCMS\Plugin\Controller;
 
 use CandyCMS\Controller\Mails as Mails;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Model\Main as Main;
 use PDO;
 
-if (!class_exists('Mails') && file_exists('app/controllers/Mails.controller.php'))
-  require 'app/controllers/Mails.controller.php';
+require_once 'app/controllers/Mails.controller.php';
 
 final class Cronjob {
 
   /**
-   * @todo
-   * @todo add helper
+   * Cleanup our temp folders.
+   *
+   * @static
+   * @access public
+   * @param array $aFolders temp folders to clean
+   *
    */
   public static final function cleanup($aFolders) {
     foreach ($aFolders as $sFolder) {
-      $sTempPath = PATH_UPLOAD . '/temp/' . $sFolder;
+      $sTempPath = Helper::removeSlash(PATH_UPLOAD . '/temp/' . $sFolder);
       $oDir = opendir($sTempPath);
 
       while ($sFile = readdir($oDir)) {
@@ -39,40 +44,51 @@ final class Cronjob {
     }
   }
 
+
   /**
-   *@todo
+   * Optimize tables.
+   *
+   * @static
+   * @access public
+   * @todo clean up sessions table and remove old entries
+   *
    */
   public static final function optimize() {
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->query(" OPTIMIZE TABLE
+      Main::$_oDbStatic->query("OPTIMIZE TABLE
                                 " . SQL_PREFIX . "blogs,
                                 " . SQL_PREFIX . "comments,
+                                " . SQL_PREFIX . "calendars,
                                 " . SQL_PREFIX . "contents,
+                                " . SQL_PREFIX . "downloads,
                                 " . SQL_PREFIX . "gallery_albums,
                                 " . SQL_PREFIX . "gallery_files,
                                 " . SQL_PREFIX . "migrations,
                                 " . SQL_PREFIX . "logs,
-                                " . SQL_PREFIX . "newsletters,
+                                " . SQL_PREFIX . "sessions,
                                 " . SQL_PREFIX . "users");
 
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      Main::$_oDbStatic->rollBack();
+      AdvancedException::reportBoth('0109 - ' . $e->getMessage());
+      exit('SQL error.');
     }
   }
 
-  public static final function backup($iUserId, $sPath = '') {
-    $sBackupName = date('Y-m-d_H-i');
-    $sBackupFolder = $sPath . 'backup';
-    $sBackupPath = $sBackupFolder . '/' . $sBackupName . '.sql';
+  /**
+   * Create a SQL backup.
+   *
+   * @static
+   * @access public
+   * @param integer $iUserId user ID who updates the database.
+   *
+   */
+  public static final function backup($iUserId) {
+    $sBackupName      = date('Y-m-d_H-i');
+    $sBackupFolder    = $sPath . 'backup';
+    $sBackupPath      = $sBackupFolder . '/' . $sBackupName . '.sql';
     $iBackupStartTime = time();
-
-    if (!is_dir($sBackupFolder))
-      mkdir($sBackupFolder, 0777);
 
     # Create header information
     $sFileText = "\r\n#---------------------------------------------------------------#\r\n";
@@ -93,21 +109,16 @@ final class Cronjob {
 
     # Get all tables and name them
     try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD, array(
-                  PDO::ATTR_PERSISTENT => true));
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-      $oQuery = $oDb->query("SHOW TABLES FROM " . SQL_DB);
+      $oQuery = Main::$_oDbStatic->query("SHOW TABLES FROM " . SQL_DB . '_' . WEBSITE_MODE);
       $aResult = $oQuery->fetchAll();
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      # @todo exception
     }
 
     # Show all tables
     foreach ($aResult as $aTable) {
-      $sTable = $aTable[0];
-      $sFileText .= "# " . SQL_PREFIX . $sTable . "\r\n";
+      $sFileText .= "# " . SQL_PREFIX . $aTable[0] . "\r\n";
     }
 
     # Now backup them
@@ -115,12 +126,12 @@ final class Cronjob {
       $sTable = SQL_PREFIX . $aTable[0];
 
       try {
-        $oQuery = $oDb->query("SHOW COLUMNS FROM " . $sTable);
+        $oQuery = Main::$_oDbStatic->query("SHOW COLUMNS FROM " . $sTable);
         $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iColumns = count($aColumns);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        # @todo exception
       }
 
       $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
@@ -150,12 +161,11 @@ final class Cronjob {
 
       # Show extras like auto_increment etc
       try {
-        $oQuery = $oDb->query("SHOW KEYS FROM " . $sTable);
+        $oQuery = Main::$_oDbStatic->query("SHOW KEYS FROM " . $sTable);
         $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iKeys = count($aKeys);
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        # @todo exception
       }
 
       $iKey = 1;
@@ -166,7 +176,7 @@ final class Cronjob {
           $sKey = "UNIQUE|" . $sKey;
 
         # Do we have keys?
-        if ($sKey == "PRIMARY")
+        if ($sKey == 'PRIMARY')
           $sFileText .= " PRIMARY KEY (`" . $aKey['Column_name'] . "`)";
 
         elseif (substr($sKey, 0, 6) == "UNIQUE")
@@ -175,17 +185,17 @@ final class Cronjob {
         else
           $sFileText .= " FULLTEXT KEY " . $sKey . " (`" . $aKey['Column_name'] . "`)";
 
-        if ($iKeys !== $iKey)
+        if (count($aKeys) !== $iKey)
           $sFileText .= ",\n";
 
-        $iKey++;
+        ++$iKey;
       }
 
       # Closing bracket
       $sFileText .= "\n)";
 
       try {
-        $oQuery = $oDb->query(" SELECT
+        $oQuery = Main::$_oDbStatic->query(" SELECT
                                   id
                                 FROM
                                   " . $sTable . "
@@ -197,7 +207,7 @@ final class Cronjob {
         $aRow = $oQuery->fetch();
       }
       catch (AdvancedException $e) {
-        $oDb->rollBack();
+        # @todo exception
       }
 
       # We also use this as count for data entries
@@ -209,7 +219,7 @@ final class Cronjob {
 
       # Now fetch content
       try {
-        $oQuery = $oDb->query("SELECT * FROM " . $sTable);
+        $oQuery = Main::$_oDbStatic->query("SELECT * FROM " . $sTable);
         $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
         $iRows = count($aRows);
       }
@@ -244,7 +254,7 @@ final class Cronjob {
     @fwrite($oFile, $sFileText);
     @fclose($oFile);
 
-    if (CRONJOB_GZIP_BACKUP == true) {
+    if (CRONJOB_GZIP_BACKUP === true) {
       $oData = implode('', file($sBackupPath));
       $oCompress = gzencode($oData, 9);
       unlink($sBackupPath);
@@ -256,64 +266,84 @@ final class Cronjob {
     }
 
     # Send the backup via mail
-    if (class_exists('Mails') && CRONJOB_SEND_PER_MAIL == true)
-      Mail::send(WEBSITE_MAIL, str_replace('%d', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT), LANG_MAIL_CRONJOB_CREATE_BODY, WEBSITE_MAIL_NOREPLY, $sBackupPath);
+    # @todo test if this works
+    if (class_exists('Mails') && CRONJOB_SEND_PER_MAIL === true)
+      Mails::send(WEBSITE_MAIL,
+              str_replace('%s', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT),
+              LANG_MAIL_CRONJOB_CREATE_BODY,
+              WEBSITE_MAIL_NOREPLY,
+              $sBackupPath);
 
     # Write into backup log
     try {
-      $oQuery = $oDb->prepare(" INSERT INTO
-                                  " . SQL_PREFIX . "logs(section_name, action_name, action_id, time_start, time_end, user_id)
-                                VALUES
-                                  ( :section_name, :action_name, :action_id, :time_start, :time_end, :user_id)");
+      $oQuery = Main::$_oDbStatic->prepare("INSERT INTO
+                                              " . SQL_PREFIX . "logs
+                                              ( controller_name,
+                                                action_name,
+                                                action_id,
+                                                time_start,
+                                                time_end,
+                                                user_id)
+                                            VALUES
+                                              ( :controller_name,
+                                                :action_name,
+                                                :action_id,
+                                                :time_start,
+                                                :time_end,
+                                                :user_id)");
 
-      $sSectionName = 'cronjob';
-      $sActionName = 'create';
-      $iActionId = 0;
-      $oQuery->bindParam('section_name', $sSectionName);
-      $oQuery->bindParam('action_name', $sActionName);
+      $sControllerName  = 'cronjob';
+      $sActionName      = 'create';
+      $iActionId        = 0;
+
+      $oQuery->bindParam('controller_name', $sControllerName, PDO::PARAM_STR);
+      $oQuery->bindParam('action_name', $sActionName, PDO::PARAM_STR);
       $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
-      $oQuery->bindParam('time_start', $iBackupStartTime);
-      $oQuery->bindParam('time_end', time());
-      $oQuery->bindParam('user_id', $iUserId);
-      $bResult = $oQuery->execute();
+      $oQuery->bindParam('time_start', $iBackupStartTime, PDO::PARAM_INT);
+      $oQuery->bindParam('time_end', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
+      return $oQuery->execute();
 
-      $oDb = null;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      Main::$_oDbStatic->rollBack();
+      # @todo exception
     }
   }
 
+  /**
+   * Return the status if we want to execute the cronjob.
+   *
+   * @static
+   * @access public
+   * @param integer $iInterval time in seconds that the cronjob should be executed
+   * @return boolean update status
+   *
+   */
   public static function getNextUpdate($iInterval = '') {
     $iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
 
-    try {
-      $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB, SQL_USER, SQL_PASSWORD);
-      $oDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if (empty(Main::$_oDbStatic))
+      Main::connectToDatabase();
 
-      $oQuery = $oDb->query(" SELECT
-                                time_end
-                              FROM
-                                " . SQL_PREFIX . "logs
-                              WHERE
-                                section_name = 'cronjob'
-                              ORDER BY
-                                time_end DESC
-                              LIMIT
-                                1");
+    try {
+      $oQuery = Main::$_oDbStatic->prepare("SELECT
+                                              time_end
+                                            FROM
+                                              " . SQL_PREFIX . "logs
+                                            WHERE
+                                              controller_name = 'cronjob'
+                                            ORDER BY
+                                              time_end DESC
+                                            LIMIT
+                                              1");
 
       $aResult = $oQuery->fetch();
-      $iTimeEnd = $aResult['time_end'];
-
-      $oDb = null;
+      return $aResult['time_end'] + $iInterval < time() ? true : false;
     }
     catch (AdvancedException $e) {
-      $oDb->rollBack();
+      AdvancedException::reportBoth('0108 - ' . $e->getMessage());
+      exit('SQL error.');
     }
-
-    if ($iTimeEnd + $iInterval < time())
-      return true;
-    else
-      return false;
   }
 }

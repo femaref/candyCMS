@@ -126,8 +126,6 @@ class Upload {
 
       return $bReturn;
     }
-    else
-      return die(print_r($this->_aFile));
   }
 
   /**
