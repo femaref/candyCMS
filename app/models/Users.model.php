@@ -422,7 +422,6 @@ class Users extends Main {
    * @param integer $iId user ID
    * @param integer $iUseGravatar do we want to use a Gravatar?
    * @return boolean status of query
-   * @todo documentation
    *
    */
   public static function updateGravatar($iId, $iUseGravatar = 0) {

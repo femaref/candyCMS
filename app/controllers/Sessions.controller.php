@@ -66,7 +66,11 @@ class Sessions extends Main {
    *
    */
   public function create() {
-    return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
+    if ($this->_aSession['user']['role'] > 0)
+      return Helper::errorMessage('', '/');
+
+    else
+      return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
   }
 
   /**
@@ -277,6 +281,6 @@ class Sessions extends Main {
     }
 
     else
-      return Helper::errorMessage(I18n::get('error.sql'), '/');
+      return Helper::errorMessage('', '/');
   }
 }

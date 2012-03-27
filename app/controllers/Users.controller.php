@@ -288,7 +288,6 @@ class Users extends Main {
 	 *
 	 * @access protected
 	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-   * @todo bugfix
 	 *
 	 */
 	protected function _create($bShowCaptcha) {
@@ -314,24 +313,23 @@ class Users extends Main {
       return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
-      # @todo clearCache?
+      # @todo clearCache of user overview?
       # Send email if user has registered and creator is not an admin.
       if ($this->_aSession['user']['role'] == 4)
         $sMailMessage = '';
 
-      else {
-        $sVerificationUrl = Helper::createLinkTo('users/' . $iVerificationCode . '/verification');
-
-        $sMailMessage = I18n::get('users.mail.body', Helper::formatInput($this->_aRequest['name']), $sVerificationUrl);
-      }
+      else
+        $sMailMessage = I18n::get('users.mail.body',
+                Helper::formatInput($this->_aRequest['name']),
+                Helper::createLinkTo('users/' . $iVerificationCode . '/verification'));
 
 			Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],
 										$this->_oModel->getLastInsertId('users'),
 										$this->_aSession['user']['id']);
 
-      $cMails = $this->__autoload('Mails');
-      $cMails::send( Helper::formatInput($this->_aRequest['email']),
+      $sMails = $this->__autoload('Mails');
+      $sMails::send( Helper::formatInput($this->_aRequest['email']),
 									I18n::get('users.mail.subject'),
 									$sMailMessage,
 									WEBSITE_MAIL_NOREPLY);
@@ -512,6 +510,7 @@ class Users extends Main {
 	 *
 	 * @access public
 	 * @return boolean status of message
+   * @todo clear users cache
 	 *
 	 */
 	public function verifyEmail() {

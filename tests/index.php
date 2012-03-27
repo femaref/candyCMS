@@ -36,8 +36,9 @@ class AllFileTests extends TestSuite {
 		parent::__construct();
 		$this->TestSuite('All tests');
 
-    if (WEBSITE_MODE != 'test')
+    if (WEBSITE_MODE !== 'test')
       die('not in testing mode');
+
     else {
 
       # All Tests
@@ -130,6 +131,7 @@ class AllFileTests extends TestSuite {
           else
             die($sArg . ' not found');
       }
+
       # no specific test given, run all of them
       else {
         foreach ($aTests as $sTestFile)
