@@ -1,0 +1,36 @@
+{strip}
+  {if !$downloads}
+    <div class='alert alert-warning'>
+      <h4>{$lang.error.missing.entries}</h4>
+    </div>
+  {else}
+    {foreach $downloads as $d}
+      <ul data-role='listview' data-inset='true' {if $_SESSION.user.role >= 3}data-split-theme='a' data-split-icon='gear'{/if}>
+        <li data-role='list-divider'>
+          {$d.category}
+        </li>
+        {foreach $d.files as $f}
+          <li data-icon='arrow-d' data-iconpos="right">
+            <a href='{$f.url}' title='{$f.content}' data-ajax='false'>
+              <img src='{$_PATH.images}/candy.files/{$f.extension}.png' alt='{$f.extension}' class='ui-li-icon' />
+              <h2>
+                {$f.title}
+              </h2>
+              <p class='ui-li-aside'>
+                {$f.size}
+                {if $_SESSION.user.role >= 3}
+                  <br />{$f.downloads} {$lang.global.downloads}
+                {/if}
+              </p>
+              {if $f.content}
+                <p>
+                  {$f.content}
+                </p>
+              {/if}
+            </a>
+          </li>
+        {/foreach}
+      </ul>
+    {/foreach}
+  {/if}
+{/strip}
