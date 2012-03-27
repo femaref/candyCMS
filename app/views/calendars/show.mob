@@ -1,7 +1,7 @@
 {strip}
   {if $_SESSION.user.role >= 3}
-    <p class="create">
-      <a href='/{$_REQUEST.controller}/create' data-role="button" data-theme="b" data-icon="plus">
+    <p class='create'>
+      <a href='/{$_REQUEST.controller}/create' data-role='button' data-theme='b' data-icon='plus'>
         {$lang.global.create.entry}
       </a>
     </p>
@@ -25,8 +25,8 @@
     </div>
   {else}
     {foreach $calendar as $c}
-      <ul data-role="listview" data-inset="true" {if $_SESSION.user.role >= 3}data-split-theme="a" data-split-icon="gear"{/if}>
-        <li data-role="list-divider">
+      <ul data-role='listview' data-inset='true' {if $_SESSION.user.role >= 3}data-split-theme='a' data-split-icon='gear'{/if}>
+        <li data-role='list-divider'>
           {$c.month} {$c.year}
         </li>
         {foreach $c.dates as $d}
@@ -52,8 +52,8 @@
     {/foreach}
   {/if}
   {if !isset($_REQUEST.action)}
-    <p class="center">
-      <a href="/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive">{$lang.global.archive}</a>
+    <p class='center'>
+      <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive'>{$lang.global.archive}</a>
     </p>
   {/if}
 {/strip}

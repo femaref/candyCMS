@@ -2,12 +2,12 @@
   <!DOCTYPE html>
   <html>
     <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta http-equiv='content-type' content='text/html;charset=utf-8'/>
       <link href='{$_PATH.css}/mobile/jquery.mobile{$_SYSTEM.compress_files_suffix}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
       <link href='{$_PATH.css}/mobile/essential{$_SYSTEM.compress_files_suffix}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
       <link href='{$_PATH.css}/mobile/application{$_SYSTEM.compress_files_suffix}.css' rel='stylesheet' type='text/css' media='screen, projection'/>
-      <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1{$_SYSTEM.compress_files_suffix}.js"></script>
+      <script type='text/javascript' src='http://code.jquery.com/jquery-1.7.1{$_SYSTEM.compress_files_suffix}.js'></script>
       <script type="text/javascript">
         if (typeof jQuery == 'undefined')
           document.write(unescape("%3Cscript src='{$_PATH.js}/core/jquery.1.7.1{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'%3E%3C/script%3E"));
@@ -20,25 +20,26 @@
       <title>{$_title_}</title>
     </head>
     <body>
-      <div data-role="page" data-theme="d">
-        <div data-role="header">
+      <div data-role='page' data-theme='d'>
+        <div data-role='header'>
           <h1>{$_title_}</h1>
           {if $_SESSION.user.role == 0}
-            <a href="/sessions" class="ui-btn-right">{$lang.global.login}</a>
+            <a href='/sessions' class='ui-btn-right'>{$lang.global.login}</a>
           {else}
-            <a href="/sessions/destroy" class="ui-btn-right">{$lang.global.logout}</a>
+            <a href='/sessions/destroy' class='ui-btn-right'>{$lang.global.logout}</a>
           {/if}
         </div><!-- /header -->
-        <div data-role="navbar">
+        <div data-role='navbar'>
           <ul>
-            <li><a href='/blogs' {if $_REQUEST.controller == 'blogs'}class="ui-btn-active"{/if}>{$lang.global.blog}</a></li>
-            <li><a href='/galleries' {if $_REQUEST.controller == 'galleries'}class="ui-btn-active"{/if}>{$lang.global.gallery}</a></li>
-            <li><a href='/searches' {if $_REQUEST.controller == 'searches'}class="ui-btn-active" data-ajax="false"{/if}>{$lang.global.search}</a></li>
-            <li><a href='/calendars' {if $_REQUEST.controller == 'calendars'}class="ui-btn-active"{/if}>{$lang.global.calendar}</a></li>
+            <li><a href='/blogs' {if $_REQUEST.controller == 'blogs'}class='ui-btn-active'{/if}>{$lang.global.blog}</a></li>
+            <li><a href='/galleries' {if $_REQUEST.controller == 'galleries'}class='ui-btn-active'{/if}>{$lang.global.gallery}</a></li>
+            <li><a href='/calendars' {if $_REQUEST.controller == 'calendars'}class='ui-btn-active'{/if}>{$lang.global.calendar}</a></li>
+            <li><a href='/downloads' {if $_REQUEST.controller == 'downloads'}class='ui-btn-active'{/if}>{$lang.global.download}</a></li>
+            <li><a href='/searches' {if $_REQUEST.controller == 'searches'}class='ui-btn-active' data-ajax='false'{/if}>{$lang.global.search}</a></li>
           </ul>
         </div><!-- /navbar -->
-        <div data-role="content">
-          <section id="{$_REQUEST.controller}">
+        <div data-role='content'>
+          <section id='{$_REQUEST.controller}'>
             {if $_flash_type_}
               <div id='js-flash_message'>
                 <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>

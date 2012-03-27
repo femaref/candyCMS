@@ -173,8 +173,12 @@ class SmartySingleton extends Smarty {
 
       try {
         @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));
+        @unlink(Helper::removeSlash($aPaths['css'] . '/mobile/application.css'));
+
         lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/core/application.less'),
                 Helper::removeSlash($aPaths['css'] . '/core/application.css'));
+        lessc::ccompile(Helper::removeSlash($aPaths['less'] . '/mobile/application.less'),
+                Helper::removeSlash($aPaths['css'] . '/mobile/application.css'));
       }
       catch (AdvancedException $e) {
         AdvancedException::reportBoth($e->getMessage());

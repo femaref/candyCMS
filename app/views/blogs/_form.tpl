@@ -123,14 +123,14 @@
       {/if}
       <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
       {if $_REQUEST.action == 'create'}
-        <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" />
+        <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" data-theme='b' />
       {elseif $_REQUEST.action == 'update'}
-        <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" />
-          <input type='button' class='btn btn-danger' value='{$lang.blogs.title.destroy}'
-                onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
-          <input type='reset' class='btn' value='{$lang.global.reset}' />
-          <input type='hidden' value='{$_REQUEST.id}' name='id' />
-          <input type='hidden' value='{$date}' name='date' />
+        <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" data-theme='b' />
+        <input type='button' class='btn btn-danger' value='{$lang.blogs.title.destroy}'
+              onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
+        <input type='reset' class='btn' value='{$lang.global.reset}' />
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
+        <input type='hidden' value='{$date}' name='date' />
       {/if}
     </div>
   </form>
