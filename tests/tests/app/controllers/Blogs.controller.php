@@ -43,11 +43,29 @@ class WebTestOfBlogController extends CandyWebTest {
 		$this->assertResponse(200);
 	}
 
+  function testShowWithAPIToken() {
+    # Overview with correct token
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '?api_token=c2f9619961'));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('global.create.entry'));
+
+    # Overview with wrong token
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '?api_token=notatoken'));
+    $this->assertResponse(200);
+    $this->assertNoText(I18n::get('global.create.entry'));
+  }
+
 	function testShowEntryUnpublished() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2'));
 		$this->assertResponse(200);
     $this->assertText(I18n::get('error.404.title'));
 	}
+
+  function testShowEntryUnpublishedWithAPIToken() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/2?api_token=c2f9619961'));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('global.not_published'));
+  }
 
   function testShowPageTwo() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/page/2'));
@@ -80,15 +98,107 @@ class WebTestOfBlogController extends CandyWebTest {
     $this->assertResponse(200);
 	}
 
+  function testCreateWithAPIToken() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create?api_token=notatoken'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create?api_token=c2f9619961'));
+    $this->assertResponse(200);
+    $this->assertField('title', '');
+    $this->assertField('teaser', '');
+    $this->assertField('tags', '');
+    // ...
+    # still have to manually send api token, so normal submit has to fail
+    $this->click(I18n::get('global.create.create'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    //actually creating and deleting is done in testCreateAndDestroyWithAPIToken
+  }
+
 	function testUpdate() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
 
+  function testUpdateWithAPIToken() {
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update?api_token=notatoken'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update?api_token=c2f9619961'));
+    $this->assertResponse(200);
+    $this->assertField('title', 'b3cf6b2dd0');
+    $this->assertField('teaser', '');
+    $this->assertField('tags', 'tag1');
+    // ...
+    # still have to manually send api token, so normal submit should fail
+    $this->click(I18n::get('global.update.update'));
+    $this->assertText(I18n::get('error.missing.permission'));
+    $this->assertResponse(200);
+
+    # really update, by sending api_token
+    $sContent = 'Content change at : ' . time();
+    $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update?api_token=c2f9619961',
+                                  array('author_id' => '2',
+                                        'content' => $sContent,
+                                        'date' => '1',
+                                        'id' => '1',
+                                        'keywords' => 'APITesting',
+                                        'language' => 'en',
+                                        'published' => '1',
+                                        'tags' => 'tag1',
+                                        'title' => 'b3cf6b2dd0',
+                                        'update_blogs' => 'formdata')));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('success.update'));
+    $this->assertText($sContent);
+  }
+
 	function testDestroy() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/destroy'));
 		$this->assertText(I18n::get('error.missing.permission'));
     $this->assertResponse(200);
 	}
+
+  function testCreateAndDestroyWithAPIToken() {
+    $sTimestamp = '' . time();
+    $sContent = 'Content created at : ' . $sTimestamp;
+    #try to create without valid api_token
+    $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create?api_token=notatoken',
+                                  array('content' => $sContent,
+                                      'keywords' => '',
+                                      'language' => 'en',
+                                      'tags' => 'api',
+                                      'title' => $sTimestamp,
+                                      'teaser' => 'API stuff',
+                                      'create_blogs' => 'formdata')));
+		$this->assertText(I18n::get('error.missing.permission'));
+
+    # create with valid api token
+    $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create?api_token=c2f9619961',
+                                  array('content' => $sContent,
+                                      'keywords' => '',
+                                      'language' => 'en',
+                                      'tags' => 'api',
+                                      'title' => $sTimestamp,
+                                      'teaser' => 'API stuff',
+                                      'published' => '1',
+                                      'create_blogs' => 'formdata')));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('success.create'));
+    $this->assertText($sTimestamp);
+
+    # open the newly created blog entry
+    $this->assertTrue($this->click($sTimestamp));
+    $this->assertResponse(200);
+    $sUrl = $this->getUrl();
+    $sUrl = substr($sUrl, 0, strrpos($sUrl, '/'));
+
+    $this->assertTrue($this->get($sUrl . '/destroy?api_token=c2f9619961'));
+    $this->assertResponse(200);
+    $this->assertText(I18n::get('success.destroy'));
+  }
 }
