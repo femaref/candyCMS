@@ -99,7 +99,7 @@ class Install extends Index {
 
       # check single Folder
       else
-        $aReturn[$sPrefix . $mFolder] = substr(decoct(fileperms(PATH_STANDARD . $sPrefix . 'backup')), 1) == $sPermissions;
+        $aReturn[$sPrefix . $mFolder] = substr(decoct(fileperms(PATH_STANDARD . $sPrefix . $mFolder)), 1) == $sPermissions;
     }
   }
 
