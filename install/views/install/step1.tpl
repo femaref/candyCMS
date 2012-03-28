@@ -46,11 +46,9 @@
     them manually.
   </p>
   <ul>
-    <li style='color:{$_color_backup_}'>/backup</li>
-    <li style='color:{$_color_cache_}'>/cache</li>
-    <li style='color:{$_color_compile_}'>/compile</li>
-    <li style='color:{$_color_logs_}'>/logs</li>
-    <li style='color:{$_color_upload_}'>/upload</li>
+    {foreach $_folder_checks_ as $folder=>$check}
+      <li style='color:{if $check}green{else}red{/if}'>{$folder}</li>
+    {/foreach}
   </ul>
   <hr />
 
@@ -69,8 +67,9 @@
     sites protected by CAPTCHAs.
   </p>
   <p class='alert alert-notice'>
-    CAPTCHAs can be enabled / disabled via <em>config/Candy.inc.php</em> (RECAPTCHA_ENABLED).
-    Also your public and private key have to be added there (RECAPTCHA_PUBLIC & RECAPTCHA_PRIVATE).
+    CAPTCHAs can be enabled / disabled via adden the Recaptcha Plugin in <em>config/Candy.inc.php</em>.
+    Also your public and private key have to be added to <em>config/Plugins.inc.php</em>
+    (PLUGIN_RECAPTCHA_PUBLIC_KEY & PLUGIN_RECAPTCHA_PRIVATE_KEY).
   </p>
   <hr class="clearfix" />
 
@@ -84,7 +83,7 @@
     Facebook Connect.
   </p>
   <div class="alert alert-notice">
-    Don't forget to enter your App ID and Secret into <em>config/Facebook.inc.php</em>
+    Don't forget to enter your App ID and Secret into <em>config/Plugins.inc.php</em>
     and add Facebook as a plugin at ALLOWED_PLUGINS in the <em>config/Candy.inc.php</em>!
   </div>
   <hr />
