@@ -173,19 +173,21 @@ class Pagination {
    *
    */
   public function showPages($sController = '') {
-		if($this->_iPages > 1) {
+    if ($this->_iPages > 1) {
+      $sTemplateDir  = Helper::getTemplateDir('paginations', 'show');
+      $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
       $aPage = array(
-          'last'        => $this->_iPages,
-          'controller'  => !empty($sController) ?
+          'last'       => $this->_iPages,
+          'controller' => !empty($sController) ?
                   $sController :
                   Helper::formatInput($this->_aRequest['controller']));
 
       $this->_oSmarty->assign('_PAGE', $aPage);
 
-			$this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'show');
-			return $this->_oSmarty->fetch('show.tpl', UNIQUE_ID);
-		}
+      $this->_oSmarty->setTemplateDir($sTemplateDir);
+      return $this->_oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
   }
 
 	/**
@@ -197,6 +199,9 @@ class Pagination {
    *
    */
   public function showSurrounding($sController = 'blogs') {
+    $sTemplateDir  = Helper::getTemplateDir('paginations', 'surrounding');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'surrounding');
+
     if ($this->_iPages > 1 && $this->_iCurrentPage < $this->_iPages)
       $iNext = $this->_iCurrentPage + 1;
 
@@ -212,7 +217,7 @@ class Pagination {
 
     $this->_oSmarty->assign('_PAGE', $aPage);
 
-    $this->_oSmarty->template_dir = Helper::getTemplateDir('paginations', 'surrounding');
-    return $this->_oSmarty->fetch('surrounding.tpl', UNIQUE_ID);
+    $this->_oSmarty->setTemplateDir($sTemplateDir);
+    return $this->_oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 }

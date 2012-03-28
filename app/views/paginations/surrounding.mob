@@ -1,0 +1,16 @@
+{strip}
+  <p class='center'>
+    <div data-role='controlgroup' data-type='horizontal' class='center'>
+      <a href='/{$_REQUEST.controller}/page/{$_PAGE.previous}' rel='prev' data-role='button'
+        {if !$_PAGE.previous}class='ui-disabled'{/if}>&larr; {$lang.pages.previous}</a>
+      <a href='/{$_REQUEST.controller}/page/{$_PAGE.next}' rel='next' data-role='button'
+        {if !$_PAGE.next || !$_PAGE.entries > $_PAGE.limit}class='ui-disabled'{/if}>{$lang.pages.next} &rarr;</a>
+    </div>
+    <p class='center'>
+      <a href='/rss/{$_PAGE.controller}'>
+        <img src='{$_PATH.images}/candy.global/spacer.png' class='icon-rss js-tooltip'
+            title='{$lang.global.rss}' alt='{$lang.global.rss}' width='16' height='16' />
+      </a>
+    </p>
+  </p>
+{/strip}
