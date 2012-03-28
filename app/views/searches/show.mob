@@ -2,7 +2,7 @@
   {if $tables.blogs.entries > 0 || $tables.contents.entries > 0 || $tables.downloads.entries > 0 || $tables.gallery_albums.entries > 0}
     {foreach $tables as $table}
       {if $table.entries > 0}
-        <ol data-role='listview' data-inset='true'>
+        <ul data-role='listview' data-inset='true'>
           <li data-role='list-divider'>
             {$table.title}
             <span class="ui-li-count">{$table.entries}</span>
@@ -19,7 +19,7 @@
               </li>
             {/if}
           {/foreach}
-        </ol>
+        </ul>
       {/if}
     {/foreach}
   {else}
