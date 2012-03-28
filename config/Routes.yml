@@ -3,7 +3,6 @@
 
 # Special behaviour
 "blogs/(:num)/(update|destroy)": controller=blogs&id=$1&action=$2&page=1
-"blogs/(:num)(/[\d\w]+)?": controller=blogs&id=$1&page=1
 "calendars/(:num)/archive": controller=calendars&action=archive&id=$1
 "galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
 "galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
@@ -28,8 +27,8 @@
 "(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
 
 # Magic rule
-"(:alpha)/(:num)": controller=$1&id=$2
-"(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3
+"(:alpha)/(:num)": controller=$1&id=$2&page=1
+"(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3&page=1
 "(:alpha).xml": controller=$1&action=xml&ajax=1
 
 # Fixes
