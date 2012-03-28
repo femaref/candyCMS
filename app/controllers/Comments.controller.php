@@ -146,7 +146,8 @@ class Comments extends Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . '#create';
+      # bugfix for jquery mobile not handling this redirect with hash very vell
+      $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . (MOBILE ? '' : '#create');
 
       if ($this->_oModel->create() === true) {
         #this also clears cache for our comments, since they are stored in the blogs namespace
