@@ -59,8 +59,8 @@
         </footer>
       {/if}
     {/foreach}
-    {$_blog_footer_}
   {/if}
+  {$_blog_footer_}
   <script type="text/javascript">
     $('.js-media').each(function(e) {
       var $this = $(this);
