@@ -61,7 +61,7 @@ class Comments extends Main {
     $this->oSmarty->assign('_pages_', $this->_oModel->oPagination->showPages('/blogs/' . $this->_iId));
 
     # Do we want autoloading of pages?
-    $this->oSmarty->assign('_COMMENT_AUTOLOAD_', COMMENTS_AUTOLOAD ? true : false);
+    $this->oSmarty->assign('_COMMENT_AUTOLOAD_', !defined('COMMENTS_AUTOLOAD') || COMMENTS_AUTOLOAD ? true : false);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
 
