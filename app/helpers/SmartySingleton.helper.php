@@ -67,8 +67,6 @@ class SmartySingleton extends Smarty {
     if (!defined('WEBSITE_LANGUAGE'))
       define('WEBSITE_LANGUAGE', 'en');
 
-    new I18n(WEBSITE_LANGUAGE);
-
     $this->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
     $this->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
     $this->setPluginsDir(PATH_STANDARD . '/lib/smarty/plugins');

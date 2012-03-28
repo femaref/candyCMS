@@ -18,14 +18,40 @@ use sfYaml;
 class I18n {
 
   /**
+   *
+   * holds all translations
+   *
+   * @var static
+	 * @access private
+   *
+   */
+  private static $_aLang = null;
+
+  /**
+   *
+   * holds the object
+   *
+   * @var static
+	 * @access private
+   *
+   */
+  private static $_oObject = null;
+
+  /**
    * Read the language yaml and save information into session due to fast access.
    *
    * @access public
    * @param string $sLanguage language to load
+   * @param array $aSession the session object, if given save the translations in S_SESSION['lang']
    *
    */
-  public function __construct($sLanguage) {
-    if (!isset($_SESSION['lang']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
+  public function __construct($sLanguage, &$aSession = null) {
+    if ($aSession)
+      $this->_aSession = $aSession;
+
+    I18n::$_oObject = $this;
+
+    if (!isset(I18n::$_aLang) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
 			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
       $sLanguageFile = PATH_STANDARD . '/languages/' . $sLanguage . '.language.yml';
 
@@ -33,7 +59,13 @@ class I18n {
       if (!file_exists($sLanguageFile))
         $_COOKIE['default_language'] = 'en';
 
-      $_SESSION['lang'] = & sfYaml::load(file_get_contents($sLanguageFile));
+      if (WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test' || !isset($aSession['lang'])) {
+        I18n::$_aLang = & sfYaml::load(file_get_contents($sLanguageFile));
+        if ($aSession != null)
+          $aSession['lang'] = & I18n::$_aLang;
+      }
+      else
+        I18n::$_aLang = & $aSession['lang'];
     }
   }
 
@@ -47,7 +79,7 @@ class I18n {
 	 *
 	 */
 	public static function getArray($sPart = '') {
-		return !$sPart ? $_SESSION['lang'] : $_SESSION['lang'][$sPart];
+		return !$sPart ? I18n::$_aLang : I18n::$_aLang[$sPart];
 	}
 
 	/**
@@ -72,8 +104,8 @@ class I18n {
    *
    */
   public static function get($sLanguagePart) {
-    if (isset($_SESSION['lang'])) {
-      $mTemp = $_SESSION['lang'];
+    if (isset( I18n::$_aLang)) {
+      $mTemp =  I18n::$_aLang;
       foreach (explode('.', $sLanguagePart) as $sPart) {
         if (!is_string($mTemp)) {
           if (array_key_exists($sPart, $mTemp)) {
@@ -100,14 +132,16 @@ class I18n {
     }
   }
 
-	/**
-	 * Unset the language saved in the session.
-	 *
-	 * @static
-	 * @access public
-	 *
-	 */
-	public static function unsetLanguage() {
-		unset($_SESSION['lang']);
-	}
+  /**
+   * Unset the language saved in the session.
+   *
+   * @static
+   * @access public
+   *
+   */
+  public static function unsetLanguage() {
+    I18n::$_aLang = null;
+    if (I18n::$_oObject != null)
+      unset(I18n::$_oObject->_aSession['lang']);
+  }
 }
