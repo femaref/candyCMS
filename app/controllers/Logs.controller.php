@@ -58,7 +58,10 @@ class Logs extends Main {
   public static function insert($sControllerName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
     require_once PATH_STANDARD . '/app/models/Logs.model.php';
 
-    return \CandyCMS\Model\Logs::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+    $bReturn = \CandyCMS\Model\Logs::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+    if ($bReturn)
+      \CandyCMS\Helper\SmartySingleton::getInstance()->clearCacheForController('logs');
+    return $bReturn;
   }
 
   /**
