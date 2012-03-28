@@ -1,16 +1,25 @@
 <form action='?action=install&step=2' method='post'>
   <h2>
-    1. Set all variables in <em>config/Candy.inc.php</em> correctly.
+    1. Create your <em>config/Candy.inc.php</em>.
   </h2>
   <p>
-    Read each description and modify the software for your needs.
+    Copy <em>config/samples/Candy.inc.php</em> to <em>config/Candy.inc.php</em>,
+    read each description carefully and modify the software for your needs.
   </p>
   <div class='alert alert-danger'>
     <h4 class='alert-heading'>Important information</h4>
     <ul>
-      <li>
-        Make sure, you set a random hash at RANDOM_HASH and NEVER change it again.
-      </li>
+      {if !_config_exists_}
+        <li>
+          Copy <em>config/samples/Candy.inc.php</em> to <em>config/Candy.inc.php</em>,
+          read each description carefully and modify the software for your needs.
+        </li>
+      {/if}
+      {if !_hash_changed_}
+        <li>
+          Make sure, you set a random hash at RANDOM_HASH and NEVER change it again.
+        </li>
+      {/if}
       <li>
         The WEBSITE_MODE is very important. For security reasons never run a
         productive system with a state different than 'production'!
@@ -38,22 +47,7 @@
   <hr />
 
   <h2>
-    3. Set following dirs to <em>CHMOD 777 (recursive)</em>.
-  </h2>
-  <p>
-    You might have to use a FTP programm (like <a href='http://cyberduck.ch/'>Cyberduck</a>)
-    for that. If the folders were not created by the system, you have to create
-    them manually.
-  </p>
-  <ul>
-    {foreach $_folder_checks_ as $folder=>$check}
-      <li style='color:{if $check}green{else}red{/if}'>{$folder}</li>
-    {/foreach}
-  </ul>
-  <hr />
-
-  <h2>
-    4. Go to <a href="http://www.google.com/recaptcha">google.com/recaptcha</a> and
+    3. Go to <a href="http://www.google.com/recaptcha">google.com/recaptcha</a> and
     register your domain.
   </h2>
   <p>
@@ -67,14 +61,15 @@
     sites protected by CAPTCHAs.
   </p>
   <p class='alert alert-notice'>
-    CAPTCHAs can be enabled / disabled via adden the Recaptcha Plugin in <em>config/Candy.inc.php</em>.
+    CAPTCHAs can be enabled / disabled via adding Recaptcha as plugin at ALLOWED_PLUGINS
+    in <em>config/Candy.inc.php</em>.
     Also your public and private key have to be added to <em>config/Plugins.inc.php</em>
     (PLUGIN_RECAPTCHA_PUBLIC_KEY & PLUGIN_RECAPTCHA_PRIVATE_KEY).
   </p>
   <hr class="clearfix" />
 
   <h2>
-    5. If you want to use the Facebook plugin, register your domain.
+    4. If you want to use the Facebook plugin, register your domain.
   </h2>
   <p>
     With <a href="http://www.facebook.com/developers/createapp.php">Facebook</a> you
@@ -84,12 +79,12 @@
   </p>
   <div class="alert alert-notice">
     Don't forget to enter your App ID and Secret into <em>config/Plugins.inc.php</em>
-    and add Facebook as a plugin at ALLOWED_PLUGINS in the <em>config/Candy.inc.php</em>!
+    and add Facebook as plugin at ALLOWED_PLUGINS in the <em>config/Candy.inc.php</em>!
   </div>
   <hr />
 
   <h2>
-    6. Register at MailChimp to send newsletters.
+    5. Register at MailChimp to send newsletters.
   </h2>
   <p>
     <a href="http://mailchimp.com/">MailChimp</a> helps you design email newsletters,
@@ -99,8 +94,10 @@
   <div class="alert alert-notice">
     Don't forget to to set information at <em>config/Mailchimp.inc.php</em>!
   </div>
-  <div class='form-actions right'>
+  {if !$_has_errors_}
+    <div class='form-actions right'>
 
-    <input type='submit' class='btn' value='Create database' />
-  </div>
+      <input type='submit' class='btn' value='Create Folder Structure' />
+    </div>
+  {/if}
 </form>

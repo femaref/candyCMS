@@ -17,7 +17,6 @@ use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
 
-require PATH_STANDARD . '/config/Candy.inc.php';
 require PATH_STANDARD . '/app/controllers/Index.controller.php';
 
 class Install extends Index {
@@ -28,7 +27,10 @@ class Install extends Index {
     $this->_aFile    = & $aFile;
     $this->_aCookie  = & $aCookie;
 
-    $this->getConfigFiles(array('Plugins', 'Mailchimp'));
+    if (file_exists(PATH_STANDARD . '/config/Candy.inc.php'))
+      require PATH_STANDARD . '/config/Candy.inc.php';
+    if (file_exists(PATH_STANDARD . '/config/Plugins.inc.php'))
+      $this->getConfigFiles(array('Plugins'));
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
@@ -88,19 +90,25 @@ class Install extends Index {
    */
   private function _checkFoldersAndAssign($aFolders, &$aReturn, $sPrefix = '/', $sPermissions = '0777') {
     foreach ($aFolders as $sKey => $mFolder) {
-      # ccheck multiple folders
+      $bReturn = true;
+
+      # check multiple folders
       if (is_array($mFolder)) {
         # check root folder
-        $this->_checkFoldersAndAssign(array($sKey), $aReturn, $sPrefix, $sPermissions);
-
+        $bReturnSub = $this->_checkFoldersAndAssign(array($sKey), $aReturn, $sPrefix, $sPermissions);
         # and check all subfolders
-        $this->_checkFoldersAndAssign($mFolder, $aReturn, $sPrefix . $sKey . '/', $sPermissions);
+        $bReturnRoot = $this->_checkFoldersAndAssign($mFolder, $aReturn, $sPrefix . $sKey . '/', $sPermissions);
+
+        $bReturn = $bReturn && $bReturnRoot && $bReturnSub;
       }
 
       # check single Folder
-      else
+      else {
         $aReturn[$sPrefix . $mFolder] = substr(decoct(fileperms(PATH_STANDARD . $sPrefix . $mFolder)), 1) == $sPermissions;
+        $bReturn = $bReturn && $aReturn[$sPrefix . $mFolder];
+      }
     }
+    return $bReturn;
   }
 
   public function showInstall() {
@@ -108,13 +116,29 @@ class Install extends Index {
 
       default:
       case '1':
+
+        $bHasConfigFile = file_exists(PATH_STANDARD . '/config/Candy.inc.php');
+        $this->oSmarty->assign('_config_exists_', $bHasConfigFile);
+        $bRandomHashChanged = defined('RANDOM_HASH') && RANDOM_HASH !== '';
+        $this->oSmarty->assign('_hash_changed_', $bRandomHashChanged);
+
+        $this->oSmarty->assign('_has_errors_', !$bRandomHashChanged || !$bHasConfigFile);
+
+        $this->oSmarty->assign('title', 'Installation - Step 1 - Preparation');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step1.tpl'));
+
+        break;
+
+      case '2':
+
         # Try to create folders (if not avaiable)
+        $sUpload = substr(PATH_UPLOAD, 1);
         $aFolders = array(
             'backup',
-            'cache',
-            'compile',
+            CACHE_DIR,
+            COMPILE_DIR,
             'logs',
-            'upload' => array(
+            $sUpload => array(
                 'galleries',
                 'medias',
                 'temp' => array(
@@ -127,16 +151,18 @@ class Install extends Index {
         $this->_createFoldersIfNotExistent($aFolders);
 
         $aFolderChecks = array();
-        $this->_checkFoldersAndAssign($aFolders, $aFolderChecks);
+        $bHasNoErrors = $this->_checkFoldersAndAssign($aFolders, $aFolderChecks);
 
         $this->oSmarty->assign('_folder_checks_', $aFolderChecks);
 
-        $this->oSmarty->assign('title', 'Installation - Step 1 - Preparation');
-        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step1.tpl'));
+        $this->oSmarty->assign('_has_errors_', !$bHasNoErrors);
+
+        $this->oSmarty->assign('title', 'Installation - Step 2 - Folder Rights');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step2.tpl'));
 
         break;
 
-      case '2':
+      case '3':
 
         $sUrl = PATH_STANDARD . '/install/sql/install/tables.sql';
         if (file_exists($sUrl)) {
@@ -153,12 +179,12 @@ class Install extends Index {
           }
         }
 
-        $this->oSmarty->assign('title', 'Installation - Step 2 - Create admin user');
-        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step2.tpl'));
+        $this->oSmarty->assign('title', 'Installation - Step 3 - Create Database and admin user');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step3.tpl'));
 
         break;
 
-      case '3':
+      case '4':
 
         die(print_r($this->_aRequest));
 
