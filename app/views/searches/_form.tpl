@@ -1,5 +1,5 @@
 {strip}
-  <form method='post' class='form-horizontal'>
+  <form method='post' class='form-horizontal' data-ajax='false'>
     {if !$MOBILE}
       <div class='page-header'>
         <h1>{$lang.global.search}</h1>

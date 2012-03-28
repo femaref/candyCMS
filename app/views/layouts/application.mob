@@ -51,7 +51,7 @@
             {$_content_}
           </section>
         </div><!-- /content -->
-        <div data-role="footer" class="ui-bar">
+        <div data-role="footer" data-position='fixed' class="ui-bar">
           <div data-role="controlgroup" data-type="horizontal">
             <a id='top' data-role="button" class="ui-btn-right" data-icon="arrow-u">Top</a>
             <a href='?mobile=0' data-ajax="false">{$lang.global.view.web}</a>
