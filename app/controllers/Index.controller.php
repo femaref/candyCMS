@@ -483,14 +483,9 @@ class Index {
 			define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|');
 
 		if (!defined('UNIQUE_ID')) {
-      # bugfix, searches has some post data, on which it determines what to show... all other controllers have a unique path
-      if ($this->_aRequest['controller'] == 'searches')
-        define('UNIQUE_ID', UNIQUE_PREFIX . Helper::replaceNonAlphachars ($this->_aRequest['search']));
-
-      else
-        define('UNIQUE_ID', UNIQUE_PREFIX .
-                substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
-                substr(md5(CURRENT_URL), 0, 10));
+      define('UNIQUE_ID', UNIQUE_PREFIX . (MOBILE ? 'mob|' : 'tpl|') .
+              substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
+              substr(md5(CURRENT_URL), 0, 10));
     }
 
     # Start the dispatcher and grab the controller.
