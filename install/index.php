@@ -65,16 +65,16 @@ class Install extends Index {
       if (is_array($mFolder)) {
         # create root folder
         # not needed since mkdir has recursive flag set to true
-        //if (!is_dir(PATH_STANDARD . $sPrefix . $sKey))
-        //  @mkdir(PATH_STANDARD . $sPrefix . $sKey, '0777', true);
+        //$this->_createFoldersIfNotExistent(array($sKey), $sPrefix, $sPermissions);
 
         # and create all subfolders
-        $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/');
+        $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/', $sPermissions);
       }
 
       # create single Folder
-      if (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
-        @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $sPermissions, true);
+      else
+        if (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
+          @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $sPermissions, true);
     }
   }
 
@@ -91,10 +91,10 @@ class Install extends Index {
       # ccheck multiple folders
       if (is_array($mFolder)) {
         # check root folder
-        $this->_checkFoldersAndAssign(array($sKey), $aReturn, $sPrefix);
+        $this->_checkFoldersAndAssign(array($sKey), $aReturn, $sPrefix, $sPermissions);
 
         # and check all subfolders
-        $this->_checkFoldersAndAssign($mFolder, $aReturn, $sPrefix . $sKey . '/');
+        $this->_checkFoldersAndAssign($mFolder, $aReturn, $sPrefix . $sKey . '/', $sPermissions);
       }
 
       # check single Folder
