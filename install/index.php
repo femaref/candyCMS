@@ -33,6 +33,7 @@ class Install extends Index {
       require PATH_STANDARD . '/config/Candy.inc.php';
     if (file_exists(PATH_STANDARD . '/config/Plugins.inc.php'))
       $this->getConfigFiles(array('Plugins'));
+    $this->_defines();
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
@@ -54,6 +55,15 @@ class Install extends Index {
 
     else
       $this->showIndex();
+  }
+
+  private function _defines() {
+    if (!defined('WEBSITE_URL'))
+      define('WEBSITE_URL', 'http://' . $_SERVER['SERVER_NAME']);
+    define('VERSION', '20111114');
+    define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
+    define('MOBILE', false);
+    define('MOBILE_DEVICE', false);
   }
 
   /**
