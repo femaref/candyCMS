@@ -44,7 +44,39 @@ final class Cronjob {
 
     $this->_iUserId = $iUserId;
 
+    $this->_startCronjob();
   }
+
+  /**
+   * Finish up the execution of the Cronjob
+   *
+   * @access public
+   *
+   */
+  public function __destruct() {
+    Logs::updateEndTime($this->_iLogId);
+  }
+
+  /**
+   * start the execution of the Cronjob, so there wont be other simultanious executions
+   *
+   * @access private
+   */
+  private final function _startCronjob() {
+    $oPDO = Main::$_oDbStatic;
+    $oPDO->beginTransaction();
+
+    # create log entry, so other calls won't start aswell
+    $iTime = time();
+    Logs::insert('cronjob', 'execute', 0, $this->_iUserId, $iTime, $iTime);
+
+    # save the id, so we can update at end
+    $this->_iLogId = Main::getLastInsertId();
+
+    $oPDO->commit();
+  }
+
+  /**
    * Cleanup our temp folders.
    *
    * @access public
@@ -294,43 +326,9 @@ final class Cronjob {
               $sBackupPath);
 
     # @todo return status of backup?!
-    # Write into backup log
-    try {
-      $oQuery = Main::$_oDbStatic->prepare("INSERT INTO
-                                              " . SQL_PREFIX . "logs
-                                              ( controller_name,
-                                                action_name,
-                                                action_id,
-                                                time_start,
-                                                time_end,
-                                                user_id)
-                                            VALUES
-                                              ( :controller_name,
-                                                :action_name,
-                                                :action_id,
-                                                :time_start,
-                                                :time_end,
-                                                :user_id)");
-
-      $sControllerName  = 'cronjob';
-      $sActionName      = 'create';
-      $iActionId        = 0;
-
-      $oQuery->bindParam('controller_name', $sControllerName, PDO::PARAM_STR);
-      $oQuery->bindParam('action_name', $sActionName, PDO::PARAM_STR);
-      $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
-      $oQuery->bindParam('time_start', $iBackupStartTime, PDO::PARAM_INT);
-      $oQuery->bindParam('time_end', time(), PDO::PARAM_INT);
-      $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
-      return $oQuery->execute();
 
     # rollback, since we did only read
     Main::$_oDbStatic->rollBack();
-    }
-    catch (AdvancedException $e) {
-      Main::$_oDbStatic->rollBack();
-      # @todo exception
-    }
   }
 
   /**

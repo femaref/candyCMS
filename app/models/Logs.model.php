@@ -120,12 +120,12 @@ class Logs extends Main {
                                                   :time_end,
                                                   :user_id)");
 
-      $oQuery->bindParam('controller_name', strtolower($sControllerName));
-      $oQuery->bindParam('action_name', strtolower($sActionName));
+      $oQuery->bindParam('controller_name', strtolower($sControllerName), PDO::PARAM_STR);
+      $oQuery->bindParam('action_name', strtolower($sActionName), PDO::PARAM_STR);
       $oQuery->bindParam('action_id', $iActionId, PDO::PARAM_INT);
-      $oQuery->bindParam('time_start', $iTimeStart);
-      $oQuery->bindParam('time_end', $iTimeEnd);
-      $oQuery->bindParam('user_id', $iUserId);
+      $oQuery->bindParam('time_start', $iTimeStart, PDO::PARAM_INT);
+      $oQuery->bindParam('time_end', $iTimeEnd, PDO::PARAM_INT);
+      $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
       parent::$iLastInsertId = Helper::getLastEntry('logs');
@@ -162,7 +162,7 @@ class Logs extends Main {
                                       LIMIT
                                         1");
 
-      $oQuery->bindParam('id', $iId);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       return $oQuery->execute();
     }
     catch (\PDOException $p) {
@@ -174,6 +174,47 @@ class Logs extends Main {
       }
 
       AdvancedException::reportBoth('0070 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
+  }
+
+  /**
+   *
+   * Set the Endtime of some LogEntry
+   *
+   * @static
+   * @param int $iId the id of the log-entry
+   * @param int $iEndTime the timestamp to set the log-entrys endtime to
+   * @return boolean status of query
+   * @todo tests
+   */
+  public static function setEndTime($iId, $iEndTime = null) {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
+
+    try {
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
+                                                " . SQL_PREFIX . "logs
+                                              SET
+                                                time_end = :time_end
+                                              WHERE
+                                                id = :id
+                                              LIMIT
+                                                1");
+
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->bindParam('time_end', $iEndTime, PDO::PARAM_INT);
+      return $oQuery->execute();
+    }
+    catch (\PDOException $p) {
+      try {
+        parent::$_oDbStatic->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0110 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0111 - ' . $p->getMessage());
       exit('SQL error.');
     }
   }

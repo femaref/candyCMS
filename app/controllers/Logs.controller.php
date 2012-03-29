@@ -42,7 +42,7 @@ class Logs extends Main {
   }
 
   /**
-   * Show content entry or content overview (depends on a given ID or not).
+   * Create a new Log-Entry
    *
    * @static
    * @access public
@@ -82,5 +82,25 @@ class Logs extends Main {
    */
   public function update() {
     Helper::redirectTo('/errors/404');
+  }
+
+  /**
+   * Update the Endtime of some LogEntry
+   *
+   * @static
+   * @param type $iLogsId
+   * @return type
+   * @todo tests
+   */
+  public static function updateEndTime($iLogsId, $iEndTime = null) {
+    require_once PATH_STANDARD . '/app/models/Logs.model.php';
+
+    if ($iEndTime == null)
+      $iEndTime = time();
+
+    $bReturn = \CandyCMS\Model\Logs::setEndTime($iLogsId, $iEndTime);
+    if ($bReturn)
+      \CandyCMS\Helper\SmartySingleton::getInstance()->clearCacheForController('logs');
+    return $bReturn;
   }
 }
