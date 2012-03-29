@@ -16,21 +16,42 @@ use CandyCMS\Controller\Mails as Mails;
 use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Main as Main;
+use CandyCMS\Controller\Logs as Logs;
 use PDO;
-
-require_once 'app/controllers/Mails.controller.php';
 
 final class Cronjob {
 
   /**
+   * The Id of the Cronjobs Log Entry, that is created for the execution
+   * @var int
+   */
+  private $_iLogId = -1;
+  /**
+   * The User Id of the user, that is running the Cronjob
+   * @var int
+   */
+  private $_iUserId;
+
+  /**
+   * Create a new Cronjob Object
+   *
+   * @access public
+   * @param integer $iUserId user ID who updates the database.
+   *
+   */
+  public function __construct($iUserId) {
+    require_once PATH_STANDARD . '/app/controllers/Mails.controller.php';
+
+    $this->_iUserId = $iUserId;
+
+  }
    * Cleanup our temp folders.
    *
-   * @static
    * @access public
    * @param array $aFolders temp folders to clean
    *
    */
-  public static final function cleanup($aFolders) {
+  public final function cleanup($aFolders) {
     foreach ($aFolders as $sFolder) {
       $sTempPath = Helper::removeSlash(PATH_UPLOAD . '/temp/' . $sFolder);
       $oDir = opendir($sTempPath);
@@ -48,12 +69,11 @@ final class Cronjob {
   /**
    * Optimize tables.
    *
-   * @static
    * @access public
    * @todo clean up sessions table and remove old entries
    *
    */
-  public static final function optimize() {
+  public final function optimize() {
     try {
       Main::$_oDbStatic->query("OPTIMIZE TABLE
                                 " . SQL_PREFIX . "blogs,
@@ -79,16 +99,15 @@ final class Cronjob {
   /**
    * Create a SQL backup.
    *
-   * @static
    * @access public
-   * @param integer $iUserId user ID who updates the database.
    *
    */
-  public static final function backup($iUserId) {
+  public final function backup() {
     $sBackupName      = date('Y-m-d_H-i');
-    $sBackupFolder    = $sPath . 'backup';
+    $sBackupFolder    = PATH_STANDARD . 'backup';
     $sBackupPath      = $sBackupFolder . '/' . $sBackupName . '.sql';
-    $iBackupStartTime = time();
+
+    Main::$_oDbStatic->beginTransaction();
 
     # Create header information
     $sFileText = "\r\n#---------------------------------------------------------------#\r\n";
@@ -274,6 +293,7 @@ final class Cronjob {
               WEBSITE_MAIL_NOREPLY,
               $sBackupPath);
 
+    # @todo return status of backup?!
     # Write into backup log
     try {
       $oQuery = Main::$_oDbStatic->prepare("INSERT INTO
@@ -304,6 +324,8 @@ final class Cronjob {
       $oQuery->bindParam('user_id', $iUserId, PDO::PARAM_INT);
       return $oQuery->execute();
 
+    # rollback, since we did only read
+    Main::$_oDbStatic->rollBack();
     }
     catch (AdvancedException $e) {
       Main::$_oDbStatic->rollBack();

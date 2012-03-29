@@ -98,9 +98,9 @@ class Index {
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
-    $this->getCronjob();
     $this->getFacebookExtension();
     $this->setUser();
+    $this->getCronjob();
 	}
 
   /**
@@ -302,9 +302,11 @@ class Index {
   public function getCronjob($bForceAction = false) {
     if (class_exists('\CandyCMS\Plugin\Controller\Cronjob')) {
       if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
-					Cronjob::cleanup(array('medias', 'bbcode'));
-					Cronjob::optimize();
-					Cronjob::backup($this->_aSession['user']['id']);
+        $oCronjob = new Cronjob($this->_aSession['user']['id']);
+        $oCronjob->cleanup(array('medias', 'bbcode'));
+        $oCronjob->optimize();
+        $oCronjob->backup();
+        $oCronjob = null;
       }
     }
   }
