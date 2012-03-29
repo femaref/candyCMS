@@ -359,9 +359,13 @@ final class Cronjob {
                                               time_end DESC
                                             LIMIT
                                               1");
-
-      $aResult = $oQuery->fetch();
-      return $aResult['time_end'] + $iInterval < time() ? true : false;
+      $oQuery->execute();
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      # no previous cronjob execution found
+      if (!$aResult)
+        return true;
+      else
+        return (int)$aResult['time_end'] + $iInterval < time();
     }
     catch (AdvancedException $e) {
       AdvancedException::reportBoth('0108 - ' . $e->getMessage());
