@@ -165,7 +165,7 @@ class Galleries extends Main {
       $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
       $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
       $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
-      $sUrlThumb     = $sUrlUpload . '/' . THUMB_DEFAULT_X . '/' . $aRow['file'];
+      $sUrlThumb     = $sUrlUpload . '/thumbnail/' . $aRow['file'];
 
       $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, $aInts);
       $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
@@ -446,7 +446,7 @@ class Galleries extends Main {
         $oQuery->bindParam('album_id', $iId);
         $oQuery->execute();
 
-        $aSizes = array ('32', 'popup', 'original', THUMB_DEFAULT_X);
+        $aSizes = array ('32', 'popup', 'original', 'thumbnail');
         foreach ($aSizes as $sSize) {
           # destroy files from disk
           foreach ($aResult as $aRow)
@@ -624,7 +624,7 @@ class Galleries extends Main {
         $bReturn = $oQuery->execute();
 
         if ($bReturn) {
-          $aSizes = array ('32', 'popup', 'original', THUMB_DEFAULT_X);
+          $aSizes = array ('32', 'popup', 'original', 'thumbnail');
           foreach ($aResult as $aRow) {
             $sPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $aRow['album_id']);
             foreach ($aSizes as $sSize)

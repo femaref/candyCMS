@@ -228,7 +228,7 @@ class Galleries extends Main {
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
 
       # Create missing thumb folders.
-      $aThumbs = array('32', THUMB_DEFAULT_X, 'popup', 'original');
+      $aThumbs = array('32', 'thumbnail', 'popup', 'original');
       foreach($aThumbs as $sFolder) {
         if (!is_dir($sPath . '/' . $sFolder))
           mkdir($sPath . '/' . $sFolder, 0755, true);

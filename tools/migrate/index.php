@@ -296,7 +296,7 @@ class Convert {
 				if (is_file($sOldPath)) {
 					copy($sOldPath, $sNewPath);
 					$oImage = new AddonImage(substr($aRow['file_name'], 0, -4), 'gallery/' . $aRow['aid'], $sNewPath, $sExtension);
-					$oImage->resizeAndCut(THUMB_DEFAULT_X);
+					$oImage->resizeAndCut(THUMB_DEFAULT_X, 'thumbnail');
 					$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
 					$oImage->resizeAndCut('32');
 

@@ -150,10 +150,10 @@ class Upload {
         $oImage = new Image($this->_sFileNames[$iI], $this->_sUploadFolder, $this->sFilePaths[$iI], $this->_sFileExtensions[$iI]);
 
         if (isset($this->_aRequest['cut']) && 'c' == $this->_aRequest['cut'])
-          $oImage->resizeAndCut(THUMB_DEFAULT_X);
+          $oImage->resizeAndCut(THUMB_DEFAULT_X, 'thumbnail');
 
         elseif (isset($this->_aRequest['cut']) && 'r' == $this->_aRequest['cut'])
-          $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y);
+          $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y, 'thumbnail');
 
         else
           throw new Exception('No resizing information!');
@@ -197,7 +197,7 @@ class Upload {
       $oImage = & new Image($this->_sFileNames[0], $this->_sUploadFolder, $this->sFilePaths[0], $this->_sFileExtensions[0]);
 
       $oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
-      $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y);
+      $oImage->resizeDefault(THUMB_DEFAULT_X, THUMB_DEFAULT_Y, 'thumbnail');
       $oImage->resizeDefault(100);
       $oImage->resizeAndCut(64);
       $oImage->resizeAndCut(32);
@@ -216,7 +216,7 @@ class Upload {
    */
   public static function destroyAvatarFiles($sFileName) {
     $aFileTypes = array('jpg', 'png', 'gif');
-    $aFolders = array('original', 'popup', THUMB_DEFAULT_X, '100', '64', '32');
+    $aFolders = array('original', 'popup', 'thumbnail', '100', '64', '32');
 
     foreach ($aFileTypes as &$sExtension) {
       foreach ($aFolders as &$sFolder) {
