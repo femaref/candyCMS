@@ -284,7 +284,7 @@ contents:
 cronjob:
   mail:
     body: Your backup has successfully been created and is available as attachment.\r\n
-    subject: Backup from %d
+    subject: '[%%WEBSITE_NAME] Backup from %s'
 
 downloads:
   description:

@@ -17,6 +17,7 @@ use CandyCMS\Helper\AdvancedException as AdvancedException;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Model\Main as Main;
 use CandyCMS\Controller\Logs as Logs;
+use CandyCMS\Helper\I18n as I18n;
 use PDO;
 
 final class Cronjob {
@@ -40,9 +41,6 @@ final class Cronjob {
    *
    */
   public function __construct($iUserId) {
-    # @todo use autoload?
-    require_once PATH_STANDARD . '/app/controllers/Mails.controller.php';
-
     $this->_iUserId = $iUserId;
 
     $this->_startCronjob();
@@ -344,12 +342,14 @@ EOD;
 
     # Send the backup via mail
     # @todo test if this works
-    if (PLUGIN_CRONJOB_SEND_PER_MAIL === true && class_exists('Mails'))
-      Mails::send(WEBSITE_MAIL,
-              str_replace('%s', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT),
-              LANG_MAIL_CRONJOB_CREATE_BODY,
+    if (PLUGIN_CRONJOB_SEND_PER_MAIL === true) {
+      $sMails = \CandyCMS\Controller\Main::__autoload('Mails');
+      $sMails::send(WEBSITE_MAIL,
+              I18n::get('cronjob.mail.subject', $sBackupName),
+              I18n::get('cronjob.mail.body'),
               WEBSITE_MAIL_NOREPLY,
               $sBackupPath);
+    }
 
     # @todo return status of backup?!
 

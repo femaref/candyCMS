@@ -284,7 +284,7 @@ contents:
 cronjob:
   mail:
     body: Ihre Sicherungskopie wurde erfolreich erstellt und befindet sich im Anhang.\r\n
-    subject: Sicherungskopie vom %d
+    subject: '[%%WEBSITE_NAME] Sicherungskopie vom %d'
 
 downloads:
   description:
