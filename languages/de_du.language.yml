@@ -359,7 +359,8 @@ searches:
     create: Suche
     show: Suchergebnisse für "%s"
   info:
-    fail: "Es wurden keine Einträge zu dem Begriff: '<strong>%b</strong>' gefunden.<br /> <a href='/searches' title='Suche'>Erneut suchen.</a>"
+    fail: "Es wurden keine Einträge zu dem Begriff: '<strong>%b</strong>' gefunden."
+    research: Erneut suchen.
 
 sessions:
   password:

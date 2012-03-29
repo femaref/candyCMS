@@ -359,7 +359,8 @@ searches:
     create: Search
     show: "Search results for '%s'"
   info:
-    fail: "There are no results for the term: '<strong>%s</strong>'.<br /><a href='/searches'>Search again.</a>"
+    fail: "There are no results for the term: '<strong>%s</strong>'."
+    research: "Search again."
 
 sessions:
   password:

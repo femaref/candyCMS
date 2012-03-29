@@ -40,6 +40,8 @@
   {else}
     <div class='alert alert-warning'>
       {$lang.searches.info.fail|replace:'%s':$string}
+      <br />
+      <a href='/searches'>{$lang.searches.info.research}</a>
     </div>
   {/if}
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.bootstrap.tabs{$_SYSTEM.compress_files_suffix}.js'></script>

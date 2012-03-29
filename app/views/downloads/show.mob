@@ -1,6 +1,6 @@
 {strip}
   {if !$downloads}
-    <div class='alert alert-warning'>
+    <div class='error'>
       <h4>{$lang.error.missing.entries}</h4>
     </div>
   {else}
