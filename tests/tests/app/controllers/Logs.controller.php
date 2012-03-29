@@ -12,6 +12,7 @@
 
 require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/app/controllers/Logs.controller.php';
+require_once PATH_STANDARD . '/app/models/Logs.model.php';
 
 use \CandyCMS\Controller\Logs as Logs;
 use \CandyCMS\Helper\I18n as I18n;
@@ -49,6 +50,30 @@ class WebTestOfLogController extends CandyWebTest {
     # there is no update
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
     $this->assert404();
+  }
+
+}
+
+class UnitTestOfLogController extends CandyUnitTest {
+
+  function setUp() {
+    $this->aRequest = array('controller' => 'logs');
+
+    $this->oObject = new Logs($this->aRequest, $this->aSession);
+  }
+
+  function testInsert() {
+    $iTime = time() - 100;
+    $this->assertTrue(Logs::insert('test', 'create', 1, 0, $iTime, $iTime));
+
+    $this->iLastInsertId = (int) \CandyCMS\Model\Logs::getLastInsertId();
+    $this->assertIsA($this->iLastInsertId, 'integer');
+  }
+
+  function testUpdateEndTime() {
+    $iTime = time() + 100;
+    $this->assertTrue($this->oObject->updateEndTime($iTime));
+
   }
 
 }

@@ -186,7 +186,7 @@ class Logs extends Main {
    * @param int $iId the id of the log-entry
    * @param int $iEndTime the timestamp to set the log-entrys endtime to
    * @return boolean status of query
-   * @todo tests
+   * 
    */
   public static function setEndTime($iId, $iEndTime = null) {
     if (empty(parent::$_oDbStatic))

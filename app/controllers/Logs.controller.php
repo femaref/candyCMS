@@ -88,9 +88,9 @@ class Logs extends Main {
    * Update the Endtime of some LogEntry
    *
    * @static
-   * @param type $iLogsId
-   * @return type
-   * @todo tests
+   * @param integer $iLogsId id of log entry to update
+   * @param integer $iEndTime the new Timestamp
+   * @return boolean status of query
    */
   public static function updateEndTime($iLogsId, $iEndTime = null) {
     require_once PATH_STANDARD . '/app/models/Logs.model.php';

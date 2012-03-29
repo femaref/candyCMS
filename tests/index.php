@@ -44,6 +44,8 @@ class AllFileTests extends TestSuite {
 
     else {
 
+      new \CandyCMS\Helper\I18n('en');
+
       # All Tests
       $aTests = array(
           # @todo AdvancedException

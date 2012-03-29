@@ -13,6 +13,7 @@
 require_once PATH_STANDARD . '/app/models/Logs.model.php';
 
 use \CandyCMS\Model\Logs as Logs;
+use \CandyCMS\Helper\Helper as Helper;
 
 class UnitTestOfLogModel extends CandyUnitTest {
 
@@ -31,6 +32,14 @@ class UnitTestOfLogModel extends CandyUnitTest {
 
   function testGetData() {
     $this->assertIsA($this->oObject->getData(), 'array');
+  }
+
+  function testSetEndTime() {
+    $iTime = time() + 100;
+    $this->assertTrue($this->oObject->setEndTime($this->iLastInsertId, $iTime));
+    $aLogs = $this->oObject->getData(1);
+    foreach ($aLogs as $aLog)
+      $this->assertEqual($aLog['time_end'], Helper::formatTimestamp($iTime));
   }
 
   function testDestroy() {
