@@ -26,8 +26,7 @@
   </ul>
   {* @todo fix view *}
   <p class="center">
-    <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'>
-      <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-rss" alt='{$lang.global.rss}' width="16" height="16" />
-    </a>
+    <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'
+       data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false' />
   </p>
 {/strip}
