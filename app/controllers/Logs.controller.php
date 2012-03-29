@@ -85,6 +85,25 @@ class Logs extends Main {
   }
 
   /**
+   * Destroy a log entry, need to have a custom _delete-action since we do not want to produce log-entries.
+   *
+   * Activate model, delete data from database and redirect afterwards.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _destroy() {
+    if ($this->_oModel->destroy($this->_iId) === true) {
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+
+      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
+    }
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
+  }
+
+  /**
    * Update the Endtime of some LogEntry
    *
    * @static
