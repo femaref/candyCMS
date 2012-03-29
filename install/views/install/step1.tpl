@@ -5,7 +5,7 @@
   <p>
     Copy <em>Candy.inc.php</em>, <em>Plugins.inc.php</em> and <em>Mailchimp.inc.php</em>
     from <em>config/samples/</em> to <em>config/</em>,
-    read each description carefully and modify the software for your needs.
+    read each description carefully and modify the software to your needs.
   </p>
   <div class='alert alert-danger'>
     <h4 class='alert-heading'>Important information</h4>

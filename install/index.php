@@ -71,24 +71,24 @@ class Install extends Index {
    *
    * @param array $aFolders array of Folders to create, can also contain subarrays
    * @param string $sPrefix prefix for folder creations, default: '/'
-   * @param string $sPermissions the permissions to create the folders with, default: '0777'
+   * @param string $iPermissions the permissions to create the folders with, default: 0777
    */
-  private function _createFoldersIfNotExistent($aFolders, $sPrefix = '/', $sPermissions = '0777') {
+  private function _createFoldersIfNotExistent($aFolders, $sPrefix = '/', $iPermissions = 0777) {
     foreach ($aFolders as $sKey => $mFolder) {
       # create multiple folders
       if (is_array($mFolder)) {
         # create root folder
         # not needed since mkdir has recursive flag set to true
-        //$this->_createFoldersIfNotExistent(array($sKey), $sPrefix, $sPermissions);
+        //$this->_createFoldersIfNotExistent(array($sKey), $sPrefix, $iPermissions);
 
         # and create all subfolders
-        $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/', $sPermissions);
+        $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/', $iPermissions);
       }
 
       # create single Folder
       else
         if (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
-          @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $sPermissions, true);
+          @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $iPermissions, true);
     }
   }
 
@@ -163,7 +163,7 @@ class Install extends Index {
                 'temp' => array(
                     'medias', 'bbcode'),
                 'users' => array(
-                    '32', '64', '100', THUMB_DEFAULT_X, 'popup', 'original')
+                    '32', '64', '100', 'thumbnail', 'popup', 'original')
                 )
             );
 
