@@ -72,24 +72,6 @@ define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 
-# Number of seconds between cronjob execution (if enabled at ALLOWED_PLUGINS)
-# DEFAULT: '86400'
-define('CRONJOB_UPDATE_INTERVAL', '86400');
-
-# ------------------------------------------------------------------------------
-
-# Allow compressing of SQL backups
-# DEFAULT: true
-define('CRONJOB_GZIP_BACKUP', true);
-
-# ------------------------------------------------------------------------------
-
-# Do you want to receive a mail with the backup after it's created?
-# DEFAULT: false
-define('CRONJOB_SEND_PER_MAIL', false);
-
-# ------------------------------------------------------------------------------
-
 # If you want to override existing classes (placed in "addons/controllers/"), turn true
 # DEFAULT: false
 define('ALLOW_ADDONS', false);

@@ -40,6 +40,7 @@ final class Cronjob {
    *
    */
   public function __construct($iUserId) {
+    # @todo use autoload?
     require_once PATH_STANDARD . '/app/controllers/Mails.controller.php';
 
     $this->_iUserId = $iUserId;
@@ -330,7 +331,7 @@ EOD;
     @fwrite($oFile, $sFileText);
     @fclose($oFile);
 
-    if (CRONJOB_GZIP_BACKUP === true) {
+    if (PLUGIN_CRONJOB_GZIP_BACKUP === true) {
       $oData = implode('', file($sBackupPath));
       $oCompress = gzencode($oData, 9);
       unlink($sBackupPath);
@@ -343,7 +344,7 @@ EOD;
 
     # Send the backup via mail
     # @todo test if this works
-    if (class_exists('Mails') && CRONJOB_SEND_PER_MAIL === true)
+    if (PLUGIN_CRONJOB_SEND_PER_MAIL === true && class_exists('Mails'))
       Mails::send(WEBSITE_MAIL,
               str_replace('%s', $sBackupName, LANG_MAIL_CRONJOB_CREATE_SUBJECT),
               LANG_MAIL_CRONJOB_CREATE_BODY,
@@ -366,7 +367,7 @@ EOD;
    *
    */
   public static function getNextUpdate($iInterval = '') {
-    $iInterval = !empty($iInterval) ? $iInterval : CRONJOB_UPDATE_INTERVAL;
+    $iInterval = !empty($iInterval) ? $iInterval : PLUGIN_CRONJOB_UPDATE_INTERVAL;
 
     if (empty(Main::$_oDbStatic))
       Main::connectToDatabase();
