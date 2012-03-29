@@ -305,28 +305,8 @@ class Blogs extends Main {
    *
    */
   public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "blogs
-                                      WHERE
-                                        id = :id
-                                      LIMIT
-                                        1");
 
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bResult = $oQuery->execute();
-    }
-    catch (\PDOException $p) {
-      try {
-        $this->_oDb->rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0007 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0008 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
+    $bResult = parent::destroy($iId);
 
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
@@ -335,7 +315,7 @@ class Blogs extends Main {
                                         parent_id = :parent_id");
 
       $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
-      $bResult = $oQuery->execute();
+      $bResult = $bResult && $oQuery->execute();
     }
     catch (\PDOException $p) {
       try {

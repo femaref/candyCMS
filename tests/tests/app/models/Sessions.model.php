@@ -48,6 +48,6 @@ class TestOfSessionsModel extends UnitTestCase {
 
   # User doesn't exist, but query run through.
   function testDestroy() {
-    $this->assertTrue($this->oObject->destroy());
+    $this->assertTrue($this->oObject->destroy(session_id()));
   }
 }

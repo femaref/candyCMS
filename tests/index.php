@@ -30,6 +30,7 @@ define('UNIQUE_ID', 'tests');
 define('VERSION', '0');
 define('TESTFILE', '/private/var/tmp/test'.md5(time()));
 define('WEBSITE_LOCALE', 'en_US');
+define('WEBSITE_LANGUAGE', 'en');
 
 setlocale(LC_ALL, WEBSITE_LOCALE);
 
@@ -44,7 +45,7 @@ class AllFileTests extends TestSuite {
 
     else {
 
-      new \CandyCMS\Helper\I18n('en');
+      new \CandyCMS\Helper\I18n(WEBSITE_LANGUAGE);
 
       # All Tests
       $aTests = array(

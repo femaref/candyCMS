@@ -233,32 +233,11 @@ class Downloads extends Main {
    *
    */
   public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "downloads
-                                      WHERE
-                                        id = :id
-                                      LIMIT
-                                        1");
-
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      $bReturn = $oQuery->execute();
-    }
-    catch (\PDOException $p) {
-      try {
-        $this->_oDb->rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0038 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0039 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-
     # Get file name
     $aFile = $this->getData($iId);
     $sFile = $aFile['file'];
+
+    $bReturn = parent::destroy($iId);
 
     if (is_file(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)))
       unlink(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));

@@ -455,43 +455,6 @@ class Users extends Main {
   }
 
   /**
-   * Destroy a user.
-   *
-   * @static
-   * @access public
-   * @param integer $iId ID to update
-   * @return boolean status of query
-   *
-   */
-  public static function destroy($iId) {
-    if (empty(parent::$_oDbStatic))
-      parent::connectToDatabase();
-
-		try {
-			$oQuery = parent::$_oDbStatic->prepare("DELETE FROM
-                                                " . SQL_PREFIX . "users
-                                              WHERE
-                                                id = :id
-                                              LIMIT
-                                                1");
-
-			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-			return $oQuery->execute();
-		}
-    catch (\PDOException $p) {
-      try {
-        parent::$_oDbStatic->rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0089 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0090 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-	}
-
-  /**
    * Update a user account when verification link is clicked.
    *
    * @access public

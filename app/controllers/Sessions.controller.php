@@ -278,7 +278,7 @@ class Sessions extends Main {
     }
 
     # Standard member
-    elseif ($this->_aSession['user']['role'] > 0 && $this->_oModel->destroy() === true) {
+    elseif ($this->_aSession['user']['role'] > 0 && $this->_oModel->destroy(session_id()) === true) {
       unset($this->_aSession['user']);
       return Helper::successMessage(I18n::get('success.session.destroy'), '/');
     }

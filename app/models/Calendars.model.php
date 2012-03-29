@@ -237,37 +237,4 @@ class Calendars extends Main {
       exit('SQL error.');
     }
 	}
-
-	/**
-	 * Destroy a calendar entry.
-	 *
-	 * @access public
-	 * @param integer $iId ID to destroy
-	 * @return boolean status of query
-	 *
-	 */
-	public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "calendars
-                                      WHERE
-                                        id = :id
-                                      LIMIT
-                                        1");
-
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-      return $oQuery->execute();
-    }
-    catch (\PDOException $p) {
-      try {
-        $this->_oDb->rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0017 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0018 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-  }
 }

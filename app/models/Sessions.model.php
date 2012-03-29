@@ -145,12 +145,12 @@ class Sessions extends Main {
 	/**
    * Destroy a user session and logout.
    *
-   * @static
    * @access public
+   * @param integer $sSessionId the session id
    * @return boolean status of query
 	 *
    */
-  public static function destroy() {
+  public function destroy($sSessionId) {
     if (empty(parent::$_oDbStatic))
       parent::connectToDatabase();
 
@@ -162,7 +162,6 @@ class Sessions extends Main {
                                               WHERE
                                                 session = :session_id");
 
-      $sSessionId = session_id();
       $oQuery->bindParam('session_id', $sSessionId, PDO::PARAM_STR);
       return $oQuery->execute();
     }

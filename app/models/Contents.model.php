@@ -214,38 +214,4 @@ class Contents extends Main {
       exit('SQL error.');
     }
   }
-
-  /**
-   * Delete a content entry.
-   *
-   * @access public
-   * @param integer $iId ID to delete
-   * @return boolean status of query
-   *
-   */
-  public function destroy($iId) {
-    try {
-      $oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . "contents
-                                      WHERE
-                                        id = :id
-                                      LIMIT
-                                        1");
-
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-
-      return $oQuery->execute();
-    }
-    catch (\PDOException $p) {
-      try {
-        $this->_oDb->rollBack();
-      }
-      catch (\Exception $e) {
-        AdvancedException::reportBoth('0030 - ' . $e->getMessage());
-      }
-
-      AdvancedException::reportBoth('0031 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-  }
 }

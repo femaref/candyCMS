@@ -12,6 +12,7 @@
 namespace CandyCMS\Model;
 
 use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\AdvancedException as AdvancedException;
 use PDO;
 
 abstract class Main {
@@ -374,5 +375,38 @@ abstract class Main {
 			require_once PATH_STANDARD . '/app/models/' . $sClass . '.model.php';
 			return '\CandyCMS\Model\\' . $sClass;
 		}
+  }
+
+  /**
+   * Destroy an entry.
+   *
+   * @access public
+   * @param integer $iId ID to destroy
+   * @return boolean status of query
+   *
+   */
+  public function destroy($iId) {
+    try {
+      $oQuery = $this->_oDb->prepare("DELETE FROM
+                                        " . SQL_PREFIX . $this->_aRequest['controller'] . "
+                                      WHERE
+                                        id = :id
+                                      LIMIT
+                                        1");
+
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      return $oQuery->execute();
+    }
+    catch (\PDOException $p) {
+      try {
+        $this->_oDb->rollBack();
+      }
+      catch (\Exception $e) {
+        AdvancedException::reportBoth('0112 - ' . $e->getMessage());
+      }
+
+      AdvancedException::reportBoth('0113 - ' . $p->getMessage());
+      exit('SQL error.');
+    }
   }
 }
