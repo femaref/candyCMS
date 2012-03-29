@@ -129,6 +129,148 @@ final class Cronjob {
   }
 
   /**
+   * Create a Backup of one Table
+   *
+   * @param string $sTable the Table Name
+   * @param string $sFileText the string to write the backup to
+   * @return integer number of Columns
+   * @throws AdvancedException
+   */
+  private final function _backupTableInfo($sTable, &$sFileText) {
+    $oQuery = Main::$_oDbStatic->query('SHOW COLUMNS FROM ' . $sTable);
+    $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+    $iColumns = count($aColumns);
+
+    $sFileText .= <<<EOD
+#---------------------------------------------------------------#
+# Table: {$sTable}, Columns: {$iColumns}
+#---------------------------------------------------------------#
+
+EOD;
+
+    $sFileText .= 'DROP TABLE IF EXISTS `' . $sTable . '`;';
+    $sFileText .= "\r\n";
+    $sFileText .= 'CREATE TABLE `' . $sTable . '` (';
+
+    foreach ($aColumns as $aColumn) {
+      $sFileText .= "\r\n`" . $aColumn['Field'] . '` ' . $aColumn['Type'];
+
+      if (!empty($aColumn['Default']))
+        $sFileText .= " NOT NULL default '" . $aColumn['Default'] . "'";
+
+      elseif ($aColumn['Null'] !== 'YES')
+        $sFileText .= ' NOT NULL';
+
+      elseif ($aColumn['Null'] == 'YES')
+        $sFileText .= ' default NULL';
+
+      $sFileText .= ',';
+    }
+    $sFileText .= "\r\n";
+
+    # Show extras like auto_increment etc
+    try {
+      $oQuery = Main::$_oDbStatic->query('SHOW KEYS FROM ' . $sTable);
+      $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+      $iKey = 1;
+      foreach ($aKeys as $aKey) {
+        $sKey = & $aKey['Key_name'];
+
+        if (($sKey != 'PRIMARY') && ($sKey['Non_unique'] == 0))
+          $sKey = 'UNIQUE|' . $sKey;
+
+        # Do we have keys?
+        if ($sKey == 'PRIMARY')
+          $sFileText .= ' PRIMARY KEY (`' . $aKey['Column_name'] . '`)';
+
+        elseif (substr($sKey, 0, 6) == "UNIQUE")
+          $sFileText .= ' UNIQUE ' . substr($sKey, 7) . ' (`' . $aKey['Column_name'] . '`)';
+
+        else
+          $sFileText .= ' FULLTEXT KEY ' . $sKey . ' (`' . $aKey['Column_name'] . '`)';
+
+        if (count($aKeys) !== $iKey)
+          $sFileText .= ",\n";
+        ++$iKey;
+      }
+    }
+    catch (AdvancedException $e) {
+      # @todo exception
+    }
+
+    # Closing bracket
+    $sFileText .= "\n)";
+
+    try {
+      # select last id
+      $oQuery = Main::$_oDbStatic->query('SELECT
+                                            id
+                                          FROM
+                                            ' . $sTable . '
+                                          ORDER BY
+                                            id DESC
+                                          LIMIT
+                                            1');
+
+      $aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $iRows = (int) $aRow['id'];
+      $sFileText .= ' AUTO_INCREMENT=';
+      $sFileText .= $iRows + 1;
+    }
+    catch (AdvancedException $e) {
+      # @todo exception
+    }
+
+    # We also use this as count for data entries
+    $sFileText .= ' DEFAULT CHARSET=utf8;';
+    $sFileText .= "\r\n\r\n";
+
+    return $iColumns;
+  }
+
+  /**
+   * get the Table Data and write it to $sFileText
+   *
+   * @param string $sTable the table to get the data from
+   * @param string $sFileText the result string
+   * @return int number of rows backed up
+   * @throws AdvancedException
+   */
+  private final function _backupTableData($sTable, &$sFileText, $iColumns) {
+    # fetch content
+    $oQuery = Main::$_oDbStatic->query('SELECT * FROM ' . $sTable);
+    $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+    $iRows = count($aRows);
+
+    $sFileText .= <<<EOD
+#---------------------------------------------------------------#
+# Data: {$sTable}, Rows: {$iRows}
+#---------------------------------------------------------------#
+
+EOD;
+
+    foreach ($aRows as $aRow) {
+      $sFileText .= 'INSERT INTO `' . $sTable . '` VALUES (';
+
+      $iEntries = 1;
+      foreach ($aRow as $sEntry) {
+        $sFileText .= "'" . addslashes($sEntry) . "'";
+
+        if ($iEntries !== $iColumns)
+          $sFileText .= ',';
+
+        $iEntries++;
+      }
+
+      $sFileText .= ");\r\n";
+    }
+    $sFileText .= "\r\n";
+    return $iRows;
+  }
+
+
+  /**
    * Create a SQL backup.
    *
    * @access public
@@ -136,170 +278,53 @@ final class Cronjob {
    */
   public final function backup() {
     $sBackupName      = date('Y-m-d_H-i');
-    $sBackupFolder    = PATH_STANDARD . 'backup';
+    $sBackupFolder    = PATH_STANDARD . '/backup';
     $sBackupPath      = $sBackupFolder . '/' . $sBackupName . '.sql';
 
     Main::$_oDbStatic->beginTransaction();
 
-    # Create header information
-    $sFileText = "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "# Server OS: " . @php_uname();
+    $sFileText = "#---------------------------------------------------------------#\r\n";
+    $sFileText .= '# Server OS: '.@php_uname()."\r\n";
+    $sFileText .= "#\r\n";
+    $sFileText .= '# MySQL-Version: '.@mysql_get_server_info()."\r\n";
+    $sFileText .= "#\r\n";
+    $sFileText .= '# PHP-Version: '.@phpversion()."\r\n";
+    $sFileText .= "#\r\n";
+    $sFileText .= '# Database: ' . SQL_DB."\r\n";
+    $sFileText .= "#\r\n";
+    $sFileText .= "# Time of backup: ".date('Y-m-d H:i')."\r\n";
+    $sFileText .= "#---------------------------------------------------------------#\r\n";
     $sFileText .= "\r\n";
-    $sFileText .= "# MySQL-Version: " . @mysql_get_server_info();
-    $sFileText .= "\r\n";
-    $sFileText .= "# PHP-Version: " . @phpversion();
-    $sFileText .= "\r\n";
-    $sFileText .= "# Database: " . SQL_DB;
-    $sFileText .= "\r\n";
-    $sFileText .= "# Time of backup: " . date('Y-m-d H:i');
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "# Backup includes following tables:";
-    $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-    $sFileText .= "\r\n";
+    $sFileText .= "#---------------------------------------------------------------#\r\n";
+    $sFileText .= "# Backup includes following tables:\r\n";
+    $sFileText .= "#---------------------------------------------------------------#\r\n";
 
     # Get all tables and name them
     try {
       $oQuery = Main::$_oDbStatic->query("SHOW TABLES FROM " . SQL_DB . '_' . WEBSITE_MODE);
       $aResult = $oQuery->fetchAll();
+
+      # Show all tables
+      foreach ($aResult as $aTable) {
+        $sFileText .= '# ' . $aTable[0] . "\r\n";
+      }
+      $sFileText .= "\r\n\r\n";
+
+      # Now back them up
+      foreach ($aResult as $aTable) {
+        try {
+          $iColumns = $this->_backupTableInfo($aTable[0], $sFileText);
+          $this->_backupTableData($aTable[0], $sFileText, $iColumns);
+        }
+        catch (AdvancedException $e) {
+          # @todo exception?
+          continue;
+        }
+      }
     }
     catch (AdvancedException $e) {
       # @todo exception
     }
-
-    # Show all tables
-    foreach ($aResult as $aTable) {
-      $sFileText .= "# " . SQL_PREFIX . $aTable[0] . "\r\n";
-    }
-
-    # Now backup them
-    foreach ($aResult as $aTable) {
-      $sTable = SQL_PREFIX . $aTable[0];
-
-      try {
-        $oQuery = Main::$_oDbStatic->query("SHOW COLUMNS FROM " . $sTable);
-        $aColumns = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iColumns = count($aColumns);
-      }
-      catch (AdvancedException $e) {
-        # @todo exception
-      }
-
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "# Table: " . $sTable . ", Columns: " . $iColumns;
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "\r\n";
-      $sFileText .= "DROP TABLE IF EXISTS `" . $sTable . "`;";
-      $sFileText .= "\r\n";
-      $sFileText .= "CREATE TABLE `" . $sTable . "` (";
-
-      foreach ($aColumns as $aColumn) {
-        $sFileText .= "\r\n`" . $aColumn['Field'] . "` " . $aColumn['Type'];
-
-        if (!empty($aColumn['Default']))
-          $sFileText .= " NOT NULL default '" . $aColumn['Default'] . "'";
-
-        elseif ($aColumn['Null'] !== 'YES')
-          $sFileText .= ' NOT NULL';
-
-        elseif ($aColumn['Null'] == 'YES')
-          $sFileText .= ' default NULL';
-
-        $sFileText .= ",";
-      }
-
-      $sFileText .= "\n";
-
-      # Show extras like auto_increment etc
-      try {
-        $oQuery = Main::$_oDbStatic->query("SHOW KEYS FROM " . $sTable);
-        $aKeys = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-      }
-      catch (AdvancedException $e) {
-        # @todo exception
-      }
-
-      $iKey = 1;
-      foreach ($aKeys as $aKey) {
-        $sKey = & $aKey['Key_name'];
-
-        if (($sKey != 'PRIMARY') && ($sKey['Non_unique'] == 0))
-          $sKey = "UNIQUE|" . $sKey;
-
-        # Do we have keys?
-        if ($sKey == 'PRIMARY')
-          $sFileText .= " PRIMARY KEY (`" . $aKey['Column_name'] . "`)";
-
-        elseif (substr($sKey, 0, 6) == "UNIQUE")
-          $sFileText .= " UNIQUE " . substr($sKey, 7) . " (`" . $aKey['Column_name'] . "`)";
-
-        else
-          $sFileText .= " FULLTEXT KEY " . $sKey . " (`" . $aKey['Column_name'] . "`)";
-
-        if (count($aKeys) !== $iKey)
-          $sFileText .= ",\n";
-
-        ++$iKey;
-      }
-
-      # Closing bracket
-      $sFileText .= "\n)";
-
-      try {
-        $oQuery = Main::$_oDbStatic->query(" SELECT
-                                  id
-                                FROM
-                                  " . $sTable . "
-                                ORDER BY
-                                  id DESC
-                                LIMIT
-                                  1");
-
-        $aRow = $oQuery->fetch();
-      }
-      catch (AdvancedException $e) {
-        # @todo exception
-      }
-
-      # We also use this as count for data entries
-      $iRows = (int) $aRow['id'];
-      $sFileText .= " AUTO_INCREMENT=";
-      $sFileText .= $iRows + 1;
-      $sFileText .= " DEFAULT CHARSET=utf8;";
-      $sFileText .= "\r\n";
-
-      # Now fetch content
-      try {
-        $oQuery = Main::$_oDbStatic->query("SELECT * FROM " . $sTable);
-        $aRows = $oQuery->fetchAll(PDO::FETCH_ASSOC);
-        $iRows = count($aRows);
-      }
-      catch (AdvancedException $e) {
-        $oDb->rollBack();
-      }
-
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "# Data: " . $sTable . ", Rows: " . $iRows;
-      $sFileText .= "\r\n#---------------------------------------------------------------#\r\n";
-      $sFileText .= "\r\n";
-
-      foreach ($aRows as $aRow) {
-        $sFileText .= "INSERT INTO `" . $sTable . "` VALUES (";
-
-        $iEntries = 1;
-        foreach ($aRow as $sEntry) {
-          $sFileText .= "'" . addslashes($sEntry) . "'";
-
-          if ($iEntries !== $iColumns)
-            $sFileText .= ",";
-
-          $iEntries++;
-        }
-
-        $sFileText .= ");\r\n";
-      }
-    }
-
     # Write into file
     $oFile = @fopen($sBackupPath, 'a+');
     @fwrite($oFile, $sFileText);
@@ -327,7 +352,7 @@ final class Cronjob {
 
     # @todo return status of backup?!
 
-    # rollback, since we did only read
+    # rollback, since we did only read statements
     Main::$_oDbStatic->rollBack();
   }
 
