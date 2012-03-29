@@ -13,6 +13,8 @@
 namespace CandyCMS;
 
 use CandyCMS\Controller\Index as Index;
+use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
@@ -39,9 +41,9 @@ class Install extends Index {
     # TODO: enable
     #$this->getCronjob(true);
 
-    $this->oSmarty = Helper\SmartySingleton::getInstance();
+    $this->oSmarty = SmartySingleton::getInstance();
     $this->oSmarty->template_dir = PATH_STANDARD . '/install/views';
-    $this->oSmarty->setCaching(Helper\SmartySingleton::CACHING_OFF);
+    $this->oSmarty->setCaching(SmartySingleton::CACHING_OFF);
 
     # Direct actions
     if (isset($this->_aRequest['action']) && 'install' == $this->_aRequest['action'])
@@ -132,11 +134,11 @@ class Install extends Index {
       case '2':
 
         # Try to create folders (if not avaiable)
-        $sUpload = substr(PATH_UPLOAD, 1);
+        $sUpload = Helper::removeSlash(PATH_UPLOAD);
         $aFolders = array(
             'backup',
-            CACHE_DIR,
-            COMPILE_DIR,
+            Helper::removeSlash(CACHE_DIR),
+            Helper::removeSlash(COMPILE_DIR),
             'logs',
             $sUpload => array(
                 'galleries',

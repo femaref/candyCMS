@@ -128,7 +128,7 @@ class Medias extends Main {
         if ($sFileType == 'jpg' || $sFileType == 'jpeg' || $sFileType == 'png' || $sFileType == 'gif') {
           $aImgDim = getImageSize($sPath);
 
-          if (!file_exists(PATH_UPLOAD . '/temp/' . $this->_aRequest['controller'] . '/' . $sFile)) {
+          if (!file_exists(Helper::removeSlash(PATH_UPLOAD . '/temp/' . $this->_aRequest['controller'] . '/' . $sFile))) {
             $oImage = & new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32', $this->_aRequest['controller']);
           }
