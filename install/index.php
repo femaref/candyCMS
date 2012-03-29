@@ -119,12 +119,19 @@ class Install extends Index {
       default:
       case '1':
 
-        $bHasConfigFile = file_exists(PATH_STANDARD . '/config/Candy.inc.php');
-        $this->oSmarty->assign('_config_exists_', $bHasConfigFile);
+        $aHasConfigFiles = array(
+            'main'      => file_exists(PATH_STANDARD . '/config/Candy.inc.php'),
+            'plugins'   => file_exists(PATH_STANDARD . '/config/Plugins.inc.php'),
+            'mailchimp' => file_exists(PATH_STANDARD . '/config/Mailchimp.inc.php'));
+        $this->oSmarty->assign('_configs_exist_', $aHasConfigFiles);
+
         $bRandomHashChanged = defined('RANDOM_HASH') && RANDOM_HASH !== '';
         $this->oSmarty->assign('_hash_changed_', $bRandomHashChanged);
 
-        $this->oSmarty->assign('_has_errors_', !$bRandomHashChanged || !$bHasConfigFile);
+        $bHasNoErrors = $bRandomHashChanged;
+        foreach ($aHasConfigFiles as $bConfigFileExists)
+          $bHasNoErrors = $bHasNoErrors && $bConfigFileExists;
+        $this->oSmarty->assign('_has_errors_', !$bHasNoErrors);
 
         $this->oSmarty->assign('title', 'Installation - Step 1 - Preparation');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step1.tpl'));

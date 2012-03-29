@@ -1,29 +1,38 @@
 <form action='?action=install&step=2' method='post'>
   <h2>
-    1. Create your <em>config/Candy.inc.php</em>.
+    1. Create your Configuration.
   </h2>
   <p>
-    Copy <em>config/samples/Candy.inc.php</em> to <em>config/Candy.inc.php</em>,
+    Copy <em>Candy.inc.php</em>, <em>Plugins.inc.php</em> and <em>Mailchimp.inc.php</em>
+    from <em>config/samples/</em> to <em>config/</em>,
     read each description carefully and modify the software for your needs.
   </p>
   <div class='alert alert-danger'>
     <h4 class='alert-heading'>Important information</h4>
     <ul>
-      {if !_config_exists_}
+      {if !$_configs_exist_.main}
         <li>
           Copy <em>config/samples/Candy.inc.php</em> to <em>config/Candy.inc.php</em>,
           read each description carefully and modify the software for your needs.
         </li>
       {/if}
-      {if !_hash_changed_}
+      {if !$_configs_exist_.plugins}
+        <li>
+          Copy <em>config/samples/Plugins.inc.php</em> to <em>config/Plugins.inc.php</em>,
+          and modify the defines for all your Plugins (ALLOWED_PLUGINS in <em>config/Candy.inc.php</em>).
+        </li>
+      {/if}
+      {if !$_hash_changed_}
         <li>
           Make sure, you set a random hash at RANDOM_HASH and NEVER change it again.
         </li>
       {/if}
-      <li>
-        The WEBSITE_MODE is very important. For security reasons never run a
-        productive system with a state different than 'production'!
-      </li>
+      {if $WEBSITE_MODE != 'production'}
+        <li>
+          The WEBSITE_MODE is very important. For security reasons never run a
+          productive system with a state different than 'production'!
+        </li>
+      {/if}
       <li>
         Your system slows down with every additional plugin enabled and if addons
         are allowed.
@@ -91,9 +100,17 @@
     share them on social networks, integrate with services you already use, and
     track your results. It's like your own personal publishing platform.
   </p>
-  <div class="alert alert-notice">
-    Don't forget to to set information at <em>config/Mailchimp.inc.php</em>!
-  </div>
+  {if !$_configs_exist_.mailchimp}
+    <div class="alert alert-danger">
+      Copy <em>config/samples/Mailchimp.inc.php</em> to <em>config/Mailchimp.inc.php</em>
+      and set your information. Even if you don't want to use MailChimp, you still have
+      to create the Config-File.
+    </div>
+  {else}
+    <div class="alert alert-notice">
+      Don't forget to to set information at <em>config/Mailchimp.inc.php</em>!
+    </div>
+  {/if}
   {if !$_has_errors_}
     <div class='form-actions right'>
 
