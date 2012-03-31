@@ -34,7 +34,7 @@ class Install extends Index {
     if (file_exists(PATH_STANDARD . '/config/Plugins.inc.php'))
       $this->getConfigFiles(array('Plugins'));
     $this->_defines();
-    $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
+    # $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
     $this->getCronjob();
 
@@ -45,7 +45,6 @@ class Install extends Index {
     $this->oSmarty = SmartySingleton::getInstance();
     $this->oSmarty->template_dir = PATH_STANDARD . '/install/views';
     $this->oSmarty->setCaching(SmartySingleton::CACHING_OFF);
-
     # Direct actions
     if (isset($this->_aRequest['action']) && 'install' == $this->_aRequest['action'])
       $this->showInstall();
@@ -64,6 +63,10 @@ class Install extends Index {
     define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
     define('MOBILE', false);
     define('MOBILE_DEVICE', false);
+    if (!defined('CACHE_DIR'))
+      define('CACHE_DIR', 'cache');
+    if (!defined('COMPILE_DIR'))
+      define('COMPILE_DIR', 'compile');
   }
 
   /**
