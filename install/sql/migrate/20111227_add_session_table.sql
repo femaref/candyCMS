@@ -1,4 +1,4 @@
-CREATE TABLE `sessions` (
+CREATE TABLE `%SQL_PREFIX%sessions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `session` varchar(32) DEFAULT NULL,

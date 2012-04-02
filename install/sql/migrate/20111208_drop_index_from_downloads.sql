@@ -1,1 +1,1 @@
-ALTER TABLE `downloads` DROP INDEX `title`;
+ALTER TABLE `%SQL_PREFIX%downloads` DROP INDEX `title`;

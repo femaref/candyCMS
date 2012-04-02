@@ -1,1 +1,1 @@
-ALTER TABLE `blogs` ADD `keywords` varchar(160) NULL DEFAULT NULL  AFTER `tags`;
+ALTER TABLE `%SQL_PREFIX%blogs` ADD `keywords` varchar(160) NULL DEFAULT NULL  AFTER `tags`;

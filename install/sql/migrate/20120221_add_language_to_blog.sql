@@ -1,1 +1,1 @@
-ALTER TABLE `blogs` ADD `language` VARCHAR(2)  NULL  DEFAULT 'en'  AFTER `content`;
+ALTER TABLE `%SQL_PREFIX%blogs` ADD `language` VARCHAR(2)  NULL  DEFAULT 'en'  AFTER `content`;

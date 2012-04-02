@@ -1,1 +1,1 @@
-ALTER TABLE `comments` DROP `parent_category`;
+ALTER TABLE `%SQL_PREFIX%comments` DROP `parent_category`;

@@ -46,6 +46,7 @@ class Install extends Index {
     $this->oSmarty = SmartySingleton::getInstance();
     $this->oSmarty->template_dir = PATH_STANDARD . '/install/views';
     $this->oSmarty->setCaching(SmartySingleton::CACHING_OFF);
+    $this->oSmarty->setCompileCheck(true);
     # Direct actions
     if (isset($this->_aRequest['action']) && 'install' == $this->_aRequest['action'])
       $this->showInstall();
@@ -107,8 +108,8 @@ class Install extends Index {
    * @param string $sPermissions the permissions to create the folders with, default: '0777'
    */
   private function _checkFoldersAndAssign($aFolders, &$aReturn, $sPrefix = '/', $sPermissions = '0777') {
+    $bReturn = true;
     foreach ($aFolders as $sKey => $mFolder) {
-      $bReturn = true;
 
       # check multiple folders
       if (is_array($mFolder)) {
@@ -198,7 +199,7 @@ class Install extends Index {
 
           # Create tables
           try {
-            $oDb = new PDO('mysql:host=' . SQL_HOST . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE, SQL_USER, SQL_PASSWORD);
+            $oDb = \CandyCMS\Model\Main::connectToDatabase();
             $oDb->query($sData);
           }
           catch (\AdvancedException $e) {
@@ -303,6 +304,97 @@ class Install extends Index {
 
   public function show() {
     return $this->oSmarty->fetch('layout.tpl');
+  }
+
+  private function _showMigrations() {
+    $sDir = 'sql/migrate/';
+    $oDir = opendir($sDir);
+
+    $oDb = \CandyCMS\Model\Main::connectToDatabase();
+
+    $iI = 0;
+    $aFiles = array();
+    while ($sFile = readdir($oDir)) {
+      try {
+        $oQuery = $oDb->prepare('SELECT id FROM ' . SQL_PREFIX . 'migrations WHERE file = :file');
+        $oQuery->bindParam(':file', $sFile, PDO::PARAM_STR);
+
+        $bReturn = $oQuery->execute();
+
+        if ($bReturn == true)
+          $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      }
+      catch (\AdvancedException $e) {
+        $oDb->rollBack();
+        die($e->getMessage());
+      }
+
+      $bAlreadyMigrated = isset($aResult['id']) && !empty($aResult['id']) ? true : false;
+
+      if (substr($sFile, 0, 1) == '.' || $bAlreadyMigrated == true)
+        continue;
+
+      else {
+        $oFo = fopen($sDir . '/' . $sFile, 'r');
+        $sQuery = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize($sDir . '/' . $sFile)));
+
+        $aFiles[$iI]['name'] = $sFile;
+        $aFiles[$iI]['query'] = $sQuery;
+        $iI++;
+      }
+
+      unset($bAlreadyMigrated, $aResult);
+    }
+
+    sort($aFiles);
+
+    $this->oSmarty->assign('files', $aFiles);
+    $this->oSmarty->assign('title', 'Migrations');
+    $this->oSmarty->assign('content', $this->oSmarty->fetch('migrate/index.tpl'));
+  }
+
+  private function _doMigration($file) {
+    $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');
+    $sQuery = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize('migrate/sql/' .$_REQUEST['file'])));
+
+    try {
+      $oDb = \CandyCMS\Model\Main::connectToDatabase();
+      $bResult = $oDb->query($sQuery);
+    } catch (\AdvancedException $e) {
+      $oDb->rollBack();
+      $e->getMessage();
+    }
+
+    # Write migration into table
+    if($bResult == true) {
+      try {
+        $oDb = \CandyCMS\Model\Main::connectToDatabase();
+        $oQuery = $oDb->prepare("INSERT INTO
+                                    " . SQL_PREFIX . "migrations (file, date)
+                                  VALUES
+                                    ( :file, :date )");
+
+        $oQuery->bindParam('file', $_REQUEST['file']);
+        $oQuery->bindParam('date', time());
+        $bResult = $oQuery->execute();
+      }
+      catch (\AdvancedException $e) {
+        $oDb->rollBack();
+      }
+    }
+    die(json_encode(array('result' => true)));
+  }
+
+  /**
+   * Migrate
+   */
+  public function showStart() {
+    if ($this->_aRequest['file']) {
+      return $this->_doMigration($this->_aRequest['file']);
+    }
+    else {
+      return $this->_showMigrations();
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-CREATE TABLE `calendar` (
+CREATE TABLE `%SQL_PREFIX%calendar` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `title` varchar(128) NOT NULL DEFAULT '',
