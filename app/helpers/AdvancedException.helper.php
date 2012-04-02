@@ -12,7 +12,7 @@
 
 namespace CandyCMS\Helper;
 
-use CandyCMS\Controller\Mail as Mail;
+use CandyCMS\Controller\Mails as Mails;
 
 class AdvancedException extends \Exception {
 
@@ -41,7 +41,7 @@ class AdvancedException extends \Exception {
    */
   public static function sendAdminMail($sMessage) {
     if (!class_exists('\CandyCMS\Controller\Mail'))
-      require_once PATH_STANDARD . '/app/controllers/Mail.controller.php';
+      require_once PATH_STANDARD . '/app/controllers/Mails.controller.php';
 
     $sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
     return Mails::send(WEBSITE_MAIL, 'Exception', $sMessage, WEBSITE_MAIL_NOREPLY);
