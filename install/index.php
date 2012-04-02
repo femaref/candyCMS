@@ -15,6 +15,7 @@ namespace CandyCMS;
 use CandyCMS\Controller\Index as Index;
 use CandyCMS\Helper\Helper as Helper;
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Helper\I18n as I18n;
 use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
@@ -187,9 +188,11 @@ class Install extends Index {
       case '3':
 
         $sUrl = PATH_STANDARD . '/install/sql/install/tables.sql';
+        $bHasErrors = true;
         if (file_exists($sUrl)) {
           $oFo = fopen($sUrl, 'r');
           $sData = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize($sUrl)));
+          $bHasErrors = false;
 
           # Create tables
           try {
@@ -197,21 +200,102 @@ class Install extends Index {
             $oDb->query($sData);
           }
           catch (\AdvancedException $e) {
+            $bHasErrors = true;
             die($e->getMessage());
           }
         }
 
-        $this->oSmarty->assign('title', 'Installation - Step 3 - Create Database and admin user');
+        $this->oSmarty->assign('_has_errors_', $bHasErrors);
+        $this->oSmarty->assign('title', 'Installation - Step 3 - Create Database');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step3.tpl'));
 
         break;
 
       case '4':
 
-        die(print_r($this->_aRequest));
+        if (isset($this->_aRequest['create_admin']))
+          $this->_createAdminUser();
+
+        $this->oSmarty->assign('title', 'Installation - Step 4 - Create Admin User');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step4.tpl'));
 
         break;
 
+      case '5':
+
+        $this->oSmarty->assign('title', 'Installation finished');
+        $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step5.tpl'));
+
+    }
+  }
+  
+	/**
+	 * Set error messages. This is a copy from Main.controller.php
+	 *
+	 * @access protected
+	 * @param string $sField field to be checked
+	 * @param string $sMessage error to be displayed
+   * @return object $this due to method chaining
+	 *
+	 */
+	protected function _setError($sField, $sMessage = '') {
+    if ($sField == 'file' || $sField == 'image') {
+      if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name']))
+          $this->_aError[$sField] = $sMessage ?
+                $sMessage :
+                I18n::get('error.form.missing.file');
+    }
+
+    else {
+      if (!isset($this->_aRequest[$sField]) || empty($this->_aRequest[$sField]))
+          $sError = I18n::get('error.form.missing.' . strtolower($sField)) ?
+                I18n::get('error.form.missing.' . strtolower($sField)) :
+                I18n::get('error.form.missing.standard');
+
+      if ('email' == $sField && !Helper::checkEmailAddress($this->_aRequest['email']))
+          $sError = $sError ? $sError : I18n::get('error.mail.format');
+
+      if ($sError)
+        $this->_aError[$sField] = !$sMessage ? $sError : $sMessage;
+    }
+
+    return $this;
+  }
+
+  private function _createAdminUser() {
+    $this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
+
+    if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+      $this->_aError['password'] = I18n::get('error.passwords');
+
+    if ($this->_aError) {
+      $this->oSmarty->assign('error', $this->_aError);
+
+      $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
+                      Helper::formatInput($this->_aRequest['name']) :
+                      '');
+
+      $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+                      Helper::formatInput($this->_aRequest['surname']) :
+                      '');
+
+      $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+                      Helper::formatInput($this->_aRequest['email']) :
+                      '');
+
+    }
+    else {
+      //TODO autoload?
+      require_once PATH_STANDARD . '/app/models/Users.model.php';
+      $oUsers = new \CandyCMS\Model\Users();
+      if ($oUsers->create()) {
+        # show success
+        Helper::successMessage('Setup complete', '/');
+      }
+      else {
+        # show error
+        Helper::errorMessage('creation of Admin User failed');
+      }
     }
   }
 
