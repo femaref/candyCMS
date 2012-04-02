@@ -88,6 +88,9 @@ define('CRAWLER', defined('CRAWLERS') ?
               preg_match('/' . CRAWLERS . '/', $_SERVER['HTTP_USER_AGENT']) > 0 :
               false);
 
+# check for addons?
+define('ADDON_CHECK', ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
+
 # Initialize software
 $oIndex = new \CandyCMS\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 

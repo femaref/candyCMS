@@ -68,6 +68,8 @@ class Install extends Index {
       define('CACHE_DIR', 'cache');
     if (!defined('COMPILE_DIR'))
       define('COMPILE_DIR', 'compile');
+    # check for addons?
+    define('ADDON_CHECK', ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
   }
 
   /**
@@ -228,7 +230,7 @@ class Install extends Index {
 
     }
   }
-  
+
 	/**
 	 * Set error messages. This is a copy from Main.controller.php
 	 *

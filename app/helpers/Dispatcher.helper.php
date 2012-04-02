@@ -51,8 +51,7 @@ class Dispatcher {
 
     try {
       # Are addons for existing controllers available? If yes, use them.
-      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php') &&
-              (ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php')) {
         require_once PATH_STANDARD . '/addons/controllers/' . $sController . '.controller.php';
 
         $sClassName = '\CandyCMS\Addon\Controller\Addon_' . $sController;

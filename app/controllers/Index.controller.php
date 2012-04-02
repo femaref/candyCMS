@@ -417,7 +417,7 @@ class Index {
 
     # Get user by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
-      if (file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/Users.model.php')) {
         require_once PATH_STANDARD . '/addons/models/Users.model.php';
         $aUser = \CandyCMS\Addon\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
@@ -429,7 +429,7 @@ class Index {
 
     # Get user by session
     else {
-      if (file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/Sessions.model.php')) {
         require_once PATH_STANDARD . '/addons/models/Sessions.model.php';
         $aUser = \CandyCMS\Addon\Model\Sessions::getUserBySession();
       }
