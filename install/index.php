@@ -215,8 +215,38 @@ class Install extends Index {
 
       case '4':
 
-        if (isset($this->_aRequest['create_admin']))
-          $this->_createAdminUser();
+        if (isset($this->_aRequest['create_admin'])) {
+          $this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
+
+          if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+            $this->_aError['password'] = I18n::get('error.passwords');
+
+          if ($this->_aError) {
+            $this->oSmarty->assign('error', $this->_aError);
+
+            $this->oSmarty->assign('name',
+                    isset($this->_aRequest['name']) ?
+                            Helper::formatInput($this->_aRequest['name']) :
+                            '');
+
+            $this->oSmarty->assign('surname',
+                    isset($this->_aRequest['surname']) ?
+                            Helper::formatInput($this->_aRequest['surname']) :
+                            '');
+
+            $this->oSmarty->assign('email',
+                    isset($this->_aRequest['email']) ?
+                            Helper::formatInput($this->_aRequest['email']) :
+                            '');
+          }
+          else {
+            //TODO autoload?
+            require_once PATH_STANDARD . '/app/models/Users.model.php';
+            $oUsers = new \CandyCMS\Model\Users($this->_aRequest, $this->_aSession);
+            $bResult = $oUsers->create('', 4);
+            Helper::redirectTo('/install/?action=install&step=5&result=' . ($bResult ? '1' : '0'));
+          }
+        }
 
         $this->oSmarty->assign('title', 'Installation - Step 4 - Create Admin User');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step4.tpl'));
@@ -225,9 +255,11 @@ class Install extends Index {
 
       case '5':
 
+        $this->oSmarty->assign('_result_', $this->_aRequest['result'] ? true : false);
         $this->oSmarty->assign('title', 'Installation finished');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step5.tpl'));
 
+        break;
     }
   }
 
@@ -264,43 +296,6 @@ class Install extends Index {
     return $this;
   }
 
-  private function _createAdminUser() {
-    $this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
-
-    if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-      $this->_aError['password'] = I18n::get('error.passwords');
-
-    if ($this->_aError) {
-      $this->oSmarty->assign('error', $this->_aError);
-
-      $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
-                      Helper::formatInput($this->_aRequest['name']) :
-                      '');
-
-      $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
-                      Helper::formatInput($this->_aRequest['surname']) :
-                      '');
-
-      $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
-                      Helper::formatInput($this->_aRequest['email']) :
-                      '');
-
-    }
-    else {
-      //TODO autoload?
-      require_once PATH_STANDARD . '/app/models/Users.model.php';
-      $oUsers = new \CandyCMS\Model\Users();
-      if ($oUsers->create()) {
-        # show success
-        Helper::successMessage('Setup complete', '/');
-      }
-      else {
-        # show error
-        Helper::errorMessage('creation of Admin User failed');
-      }
-    }
-  }
-
   public function showIndex() {
     $this->oSmarty->assign('title', 'Welcome!');
     $this->oSmarty->assign('content', $this->oSmarty->fetch('index.tpl'));
@@ -310,6 +305,10 @@ class Install extends Index {
     return $this->oSmarty->fetch('layout.tpl');
   }
 }
+
+ini_set('display_errors', 1);
+ini_set('error_reporting', 1);
+ini_set('log_errors', 1);
 
 $oInstall = new Install(array_merge($_GET, $_POST));
 echo $oInstall->show();
