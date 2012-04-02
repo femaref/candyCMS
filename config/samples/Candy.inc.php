@@ -68,20 +68,20 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@domain.tld');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
-# If you want to override existing classes (placed in "addons/controllers/"), turn true
+# If you want to override existing classes (placed in "addons/controllers/"), put true
 # DEFAULT: false
 define('ALLOW_ADDONS', false);
 
 # ------------------------------------------------------------------------------
 
 # Tell the allowed plugins seperated by comma
-# DEFAULT: 'Bbcode,FormatTimestamp,Headlines,Archive,Analytics'
-# OTHER OFFICIALLY SUPPORTED PLUGINS: Facebook, Cronjob, Piwik
-define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp');
+# DEFAULT: 'Bbcode,FormatTimestamp,Headlines,Archive'
+# OTHER OFFICIALLY SUPPORTED PLUGINS: Facebook, Cronjob, Piwik, Analytics
+define('ALLOW_PLUGINS', 'Bbcode,FormatTimestamp,Headlines,Archive');
 
 # ------------------------------------------------------------------------------
 
