@@ -37,7 +37,7 @@
           </a>
         </td>
         <td>
-          <a href='/{$_REQUEST.controller}/{$u.id}/{$u.encoded_full_name}'>{$u.full_name}</a>
+          <a href='{$u.url}'>{$u.full_name}</a>
           <br />
           {if $u.role == 1}
             ({$lang.global.user.roles.1})
@@ -72,7 +72,7 @@
         </td>
         {if $_SESSION.user.role == 4}
           <td class='center'>
-            <a href='/{$_REQUEST.controller}/{$u.id}/update'>
+            <a href='{$u.url_update}'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
@@ -80,7 +80,7 @@
                   width='16' height='16' />
             </a>
             &nbsp;
-            <a href='#' onclick="confirmDestroy('/{$_REQUEST.controller}/{$u.id}/destroy')">
+            <a href='#' onclick="confirmDestroy('{$u.url_destroy}')">
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'

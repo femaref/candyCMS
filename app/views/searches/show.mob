@@ -10,7 +10,7 @@
           {foreach $table as $data}
             {if $data.id > 0}
               <li>
-                <a href='/{$table.controller}/{$data.id}/highlight/{$string}'>
+                <a href='{$data.url}'>
                   <h2>
                     {$data.title}
                   </h2>
@@ -26,6 +26,6 @@
     <div class='error'>
       <h4>{$lang.searches.info.fail|replace:'%s':$string}</h4>
     </div>
-    <a href='/searches' data-role='button' data-ajax='false' data-theme='b'>{$lang.searches.info.research}</a>
+    <a href='/{$_REQUEST.controller}' data-role='button' data-ajax='false' data-theme='b'>{$lang.searches.info.research}</a>
   {/if}
 {/strip}

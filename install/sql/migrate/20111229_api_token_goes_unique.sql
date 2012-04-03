@@ -1,1 +1,1 @@
-ALTER TABLE `users` ADD UNIQUE INDEX (`api_token`);
+ALTER TABLE `%SQL_PREFIX%users` ADD UNIQUE INDEX (`api_token`);

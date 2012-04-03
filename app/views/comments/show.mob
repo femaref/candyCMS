@@ -2,17 +2,17 @@
   <div id="comments">
     <div id="js-commments">
       {foreach $comments as $c}
-        <article class='{if $author_id == $c.author_id}from_author{/if}'>
+        <article class='{if $author_id == $c.author.id}from_author{/if}'>
           <header>
             <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
             {if $c.user_id > 0}
-              <a href='/users/{$c.user_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
-            {elseif $c.author_facebook_id > 0 && isset($c.author_website)}
-              <a href='{$c.author_website}'>
-                {$c.author_name}
+              <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
+            {elseif $c.author.facebook_id > 0 && isset($c.author.website)}
+              <a href='{$c.author.website}'>
+                {$c.author.name}
               </a>
-            {elseif $c.author_name}
-              {$c.author_name}
+            {elseif $c.author.name}
+              {$c.author.name}
             {else}
               <em style="text-decoration:line-through">{$lang.global.deleted_user}</em>
             {/if}

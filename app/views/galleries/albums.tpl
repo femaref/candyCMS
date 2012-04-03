@@ -24,14 +24,14 @@
           <h2>
             <a href='{$a.url}'>{$a.title}</a>
             {if $_SESSION.user.role >= 3}
-              <a href='/{$_REQUEST.controller}/{$a.id}/createfile'>
+              <a href='{$a.url_createfile}'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-create js-tooltip'
                     alt='{$lang.galleries.files.title.create}'
                     title='{$lang.galleries.files.title.create}'
                     width='16' height='16' />
               </a>
-              <a href='/{$_REQUEST.controller}/{$a.id}/update'>
+              <a href='{$a.url_update}'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-update js-tooltip'
                     alt='{$lang.global.update.update}'

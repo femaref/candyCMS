@@ -67,7 +67,7 @@ class Comments extends Main {
       $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
 
-      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0019 - ' . $p->getMessage());
@@ -75,9 +75,10 @@ class Comments extends Main {
     }
 
     foreach ($aResult as $aRow) {
-      $this->_aData[$aRow['id']] = $this->_formatForOutput($aRow, $aInts, $aBools);
+      $this->_aData[$aRow['id']] = $aRow;
+      $this->_formatForOutput($this->_aData[$aRow['id']], $aInts, $aBools, 'comments');
+      $this->_aData[$aRow['id']]['url'] = '/' . $this->_aRequest['controller'] . '/' . $iId . '#' . $aRow['id'];
     }
-
     # We crawl the facebook avatars
     if (PLUGIN_FACEBOOK_APP_ID && class_exists('\CandyCMS\Plugin\Controller\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);

@@ -1,3 +1,3 @@
-ALTER TABLE `users` CHANGE `description` `content` VARCHAR(1000)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
-ALTER TABLE `gallery_albums` CHANGE `description` `content` VARCHAR(100)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
-ALTER TABLE `gallery_files` CHANGE `description` `content` VARCHAR(100)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
+ALTER TABLE `%SQL_PREFIX%users` CHANGE `description` `content` VARCHAR(1000)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
+ALTER TABLE `%SQL_PREFIX%gallery_albums` CHANGE `description` `content` VARCHAR(100)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;
+ALTER TABLE `%SQL_PREFIX%gallery_files` CHANGE `description` `content` VARCHAR(100)  CHARACTER SET utf8  COLLATE utf8_unicode_ci  NULL  DEFAULT NULL;

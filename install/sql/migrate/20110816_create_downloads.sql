@@ -1,4 +1,4 @@
-CREATE TABLE `downloads` (
+CREATE TABLE `%SQL_PREFIX%downloads` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `author_id` smallint(5) NOT NULL,
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',

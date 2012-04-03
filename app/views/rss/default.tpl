@@ -22,7 +22,7 @@
             {$d.content}
           ]]>
         </description>
-        <dc:creator>{$d.full_name}</dc:creator>
+        <dc:creator>{$d.author.full_name}</dc:creator>
         <comments>{$d.url}</comments>
         <guid isPermaLink="true">{$d.url}</guid>
         <link>{$d.url}</link>

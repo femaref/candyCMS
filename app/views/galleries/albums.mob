@@ -7,13 +7,13 @@
     {foreach $albums as $a}
     <ul data-role="listview" data-inset="true" data-split-theme="c">
       {* Show gallery albums with uploaded images *}
-      {if $a.files_sum > 0}
-        <li data-role="list-divider">
-          <h3>
-            {$a.title} - {$a.date}
-          </h3>
-        </li>
-        <li>
+      <li data-role="list-divider">
+        <h3>
+          {$a.title} - {$a.date}
+        </h3>
+      </li>
+      <li>
+        {if $a.files_sum > 0}
           <a href='{$a.url}'>
             <div>
               {foreach $a.files as $f}
@@ -23,8 +23,12 @@
               {/foreach}
             </div>
           </a>
-        </li>
-      {/if}
+        {else}
+          <div class='alert alert-error' title='{$lang.error.missing.entries}'>
+            <p>{$lang.error.missing.entries}</p>
+          </div>
+        {/if}
+      </li>
     </ul>
     {/foreach}
     {$_pages_}

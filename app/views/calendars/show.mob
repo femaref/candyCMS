@@ -31,7 +31,7 @@
         </li>
         {foreach $c.dates as $d}
           <li data-icon='calendar-add' data-iconpos="left">
-            <a href='{$_REQUEST.controller}/{$d.id}' title='{$d.content}' data-ajax='false'>
+            <a href='{$d.url}' title='{$d.content}' data-ajax='false'>
               <h2>
                 {$d.title}
               </h2>

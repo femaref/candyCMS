@@ -49,14 +49,14 @@
             </a>
             {if $_SESSION.user.role >= 3}
               <p class='center'>
-                <a href='/{$_REQUEST.controller}/{$f.id}/updatefile'>
+                <a href='{$f.url_update}'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
                       title='{$lang.global.update.update}'
                       width='16' height='16' />
                 </a>
-                <a href='#' onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.id}/destroyfile?album_id={$_REQUEST.id}')">
+                <a href='#' onclick="confirmDestroy('{$f.url_destroy}')">
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'

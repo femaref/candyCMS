@@ -54,7 +54,7 @@
             </td>
             <td class='center'>
               {if $_SESSION.user.role >= 3}
-                <a href='/{$_REQUEST.controller}/{$f.id}/update'>
+                <a href='{$f.url_update}'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-update js-tooltip'
                       alt='{$lang.global.update.update}'
@@ -62,7 +62,7 @@
                       width='16' height='16' />
                 </a>
                 &nbsp;
-                <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.id}/destroy')">
+                <a href="#" onclick="confirmDestroy('{$f.url_destroy}')">
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-destroy js-tooltip'
                       alt='{$lang.global.destroy.destroy}'
