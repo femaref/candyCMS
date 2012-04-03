@@ -12,10 +12,6 @@
             <img class='thumbnail' src='{$c.author.avatar_64}' width='40' height='40' alt='' />
             {if $c.author.id > 0}
               <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
-            {elseif $c.author.facebook_id > 0 && isset($c.author.website)}
-              <a href='{$c.author.website}' rel='nofollow'>
-                {$c.author.name}
-              </a>
             {elseif $c.author.name}
               {$c.author.name}
             {else}
@@ -32,8 +28,8 @@
               <a href='mailto:{$c.author.email}'>{$c.author.email}</a>
               &nbsp;
             {/if}
-            {if $_SESSION.user.role >= 3 && $c.author_ip}
-              <span>{$c.author_ip}</span>
+            {if $_SESSION.user.role >= 3 && $c.author.ip}
+              <span>{$c.author.ip}</span>
               &nbsp;
             {/if}
             <a href='#create' rel='nofollow'

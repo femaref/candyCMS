@@ -250,9 +250,9 @@ abstract class Main {
     }
 
     # build the user data
-    if (isset($aData['author_id']))
+    if (isset($aData['author_id']) && $aData['author_id'])
       $iUserId = $aData['author_id'];
-    else if (isset($aData['user_id']))
+    else if (isset($aData['user_id']) && $aData['user_id'])
       $iUserId = $aData['user_id'];
     else if (isset($aData['uid']))
       $iUserId = $aData['uid'];
@@ -263,7 +263,9 @@ abstract class Main {
         'id'           => $iUserId,
         'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
         'name'         => isset($aData['author_name']) && $aData['author_name'] ? $aData['author_name'] : $aData['name'],
-        'surname'      => isset($aData['author_surname']) && $aData['author_surname'] ? $aData['author_surname'] : $aData['surname']
+        'surname'      => isset($aData['author_surname']) && $aData['author_surname'] ? $aData['author_surname'] : $aData['surname'],
+        'facebook_id'  => $aData['author_facebook_id'],
+        'ip'           => $aData['author_ip'],
     );
     $aData['author'] = $this->_formatForUserOutput($aUserData);
 

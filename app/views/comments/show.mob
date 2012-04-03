@@ -7,10 +7,6 @@
             <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
             {if $c.user_id > 0}
               <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
-            {elseif $c.author.facebook_id > 0 && isset($c.author.website)}
-              <a href='{$c.author.website}'>
-                {$c.author.name}
-              </a>
             {elseif $c.author.name}
               {$c.author.name}
             {else}
@@ -24,7 +20,7 @@
           </p>
           <footer>
             <a href='#create'
-              onclick="quote('{$c.full_name}{$c.author_name}', 'js-comment_{$c.id}')">
+              onclick="quote('{$c.full_name}', 'js-comment_{$c.id}')">
               <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                   title='{$lang.global.quote.quote}' />
             </a>
