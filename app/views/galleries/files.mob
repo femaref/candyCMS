@@ -7,8 +7,8 @@
       {/if}
     </li>
     {if !$files}
-      <div class='error' title="{$lang.error.gallery.no_files}">
-        <h4>{$lang.error.gallery.no_files}</h4>
+      <div class='error' title="{$lang.error.missing.files}">
+        <h4>{$lang.error.missing.files}</h4>
       </div>
     {else}
       {foreach $files as $f}

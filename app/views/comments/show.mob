@@ -4,7 +4,7 @@
       {foreach $comments as $c}
         <article class='{if $author_id == $c.author.id}from_author{/if}'>
           <header>
-            <img class="avatar" src="{$c.avatar_64}" width="40" height="40" alt="" />
+            <img class="avatar" src="{$c.author.avatar_64}" width="40" height="40" alt="" />
             {if $c.user_id > 0}
               <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
             {elseif $c.author.name}
@@ -20,7 +20,7 @@
           </p>
           <footer>
             <a href='#create'
-              onclick="quote('{$c.full_name}', 'js-comment_{$c.id}')">
+              onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')">
               <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
                   title='{$lang.global.quote.quote}' />
             </a>
