@@ -326,11 +326,10 @@ class Index {
   public function getFacebookExtension() {
     if (PLUGIN_FACEBOOK_APP_ID && class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
       $this->_aSession['facebook'] = & new FacebookCMS(array(
-					'appId' => PLUGIN_FACEBOOK_APP_ID,
-					'secret' => PLUGIN_FACEBOOK_SECRET,
-					'cookie' => true
-					));
-
+          'appId' => PLUGIN_FACEBOOK_APP_ID,
+          'secret' => PLUGIN_FACEBOOK_SECRET,
+          'cookie' => true
+          ));
       return $this->_aSession['facebook'];
     }
   }
