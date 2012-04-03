@@ -98,6 +98,7 @@ class Index {
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
+    $this->getFacebookExtension();
     $this->setUser();
     $this->getCronjob();
 	}
