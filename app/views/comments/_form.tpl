@@ -6,7 +6,7 @@
     </h2>
   </div>
   <form method='post' data-ajax='false' class='form-horizontal'>
-    {if !$_SESSION.user.facebook_id && !$_SESSION.user.name && $_SYSTEM.facebook_plugin == true}
+    {if $_SESSION.user.role == 0 && $_SYSTEM.facebook_plugin == true}
       <p>
         <fb:login-button scope='email'
                          onlogin="window.location='{$CURRENT_URL}#comments'">
