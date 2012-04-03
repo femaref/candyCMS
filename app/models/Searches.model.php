@@ -66,7 +66,7 @@ class Searches extends Main {
             continue;
 
           $iDate = $aRow['date'];
-          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $aInts, null, $sTable);
+          $this->_aData[$sTable][$iDate] = $this->_formatForOutput($aRow, $aInts, null, $this->_aData[$sTable]['controller']);
 					++$iEntries;
         }
 
