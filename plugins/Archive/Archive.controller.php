@@ -46,7 +46,7 @@ final class Archive {
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|archive';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
 
-      if (file_exists(PATH_STANDARD . '/addons/models/Blogs.model.php')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/Blogs.model.php')) {
         require_once PATH_STANDARD . '/addons/models/Blogs.model.php';
         $oModel = new \CandyCMS\Model\Addon\Blogs($aRequest, $aSession);
       }

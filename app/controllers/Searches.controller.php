@@ -67,7 +67,7 @@ class Searches extends Main {
    *
    */
   protected function _create() {
-    $this->oSmarty->setCaching(false);
+    $this->oSmarty->setCaching(\CandyCMS\Helper\SmartySingleton::CACHING_LIFETIME_SAVED);
     return $this->_formTemplate();
   }
 

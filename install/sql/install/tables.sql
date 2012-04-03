@@ -152,4 +152,4 @@ CREATE TABLE `%SQL_PREFIX%users` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `api_token` (`api_token`),
   KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

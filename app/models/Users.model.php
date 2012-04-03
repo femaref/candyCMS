@@ -267,10 +267,11 @@ class Users extends Main {
    *
    * @access public
 	 * @param integer $iVerificationCode verification code that was sent to the user.
+   * @param integer $iRole role of new User
    * @return boolean status of query
    *
    */
-  public function create($iVerificationCode = '') {
+  public function create($iVerificationCode = '', $iRole = 1) {
 		try {
 			$oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
@@ -279,6 +280,7 @@ class Users extends Main {
 																					password,
 																					email,
 																					date,
+                                          role,
 																					verification_code,
                                           api_token)
                                       VALUES
@@ -287,6 +289,7 @@ class Users extends Main {
 																					:password,
 																					:email,
 																					:date,
+                                          :role,
 																					:verification_code,
                                           :api_token)");
 
@@ -296,6 +299,7 @@ class Users extends Main {
 			$oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']), PDO::PARAM_STR);
 			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
 			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+			$oQuery->bindParam('role', $iRole, PDO::PARAM_INT);
 			$oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
 			$oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
 

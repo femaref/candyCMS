@@ -367,7 +367,7 @@ abstract class Main {
   public static function __autoload($sClass) {
     $sClass = (string) ucfirst(strtolower($sClass));
 
-		if (file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
+		if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
 			require_once PATH_STANDARD . '/addons/models/' . $sClass . '.model.php';
 			return '\CandyCMS\Addon\Model\Addon_' . $sClass;
 		}

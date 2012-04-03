@@ -182,13 +182,14 @@ abstract class Main {
    * @param string $sClass name of class to load
    * @param boolean $bModel load a model file
    * @return string class name
+   * @todo refactor to use CandyCMS\Model\Main::__autoload
    *
    */
   public static function __autoload($sClass, $bModel = false) {
     $sClass = (string) ucfirst(strtolower($sClass));
 
     if ($bModel === true) {
-      if (file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/' . $sClass . '.model.php')) {
         require_once PATH_STANDARD . '/addons/models/' . $sClass . '.model.php';
         return '\CandyCMS\Addon\Model\Addon_' . $sClass;
       }
@@ -198,7 +199,7 @@ abstract class Main {
       }
     }
     else {
-      if (file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php')) {
+      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php')) {
         require_once PATH_STANDARD . '/addons/controllers/' . $sClass . '.controller.php';
         return '\CandyCMS\Addon\Controller\Addon_' . $sClass;
       }
