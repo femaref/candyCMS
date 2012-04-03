@@ -325,7 +325,7 @@ class Index {
    *
    */
   public function getFacebookExtension() {
-    if (class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
+    if (PLUGIN_FACEBOOK_APP_ID && class_exists('\CandyCMS\Plugin\Controller\FacebookCMS')) {
       $this->_aSession['facebook'] = & new FacebookCMS(array(
 					'appId' => PLUGIN_FACEBOOK_APP_ID,
 					'secret' => PLUGIN_FACEBOOK_SECRET,
@@ -362,8 +362,9 @@ class Index {
    *
    */
   private function _checkForNewVersion() {
-    if ($this->_aSession['user']['role'] == 4 && ALLOW_VERSION_CHECK == true) {
-      $oFile = @fopen('http://www.empuxa.com/misc/candycms/version.txt', 'rb');
+    if ($this->_aSession['user']['role'] == 4 && ALLOW_VERSION_CHECK === true &&
+            (WEBSITE_MODE == 'staging' || WEBSITE_MODE == 'production')) {
+      $oFile = @fopen('http://www.candycms.com/version.txt', 'rb');
       $sVersionContent = @stream_get_contents($oFile);
       @fclose($oFile);
 
@@ -488,10 +489,10 @@ class Index {
     # Set a caching / compile ID
 		# Ask if defined because of unit tests.
 		if (!defined('UNIQUE_PREFIX'))
-			define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE . '|');
+			define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE);
 
 		if (!defined('UNIQUE_ID')) {
-      define('UNIQUE_ID', UNIQUE_PREFIX . (MOBILE ? 'mob|' : 'tpl|') .
+      define('UNIQUE_ID', UNIQUE_PREFIX . '|' . (MOBILE ? 'mob|' : 'tpl|') .
               substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
               substr(md5(CURRENT_URL), 0, 10));
     }
@@ -563,14 +564,16 @@ class Index {
       if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob' ||  $sPlugin == 'Recaptcha')
         continue;
 
+      if($sPlugin == 'Facebook')
+        $sPlugin = 'FacebookCMS';
+
       $sPluginNamespace = '\CandyCMS\Plugin\Controller\\' . $sPlugin;
 
       if (class_exists($sPluginNamespace)) {
         $oPlugin = & new $sPluginNamespace();
 
-        if (preg_match('/<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->/', $sCachedHTML)) {
+        if (preg_match('/<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->/', $sCachedHTML))
           $sCachedHTML = str_replace('<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->', $oPlugin->show(), $sCachedHTML);
-        }
       }
     }
 

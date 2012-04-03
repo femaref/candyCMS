@@ -2,11 +2,11 @@
   <div class='page-header'>
     <h1>
       {$lang.global.registration}
-      {if !$_SESSION.user.facebook_id && !$_SESSION.user.name && $_SYSTEM.facebook_plugin == true}
-        <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
-      {/if}
     </h1>
   </div>
+  {if !$_SESSION.user.facebook_id && !$_SESSION.user.name && $_SYSTEM.facebook_plugin == true}
+    <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}"></fb:login-button>
+  {/if}
   <form method='post' class='form-horizontal'>
     <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
       <label for='input-name' class='control-label'>

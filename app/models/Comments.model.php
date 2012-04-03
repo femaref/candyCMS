@@ -79,7 +79,7 @@ class Comments extends Main {
     }
 
     # We crawl the facebook avatars
-    if (class_exists('\CandyCMS\Plugin\Controller\FacebookCMS'))
+    if (PLUGIN_FACEBOOK_APP_ID && class_exists('\CandyCMS\Plugin\Controller\FacebookCMS'))
       $this->_getFacebookAvatars($aResult);
 
     # Get comment number

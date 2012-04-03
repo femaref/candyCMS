@@ -8,7 +8,9 @@
   <form method='post' data-ajax='false' class='form-horizontal'>
     {if !$_SESSION.user.facebook_id && !$_SESSION.user.name && $_SYSTEM.facebook_plugin == true}
       <p>
-        <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
+        <fb:login-button scope='email'
+                         onlogin="window.location='{$CURRENT_URL}#comments'">
+        </fb:login-button>
       </p>
     {/if}
     <div class='control-group{if isset($error.name)} alert alert-error{/if}'>
@@ -17,8 +19,8 @@
       </label>
       <div class='controls'>
         {if $_SESSION.user.name}
-          <input type='text' name='name' value="{$_SESSION.user.full_name}" id='input-name'
-                class='disabled span4' disabled />
+          <input type='text' name='name' value="{$_SESSION.user.full_name}"
+                 id='input-name' class='disabled span4' disabled />
           {if $_SESSION.user.facebook_id}
             <input type='hidden' value="{$_SESSION.user.facebook_id}" name='facebook_id' />
           {/if}
@@ -58,8 +60,9 @@
     </div>
     {if isset($_captcha_)}{$_captcha_}{/if}
     <div class='form-actions' data-role='controlgroup' data-type='horizontal'>
+      <input type='submit' value='{$lang.comments.title.create}'
+             data-theme='b' class='btn btn-primary' />
       <input type='reset' value='{$lang.global.reset}' class='btn' />
-      <input type='submit' value='{$lang.comments.title.create}' data-theme='b' class='btn btn-primary' />
       <input type='hidden' value='formdata' name='create_comments' />
       <input type='hidden' value='{$_REQUEST.id}' name='parent_id' />
     </div>
