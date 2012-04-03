@@ -74,13 +74,13 @@ else
 
 # Allow mobile access
 if(!isset($_REQUEST['mobile']))
-  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : true;
+  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : $bMobile;
 
 # Override current session if there is a request.
 else
   $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
 
-define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
+define('MOBILE', $_SESSION['mobile'] == true ? true : false);
 define('MOBILE_DEVICE', $bMobile);
 
 # page called by crawler?
