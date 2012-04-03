@@ -452,7 +452,7 @@ class Index {
       # Override empty data with facebook data
       if (isset($aFacebookData)) {
         $this->_aSession['user']['facebook_id'] = isset($aFacebookData[0]['uid']) ?
-                $aFacebookData[0]['uid'] :
+                (int) $aFacebookData[0]['uid'] :
                 '';
         $this->_aSession['user']['email'] = isset($aFacebookData[0]['email']) ?
                 $aFacebookData[0]['email'] :

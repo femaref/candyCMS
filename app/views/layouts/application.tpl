@@ -80,12 +80,14 @@
             </ul>
             <ul class="nav pull-right">
               {if $_SESSION.user.id == 0}
-                <li{if $_REQUEST.controller == 'sessions'} class='active'{/if}>
-                  <a href='/sessions/create'>{$lang.global.login}</a>
-                </li>
-                <li class="divider-vertical"/>
                 <li{if $_REQUEST.controller == 'users' && isset($_REQUEST.action) && $_REQUEST.action == 'create'} class='active'{/if}>
                   <a href='/users/create'>{$lang.global.register}</a>
+                </li>
+                <li class="divider-vertical"/>
+              {/if}
+              {if $_SESSION.user.role == 0}
+                <li{if $_REQUEST.controller == 'sessions'} class='active'{/if}>
+                  <a href='/sessions/create'>{$lang.global.login}</a>
                 </li>
               {else}
                 <li class="dropdown">
@@ -94,9 +96,11 @@
                     <b class="caret"></b>
                   </a>
                   <ul class="dropdown-menu">
-                    <li>
-                      <a href='/users/{$_SESSION.user.id}/update'>{$lang.global.settings}</a>
-                    </li>
+                    {if $_SESSION.user.id > 0}
+                      <li>
+                        <a href='/users/{$_SESSION.user.id}/update'>{$lang.global.settings}</a>
+                      </li>
+                    {/if}
                     <li>
                       <a href='/sessions/destroy'>{$lang.global.logout}</a>
                     </li>
