@@ -98,7 +98,6 @@ class Index {
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
 		$this->getRoutes();
     $this->getLanguage();
-    $this->getFacebookExtension();
     $this->setUser();
     $this->getCronjob();
 	}
@@ -387,7 +386,7 @@ class Index {
   protected static function _resetUser() {
 		return array(
 				'email' => '',
-				'facebook_id' => '',
+				'facebook_id' => NULL,
 				'id' => 0,
 				'name' => '',
 				'surname' => '',
@@ -448,7 +447,7 @@ class Index {
       $oFacebook = $this->getFacebookExtension();
 
       if ($oFacebook == true)
-        $aFacebookData = $oFacebook->getuser();
+        $aFacebookData = $oFacebook->getUserData();
 
       # Override empty data with facebook data
       if (isset($aFacebookData)) {

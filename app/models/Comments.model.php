@@ -150,13 +150,15 @@ class Comments extends Main {
   public function create() {
     $sAuthorName = isset($this->_aRequest['name']) ?
             Helper::formatInput($this->_aRequest['name']) :
-            '';
+            $this->_aSession['user']['full_name'];
+
     $sAuthorEmail = isset($this->_aRequest['email']) ?
             Helper::formatInput($this->_aRequest['email']) :
             $this->_aSession['user']['email'];
+
     $iFacebookId = isset($this->_aRequest['facebook_id']) ?
             Helper::formatInput($this->_aRequest['facebook_id']) :
-            '';
+            $this->_aSession['user']['facebook_id'];
 
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
