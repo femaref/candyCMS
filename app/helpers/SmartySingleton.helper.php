@@ -78,13 +78,11 @@ class SmartySingleton extends Smarty {
     # Use a readable structure
     $this->use_sub_dirs = true;
 
-    # A $cache_lifetime value of -1 will force the cache to never expire.
-    $this->cache_lifetime = -1;
-
     # Only compile our templates on production mode.
     if (WEBSITE_MODE == 'production' || WEBSITE_MODE == 'staging') {
       $this->setCompileCheck(false);
       $this->setCacheModifiedCheck(true);
+      $this->setCacheLifetime(-1);
     }
 
     $bUseFacebook = class_exists('\CandyCMS\Plugin\Controller\FacebookCMS') ? true : false;
