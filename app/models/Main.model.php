@@ -211,6 +211,7 @@ abstract class Main {
 
       # SEO optimization
       $iTimestampNow = time();
+
       # Entry is less than a day old
       if($iTimestampNow - $iTimestamp < 86400) {
         $aData['changefreq']  = 'hourly';
@@ -248,21 +249,64 @@ abstract class Main {
       }
     }
 
-    # Build user ID
-    $iUserId = isset($aData['author_id']) ? (int) $aData['author_id'] : (int) $aData['id'];
+    # build the user data
+    if (isset($aData['author_id']))
+      $iUserId = $aData['author_id'];
+    else if (isset($aData['user_id']))
+      $iUserId = $aData['user_id'];
+    else if (isset($aData['uid']))
+      $iUserId = $aData['uid'];
+    else
+      $iUserId = $aData['id'];
+    $aUserData = array(
+        'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
+        'id'           => $iUserId,
+        'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
+        'name'         => isset($aData['author_name']) && $aData['author_name'] ? $aData['author_name'] : $aData['name'],
+        'surname'      => isset($aData['author_surname']) && $aData['author_surname'] ? $aData['author_surname'] : $aData['surname']
+    );
+    $aData['author'] = $this->_formatForUserOutput($aUserData);
 
+    # Encode data for SEO
+    $aData['encoded_title']			= isset($aData['title']) ? urlencode($aData['title']) : $aData['encoded_full_name'];
+
+    # URL to entry
+    $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aData['id'];
+    $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_title'];
+    $aData['encoded_url'] = urlencode($aData['url']);
+
+    $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
+    $aData['url_update'] = $aData['url_clean'] . '/update';
+
+    # Do we need to highlight text?
+    $sHighlight = isset($this->_aRequest['highlight']) ? $this->_aRequest['highlight'] : '';
+
+    # Highlight text for search results
+    if(!empty($sHighlight)) {
+      $aData['title']   = isset($aData['title']) ? Helper::formatOutput($aData['title'], $sHighlight) : '';
+      $aData['teaser']  = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
+      $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
+    }
+
+    return $aData;
+  }
+
+  /**
+   * Formats / Adds all relevant Information for displaying a User
+   *
+   * @param array $aData array of given userdata, required Fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
+   * @return array $aData returns reference of $aData
+   * @todo tests
+   */
+  protected function _formatForUserOutput(&$aData) {
 		# Create avatars
-		if(isset($aData['author_email']))
-			$sEmail = $aData['author_email'];
-
-		elseif(isset($aData['email']))
+		if(isset($aData['email']))
 			$sEmail = $aData['email'];
-
 		else
-			$sEmail = 'admin@example.com';
+			$sEmail = WEBSITE_MAIL;
 
-		Helper::createAvatarURLs($aData,
-						$iUserId,
+    Helper::createAvatarURLs($aData,
+						$aData['id'],
 						$sEmail,
 						isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false);
 
@@ -273,23 +317,25 @@ abstract class Main {
 
     # Encode data for SEO
     $aData['encoded_full_name'] = urlencode($aData['full_name']);
-    $aData['encoded_title']			= isset($aData['title']) ? urlencode($aData['title']) : '';
 
     # URL to entry
-    $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aData['id'];
-    $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_title'];
+    $aData['url_clean']   = WEBSITE_URL . '/users/' . $aData['id'];
+    $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_full_name'];
     $aData['encoded_url'] = urlencode($aData['url']);
 
-    # Do we need to highlight text?
-    $sHighlight = isset($this->_aRequest['highlight']) && !empty($this->_aRequest['highlight']) ?
-            $this->_aRequest['highlight'] :
-            '';
+    $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
+    $aData['url_update'] = $aData['url_clean'] . '/update';
 
-    # Highlight text for search results
-    if(!empty($sHighlight)) {
-      $aData['title']   = isset($aData['title']) ? Helper::formatOutput($aData['title'], $sHighlight) : '';
-      $aData['teaser']  = isset($aData['teaser']) ? Helper::formatOutput($aData['teaser'], $sHighlight) : '';
-      $aData['content'] = Helper::formatOutput($aData['content'], $sHighlight);
+    if (isset($aData['date'])) {
+      $iTimestamp = $aData['date'];
+      $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
+      $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
+      $aData['date_raw'] = (int) $iTimestamp;
+      $aData['date_w3c'] = date('Y-m-d', $iTimestamp);
+
+      $aData['datetime'] = Helper::formatTimestamp($iTimestamp);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $iTimestamp);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $iTimestamp);
     }
 
     return $aData;

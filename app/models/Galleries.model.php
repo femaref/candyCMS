@@ -110,6 +110,7 @@ class Galleries extends Main {
         # need to specify 'galleries' because this might be called for rss feed generation
         $this->_aData[$iId] = $this->_formatForOutput($aRow, $aInts, null, 'galleries');
         $this->_aData[$iId]['files'] = ($aRow['files_sum'] > 0) ? $this->getThumbs($aRow['id'], $bAdvancedImageInformation) : '';
+        $this->_aData[$iId]['url_createfile'] = $this->_aData[$iId]['url_clean'] . '/createfile';
       }
     }
 
@@ -174,6 +175,10 @@ class Galleries extends Main {
       $this->_aThumbs[$iId]['url_popup']    = $sUrlPopup;
       $this->_aThumbs[$iId]['url_original'] = $sUrlOriginal;
       $this->_aThumbs[$iId]['url_thumb']    = $sUrlThumb;
+      # /{$_REQUEST.controller}/{$f.id}/updatefile
+      $this->_aThumbs[$iId]['url_update']   = $this->_aThumbs[$iId]['url_update'] . 'file';
+      # /{$_REQUEST.controller}/{$f.id}/destroyfile?album_id={$_REQUEST.id}
+      $this->_aThumbs[$iId]['url_destroy']  = $this->_aThumbs[$iId]['url_destroy'] . 'file?album_id=' . $aRow['album_id'];
       $this->_aThumbs[$iId]['thumb_width']  = THUMB_DEFAULT_X;
       $this->_aThumbs[$iId]['loop']         = $iLoop;
 

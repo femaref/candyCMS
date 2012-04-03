@@ -30,14 +30,14 @@
       <tr>
         <td>{$c.id}</td>
         <td>
-          <a href='/{$_REQUEST.controller}/{$c.id}/{$c.encoded_title}'>
+          <a href='{$c.url}'>
             {$c.title}
           </a>
         </td>
         <td>{$c.datetime}</td>
         <td>
-          <a href='/users/{$c.author_id}'>
-            {$c.name} {$c.surname}
+          <a href='{$c.author.url}'>
+            {$c.full_name}
           </a>
         </td>
         {if $_SESSION.user.role >= 3}
@@ -48,7 +48,7 @@
                 title='{if $c.published == true}✔{else}✖{/if}' width='16' />
           </td>
           <td>
-            <a href='/{$_REQUEST.controller}/{$c.id}/update'>
+            <a href='{$c.url_update}'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
@@ -56,7 +56,7 @@
                   width='16' height='16' />
             </a>
             &nbsp;
-            <a href='#' onclick="confirmDestroy('/{$_REQUEST.controller}/{$c.id}/destroy')">
+            <a href='#' onclick="confirmDestroy('{$c.url_destroy}')">
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-destroy js-tooltip'
                   alt='{$lang.global.destroy.destroy}'

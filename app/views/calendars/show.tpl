@@ -69,7 +69,7 @@
                 {/if}
               </td>
               <td class='center'>
-                <a href='/{$_REQUEST.controller}/{$d.id}'>
+                <a href='{$d.url}'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
                       class='icon-calendar_add js-tooltip'
                       alt='{$lang.calendars.info.ics}'
@@ -77,6 +77,7 @@
                       width='16' height='16' />
                 </a>
                 {if $_SESSION.user.role >= 3}
+                  &nbsp;
                   <a href='/{$_REQUEST.controller}/{$d.id}/update'>
                     <img src='{$_PATH.images}/candy.global/spacer.png'
                         class='icon-update js-tooltip'

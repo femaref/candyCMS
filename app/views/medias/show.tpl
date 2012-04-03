@@ -64,7 +64,7 @@
               {$f.cdate}
             </td>
             <td>
-              <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$f.name}/destroy')">
+              <a href="#" onclick="confirmDestroy('{$f.urL_destroy}')">
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-destroy js-tooltip'
                     alt='{$lang.global.destroy.destroy}'

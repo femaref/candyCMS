@@ -7,7 +7,7 @@
           <ul style='display:none'>
           {foreach from=$d item=entry}
             <li>
-              <a href='/blogs/{$entry.id}/{$entry.encoded_title}' title='{$entry.date}' class='js-tooltip'>
+              <a href='{$entry.url}' title='{$entry.date}' class='js-tooltip'>
                 {$entry.title}
               </a>
             </li>

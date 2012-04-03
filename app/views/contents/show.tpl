@@ -5,7 +5,7 @@
         <h1>
           {$c.title}
           {if $_SESSION.user.role >= 3}
-            <a href='/{$_REQUEST.controller}/{$c.id}/update'>
+            <a href='{$c.url_update}'>
               <img src='{$_PATH.images}/candy.global/spacer.png'
                   class='icon-update js-tooltip'
                   alt='{$lang.global.update.update}'
@@ -23,7 +23,7 @@
           &nbsp;
           {$lang.global.by}
           &nbsp;
-          <a href='/users/{$c.author_id}/{$c.encoded_full_name}' rel='author'>{$c.full_name}</a>
+          <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
         </p>
       </header>
       {if $c.teaser}

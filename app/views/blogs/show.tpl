@@ -22,9 +22,9 @@
             {if $b.published == false}
               {$lang.global.not_published}:&nbsp;
             {/if}
-            <a href='/{$_REQUEST.controller}/{$b.id}/{$b.encoded_title}'>{$b.title}</a>
+            <a href='{$b.url}'>{$b.title}</a>
             {if $_SESSION.user.role >= 3}
-              <a href='/{$_REQUEST.controller}/{$b.id}/update'>
+              <a href='{$b.url_update}'>
                 <img src='{$_PATH.images}/candy.global/spacer.png'
                     class='icon-update js-tooltip'
                     alt='{$lang.global.update.update}'
@@ -40,7 +40,7 @@
             &nbsp;
             {$lang.global.by}
             &nbsp;
-            <a href='/users/{$b.author_id}/{$b.encoded_full_name}' rel='author'>{$b.full_name}</a>
+            <a href='{$b.author.url}' rel='author'>{$b.author.full_name}</a>
             {if $b.date_modified != ''}
               &nbsp;
               - {$lang.global.last_update}: {$b.date_modified}
@@ -66,7 +66,7 @@
             {/if}
           </div>
           <div class='span4 comments right'>
-            <a href='/{$_REQUEST.controller}/{$b.id}/{$b.encoded_title}#comments'>
+            <a href='{$b.url}#comments'>
               {$b.comment_sum} {$lang.global.comments}
             </a>
           </div>
