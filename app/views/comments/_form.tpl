@@ -8,9 +8,7 @@
   <form method='post' data-ajax='false' class='form-horizontal'>
     {if $_SESSION.user.role == 0 && $_SYSTEM.facebook_plugin == true}
       <p>
-        <fb:login-button scope='email'
-                         onlogin="window.location='{$CURRENT_URL}#comments'">
-        </fb:login-button>
+        <fb:login-button scope='email' onlogin="window.location='{$CURRENT_URL}#comments'"></fb:login-button>
       </p>
     {/if}
     <div class='control-group{if isset($error.name)} alert alert-error{/if}'>

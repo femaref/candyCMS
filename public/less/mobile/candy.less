@@ -16,33 +16,32 @@ span.js-toggle-element {
   margin: -15px -15px 30px;
 }
 
-div.success,
-div.error,
-p.error,
-div.notice {
+div.alert, p.alert {
   padding: 0px 15px;
   overflow:auto;
-}
-
-div.success {
-  border: 1px solid #41a62a;
-  background: #cbe472;
-}
-
-div.notice {
-  border: 1px solid #FFD324;
-  background: #FFF6BF;
-}
-
-div.error,
-p.error {
-  background:#EED0D0 !important; /* Override .row1 and .row2 */
-  color:#333;
-  border:1px solid red;
-  margin:0px 0px 5px;
+  color: #C09853;
   h4 {
     font-size:125%;
     margin: 12px 0;
+  }
+  &.alert-success {
+    border: 1px solid #41a62a;
+    background: #cbe472;
+  }
+  &.alert-notice {
+    border: 1px solid #FFD324;
+    background: #FFF6BF;
+  }
+  &.alert-warning {
+    background:#FCF8E3 !important; /* Override .row1 and .row2 */
+    color:#333;
+    border:1px solid #FBEED5;
+  }
+  &.alert-error {
+    background:#EED0D0 !important; /* Override .row1 and .row2 */
+    color:#333;
+    border:1px solid red;
+    margin:0px 0px 5px;
   }
 }
 

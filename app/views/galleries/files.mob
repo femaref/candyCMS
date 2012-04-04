@@ -7,7 +7,7 @@
       {/if}
     </li>
     {if !$files}
-      <div class='error' title="{$lang.error.missing.files}">
+      <div class='alert alert-warning' title="{$lang.error.missing.files}">
         <h4>{$lang.error.missing.files}</h4>
       </div>
     {else}

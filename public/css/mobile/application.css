@@ -2397,27 +2397,33 @@ span.ui-slider-label-b {
 }
 div.success h4, div.notice h4, span.js-toggle-element { display:none; }
 #js-flash_message { margin:-15px -15px 30px; }
-div.success, div.error, p.error, div.notice {
+div.alert, p.alert {
   padding:0px 15px;
   overflow:auto;
+  color:#c09853;
 }
-div.success {
+div.alert h4, p.alert h4 {
+  font-size:125%;
+  margin:12px 0;
+}
+div.alert.alert-success, p.alert.alert-success {
   border:1px solid #41a62a;
   background:#cbe472;
 }
-div.notice {
+div.alert.alert-notice, p.alert.alert-notice {
   border:1px solid #ffd324;
   background:#fff6bf;
 }
-div.error, p.error {
+div.alert.alert-warning, p.alert.alert-warning {
+  background:#fcf8e3 !important;
+  color:#333333;
+  border:1px solid #fbeed5;
+}
+div.alert.alert-error, p.alert.alert-error {
   background:#eed0d0 !important;
   color:#333333;
   border:1px solid red;
   margin:0px 0px 5px;
-}
-div.error h4, p.error h4 {
-  font-size:125%;
-  margin:12px 0;
 }
 .ui-content .ui-listview { margin-bottom:1em; }
 .ui-header, .ui-footer, .ui-page-fullscreen .ui-header, .ui-page-fullscreen .ui-footer {

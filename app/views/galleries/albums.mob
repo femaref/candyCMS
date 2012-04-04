@@ -1,6 +1,6 @@
 {strip}
   {if !$albums}
-    <div class='error' title='{$lang.error.missing.entries}'>
+    <div class='alert alert-warning' title='{$lang.error.missing.entries}'>
       <p>{$lang.error.missing.entries}</p>
     </div>
   {else}

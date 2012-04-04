@@ -42,8 +42,8 @@
           <section id='{$_REQUEST.controller}'>
             {if $_flash_type_}
               <div id='js-flash_message'>
-                <div class='{$_flash_type_}' id='js-flash_{$_flash_type_}'>
-                  <h4>{$_flash_headline_}</h4>
+                <div class='alert alert-{$_flash_type_}' id='js-flash_{$_flash_type_}'>
+                  <h4 class='alert-heading'>{$_flash_headline_}</h4>
                   <p>{$_flash_message_}</p>
                 </div>
               </div>
