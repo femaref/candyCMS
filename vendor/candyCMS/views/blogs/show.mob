@@ -24,14 +24,14 @@
           <li>
             <a href='{$b.url}' title='{$b.title}'>
               <h3>{$b.title}</h3>
-              <p>
-                {if $b.teaser}
+              {if $b.teaser}
+                <p>
                   {$b.teaser}
-                {else}
-                  {$b.content}
-                {/if}
-              </p>
-              <span class='ui-li-count'>{$b.comment_sum}</span>
+                </p>
+              {else}
+                {$b.content}
+              {/if}
+              <span class="ui-li-count">{$b.comment_sum}</span>
             </a>
           </li>
         {/foreach}

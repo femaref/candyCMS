@@ -29,7 +29,7 @@
       </div>
     </div>
     {if isset($_captcha_)}{$_captcha_}{/if}
-    <div class='form-actions'>
+    <div datas-role='fieldcontain' class='form-actions'>
       <input type='submit' class='btn btn-primary' value='{$lang.global.submit}' data-theme='b' />
     </div>
   </form>

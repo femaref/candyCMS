@@ -1,14 +1,13 @@
 {strip}
-  <p class='center'>
-    <div data-role='controlgroup' data-type='horizontal' class='center'>
+  <div class='pagination center'>
+    <div data-role='controlgroup' data-type='horizontal'>
       <a href='/{$_REQUEST.controller}/page/{$_PAGE.previous}' rel='prev' data-role='button'
-        {if !$_PAGE.previous}class='ui-disabled'{/if}>&larr;</a>
+        {if !$_PAGE.previous} class='ui-disabled'{/if}>&larr;</a>
       <a href='/{$_REQUEST.controller}/page/{$_PAGE.next}' rel='next' data-role='button'
-        {if !$_PAGE.next || !$_PAGE.entries > $_PAGE.limit}class='ui-disabled'{/if}>&rarr;</a>
+        {if !$_PAGE.next || !$_PAGE.entries > $_PAGE.limit} class='ui-disabled'{/if}>&rarr;</a>
     </div>
-    <p class='center'>
-      <a href='/rss/{$_REQUEST.controller}'
-         data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false' />
-    </p>
+  </div>
+  <p class='center'>
+    <a href='/rss/{$_REQUEST.controller}' data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false'></a>
   </p>
 {/strip}

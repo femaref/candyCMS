@@ -77,8 +77,10 @@ class Calendars extends Main {
                                           " . SQL_PREFIX . "users u
                                         ON
                                           c.author_id=u.id
-																				WHERE
-																					c.start_date > NOW()
+                                        WHERE
+                                          c.start_date >= NOW()
+                                        OR
+                                          c.end_date >= NOW()
                                         ORDER BY
                                           c.start_date ASC,
                                           c.title ASC");

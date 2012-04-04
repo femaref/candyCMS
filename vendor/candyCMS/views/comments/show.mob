@@ -15,19 +15,13 @@
             <br />
             <time datetime="{$c.datetime_w3c}">{$c.datetime}</time>
           </header>
-          <p id="js-comment_{$c.id}">
+          <div id="js-comment_{$c.id}">
             {$c.content}
-          </p>
+          </div>
           <footer>
             {* Scroll to bottom when quote is clicked *}
-            <a class='js-create_quote' href='#create'
-              onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}');$.mobile.silentScroll(1000)">
-              <img src='{$_PATH.images}/candy.global/spacer.png'
-                   class='icon-quote'
-                   alt='{$lang.global.quote.quote}'
-                   title='{$lang.global.quote.quote}'
-                   width='16'
-                   height='16' />
+            <a href='#' onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')"
+                data-role='button' data-inline='true' data-icon='quote' data-iconpos='notext' data-ajax='false'>
             </a>
           </footer>
         </article>
