@@ -10,10 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Image.helper.php';
 
-use \CandyCMS\Helper\Helper as Helper;
-use \CandyCMS\Helper\Image as Image;
+use \CandyCMS\Core\Helper\Helper as Helper;
+use \CandyCMS\Core\Helper\Image as Image;
 
 class UnitTestOfImageHelper extends CandyUnitTest {
 

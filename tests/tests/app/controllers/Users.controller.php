@@ -8,11 +8,11 @@
  * @license MIT
  * @since 2.0
  */
-require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Users.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Users.controller.php';
 
-use \CandyCMS\Controller\Users as Users;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Users as Users;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfUserController extends CandyWebTest {
 

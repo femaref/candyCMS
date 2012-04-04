@@ -13,7 +13,7 @@
 
 namespace CandyCMS\Plugin;
 
-use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Core\Helper\I18n as I18n;
 
 final class FormatTimestamp {
 

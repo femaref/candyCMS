@@ -30,8 +30,8 @@ define('PATH_STANDARD', dirname(__FILE__));
 
 # Initialize software
 try {
-  require PATH_STANDARD . '/config/Candy.inc.php';
-  require PATH_STANDARD . '/app/controllers/Index.controller.php';
+  require PATH_STANDARD . '/app/config/Candy.inc.php';
+  require PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
 }
 catch (Exception $e) {
   die($e->getMessage());
@@ -88,11 +88,12 @@ define('CRAWLER', defined('CRAWLERS') ?
               preg_match('/' . CRAWLERS . '/', $_SERVER['HTTP_USER_AGENT']) > 0 :
               false);
 
-# check for addons?
-define('ADDON_CHECK', ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
+# Check for extensions?
+define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
 
 # Initialize software
-$oIndex = new \CandyCMS\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+# @todo extension check
+$oIndex = new \CandyCMS\Core\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 if (is_dir('install') && WEBSITE_MODE == 'production')

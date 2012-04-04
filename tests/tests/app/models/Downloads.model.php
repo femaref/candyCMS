@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Downloads.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/models/Downloads.model.php';
 
-use \CandyCMS\Model\Downloads as Downloads;
+use \CandyCMS\Core\Model\Downloads as Downloads;
 
 class UnitTestOfDownloadModel extends CandyUnitTest {
 

@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Comments.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Comments.controller.php';
 
-use \CandyCMS\Controller\Comments as Comments;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Comments as Comments;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfCommentController extends CandyWebTest {
 

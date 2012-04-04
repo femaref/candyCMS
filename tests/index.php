@@ -18,9 +18,9 @@ require_once PATH_STANDARD . '/tests/simpletest/web_tester.php';
 require_once PATH_STANDARD . '/tests/candy/Candy.unit.php';
 require_once PATH_STANDARD . '/tests/candy/Candy.web.php';
 
-require_once PATH_STANDARD . '/config/Candy.inc.php';
-require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
-require_once PATH_STANDARD . '/app/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/app/config/Candy.inc.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/I18n.helper.php';
 
 define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
@@ -45,7 +45,7 @@ class AllFileTests extends TestSuite {
 
     else {
 
-      new \CandyCMS\Helper\I18n(WEBSITE_LANGUAGE);
+      new \CandyCMS\Core\Helper\I18n(WEBSITE_LANGUAGE);
 
       # All Tests
       $aTests = array(

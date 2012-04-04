@@ -9,10 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/app/controllers/Downloads.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Downloads.controller.php';
 
-use \CandyCMS\Controller\Downloads as Downloads;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Downloads as Downloads;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfDownloadController extends CandyWebTest {
 

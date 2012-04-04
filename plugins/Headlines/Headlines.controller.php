@@ -12,8 +12,8 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
 
 final class Headlines {
   /**
@@ -32,6 +32,7 @@ final class Headlines {
    * @param array $aRequest
    * @param array $aSession
    * @return string HTML
+   * @todo model extension check
    *
    */
   public final function show(&$aRequest, &$aSession) {
@@ -44,8 +45,8 @@ final class Headlines {
 
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|headlines';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
-      require_once PATH_STANDARD . '/app/models/Blogs.model.php';
-      $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
+      require_once PATH_STANDARD . '/vendor/candyCMS/models/Blogs.model.php';
+      $oModel = new \CandyCMS\Core\Model\Blogs($aRequest, $aSession);
 
       $oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
     }

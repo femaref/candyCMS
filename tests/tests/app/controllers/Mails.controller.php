@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Mails.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Mails.controller.php';
 
-use \CandyCMS\Controller\Mails as Mails;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Mails as Mails;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfMailController extends CandyWebTest {
 

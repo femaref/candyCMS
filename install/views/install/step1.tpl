@@ -34,7 +34,7 @@
         </li>
       {/if}
       <li>
-        Your system slows down with every additional plugin enabled and if addons
+        Your system slows down with every additional plugin enabled and if extensions
         are allowed.
       </li>
       <li>
