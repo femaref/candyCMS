@@ -9,13 +9,13 @@
  * @since 2.0
  */
 
-namespace CandyCMS\Model;
+namespace CandyCMS\Models;
 
-use CandyCMS\Helper\AdvancedException as AdvancedException;
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Page as Page;
+use CandyCMS\core\Helpers\AdvancedException;
+use CandyCMS\core\Helpers\Helper;
+use CandyCMS\core\Helpers\Page;
 use PDO;
 
-class Extension_Sample extends \CandyCMS\Core\Model\Main {
+class ExtensionSample extends \CandyCMS\core\Models\Main {
 
 }

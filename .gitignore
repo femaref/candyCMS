@@ -10,3 +10,9 @@ version.txt
 public/templates/*
 .project
 !/app/config/samples/
+composer.lock
+composer.phar
+/vendor/vendor/.composer/
+/vendor/.composer/
+/vendor/symfony/
+/vendor/facebook/

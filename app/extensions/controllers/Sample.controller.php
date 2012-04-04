@@ -9,13 +9,13 @@
  * @since 2.0
  */
 
-namespace CandyCMS\Controller;
+namespace CandyCMS\Controllers;
 
-use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\core\Helpers\Helper;
 
 require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
 
-class Extension_Sample extends \CandyCMS\Core\Controller\Main {
+class ExtensionSample extends \CandyCMS\core\Controllers\Main {
 
   /**
    * Method to include the model files and start action beside the constructor.

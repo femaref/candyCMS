@@ -31,7 +31,7 @@ define('PATH_STANDARD', dirname(__FILE__));
 # Initialize software
 try {
   require PATH_STANDARD . '/app/config/Candy.inc.php';
-  require PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
+  require PATH_STANDARD . '/vendor/candyCMS/core/controllers/Index.controller.php';
 }
 catch (Exception $e) {
   die($e->getMessage());
@@ -93,7 +93,7 @@ define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'developm
 
 # Initialize software
 # @todo extension check
-$oIndex = new \CandyCMS\Core\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new \candyCMS\core\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 # If we are on a productive enviroment, make sure that we can't override the system.
 if (is_dir('install') && WEBSITE_MODE == 'production')

@@ -9,13 +9,13 @@
  * @since 2.0
  */
 
-namespace CandyCMS\Controller;
+namespace CandyCMS\Controllers;
 
-use CandyCMS\Helper\Helper as Helper;
+use CandyCMS\core\Helpers\Helper;
 
 require_once 'app/controllers/Mail.controller.php';
 
-class Extension_Mail extends \CandyCMS\Core\Controller\Mail {
+class ExtensionMail extends \CandyCMS\Core\Controller\Mail {
 
   public function methodToOverride() {
     return 'This is an example!';

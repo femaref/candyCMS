@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ * 
  */
 
 # grab an API Key from https://us4.admin.mailchimp.com/account/api

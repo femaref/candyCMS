@@ -68,7 +68,7 @@ define('WEBSITE_MAIL_NOREPLY', 'no-reply@domain.tld');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'staging');
+define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 
@@ -191,5 +191,14 @@ define('COMMENTS_AUTOLOAD', true);
 define('CRAWLERS', 'Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|' .
                     'ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|' .
                     'Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby');
+
+# ------------------------------------------------------------------------------
+
+# grab an API Key from https://us4.admin.mailchimp.com/account/api
+define('MAILCHIMP_API_KEY', '');
+
+# grab your List's Unique Id by going to http://admin.mailchimp.com/lists/
+# Click the "settings" link for the list - the Unique Id is at the bottom of that page.
+define('MAILCHIMP_LIST_ID', '');
 
 ?>
