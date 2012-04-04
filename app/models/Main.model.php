@@ -199,8 +199,6 @@ abstract class Main {
 
     # Format data
     if (isset($aData['date'])) {
-      $aData['time'] = Helper::formatTimestamp($aData['date'], 2);
-      $aData['date'] = Helper::formatTimestamp($aData['date'], 1);
       $aData['date_raw'] = (int) $aData['date'];
       $aData['date_w3c'] = date('Y-m-d', $aData['date']);
 
@@ -245,6 +243,10 @@ abstract class Main {
         $aData['changefreq']  = 'yearly';
         $aData['priority']    = '0.1';
       }
+
+      # Bugfix: Create 'time' and 'date' at the end to avoid an override of 'date'.
+      $aData['time'] = Helper::formatTimestamp($aData['date'], 2);
+      $aData['date'] = Helper::formatTimestamp($aData['date'], 1);
     }
 
     # build the user data
@@ -296,27 +298,24 @@ abstract class Main {
   }
 
   /**
-   * Formats / Adds all relevant Information for displaying a User
+   * Formats / adds all relevant Information for displaying a user.
    *
-   * @param array $aData array of given userdata, required Fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
+   * @access protected
+   * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
    * @todo tests
+   *
    */
   protected function _formatForUserOutput(&$aData) {
 		# Create avatars
-		if(isset($aData['email']))
-			$sEmail = $aData['email'];
-		else
-			$sEmail = WEBSITE_MAIL;
-
     Helper::createAvatarURLs($aData,
 						$aData['id'],
-						$sEmail,
+						isset($aData['email']) ? $aData['email'] : WEBSITE_MAIL,
 						isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false);
 
     # Build full user name
-    $aData['name']    = isset($aData['name']) ? (string) $aData['name'] : '';
-    $aData['surname'] = isset($aData['surname']) ? (string) $aData['surname'] : '';
+    $aData['name']      = isset($aData['name']) ? (string) $aData['name'] : '';
+    $aData['surname']   = isset($aData['surname']) ? (string) $aData['surname'] : '';
     $aData['full_name'] = trim($aData['name'] . ' ' . $aData['surname']);
 
     # Encode data for SEO
@@ -328,18 +327,18 @@ abstract class Main {
     $aData['encoded_url'] = urlencode($aData['url']);
 
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
-    $aData['url_update'] = $aData['url_clean'] . '/update';
+    $aData['url_update']  = $aData['url_clean'] . '/update';
 
     if (isset($aData['date'])) {
-      $iTimestamp = $aData['date'];
+      $aData['date_raw'] = (int) $aData['date'];
+      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
+
+      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
+
       $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
       $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
-      $aData['date_raw'] = (int) $iTimestamp;
-      $aData['date_w3c'] = date('Y-m-d', $iTimestamp);
-
-      $aData['datetime'] = Helper::formatTimestamp($iTimestamp);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $iTimestamp);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $iTimestamp);
     }
 
     return $aData;
@@ -350,7 +349,8 @@ abstract class Main {
    *
    * @static
    * @access public
-   * @return integer last inserted ID.
+   * @return integer self::$iLastInsertId last inserted ID.
+   *
    */
   public static function getLastInsertId() {
     return self::$iLastInsertId;
@@ -376,7 +376,7 @@ abstract class Main {
                                           GROUP BY
                                             " . $sColumn);
 
-      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
       $sString = '';
       foreach ($aResult as $aRow) {
@@ -410,6 +410,7 @@ abstract class Main {
    * Dynamically load models.
    *
    * @static
+   * @access public
    * @param string $sClass name of model to load
    * @return string model name
    *
