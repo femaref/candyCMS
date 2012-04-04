@@ -214,8 +214,13 @@ class Index {
 					$this->_aRequest[$aRoute[0]] = $aRoute[1];
 			}
 		}
-		else
-			$this->_aRequest['controller'] = isset($this->_aRequest['controller']) ? $this->_aRequest['controller'] : $sRoutemap;
+		else {
+      $aRoute = explode('=', $sRoutemap);
+			$this->_aRequest['controller'] = isset($this->_aRequest['controller']) ?
+              $this->_aRequest['controller'] :
+              $aRoute[1];
+    }
+
 
     # Show files from public folder (robots.txt, human.txt and favicon.ico)
     if(preg_match('/\./', $this->_aRequest['controller']))
