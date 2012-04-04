@@ -2425,7 +2425,10 @@ div.alert.alert-error, p.alert.alert-error {
   border:1px solid red;
   margin:0px 0px 5px;
 }
-.ui-content .ui-listview { margin-bottom:1em; }
+.ui-content .ui-listview {
+  margin-bottom:1em;
+  margin-top:1em;
+}
 .ui-header, .ui-footer, .ui-page-fullscreen .ui-header, .ui-page-fullscreen .ui-footer {
   width:auto;
   text-align:center;
