@@ -191,11 +191,18 @@ class Mails extends Main {
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {
     $sMessage = str_replace('%NOREPLY', I18n::get('mails.body.no_reply'), $sMessage);
     $sMessage = str_replace('%SIGNATURE', I18n::get('mails.body.signature'), $sMessage);
+
+    $sMessage = str_replace('%%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
+    $sMessage = str_replace('%%WEBSITE_URL', WEBSITE_URL, $sMessage);
     $sMessage = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sMessage);
     $sMessage = str_replace('%WEBSITE_URL', WEBSITE_URL, $sMessage);
+    $sSubject = str_replace('%%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
+    $sSubject = str_replace('%%WEBSITE_URL', WEBSITE_URL, $sSubject);
+    $sSubject = str_replace('%WEBSITE_NAME', WEBSITE_NAME, $sSubject);
+    $sSubject = str_replace('%WEBSITE_URL', WEBSITE_URL, $sSubject);
 
     try {
-      require_once 'lib/phpmailer/class.phpmailer.php';
+      require_once 'vendor/phpmailer/class.phpmailer.php';
       $oMail = & new \PHPMailer(true);
 
       if (SMTP_ENABLE === true) {
