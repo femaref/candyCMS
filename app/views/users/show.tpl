@@ -14,7 +14,7 @@
         {/if}
       </h1>
     </div>
-    <table class="table unstyled">
+    <table class='table unstyled'>
       <tr>
         <td>
           {$lang.users.label.registered_since}

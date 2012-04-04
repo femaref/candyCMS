@@ -137,12 +137,12 @@
     </div>
   </form>
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.typeahead{$_SYSTEM.compress_files_suffix}.js'></script>
-  <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
+  <script type='text/javascript' src='/vendor/tiny_mce/jquery.tinymce.js'></script>
   <script type='text/javascript'>
     {if !$MOBILE}
       $(document).ready(function(){
         $('textarea.js-tinymce').tinymce({
-          script_url : '/lib/tiny_mce/tiny_mce.js',
+          script_url : '/vendor/tiny_mce/tiny_mce.js',
           theme : 'advanced',
           plugins : 'autosave,safari,style,advimage,advlink,inlinepopups,insertdatetime,media,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
           theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen',

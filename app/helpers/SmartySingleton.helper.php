@@ -15,7 +15,7 @@ namespace CandyCMS\Helper;
 use Smarty;
 use lessc;
 
-require_once PATH_STANDARD . '/lib/smarty/Smarty.class.php';
+require_once PATH_STANDARD . '/vendor/smarty/Smarty.class.php';
 
 class SmartySingleton extends Smarty {
 
@@ -69,7 +69,7 @@ class SmartySingleton extends Smarty {
 
     $this->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
     $this->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
-    $this->setPluginsDir(PATH_STANDARD . '/lib/smarty/plugins');
+    $this->setPluginsDir(PATH_STANDARD . '/vendor/smarty/plugins');
     $this->setTemplateDir(PATH_STANDARD . '/app/views');
 
     # See http://www.smarty.net/docs/en/variable.merge.compiled.includes.tpl
@@ -165,7 +165,7 @@ class SmartySingleton extends Smarty {
 
     # Compile CSS when in development mode and clearing the cache
     if (WEBSITE_MODE == 'development' && file_exists(Helper::removeSlash($aPaths['less'] . '/core/application.less'))) {
-      require_once PATH_STANDARD . '/lib/lessphp/lessc.inc.php';
+      require_once PATH_STANDARD . '/vendor/lessphp/lessc.inc.php';
 
       try {
         @unlink(Helper::removeSlash($aPaths['css'] . '/core/application.css'));

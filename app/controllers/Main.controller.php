@@ -620,7 +620,7 @@ abstract class Main {
 	 *
    */
   protected static function _subscribeToNewsletter($aData, $bDoubleOptIn = false) {
-    require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
+    require_once PATH_STANDARD . '/vendor/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID,
@@ -640,7 +640,7 @@ abstract class Main {
    *
    */
   protected static function _unsubscribeFromNewsletter($sEmail) {
-    require_once PATH_STANDARD . '/lib/mailchimp/MCAPI.class.php';
+    require_once PATH_STANDARD . '/vendor/mailchimp/MCAPI.class.php';
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listUnsubscribe(MAILCHIMP_LIST_ID, $sEmail, '', '', false, false);

@@ -102,7 +102,7 @@ final class Recaptcha {
    * @todo documentation
    */
   public function __construct() {
-    require PATH_STANDARD . '/lib/recaptcha/recaptchalib.php';
+    require PATH_STANDARD . '/vendor/recaptcha/recaptchalib.php';
   }
 
 	/**
