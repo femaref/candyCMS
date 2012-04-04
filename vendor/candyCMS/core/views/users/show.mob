@@ -1,4 +1,19 @@
 {strip}
+  {foreach $user as $u}
+    <img alt='{$u.full_name}' src='{$u.avatar_64}' />
+    <ul data-role='listview'>
+      <li data-role='list-divider'></li>
+      <li>{$lang.users.label.registered_since}: <div class='ui-li-aside'>{$u.date}</div></li>
+      <li>{$lang.users.label.last_login}: <div class='ui-li-aside'>{$u.last_login}</div></li>
+      {if !empty($u.content)}
+        <li data-role='list-divider'>{$lang.users.label.content.show|replace:'%s':$u.name}</li>
+        <li>{$u.content}</li>
+      {/if}
+      <li data-role='list-divider'>{$lang.global.contact}</li>
+      <li><a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}/create'>
+            {$lang.users.contact_via_email|replace:'%s':$u.name}
+          </a></li>
+    </ul>
 
-
+  {/foreach}
 {/strip}

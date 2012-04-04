@@ -201,41 +201,43 @@ abstract class Main {
     # Format data
     if (isset($aData['date'])) {
       $aData['date_raw'] = (int) $aData['date'];
-      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
+      $aData['date_w3c'] = date('Y-m-d', $aData['date_raw']);
+      $aData['time']     = Helper::formatTimestamp($aData['date_raw'], 2);
+      $aData['date']     = Helper::formatTimestamp($aData['date_raw'], 1);
 
-      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
+      $aData['datetime'] = Helper::formatTimestamp($aData['date_raw']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
 
       $iTimestampNow = time();
 
       # Entry is less than a day old
-      if($iTimestampNow - $aData['date'] < 86400) {
+      if($iTimestampNow - $aData['date_raw'] < 86400) {
         $aData['changefreq']  = 'hourly';
         $aData['priority']    = '1.0';
       }
       # Entry is younger than a week
-      elseif($iTimestampNow - $aData['date'] < 86400 * 7) {
+      elseif($iTimestampNow - $aData['date_raw'] < 86400 * 7) {
         $aData['changefreq']  = 'daily';
         $aData['priority']    = '0.9';
       }
       # Entry is younger than a month
-      elseif($iTimestampNow - $aData['date'] < 86400 * 31) {
+      elseif($iTimestampNow - $aData['date_raw'] < 86400 * 31) {
         $aData['changefreq']  = 'weekly';
         $aData['priority']    = '0.75';
       }
       # Entry is younger than three month
-      elseif($iTimestampNow - $aData['date'] < 86400 * 90) {
+      elseif($iTimestampNow - $aData['date_raw'] < 86400 * 90) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.6';
       }
       # Entry is younger than half a year
-      elseif($iTimestampNow - $aData['date'] < 86400 * 180) {
+      elseif($iTimestampNow - $aData['date_raw'] < 86400 * 180) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.4';
       }
       # Entry is younger than a year
-      elseif($iTimestampNow - $aData['date'] < 86400 * 360) {
+      elseif($iTimestampNow - $aData['date_raw'] < 86400 * 360) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.25';
       }
@@ -244,10 +246,6 @@ abstract class Main {
         $aData['changefreq']  = 'yearly';
         $aData['priority']    = '0.1';
       }
-
-      # Bugfix: Create 'time' and 'date' at the end to avoid an override of 'date'.
-      $aData['time'] = Helper::formatTimestamp($aData['date'], 2);
-      $aData['date'] = Helper::formatTimestamp($aData['date'], 1);
     }
 
     # build the user data
@@ -267,8 +265,8 @@ abstract class Main {
         'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
         'id'           => $iUserId,
         'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
-        'name'         => isset($aData['author_name']) && $aData['author_name'] ? $aData['author_name'] : $aData['name'],
-        'surname'      => isset($aData['author_surname']) && $aData['author_surname'] ? $aData['author_surname'] : $aData['surname'],
+        'name'         => isset($aData['name']) && $aData['name'] ? $aData['name'] : $aData['author_name'],
+        'surname'      => isset($aData['surname']) && $aData['surname'] ? $aData['surname'] : $aData['author_surname'],
         'facebook_id'  => $aData['author_facebook_id'],
         'ip'           => $aData['author_ip'],
     );
@@ -332,14 +330,14 @@ abstract class Main {
 
     if (isset($aData['date'])) {
       $aData['date_raw'] = (int) $aData['date'];
-      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
+      $aData['date_w3c'] = date('Y-m-d', $aData['date_raw']);
 
-      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
+      $aData['datetime'] = Helper::formatTimestamp($aData['date_raw']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
 
-      $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
-      $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
+      $aData['time'] = Helper::formatTimestamp($aData['date_raw'], 2);
+      $aData['date'] = Helper::formatTimestamp($aData['date_raw'], 1);
     }
 
     return $aData;

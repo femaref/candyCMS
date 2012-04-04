@@ -26,6 +26,10 @@ class Routes {
 			$qs = '&' . $qs;
 		}
 
+    // Empty URI?
+    if (empty($uri))
+      $uri = '/';
+
 		// Is there a literal match?
 		if (isset(static::$routes[$uri])) {
 			return static::$routes[$uri] . $qs;
