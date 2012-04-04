@@ -19,10 +19,15 @@
             {$c.content}
           </p>
           <footer>
-            <a href='#create'
-              onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')">
-              <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
-                  title='{$lang.global.quote.quote}' />
+            {* Scroll to bottom when quote is clicked *}
+            <a class='js-create_quote' href='#create'
+              onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}');$.mobile.silentScroll(1000)">
+              <img src='{$_PATH.images}/candy.global/spacer.png'
+                   class='icon-quote'
+                   alt='{$lang.global.quote.quote}'
+                   title='{$lang.global.quote.quote}'
+                   width='16'
+                   height='16' />
             </a>
           </footer>
         </article>

@@ -24,7 +24,7 @@
               {foreach $table as $data}
                 {if $data.id > 0}
                   <li>
-                    <a href='{$data.url}'>
+                    <a href='{$data.url_clean}/highlight/{$string}'>
                       {$data.title}
                     </a>,
                     &nbsp;

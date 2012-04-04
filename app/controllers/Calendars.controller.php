@@ -33,10 +33,11 @@ class Calendars extends Main {
         return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
 
       else {
-        $this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
+        $aData = $this->_oModel->getData($this->_iId);
+        $this->oSmarty->assign('calendar', $aData);
 
         header('Content-type: text/calendar; charset=utf-8');
-        header('Content-Disposition: inline; filename=' . I18n::get('global.event') . '.ics');
+        header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
 
         $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
         exit($this->oSmarty->display('ics.tpl', UNIQUE_ID));

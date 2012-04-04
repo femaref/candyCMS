@@ -2401,7 +2401,6 @@ div.success, div.error, p.error, div.notice {
   padding:0px 15px;
   overflow:auto;
 }
-div.success:hover, div.error:hover { cursor:pointer; }
 div.success {
   border:1px solid #41a62a;
   background:#cbe472;
@@ -2416,7 +2415,10 @@ div.error, p.error {
   border:1px solid red;
   margin:0px 0px 5px;
 }
-div.error h4, p.error h4 { font-size:125%; }
+div.error h4, p.error h4 {
+  font-size:125%;
+  margin:12px 0;
+}
 .ui-header, .ui-footer, .ui-page-fullscreen .ui-header, .ui-page-fullscreen .ui-footer {
   width:auto;
   text-align:center;
@@ -2468,6 +2470,7 @@ p.create { margin:0px 0px 30px; }
 }
 #comments article footer { text-align:right; }
 #comments article.from_author { background:#e3e3e3; }
+#downloads .ui-link-inherit { padding-left:50px; }
 #galleries li a div img { margin-right:5px; }
 p.center { clear:both; }
 blockquote {
