@@ -12,10 +12,10 @@
 
 namespace CandyCMS;
 
-use CandyCMS\Controller\Index as Index;
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
-use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Core\Controller\Index as Index;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\I18n as I18n;
 use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
@@ -164,10 +164,10 @@ class Install extends Index {
         # Try to create folders (if not avaiable)
         $sUpload = Helper::removeSlash(PATH_UPLOAD);
         $aFolders = array(
-            'backup',
-            Helper::removeSlash(CACHE_DIR),
-            Helper::removeSlash(COMPILE_DIR),
-            'logs',
+            'app/backup',
+            'app/' . Helper::removeSlash(CACHE_DIR),
+            'app/' . Helper::removeSlash(COMPILE_DIR),
+            'app/logs',
             $sUpload => array(
                 'galleries',
                 'medias',
