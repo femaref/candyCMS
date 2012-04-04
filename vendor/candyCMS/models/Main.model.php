@@ -266,8 +266,8 @@ abstract class Main {
         'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
         'id'           => $iUserId,
         'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
-        'name'         => isset($aData['author_name']) && $aData['author_name'] ? $aData['author_name'] : $aData['name'],
-        'surname'      => isset($aData['author_surname']) && $aData['author_surname'] ? $aData['author_surname'] : $aData['surname'],
+        'name'         => isset($aData['name']) && $aData['name'] ? $aData['name'] : $aData['author_name'],
+        'surname'      => isset($aData['surname']) && $aData['surname'] ? $aData['surname'] : $aData['author_surname'],
         'facebook_id'  => $aData['author_facebook_id'],
         'ip'           => $aData['author_ip'],
     );
