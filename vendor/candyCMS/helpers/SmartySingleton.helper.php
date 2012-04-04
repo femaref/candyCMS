@@ -67,8 +67,8 @@ class SmartySingleton extends Smarty {
     if (!defined('WEBSITE_LANGUAGE'))
       define('WEBSITE_LANGUAGE', 'en');
 
-    $this->setCacheDir(PATH_STANDARD . '/' . CACHE_DIR);
-    $this->setCompileDir(PATH_STANDARD . '/' . COMPILE_DIR);
+    $this->setCacheDir(PATH_STANDARD . '/app/' . CACHE_DIR);
+    $this->setCompileDir(PATH_STANDARD . '/app/' . COMPILE_DIR);
     $this->setPluginsDir(PATH_STANDARD . '/vendor/smarty/plugins');
     $this->setTemplateDir(PATH_STANDARD . '/vendor/candyCMS/views');
 
