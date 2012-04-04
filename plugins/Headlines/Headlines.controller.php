@@ -32,7 +32,6 @@ final class Headlines {
    * @param array $aRequest
    * @param array $aSession
    * @return string HTML
-   * @todo model extension check
    *
    */
   public final function show(&$aRequest, &$aSession) {
@@ -45,8 +44,8 @@ final class Headlines {
 
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|headlines';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
-      require_once PATH_STANDARD . '/vendor/candyCMS/models/Blogs.model.php';
-      $oModel = new \CandyCMS\Core\Model\Blogs($aRequest, $aSession);
+      $sBlogsModel = \CandyCMS\Core\Model\Main::__autoload('Blogs');
+      $oModel = & new $sBlogsModel($aRequest, $aSession);
 
       $oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
     }

@@ -422,7 +422,7 @@ abstract class Main {
 			require_once PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php';
 			return '\CandyCMS\Model\Extension_' . $sClass;
 		}
-		elseif (file_exists(PATH_STANDARD . '/app/models/' . $sClass . '.model.php')) {
+		elseif (file_exists(PATH_STANDARD . '/vendor/candyCMS/models/' . $sClass . '.model.php')) {
 			require_once PATH_STANDARD . '/vendor/candyCMS/models/' . $sClass . '.model.php';
 			return '\CandyCMS\Core\Model\\' . $sClass;
 		}
