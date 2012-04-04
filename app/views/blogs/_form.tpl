@@ -117,44 +117,48 @@
         </div>
       </div>
     {/if}
-    <div class='form-actions'>
-      {if isset($author_id)}
-        <input type='hidden' value='{$author_id}' name='author_id' />
-      {/if}
-      <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
-      {if $_REQUEST.action == 'create'}
-        <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" data-theme='b' />
-      {elseif $_REQUEST.action == 'update'}
-        <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" data-theme='b' />
-        <input type='button' class='btn btn-danger' value='{$lang.blogs.title.destroy}'
-              onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
-        <input type='reset' class='btn' value='{$lang.global.reset}' />
-        <input type='hidden' value='{$_REQUEST.id}' name='id' />
-        <input type='hidden' value='{$date}' name='date' />
-      {/if}
+    <div data-role='fieldcontain'>
+      <div class='form-actions' data-role='controlgroup'>
+        {if isset($author_id)}
+          <input type='hidden' value='{$author_id}' name='author_id' />
+        {/if}
+        <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
+        {if $_REQUEST.action == 'create'}
+          <input type='submit' class='btn btn-primary' value="{$lang.global.create.create}" data-theme='b' />
+        {elseif $_REQUEST.action == 'update'}
+          <input type='submit' class='btn btn-primary' value="{$lang.global.update.update}" data-theme='b' />
+          <input type='button' class='btn btn-danger' value='{$lang.blogs.title.destroy}'
+                onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
+          <input type='reset' class='btn' value='{$lang.global.reset}' />
+          <input type='hidden' value='{$_REQUEST.id}' name='id' />
+          <input type='hidden' value='{$date}' name='date' />
+        {/if}
+      </div>
     </div>
   </form>
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.typeahead{$_SYSTEM.compress_files_suffix}.js'></script>
   <script type='text/javascript' src='/lib/tiny_mce/jquery.tinymce.js'></script>
   <script type='text/javascript'>
-    $(document).ready(function(){
-      $('textarea.js-tinymce').tinymce({
-        script_url : '/lib/tiny_mce/tiny_mce.js',
-        theme : 'advanced',
-        plugins : 'autosave,safari,style,advimage,advlink,inlinepopups,insertdatetime,media,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
-        theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen',
-        theme_advanced_buttons2 : 'styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor',
-        theme_advanced_buttons3 : 'hr,|,link,unlink,anchor,|,image,|,cleanup,removeformat,|,code,|,insertdate,inserttime,|,outdent,indent,|,sub,sup,|,charmap',
-        theme_advanced_statusbar_location : 'bottom',
-        theme_advanced_resizing : true,
-        language : '{$WEBSITE_LANGUAGE}',
-        remove_script_host : false,
-        document_base_url : '{$WEBSITE_URL}',
-        entity_encoding : 'raw',
-        height : '300px',
-        content_css : '{$_PATH.css}/core/tinymce{$_SYSTEM.compress_files_suffix}.css'
+    {if !$MOBILE}
+      $(document).ready(function(){
+        $('textarea.js-tinymce').tinymce({
+          script_url : '/lib/tiny_mce/tiny_mce.js',
+          theme : 'advanced',
+          plugins : 'autosave,safari,style,advimage,advlink,inlinepopups,insertdatetime,media,searchreplace,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras',
+          theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,cut,copy,paste,pastetext,|,search,replace,|,fullscreen',
+          theme_advanced_buttons2 : 'styleselect,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor',
+          theme_advanced_buttons3 : 'hr,|,link,unlink,anchor,|,image,|,cleanup,removeformat,|,code,|,insertdate,inserttime,|,outdent,indent,|,sub,sup,|,charmap',
+          theme_advanced_statusbar_location : 'bottom',
+          theme_advanced_resizing : true,
+          language : '{$WEBSITE_LANGUAGE}',
+          remove_script_host : false,
+          document_base_url : '{$WEBSITE_URL}',
+          entity_encoding : 'raw',
+          height : '300px',
+          content_css : '{$_PATH.css}/core/tinymce{$_SYSTEM.compress_files_suffix}.css'
+        });
       });
-    });
+    {/if}
 
     $('#input-title').bind('keyup', function() {
       countCharLength(this, 128);

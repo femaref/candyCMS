@@ -2481,3 +2481,4 @@ blockquote h3 {
   margin-bottom:0px;
   font-size:90%;
 }
+form .control-group .controls .help-block { display:none; }

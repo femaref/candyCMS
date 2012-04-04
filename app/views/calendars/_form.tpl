@@ -56,8 +56,8 @@
         </p>
       </div>
     </div>
-    <div class='form-actions'>
-      <input class='btn btn-primary' type='submit'
+    <div data-role='fieldcontain' class='form-actions'>
+      <input class='btn btn-primary' type='submit' data-theme='b'
              value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
       {if $_REQUEST.action == 'update'}
         <input class='btn btn-danger' type='button' value='{$lang.global.destroy.destroy}'

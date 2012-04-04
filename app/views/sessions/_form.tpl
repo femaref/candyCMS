@@ -25,7 +25,7 @@
         {if isset($error.password)}<span class='help-inline'>{$error.password}</span>{/if}
       </div>
     </div>
-    <div class='form-actions'>
+    <div data-role='fieldcontain' class='form-actions'>
       <input type='submit' value='{$lang.global.login}' data-theme='b' class='btn btn-primary'/>
       <input type='hidden' value='formdata' name='create_sessions' />
     </div>
