@@ -21,8 +21,6 @@ use CandyCMS\Core\Helpers\Helper;
 use CandyCMS\Core\Helpers\SmartySingleton;
 use Facebook;
 
-require_once PATH_STANDARD . '/vendor/facebook/facebook.php';
-
 final class FacebookCMS extends Facebook {
 
   /**
