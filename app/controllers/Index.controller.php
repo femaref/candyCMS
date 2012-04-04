@@ -190,11 +190,11 @@ class Index {
 	 *
    */
 	public function getRoutes() {
-		require_once PATH_STANDARD . '/lib/routes/Routes.php';
+		require_once PATH_STANDARD . '/vendor/routes/Routes.php';
 
 		# Cache routes for performance reasons
 		if(!isset($this->_aSession['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
-			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
+			require_once PATH_STANDARD . '/vendor/symfony_yaml/sfYaml.php';
 			$this->_aSession['routes'] = sfYaml::load(file_get_contents(PATH_STANDARD . '/config/Routes.yml'));
 		}
 

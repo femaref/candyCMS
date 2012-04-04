@@ -52,7 +52,7 @@ class I18n {
     I18n::$_oObject = $this;
 
     if (!isset(I18n::$_aLang) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test') {
-			require_once PATH_STANDARD . '/lib/symfony_yaml/sfYaml.php';
+			require_once PATH_STANDARD . '/vendor/symfony_yaml/sfYaml.php';
       $sLanguageFile = PATH_STANDARD . '/languages/' . $sLanguage . '.language.yml';
 
       # Remove mistakenly set cookie to avoid exceptions.
