@@ -251,8 +251,8 @@ class Helper {
   public static function getTemplateDir($sFolder, $sFile) {
 		try {
 			# Extensions
-			if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/ext/views/' . $sFolder . '/' . $sFile . '.tpl'))
-				return PATH_STANDARD . '/app/ext/views/' . $sFolder;
+			if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/views/' . $sFolder . '/' . $sFile . '.tpl'))
+				return PATH_STANDARD . '/app/extensions/views/' . $sFolder;
 
 			# Template use
 			elseif (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))

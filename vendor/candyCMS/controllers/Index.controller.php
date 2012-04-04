@@ -418,8 +418,8 @@ class Index {
 
     # Get user by token
     if (isset($this->_aRequest['api_token']) && !empty($this->_aRequest['api_token'])) {
-      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/ext/models/Users.model.php')) {
-        require_once PATH_STANDARD . '/app/ext/models/Users.model.php';
+      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/Users.model.php')) {
+        require_once PATH_STANDARD . '/app/extensions/models/Users.model.php';
         $aUser = \CandyCMS\Model\Users::getUserByToken(Helper::formatInput($this->_aRequest['api_token']));
       }
       else {
@@ -430,8 +430,8 @@ class Index {
 
     # Get user by session
     else {
-      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/ext/models/Sessions.model.php')) {
-        require_once PATH_STANDARD . '/app/ext/models/Sessions.model.php';
+      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/Sessions.model.php')) {
+        require_once PATH_STANDARD . '/app/extensions/models/Sessions.model.php';
         $aUser = \CandyCMS\Model\Sessions::getUserBySession();
       }
       else {

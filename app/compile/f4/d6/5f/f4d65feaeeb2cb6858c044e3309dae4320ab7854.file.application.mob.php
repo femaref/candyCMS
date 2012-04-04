@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.1.8, created on 2012-04-04 14:29:02
+<?php /* Smarty version Smarty-3.1.8, created on 2012-04-04 14:59:24
          compiled from "/Users/marcoraddatz/Sites/phpcms/vendor/candyCMS/views/layouts/application.mob" */ ?>
-<?php /*%%SmartyHeaderCode:14582754524f7c3e8e6ba069-17232050%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7488386034f7c45ac75d537-87890719%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'f4d65feaeeb2cb6858c044e3309dae4320ab7854' => 
     array (
       0 => '/Users/marcoraddatz/Sites/phpcms/vendor/candyCMS/views/layouts/application.mob',
-      1 => 1333533493,
+      1 => 1333542641,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14582754524f7c3e8e6ba069-17232050',
+  'nocache_hash' => '7488386034f7c45ac75d537-87890719',
   'function' => 
   array (
   ),
@@ -30,9 +30,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   ),
   'has_nocache_code' => false,
   'version' => 'Smarty-3.1.8',
-  'unifunc' => 'content_4f7c3e8e7f3dc4_60717801',
+  'unifunc' => 'content_4f7c45ac8abdf5_88588043',
 ),false); /*/%%SmartyHeaderCode%%*/?>
-<?php if ($_valid && !is_callable('content_4f7c3e8e7f3dc4_60717801')) {function content_4f7c3e8e7f3dc4_60717801($_smarty_tpl) {?><!DOCTYPE html><html><head><meta name='viewport' content='width=device-width, initial-scale=1' /><meta http-equiv='content-type' content='text/html;charset=utf-8'/><link href='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['css'];?>
+<?php if ($_valid && !is_callable('content_4f7c45ac8abdf5_88588043')) {function content_4f7c45ac8abdf5_88588043($_smarty_tpl) {?><!DOCTYPE html><html><head><meta name='viewport' content='width=device-width, initial-scale=1' /><meta http-equiv='content-type' content='text/html;charset=utf-8'/><link href='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['css'];?>
 /mobile/jquery.mobile<?php echo $_smarty_tpl->tpl_vars['_SYSTEM']->value['compress_files_suffix'];?>
 .css' rel='stylesheet' type='text/css' media='screen, projection'/><link href='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['css'];?>
 /mobile/essential<?php echo $_smarty_tpl->tpl_vars['_SYSTEM']->value['compress_files_suffix'];?>
@@ -42,7 +42,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
 .js'></script><script type="text/javascript">if (typeof jQuery == 'undefined')document.write(unescape("%3Cscript src='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['js'];?>
 /core/jquery.1.7.1<?php echo $_smarty_tpl->tpl_vars['_SYSTEM']->value['compress_files_suffix'];?>
 .js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript" src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1<?php echo $_smarty_tpl->tpl_vars['_SYSTEM']->value['compress_files_suffix'];?>
-.js"></script><script type="text/javascript">if (typeof jQuery == 'undefined')document.write(unescape("%3Cscript src='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['js'];?>
+.js"></script><script type="text/javascript">if (typeof jQuery.mobile == 'undefined')document.write(unescape("%3Cscript src='<?php echo $_smarty_tpl->tpl_vars['_PATH']->value['js'];?>
 /mobile/jquery.mobile.1.1.0-rc1<?php echo $_smarty_tpl->tpl_vars['_SYSTEM']->value['compress_files_suffix'];?>
 .js' type='text/javascript'%3E%3C/script%3E"));</script><title><?php echo $_smarty_tpl->tpl_vars['_title_']->value;?>
 </title></head><body><div data-role='page' data-theme='d' data-add-back-btn='true'><div data-role='header'><h1><?php echo $_smarty_tpl->tpl_vars['_title_']->value;?>

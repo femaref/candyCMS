@@ -101,7 +101,7 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
 
   function testGetTemplateDir() {
     $this->assertPattern('/vendor/candyCMS\/views/i', Helper::getTemplateDir('layouts', 'application'));
-    $this->assertPattern('/vendor/candyCMS/ext\/views/i', Helper::getTemplateDir('samples', 'show'));
+    $this->assertPattern('/vendor/candyCMS/extensions\/views/i', Helper::getTemplateDir('samples', 'show'));
     $this->assertFalse(Helper::getTemplateDir(time(), time()));
   }
 

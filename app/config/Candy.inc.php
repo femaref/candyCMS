@@ -67,13 +67,13 @@ define('WEBSITE_MAIL_NOREPLY', 'marco@empuxa.com');
 # What mode is this website running on?
 # OPTIONS: production OR staging OR test OR development
 # DEFAULT: staging
-define('WEBSITE_MODE', 'development');
+define('WEBSITE_MODE', 'test');
 
 # ------------------------------------------------------------------------------
 
 # Number of seconds between cronjob execution (if enabled at ALLOWED_PLUGINS)
 # DEFAULT: '86400'
-define('CRONJOB_UPDATE_INTERVAL', '1');
+define('CRONJOB_UPDATE_INTERVAL', '86400');
 
 # ------------------------------------------------------------------------------
 

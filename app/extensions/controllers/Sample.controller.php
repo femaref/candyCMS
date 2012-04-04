@@ -13,7 +13,7 @@ namespace CandyCMS\Controller;
 
 use CandyCMS\Helper\Helper as Helper;
 
-require_once PATH_STANDARD . '/app/ext/models/Sample.model.php';
+require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
 
 class Extension_Sample extends \CandyCMS\Core\Controller\Main {
 
