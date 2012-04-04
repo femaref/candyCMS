@@ -12,9 +12,9 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
-use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\I18n as I18n;
 
 if (!defined('SHOW_CAPTCHA'))
   define('SHOW_CAPTCHA', MOBILE === false && WEBSITE_MODE !== 'test');

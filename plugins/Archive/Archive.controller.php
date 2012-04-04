@@ -12,9 +12,9 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\I18n as I18n;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
 
 final class Archive {
 
@@ -36,8 +36,8 @@ final class Archive {
 	 *
 	 */
   public final function show($aRequest, $aSession) {
-    $sTemplateDir = Helper::getPluginTemplateDir('archive', 'show');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir   = Helper::getPluginTemplateDir('archive', 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
@@ -46,13 +46,13 @@ final class Archive {
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|archive';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
 
-      if (ADDON_CHECK && file_exists(PATH_STANDARD . '/addons/models/Blogs.model.php')) {
-        require_once PATH_STANDARD . '/addons/models/Blogs.model.php';
-        $oModel = new \CandyCMS\Model\Addon\Blogs($aRequest, $aSession);
+      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/ext/models/Blogs.model.php')) {
+        require_once PATH_STANDARD . '/app/ext/models/Blogs.model.php';
+        $oModel = & new \CandyCMS\Model\Blogs($aRequest, $aSession);
       }
       else {
-        require_once PATH_STANDARD . '/app/models/Blogs.model.php';
-        $oModel = new \CandyCMS\Model\Blogs($aRequest, $aSession);
+        require_once PATH_STANDARD . '/vendor/candyCMS/models/Blogs.model.php';
+        $oModel = & new \CandyCMS\Core\Model\Blogs($aRequest, $aSession);
       }
 
       foreach ($oModel->getData('', false, PLUGIN_ARCHIVE_LIMIT) as $aRow) {

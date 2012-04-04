@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Errors.controller.php';
-require_once PATH_STANDARD . '/app/helpers/Helper.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Errors.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Helper.helper.php';
 
-use \CandyCMS\Controller\Errors as Errors;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Errors as Errors;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfErrorController extends CandyWebTest {
 

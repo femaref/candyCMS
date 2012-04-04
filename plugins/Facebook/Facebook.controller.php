@@ -16,9 +16,9 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Helper\AdvancedException as AdvancedException;
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
 use Facebook;
 
 require_once PATH_STANDARD . '/vendor/facebook/facebook.php';

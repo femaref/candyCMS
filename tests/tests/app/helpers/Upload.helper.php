@@ -9,10 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/app/helpers/Upload.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Upload.helper.php';
 
-use \CandyCMS\Helper\Upload as Upload;
-use \CandyCMS\Helper\Image as Image;
+use \CandyCMS\Core\Helper\Upload as Upload;
+use \CandyCMS\Core\Helper\Image as Image;
 
 class UnitTestOfUploadHelper extends CandyUnitTest {
 
@@ -27,7 +27,7 @@ class UnitTestOfUploadHelper extends CandyUnitTest {
             'type' => 'image/png',
             'error' => 0,
             'size' => 0));
- 
+
     $this->oObject = new Upload($this->_aRequest, $this->_aSession, $file);
   }
 

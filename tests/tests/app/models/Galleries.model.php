@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Galleries.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/models/Galleries.model.php';
 
-use \CandyCMS\Model\Galleries as Galleries;
+use \CandyCMS\Core\Model\Galleries as Galleries;
 
 class UnitTestOfGalleryModel extends CandyUnitTest {
 

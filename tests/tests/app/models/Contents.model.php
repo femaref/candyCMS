@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Contents.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/models/Contents.model.php';
 
-use \CandyCMS\Model\Contents as Contents;
+use \CandyCMS\Core\Model\Contents as Contents;
 
 class UnitTestOfContentModel extends CandyUnitTest {
 

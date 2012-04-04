@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/app/controllers/Rss.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Rss.controller.php';
 
-use \CandyCMS\Controller\Rss as Rss;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Rss as Rss;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class WebTestOfRssController extends CandyWebTest {
 

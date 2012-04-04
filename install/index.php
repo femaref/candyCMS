@@ -20,7 +20,7 @@ use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
 
-require PATH_STANDARD . '/app/controllers/Index.controller.php';
+require PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
 
 class Install extends Index {
 
@@ -30,10 +30,12 @@ class Install extends Index {
     $this->_aFile    = & $aFile;
     $this->_aCookie  = & $aCookie;
 
-    if (file_exists(PATH_STANDARD . '/config/Candy.inc.php'))
-      require PATH_STANDARD . '/config/Candy.inc.php';
-    if (file_exists(PATH_STANDARD . '/config/Plugins.inc.php'))
+    if (file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'))
+      require PATH_STANDARD . '/app/config/Candy.inc.php';
+
+    if (file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'))
       $this->getConfigFiles(array('Plugins'));
+
     $this->_defines();
     # $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
@@ -69,8 +71,9 @@ class Install extends Index {
       define('CACHE_DIR', 'cache');
     if (!defined('COMPILE_DIR'))
       define('COMPILE_DIR', 'compile');
-    # check for addons?
-    define('ADDON_CHECK', ALLOW_ADDONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
+
+    # check for extensions?
+    define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
   }
 
   /**
@@ -137,9 +140,10 @@ class Install extends Index {
       case '1':
 
         $aHasConfigFiles = array(
-            'main'      => file_exists(PATH_STANDARD . '/config/Candy.inc.php'),
-            'plugins'   => file_exists(PATH_STANDARD . '/config/Plugins.inc.php'),
-            'mailchimp' => file_exists(PATH_STANDARD . '/config/Mailchimp.inc.php'));
+            'main'      => file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'),
+            'plugins'   => file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'),
+            'mailchimp' => file_exists(PATH_STANDARD . '/app/config/Mailchimp.inc.php'));
+
         $this->oSmarty->assign('_configs_exist_', $aHasConfigFiles);
 
         $bRandomHashChanged = defined('RANDOM_HASH') && RANDOM_HASH !== '';
@@ -199,7 +203,7 @@ class Install extends Index {
 
           # Create tables
           try {
-            $oDb = \CandyCMS\Model\Main::connectToDatabase();
+            $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
             $oDb->query($sData);
           }
           catch (\AdvancedException $e) {
@@ -242,8 +246,8 @@ class Install extends Index {
           }
           else {
             //TODO autoload?
-            require_once PATH_STANDARD . '/app/models/Users.model.php';
-            $oUsers = new \CandyCMS\Model\Users($this->_aRequest, $this->_aSession);
+            require_once PATH_STANDARD . '/vendor/candyCMS/models/Users.model.php';
+            $oUsers = new \CandyCMS\Core\Model\Users($this->_aRequest, $this->_aSession);
             $bResult = $oUsers->create('', 4);
             Helper::redirectTo('/install/?action=install&step=5&result=' . ($bResult ? '1' : '0'));
           }
@@ -310,7 +314,7 @@ class Install extends Index {
     $sDir = 'sql/migrate/';
     $oDir = opendir($sDir);
 
-    $oDb = \CandyCMS\Model\Main::connectToDatabase();
+    $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
 
     $iI = 0;
     $aFiles = array();
@@ -358,7 +362,7 @@ class Install extends Index {
     $sQuery = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize('migrate/sql/' .$_REQUEST['file'])));
 
     try {
-      $oDb = \CandyCMS\Model\Main::connectToDatabase();
+      $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
       $bResult = $oDb->query($sQuery);
     } catch (\AdvancedException $e) {
       $oDb->rollBack();
@@ -368,7 +372,7 @@ class Install extends Index {
     # Write migration into table
     if($bResult == true) {
       try {
-        $oDb = \CandyCMS\Model\Main::connectToDatabase();
+        $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
         $oQuery = $oDb->prepare("INSERT INTO
                                     " . SQL_PREFIX . "migrations (file, date)
                                   VALUES

@@ -10,10 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/models/Comments.model.php';
-require_once PATH_STANDARD . '/app/helpers/Pagination.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/models/Comments.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Pagination.helper.php';
 
-use \CandyCMS\Model\Comments as Comments;
+use \CandyCMS\Core\Model\Comments as Comments;
 
 class UnitTestOfCommentModel extends CandyUnitTest {
 

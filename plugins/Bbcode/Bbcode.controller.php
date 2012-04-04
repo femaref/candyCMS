@@ -20,9 +20,9 @@
 
 namespace CandyCMS\Plugin;
 
-use CandyCMS\Helper\I18n as I18n;
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\Image as Image;
+use CandyCMS\Core\Helper\I18n as I18n;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\Image as Image;
 
 final class Bbcode {
 
@@ -79,7 +79,7 @@ final class Bbcode {
 
       # We do not have a preview
       else {
-        require_once PATH_STANDARD . '/app/helpers/Image.helper.php';
+        require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Image.helper.php';
 
         if (!file_exists($sTempFilePath)) {
           $oImage = new Image($sTempFileName, 'temp', $sUrl[1], $sImageExtension);

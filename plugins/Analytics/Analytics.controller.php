@@ -12,8 +12,8 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
 
 final class Analytics {
 

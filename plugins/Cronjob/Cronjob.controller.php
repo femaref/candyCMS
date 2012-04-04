@@ -12,12 +12,12 @@
 
 namespace CandyCMS\Plugin\Controller;
 
-use CandyCMS\Controller\Mails as Mails;
-use CandyCMS\Helper\AdvancedException as AdvancedException;
-use CandyCMS\Helper\Helper as Helper;
-use CandyCMS\Model\Main as Main;
-use CandyCMS\Controller\Logs as Logs;
-use CandyCMS\Helper\I18n as I18n;
+use CandyCMS\Core\Controller\Logs as Logs;
+use CandyCMS\Core\Controller\Mails as Mails;
+use CandyCMS\Core\Helper\AdvancedException as AdvancedException;
+use CandyCMS\Core\Helper\Helper as Helper;
+use CandyCMS\Core\Helper\I18n as I18n;
+use CandyCMS\Core\Model\Main as Main;
 use PDO;
 
 final class Cronjob {
@@ -277,7 +277,7 @@ EOD;
    */
   public final function backup() {
     $sBackupName      = date('Y-m-d_H-i');
-    $sBackupFolder    = PATH_STANDARD . '/backup';
+    $sBackupFolder    = PATH_STANDARD . '/app/backup';
     $sBackupPath      = $sBackupFolder . '/' . $sBackupName . '.sql';
 
     Main::$_oDbStatic->beginTransaction();
@@ -343,7 +343,7 @@ EOD;
     # Send the backup via mail
     # @todo test if this works
     if (PLUGIN_CRONJOB_SEND_PER_MAIL === true) {
-      $sMails = \CandyCMS\Controller\Main::__autoload('Mails');
+      $sMails = \CandyCMS\Core\Controller\Main::__autoload('Mails');
       $sMails::send(WEBSITE_MAIL,
               I18n::get('cronjob.mail.subject', $sBackupName),
               I18n::get('cronjob.mail.body'),

@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/controllers/Index.controller.php';
-require_once PATH_STANDARD . '/app/models/Sessions.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/models/Sessions.model.php';
 
-use \CandyCMS\Controller\Index as Index;
-use \CandyCMS\Helper\I18n as I18n;
+use \CandyCMS\Core\Controller\Index as Index;
+use \CandyCMS\Core\Helper\I18n as I18n;
 
 class UnitTestOfIndexController extends CandyUnitTest {
 
@@ -28,9 +28,9 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testGetConfigFiles() {
-		$this->assertTrue(file_exists(PATH_STANDARD . '/config/Candy.inc.php'), 'Candy.inc.php exists.');
-		$this->assertTrue(file_exists(PATH_STANDARD . '/config/Plugins.inc.php'), 'Plugins.inc.php exists.');
-		$this->assertTrue(file_exists(PATH_STANDARD . '/config/Mailchimp.inc.php'), 'Plugins.inc.php exists.');
+		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'), 'Candy.inc.php exists.');
+		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'), 'Plugins.inc.php exists.');
+		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Mailchimp.inc.php'), 'Plugins.inc.php exists.');
 		$this->assertTrue($this->oObject->getConfigFiles(array('Candy', 'Plugins', 'Mailchimp')));
 	}
 
@@ -119,7 +119,7 @@ class WebTestOfIndexController extends CandyWebTest {
 		$this->assert404();
 	}
 
-	function testShowSampleAddon() {
+	function testShowSampleExtension() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/sample'));
 		$this->assertResponse(200);
 		$this->assertText('Sample');

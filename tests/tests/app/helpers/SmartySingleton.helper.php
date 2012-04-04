@@ -10,7 +10,7 @@
  *
  */
 
-require_once PATH_STANDARD . '/app/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/helpers/SmartySingleton.helper.php';
 
 use CandyCMS\Helper\SmartySingleton as SmartySingleton;
 
