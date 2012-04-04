@@ -59,7 +59,7 @@
       </div>
     </div>
     {if isset($_captcha_)}{$_captcha_}{/if}
-    <div class='form-actions' data-role='controlgroup' data-type='horizontal'>
+    <div class='form-actions center' data-role='controlgroup' data-type='horizontal'>
       <input type='submit' value='{$lang.comments.title.create}'
              data-theme='b' class='btn btn-primary' />
       <input type='reset' value='{$lang.global.reset}' class='btn' />
