@@ -51,8 +51,8 @@ class Dispatcher {
 
     try {
       # Are extensions for existing controllers available? If yes, use them.
-      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/ext/controllers/' . $sController . '.controller.php')) {
-        require_once PATH_STANDARD . '/app/ext/controllers/' . $sController . '.controller.php';
+      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/controllers/' . $sController . '.controller.php')) {
+        require_once PATH_STANDARD . '/app/extensions/controllers/' . $sController . '.controller.php';
 
         $sClassName = '\CandyCMS\Controller\Extension_' . $sController;
         $this->oController = new $sClassName($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);

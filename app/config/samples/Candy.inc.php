@@ -72,7 +72,7 @@ define('WEBSITE_MODE', 'staging');
 
 # ------------------------------------------------------------------------------
 
-# If you want to override existing classes (placed in "/app/ext/controllers/"), set true
+# If you want to override existing classes (placed in "/app/extensions/controllers/"), set true
 # DEFAULT: false
 define('ALLOW_EXTENSIONS', false);
 
