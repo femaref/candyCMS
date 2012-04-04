@@ -19,6 +19,7 @@
             {$c.content}
           </p>
           <footer>
+            {* Scroll to bottom when quote is clicked *}
             <a href='#create' onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')"
                 data-role='button' data-inline='true' data-icon='quote' data-iconpos='notext' data-ajax='false'>
             </a>

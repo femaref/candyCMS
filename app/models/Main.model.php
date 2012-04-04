@@ -186,7 +186,7 @@ abstract class Main {
     foreach ($aData as $sColumn => $mData)
       $aData[$sColumn] = Helper::formatOutput($mData);
 
-    # Bugfix
+    # Bugfix: Set types
     if ($aInts)
       foreach ($aInts as $sIdent)
         if (isset($aData[$sIdent]))
@@ -199,46 +199,42 @@ abstract class Main {
 
     # Format data
     if (isset($aData['date'])) {
-      $iTimestamp = $aData['date'];
-      $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
-      $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
-      $aData['date_raw'] = (int) $iTimestamp;
-      $aData['date_w3c'] = date('Y-m-d', $iTimestamp);
+      $aData['date_raw'] = (int) $aData['date'];
+      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
 
-      $aData['datetime'] = Helper::formatTimestamp($iTimestamp);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $iTimestamp);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $iTimestamp);
+      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
 
-      # SEO optimization
       $iTimestampNow = time();
 
       # Entry is less than a day old
-      if($iTimestampNow - $iTimestamp < 86400) {
+      if($iTimestampNow - $aData['date'] < 86400) {
         $aData['changefreq']  = 'hourly';
         $aData['priority']    = '1.0';
       }
       # Entry is younger than a week
-      elseif($iTimestampNow - $iTimestamp < 86400 * 7) {
+      elseif($iTimestampNow - $aData['date'] < 86400 * 7) {
         $aData['changefreq']  = 'daily';
         $aData['priority']    = '0.9';
       }
       # Entry is younger than a month
-      elseif($iTimestampNow - $iTimestamp < 86400 * 31) {
+      elseif($iTimestampNow - $aData['date'] < 86400 * 31) {
         $aData['changefreq']  = 'weekly';
         $aData['priority']    = '0.75';
       }
       # Entry is younger than three month
-      elseif($iTimestampNow - $iTimestamp < 86400 * 90) {
+      elseif($iTimestampNow - $aData['date'] < 86400 * 90) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.6';
       }
       # Entry is younger than half a year
-      elseif($iTimestampNow - $iTimestamp < 86400 * 180) {
+      elseif($iTimestampNow - $aData['date'] < 86400 * 180) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.4';
       }
       # Entry is younger than a year
-      elseif($iTimestampNow - $iTimestamp < 86400 * 360) {
+      elseif($iTimestampNow - $aData['date'] < 86400 * 360) {
         $aData['changefreq']  = 'monthly';
         $aData['priority']    = '0.25';
       }
@@ -247,17 +243,25 @@ abstract class Main {
         $aData['changefreq']  = 'yearly';
         $aData['priority']    = '0.1';
       }
+
+      # Bugfix: Create 'time' and 'date' at the end to avoid an override of 'date'.
+      $aData['time'] = Helper::formatTimestamp($aData['date'], 2);
+      $aData['date'] = Helper::formatTimestamp($aData['date'], 1);
     }
 
     # build the user data
     if (isset($aData['author_id']) && $aData['author_id'])
       $iUserId = $aData['author_id'];
+
     else if (isset($aData['user_id']) && $aData['user_id'])
       $iUserId = $aData['user_id'];
+
     else if (isset($aData['uid']))
       $iUserId = $aData['uid'];
+
     else
       $iUserId = $aData['id'];
+
     $aUserData = array(
         'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
         'id'           => $iUserId,
@@ -267,18 +271,18 @@ abstract class Main {
         'facebook_id'  => $aData['author_facebook_id'],
         'ip'           => $aData['author_ip'],
     );
+
     $aData['author'] = $this->_formatForUserOutput($aUserData);
 
     # Encode data for SEO
-    $aData['encoded_title']			= isset($aData['title']) ? urlencode($aData['title']) : $aData['encoded_full_name'];
+    $aData['encoded_title'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['encoded_full_name'];
 
     # URL to entry
     $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aData['id'];
     $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_title'];
-    $aData['encoded_url'] = urlencode($aData['url']);
-
+    $aData['encoded_url'] = urlencode($aData['url']); #SEO
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
-    $aData['url_update'] = $aData['url_clean'] . '/update';
+    $aData['url_update']  = $aData['url_clean'] . '/update';
 
     # Do we need to highlight text?
     $sHighlight = isset($this->_aRequest['highlight']) ? $this->_aRequest['highlight'] : '';
@@ -294,27 +298,24 @@ abstract class Main {
   }
 
   /**
-   * Formats / Adds all relevant Information for displaying a User
+   * Formats / adds all relevant Information for displaying a user.
    *
-   * @param array $aData array of given userdata, required Fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
+   * @access protected
+   * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
    * @todo tests
+   *
    */
   protected function _formatForUserOutput(&$aData) {
 		# Create avatars
-		if(isset($aData['email']))
-			$sEmail = $aData['email'];
-		else
-			$sEmail = WEBSITE_MAIL;
-
     Helper::createAvatarURLs($aData,
 						$aData['id'],
-						$sEmail,
+						isset($aData['email']) ? $aData['email'] : WEBSITE_MAIL,
 						isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false);
 
     # Build full user name
-    $aData['name']    = isset($aData['name']) ? (string) $aData['name'] : '';
-    $aData['surname'] = isset($aData['surname']) ? (string) $aData['surname'] : '';
+    $aData['name']      = isset($aData['name']) ? (string) $aData['name'] : '';
+    $aData['surname']   = isset($aData['surname']) ? (string) $aData['surname'] : '';
     $aData['full_name'] = trim($aData['name'] . ' ' . $aData['surname']);
 
     # Encode data for SEO
@@ -326,18 +327,18 @@ abstract class Main {
     $aData['encoded_url'] = urlencode($aData['url']);
 
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
-    $aData['url_update'] = $aData['url_clean'] . '/update';
+    $aData['url_update']  = $aData['url_clean'] . '/update';
 
     if (isset($aData['date'])) {
-      $iTimestamp = $aData['date'];
+      $aData['date_raw'] = (int) $aData['date'];
+      $aData['date_w3c'] = date('Y-m-d', $aData['date']);
+
+      $aData['datetime'] = Helper::formatTimestamp($aData['date']);
+      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date']);
+      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date']);
+
       $aData['time'] = Helper::formatTimestamp($iTimestamp, 2);
       $aData['date'] = Helper::formatTimestamp($iTimestamp, 1);
-      $aData['date_raw'] = (int) $iTimestamp;
-      $aData['date_w3c'] = date('Y-m-d', $iTimestamp);
-
-      $aData['datetime'] = Helper::formatTimestamp($iTimestamp);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $iTimestamp);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $iTimestamp);
     }
 
     return $aData;
@@ -348,7 +349,8 @@ abstract class Main {
    *
    * @static
    * @access public
-   * @return integer last inserted ID.
+   * @return integer self::$iLastInsertId last inserted ID.
+   *
    */
   public static function getLastInsertId() {
     return self::$iLastInsertId;
@@ -374,7 +376,7 @@ abstract class Main {
                                           GROUP BY
                                             " . $sColumn);
 
-      $aResult = & $oQuery->fetchAll(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
       $sString = '';
       foreach ($aResult as $aRow) {
@@ -408,6 +410,7 @@ abstract class Main {
    * Dynamically load models.
    *
    * @static
+   * @access public
    * @param string $sClass name of model to load
    * @return string model name
    *

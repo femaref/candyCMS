@@ -58,7 +58,7 @@
           </div>
         </div><!-- /footer -->
       </div><!-- /page -->
-      <script type="text/javascript">
+      <script type='text/javascript'>
         $('#top').live('click', function(e){
           $('body').clearQueue();
           $.mobile.silentScroll(0);

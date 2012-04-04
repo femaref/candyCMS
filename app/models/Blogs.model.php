@@ -99,7 +99,7 @@ class Blogs extends Main {
         # We use the date as identifier to give plugins the possibility to patch into the system.
         $iDate = $aRow['date'];
 
-        # we need to specify 'blogs' because this might also be called for rss
+        # We need to specify 'blogs' because this might also be called for rss
         $this->_aData[$iDate] = $this->_formatForOutput($aRow, $aInts, $aBools, 'blogs');
         $this->_aData[$iDate]['tags_raw']       = $aRow['tags'];
         $this->_aData[$iDate]['tags']           = explode(', ', $aRow['tags']);

@@ -13,9 +13,9 @@
         <h4>{$lang.error.missing.entries}</h4>
       </div>
     {else}
-      <ul data-role="listview">
+      <ul data-role='listview'>
         {foreach $blogs as $b}
-          <li role="heading" data-role="list-divider">
+          <li role='heading' data-role='list-divider'>
             {$b.datetime}
             {if $b.date_modified != ''}
               - {$lang.global.last_update}: {$b.date_modified}
