@@ -191,7 +191,7 @@ abstract class Main {
     if ($bModel === true) {
       if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php')) {
         require_once PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php';
-        return '\CandyCMS\Models\Extension' . $sClass;
+        return '\CandyCMS\Models\\' . $sClass;
       }
       elseif (file_exists(PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php')) {
         require_once PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php';
@@ -201,7 +201,7 @@ abstract class Main {
     else {
       if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/controllers/' . $sClass . '.controller.php')) {
         require_once PATH_STANDARD . '/app/extensions/controllers/' . $sClass . '.controller.php';
-        return '\CandyCMS\Controllers\Extension' . $sClass;
+        return '\CandyCMS\Controllers\\' . $sClass;
       }
       else {
         require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/' . $sClass . '.controller.php';

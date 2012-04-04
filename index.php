@@ -37,6 +37,22 @@ catch (Exception $e) {
   die($e->getMessage());
 }
 
+# If we are on a productive enviroment, make sure that we can't override the system.
+if (WEBSITE_MODE == 'production' && is_dir('install'))
+  exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
+
+# Also disable tools to avoid system crashes.
+if (WEBSITE_MODE == 'production' && is_dir('tools'))
+  exit('Please delete the tools folder.');
+
+# Disable tests on productive system.
+if (WEBSITE_MODE == 'production' && is_dir('tests'))
+  exit('Please delete the tests enviroment (tests.php).');
+
+# Disable the use of composer.
+if (WEBSITE_MODE == 'production' && is_file('composer.phar'))
+  exit('Please delete the composer.phar.');
+
 # Override the system variables in development mode.
 if (WEBSITE_MODE == 'test') {
   ini_set('display_errors', 0);
@@ -94,18 +110,6 @@ define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'developm
 # Initialize software
 # @todo extension check
 $oIndex = new \candyCMS\core\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
-
-# If we are on a productive enviroment, make sure that we can't override the system.
-if (is_dir('install') && WEBSITE_MODE == 'production')
-  exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
-
-# Also disable tools to avoid system crashes.
-if (is_dir('tools') && WEBSITE_MODE == 'production')
-  exit('Please delete the tools folder.');
-
-# Disable tests on productive system.
-if (is_dir('tests') && WEBSITE_MODE == 'production')
-  exit('Please delete the tests enviroment (tests.php).');
 
 # Print out HTML
 echo $oIndex->show();

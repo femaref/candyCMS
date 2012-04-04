@@ -9,7 +9,7 @@
  * @since 1.0
  */
 
-namespace CandyCMS\Core\Controller;
+namespace CandyCMS\Core\Controllers;
 
 use CandyCMS\Core\Controllers\Main;
 use CandyCMS\Core\Helpers\Helper;

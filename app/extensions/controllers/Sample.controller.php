@@ -15,7 +15,7 @@ use CandyCMS\core\Helpers\Helper;
 
 require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
 
-class ExtensionSample extends \CandyCMS\core\Controllers\Main {
+class Sample extends \CandyCMS\core\Controllers\Main {
 
   /**
    * Method to include the model files and start action beside the constructor.
@@ -24,7 +24,7 @@ class ExtensionSample extends \CandyCMS\core\Controllers\Main {
    *
    */
   public function __init() {
-    $this->_oModel = new \CandyCMS\Model\Extension_Sample($this->_aRequest, $this->_aSession, $this->_aFile);
+    $this->_oModel = new \CandyCMS\Models\Sample($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
   /**

@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ * 
  */
 
 namespace CandyCMS\Models;
@@ -16,6 +17,6 @@ use CandyCMS\core\Helpers\Helper;
 use CandyCMS\core\Helpers\Page;
 use PDO;
 
-class ExtensionSample extends \CandyCMS\core\Models\Main {
+class Sample extends \CandyCMS\core\Models\Main {
 
 }

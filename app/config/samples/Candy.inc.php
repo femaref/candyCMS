@@ -72,7 +72,8 @@ define('WEBSITE_MODE', 'development');
 
 # ------------------------------------------------------------------------------
 
-# If you want to override existing classes (placed in "/app/extensions/controllers/"), set true
+# Set true, if you want to build your own app. Also, this is always set to true
+# in development or testing mode.
 # DEFAULT: false
 define('ALLOW_EXTENSIONS', false);
 
