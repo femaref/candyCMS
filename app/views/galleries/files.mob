@@ -24,9 +24,8 @@
       {/foreach}
     {/if}
   </ul>
-  {* @todo fix view *}
   <p class="center">
     <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'
-       data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false' />
+       data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false'></a>
   </p>
 {/strip}

@@ -19,10 +19,8 @@
             {$c.content}
           </p>
           <footer>
-            <a href='#create'
-              onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')">
-              <img src='{$_PATH.images}/candy.global/spacer.png' class="icon-quote" alt='{$lang.global.quote.quote}' width="16" height="16"
-                  title='{$lang.global.quote.quote}' />
+            <a href='#create' onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')"
+                data-role='button' data-inline='true' data-icon='quote' data-iconpos='notext' data-ajax='false'>
             </a>
           </footer>
         </article>
