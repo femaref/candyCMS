@@ -76,7 +76,7 @@ final class FacebookCMS extends Facebook {
 		}
 	}
 
-	public final function show() {
+	public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('facebook', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 

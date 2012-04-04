@@ -40,9 +40,9 @@ class Blogs extends Main {
 
     if (empty($iId)) {
 			# Show unpublished items and entries with diffent languages to moderators or administrators only
-      $sWhere = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] < 3 ?
-							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'" :
-							'';
+      $sWhere = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] >= 3 ?
+							'' :
+							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'";
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {

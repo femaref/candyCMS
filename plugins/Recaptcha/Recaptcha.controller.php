@@ -112,7 +112,7 @@ final class Recaptcha {
 	 * @return string HTML
 	 *
 	 */
-  public function show() {
+  public function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('recaptcha', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 

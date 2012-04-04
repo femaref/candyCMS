@@ -22,7 +22,7 @@ final class Analytics {
    */
   const IDENTIFIER = 'analytics';
 
-  public final static function show() {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('analytics', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 

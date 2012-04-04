@@ -28,14 +28,13 @@ final class Headlines {
   /**
    * Show the (cached) headlines.
    *
-   * @static
    * @access public
    * @param array $aRequest
    * @param array $aSession
    * @return string HTML
    *
    */
-  public final static function show($aRequest, $aSession) {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir = Helper::getPluginTemplateDir('headlines', 'show');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 

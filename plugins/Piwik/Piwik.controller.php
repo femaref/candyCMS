@@ -28,12 +28,11 @@ final class Piwik {
 	/**
 	 * Get The HTML-Code for Piwik.
 	 *
-	 * @static
 	 * @access public
 	 * @return string HTML
 	 *
 	 */
-  public final static function show() {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 

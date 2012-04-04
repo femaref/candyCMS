@@ -28,14 +28,13 @@ final class Archive {
 	 *
 	 * We use a new Smarty instance to avoid parsing the Main.controller due to performance reasons.
 	 *
-	 * @static
 	 * @access public
 	 * @param array $aRequest
 	 * @param array $aSession
 	 * @return string HTML
 	 *
 	 */
-  public final function show($aRequest, $aSession) {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir = Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
