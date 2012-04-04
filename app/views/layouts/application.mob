@@ -14,7 +14,7 @@
       </script>
       <script type="text/javascript" src="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1{$_SYSTEM.compress_files_suffix}.js"></script>
       <script type="text/javascript">
-        if (typeof jQuery == 'undefined')
+        if (typeof jQuery.mobile == 'undefined')
           document.write(unescape("%3Cscript src='{$_PATH.js}/mobile/jquery.mobile.1.1.0-rc1{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'%3E%3C/script%3E"));
       </script>
       <title>{$_title_}</title>
