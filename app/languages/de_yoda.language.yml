@@ -1,6 +1,7 @@
 website:
   description: Free, fast and simple PHP CMS.
   keywords: PHP, CMS, Free CMS, Open Source CMS
+  terms: AGB...
 
 global:
   about: Über
@@ -390,7 +391,6 @@ users:
     destroy_account: Zur eigenen Sicherheit dein aktuelles Passwort noch einmal eingeben, du musst. Sobald du auf "Account löschen" klicken du tust, dein Zugang gelöscht und nicht wiederherstellbar, er ist!
     gravatar: Wenn du aktivierst dieses Kästchen, automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild (s.o.) gesucht, es wird. Alternativ aber auch direkt ein Bild hochladen, du kannst.
     image: Nur Bilder mit einer Größe von bis zu 400KB hochladen, du darfst!
-    terms: Nutzungsbedingungen... TODO
   label:
     account:
       destroy: Account löschen

@@ -22,7 +22,7 @@ class SmartySingleton extends Smarty {
   /**
    *
    * @var static
-	 * @access private
+   * @access private
    *
    */
   private static $_oInstance = null;
@@ -30,8 +30,8 @@ class SmartySingleton extends Smarty {
   /**
    * Get the Smarty instance
    *
-	 * @static
-	 * @access public
+   * @static
+   * @access public
    * @return object self::$_oInstance Smarty instance that was found or generated
    *
    */
@@ -51,15 +51,15 @@ class SmartySingleton extends Smarty {
    * @access public
    */
   public function setRequestAndSession(&$aRequest = null, &$aSession = null) {
-		$this->assignByRef('_REQUEST', $aRequest);
-		$this->assignByRef('_SESSION', $aSession);
+    $this->assignByRef('_REQUEST', $aRequest);
+    $this->assignByRef('_SESSION', $aSession);
   }
 
   /**
    * Set all default smarty values.
-	 *
-	 * @access public
-	 *
+   *
+   * @access public
+   *
    */
   public function __construct() {
     parent::__construct();
@@ -121,8 +121,8 @@ class SmartySingleton extends Smarty {
 
   /**
    * Delete this variable from memory...
-	 *
-	 * @access public
+   *
+   * @access public
    *
    */
   public function __destruct() {
@@ -133,10 +133,10 @@ class SmartySingleton extends Smarty {
 
   /**
    * Generate all path variables that could be useful for Smarty templates.
-	 *
-	 * @access public
+   *
+   * @access public
    * @return array Array with Paths for 'images', 'js', 'less', 'css', 'templates', 'upload', 'public'
-	 *
+   *
    */
   public function getPaths() {
     $aPaths = array('css' => 'css', 'less' => 'less', 'images' => 'images', 'js' => 'js');

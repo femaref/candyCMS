@@ -26,6 +26,7 @@ class Galleries extends Main {
    *
    * @access private
    * @var array
+   *
    */
   private $_aThumbs;
 

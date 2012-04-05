@@ -21,11 +21,11 @@ class Sites extends Main {
    * Print out a static page.
    *
    * An example would be an URL linking to "/sites/welcome" when there is a template named
-	 * "welcome.tpl" in the static folder defined in the "app/config/Candy.inc.php" (PATH_STATIC -
+   * "welcome.tpl" in the static folder defined in the "app/config/Candy.inc.php" (PATH_STATIC -
    * normally located at "/public/_static/").
-	 *
-	 * @access protected
-	 * @return string HTML content
+   *
+   * @access protected
+   * @return string HTML content
    *
    */
   protected function _show() {

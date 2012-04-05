@@ -28,42 +28,42 @@ final class FacebookCMS extends Facebook {
    */
   const IDENTIFIER = 'facebook';
 
-	/**
-	 *
-	 * @param type $sKey
-	 * @return type
-	 *
-	 */
+  /**
+   *
+   * @param type $sKey
+   * @return type
+   *
+   */
 	public final function getUserData($sKey = '') {
-		if ($this->getAccessToken()) {
-			try {
-				$iUid = $this->getUser();
-				$aApiCall = array(
-						'method' => 'users.getinfo',
-						'uids' => $iUid,
-						'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
-				);
+  	if ($this->getAccessToken()) {
+    	try {
+        $iUid = $this->getUser();
+        $aApiCall = array(
+            'method' => 'users.getinfo',
+            'uids' => $iUid,
+            'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
+        );
 
-				$aData = $this->api($aApiCall);
-				return !empty($sKey) ? $aData[$sKey] : $aData;
-			}
-			catch (AdvancedException $e) {
-				die($e->getMessage());
-			}
-		}
-	}
+        $aData = $this->api($aApiCall);
+      	return !empty($sKey) ? $aData[$sKey] : $aData;
+      }
+    	catch (AdvancedException $e) {
+      	die($e->getMessage());
+      }
+    }
+  }
 
-	/**
+  /**
    *
    * Get the Facebook Avatar Info for all given Uids, load from cache, if cache is specified
-	 *
-	 * @param array $aUids
+   *
+   * @param array $aUids
    * @param array $aSession
-	 * @return type
-	 *
-	 */
+   * @return type
+   *
+   */
 	public final function getUserAvatars($aUids, &$aSession = null) {
-		try {
+  	try {
       # get the cache
       if ($aSession)
         $aFacebookAvatarCache = &$aSession['facebookavatars'];
@@ -96,11 +96,11 @@ final class FacebookCMS extends Facebook {
 
       #we return the cache
       return $aFacebookAvatarCache;
-		}
-		catch (AdvancedException $e) {
-			die($e->getMessage());
-		}
-	}
+    }
+  	catch (AdvancedException $e) {
+    	die($e->getMessage());
+    }
+  }
 
 	public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('facebook', 'show');
@@ -117,5 +117,5 @@ final class FacebookCMS extends Facebook {
     }
 
     return $oSmarty->fetch($sTemplateFile, $sCacheId);
-	}
+  }
 }

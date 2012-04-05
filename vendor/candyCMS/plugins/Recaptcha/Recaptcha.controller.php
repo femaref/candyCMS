@@ -21,42 +21,42 @@ if (!defined('SHOW_CAPTCHA'))
 
 final class Recaptcha {
 
-	/**
-	 * ReCaptcha public key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Plugins.inc.php
+  /**
+   * ReCaptcha public key.
    *
-	 */
+   * @var string
+   * @access protected
+   * @see config/Plugins.inc.php
+   *
+   */
 	protected $_sPublicKey = PLUGIN_RECAPTCHA_PUBLIC_KEY;
 
-	/**
-	 * ReCaptcha private key.
-	 *
-	 * @var string
-	 * @access protected
-	 * @see config/Plugins.inc.php
+  /**
+   * ReCaptcha private key.
    *
-	 */
+   * @var string
+   * @access protected
+   * @see config/Plugins.inc.php
+   *
+   */
 	protected $_sPrivateKey = PLUGIN_RECAPTCHA_PRIVATE_KEY;
 
-	/**
-	 * ReCaptcha object.
-	 *
-	 * @var object
-	 * @access protected
+  /**
+   * ReCaptcha object.
    *
-	 */
+   * @var object
+   * @access protected
+   *
+   */
 	protected $_oResponse = '';
 
-	/**
-	 * Provided ReCaptcha error message.
-	 *
-	 * @var string
-	 * @access protected
+  /**
+   * Provided ReCaptcha error message.
    *
-	 */
+   * @var string
+   * @access protected
+   *
+   */
 	protected $_sError = '';
 
   /**
@@ -70,7 +70,7 @@ final class Recaptcha {
   /**
    *
    * @var static
-	 * @access private
+   * @access private
    *
    */
   private static $_oInstance = null;
@@ -86,8 +86,8 @@ final class Recaptcha {
   /**
    * Get the Smarty instance
    *
-	 * @static
-	 * @access public
+   * @static
+   * @access public
    * @return object self::$_oInstance Recaptcha instance that was found or generated
    *
    */
@@ -105,13 +105,13 @@ final class Recaptcha {
     require PATH_STANDARD . '/vendor/recaptcha/recaptchalib.php';
   }
 
-	/**
-	 * Get The HTML-Code for the Recaptcha Form.
-	 *
-	 * @access public
-	 * @return string HTML
-	 *
-	 */
+  /**
+   * Get The HTML-Code for the Recaptcha Form.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
   public function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('recaptcha', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
@@ -161,5 +161,4 @@ final class Recaptcha {
       return Helper::errorMessage(I18n::get('error.captcha.loading'));
     }
   }
-
 }

@@ -250,6 +250,7 @@ class Upload {
 
       return isset($aReturn) ? $aReturn : array();
     }
+
     else
       return $this->_sFileNames;
   }

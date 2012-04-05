@@ -32,7 +32,7 @@ class Downloads extends Main {
 
       # if file not found, redirect user to overview
       if (!$sFile)
-        return Helper::errorMessage(I18n::get('error.missing.id'), '/' . $this->_aRequest['controller']);
+        Helper::redirectTo ('/errors/404');
 
       # Update download count
       $this->_oModel->updateDownloadCount($this->_iId);
@@ -40,7 +40,7 @@ class Downloads extends Main {
       # Get mime type
       if(function_exists('finfo_open')) {
         $sMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE),
-								Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
+              	Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
         header('Content-type: ' . $sMimeType);
       }
 
@@ -49,15 +49,15 @@ class Downloads extends Main {
       exit(readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)));
     }
     else {
-			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-			if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
-				$this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
+    	if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+        $this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
 
-			$this->oSmarty->setTemplateDir($sTemplateDir);
-			return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-		}
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+    	return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    }
   }
 
   /**
@@ -68,7 +68,7 @@ class Downloads extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
@@ -113,17 +113,17 @@ class Downloads extends Main {
       return $this->_showFormTemplate();
 
     else {
-			require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
+    	require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
 
       # Set up upload helper and rename file to title
       $oUploadFile = new Upload($this->_aRequest,
-																$this->_aSession, $this->_aFile,
-																Helper::formatInput($this->_aRequest['title']));
+                                $this->_aSession, $this->_aFile,
+                              	Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
       $aRetVals = $oUploadFile->uploadFiles('downloads');
       if ($aRetVals[0] === true) {
-				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+        $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
         $this->oSmarty->clearCacheForController('searches');
 
         $aIds = $oUploadFile->getIds(false);
@@ -131,9 +131,9 @@ class Downloads extends Main {
 
         if ($this->_oModel->create($aIds[0] . '.' . $aExts[0], $aExts[0]) === true) {
           Logs::insert($this->_aRequest['controller'],
-											$this->_aRequest['action'],
-											$this->_oModel->getLastInsertId('downloads'),
-											$this->_aSession['user']['id']);
+                      $this->_aRequest['action'],
+                      $this->_oModel->getLastInsertId('downloads'),
+                      $this->_aSession['user']['id']);
 
           return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
         }
@@ -145,26 +145,26 @@ class Downloads extends Main {
     }
   }
 
-	/**
-	 * Update a download entry.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
+  /**
+   * Update a download entry.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
 	protected function _update() {
     return parent::_update('searches');
-	}
+  }
 
   /**
-	 * Destroy a download entry.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
+   * Destroy a download entry.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
 	protected function _destroy() {
     return parent::_destroy('searches');
-	}
+  }
 
 }

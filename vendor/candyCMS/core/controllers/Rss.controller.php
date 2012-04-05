@@ -48,19 +48,19 @@ class Rss extends Main {
    *
    */
   private function _showDefault() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'default');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'default');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
 
     $sModel = $this->__autoload('Blogs', true);
     $oModel = new $sModel($this->_aRequest, $this->_aSession);
 
-		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
-			$this->oSmarty->assign('data', $oModel->getData());
+  	if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      $this->oSmarty->assign('data', $oModel->getData());
 
-		$this->oSmarty->setCacheLifetime(60);
+    $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
-		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
-	}
+  	exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+  }
 
   /**
    * Show media RSS template
@@ -70,7 +70,7 @@ class Rss extends Main {
    *
    */
   private function _showMedia() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'media');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'media');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
 
     $sModel = $this->__autoload('Galleries', true);
@@ -92,7 +92,7 @@ class Rss extends Main {
 
     $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
-		exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+  	exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
 
   /**

@@ -14,7 +14,7 @@ namespace CandyCMS\Core\Controllers;
 
 use CandyCMS\Core\Helpers\Helper;
 use CandyCMS\Core\Helpers\I18n;
-use candyCMS\plugins\Controller\Recaptcha;
+use CandyCMS\Plugins\Recaptcha;
 
 class Mails extends Main {
 
@@ -26,7 +26,7 @@ class Mails extends Main {
    *
    */
   public function show() {
-    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . $this->_iId . '/create');
+    Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . $this->_iId . '/create');
   }
 
   /**
@@ -63,8 +63,8 @@ class Mails extends Main {
    *
    */
   protected function _showCreateMailTemplate($bShowCaptcha) {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'create');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     $oUser = $this->__autoload('Users', true);
     $aUser = $oUser::getUserNamesAndEmail($this->_iId);
@@ -166,13 +166,13 @@ class Mails extends Main {
    *
    */
   private function _showSuccessPage() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'success');
-
-    $this->oSmarty->setCaching(\CandyCMS\Core\Helpers\SmartySingleton::CACHING_LIFETIME_SAVED);
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
 
     $this->setTitle(I18n::get('mails.success_page.title'));
+
     $this->oSmarty->setTemplateDir($sTemplateDir);
+    $this->oSmarty->setCaching(\CandyCMS\Core\Helpers\SmartySingleton::CACHING_LIFETIME_SAVED);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 

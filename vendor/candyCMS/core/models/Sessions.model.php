@@ -26,7 +26,7 @@ class Sessions extends Main {
    * @access public
    * @return array $aResult user data
    * @see app/controllers/Index.controller.php
-	 *
+   *
    */
   public static function getUserBySession() {
     if (empty(parent::$_oDbStatic))
@@ -37,10 +37,10 @@ class Sessions extends Main {
                                                 u.*
                                               FROM
                                                 " . SQL_PREFIX . "users AS u
-																							LEFT JOIN
-																								" . SQL_PREFIX . "sessions AS s
-																							ON
-																								u.id = s.user_id
+                                            	LEFT JOIN
+                                                " . SQL_PREFIX . "sessions AS s
+                                            	ON
+                                              	u.id = s.user_id
                                               WHERE
                                                 s.session = :session_id
                                               AND
@@ -67,39 +67,39 @@ class Sessions extends Main {
    * Create a user session.
    *
    * @access public
-	 * @param array $aUser optional user data.
+   * @param array $aUser optional user data.
    * @return boolean status of login
-	 *
+   *
    */
   public function create($aUser = '') {
-		if (empty($aUser)) {
+  	if (empty($aUser)) {
       $sModel = $this->__autoload('Users', true);
-			$oModel = & new $sModel($this->_aRequest, $this->_aSession);
-			$aUser	= $oModel->getLoginData();
-		}
+      $oModel = & new $sModel($this->_aRequest, $this->_aSession);
+      $aUser	= $oModel->getLoginData();
+    }
 
     # User did verify and has id, so log in!
     if (isset($aUser['id']) && !empty($aUser['id']) && empty($aUser['verification_code'])) {
-			try {
-				$oQuery = $this->_oDb->prepare("INSERT INTO
-																					" . SQL_PREFIX . "sessions
-																					(	user_id,
-																						session,
-																						ip,
-																						date)
-																				VALUES
-																					( :user_id,
-																						:session,
-																						:ip,
-																						:date)");
+    	try {
+        $oQuery = $this->_oDb->prepare("INSERT INTO
+                                          " . SQL_PREFIX . "sessions
+                                          (	user_id,
+                                          	session,
+                                          	ip,
+                                          	date)
+                                      	VALUES
+                                          ( :user_id,
+                                            :session,
+                                            :ip,
+                                            :date)");
 
-				$oQuery->bindParam('user_id', $aUser['id'], PDO::PARAM_INT);
-				$oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
-				$oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
-				$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+        $oQuery->bindParam('user_id', $aUser['id'], PDO::PARAM_INT);
+        $oQuery->bindParam('session', session_id(), PDO::PARAM_STR);
+        $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-				return $oQuery->execute();
-			}
+      	return $oQuery->execute();
+      }
       catch (\PDOException $p) {
         try {
           $this->_oDb->rollBack();
@@ -111,12 +111,12 @@ class Sessions extends Main {
         AdvancedException::reportBoth('0074 - ' . $p->getMessage());
         exit('SQL error.');
       }
-		}
+    }
     else
       return false;
-	}
+  }
 
-	/**
+  /**
    * Resend password.
    *
    * @access public
@@ -145,13 +145,13 @@ class Sessions extends Main {
     return empty($aData['verification_code']) ? false : $aData;
   }
 
-	/**
+  /**
    * Destroy a user session and logout.
    *
    * @access public
    * @param integer $sSessionId the session id
    * @return boolean status of query
-	 *
+   *
    */
   public function destroy($sSessionId) {
     if (empty(parent::$_oDbStatic))

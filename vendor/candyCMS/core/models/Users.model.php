@@ -22,7 +22,7 @@ class Users extends Main {
   /**
    * Get user name, surname and email from user ID.
    *
-	 * @static
+   * @static
    * @access public
    * @param integer $iId ID of the user
    * @return array data with user information
@@ -55,7 +55,7 @@ class Users extends Main {
   /**
    * Check, if the user already with given email address exists.
    *
-	 * @static
+   * @static
    * @access public
    * @param string $sEmail email address of user.
    * @return boolean status of user check
@@ -88,39 +88,39 @@ class Users extends Main {
     }
   }
 
-	/**
-	 * Get the verification data from an users email address.
-	 *
+  /**
+   * Get the verification data from an users email address.
+   *
    * @static
-	 * @access public
-	 * @param string $sEmail email address to search user from.
-	 * @return array user data.
-	 * @see app/models/Session.model.php
-	 *
-	 */
+   * @access public
+   * @param string $sEmail email address to search user from.
+   * @return array user data.
+   * @see app/models/Session.model.php
+   *
+   */
 	public static function getVerificationData($sEmail) {
-		if (empty(parent::$_oDbStatic))
-			parent::connectToDatabase();
+  	if (empty(parent::$_oDbStatic))
+    	parent::connectToDatabase();
 
-		try {
-			$oQuery = parent::$_oDbStatic->prepare("SELECT
-																								name,
-																								verification_code
-																							FROM
-																								" . SQL_PREFIX . "users
-																							WHERE
-																								email = :email");
+  	try {
+      $oQuery = parent::$_oDbStatic->prepare("SELECT
+                                              	name,
+                                              	verification_code
+                                            	FROM
+                                                " . SQL_PREFIX . "users
+                                            	WHERE
+                                              	email = :email");
 
-			$oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
-			$oQuery->execute();
+      $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
+      $oQuery->execute();
 
-			return $oQuery->fetch(PDO::FETCH_ASSOC);
-		}
+    	return $oQuery->fetch(PDO::FETCH_ASSOC);
+    }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0079 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Sets a users password.
@@ -134,24 +134,24 @@ class Users extends Main {
    *
    */
 	public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
-		if (empty(parent::$_oDbStatic))
-			parent::connectToDatabase();
+  	if (empty(parent::$_oDbStatic))
+    	parent::connectToDatabase();
 
     $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
 
-		try {
-			$oQuery = parent::$_oDbStatic->prepare("UPDATE
+  	try {
+      $oQuery = parent::$_oDbStatic->prepare("UPDATE
                                                 " . SQL_PREFIX . "users
                                               SET
                                                 password = :password
                                               WHERE
                                                 email = :email");
 
-			$oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
-			$oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
+      $oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
+      $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
 
-			return $oQuery->execute();
-		}
+    	return $oQuery->execute();
+    }
     catch (\PDOException $p) {
       try {
         parent::$_oDbStatic->rollBack();
@@ -163,7 +163,7 @@ class Users extends Main {
       AdvancedException::reportBoth('0081 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Get user entry or user overview data. Depends on available ID.
@@ -180,8 +180,8 @@ class Users extends Main {
     $aInts  = array('id', 'role');
     $aBools = array('use_gravatar', 'receive_newsletter');
 
-		if ($bForceNoId === true)
-			$iId = '';
+  	if ($bForceNoId === true)
+      $iId = '';
 
     if (empty($iId)) {
       try {
@@ -192,7 +192,7 @@ class Users extends Main {
                                           u.surname,
                                           u.date,
                                           u.use_gravatar,
-																					u.receive_newsletter,
+                                        	u.receive_newsletter,
                                           u.verification_code,
                                           u.role,
                                           s.date as last_login
@@ -267,42 +267,42 @@ class Users extends Main {
    * Create a user.
    *
    * @access public
-	 * @param integer $iVerificationCode verification code that was sent to the user.
+   * @param integer $iVerificationCode verification code that was sent to the user.
    * @param integer $iRole role of new User
    * @return boolean status of query
    *
    */
   public function create($iVerificationCode = '', $iRole = 1) {
-		try {
-			$oQuery = $this->_oDb->prepare("INSERT INTO
+  	try {
+      $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
-																				(	name,
-																					surname,
-																					password,
-																					email,
-																					date,
+                                        (	name,
+                                        	surname,
+                                        	password,
+                                        	email,
+                                        	date,
                                           role,
-																					verification_code,
+                                        	verification_code,
                                           api_token)
                                       VALUES
                                         ( :name,
-																					:surname,
-																					:password,
-																					:email,
-																					:date,
+                                          :surname,
+                                          :password,
+                                          :email,
+                                          :date,
                                           :role,
-																					:verification_code,
+                                          :verification_code,
                                           :api_token)");
 
       $sApiToken = md5(RANDOM_HASH . $this->_aRequest['email']);
-			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
-			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
-			$oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']), PDO::PARAM_STR);
-			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-			$oQuery->bindParam('date', time(), PDO::PARAM_INT);
-			$oQuery->bindParam('role', $iRole, PDO::PARAM_INT);
-			$oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
-			$oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
+      $oQuery->bindParam('password', md5(RANDOM_HASH . $this->_aRequest['password']), PDO::PARAM_STR);
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('date', time(), PDO::PARAM_INT);
+      $oQuery->bindParam('role', $iRole, PDO::PARAM_INT);
+      $oQuery->bindParam('verification_code', $iVerificationCode, PDO::PARAM_STR);
+      $oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
 
       $bReturn = $oQuery->execute();
       parent::$iLastInsertId = Helper::getLastEntry('users');
@@ -320,18 +320,18 @@ class Users extends Main {
       AdvancedException::reportBoth('0085 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
-	 * Update a user.
-	 *
-	 * @access public
-	 * @param integer $iId ID to update
-	 * @return boolean status of query
-	 *
-	 */
+   * Update a user.
+   *
+   * @access public
+   * @param integer $iId ID to update
+   * @return boolean status of query
+   *
+   */
 	public function update($iId) {
-		$iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
+    $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user roles
@@ -343,29 +343,29 @@ class Users extends Main {
     else
       $iUserRole = & $this->_aSession['user']['role'];
 
-		try {
-			$oQuery = $this->_oDb->prepare("UPDATE
+  	try {
+      $oQuery = $this->_oDb->prepare("UPDATE
                                         " . SQL_PREFIX . "users
                                       SET
                                         name = :name,
                                         surname = :surname,
                                         content = :content,
-																				receive_newsletter = :receive_newsletter,
+                                      	receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
                                         role = :role
                                       WHERE
                                         id = :id");
 
-			$oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
-			$oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
-			$oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
-			$oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
-			$oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
-			$oQuery->bindParam('role', $iUserRole, PDO::PARAM_INT);
-			$oQuery->bindParam('id', $iId, PDO::PARAM_INT);
+      $oQuery->bindParam('name', Helper::formatInput($this->_aRequest['name']), PDO::PARAM_STR);
+      $oQuery->bindParam('surname', Helper::formatInput($this->_aRequest['surname']), PDO::PARAM_STR);
+      $oQuery->bindParam('content', Helper::formatInput($this->_aRequest['content']), PDO::PARAM_STR);
+      $oQuery->bindParam('receive_newsletter', $iReceiveNewsletter, PDO::PARAM_INT);
+      $oQuery->bindParam('use_gravatar', $iUseGravatar, PDO::PARAM_INT);
+      $oQuery->bindParam('role', $iUserRole, PDO::PARAM_INT);
+      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
-			return $oQuery->execute();
-		}
+    	return $oQuery->execute();
+    }
     catch (\PDOException $p) {
       try {
         $this->_oDb->rollBack();
@@ -377,7 +377,7 @@ class Users extends Main {
       AdvancedException::reportBoth('0088 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Update an users password.
@@ -468,8 +468,8 @@ class Users extends Main {
    *
    */
   public function verifyEmail($sVerificationCode) {
-		try {
-			$oQuery = $this->_oDb->prepare("SELECT
+  	try {
+      $oQuery = $this->_oDb->prepare("SELECT
                                         *
                                       FROM
                                         " . SQL_PREFIX . "users
@@ -477,19 +477,19 @@ class Users extends Main {
                                         verification_code = :verification_code
                                       LIMIT 1");
 
-			$oQuery->bindParam('verification_code', Helper::formatInput($sVerificationCode), PDO::PARAM_STR);
-			$oQuery->execute();
+      $oQuery->bindParam('verification_code', Helper::formatInput($sVerificationCode), PDO::PARAM_STR);
+      $oQuery->execute();
 
-			$this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
-		}
+      $this->_aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+    }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0091 - ' . $p->getMessage());
       exit('SQL error.');
     }
 
-		if ($this->_aData['id']) {
-			try {
-				$oQuery = $this->_oDb->prepare("UPDATE
+  	if ($this->_aData['id']) {
+    	try {
+        $oQuery = $this->_oDb->prepare("UPDATE
                                           " . SQL_PREFIX . "users
                                         SET
                                           verification_code = '',
@@ -498,17 +498,17 @@ class Users extends Main {
                                         WHERE
                                           id = :id");
 
-				$oQuery->bindParam('id', $this->_aData['id'], PDO::PARAM_INT);
-				$oQuery->bindParam('date', time(), PDO::PARAM_INT);
+        $oQuery->bindParam('id', $this->_aData['id'], PDO::PARAM_INT);
+        $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-				# Prepare for first login
-				$this->_aData['verification_code'] = '';
+        # Prepare for first login
+        $this->_aData['verification_code'] = '';
 
         $sModel = $this->__autoload('Sessions');
         $sModel::create($this->_aData);
 
-				return $oQuery->execute();
-			}
+      	return $oQuery->execute();
+      }
       catch (\PDOException $p) {
         try {
           $this->_oDb->rollBack();
@@ -520,29 +520,29 @@ class Users extends Main {
         AdvancedException::reportBoth('0093 - ' . $p->getMessage());
         exit('SQL error.');
       }
-		}
-	}
+    }
+  }
 
-	/**
-	 * Return data from verification / activation.
-	 *
-	 * @access public
-	 * @return array $this->_aData
-	 */
+  /**
+   * Return data from verification / activation.
+   *
+   * @access public
+   * @return array $this->_aData
+   */
 	public function getActivationData() {
-		return $this->_aData;
-	}
+  	return $this->_aData;
+  }
 
-	/**
-	 * Return an array of user data if user exists.
-	 *
-	 * @access public
-	 * @return array user data of login user
-	 *
-	 */
+  /**
+   * Return an array of user data if user exists.
+   *
+   * @access public
+   * @return array user data of login user
+   *
+   */
 	public function getLoginData() {
-		try {
-			$oQuery = $this->_oDb->prepare("SELECT
+  	try {
+      $oQuery = $this->_oDb->prepare("SELECT
                                         id, verification_code
                                       FROM
                                         " . SQL_PREFIX . "users
@@ -553,18 +553,18 @@ class Users extends Main {
                                       LIMIT
                                         1");
 
-			$sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
-			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
-			$oQuery->execute();
+      $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+      $oQuery->execute();
 
-			return $oQuery->fetch(PDO::FETCH_ASSOC);
-		}
+    	return $oQuery->fetch(PDO::FETCH_ASSOC);
+    }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0094 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Get the API token of a user.
@@ -574,8 +574,8 @@ class Users extends Main {
    *
    */
 	public function getToken() {
-		try {
-			$oQuery = $this->_oDb->prepare("SELECT
+  	try {
+      $oQuery = $this->_oDb->prepare("SELECT
                                         api_token
                                       FROM
                                         " . SQL_PREFIX . "users
@@ -586,19 +586,19 @@ class Users extends Main {
                                       LIMIT
                                         1");
 
-			$sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
-			$oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
-			$oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
-			$oQuery->execute();
+      $sPassword = md5(RANDOM_HASH . Helper::formatInput($this->_aRequest['password']));
+      $oQuery->bindParam('email', Helper::formatInput($this->_aRequest['email']), PDO::PARAM_STR);
+      $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
+      $oQuery->execute();
       $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
 
       return !empty($aData['api_token']) ? $aData['api_token'] : '';
-		}
+    }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0095 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Fetch all user data of active token.
@@ -608,7 +608,7 @@ class Users extends Main {
    * @param string $sApiToken API token
    * @return array $aResult user data
    * @see app/controllers/Index.controller.php
-	 *
+   *
    */
   public static function getUserByToken($sApiToken) {
     if (empty(parent::$_oDbStatic))

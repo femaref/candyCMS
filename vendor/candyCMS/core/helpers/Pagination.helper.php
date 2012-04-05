@@ -18,87 +18,87 @@ use CandyCMS\Core\Helpers\SmartySingleton;
 
 class Pagination {
 
-	/**
-	 * Alias for $_REQUEST
-	 *
-	 * @var array
-	 * @access private
-	 *
-	 */
+  /**
+   * Alias for $_REQUEST
+   *
+   * @var array
+   * @access private
+   *
+   */
   private $_aRequest;
 
-	/**
-	 * Limit of posts.
-	 *
-	 * @var integer
-	 * @access private
-	 *
-	 */
+  /**
+   * Limit of posts.
+   *
+   * @var integer
+   * @access private
+   *
+   */
   private $_iLimit;
 
-	/**
-	 * Entry offset.
-	 *
-	 * @var integer
-	 * @access private
-	 *
-	 */
+  /**
+   * Entry offset.
+   *
+   * @var integer
+   * @access private
+   *
+   */
   private $_iOffset;
 
-	/**
-	 * Counted pages.
-	 *
-	 * @var integer
-	 * @access private
-	 *
-	 */
+  /**
+   * Counted pages.
+   *
+   * @var integer
+   * @access private
+   *
+   */
   private $_iPages;
 
-	/**
-	 * Sum of entries.
-	 *
-	 * @var integer
-	 * @access private
-	 *
-	 */
+  /**
+   * Sum of entries.
+   *
+   * @var integer
+   * @access private
+   *
+   */
   private $_iEntries;
 
-	/**
-	 * Page that is currently shown.
-	 *
-	 * @var integer
-	 * @access private
-	 *
-	 */
+  /**
+   * Page that is currently shown.
+   *
+   * @var integer
+   * @access private
+   *
+   */
   private $_iCurrentPage;
 
-	/**
-	 * Set up Smarty.
-	 *
-	 * @var object
-	 * @access private
-	 *
-	 */
+  /**
+   * Set up Smarty.
+   *
+   * @var object
+   * @access private
+   *
+   */
   private $_oSmarty;
 
-	/**
-	 * Initialize page helper.
-	 *
-	 * @access public
-	 * @param array $aRequest alias for the combination of $_GET and $_POST
-	 * @param integer $iEntries sum of entries.
-	 * @param integer $iLimit limit of entries per page.
-	 *
-	 */
+  /**
+   * Initialize page helper.
+   *
+   * @access public
+   * @param array $aRequest alias for the combination of $_GET and $_POST
+   * @param integer $iEntries sum of entries.
+   * @param integer $iLimit limit of entries per page.
+   *
+   */
   public function __construct(&$aRequest, $iEntries, $iLimit = 10) {
     $this->_aRequest	= & $aRequest;
-		$this->_iEntries	= & $iEntries;
-		$this->_iLimit		= & $iLimit;
+    $this->_iEntries	= & $iEntries;
+    $this->_iLimit	  = & $iLimit;
 
     $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
     $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ?
-						(int) $this->_aRequest['page'] :
-						1;
+            (int) $this->_aRequest['page'] :
+          	1;
 
     if (!$this->_iPages)
       $this->_iPages = 1;
@@ -117,7 +117,7 @@ class Pagination {
     $this->_oSmarty = SmartySingleton::getInstance();
   }
 
-	/**
+  /**
    * Return offset.
    *
    * @access public
@@ -128,7 +128,7 @@ class Pagination {
     return $this->_iOffset;
   }
 
-	/**
+  /**
    * Return entry limit.
    *
    * @access public
@@ -139,7 +139,7 @@ class Pagination {
     return $this->_iLimit;
   }
 
-	/**
+  /**
    * Return pages count.
    *
    * @access public
@@ -150,7 +150,7 @@ class Pagination {
     return $this->_iPages;
   }
 
-	/**
+  /**
    * Return current page.
    *
    * @access public
@@ -161,7 +161,7 @@ class Pagination {
     return $this->_iCurrentPage;
   }
 
-	/**
+  /**
    * Show all page numbers as a link.
    *
    * Note that if you want to use ajax requests for loading pages, you have to set up $sController manually
@@ -190,7 +190,7 @@ class Pagination {
     }
   }
 
-	/**
+  /**
    * Show surrounding pages.
    *
    * @access public

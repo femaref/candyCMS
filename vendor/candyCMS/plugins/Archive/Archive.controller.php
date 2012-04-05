@@ -23,17 +23,17 @@ final class Archive {
    */
   const IDENTIFIER = 'archive';
 
-	/**
-	 * Show the (cached) archive.
-	 *
-	 * We use a new Smarty instance to avoid parsing the Main.controller due to performance reasons.
-	 *
-	 * @access public
-	 * @param array $aRequest
-	 * @param array $aSession
-	 * @return string HTML
-	 *
-	 */
+  /**
+   * Show the (cached) archive.
+   *
+   * We use a new Smarty instance to avoid parsing the Main.controller due to performance reasons.
+   *
+   * @access public
+   * @param array $aRequest
+   * @param array $aSession
+   * @return string HTML
+   *
+   */
   public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('archive', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');

@@ -4,6 +4,7 @@
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @todo refactor
+ * @todo documentation
  */
 
 # The cronjob keeps your software backuped, fast and clean. Set up the execution

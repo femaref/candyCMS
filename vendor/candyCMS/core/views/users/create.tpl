@@ -58,7 +58,7 @@
           <h3>{$lang.global.terms.terms}</h3>
         </div>
         <div class="modal-body">
-          <p>{$lang.users.info.terms}</p>
+          <p>{$lang.website.terms}</p>
         </div>
       </div>
       <div class="control-group{if isset($error.disclaimer)} alert alert-error{/if}">
@@ -76,8 +76,8 @@
       </div>
     {/if}
     {if isset($_captcha_)}{$_captcha_}{/if}
-    <div class="form-actions">
-      <input type='submit' class="btn btn-primary" value='{$lang.global.register}' />
+    <div class='form-actions'>
+      <input type='submit' class='btn btn-primary' value='{$lang.global.register}' />
       <input type='reset' class='btn' />
       <input type='hidden' value='formdata' name='create_users' />
     </div>

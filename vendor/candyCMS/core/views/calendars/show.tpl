@@ -32,69 +32,75 @@
       </a>
     </p>
   {/if}
-  {foreach $calendar as $c}
-    <h2>{$c.month} {$c.year}</h2>
-    <table class='table tablesorter'>
-      <thead>
-        <tr>
-          <th class='column-date headerSortDown'>{$lang.global.date.date}</th>
-          <th class='column-description'>{$lang.global.description}</th>
-          <th class='column-actions'></th>
-        </tr>
-      </thead>
-      <tbody>
-        {foreach $c.dates as $d}
+  {if !$calendar}
+    <div class='alert alert-warning'>
+      <h4>{$lang.error.missing.entries}</h4>
+    </div>
+  {else}
+    {foreach $calendar as $c}
+      <h2>{$c.month} {$c.year}</h2>
+      <table class='table tablesorter'>
+        <thead>
           <tr>
-            <td>
-              {$d.start_date}
-              {if $d.end_date > 1}
-                &nbsp;
-                -
-                &nbsp;
-                {$d.end_date}
-              {/if}
-            </td>
-            <td>
-              <strong>
-                {$d.title}
-              </strong>
-              {if $d.content}
-                <br />
-                {$d.content}
-              {/if}
-            </td>
-            <td class='center'>
-              <a href='{$d.url}'>
-                <img src='{$_PATH.images}/candy.global/spacer.png'
-                    class='icon-calendar_add js-tooltip'
-                    alt='{$lang.calendars.info.ics}'
-                    title='{$lang.calendars.info.ics}'
-                    width='16' height='16' />
-              </a>
-              {if $_SESSION.user.role >= 3}
-                &nbsp;
-                <a href='/{$_REQUEST.controller}/{$d.id}/update'>
-                  <img src='{$_PATH.images}/candy.global/spacer.png'
-                      class='icon-update js-tooltip'
-                      alt='{$lang.global.update.update}'
-                      title='{$lang.global.update.update}'
-                      width='16' height='16' />
-                </a>
-                &nbsp;
-                <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$d.id}/destroy')">
-                  <img src='{$_PATH.images}/candy.global/spacer.png'
-                      class='icon-destroy js-tooltip'
-                      alt='{$lang.global.destroy.destroy}'
-                      title='{$lang.global.destroy.destroy}'
-                      width='16' height='16' />
-                </a>
-              {/if}
-            </td>
+            <th class='column-date headerSortDown'>{$lang.global.date.date}</th>
+            <th class='column-description'>{$lang.global.description}</th>
+            <th class='column-actions'></th>
           </tr>
-        {/foreach}
-      </tbody>
-    </table>
-  {/foreach}
+        </thead>
+        <tbody>
+          {foreach $c.dates as $d}
+            <tr>
+              <td>
+                {$d.start_date}
+                {if $d.end_date > 1}
+                  &nbsp;
+                  -
+                  &nbsp;
+                  {$d.end_date}
+                {/if}
+              </td>
+              <td>
+                <strong>
+                  {$d.title}
+                </strong>
+                {if $d.content}
+                  <br />
+                  {$d.content}
+                {/if}
+              </td>
+              <td class='center'>
+                <a href='{$d.url}'>
+                  <img src='{$_PATH.images}/candy.global/spacer.png'
+                      class='icon-calendar_add js-tooltip'
+                      alt='{$lang.calendars.info.ics}'
+                      title='{$lang.calendars.info.ics}'
+                      width='16' height='16' />
+                </a>
+                {if $_SESSION.user.role >= 3}
+                  &nbsp;
+                  <a href='/{$_REQUEST.controller}/{$d.id}/update'>
+                    <img src='{$_PATH.images}/candy.global/spacer.png'
+                        class='icon-update js-tooltip'
+                        alt='{$lang.global.update.update}'
+                        title='{$lang.global.update.update}'
+                        width='16' height='16' />
+                  </a>
+                  &nbsp;
+                  <a href="#" onclick="confirmDestroy('/{$_REQUEST.controller}/{$d.id}/destroy')">
+                    <img src='{$_PATH.images}/candy.global/spacer.png'
+                        class='icon-destroy js-tooltip'
+                        alt='{$lang.global.destroy.destroy}'
+                        title='{$lang.global.destroy.destroy}'
+                        width='16' height='16' />
+                  </a>
+                {/if}
+              </td>
+            </tr>
+          {/foreach}
+        </tbody>
+      </table>
+    {/foreach}
+  {/if}
   {if !isset($_REQUEST.action)}
     <p class='center'>
       <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive' class='btn'>

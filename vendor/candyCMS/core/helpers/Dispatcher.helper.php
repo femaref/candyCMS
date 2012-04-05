@@ -14,29 +14,29 @@ namespace CandyCMS\Core\Helpers;
 
 class Dispatcher {
 
-	/**
-	 * @var object
-	 * @access public
-	 *
-	 */
+  /**
+   * @var object
+   * @access public
+   *
+   */
   public $oController;
 
-	/**
-	 * Initialize the controller by adding input params.
-	 *
-	 * @access public
-	 * @param array $aRequest alias for the combination of $_GET and $_POST
-	 * @param array $aSession alias for $_SESSION
-	 * @param array $aFile alias for $_FILE
-	 * @param array $aCookie alias for $_COOKIE
-	 *
-	 */
+  /**
+   * Initialize the controller by adding input params.
+   *
+   * @access public
+   * @param array $aRequest alias for the combination of $_GET and $_POST
+   * @param array $aSession alias for $_SESSION
+   * @param array $aFile alias for $_FILE
+   * @param array $aCookie alias for $_COOKIE
+   *
+   */
 	public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
-		$this->_aRequest	= & $aRequest;
-		$this->_aSession	= & $aSession;
-		$this->_aFile			= & $aFile;
-		$this->_aCookie		= & $aCookie;
-	}
+    $this->_aRequest	= & $aRequest;
+    $this->_aSession	= & $aSession;
+    $this->_aFile	    = & $aFile;
+    $this->_aCookie	  = & $aCookie;
+  }
 
   /**
    * Get the controller object.

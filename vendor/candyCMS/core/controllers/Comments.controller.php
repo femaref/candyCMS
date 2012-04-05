@@ -14,7 +14,7 @@ namespace CandyCMS\Core\Controllers;
 
 use CandyCMS\Core\Helpers\Helper;
 use CandyCMS\Core\Helpers\I18n;
-use CandyCMS\Plugins\Controller\Recaptcha;
+use CandyCMS\Plugins\Recaptcha;
 
 class Comments extends Main {
 
@@ -29,8 +29,8 @@ class Comments extends Main {
     $oModel = $this->__autoload('Comments', true);
     $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
 
-		$this->_aParentData = & $aParentData;
-	}
+    $this->_aParentData = & $aParentData;
+  }
 
   /**
    * Show comment entries.
@@ -40,13 +40,12 @@ class Comments extends Main {
    *
    */
   protected function _show() {
-    $sTemplateDir = Helper::getTemplateDir('comments', 'show');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir	  = Helper::getTemplateDir('comments', 'show');
+    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
-    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->oSmarty->assign('comments',
               $this->_oModel->getData($this->_iId, (int) $this->_aParentData[1]['comment_sum'], LIMIT_COMMENTS));
-    }
 
     # Set author of blog entry
     $this->oSmarty->assign('author_id', (int) $this->_aParentData[1]['author_id']);
@@ -78,7 +77,7 @@ class Comments extends Main {
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
-    $sTemplateDir		= Helper::getTemplateDir('comments', '_form');
+    $sTemplateDir	  = Helper::getTemplateDir('comments', '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '');
@@ -109,15 +108,13 @@ class Comments extends Main {
                       $this->_aSession['user']['role'] == 0 && SHOW_CAPTCHA :
                       false;
 
-    #no caching for comments
+    # No caching for comments
     $this->oSmarty->setCaching(false);
 
-    if (isset($this->_aRequest[$sInputName]))
-			return	$this->_create($bShowCaptcha);
-
-		else
-			return $this->_showFormTemplate($bShowCaptcha);
-	}
+  	return isset($this->_aRequest[$sInputName]) ?
+            $this->_create($bShowCaptcha) :
+            $this->_showFormTemplate($bShowCaptcha);
+  }
 
   /**
    * Create a blog entry.
@@ -146,11 +143,11 @@ class Comments extends Main {
       return $this->_showFormTemplate($bShowCaptcha);
 
     else {
-      # bugfix for jquery mobile not handling this redirect with hash very vell
+      # Bugfix for jquery mobile not handling this redirect with hash very vell
       $sRedirect = '/blogs/' . (int) $this->_aRequest['parent_id'] . (MOBILE ? '' : '#create');
 
       if ($this->_oModel->create() === true) {
-        #this also clears cache for our comments, since they are stored in the blogs namespace
+        # This also clears cache for our comments, since they are stored in the blogs namespace.
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
         Logs::insert( 'comments',
@@ -176,13 +173,13 @@ class Comments extends Main {
     $sRedirect = '/blogs/' . $this->_oModel->getParentId((int) $this->_aRequest['id']);
 
     if ($this->_oModel->destroy((int) $this->_aRequest['id']) === true) {
-      #this also clears cache for our comments, since they are stored in the blogs namespace
+      # This also clears cache for our comments, since they are stored in the blogs namespace.
       $this->oSmarty->clearCacheForController('blogs');
 
       Logs::insert( 'comments',
-										'destroy',
-										(int) $this->_aRequest['id'],
-										$this->_aSession['user']['id']);
+                    'destroy',
+                    (int) $this->_aRequest['id'],
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), $sRedirect);
     }

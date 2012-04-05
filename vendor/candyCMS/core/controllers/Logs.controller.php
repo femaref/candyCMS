@@ -29,7 +29,7 @@ class Logs extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->assign('logs', $this->_oModel->getData());
@@ -68,7 +68,7 @@ class Logs extends Main {
   }
 
   /**
-   * There is no create Action for the sitemaps Controller
+   * There is no create action for the sitemaps controller.
    *
    * @access public
    *
@@ -78,7 +78,7 @@ class Logs extends Main {
   }
 
   /**
-   * There is no update Action for the sitemaps Controller
+   * There is no update action for the sitemaps controller.
    *
    * @access public
    *

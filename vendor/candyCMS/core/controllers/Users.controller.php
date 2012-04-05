@@ -30,7 +30,6 @@ class Users extends Main {
     if (!isset($this->_aRequest['action']))
        $this->_aRequest['action'] = 'show';
 
-
     switch ($this->_aRequest['action']) {
 
       case 'avatar':
@@ -71,17 +70,17 @@ class Users extends Main {
     }
   }
 
-	/**
-	 * Show user or user overview.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Show user or user overview.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
 	protected function _show() {
-		if ($this->_iId) {
-			$sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-			$sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+  	if ($this->_iId) {
+      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
@@ -98,12 +97,12 @@ class Users extends Main {
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
-		else {
-			if ($this->_aSession['user']['role'] < 3)
-				return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+  	else {
+    	if ($this->_aSession['user']['role'] < 3)
+      	return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-			else {
-        $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
+    	else {
+        $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
         $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
 
         $this->oSmarty->assign('user', $this->_oModel->getData());
@@ -111,74 +110,74 @@ class Users extends Main {
         $this->setTitle(I18n::get('users.title.overview'));
         $this->oSmarty->setTemplateDir($sTemplateDir);
         return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-			}
-		}
-	}
+      }
+    }
+  }
 
-	/**
-	 * Build form template to create or update a user.
-	 *
-	 * @access protected
+  /**
+   * Build form template to create or update a user.
+   *
+   * @access protected
    * @param boolean $bUseRequest whether the Displayed Data should be overwritten by Query Result
-	 * @return string HTML content
-	 *
-	 */
+   * @return string HTML content
+   *
+   */
 	protected function _showFormTemplate($bUseRequest = false) {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
 
-		# Set user id of person to update
-		$iId =	$this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4 ?
+    # Set user id of person to update
+    $iId =  $this->_iId !== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4 ?
             $this->_iId :
             $this->_aSession['user']['id'];
 
-		# Fetch data from database
-		$aData = $this->_oModel->getData($iId, false, true);
+    # Fetch data from database
+    $aData = $this->_oModel->getData($iId, false, true);
 
     # Add the gravatar_urls, so the user can preview those
     Helper::createAvatarURLs($aData, $aData['id'], $aData['email'], true);
 
-		# Override if we want to use request
-		if ($bUseRequest === true) {
-			foreach ($aData as $sColumn => $sData)
-				$aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
-		}
+    # Override if we want to use request
+  	if ($bUseRequest === true) {
+    	foreach ($aData as $sColumn => $sData)
+        $aData[$sColumn] = isset($this->_aRequest[$sColumn]) ? $this->_aRequest[$sColumn] : $sData;
+    }
 
-		foreach ($aData as $sColumn => $sData)
-			$this->oSmarty->assign($sColumn, $sData);
+  	foreach ($aData as $sColumn => $sData)
+      $this->oSmarty->assign($sColumn, $sData);
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
-		$this->oSmarty->assign('uid', $iId);
+    $this->oSmarty->assign('uid', $iId);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-	}
+  }
 
-	/**
-	 * Upload user profile image.
-	 *
-	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
+  /**
+   * Upload user profile image.
+   *
+   * @access public
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
 	public function updateAvatar() {
     return isset($this->_aRequest['create_avatar']) ?
             $this->_updateAvatar() :
             $this->_showFormTemplate();
   }
 
-	/**
-	 * Upload user profile image.
+  /**
+   * Upload user profile image.
    *
    * Check for required Fields, show Form if Fields are missing,
    * otherwise upload new Avatar, unset Gravatar on success and redirect to user Profile
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
 	public function _updateAvatar() {
     $this->_setError('terms', I18n::get('error.file.upload'));
     $this->_setError('image');
@@ -193,40 +192,41 @@ class Users extends Main {
       $this->_oModel->updateGravatar($this->_iId);
 
       return Helper::successMessage(I18n::get('success.upload'), '/' .
-							$this->_aRequest['controller'] . '/' . $this->_iId);
+              $this->_aRequest['controller'] . '/' . $this->_iId);
     }
 
     else
       return Helper::errorMessage(I18n::get('error.file.upload'), '/' .
-							$this->_aRequest['controller'] . '/' . $this->_iId . '/update');
+              $this->_aRequest['controller'] . '/' . $this->_iId . '/update');
   }
 
-	/**
-	 * Update a users password.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Update a users password.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
   public function updatePassword() {
     return isset($this->_aRequest['update_password']) ?
             $this->_updatePassword() :
             $this->_showFormTemplate();
   }
 
-	/**
-	 * Update a users password.
-	 *
+  /**
+   * Update a users password.
+   *
    * Check for required Fields, show Form if Fields are missing or wrong,
    * otherwise change the password and redirect to user Profile
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
   protected function _updatePassword() {
     # Check if old password is set
     $this->_setError('password_old', I18n::get('error.user.update.password.old.empty'));
+
     # Check if new password fields aren't empty
     $this->_setError('password_new', I18n::get('error.user.update.password.new.empty'));
     $this->_setError('password_new2', I18n::get('error.user.update.password.new.empty'));
@@ -249,10 +249,10 @@ class Users extends Main {
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
-      Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										(int) $this->_iId,
-										$this->_aSession['user']['id']);
+      Logs::insert(  $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    (int) $this->_iId,
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), $sRedirectURL . $this->_iId);
     }
@@ -260,15 +260,15 @@ class Users extends Main {
       return Helper::errorMessage(I18n::get('error.sql'), $sRedirectURL . $this->_iId);
   }
 
-	/**
-	 * Create user or show form template.
+  /**
+   * Create user or show form template.
    *
    * This method must override the parent one because of another showTemplate method.
-	 *
-	 * @access public
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
+   *
+   * @access public
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
 	public function create() {
     # Logged in users should not have a recaptcha field since we can assume that these are real humans.
     $bShowCaptcha = class_exists('\CandyCMS\Plugins\Recaptcha') ?
@@ -280,27 +280,27 @@ class Users extends Main {
             $this->_showCreateUserTemplate($bShowCaptcha);
   }
 
-	/**
-	 * Create a user.
-	 *
-	 * Check if required data is given or throw an error instead.
-	 * If data is given, activate the model, insert them into the database, send mail and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return string|boolean HTML content (string) or returned status of model action (boolean).
-	 *
-	 */
+  /**
+   * Create a user.
+   *
+   * Check if required data is given or throw an error instead.
+   * If data is given, activate the model, insert them into the database, send mail and redirect afterwards.
+   *
+   * @access protected
+   * @return string|boolean HTML content (string) or returned status of model action (boolean).
+   *
+   */
 	protected function _create($bShowCaptcha) {
-		$this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
+    $this->_setError('name')->_setError('surname')->_setError('email')->_setError('password');
 
-		if ($this->_oModel->getExistingUser($this->_aRequest['email']))
-			$this->_aError['email'] = I18n::get('error.user.create.email');
+  	if ($this->_oModel->getExistingUser($this->_aRequest['email']))
+      $this->_aError['email'] = I18n::get('error.user.create.email');
 
-		if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
-			$this->_aError['password'] = I18n::get('error.passwords');
+  	if ($this->_aRequest['password'] !== $this->_aRequest['password2'])
+      $this->_aError['password'] = I18n::get('error.passwords');
 
-		# Admin does not need to confirm disclaimer
-		if ($this->_aSession['user']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
+    # Admin does not need to confirm disclaimer
+  	if ($this->_aSession['user']['role'] < 4 && !isset($this->_aRequest['disclaimer']))
       $this->_aError['disclaimer'] = I18n::get('error.form.missing.terms');
 
     if ($bShowCaptcha === true && Recaptcha::getInstance()->checkCaptcha($this->_aRequest) === false)
@@ -309,7 +309,7 @@ class Users extends Main {
     # Generate verification code for users (double-opt-in) when not created by admin.
     $iVerificationCode = $this->_aSession['user']['role'] < 4 ? Helper::createRandomChar(12) : '';
 
-		if (isset($this->_aError))
+  	if (isset($this->_aError))
       return $this->_showCreateUserTemplate();
 
     elseif ($this->_oModel->create($iVerificationCode) === true) {
@@ -324,34 +324,34 @@ class Users extends Main {
                 Helper::formatInput($this->_aRequest['name']),
                 Helper::createLinkTo('users/' . $iVerificationCode . '/verification'));
 
-			Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										$this->_oModel->getLastInsertId('users'),
-										$this->_aSession['user']['id']);
+    	Logs::insert(  $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    $this->_oModel->getLastInsertId('users'),
+                    $this->_aSession['user']['id']);
 
       $sMails = $this->__autoload('Mails');
       $sMails::send( Helper::formatInput($this->_aRequest['email']),
-									I18n::get('users.mail.subject'),
-									$sMailMessage,
-									WEBSITE_MAIL_NOREPLY);
+                	I18n::get('users.mail.subject'),
+                  $sMailMessage,
+                	WEBSITE_MAIL_NOREPLY);
 
       return $this->_aSession['user']['role'] == 4 ?
               Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']) :
               Helper::successMessage(I18n::get('success.user.create'), '/');
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/');
-	}
+    }
+  	else
+    	return Helper::errorMessage(I18n::get('error.sql'), '/');
+  }
 
-	/**
-	 * Build form template to create a user.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Build form template to create a user.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
 	protected function _showCreateUserTemplate($bShowCaptcha) {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
 
     if ($this->_aSession['user']['role'] == 4)
@@ -363,34 +363,34 @@ class Users extends Main {
 
     if ($bShowCaptcha) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
-		$this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
-										Helper::formatInput($this->_aRequest['name']) :
-										$this->_aSession['user']['name']);
+    $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
+                  	Helper::formatInput($this->_aRequest['name']) :
+                    $this->_aSession['user']['name']);
 
-		$this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
-										Helper::formatInput($this->_aRequest['surname']) :
-										$this->_aSession['user']['surname']);
+    $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+                  	Helper::formatInput($this->_aRequest['surname']) :
+                    $this->_aSession['user']['surname']);
 
-		$this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
-										Helper::formatInput($this->_aRequest['email']) :
-										$this->_aSession['user']['email']);
+    $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+                  	Helper::formatInput($this->_aRequest['email']) :
+                    $this->_aSession['user']['email']);
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
-	}
+  }
 
-	/**
-	 * Update an user.
-	 *
-	 * Update entry or show form template if we have enough rights.
-	 *
-	 * @access public
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Update an user.
+   *
+   * Update entry or show form template if we have enough rights.
+   *
+   * @access public
+   * @return string HTML content
+   *
+   */
 	public function update() {
     if ($this->_aSession['user']['id'] == 0)
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions/create');
@@ -403,53 +403,53 @@ class Users extends Main {
       return isset($this->_aRequest['update_users']) ? $this->_update() : $this->_showFormTemplate();
   }
 
-	/**
-	 * Update a user.
-	 *
-	 * Activate model, insert data into the database and redirect afterwards.
-	 *
-	 * @access protected
-	 * @return string HTML content
-	 *
-	 */
+  /**
+   * Update a user.
+   *
+   * Activate model, insert data into the database and redirect afterwards.
+   *
+   * @access protected
+   * @return string HTML content
+   *
+   */
 	protected function _update() {
-		$this->_setError('name');
+    $this->_setError('name');
 
-		if (isset($this->_aError))
-			return $this->_showFormTemplate();
+  	if (isset($this->_aError))
+    	return $this->_showFormTemplate();
 
-		elseif ($this->_oModel->update((int) $this->_iId) === true) {
-			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+  	elseif ($this->_oModel->update((int) $this->_iId) === true) {
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
 
       # Check if user wants to unsubscribe from mailchimp
-			if (!isset($this->_aRequest['receive_newsletter']))
-				$this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
+    	if (!isset($this->_aRequest['receive_newsletter']))
+        $this->_unsubscribeFromNewsletter(Helper::formatInput(($this->_aRequest['email'])));
 
-			else
-				$this->_subscribeToNewsletter($this->_aRequest);
+    	else
+        $this->_subscribeToNewsletter($this->_aRequest);
 
-			$this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['user']['id'] ?
+      $this->_iId = isset($this->_aRequest['id']) && $this->_aRequest['id'] !== $this->_aSession['user']['id'] ?
               (int) $this->_aRequest['id'] :
               $this->_aSession['user']['id'];
 
-			Logs::insert($this->_aRequest['controller'],
-									$this->_aRequest['action'],
-									(int) $this->_iId,
-									$this->_aSession['user']['id']);
+    	Logs::insert($this->_aRequest['controller'],
+                  $this->_aRequest['action'],
+                  (int) $this->_iId,
+                  $this->_aSession['user']['id']);
 
-			return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
-		}
-		else
-			return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
-	}
+    	return Helper::successMessage(I18n::get('success.update'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+    }
+  	else
+    	return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' . $this->_iId);
+  }
 
-	/**
-	 * Delete a user account.
-	 *
-	 * @access public
-	 * @return boolean status message
-	 *
-	 */
+  /**
+   * Delete a user account.
+   *
+   * @access public
+   * @return boolean status message
+   *
+   */
   public function destroy() {
     return (isset($this->_aRequest['destroy_users']) && $this->_aSession['user']['id'] == $this->_iId) ||
               $this->_aSession['user']['role'] == 4 ?
@@ -457,18 +457,18 @@ class Users extends Main {
             Helper::errorMessage(I18n::get('error.missing.permission'), '/');
   }
 
-	/**
-	 * Delete a user account.
+  /**
+   * Delete a user account.
    *
    * Check if the ids match or if the user is admin,
    * delete the user from database and redirect afterwards
-	 *
-	 * @access protected
-	 * @return boolean status message
-	 *
-	 */
+   *
+   * @access protected
+   * @return boolean status message
+   *
+   */
 	protected function _destroy() {
-		require PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
+  	require PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
     $aUser = $this->_oModel->getUserNamesAndEmail($this->_iId);
 
     # is form submit and do ids match?
@@ -506,29 +506,29 @@ class Users extends Main {
       return Helper::errorMessage(I18n::get('error.user.destroy.password'), $sFailureRedirectUrl);
   }
 
-	/**
-	 * Verify email address.
-	 *
-	 * @access public
-	 * @return boolean status of message
-	 *
-	 */
+  /**
+   * Verify email address.
+   *
+   * @access public
+   * @return boolean status of message
+   *
+   */
 	public function verifyEmail() {
-		if (!isset($this->_aRequest['code']) || empty($this->_aRequest['code']))
-			return Helper::errorMessage(I18n::get('error.missing.id'), '/');
+  	if (!isset($this->_aRequest['code']) || empty($this->_aRequest['code']))
+    	return Helper::errorMessage(I18n::get('error.missing.id'), '/');
 
-		elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
-			# Subscribe to MailChimp after email address is confirmed
-			$this->_subscribeToNewsletter($this->_oModel->getActivationData());
+  	elseif ($this->_oModel->verifyEmail($this->_aRequest['code']) === true) {
+      # Subscribe to MailChimp after email address is confirmed
+      $this->_subscribeToNewsletter($this->_oModel->getActivationData());
 
       $this->oSmarty->clearCacheForController('users');
 
-			return Helper::successMessage(I18n::get('success.user.verification'), '/');
-		}
+    	return Helper::successMessage(I18n::get('success.user.verification'), '/');
+    }
 
-		else
-			return Helper::errorMessage(I18n::get('error.user.verification'), '/');
-	}
+  	else
+    	return Helper::errorMessage(I18n::get('error.user.verification'), '/');
+  }
 
   /**
    * Get the API token of a user.

@@ -102,15 +102,15 @@ class Downloads extends Main {
     return $this->_aData;
   }
 
-	/**
-	 * Return the name of a file.
-	 *
-	 * @static
-	 * @access public
-	 * @param integer $iId ID to get data from.
-	 * @return string $aResult['file'] file name.
-	 *
-	 */
+  /**
+   * Return the name of a file.
+   *
+   * @static
+   * @access public
+   * @param integer $iId ID to get data from.
+   * @return string $aResult['file'] file name.
+   *
+   */
 	public static function getFileName($iId) {
     if (empty(parent::$_oDbStatic))
       parent::connectToDatabase();
@@ -127,14 +127,14 @@ class Downloads extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
-			$aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
       return $aResult['file'];
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0101 - ' . $p->getMessage());
       exit('SQL error.');
     }
-	}
+  }
 
   /**
    * Create new download.
@@ -258,7 +258,7 @@ class Downloads extends Main {
   /**
    * Updates a download count +1.
    *
-	 * @static
+   * @static
    * @access public
    * @param integer $iId ID to update
    * @return boolean status of query

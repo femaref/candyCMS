@@ -21,7 +21,7 @@ class I18n {
    * holds all translations
    *
    * @var static
-	 * @access private
+   * @access private
    *
    */
   private static $_aLang = null;
@@ -31,7 +31,7 @@ class I18n {
    * holds the object
    *
    * @var static
-	 * @access private
+   * @access private
    *
    */
   private static $_oObject = null;
@@ -69,29 +69,29 @@ class I18n {
   }
 
   /**
-	 * Return the language array.
-	 *
+   * Return the language array.
+   *
    * @static
-	 * @access public
-	 * @param string $sPart main part of the array to return string from
-	 * @return array $_SESSION['lang'] session array with language data
-	 *
-	 */
+   * @access public
+   * @param string $sPart main part of the array to return string from
+   * @return array $_SESSION['lang'] session array with language data
+   *
+   */
 	public static function getArray($sPart = '') {
-		return !$sPart ? I18n::$_aLang : I18n::$_aLang[$sPart];
-	}
+  	return !$sPart ? I18n::$_aLang : I18n::$_aLang[$sPart];
+  }
 
-	/**
-	 * Get language as JSON for JavaScript.
-	 *
-	 * @static
-	 * @access public
-	 * @return string JSON
-	 *
-	 */
+  /**
+   * Get language as JSON for JavaScript.
+   *
+   * @static
+   * @access public
+   * @return string JSON
+   *
+   */
 	public static function getJson() {
-		return json_encode(self::getArray('javascript'));
-	}
+  	return json_encode(self::getArray('javascript'));
+  }
 
   /**
    * Get a specific language string.

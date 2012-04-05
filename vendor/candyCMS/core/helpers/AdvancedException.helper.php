@@ -17,12 +17,12 @@ use CandyCMS\Core\Controllers\Mails;
 class AdvancedException extends \Exception {
 
   /**
-	 * Report errors to our log and send a mail to the admin.
-	 *
-	 * @static
-	 * @access public
+   * Report errors to our log and send a mail to the admin.
+   *
+   * @static
+   * @access public
    * @param type $sMessage
-	 *
+   *
    */
   public static function reportBoth($sMessage) {
     AdvancedException::writeLog($sMessage);
@@ -48,21 +48,21 @@ class AdvancedException extends \Exception {
   }
 
   /**
-	 * Write down an error message to own log.
-	 *
-	 * @static
-	 * @access public
-	 *
-	 */
+   * Write down an error message to own log.
+   *
+   * @static
+   * @access public
+   *
+   */
 	public static function writeLog($sMessage) {
-		$sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
+    $sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
 
     if (!is_dir(PATH_STANDARD . '/app/logs'))
       mkdir(PATH_STANDARD . '/app/logs');
 
-		$sFileName = PATH_STANDARD . '/app/logs/' . WEBSITE_MODE . '.log';
-		$oFile = fopen($sFileName, 'a');
-		fputs($oFile, $sMessage . "\n");
-		fclose($oFile);
-	}
+    $sFileName = PATH_STANDARD . '/app/logs/' . WEBSITE_MODE . '.log';
+    $oFile = fopen($sFileName, 'a');
+  	fputs($oFile, $sMessage . "\n");
+  	fclose($oFile);
+  }
 }

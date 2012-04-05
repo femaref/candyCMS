@@ -25,13 +25,13 @@ final class Piwik {
    */
   const IDENTIFIER = 'piwik';
 
-	/**
-	 * Get The HTML-Code for Piwik.
-	 *
-	 * @access public
-	 * @return string HTML
-	 *
-	 */
+  /**
+   * Get The HTML-Code for Piwik.
+   *
+   * @access public
+   * @return string HTML
+   *
+   */
   public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('piwik', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');

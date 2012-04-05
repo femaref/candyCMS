@@ -62,7 +62,7 @@ final class Bbcode {
 
     # Replace images with image tag (every location allowed, but external is verrry slow)
     while (preg_match('=\[img\](.*)\[\/img\]=isU', $sStr, $sUrl)) {
-			$sUrl[1] = Helper::removeSlash($sUrl[1]);
+      $sUrl[1] = Helper::removeSlash($sUrl[1]);
       $sImageExtension = strtolower(substr(strrchr($sUrl[1], '.'), 1));
       $sTempFileName = md5(MEDIA_DEFAULT_X . $sUrl[1]);
       $sTempFilePath = Helper::removeSlash(PATH_UPLOAD . '/temp/bbcode/' . $sTempFileName . '.' . $sImageExtension);

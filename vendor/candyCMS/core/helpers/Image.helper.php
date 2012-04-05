@@ -19,55 +19,55 @@ class Image {
   /**
    * @var array
    * @access protected
-	 *
+   *
    */
   protected $_aInfo;
 
   /**
    * @var string
    * @access protected
-	 *
+   *
    */
   protected $_sFolder;
 
   /**
    * @var string
    * @access protected
-	 *
+   *
    */
   protected $_sId;
 
   /**
    * @var string
    * @access protected
-	 *
+   *
    */
   protected $_sImgType;
 
   /**
    * @var string
    * @access protected
-	 *
+   *
    */
   protected $_sOriginalPath;
 
   /**
    * @var string
    * @access protected
-	 *
+   *
    */
   protected $_sUploadDir;
 
-	/**
-	 * Set up the new image.
-	 *
-	 * @access public
-	 * @param string $sId name of the file
+  /**
+   * Set up the new image.
+   *
+   * @access public
+   * @param string $sId name of the file
    * @param string $sFolder folder to upload image to. Normally the controller name.
    * @param string $sOriginalPath path of the image to clone from
    * @param string $sImgType type of image
-	 *
-	 */
+   *
+   */
   public function __construct($sId, $sUploadDir, $sOriginalPath, $sImgType = 'jpg') {
     $this->_sId           = & $sId;
     $this->_sOriginalPath = & $sOriginalPath;
@@ -81,7 +81,7 @@ class Image {
     }
   }
 
-	/**
+  /**
    * Create the new image with given params.
    *
    * @access private
@@ -127,7 +127,7 @@ class Image {
     return $sPath;
   }
 
-	/**
+  /**
    * Proportional resizing.
    *
    * @access public
@@ -157,7 +157,7 @@ class Image {
     return $this->_createImage(0, 0, $iDstX, $iDstY);
   }
 
-	/**
+  /**
    * Cut resizing.
    *
    * @access public

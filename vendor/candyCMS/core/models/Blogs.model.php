@@ -39,10 +39,10 @@ class Blogs extends Main {
       $iLimit = 2;
 
     if (empty($iId)) {
-			# Show unpublished items and entries with diffent languages to moderators or administrators only
+      # Show unpublished items and entries with diffent languages to moderators or administrators only
       $sWhere = isset($this->_aSession['user']['role']) && $this->_aSession['user']['role'] >= 3 ?
-							'' :
-							"WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'";
+              '' :
+              "WHERE published = '1' AND language = '" . WEBSITE_LANGUAGE . "'";
 
       # Search blog for tags
       if (isset($this->_aRequest['search']) && !empty($this->_aRequest['search'])) {
@@ -51,7 +51,7 @@ class Blogs extends Main {
       }
 
       try {
-        $oQuery		= $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
+        $oQuery	  = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult	= $oQuery->fetchColumn();
         $this->oPagination = & new Pagination($this->_aRequest, (int)$iResult, $iLimit);
       }
@@ -60,7 +60,7 @@ class Blogs extends Main {
         exit('SQL error.');
       }
 
-			try {
+    	try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
                                         u.id AS uid,
@@ -185,7 +185,7 @@ class Blogs extends Main {
                                           teaser,
                                           keywords,
                                           content,
-																					language,
+                                        	language,
                                           date,
                                           published)
                                       VALUES
@@ -195,7 +195,7 @@ class Blogs extends Main {
                                           :teaser,
                                           :keywords,
                                           :content,
-																					:language,
+                                          :language,
                                           :date,
                                           :published )");
 
@@ -262,7 +262,7 @@ class Blogs extends Main {
                                         teaser = :teaser,
                                         keywords = :keywords,
                                         content = :content,
-																				language = :language,
+                                      	language = :language,
                                         date = :date,
                                         date_modified = :date_modified,
                                         published = :published

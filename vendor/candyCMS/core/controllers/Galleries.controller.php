@@ -180,15 +180,15 @@ class Galleries extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_album');
 
     if ($this->_iId) {
-			$aData = $this->_oModel->getData($this->_iId, true);
+      $aData = $this->_oModel->getData($this->_iId, true);
 
       $this->setTitle(I18n::get('galleries.albums.title.update', $aData['title']));
     }
-		else {
+  	else {
       $aData['title']    = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['content']  = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
 
@@ -256,7 +256,7 @@ class Galleries extends Main {
    *
    */
   protected function _showFormFileTemplate() {
-    $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
+    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form_file');
 
     # Update
@@ -271,8 +271,8 @@ class Galleries extends Main {
     else {
       # r = resize, c = cut
       $this->oSmarty->assign('default', isset($this->_aRequest['cut']) ?
-											Helper::formatInput($this->_aRequest['cut']) :
-											'c');
+                    	Helper::formatInput($this->_aRequest['cut']) :
+                      'c');
 
       $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '');
     }
@@ -330,11 +330,11 @@ class Galleries extends Main {
 
       $iFileCount = count($aReturnValues);
       $bReturnVal = true;
+
       for ($iI = 0; $iI < $iFileCount; $iI++)
-        if ($aReturnValues[$iI] === true)
-          $bReturnVal = $bReturnVal && $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]);
-        else
-          $bReturnVal = false;
+        $bReturnVal = $aReturnValues[$iI] === true ?
+                $bReturnVal && $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]) :
+              	false;
 
       if ($bReturnVal) {
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
@@ -387,8 +387,6 @@ class Galleries extends Main {
    *
    */
   private function _updateFile() {
-  //  $this->_setError('content');
-
     if ($this->_aError)
       return $this->_showFormFileTemplate();
 
@@ -399,10 +397,10 @@ class Galleries extends Main {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
       $this->oSmarty->clearCacheForController('rss');
 
-      Logs::insert(	$this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										(int) $this->_aRequest['id'],
-										$this->_aSession['user']['id']);
+      Logs::insert(  $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    (int) $this->_aRequest['id'],
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), $sRedirectPath);
     }
@@ -457,15 +455,13 @@ class Galleries extends Main {
 }
 
   /**
-   * Update an album .
+   * Update an album.
    *
    * @access protected
    * @return boolean status of model action
    *
    */
   protected function _update() {
-    $this->_setError('content');
-
     return parent::_update(array('searches', 'rss', 'sitemaps'));
   }
 
@@ -479,5 +475,4 @@ class Galleries extends Main {
   protected function _destroy() {
     return parent::_destroy(array('searches', 'rss', 'sitemaps'));
   }
-
 }
