@@ -68,7 +68,7 @@ class Dispatcher {
 
       else {
         # Bugfix: Fix exceptions when upload file is missing
-        if(substr(strtolower($sController), 0, 6) !== 'upload')
+        if($sController && substr(strtolower($sController), 0, 6) !== 'upload')
           throw new AdvancedException('Controller not found:' . PATH_STANDARD .
                   '/vendor/candyCMS/core/controllers/' . $sController . '.controller.php');
       }

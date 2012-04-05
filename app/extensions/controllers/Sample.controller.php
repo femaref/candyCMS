@@ -7,11 +7,12 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
+ *
  */
 
 namespace CandyCMS\Controllers;
 
-use CandyCMS\core\Helpers\Helper;
+use CandyCMS\Core\Helpers\Helper;
 
 require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
 

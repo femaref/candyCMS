@@ -48,6 +48,6 @@
     </ul>
   {/foreach}
   {if !isset($_REQUEST.action)}
-    <a href='/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive' data-role='button'>{$lang.global.archive}</a>
+    <a href="/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive" data-role='button'>{$lang.global.archive}</a>
   {/if}
 {/strip}
