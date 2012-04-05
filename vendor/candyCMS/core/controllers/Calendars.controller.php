@@ -24,28 +24,28 @@ class Calendars extends Main {
    * @return string HTML content
    *
    */
-	protected function _show() {
+  protected function _show() {
      # Show .ics
     if ($this->_iId && !isset($this->_aRequest['action'])) {
       $aData = $this->_oModel->getData($this->_iId);
 
-    	if (!$aData['id'])
-      	Helper::redirectTo('/errors/404');
+      if (!$aData['id'])
+        Helper::redirectTo('/errors/404');
 
-    	header('Content-type: text/calendar; charset=utf-8');
-    	header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
+      header('Content-type: text/calendar; charset=utf-8');
+      header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
 
       $this->oSmarty->assign('calendar', $aData);
       $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
-    	exit($this->oSmarty->display('ics.tpl', UNIQUE_ID));
+      exit($this->oSmarty->display('ics.tpl', UNIQUE_ID));
     }
 
     # Show overview
     else {
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-    	if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
         $this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -60,26 +60,26 @@ class Calendars extends Main {
    * @return string HTML content
    *
    */
-	protected function _showFormTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+  protected function _showFormTemplate() {
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
-  	if ($this->_iId)
+    if ($this->_iId)
       $aData = $this->_oModel->getData($this->_iId, true);
 
     # Create
-  	else {
+    else {
       $aData['content']      = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
       $aData['end_date']    = isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
       $aData['start_date']  = isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
       $aData['title']        = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
-  	foreach ($aData as $sColumn => $sData)
+    foreach ($aData as $sColumn => $sData)
       $this->oSmarty->assign($sColumn, $sData);
 
-  	if ($this->_aError)
+    if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -93,10 +93,10 @@ class Calendars extends Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-	protected function _create() {
+  protected function _create() {
     $this->_setError('start_date');
 
-  	return parent::_create();
+    return parent::_create();
   }
 
   /**
@@ -106,9 +106,9 @@ class Calendars extends Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-	protected function _update() {
+  protected function _update() {
     $this->_setError('start_date');
 
-  	return parent::_update();
+    return parent::_update();
   }
 }
