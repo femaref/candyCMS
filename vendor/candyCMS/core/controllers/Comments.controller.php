@@ -40,8 +40,8 @@ class Comments extends Main {
    *
    */
   protected function _show() {
-    $sTemplateDir	  = Helper::getTemplateDir('comments', 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir   = Helper::getTemplateDir('comments', 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->oSmarty->assign('comments',
@@ -77,8 +77,8 @@ class Comments extends Main {
    *
    */
   protected function _showFormTemplate($bShowCaptcha) {
-    $sTemplateDir	  = Helper::getTemplateDir('comments', '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir   = Helper::getTemplateDir('comments', '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->assign('content', isset($this->_aRequest['content']) ? (string) $this->_aRequest['content'] : '');
     $this->oSmarty->assign('email', isset($this->_aRequest['email']) ? (string) $this->_aRequest['email'] : '');
@@ -111,7 +111,7 @@ class Comments extends Main {
     # No caching for comments
     $this->oSmarty->setCaching(false);
 
-  	return isset($this->_aRequest[$sInputName]) ?
+    return isset($this->_aRequest[$sInputName]) ?
             $this->_create($bShowCaptcha) :
             $this->_showFormTemplate($bShowCaptcha);
   }

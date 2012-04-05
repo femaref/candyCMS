@@ -42,8 +42,8 @@ class Searches extends Main {
       if ($sEnd == $this->_aRequest['controller'])
         return Helper::redirectTo ('/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['search']);
 
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       $sString = Helper::formatInput($this->_aRequest['search']);
 
@@ -82,8 +82,8 @@ class Searches extends Main {
    *
    */
   protected function _formTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->setTitle(I18n::get('global.search'));
     $this->oSmarty->setTemplateDir($sTemplateDir);

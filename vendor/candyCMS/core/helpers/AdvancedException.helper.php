@@ -54,7 +54,7 @@ class AdvancedException extends \Exception {
    * @access public
    *
    */
-	public static function writeLog($sMessage) {
+  public static function writeLog($sMessage) {
     $sMessage = date('Y-m-d Hi', time()) . ' - ' . $sMessage;
 
     if (!is_dir(PATH_STANDARD . '/app/logs'))
@@ -62,7 +62,7 @@ class AdvancedException extends \Exception {
 
     $sFileName = PATH_STANDARD . '/app/logs/' . WEBSITE_MODE . '.log';
     $oFile = fopen($sFileName, 'a');
-  	fputs($oFile, $sMessage . "\n");
-  	fclose($oFile);
+    fputs($oFile, $sMessage . "\n");
+    fclose($oFile);
   }
 }

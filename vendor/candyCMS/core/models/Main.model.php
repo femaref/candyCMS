@@ -94,8 +94,8 @@ abstract class Main {
    *
    */
   public function __construct(&$aRequest = '', &$aSession = '', &$aFile = '') {
-    $this->_aRequest	= & $aRequest;
-    $this->_aSession	= & $aSession;
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
     $this->_aFile     = & $aFile;
 
     $this->_iId = isset($this->_aRequest['id']) && !isset($this->_iId) ? (int) $this->_aRequest['id'] : '';
@@ -122,22 +122,22 @@ abstract class Main {
    *
    */
   public static function connectToDatabase() {
-  	if (empty(self::$_oDbStatic)) {
-    	try {
-      	self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE,
-                      	SQL_USER,
-                      	SQL_PASSWORD,
-                      	array(PDO::ATTR_PERSISTENT => true));
+    if (empty(self::$_oDbStatic)) {
+      try {
+        self::$_oDbStatic = new PDO('mysql:host=' . SQL_HOST . ';port=' . SQL_PORT . ';dbname=' . SQL_DB . '_' . WEBSITE_MODE,
+                        SQL_USER,
+                        SQL_PASSWORD,
+                        array(PDO::ATTR_PERSISTENT => true));
 
-      	self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        self::$_oDbStatic->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       }
-    	catch (PDOException $p) {
-      	AdvancedException::reportBoth('0102 - ' . $p->getMessage());
-      	exit('SQL error.');
+      catch (PDOException $p) {
+        AdvancedException::reportBoth('0102 - ' . $p->getMessage());
+        exit('SQL error.');
       }
     }
 
-  	return self::$_oDbStatic;
+    return self::$_oDbStatic;
   }
 
   /**
@@ -309,8 +309,8 @@ abstract class Main {
     # Create avatars
     Helper::createAvatarURLs($aData,
             $aData['id'],
-          	isset($aData['email']) ? $aData['email'] : WEBSITE_MAIL,
-          	isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false);
+            isset($aData['email']) ? $aData['email'] : WEBSITE_MAIL,
+            isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false);
 
     # Build full user name
     $aData['name']      = isset($aData['name']) ? (string) $aData['name'] : '';
@@ -417,13 +417,13 @@ abstract class Main {
   public static function __autoload($sClass) {
     $sClass = (string) ucfirst(strtolower($sClass));
 
-  	if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php')) {
-    	require_once PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php';
-    	return '\CandyCMS\Models\\' . $sClass;
+    if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php')) {
+      require_once PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php';
+      return '\CandyCMS\Models\\' . $sClass;
     }
-  	elseif (file_exists(PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php')) {
-    	require_once PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php';
-    	return '\CandyCMS\Core\Models\\' . $sClass;
+    elseif (file_exists(PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php')) {
+      require_once PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php';
+      return '\CandyCMS\Core\Models\\' . $sClass;
     }
   }
 

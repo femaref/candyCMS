@@ -111,7 +111,7 @@ class Downloads extends Main {
    * @return string $aResult['file'] file name.
    *
    */
-	public static function getFileName($iId) {
+  public static function getFileName($iId) {
     if (empty(parent::$_oDbStatic))
       parent::connectToDatabase();
 

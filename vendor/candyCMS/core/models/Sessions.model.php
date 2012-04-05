@@ -37,10 +37,10 @@ class Sessions extends Main {
                                                 u.*
                                               FROM
                                                 " . SQL_PREFIX . "users AS u
-                                            	LEFT JOIN
+                                              LEFT JOIN
                                                 " . SQL_PREFIX . "sessions AS s
-                                            	ON
-                                              	u.id = s.user_id
+                                              ON
+                                                u.id = s.user_id
                                               WHERE
                                                 s.session = :session_id
                                               AND
@@ -72,22 +72,22 @@ class Sessions extends Main {
    *
    */
   public function create($aUser = '') {
-  	if (empty($aUser)) {
+    if (empty($aUser)) {
       $sModel = $this->__autoload('Users', true);
       $oModel = & new $sModel($this->_aRequest, $this->_aSession);
-      $aUser	= $oModel->getLoginData();
+      $aUser  = $oModel->getLoginData();
     }
 
     # User did verify and has id, so log in!
     if (isset($aUser['id']) && !empty($aUser['id']) && empty($aUser['verification_code'])) {
-    	try {
+      try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
                                           " . SQL_PREFIX . "sessions
-                                          (	user_id,
-                                          	session,
-                                          	ip,
-                                          	date)
-                                      	VALUES
+                                          (  user_id,
+                                            session,
+                                            ip,
+                                            date)
+                                        VALUES
                                           ( :user_id,
                                             :session,
                                             :ip,
@@ -98,7 +98,7 @@ class Sessions extends Main {
         $oQuery->bindParam('ip', $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
         $oQuery->bindParam('date', time(), PDO::PARAM_INT);
 
-      	return $oQuery->execute();
+        return $oQuery->execute();
       }
       catch (\PDOException $p) {
         try {

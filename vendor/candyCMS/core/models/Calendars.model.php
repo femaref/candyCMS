@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Handle all calendar	 SQL requests.
+ * Handle all calendar SQL requests.
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
@@ -28,22 +28,22 @@ class Calendars extends Main {
    * @return array data
    *
    */
-	public function getData($iId = '', $bUpdate = false) {
+  public function getData($iId = '', $bUpdate = false) {
     $aInts = array('id', 'author_id');
 
-  	if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
-    	try {
-      	if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
+    if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
+      try {
+        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
           $iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
                   (int) $this->_aRequest['id'] :
-                	date('Y');
+                  date('Y');
 
           $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
-                                        	MONTH(c.start_date) AS start_month,
-                                        	YEAR(c.start_date) AS start_year,
-                                        	UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                        	UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                          MONTH(c.start_date) AS start_month,
+                                          YEAR(c.start_date) AS start_year,
+                                          UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                          UNIX_TIMESTAMP(c.end_date) AS end_date,
                                           u.id AS uid,
                                           u.name,
                                           u.surname,
@@ -54,21 +54,21 @@ class Calendars extends Main {
                                           " . SQL_PREFIX . "users u
                                         ON
                                           c.author_id=u.id
-                                      	WHERE
-                                        	YEAR(c.start_date) = :year
+                                        WHERE
+                                          YEAR(c.start_date) = :year
                                         ORDER BY
                                           c.start_date ASC,
                                           c.title ASC");
 
           $oQuery->bindParam('year', $iYear, PDO::PARAM_INT);
         }
-      	else {
+        else {
           $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
-                                        	MONTH(c.start_date) AS start_month,
-                                        	YEAR(c.start_date) AS start_year,
-                                        	UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                        	UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                          MONTH(c.start_date) AS start_month,
+                                          YEAR(c.start_date) AS start_year,
+                                          UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                          UNIX_TIMESTAMP(c.end_date) AS end_date,
                                           u.id AS uid,
                                           u.name,
                                           u.surname,
@@ -96,7 +96,7 @@ class Calendars extends Main {
         exit('SQL error.');
       }
 
-    	foreach ($aResult as $aRow) {
+      foreach ($aResult as $aRow) {
         $iId = $aRow['id'];
         $sMonth = I18n::get('global.months.' . $aRow['start_month']);
         $sYear = $aRow['start_year'];
@@ -108,12 +108,12 @@ class Calendars extends Main {
         $this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $aInts);
         $this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
 
-      	if ($aRow['end_date'] > 0)
+        if ($aRow['end_date'] > 0)
           $this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
       }
     }
-  	else {
-    	try {
+    else {
+      try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           *,
                                           DATE_ADD(end_date, INTERVAL 1 DAY) as ics_end_date
@@ -131,7 +131,7 @@ class Calendars extends Main {
         exit('SQL error.');
       }
 
-    	if($bUpdate === true)
+      if($bUpdate === true)
         $this->_aData = $this->_formatForUpdate($aRow);
 
       else {
@@ -146,7 +146,7 @@ class Calendars extends Main {
       }
     }
 
-  	return $this->_aData;
+    return $this->_aData;
   }
 
   /**
@@ -156,17 +156,17 @@ class Calendars extends Main {
    * @return boolean status of query
    *
    */
-	public function create() {
-  	try {
+  public function create() {
+    try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "calendars
                                         ( author_id,
-                                        	title,
-                                        	content,
-                                        	date,
-                                        	start_date,
-                                        	end_date)
-                                    	VALUES
+                                          title,
+                                          content,
+                                          date,
+                                          start_date,
+                                          end_date)
+                                      VALUES
                                         ( :author_id,
                                           :title,
                                           :content,
@@ -207,8 +207,8 @@ class Calendars extends Main {
    * @return boolean status of query
    *
    */
-	public function update($iId) {
-  	try {
+  public function update($iId) {
+    try {
       $oQuery = $this->_oDb->prepare("UPDATE
                                         " . SQL_PREFIX . "calendars
                                       SET
@@ -227,7 +227,7 @@ class Calendars extends Main {
       $oQuery->bindParam('start_date', Helper::formatInput($this->_aRequest['start_date']), PDO::PARAM_STR, PDO::PARAM_INT);
       $oQuery->bindParam('end_date', Helper::formatInput($this->_aRequest['end_date']), PDO::PARAM_STR, PDO::PARAM_INT);
 
-    	return $oQuery->execute();
+      return $oQuery->execute();
     }
     catch (\PDOException $p) {
       try {

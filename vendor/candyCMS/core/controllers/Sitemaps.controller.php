@@ -24,8 +24,8 @@ class Sitemaps extends Main {
    *
    */
   protected function _showXML() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'xml');
 
     Header('Content-Type: text/xml');
 
@@ -47,8 +47,8 @@ class Sitemaps extends Main {
    *
    */
   protected function _show() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->_getSitemap();
@@ -64,7 +64,7 @@ class Sitemaps extends Main {
    * @access private
    *
    */
-	private function _getSitemap() {
+  private function _getSitemap() {
     $sModel     = $this->__autoload('Blogs', true);
     $oBlogs     = new $sModel($this->_aRequest, $this->_aSession);
 

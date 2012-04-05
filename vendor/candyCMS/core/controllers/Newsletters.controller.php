@@ -49,14 +49,14 @@ class Newsletters extends Main {
   public function _create() {
     $this->_setError('email');
 
-  	if (isset($this->_aError))
-    	return Helper::errorMessage(I18n::get('error.standard')) .
+    if (isset($this->_aError))
+      return Helper::errorMessage(I18n::get('error.standard')) .
               $this->_showFormTemplate();
 
-  	else
-    	return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
-            	Helper::successMessage(I18n::get('success.newsletter.create'), '/') :
-            	Helper::errorMessage(I18n::get('error.standard'), '/' . $this->_aRequest['controller']);
+    else
+      return $this->_subscribeToNewsletter($this->_aRequest, true) === true ?
+              Helper::successMessage(I18n::get('success.newsletter.create'), '/') :
+              Helper::errorMessage(I18n::get('error.standard'), '/' . $this->_aRequest['controller']);
   }
 
   /**
@@ -67,8 +67,8 @@ class Newsletters extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');
     $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ? (string) $this->_aRequest['surname'] : '');

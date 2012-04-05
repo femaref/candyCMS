@@ -24,7 +24,7 @@ class Sample extends \CandyCMS\core\Controllers\Main {
    *
    */
   public function __init() {
-		require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
+    require_once PATH_STANDARD . '/app/extensions/models/Sample.model.php';
     $this->_oModel = new \CandyCMS\Models\Sample($this->_aRequest, $this->_aSession, $this->_aFile);
   }
 
@@ -36,13 +36,13 @@ class Sample extends \CandyCMS\core\Controllers\Main {
    *
    */
   protected function _show() {
-    $sTemplateDir	  = Helper::getTemplateDir('samples', 'show');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir  = Helper::getTemplateDir('samples', 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
     $this->setTitle('Sample extension');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
-  	return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

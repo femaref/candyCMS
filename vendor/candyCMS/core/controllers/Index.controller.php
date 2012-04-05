@@ -38,27 +38,27 @@ class Index {
    * @access protected
    *
    */
-	protected $_aRequest;
+  protected $_aRequest;
 
   /**
    * @var array
    * @access protected
    *
    */
-	protected $_aSession;
+  protected $_aSession;
 
   /**
    * @var array
    * @access protected
    */
-	protected $_aFile;
+  protected $_aFile;
 
   /**
    * @var array
    * @access protected
    *
    */
-	protected $_aCookie;
+  protected $_aCookie;
 
   /**
    * Saves the object.
@@ -88,11 +88,11 @@ class Index {
    * @param array $aCookie alias for $_COOKIE
    *
    */
-	public function __construct(&$aRequest, &$aSession = '', &$aFile = '', &$aCookie = '') {
-    $this->_aRequest	= & $aRequest;
-    $this->_aSession	= & $aSession;
-    $this->_aFile	    = & $aFile;
-    $this->_aCookie	  = & $aCookie;
+  public function __construct(&$aRequest, &$aSession = '', &$aFile = '', &$aCookie = '') {
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile      = & $aFile;
+    $this->_aCookie    = & $aCookie;
 
     $this->getConfigFiles(array('Plugins'));
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
@@ -190,31 +190,31 @@ class Index {
    * @see config/Routes.yml
    *
    */
-	public function getRoutes() {
-  	require_once PATH_STANDARD . '/vendor/routes/Routes.php';
+  public function getRoutes() {
+    require_once PATH_STANDARD . '/vendor/routes/Routes.php';
 
     # Cache routes for performance reasons
-  	if(!isset($this->_aSession['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')
+    if(!isset($this->_aSession['routes']) || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test')
       $this->_aSession['routes'] = \Symfony\Component\Yaml\Yaml::parse(file_get_contents(PATH_STANDARD . '/app/config/Routes.yml'));
 
-  	Routes::add($this->_aSession['routes']);
+    Routes::add($this->_aSession['routes']);
 
     if (!defined('WEBSITE_LANDING_PAGE'))
       define('WEBSITE_LANDING_PAGE', Routes::route('/'));
 
     $sURI         = isset($_SERVER['REQUEST_URI']) ? Helper::removeSlash($_SERVER['REQUEST_URI']) : '';
     $sRoutemap    = Routes::route($sURI);
-    $aRouteParts	= explode('&', $sRoutemap);
+    $aRouteParts  = explode('&', $sRoutemap);
 
-  	if (count($aRouteParts) > 1) {
-    	foreach ($aRouteParts as $sRoutes) {
+    if (count($aRouteParts) > 1) {
+      foreach ($aRouteParts as $sRoutes) {
         $aRoute = explode('=', $sRoutes);
 
-      	if(!isset($this->_aRequest[$aRoute[0]]))
+        if(!isset($this->_aRequest[$aRoute[0]]))
           $this->_aRequest[$aRoute[0]] = $aRoute[1];
       }
     }
-  	else
+    else
       $this->_aRequest['controller'] = isset($this->_aRequest['controller']) ? $this->_aRequest['controller'] : $sRoutemap;
 
 
@@ -222,7 +222,7 @@ class Index {
     if(preg_match('/\./', $this->_aRequest['controller']))
       exit(file_get_contents(Helper::removeSlash(WEBSITE_CDN) . '/' . $this->_aRequest['controller']));
 
-  	return $this->_aRequest;
+    return $this->_aRequest;
   }
 
   /**
@@ -239,7 +239,7 @@ class Index {
     # We got a language request? Let's switch the language!
     # Bugfix: Added "$this->_aRequest['controller']" to make a blog update possible.
     if (isset($this->_aRequest['language']) &&
-          	file_exists(PATH_STANDARD . '/app/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
+            file_exists(PATH_STANDARD . '/app/languages/' . (string) $this->_aRequest['language'] . '.language.yml') &&
             !isset($this->_aRequest['controller'])) {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
@@ -248,8 +248,8 @@ class Index {
 
     # There is no request, but there might be a cookie instead.
     else {
-      $aRequest	= isset($this->_aCookie) && is_array($this->_aCookie) ?
-            	array_merge($this->_aRequest, $this->_aCookie) :
+      $aRequest  = isset($this->_aCookie) && is_array($this->_aCookie) ?
+              array_merge($this->_aRequest, $this->_aCookie) :
               $this->_aRequest;
 
       if (isset($aRequest['default_language']) &&
@@ -349,8 +349,8 @@ class Index {
         'message'    => '',
         'headline'  => '');
 
-  	unset($this->_aSession['flash_message']);
-  	return $aFlashMessage;
+    unset($this->_aSession['flash_message']);
+    return $aFlashMessage;
   }
 
   /**
@@ -384,7 +384,7 @@ class Index {
    *
    */
   protected static function _resetUser() {
-  	return array(
+    return array(
         'email' => '',
         'facebook_id' => NULL,
         'id' => 0,
@@ -411,7 +411,7 @@ class Index {
    * @return array $this->_aSession['user']
    *
    */
-	public function setUser() {
+  public function setUser() {
     # Set standard variables
     $this->_aSession['user'] = self::_resetUser();
 
@@ -487,10 +487,10 @@ class Index {
   public function show() {
     # Set a caching / compile ID
     # Ask if defined because of unit tests.
-  	if (!defined('UNIQUE_PREFIX'))
-    	define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE);
+    if (!defined('UNIQUE_PREFIX'))
+      define('UNIQUE_PREFIX', WEBSITE_MODE . '|' . $this->_aRequest['controller'] . '|' . WEBSITE_LOCALE);
 
-  	if (!defined('UNIQUE_ID')) {
+    if (!defined('UNIQUE_ID')) {
       define('UNIQUE_ID', UNIQUE_PREFIX . '|' . (MOBILE ? 'mob|' : 'tpl|') .
               substr(md5($this->_aSession['user']['role'] . PATH_TEMPLATE), 0, 10) . '|' .
               substr(md5(CURRENT_URL), 0, 10));
@@ -509,8 +509,8 @@ class Index {
 
     # HTML with template
     else {
-      $sTemplateDir	  = Helper::getTemplateDir('layouts', 'application');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'application');
+      $sTemplateDir    = Helper::getTemplateDir('layouts', 'application');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'application');
 
       # Get flash messages (success and error)
       $aFlashMessages = $this->_getFlashMessage();

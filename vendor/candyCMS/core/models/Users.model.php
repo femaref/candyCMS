@@ -98,23 +98,23 @@ class Users extends Main {
    * @see app/models/Session.model.php
    *
    */
-	public static function getVerificationData($sEmail) {
-  	if (empty(parent::$_oDbStatic))
-    	parent::connectToDatabase();
+  public static function getVerificationData($sEmail) {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
 
-  	try {
+    try {
       $oQuery = parent::$_oDbStatic->prepare("SELECT
-                                              	name,
-                                              	verification_code
-                                            	FROM
+                                                name,
+                                                verification_code
+                                              FROM
                                                 " . SQL_PREFIX . "users
-                                            	WHERE
-                                              	email = :email");
+                                              WHERE
+                                                email = :email");
 
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
       $oQuery->execute();
 
-    	return $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0079 - ' . $p->getMessage());
@@ -133,13 +133,13 @@ class Users extends Main {
    * @return boolean status of query
    *
    */
-	public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
-  	if (empty(parent::$_oDbStatic))
-    	parent::connectToDatabase();
+  public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
+    if (empty(parent::$_oDbStatic))
+      parent::connectToDatabase();
 
     $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
 
-  	try {
+    try {
       $oQuery = parent::$_oDbStatic->prepare("UPDATE
                                                 " . SQL_PREFIX . "users
                                               SET
@@ -150,7 +150,7 @@ class Users extends Main {
       $oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
 
-    	return $oQuery->execute();
+      return $oQuery->execute();
     }
     catch (\PDOException $p) {
       try {
@@ -180,7 +180,7 @@ class Users extends Main {
     $aInts  = array('id', 'role');
     $aBools = array('use_gravatar', 'receive_newsletter');
 
-  	if ($bForceNoId === true)
+    if ($bForceNoId === true)
       $iId = '';
 
     if (empty($iId)) {
@@ -192,7 +192,7 @@ class Users extends Main {
                                           u.surname,
                                           u.date,
                                           u.use_gravatar,
-                                        	u.receive_newsletter,
+                                          u.receive_newsletter,
                                           u.verification_code,
                                           u.role,
                                           s.date as last_login
@@ -273,16 +273,16 @@ class Users extends Main {
    *
    */
   public function create($iVerificationCode = '', $iRole = 1) {
-  	try {
+    try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
-                                        (	name,
-                                        	surname,
-                                        	password,
-                                        	email,
-                                        	date,
+                                        (  name,
+                                          surname,
+                                          password,
+                                          email,
+                                          date,
                                           role,
-                                        	verification_code,
+                                          verification_code,
                                           api_token)
                                       VALUES
                                         ( :name,
@@ -330,7 +330,7 @@ class Users extends Main {
    * @return boolean status of query
    *
    */
-	public function update($iId) {
+  public function update($iId) {
     $iReceiveNewsletter = isset($this->_aRequest['receive_newsletter']) ? 1 : 0;
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
@@ -343,14 +343,14 @@ class Users extends Main {
     else
       $iUserRole = & $this->_aSession['user']['role'];
 
-  	try {
+    try {
       $oQuery = $this->_oDb->prepare("UPDATE
                                         " . SQL_PREFIX . "users
                                       SET
                                         name = :name,
                                         surname = :surname,
                                         content = :content,
-                                      	receive_newsletter = :receive_newsletter,
+                                        receive_newsletter = :receive_newsletter,
                                         use_gravatar = :use_gravatar,
                                         role = :role
                                       WHERE
@@ -364,7 +364,7 @@ class Users extends Main {
       $oQuery->bindParam('role', $iUserRole, PDO::PARAM_INT);
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
 
-    	return $oQuery->execute();
+      return $oQuery->execute();
     }
     catch (\PDOException $p) {
       try {
@@ -468,7 +468,7 @@ class Users extends Main {
    *
    */
   public function verifyEmail($sVerificationCode) {
-  	try {
+    try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         *
                                       FROM
@@ -487,8 +487,8 @@ class Users extends Main {
       exit('SQL error.');
     }
 
-  	if ($this->_aData['id']) {
-    	try {
+    if ($this->_aData['id']) {
+      try {
         $oQuery = $this->_oDb->prepare("UPDATE
                                           " . SQL_PREFIX . "users
                                         SET
@@ -507,7 +507,7 @@ class Users extends Main {
         $sModel = $this->__autoload('Sessions');
         $sModel::create($this->_aData);
 
-      	return $oQuery->execute();
+        return $oQuery->execute();
       }
       catch (\PDOException $p) {
         try {
@@ -529,8 +529,8 @@ class Users extends Main {
    * @access public
    * @return array $this->_aData
    */
-	public function getActivationData() {
-  	return $this->_aData;
+  public function getActivationData() {
+    return $this->_aData;
   }
 
   /**
@@ -540,8 +540,8 @@ class Users extends Main {
    * @return array user data of login user
    *
    */
-	public function getLoginData() {
-  	try {
+  public function getLoginData() {
+    try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         id, verification_code
                                       FROM
@@ -558,7 +558,7 @@ class Users extends Main {
       $oQuery->bindParam('password', $sPassword, PDO::PARAM_STR);
       $oQuery->execute();
 
-    	return $oQuery->fetch(PDO::FETCH_ASSOC);
+      return $oQuery->fetch(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0094 - ' . $p->getMessage());
@@ -573,8 +573,8 @@ class Users extends Main {
    * @return string the token or empty string
    *
    */
-	public function getToken() {
-  	try {
+  public function getToken() {
+    try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         api_token
                                       FROM

@@ -40,7 +40,7 @@ class Downloads extends Main {
       # Get mime type
       if(function_exists('finfo_open')) {
         $sMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE),
-              	Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
+                Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile));
         header('Content-type: ' . $sMimeType);
       }
 
@@ -49,14 +49,14 @@ class Downloads extends Main {
       exit(readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)));
     }
     else {
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-    	if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
         $this->oSmarty->assign('downloads', $this->_oModel->getData($this->_iId));
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
-    	return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
   }
 
@@ -68,8 +68,8 @@ class Downloads extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
     if ($this->_iId)
@@ -113,12 +113,12 @@ class Downloads extends Main {
       return $this->_showFormTemplate();
 
     else {
-    	require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
+      require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
 
       # Set up upload helper and rename file to title
       $oUploadFile = new Upload($this->_aRequest,
                                 $this->_aSession, $this->_aFile,
-                              	Helper::formatInput($this->_aRequest['title']));
+                                Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
       $aRetVals = $oUploadFile->uploadFiles('downloads');
@@ -152,7 +152,7 @@ class Downloads extends Main {
    * @return boolean status of model action
    *
    */
-	protected function _update() {
+  protected function _update() {
     return parent::_update('searches');
   }
 
@@ -163,7 +163,7 @@ class Downloads extends Main {
    * @return boolean status of model action
    *
    */
-	protected function _destroy() {
+  protected function _destroy() {
     return parent::_destroy('searches');
   }
 

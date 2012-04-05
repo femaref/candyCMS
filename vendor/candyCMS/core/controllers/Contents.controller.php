@@ -26,10 +26,10 @@ class Contents extends Main {
    */
   protected function _show() {
     if ($this->_iId) {
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
-    	if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
 
         if (!isset($aData) || !$aData[$this->_iId]['id'])
@@ -46,8 +46,8 @@ class Contents extends Main {
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'overview');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'overview');
 
       $this->setTitle(I18n::get('global.manager.content'));
 
@@ -66,8 +66,8 @@ class Contents extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     if ($this->_iId) {
       $aData = $this->_oModel->getData($this->_iId, true);
@@ -98,7 +98,7 @@ class Contents extends Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-	protected function _create() {
+  protected function _create() {
     $this->_setError('content');
 
     return parent::_create('searches', 'sitemaps');
@@ -111,7 +111,7 @@ class Contents extends Main {
    * @return boolean status of model action
    *
    */
-	protected function _update() {
+  protected function _update() {
     $this->_setError('content');
 
     return parent::_update('searches', 'sitemaps');
@@ -124,7 +124,7 @@ class Contents extends Main {
    * @return boolean status of model action
    *
    */
-	protected function _destroy() {
+  protected function _destroy() {
     return parent::_destroy('searches', 'sitemaps');
   }
 }

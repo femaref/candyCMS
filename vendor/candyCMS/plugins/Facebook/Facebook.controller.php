@@ -34,9 +34,9 @@ final class FacebookCMS extends Facebook {
    * @return type
    *
    */
-	public final function getUserData($sKey = '') {
-  	if ($this->getAccessToken()) {
-    	try {
+  public final function getUserData($sKey = '') {
+    if ($this->getAccessToken()) {
+      try {
         $iUid = $this->getUser();
         $aApiCall = array(
             'method' => 'users.getinfo',
@@ -45,10 +45,10 @@ final class FacebookCMS extends Facebook {
         );
 
         $aData = $this->api($aApiCall);
-      	return !empty($sKey) ? $aData[$sKey] : $aData;
+        return !empty($sKey) ? $aData[$sKey] : $aData;
       }
-    	catch (AdvancedException $e) {
-      	die($e->getMessage());
+      catch (AdvancedException $e) {
+        die($e->getMessage());
       }
     }
   }
@@ -62,8 +62,8 @@ final class FacebookCMS extends Facebook {
    * @return type
    *
    */
-	public final function getUserAvatars($aUids, &$aSession = null) {
-  	try {
+  public final function getUserAvatars($aUids, &$aSession = null) {
+    try {
       # get the cache
       if ($aSession)
         $aFacebookAvatarCache = &$aSession['facebookavatars'];
@@ -97,12 +97,12 @@ final class FacebookCMS extends Facebook {
       #we return the cache
       return $aFacebookAvatarCache;
     }
-  	catch (AdvancedException $e) {
-    	die($e->getMessage());
+    catch (AdvancedException $e) {
+      die($e->getMessage());
     }
   }
 
-	public final function show(&$aRequest, &$aSession) {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('facebook', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 

@@ -29,7 +29,7 @@ final class Recaptcha {
    * @see config/Plugins.inc.php
    *
    */
-	protected $_sPublicKey = PLUGIN_RECAPTCHA_PUBLIC_KEY;
+  protected $_sPublicKey = PLUGIN_RECAPTCHA_PUBLIC_KEY;
 
   /**
    * ReCaptcha private key.
@@ -39,7 +39,7 @@ final class Recaptcha {
    * @see config/Plugins.inc.php
    *
    */
-	protected $_sPrivateKey = PLUGIN_RECAPTCHA_PRIVATE_KEY;
+  protected $_sPrivateKey = PLUGIN_RECAPTCHA_PRIVATE_KEY;
 
   /**
    * ReCaptcha object.
@@ -48,7 +48,7 @@ final class Recaptcha {
    * @access protected
    *
    */
-	protected $_oResponse = '';
+  protected $_oResponse = '';
 
   /**
    * Provided ReCaptcha error message.
@@ -57,7 +57,7 @@ final class Recaptcha {
    * @access protected
    *
    */
-	protected $_sError = '';
+  protected $_sError = '';
 
   /**
    * Identifier for template replacements

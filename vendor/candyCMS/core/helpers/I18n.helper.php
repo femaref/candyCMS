@@ -77,8 +77,8 @@ class I18n {
    * @return array $_SESSION['lang'] session array with language data
    *
    */
-	public static function getArray($sPart = '') {
-  	return !$sPart ? I18n::$_aLang : I18n::$_aLang[$sPart];
+  public static function getArray($sPart = '') {
+    return !$sPart ? I18n::$_aLang : I18n::$_aLang[$sPart];
   }
 
   /**
@@ -89,8 +89,8 @@ class I18n {
    * @return string JSON
    *
    */
-	public static function getJson() {
-  	return json_encode(self::getArray('javascript'));
+  public static function getJson() {
+    return json_encode(self::getArray('javascript'));
   }
 
   /**

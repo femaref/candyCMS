@@ -91,14 +91,14 @@ class Pagination {
    *
    */
   public function __construct(&$aRequest, $iEntries, $iLimit = 10) {
-    $this->_aRequest	= & $aRequest;
-    $this->_iEntries	= & $iEntries;
-    $this->_iLimit	  = & $iLimit;
+    $this->_aRequest  = & $aRequest;
+    $this->_iEntries  = & $iEntries;
+    $this->_iLimit    = & $iLimit;
 
     $this->_iPages = ceil($this->_iEntries / $this->_iLimit); # All pages
     $this->_iCurrentPage = isset($this->_aRequest['page']) && (int) $this->_aRequest['page'] <= $this->_iPages ?
             (int) $this->_aRequest['page'] :
-          	1;
+            1;
 
     if (!$this->_iPages)
       $this->_iPages = 1;

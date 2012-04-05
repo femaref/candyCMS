@@ -51,16 +51,16 @@ class Blogs extends Main {
       }
 
       try {
-        $oQuery	  = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
-        $iResult	= $oQuery->fetchColumn();
-        $this->oPagination = & new Pagination($this->_aRequest, (int)$iResult, $iLimit);
+        $oQuery  = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
+        $iResult = $oQuery->fetchColumn();
+        $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());
         exit('SQL error.');
       }
 
-    	try {
+      try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
                                         u.id AS uid,
@@ -185,7 +185,7 @@ class Blogs extends Main {
                                           teaser,
                                           keywords,
                                           content,
-                                        	language,
+                                          language,
                                           date,
                                           published)
                                       VALUES
@@ -262,7 +262,7 @@ class Blogs extends Main {
                                         teaser = :teaser,
                                         keywords = :keywords,
                                         content = :content,
-                                      	language = :language,
+                                        language = :language,
                                         date = :date,
                                         date_modified = :date_modified,
                                         published = :published

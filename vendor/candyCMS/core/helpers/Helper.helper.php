@@ -155,7 +155,7 @@ class Helper {
    *
    */
   public static function createLinkTo($sUrl, $bExternal = false) {
-  	return	$bExternal === true ?
+    return  $bExternal === true ?
             '<a href="' . $sUrl . '" rel="external">' . $sUrl . '</a>' :
             '<a href="' . WEBSITE_URL . '/' . $sUrl . '">' . WEBSITE_URL . '/' . $sUrl . '</a>';
   }
@@ -175,16 +175,16 @@ class Helper {
   public static function getAvatar($iSize, $iUserId, $sEmail = '', $bUseGravatar = false) {
     $sFilePath = Helper::removeSlash(PATH_UPLOAD . '/users/' . $iSize . '/' . $iUserId);
 
-  	if ($bUseGravatar == false && file_exists($sFilePath . '.jpg'))
-    	return '/' . $sFilePath . '.jpg';
+    if ($bUseGravatar == false && file_exists($sFilePath . '.jpg'))
+      return '/' . $sFilePath . '.jpg';
 
-  	elseif ($bUseGravatar == false && file_exists($sFilePath . '.png'))
-    	return '/' . $sFilePath . '.png';
+    elseif ($bUseGravatar == false && file_exists($sFilePath . '.png'))
+      return '/' . $sFilePath . '.png';
 
-  	elseif ($bUseGravatar == false && file_exists($sFilePath . '.gif'))
-    	return '/' . $sFilePath . '.gif';
+    elseif ($bUseGravatar == false && file_exists($sFilePath . '.gif'))
+      return '/' . $sFilePath . '.gif';
 
-  	else {
+    else {
       if (!is_int($iSize))
         $iSize = POPUP_DEFAULT_X;
 
@@ -249,25 +249,25 @@ class Helper {
    *
    */
   public static function getTemplateDir($sFolder, $sFile) {
-  	try {
+    try {
       # Extensions
-    	if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/views/' . $sFolder . '/' . $sFile . '.tpl'))
-      	return PATH_STANDARD . '/app/extensions/views/' . $sFolder;
+      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/views/' . $sFolder . '/' . $sFile . '.tpl'))
+        return PATH_STANDARD . '/app/extensions/views/' . $sFolder;
 
       # Template use
-    	elseif (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
-      	return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
+      elseif (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
+        return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
 
       # Standard views
-    	else {
-      	if (!file_exists(PATH_STANDARD . '/vendor/candyCMS/core/views/' . $sFolder . '/' . $sFile . '.tpl'))
-        	throw new AdvancedException('This template does not exist: ' . $sFolder . '/' . $sFile . '.tpl');
+      else {
+        if (!file_exists(PATH_STANDARD . '/vendor/candyCMS/core/views/' . $sFolder . '/' . $sFile . '.tpl'))
+          throw new AdvancedException('This template does not exist: ' . $sFolder . '/' . $sFile . '.tpl');
 
-      	else
-        	return PATH_STANDARD . '/vendor/candyCMS/core/views/' . $sFolder;
+        else
+          return PATH_STANDARD . '/vendor/candyCMS/core/views/' . $sFolder;
       }
     }
-  	catch (AdvancedException $e) {
+    catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
     }
   }
@@ -283,18 +283,18 @@ class Helper {
    *
    */
   public static function getTemplateType($sDir, $sFile) {
-  	try {
+    try {
       # Mobile device.
-    	if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
-      	return $sFile . '.mob';
+      if (file_exists($sDir . '/' . $sFile . '.mob') && MOBILE === true)
+        return $sFile . '.mob';
 
       # Standard template
-    	else
-      	return $sFile . '.tpl';
+      else
+        return $sFile . '.tpl';
     }
-  	catch (AdvancedException $e) {
+    catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
-    	exit($e->getMessage());
+      exit($e->getMessage());
     }
   }
 
@@ -309,23 +309,23 @@ class Helper {
    *
    */
   public static function getPluginTemplateDir($sFolder, $sFile) {
-  	try {
+    try {
       # Template
-    	if (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
-      	return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
+      if (file_exists(PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder . '/' . $sFile . '.tpl'))
+        return PATH_STANDARD . '/public/templates/' . PATH_TEMPLATE . '/views/' . $sFolder;
 
       # Standard views
-    	else {
-      	if (!file_exists(PATH_STANDARD . '/vendor/candyCMS/plugins/' . ucfirst($sFolder) . '/views/' . $sFile . '.tpl'))
-        	throw new AdvancedException('This plugin template does not exist: ' . $sFile . '.tpl');
+      else {
+        if (!file_exists(PATH_STANDARD . '/vendor/candyCMS/plugins/' . ucfirst($sFolder) . '/views/' . $sFile . '.tpl'))
+          throw new AdvancedException('This plugin template does not exist: ' . $sFile . '.tpl');
 
-      	else
-        	return PATH_STANDARD . '/vendor/candyCMS/plugins/' . ucfirst($sFolder) . '/views';
+        else
+          return PATH_STANDARD . '/vendor/candyCMS/plugins/' . ucfirst($sFolder) . '/views';
       }
     }
-  	catch (AdvancedException $e) {
+    catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
-    	exit($e->getMessage());
+      exit($e->getMessage());
     }
   }
 
@@ -347,9 +347,9 @@ class Helper {
       if ($bDisableHTML === true)
         $sStr = htmlspecialchars($sStr);
     }
-  	catch (AdvancedException $e) {
+    catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());
-    	exit($e->getMessage());
+      exit($e->getMessage());
     }
 
     # remove multiple spaces and newlines (3+)
@@ -420,7 +420,7 @@ class Helper {
       return $oBbcode->getFormatedText($mStr);
     }
 
-  	return $mStr;
+    return $mStr;
   }
 
   /**
@@ -434,16 +434,16 @@ class Helper {
    *
    */
   public static function getLastEntry($sTable) {
-  	try {
+    try {
       $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
       $oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
       $aRow = $oQuery->fetch();
 
-    	return $aRow['id'];
+      return $aRow['id'];
     }
-  	catch (AdvancedException $e) {
-    	AdvancedException::reportBoth('0104 - ' . $e->getMessage());
-    	exit('SQL error.');
+    catch (AdvancedException $e) {
+      AdvancedException::reportBoth('0104 - ' . $e->getMessage());
+      exit('SQL error.');
     }
   }
 

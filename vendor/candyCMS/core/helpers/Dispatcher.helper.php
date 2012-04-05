@@ -31,11 +31,11 @@ class Dispatcher {
    * @param array $aCookie alias for $_COOKIE
    *
    */
-	public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
-    $this->_aRequest	= & $aRequest;
-    $this->_aSession	= & $aSession;
-    $this->_aFile	    = & $aFile;
-    $this->_aCookie	  = & $aCookie;
+  public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
+    $this->_aRequest = & $aRequest;
+    $this->_aSession = & $aSession;
+    $this->_aFile    = & $aFile;
+    $this->_aCookie  = & $aCookie;
   }
 
   /**

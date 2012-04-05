@@ -31,7 +31,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aRequest = array();
+  protected $_aRequest = array();
 
   /**
    * Alias for $_SESSION
@@ -39,7 +39,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aSession = array();
+  protected $_aSession = array();
 
   /**
    * Alias for $_FILE
@@ -47,7 +47,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aFile;
+  protected $_aFile;
 
   /**
    * Alias for $_COOKIE
@@ -55,7 +55,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aCookie;
+  protected $_aCookie;
 
   /**
    * ID to process.
@@ -63,7 +63,7 @@ abstract class Main {
    * @var integer
    * @access protected
    */
-	protected $_iId;
+  protected $_iId;
 
   /**
    * Fetches all error messages in an array.
@@ -71,7 +71,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aError;
+  protected $_aError;
 
   /**
    * The controller claimed model.
@@ -79,7 +79,7 @@ abstract class Main {
    * @var object
    * @access protected
    */
-	protected $_oModel;
+  protected $_oModel;
 
   /**
    * Returned data from models.
@@ -87,7 +87,7 @@ abstract class Main {
    * @var array
    * @access protected
    */
-	protected $_aData = array();
+  protected $_aData = array();
 
   /**
    * Final HTML-Output.
@@ -95,7 +95,7 @@ abstract class Main {
    * @var string
    * @access private
    */
-	private $_sContent;
+  private $_sContent;
 
   /**
    * Meta description.
@@ -103,7 +103,7 @@ abstract class Main {
    * @var string
    * @access private
    */
-	private $_sDescription;
+  private $_sDescription;
 
   /**
    * Meta keywords.
@@ -111,7 +111,7 @@ abstract class Main {
    * @var string
    * @access private
    */
-	private $_sKeywords;
+  private $_sKeywords;
 
   /**
    * Page title.
@@ -119,7 +119,7 @@ abstract class Main {
    * @var string
    * @access private
    */
-	private $_sTitle;
+  private $_sTitle;
 
   /**
    * Name of the templates folder.
@@ -136,7 +136,7 @@ abstract class Main {
    * @var object
    * @access public
    */
-	public $oSmarty;
+  public $oSmarty;
 
   /**
    * Initialize the controller by adding input params, set default id and start template engine.
@@ -148,18 +148,18 @@ abstract class Main {
    * @param array $aCookie alias for $_COOKIE
    *
    */
-	public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
-    $this->_aRequest	= & $aRequest;
-    $this->_aSession	= & $aSession;
-    $this->_aFile	    = & $aFile;
-    $this->_aCookie	  = & $aCookie;
+  public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile      = & $aFile;
+    $this->_aCookie    = & $aCookie;
 
     # Load config files if not already done (important for unit testing)
     if (!defined('WEBSITE_URL'))
       require PATH_STANDARD . '/config/Candy.inc.php';
 
-  	if (!defined('WEBSITE_LOCALE'))
-    	define('WEBSITE_LOCALE', 'en_US');
+    if (!defined('WEBSITE_LOCALE'))
+      define('WEBSITE_LOCALE', 'en_US');
 
     $this->_iId = isset($this->_aRequest['id']) ? (int) $this->_aRequest['id'] : '';
 
@@ -230,7 +230,7 @@ abstract class Main {
    * @return object $this->oSmarty
    *
    */
-	protected function _setSmarty() {
+  protected function _setSmarty() {
     # Initialize smarty
     $this->oSmarty = SmartySingleton::getInstance();
 
@@ -240,7 +240,7 @@ abstract class Main {
       $this->oSmarty->clearCompiledTemplate();
     }
 
-  	return $this->oSmarty;
+    return $this->oSmarty;
   }
 
   /**
@@ -250,7 +250,7 @@ abstract class Main {
    * @param string $sDescription description to be set.
    *
    */
-	public function setDescription($sDescription = '') {
+  public function setDescription($sDescription = '') {
     if ($sDescription && !$this->_sDescription)
       $this->_sDescription = & $sDescription;
   }
@@ -262,7 +262,7 @@ abstract class Main {
    * @return string meta description
    *
    */
-	public function getDescription() {
+  public function getDescription() {
     if(!$this->_sDescription) {
       # Show default description if this is our landing page or we got no descrption.
       if ($this->_aRequest['controller'] == $this->_aSession['routes']['/'])
@@ -282,7 +282,7 @@ abstract class Main {
    * @param string $sKeywords keywords to be set.
    *
    */
-	public function setKeywords($sKeywords = '') {
+  public function setKeywords($sKeywords = '') {
     if ($sKeywords && !$this->_sKeywords)
       $this->_sKeywords = & $sKeywords;
   }
@@ -294,8 +294,8 @@ abstract class Main {
    * @return string meta keywords
    *
    */
-	public function getKeywords() {
-  	return $this->_sKeywords ? $this->_sKeywords : I18n::get('website.keywords');
+  public function getKeywords() {
+    return $this->_sKeywords ? $this->_sKeywords : I18n::get('website.keywords');
   }
 
   /**
@@ -305,7 +305,7 @@ abstract class Main {
    * @param string $sTitle title to be set.
    *
    */
-	public function setTitle($sTitle = '') {
+  public function setTitle($sTitle = '') {
     if ($sTitle && !$this->_sTitle)
       $this->_sTitle = & $sTitle;
   }
@@ -317,7 +317,7 @@ abstract class Main {
    * @return string page title
    *
    */
-	public function getTitle() {
+  public function getTitle() {
     if(!$this->_sTitle) {
       if ($this->_aRequest['controller'] == 'errors')
         $this->setTitle(I18n::get('error.' . $this->_aRequest['id'] . '.title'));
@@ -337,7 +337,7 @@ abstract class Main {
    * @see vendor/candyCMS/core/helpers/Dispatcher.helper.php
    *
    */
-	public function setContent($sContent) {
+  public function setContent($sContent) {
     $this->_sContent = & $sContent;
   }
 
@@ -347,8 +347,8 @@ abstract class Main {
    * @access public
    * @return string $this->_sContent
    */
-	public function getContent() {
-  	return $this->_sContent;
+  public function getContent() {
+    return $this->_sContent;
   }
 
   /**
@@ -358,8 +358,8 @@ abstract class Main {
    * @return integer $this->_iId
    *
    */
-	public function getId() {
-  	return $this->_iId;
+  public function getId() {
+    return $this->_iId;
   }
 
   /**
@@ -371,10 +371,10 @@ abstract class Main {
    * @return string modified title
    *
    */
-	protected static function _removeHighlight($sTitle) {
+  protected static function _removeHighlight($sTitle) {
     $sTitle = str_replace('<mark>', '', $sTitle);
     $sTitle = str_replace('</mark>', '', $sTitle);
-  	return $sTitle;
+    return $sTitle;
   }
 
   /**
@@ -386,7 +386,7 @@ abstract class Main {
    * @return object $this due to method chaining
    *
    */
-	protected function _setError($sField, $sMessage = '') {
+  protected function _setError($sField, $sMessage = '') {
     if ($sField == 'file' || $sField == 'image') {
       if (!isset($this->_aFile[$sField]) || empty($this->_aFile[$sField]['name']))
           $this->_aError[$sField] = $sMessage ?
@@ -445,14 +445,14 @@ abstract class Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-	public function create($sInputName, $iUserRole = 3) {
+  public function create($sInputName, $iUserRole = 3) {
     $this->oSmarty->setCaching(false);
 
-  	if ($this->_aSession['user']['role'] < $iUserRole)
-    	return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+    if ($this->_aSession['user']['role'] < $iUserRole)
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-  	else
-    	return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
+    else
+      return isset($this->_aRequest[$sInputName]) ? $this->_create() : $this->_showFormTemplate();
   }
 
   /**
@@ -464,14 +464,14 @@ abstract class Main {
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
-	public function update($sInputName, $iUserRole = 3) {
+  public function update($sInputName, $iUserRole = 3) {
     $this->oSmarty->setCaching(false);
 
-  	if ($this->_aSession['user']['role'] < $iUserRole)
-    	return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+    if ($this->_aSession['user']['role'] < $iUserRole)
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
-  	else
-    	return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
+    else
+      return isset($this->_aRequest[$sInputName]) ? $this->_update() : $this->_showFormTemplate();
   }
 
   /**

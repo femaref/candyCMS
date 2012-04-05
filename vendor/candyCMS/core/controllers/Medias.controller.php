@@ -42,9 +42,9 @@ class Medias extends Main {
             $bAllTrue = false;
         }
 
-       	return $bAllTrue === true ?
-              	Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller']) :
-              	Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller']);
+         return $bAllTrue === true ?
+                Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller']) :
+                Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller']);
 
       }
       else
@@ -60,8 +60,8 @@ class Medias extends Main {
    *
    */
   private function _showUploadFileTemplate() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
@@ -100,12 +100,12 @@ class Medias extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->setTitle(I18n::get('global.manager.media'));
 
-    	require PATH_STANDARD . '/vendor/candyCMS/core/helpers/Image.helper.php';
+      require PATH_STANDARD . '/vendor/candyCMS/core/helpers/Image.helper.php';
 
       $sOriginalPath = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller']);
       $oDir = opendir($sOriginalPath);
@@ -117,8 +117,8 @@ class Medias extends Main {
         if (substr($sFile, 0, 1) == '.' || is_dir($sPath))
           continue;
 
-        $sFileType	= strtolower(substr(strrchr($sPath, '.'), 1));
-        $iNameLen	  = strlen($sFile) - 4;
+        $sFileType  = strtolower(substr(strrchr($sPath, '.'), 1));
+        $iNameLen    = strlen($sFile) - 4;
 
         if ($sFileType == 'jpeg')
           $iNameLen--;

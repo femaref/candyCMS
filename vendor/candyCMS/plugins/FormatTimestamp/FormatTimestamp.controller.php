@@ -29,7 +29,7 @@ final class FormatTimestamp {
 
     $sTime = strftime(DEFAULT_TIME_FORMAT, $iTime);
 
-  	if(date('Ymd', $iTime) == date('Ymd', time()))
+    if(date('Ymd', $iTime) == date('Ymd', time()))
       $sDay = I18n::get('global.today');
 
     elseif(date('Ymd', $iTime) == date('Ymd', (time()-60*60*24)))
@@ -43,14 +43,14 @@ final class FormatTimestamp {
     $sTime = str_replace('pm', I18n::get('global.time.pm'), $sTime);
     $sTime = str_replace('PM', I18n::get('global.time.pm'), $sTime);
 
-  	if($iOptions == 1)
-    	return $sDay;
+    if($iOptions == 1)
+      return $sDay;
 
-  	elseif($iOptions == 2)
-    	return $sTime;
+    elseif($iOptions == 2)
+      return $sTime;
 
-  	else
-    	return $sDay . ', ' . $sTime;
+    else
+      return $sDay . ', ' . $sTime;
   }
 
   public final function getDate($iTime, $bDateOnly) {

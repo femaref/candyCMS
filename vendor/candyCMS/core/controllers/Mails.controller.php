@@ -63,8 +63,8 @@ class Mails extends Main {
    *
    */
   protected function _showCreateMailTemplate($bShowCaptcha) {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'create');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
     $oUser = $this->__autoload('Users', true);
     $aUser = $oUser::getUserNamesAndEmail($this->_iId);
@@ -166,8 +166,8 @@ class Mails extends Main {
    *
    */
   private function _showSuccessPage() {
-    $sTemplateDir	  = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
-    $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'success');
+    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'success');
 
     $this->setTitle(I18n::get('mails.success_page.title'));
 
