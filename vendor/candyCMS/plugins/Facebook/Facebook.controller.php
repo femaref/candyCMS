@@ -54,20 +54,48 @@ final class FacebookCMS extends Facebook {
 	}
 
 	/**
+   *
+   * Get the Facebook Avatar Info for all given Uids, load from cache, if cache is specified
 	 *
-	 * @param type $sUids
+	 * @param array $aUids
+   * @param array $aSession
 	 * @return type
 	 *
 	 */
-	public final function getUserAvatar($sUids) {
+	public final function getUserAvatars($aUids, &$aSession = null) {
 		try {
-			$aApiCall = array(
-					'method' => 'users.getinfo',
-					'uids' => $sUids,
-					'fields' => 'pic_square_with_logo, profile_url'
-			);
+      # get the cache
+      if ($aSession)
+        $aFacebookAvatarCache = &$aSession['facebookavatars'];
+      else
+        $aFacebookAvatarCache = array();
 
-			return $this->api($aApiCall);
+      # only query for ids we don't know
+      $sUids = '';
+      foreach ($aUids as $sUid)
+        if (!isset($aFacebookAvatarCache[$sUid]))
+          $sUids .= $sUid . ',';
+
+      # do the facebook call with all new $sUids
+      if (strlen($sUids) > 1) {
+        $aApiCall = array(
+            'method' => 'users.getinfo',
+            'uids' => substr($sUids, 0, -1),
+            'fields' => 'pic_square_with_logo, profile_url'
+        );
+
+        $aFacebookAvatars = $this->api($aApiCall);
+
+        # we read the response and add to the cache
+        foreach ($aFacebookAvatars as $aFacebookAvatar) {
+          $sUid = $aFacebookAvatar['uid'];
+          $aFacebookAvatarCache[$sUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
+          $aFacebookAvatarCache[$sUid]['profile_url']          = $aFacebookAvatar['profile_url'];
+        }
+      }
+
+      #we return the cache
+      return $aFacebookAvatarCache;
 		}
 		catch (AdvancedException $e) {
 			die($e->getMessage());

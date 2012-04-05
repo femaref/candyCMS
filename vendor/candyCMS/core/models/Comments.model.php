@@ -103,8 +103,8 @@ class Comments extends Main {
    *
    */
   private function _getFacebookAvatars($aResult) {
-    # We go through our data and get all facebook posts
-    $sFacebookUids = '';
+    # We go through our data and get all facebook uids we want to query
+    $aIds = array();
     foreach ($aResult as $aRow) {
 
       # Skip unnecessary data
@@ -112,32 +112,16 @@ class Comments extends Main {
         continue;
 
       else
-        $sFacebookUids .= $aRow['author_facebook_id'] . ',';
+        $aIds[(int)$aRow['id']] = $aRow['author_facebook_id'];
     }
 
-    # Create a new facebook array with avatar urls
-    $aFacebookAvatarCache = array();
-    $aFacebookAvatars = $this->_aSession['facebook']->getUserAvatar($sFacebookUids);
-
-    foreach ($aFacebookAvatars as $aFacebookAvatar) {
-      $iUid = $aFacebookAvatar['uid'];
-      $aFacebookAvatarCache[$iUid]['pic_square_with_logo'] = $aFacebookAvatar['pic_square_with_logo'];
-      $aFacebookAvatarCache[$iUid]['profile_url'] = $aFacebookAvatar['profile_url'];
-    }
+    # Create a new facebook array with avatar urls and use Session as cache
+    $aFacebookAvatarCache = $this->_aSession['facebook']->getUserAvatars($aIds, $this->_aSession);
 
     # Finally, we need to rebuild avatar data in main data array
-    foreach ($aResult as $aRow) {
-      # Skip unnecessary data
-      if (empty($aRow['author_facebook_id']))
-        continue;
-
-      else {
-        $iId = $aRow['id'];
-        $iAuthorFacebookId = $aRow['author_facebook_id'];
-
-        $this->_aData[$iId]['author']['avatar_64'] = $aFacebookAvatarCache[$iAuthorFacebookId]['pic_square_with_logo'];
-        $this->_aData[$iId]['author']['url'] = $aFacebookAvatarCache[$iAuthorFacebookId]['profile_url'];
-      }
+    foreach ($aIds as $iId => $sFacebookId) {
+      $this->_aData[$iId]['author']['avatar_64'] = $aFacebookAvatarCache[$sFacebookId]['pic_square_with_logo'];
+      $this->_aData[$iId]['author']['url'] = $aFacebookAvatarCache[$sFacebookId]['profile_url'];
     }
   }
 
