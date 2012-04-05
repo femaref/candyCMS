@@ -265,16 +265,16 @@ abstract class Main {
         'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
         'id'           => $iUserId,
         'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
-        'name'         => isset($aData['name']) && $aData['name'] ? $aData['name'] : $aData['author_name'],
-        'surname'      => isset($aData['surname']) && $aData['surname'] ? $aData['surname'] : $aData['author_surname'],
-        'facebook_id'  => $aData['author_facebook_id'],
-        'ip'           => $aData['author_ip'],
+        'name'         => (isset($aData['name']) && $aData['name']) ? $aData['name'] : $aData['author_name'],
+        'surname'      => (isset($aData['surname']) && $aData['surname']) ? $aData['surname'] : $aData['author_surname'],
+        'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
+        'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
     );
 
     $aData['author'] = $this->_formatForUserOutput($aUserData);
 
     # Encode data for SEO
-    $aData['encoded_title'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['encoded_full_name'];
+    $aData['encoded_title'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['author']['encoded_full_name'];
 
     # URL to entry
     $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aData['id'];

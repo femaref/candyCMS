@@ -97,30 +97,30 @@ class Image {
                     $this->_sFolder . '/' . $this->_sId . '.' . $this->_sImgType);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      $oOldImg = ImageCreateFromJPEG($this->_sOriginalPath);
+      $oOldImg = imagecreatefromjpeg($this->_sOriginalPath);
 
     elseif ($this->_sImgType == 'png')
-      $oOldImg = ImageCreateFromPNG($this->_sOriginalPath);
+      $oOldImg = imagecreatefrompng($this->_sOriginalPath);
 
     elseif ($this->_sImgType == 'gif')
-      $oOldImg = ImageCreateFromGIF($this->_sOriginalPath);
+      $oOldImg = imagecreatefromgif($this->_sOriginalPath);
 
     $oNewImg = imagecreatetruecolor($this->_iImageWidth, $this->_iImageHeight);
-    $oBg = ImageColorAllocate($oNewImg, 255, 255, 255);
+    $oBg = imagecolorallocate($oNewImg, 255, 255, 255);
 
     imagefill($oNewImg, 0, 0, $oBg);
     imagecopyresampled($oNewImg, $oOldImg, 0, 0, $iSrcX, $iSrcY, $iDstX, $iDstY, $this->_aInfo[0], $this->_aInfo[1]);
 
     if ($this->_sImgType == 'jpg' || $this->_sImgType == 'jpeg')
-      ImageJPEG($oNewImg, $sPath, 75);
+      imagejpeg($oNewImg, $sPath, 75);
 
     elseif ($this->_sImgType == 'png') {
       imagealphablending($oNewImg, false);
       imagesavealpha($oNewImg, true);
-      ImagePNG($oNewImg, $sPath, 9);
+      imagepng($oNewImg, $sPath, 9);
     }
     elseif ($this->_sImgType == 'gif')
-      ImageGIF($oNewImg, $sPath);
+      imagegif($oNewImg, $sPath);
 
     imagedestroy($oNewImg);
 

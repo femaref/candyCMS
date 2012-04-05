@@ -10,7 +10,7 @@
  *
  */
 
-namespace CandyCMS\Core\Controller;
+namespace CandyCMS\Core\Controllers;
 
 use CandyCMS\Core\Helpers\AdvancedException;
 use CandyCMS\Core\Helpers\Dispatcher;

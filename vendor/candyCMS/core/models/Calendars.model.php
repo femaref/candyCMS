@@ -46,7 +46,8 @@ class Calendars extends Main {
 																					UNIX_TIMESTAMP(c.end_date) AS end_date,
                                           u.id AS uid,
                                           u.name,
-                                          u.surname
+                                          u.surname,
+                                          u.email
                                         FROM
                                           " . SQL_PREFIX . "calendars c
                                         LEFT JOIN
@@ -70,7 +71,8 @@ class Calendars extends Main {
 																					UNIX_TIMESTAMP(c.end_date) AS end_date,
                                           u.id AS uid,
                                           u.name,
-                                          u.surname
+                                          u.surname,
+                                          u.email
                                         FROM
                                           " . SQL_PREFIX . "calendars c
                                         LEFT JOIN
