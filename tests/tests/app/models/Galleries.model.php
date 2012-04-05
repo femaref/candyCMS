@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Galleries.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Galleries.model.php';
 
-use \CandyCMS\Core\Model\Galleries as Galleries;
+use \CandyCMS\Core\Models\Galleries;
 
 class UnitTestOfGalleryModel extends CandyUnitTest {
 
@@ -28,6 +28,16 @@ class UnitTestOfGalleryModel extends CandyUnitTest {
   }
 
   function testCreate() {
+    $this->aSession['user'] = array(
+				'email' => 'test@example.com',
+				'facebook_id' => '',
+				'id' => 5,
+				'name' => 'Test',
+				'surname' => 'User',
+				'password' => '',
+				'role' => 1,
+				'full_name' => '');
+
     $this->assertTrue($this->oObject->create());
 
     $this->iLastInsertId = (int) Galleries::getLastInsertId();

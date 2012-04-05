@@ -9,10 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Galleries.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Galleries.controller.php';
 
-use \CandyCMS\Core\Controller\Galleries as Galleries;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Galleries;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfGalleryController extends CandyWebTest {
 

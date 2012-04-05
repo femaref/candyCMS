@@ -10,7 +10,7 @@
  *
  */
 
-namespace CandyCMS\Core\Controller;
+namespace CandyCMS\Core\Controllers;
 
 use CandyCMS\Core\Helpers\AdvancedException;
 use CandyCMS\Core\Helpers\Dispatcher;
@@ -214,12 +214,8 @@ class Index {
 					$this->_aRequest[$aRoute[0]] = $aRoute[1];
 			}
 		}
-		else {
-      $aRoute = explode('=', $sRoutemap);
-			$this->_aRequest['controller'] = isset($this->_aRequest['controller']) ?
-              $this->_aRequest['controller'] :
-              $aRoute[1];
-    }
+		else
+      $this->_aRequest['controller'] = isset($this->_aRequest['controller']) ? $this->_aRequest['controller'] : $sRoutemap;
 
 
     # Show files from public folder (robots.txt, human.txt and favicon.ico)

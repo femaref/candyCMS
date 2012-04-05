@@ -1,5 +1,5 @@
 # Define the landing page
-"/": controller=blogs
+"/": blogs
 
 # Special behaviour
 "blogs/(:num)/(update|destroy)": controller=blogs&id=$1&action=$2&page=1

@@ -220,7 +220,7 @@ abstract class Main {
     $sModel = $this->__autoload($this->_aRequest['controller'], true);
 
     if ($sModel)
-      $this->_oModel = & new $sModel($this->_aRequest, $this->_aSession);
+      $this->_oModel = new $sModel($this->_aRequest, $this->_aSession);
   }
 
 	/**

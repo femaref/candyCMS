@@ -6,7 +6,7 @@ VALUES
 	(2,2,'e12b3a84b2',NULL,NULL,NULL,'','en',2,NULL,0),
 	(3,2,'c11be3b344',NULL,'tag1',NULL,'','en',3,NULL,1),
 	(4,2,'1d2275e170',NULL,NULL,NULL,'','de',4,NULL,1),
-	(5,1,'hs24br55e2',NULL,NULL,NULL,'','en',5,NULL, 1);
+	(5,2,'hs24br55e2',NULL,NULL,NULL,'','en',5,NULL, 1);
 
 
 UNLOCK TABLES;

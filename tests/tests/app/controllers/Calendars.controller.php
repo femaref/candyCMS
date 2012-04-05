@@ -9,12 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Calendars.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/SmartySingleton.helper.php';
 
-use candyCMS\core\Controllers\Calendars;
-use CandyCMS\core\Helper\I18n;
+use CandyCMS\Core\Controllers\Calendars;
+use CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfCalendarsController extends CandyWebTest {
 

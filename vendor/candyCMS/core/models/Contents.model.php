@@ -41,7 +41,8 @@ class Contents extends Main {
                                           c.*,
                                           u.id AS uid,
                                           u.name,
-                                          u.surname
+                                          u.surname,
+                                          u.email
                                         FROM
                                           " . SQL_PREFIX . "contents c
                                         LEFT JOIN
@@ -71,7 +72,8 @@ class Contents extends Main {
                                           c.*,
                                           u.id AS uid,
                                           u.name,
-                                          u.surname
+                                          u.surname,
+                                          u.email
                                         FROM
                                           " . SQL_PREFIX . "contents c
                                         LEFT JOIN

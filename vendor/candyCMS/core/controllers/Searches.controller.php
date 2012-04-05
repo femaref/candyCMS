@@ -37,7 +37,9 @@ class Searches extends Main {
       return $this->_create();
 
     else {
-      if (strrchr(CURRENT_URL, '/') !== '/' . $this->_aRequest['search'])
+      $iLength = strlen($this->_aRequest['controller']);
+      $sEnd = substr(CURRENT_URL, -strlen($this->_aRequest['controller']));
+      if ($sEnd == $this->_aRequest['controller'])
         return Helper::redirectTo ('/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['search']);
 
       $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'show');

@@ -9,10 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Upload.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
 
-use \CandyCMS\Core\Helper\Upload as Upload;
-use \CandyCMS\Core\Helper\Image as Image;
+use \CandyCMS\Core\Helpers\Upload;
+use \CandyCMS\Core\Helpers\Image;
 
 class UnitTestOfUploadHelper extends CandyUnitTest {
 

@@ -109,7 +109,7 @@ define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'developm
 
 # Initialize software
 # @todo extension check
-$oIndex = new \candyCMS\core\Controller\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
+$oIndex = new \CandyCMS\Core\Controllers\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 # Print out HTML
 echo $oIndex->show();

@@ -10,12 +10,12 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Main.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Main.model.php';
 
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/I18n.helper.php';
 
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Helpers\I18n as I18n;
 
 abstract class CandyWebTest extends WebTestCase {
 
@@ -60,7 +60,7 @@ abstract class CandyWebTest extends WebTestCase {
 	}
 
   function assert404() {
-    $this->assertText(\CandyCMS\Core\Helper\I18n::get('error.404.title'));
+    $this->assertText(I18n::get('error.404.title'));
     # $this->assertResponse(404);
   }
 

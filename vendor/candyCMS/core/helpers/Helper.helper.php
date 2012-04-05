@@ -345,7 +345,7 @@ class Helper {
         throw new AdvancedException('Input \'' . $sStr . '\' does not seem valid.');
 
       if ($bDisableHTML === true)
-        $sStr = & htmlspecialchars($sStr);
+        $sStr = htmlspecialchars($sStr);
     }
 		catch (AdvancedException $e) {
       AdvancedException::reportBoth($e->getMessage());

@@ -10,8 +10,8 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Main.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Main.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Main.model.php';
 
 abstract class CandyUnitTest extends UnitTestCase {
 

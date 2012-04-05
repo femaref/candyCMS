@@ -9,11 +9,10 @@
  * @since 2.0
  *
  */
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Newsletters.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Newsletters.controller.php';
 
-use \CandyCMS\Core\Controller\Newsletters as Newsletters;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Newsletters;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfNewsletterController extends CandyWebTest {
 

@@ -10,11 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Medias.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Medias.controller.php';
 
-use \CandyCMS\Core\Controller\Medias as Medias;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Medias;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfMediaController extends CandyWebTest {
 

@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Downloads.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Downloads.model.php';
 
-use \CandyCMS\Core\Model\Downloads as Downloads;
+use \CandyCMS\Core\Models\Downloads;
 
 class UnitTestOfDownloadModel extends CandyUnitTest {
 
@@ -32,7 +32,17 @@ class UnitTestOfDownloadModel extends CandyUnitTest {
 	}
 
   function testCreate() {
-    $this->assertTrue($this->oObject->create('filename', 'extension'));
+		$this->aSession['user'] = array(
+				'email' => 'test@example.com',
+				'facebook_id' => '',
+				'id' => 5,
+				'name' => 'Test',
+				'surname' => 'User',
+				'password' => '',
+				'role' => 1,
+				'full_name' => '');
+
+    $this->assertTrue($this->oObject->create('filename', 'ext'));
 
     $this->iLastInsertId = (int) Downloads::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
