@@ -339,6 +339,7 @@ class Galleries extends Main {
 
       if ($bReturnVal) {
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+        $this->oSmarty->clearCacheForController('rss');
 
         # Log uploaded image. Request ID = album id
         Logs::insert($this->_aRequest['controller'],
@@ -371,11 +372,10 @@ class Galleries extends Main {
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/' . $this->_aRequest['controller']);
 
-    else {
+    else
       return isset($this->_aRequest['updatefile_galleries']) ?
               $this->_updateFile() :
               $this->_showFormFileTemplate();
-    }
   }
 
   /**
@@ -397,7 +397,8 @@ class Galleries extends Main {
     $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
 
     if ($this->_oModel->updateFile($this->_iId) === true) {
-			$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController('rss');
 
       Logs::insert(	$this->_aRequest['controller'],
 										$this->_aRequest['action'],
@@ -411,7 +412,7 @@ class Galleries extends Main {
   }
 
   /**
-	 * Destroy a gallery entry.
+   * Destroy a gallery entry.
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -422,58 +423,58 @@ class Galleries extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/' .
               $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['album_id']);
 
-    else {
-      if($this->_destroyFile() === true) {
-				$this->oSmarty->clearCacheForController($this->_aRequest['controller']);
-
-        Logs::insert($this->_aRequest['controller'],
-										$this->_aRequest['action'],
-										(int) $this->_iId,
-										$this->_aSession['user']['id']);
-
-				unset($this->_iId);
-        return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller'] . '/' .
-                (int) $this->_aRequest['album_id']);
-      }
-      else
-        return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
-                (int) $this->_aRequest['album_id']);
-    }
+    else
+      return $this->_destroyFile();
   }
 
   /**
-	 * Destroy a gallery entry.
+   * Destroy a gallery entry.
    *
    * @access private
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
    *
    */
   private function _destroyFile() {
-    return $this->_oModel->destroyFile($this->_iId) === true;
-  }
+    if ($this->_oModel->destroyFile($this->_iId) === true) {
+      $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
+      $this->oSmarty->clearCacheForController('rss');
 
-	/**
-	 * Update an album .
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
-	protected function _update() {
-		$this->_setError('content');
+      Logs::insert($this->_aRequest['controller'],
+                  $this->_aRequest['action'],
+                  (int) $this->_iId,
+                  $this->_aSession['user']['id']);
 
-    return parent::_update(array('searches', 'rss', 'sitemaps'));
-	}
+      unset($this->_iId);
+      return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller'] . '/' .
+              (int) $this->_aRequest['album_id']);
+    }
+    else
+      return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
+              (int) $this->_aRequest['album_id']);
+}
 
   /**
-	 * Destroy an album.
-	 *
-	 * @access protected
-	 * @return boolean status of model action
-	 *
-	 */
-	protected function _destroy() {
+   * Update an album .
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _update() {
+    $this->_setError('content');
+
+    return parent::_update(array('searches', 'rss', 'sitemaps'));
+  }
+
+  /**
+   * Destroy an album.
+   *
+   * @access protected
+   * @return boolean status of model action
+   *
+   */
+  protected function _destroy() {
     return parent::_destroy(array('searches', 'rss', 'sitemaps'));
-	}
+  }
 
 }
