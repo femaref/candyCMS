@@ -8,14 +8,13 @@
  * @license MIT
  * @since 2.0
  */
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Users.model.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Sessions.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Users.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Sessions.model.php';
 # if something fails, the user.model will do output with the AdvancedExeption Helper,
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/AdvancedException.helper.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/AdvancedException.helper.php';
 
-use \CandyCMS\Core\Model\Users as Users;
-use \CandyCMS\Core\Model\Sessions as Sessions;
+use \CandyCMS\Core\Models\Users;
+use \CandyCMS\Core\Models\Sessions;
 
 class UnitTestOfUserModel extends CandyUnitTest {
 

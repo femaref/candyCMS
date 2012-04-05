@@ -10,11 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Mails.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Mails.controller.php';
 
-use \CandyCMS\Core\Controller\Mails as Mails;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Mails;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfMailController extends CandyWebTest {
 
@@ -67,7 +66,9 @@ class WebTestOfMailController extends CandyWebTest {
   function testUpdate() {
     # there is no update
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1/update'));
-    $this->assert404();
+    #$this->assert404();
+    # ther is an extension that overwrites the update for mails
+    $this->assertText('This is an example!');
   }
 
   function testDestroy() {

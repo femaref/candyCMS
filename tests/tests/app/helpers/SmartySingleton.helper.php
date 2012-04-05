@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/SmartySingleton.helper.php';
 
-use CandyCMS\Helper\SmartySingleton as SmartySingleton;
+use \CandyCMS\Core\Helpers\SmartySingleton;
 
 if (!defined('WEBSITE_LANGUAGE'))
   define('WEBSITE_LANGUAGE', 'en');

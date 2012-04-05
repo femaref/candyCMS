@@ -10,11 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Sessions.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Index.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Sessions.model.php';
 
-use \CandyCMS\Core\Controller\Index as Index;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Index;
+use \CandyCMS\Core\Helpers\I18n;
 
 class UnitTestOfIndexController extends CandyUnitTest {
 
@@ -30,8 +30,7 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	function testGetConfigFiles() {
 		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'), 'Candy.inc.php exists.');
 		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'), 'Plugins.inc.php exists.');
-		$this->assertTrue(file_exists(PATH_STANDARD . '/app/config/Mailchimp.inc.php'), 'Plugins.inc.php exists.');
-		$this->assertTrue($this->oObject->getConfigFiles(array('Candy', 'Plugins', 'Mailchimp')));
+		$this->assertTrue($this->oObject->getConfigFiles(array('Candy', 'Plugins')));
 	}
 
 	function testGetPlugins() {
@@ -78,23 +77,23 @@ class UnitTestOfIndexController extends CandyUnitTest {
 	}
 
 	function testCacheDirIsWritable() {
-		$this->assertTrue(parent::createFile('cache'));
-		$this->assertTrue(parent::removeFile('cache'));
+		$this->assertTrue(parent::createFile(CACHE_DIR));
+		$this->assertTrue(parent::removeFile(CACHE_DIR));
 	}
 
 	function testCompileDirIsWritable() {
-		$this->assertTrue(parent::createFile('compile'));
-		$this->assertTrue(parent::removeFile('compile'));
+		$this->assertTrue(parent::createFile(COMPILE_DIR));
+		$this->assertTrue(parent::removeFile(COMPILE_DIR));
 	}
 
 	function testBackupDirIsWritable() {
-		$this->assertTrue(parent::createFile('backup'));
-		$this->assertTrue(parent::removeFile('backup'));
+		$this->assertTrue(parent::createFile('app/backup'));
+		$this->assertTrue(parent::removeFile('app/backup'));
 	}
 
 	function testLogsDirIsWritable() {
-		$this->assertTrue(parent::createFile('logs'));
-		$this->assertTrue(parent::removeFile('logs'));
+		$this->assertTrue(parent::createFile('app/logs'));
+		$this->assertTrue(parent::removeFile('app/logs'));
 	}
 }
 

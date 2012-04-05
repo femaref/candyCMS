@@ -10,12 +10,11 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Logs.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Logs.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Logs.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Logs.model.php';
 
-use \CandyCMS\Core\Controller\Logs as Logs;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Logs;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfLogController extends CandyWebTest {
 
@@ -66,7 +65,7 @@ class UnitTestOfLogController extends CandyUnitTest {
     $iTime = time() - 100;
     $this->assertTrue(Logs::insert('test', 'create', 1, 0, $iTime, $iTime));
 
-    $this->iLastInsertId = (int) \CandyCMS\Core\Model\Logs::getLastInsertId();
+    $this->iLastInsertId = (int) \CandyCMS\Core\Models\Logs::getLastInsertId();
     $this->assertIsA($this->iLastInsertId, 'integer');
   }
 

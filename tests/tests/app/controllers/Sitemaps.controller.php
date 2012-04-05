@@ -10,11 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Main.controller.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Sitemaps.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Sitemaps.controller.php';
 
-use \CandyCMS\Core\Controller\Sitemaps as Sitemaps;
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Sitemaps;
+use \CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfSitemapController extends CandyWebTest {
 
@@ -30,7 +29,7 @@ class WebTestOfSitemapController extends CandyWebTest {
 	function testShow() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
-		$this->assertText('b3cf6b2dd0'); # Blogs
+		$this->assertText('hs24br55e2'); # Blogs
 		$this->assertText('18855f87f2'); # Contents
 		$this->assertText('6dffc4c552'); # Galleries
 	}
@@ -38,7 +37,7 @@ class WebTestOfSitemapController extends CandyWebTest {
 	function testShowXML() {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '.xml'));
 		$this->assertResponse(200);
-		$this->assertText('b3cf6b2dd0');
+		$this->assertText('hs24br55e2');
 		$this->assertText('18855f87f2');
 		$this->assertText('6dffc4c552');
 		$this->assertText('hourly');

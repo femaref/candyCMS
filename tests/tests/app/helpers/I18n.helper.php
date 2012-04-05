@@ -10,10 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/symfony_yaml/sfYaml.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/I18n.helper.php';
 
-use \CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Helpers\I18n;
 
 class UnitTestOfI18nHelper extends CandyUnitTest {
 

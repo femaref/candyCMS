@@ -12,6 +12,7 @@
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
 
+require_once PATH_STANDARD . '/vendor/.composer/autoload.php';
 require_once PATH_STANDARD . '/tests/simpletest/autorun.php';
 require_once PATH_STANDARD . '/tests/simpletest/web_tester.php';
 
@@ -19,8 +20,9 @@ require_once PATH_STANDARD . '/tests/candy/Candy.unit.php';
 require_once PATH_STANDARD . '/tests/candy/Candy.web.php';
 
 require_once PATH_STANDARD . '/app/config/Candy.inc.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/SmartySingleton.helper.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/I18n.helper.php';
+require_once PATH_STANDARD . '/app/config/Plugins.inc.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/SmartySingleton.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/I18n.helper.php';
 
 define('CLEAR_CACHE', true);
 define('CURRENT_URL', 'http://localhost/');
@@ -31,7 +33,7 @@ define('VERSION', '0');
 define('TESTFILE', '/private/var/tmp/test'.md5(time()));
 define('WEBSITE_LOCALE', 'en_US');
 define('WEBSITE_LANGUAGE', 'en');
-define('EXTENSION_CHECK', true);
+define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
 
 setlocale(LC_ALL, WEBSITE_LOCALE);
 
@@ -45,8 +47,7 @@ class AllFileTests extends TestSuite {
       die('not in testing mode');
 
     else {
-
-      new \CandyCMS\Core\Helper\I18n(WEBSITE_LANGUAGE);
+      new \CandyCMS\Core\Helpers\I18n(WEBSITE_LANGUAGE);
 
       # All Tests
       $aTests = array(
@@ -128,12 +129,7 @@ class AllFileTests extends TestSuite {
         array_shift($argv);
         foreach ($argv as $sArg)
           if ($aTests[$sArg]) {
-            # do the test
-            if (is_array($aTests[$sArg]))
-              foreach ($aTests[$sArg] as $sTest)
-                $this->addFile($sTest);
-            else
-              $this->addFile($aTests[$sArg]);
+            $this->_addFiles($aTests[$sArg]);
           }
           else
             die($sArg . ' not found');
@@ -141,16 +137,19 @@ class AllFileTests extends TestSuite {
 
       # no specific test given, run all of them
       else {
-        foreach ($aTests as $sTestFile)
-            # do the test
-          if (is_array($sTestFile))
-            foreach ($sTestFile as $sTest)
-              $this->addFile($sTest);
-          else
-            $this->addFile($sTestFile);
+        # add all tests
+        $this->_addFiles($aTests);
       }
     }
 	}
+
+  private function _addFiles($mFile) {
+    if (is_array($mFile))
+      foreach ($mFile as $sTest)
+        $this->_addFiles($sTest);
+    else
+      $this->addFile($mFile);
+  }
 }
 
 ?>

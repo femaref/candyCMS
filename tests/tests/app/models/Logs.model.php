@@ -10,10 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Logs.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Logs.model.php';
 
-use \CandyCMS\Core\Model\Logs as Logs;
-use \CandyCMS\Core\Helper\Helper as Helper;
+use \CandyCMS\Core\Models\Logs;
+use \CandyCMS\Core\Helpers\Helper;
 
 class UnitTestOfLogModel extends CandyUnitTest {
 

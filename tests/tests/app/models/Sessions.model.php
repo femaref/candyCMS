@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Sessions.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Sessions.model.php';
 
-use \CandyCMS\Core\Model\Sessions as Sessions;
+use \CandyCMS\Core\Models\Sessions;
 
 class TestOfSessionsModel extends UnitTestCase {
 

@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Calendars.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Calendars.model.php';
 
-use \CandyCMS\Core\Model\Calendars as Calendars;
+use \CandyCMS\Core\Models\Calendars;
 
 class UnitTestOfCalendarModel extends CandyUnitTest {
 

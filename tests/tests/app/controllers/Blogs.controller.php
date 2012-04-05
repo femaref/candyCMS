@@ -10,11 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Main.controller.php';
 require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Blogs.controller.php';
 
-use candyCMS\core\Controllers\Blogs;
-use CandyCMS\Core\Helper\I18n;
+use CandyCMS\Core\Controllers\Blogs;
+use CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfBlogController extends CandyWebTest {
 

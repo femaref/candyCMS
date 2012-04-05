@@ -10,10 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/controllers/Sessions.controller.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/controllers/Sessions.controller.php';
 
-use CandyCMS\Core\Controller\Sessions as Sessions;
-use CandyCMS\Core\Helper\I18n as I18n;
+use CandyCMS\Core\Controllers\Sessions;
+use CandyCMS\Core\Helpers\I18n;
 
 class WebTestOfSessionController extends CandyWebTest {
 

@@ -10,10 +10,10 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/AdvancedException.helper.php';
-require_once PATH_STANDARD . '/vendor/candyCMS/helpers/Helper.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/AdvancedException.helper.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Helper.helper.php';
 
-use \CandyCMS\Core\Helper\Helper as Helper;
+use \CandyCMS\Core\Helpers\Helper;
 
 class UnitTestOfHelperHelper extends CandyUnitTest {
 
@@ -100,13 +100,13 @@ class UnitTestOfHelperHelper extends CandyUnitTest {
   }
 
   function testGetTemplateDir() {
-    $this->assertPattern('/vendor/candyCMS\/views/i', Helper::getTemplateDir('layouts', 'application'));
-    $this->assertPattern('/vendor/candyCMS/extensions\/views/i', Helper::getTemplateDir('samples', 'show'));
+    $this->assertPattern('/vendor\/candyCMS\/core\/views/i', Helper::getTemplateDir('layouts', 'application'));
+    $this->assertPattern('/app\/extensions\/views/i', Helper::getTemplateDir('samples', 'show'));
     $this->assertFalse(Helper::getTemplateDir(time(), time()));
   }
 
   function testGetTemplateType() {
-    $this->assertPattern('/application.tpl/i', Helper::getTemplateType('vendor/candyCMS/views/layouts', 'application'));
+    $this->assertPattern('/application.tpl/i', Helper::getTemplateType('vendor/candyCMS/core/views/layouts', 'application'));
   }
 
   function testGetPluginTemplateDir() {

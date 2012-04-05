@@ -10,9 +10,9 @@
  *
  */
 
-require_once PATH_STANDARD . '/vendor/candyCMS/models/Searches.model.php';
+require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Searches.model.php';
 
-use \CandyCMS\Core\Model\Searches as Searches;
+use \CandyCMS\Core\Models\Searches;
 
 class TestOfSearchModel extends CandyUnitTest {
 
