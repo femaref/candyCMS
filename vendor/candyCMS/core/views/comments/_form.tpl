@@ -57,13 +57,11 @@
       </div>
     </div>
     {if isset($_captcha_)}{$_captcha_}{/if}
-    <div data-role='fieldcontain'>
-      <div class='form-actions center' data-role='controlgroup' data-type='horizontal'>
-        <input type='submit' value='{$lang.comments.title.create}' data-theme='b' class='btn btn-primary' />
-        <input type='reset' value='{$lang.global.reset}' class='btn' />
-        <input type='hidden' value='formdata' name='create_comments' />
-        <input type='hidden' value='{$_REQUEST.id}' name='parent_id' />
-      </div>
+    <div class='form-actions' data-role='controlgroup' data-type='horizontal'>
+      <input type='submit' value='{$lang.comments.title.create}' data-theme='b' class='btn btn-primary' />
+      <input type='reset' value='{$lang.global.reset}' class='btn' />
+      <input type='hidden' value='formdata' name='create_comments' />
+      <input type='hidden' value='{$_REQUEST.id}' name='parent_id' />
     </div>
   </form>
 {strip}
