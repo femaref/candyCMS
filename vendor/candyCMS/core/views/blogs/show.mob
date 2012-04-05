@@ -13,8 +13,8 @@
         <h4>{$lang.error.missing.entries}</h4>
       </div>
     {else}
-      <ul data-role='listview'>
-        {foreach $blogs as $b}
+      {foreach $blogs as $b}
+        <ul data-role='listview' data-inset='true'>
           <li role='heading' data-role='list-divider'>
             {$b.datetime}
             {if $b.date_modified != ''}
@@ -34,8 +34,8 @@
               <span class="ui-li-count">{$b.comment_sum}</span>
             </a>
           </li>
-        {/foreach}
-      </ul>
+        </ul>
+      {/foreach}
     {/if}
   {* single blogs entry *}
   {else}
