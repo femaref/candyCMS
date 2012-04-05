@@ -141,8 +141,7 @@ class Install extends Index {
 
         $aHasConfigFiles = array(
             'main'      => file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'),
-            'plugins'   => file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'),
-            'mailchimp' => file_exists(PATH_STANDARD . '/app/config/Mailchimp.inc.php'));
+            'plugins'   => file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'));
 
         $this->oSmarty->assign('_configs_exist_', $aHasConfigFiles);
 

@@ -3,7 +3,7 @@
     1. Create your Configuration.
   </h2>
   <p>
-    Copy <em>Candy.inc.php</em>, <em>Plugins.inc.php</em> and <em>Mailchimp.inc.php</em>
+    Copy <em>Candy.inc.php</em> and <em>Plugins.inc.php</em>
     from <em>config/samples/</em> to <em>config/</em>,
     read each description carefully and modify the software to your needs.
   </p>
