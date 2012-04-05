@@ -49,12 +49,11 @@ class UnitTestOfGalleryModel extends CandyUnitTest {
     $this->assertIsA($this->oObject->getData(), 'array');
   }
 
-  function testGetAlbumName() {
-    $this->assertIsA($this->oObject->getAlbumName($this->iLastInsertId), 'string');
-  }
-
-  function testGetAlbumContent() {
-    $this->assertIsA($this->oObject->getAlbumContent($this->iLastInsertId), 'string');
+  function testGetAlbumNameAndContent() {
+    $aData = $this->oObject->getAlbumNameAndContent($this->iLastInsertId);
+    $this->assertIsA($aData, 'array');
+    $this->assertIsA($aData['title'], 'string');
+    $this->assertIsA($aData['content'], 'string');
   }
 
   function testUpdate() {
@@ -76,12 +75,11 @@ class UnitTestOfGalleryModel extends CandyUnitTest {
     $this->assertIsA($this->oObject->getThumbs(1), 'array');
   }
 
-  function testGetFileDetails() {
-    $this->assertIsA($this->oObject->getFileDetails($this->iLastInsertId), 'array');
-  }
-
   function testGetFileData() {
-    $this->assertIsA($this->oObject->getFileData($this->iLastInsertId), 'array');
+    $aData = $this->oObject->getFileData($this->iLastInsertId);
+    $this->assertIsA($aData, 'array');
+    $this->assertIsA($aData['album_id'], 'int');
+    $this->assertIsA($aData['content'], 'string');
   }
 
   function testUpdateFile() {

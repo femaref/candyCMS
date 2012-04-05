@@ -207,7 +207,7 @@ class Galleries extends Main {
   }
 
   /**
-   * Return album name.
+   * Return album name and album content.
    *
    * @static
    * @access public
@@ -216,12 +216,12 @@ class Galleries extends Main {
    * @return string album name
    *
    */
-  public static function getAlbumName($iId, $aRequest = '') {
+  public static function getAlbumNameAndContent($iId, $aRequest = '') {
     if (empty(parent::$_oDbStatic))
       parent::connectToDatabase();
 
     try {
-      $oQuery = parent::$_oDbStatic->prepare("SELECT title FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
+      $oQuery = parent::$_oDbStatic->prepare("SELECT title, content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
       $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
 
       $bReturn = $oQuery->execute();
@@ -237,72 +237,12 @@ class Galleries extends Main {
             $aRequest['highlight'] :
             '';
 
-    if ($bReturn === true)
-      return Helper::formatOutput($aResult['title'], $sHighlight);
-  }
+    if ($bReturn === true) {
+      foreach ($aResult as $sKey => $sValue)
+        $aResult[$sKey] = Helper::formatOutput($sValue, $sHighlight);
 
-  /**
-   * Get the album content (former description).
-   *
-   * @static
-   * @access public
-   * @param integer $iId album ID
-   * @param array $aRequest current request
-   * @return string content/destription
-   *
-   */
-  public static function getAlbumContent($iId, $aRequest = '') {
-    if (empty(parent::$_oDbStatic))
-      parent::connectToDatabase();
-
-    try {
-      $oQuery = parent::$_oDbStatic->prepare("SELECT content FROM " . SQL_PREFIX . "gallery_albums WHERE id = :album_id");
-      $oQuery->bindParam('album_id', $iId, PDO::PARAM_INT);
-
-      $bReturn = $oQuery->execute();
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-    }
-    catch (\PDOException $p) {
-      AdvancedException::reportBoth('0047 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-
-    # Do we need to highlight text?
-    $sHighlight = isset($aRequest['highlight']) ?
-            $aRequest['highlight'] :
-            '';
-
-    if ($bReturn === true)
-      return Helper::formatOutput($aResult['content'], $sHighlight);
-  }
-
-  /**
-   * Get file content (former description).
-   *
-   * @static
-   * @access public
-   * @param integer $iId album ID
-   * @return array
-   *
-   */
-  public static function getFileDetails($iId) {
-    if (empty(parent::$_oDbStatic))
-      parent::connectToDatabase();
-
-    try {
-      $oQuery = parent::$_oDbStatic->prepare("SELECT album_id, content FROM " . SQL_PREFIX . "gallery_files WHERE id = :id");
-      $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
-
-      $bReturn = $oQuery->execute();
-      $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-    }
-    catch (\PDOException $p) {
-      AdvancedException::reportBoth('0048 - ' . $p->getMessage());
-      exit('SQL error.');
-    }
-
-    if ($bReturn === true)
       return $aResult;
+    }
   }
 
   /**
@@ -323,7 +263,13 @@ class Galleries extends Main {
       $oQuery->bindParam('id', $iId, PDO::PARAM_INT);
       $oQuery->execute();
 
-      return $oQuery->fetch(PDO::FETCH_ASSOC);
+      $aData = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+      $aInts = array('id', 'album_id', 'author_id');
+      foreach ($aInts as $sInt)
+        $aData[$sInt] = (int) $aData[$sInt];
+
+      return $aData;
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0049 - ' . $p->getMessage());

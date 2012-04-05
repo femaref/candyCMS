@@ -116,19 +116,18 @@ class Galleries extends Main {
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'files');
 
     # Collect data array
-    $sAlbumName = $this->_oModel->getAlbumName($this->_iId, $this->_aRequest);
-    $sAlbumDescription = $this->_oModel->getAlbumContent($this->_iId, $this->_aRequest);
+    $sAlbumData = $this->_oModel->getAlbumNameAndContent($this->_iId, $this->_aRequest);
 
-    $this->setTitle($this->_removeHighlight($sAlbumName) . ' - ' . I18n::get('global.gallery'));
-    $this->setDescription($this->_removeHighlight($sAlbumDescription));
+    $this->setTitle($this->_removeHighlight($sAlbumData['title']) . ' - ' . I18n::get('global.gallery'));
+    $this->setDescription($this->_removeHighlight($sAlbumData['content']));
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = $this->_oModel->getThumbs($this->_iId);
 
       $this->oSmarty->assign('files', $aData);
       $this->oSmarty->assign('file_no', count($aData));
-      $this->oSmarty->assign('gallery_name', $sAlbumName);
-      $this->oSmarty->assign('gallery_content', $sAlbumDescription);
+      $this->oSmarty->assign('gallery_name', $sAlbumData['title']);
+      $this->oSmarty->assign('gallery_content', $sAlbumData['content']);
     }
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -262,7 +261,7 @@ class Galleries extends Main {
 
     # Update
     if ($this->_aRequest['action'] == 'updatefile') {
-      $aDetails = $this->_oModel->getFileDetails($this->_iId);
+      $aDetails = $this->_oModel->getFileData($this->_iId);
 
       $this->oSmarty->assign('content', Helper::formatOutput($aDetails['content']));
       $this->oSmarty->assign('album_id', Helper::formatOutput($aDetails['album_id']));
@@ -393,7 +392,7 @@ class Galleries extends Main {
     if ($this->_aError)
       return $this->_showFormFileTemplate();
 
-    $aDetails = $this->_oModel->getFileDetails($this->_iId);
+    $aDetails = $this->_oModel->getFileData($this->_iId);
     $sRedirectPath = '/' . $this->_aRequest['controller'] . '/' . $aDetails['album_id'];
 
     if ($this->_oModel->updateFile($this->_iId) === true) {
@@ -419,9 +418,11 @@ class Galleries extends Main {
    *
    */
   public function destroyFile() {
+    $aDetails = $this->_oModel->getFileData($this->_iId);
+
     if ($this->_aSession['user']['role'] < 3)
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/' .
-              $this->_aRequest['controller'] . '/' . (int) $this->_aRequest['album_id']);
+              $this->_aRequest['controller'] . '/' . $aDetails['album_id']);
 
     else
       return $this->_destroyFile();
@@ -435,6 +436,8 @@ class Galleries extends Main {
    *
    */
   private function _destroyFile() {
+    $aDetails = $this->_oModel->getFileData($this->_iId);
+
     if ($this->_oModel->destroyFile($this->_iId) === true) {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
       $this->oSmarty->clearCacheForController('rss');
@@ -446,11 +449,11 @@ class Galleries extends Main {
 
       unset($this->_iId);
       return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller'] . '/' .
-              (int) $this->_aRequest['album_id']);
+              $aDetails['album_id']);
     }
     else
       return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller'] . '/' .
-              (int) $this->_aRequest['album_id']);
+              $aDetails['album_id']);
 }
 
   /**
