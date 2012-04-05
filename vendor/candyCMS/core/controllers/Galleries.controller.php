@@ -223,6 +223,7 @@ class Galleries extends Main {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
       $this->oSmarty->clearCacheForController('searches');
       $this->oSmarty->clearCacheForController('rss');
+      $this->oSmarty->clearCacheForController('sitemaps');
 
       $iId    = $this->_oModel->getLastInsertId('gallery_albums');
       $sPath  = Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $iId);
@@ -461,7 +462,7 @@ class Galleries extends Main {
 	protected function _update() {
 		$this->_setError('content');
 
-    return parent::_update(array('searches', 'rss'));
+    return parent::_update(array('searches', 'rss', 'sitemaps'));
 	}
 
   /**
@@ -472,7 +473,7 @@ class Galleries extends Main {
 	 *
 	 */
 	protected function _destroy() {
-    return parent::_destroy(array('searches', 'rss'));
+    return parent::_destroy(array('searches', 'rss', 'sitemaps'));
 	}
 
 }
