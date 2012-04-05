@@ -128,7 +128,7 @@ class Mails extends Main {
     else {
       # Select user name and surname
       $oClass = $this->__autoload('Users', true);
-      $sModel = & new $oClass($this->_aRequest, $this->_aSession);
+      $sModel = new $oClass($this->_aRequest, $this->_aSession);
       $aRow = $sModel::getUserNamesAndEmail($this->_iId);
 
       # if id is specified, but user not found => 404
@@ -203,7 +203,7 @@ class Mails extends Main {
 
     try {
       require_once 'vendor/phpmailer/class.phpmailer.php';
-      $oMail = & new \PHPMailer(true);
+      $oMail = new \PHPMailer(true);
 
       if (SMTP_ENABLE === true) {
         $oMail->IsSMTP();

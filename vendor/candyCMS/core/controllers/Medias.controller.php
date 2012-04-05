@@ -77,7 +77,7 @@ class Medias extends Main {
   private function _proceedUpload() {
     require PATH_STANDARD . '/vendor/candyCMS/core/helpers/Upload.helper.php';
 
-    $oUpload = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+    $oUpload = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
     $sFolder = isset($this->_aRequest['folder']) ?
             Helper::formatInput($this->_aRequest['folder']) :
             $this->_aRequest['controller'];
@@ -129,7 +129,7 @@ class Medias extends Main {
           $aImgDim = getImageSize($sPath);
 
           if (!file_exists(Helper::removeSlash(PATH_UPLOAD . '/temp/' . $this->_aRequest['controller'] . '/' . $sFile))) {
-            $oImage = & new Image($sFileName, 'temp', $sPath, $sFileType);
+            $oImage = new Image($sFileName, 'temp', $sPath, $sFileType);
             $oImage->resizeAndCut('32', $this->_aRequest['controller']);
           }
         }

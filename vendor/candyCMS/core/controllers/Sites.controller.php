@@ -12,14 +12,17 @@
 
 namespace CandyCMS\Core\Controllers;
 
-use CandyCMS\Core\Helpers\Helper as Helper;
-use CandyCMS\Core\Helpers\I18n as I18n;
+use CandyCMS\Core\Helpers\Helper;
+use CandyCMS\Core\Helpers\I18n;
 
 class Sites extends Main {
 
   /**
-   * Print out a static page. An example would be "/site/welcome" when there is a template named
-	 * "welcome.tpl" in the static folder defined in the "config/Candy.inc.php" (PATH_STATIC).
+   * Print out a static page.
+   *
+   * An example would be an URL linking to "/sites/welcome" when there is a template named
+	 * "welcome.tpl" in the static folder defined in the "app/config/Candy.inc.php" (PATH_STATIC -
+   * normally located at "/public/_static/").
 	 *
 	 * @access protected
 	 * @return string HTML content

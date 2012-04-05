@@ -321,7 +321,7 @@ class Galleries extends Main {
       return $this->_showFormFileTemplate();
 
     else {
-      $oUploadFile = & new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
+      $oUploadFile = new Upload($this->_aRequest, $this->_aSession, $this->_aFile);
 
       $aReturnValues = $oUploadFile->uploadGalleryFiles();
 

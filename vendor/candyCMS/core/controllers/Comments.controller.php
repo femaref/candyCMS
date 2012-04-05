@@ -27,7 +27,7 @@ class Comments extends Main {
    */
   public function __init($aParentData = '') {
     $oModel = $this->__autoload('Comments', true);
-    $this->_oModel = & new $oModel($this->_aRequest, $this->_aSession);
+    $this->_oModel = new $oModel($this->_aRequest, $this->_aSession);
 
 		$this->_aParentData = & $aParentData;
 	}

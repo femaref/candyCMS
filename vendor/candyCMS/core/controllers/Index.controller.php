@@ -326,7 +326,7 @@ class Index {
    */
   public function getFacebookExtension() {
     if (PLUGIN_FACEBOOK_APP_ID && class_exists('\CandyCMS\Plugins\FacebookCMS')) {
-      $this->_aSession['facebook'] = & new FacebookCMS(array(
+      $this->_aSession['facebook'] = new FacebookCMS(array(
           'appId' => PLUGIN_FACEBOOK_APP_ID,
           'secret' => PLUGIN_FACEBOOK_SECRET,
           'cookie' => true
@@ -499,7 +499,7 @@ class Index {
     # Start the dispatcher and grab the controller.
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setRequestAndSession($this->_aRequest, $this->_aSession);
-    $oDispatcher = & new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
+    $oDispatcher = new Dispatcher($this->_aRequest, $this->_aSession, $this->_aFile, $this->_aCookie);
     $oDispatcher->getController();
     $oDispatcher->getAction();
 
@@ -557,7 +557,6 @@ class Index {
   private function _showPlugins($sCachedHTML) {
     # Bugfix: Fix search bug
     unset($this->_aRequest['id'], $this->_aRequest['search'], $this->_aRequest['page']);
-//    $this->_aSession['user'] = self::_resetUser();
 
     foreach ($this->_aPlugins as $sPlugin) {
       if($sPlugin == 'Bbcode' || $sPlugin == 'FormatTimestamp' || $sPlugin == 'Cronjob' ||  $sPlugin == 'Recaptcha')
@@ -569,7 +568,7 @@ class Index {
       $sPluginNamespace = '\CandyCMS\Plugins\\' . $sPlugin;
 
       if (class_exists($sPluginNamespace)) {
-        $oPlugin = & new $sPluginNamespace();
+        $oPlugin = new $sPluginNamespace();
 
         if (preg_match('/<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->/', $sCachedHTML))
           $sCachedHTML = str_replace('<!-- plugin:' . $oPlugin::IDENTIFIER . ' -->', $oPlugin->show($this->_aRequest, $this->_aSession), $sCachedHTML);

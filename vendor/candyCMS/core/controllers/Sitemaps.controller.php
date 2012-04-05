@@ -27,15 +27,14 @@ class Sitemaps extends Main {
     $sTemplateDir		= Helper::getTemplateDir($this->_aRequest['controller'], 'xml');
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'xml');
 
-    #Header('Content-Type: text/xml');
+    Header('Content-Type: text/xml');
 
-		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-			$this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-			$this->_getSitemap();
-		}
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $this->oSmarty->assign('_website_landing_page_', WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
+      $this->_getSitemap();
+    }
 
-//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(1800); # 30 minutes
+    $this->oSmarty->setCacheLifetime(3600);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
@@ -54,8 +53,7 @@ class Sitemaps extends Main {
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->_getSitemap();
 
-//    $this->oSmarty->setCaching(Smarty::CACHING_LIFETIME_SAVED);
-    $this->oSmarty->setCacheLifetime(180);
+    $this->oSmarty->setCacheLifetime(300);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
@@ -68,13 +66,13 @@ class Sitemaps extends Main {
 	 */
 	private function _getSitemap() {
 		$sModel     = $this->__autoload('Blogs', true);
-		$oBlogs     = & new $sModel($this->_aRequest, $this->_aSession);
+		$oBlogs     = new $sModel($this->_aRequest, $this->_aSession);
 
 		$sModel     = $this->__autoload('Contents', true);
-		$oContents  = & new $sModel($this->_aRequest, $this->_aSession);
+		$oContents  = new $sModel($this->_aRequest, $this->_aSession);
 
 		$sModel     = $this->__autoload('Galleries', true);
-		$oGalleries = & new $sModel($this->_aRequest, $this->_aSession);
+		$oGalleries = new $sModel($this->_aRequest, $this->_aSession);
 
 		$this->oSmarty->assign('blogs', $oBlogs->getData('', false, 1000));
 		$this->oSmarty->assign('contents', $oContents->getData('', false, 1000));
@@ -82,7 +80,7 @@ class Sitemaps extends Main {
 	}
 
   /**
-   * There is no create Action for the sitemaps Controller
+   * There is no create action for the sitemaps controller
    *
    * @access public
    *
@@ -92,7 +90,7 @@ class Sitemaps extends Main {
   }
 
   /**
-   * There is no update Action for the sitemaps Controller
+   * There is no update action for the sitemaps controller
    *
    * @access public
    *
@@ -102,7 +100,7 @@ class Sitemaps extends Main {
   }
 
   /**
-   * There is no destroy Action for the sitemaps Controller
+   * There is no destroy action for the sitemaps controller
    *
    * @access public
    *

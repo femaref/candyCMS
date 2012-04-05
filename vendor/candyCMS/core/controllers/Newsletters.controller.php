@@ -79,6 +79,7 @@ class Newsletters extends Main {
 
     $this->setTitle(I18n::get('newsletters.title.subscribe'));
     $this->setDescription(I18n::get('newsletters.description.subscribe'));
+
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }

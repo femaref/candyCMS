@@ -35,7 +35,7 @@ class Blogs extends Main {
         Helper::redirectTo('/errors/404');
 
       $sClass = $this->__autoload('Comments');
-      $oComments = & new $sClass($this->_aRequest, $this->_aSession);
+      $oComments = new $sClass($this->_aRequest, $this->_aSession);
       $oComments->__init($this->_aData);
 
       $this->oSmarty->assign('blogs', $this->_aData);

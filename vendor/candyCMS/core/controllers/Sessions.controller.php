@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Core\Controllers;
@@ -23,12 +24,12 @@ class Sessions extends Main {
    * Route to right action.
    *
    * @access public
-   * @return string HTML
+   * @return string HTML or redirect to create session.
    *
    */
   public function show() {
     if (!isset($this->_aRequest['action']))
-      $this->_aRequest['action'] = 'show';
+      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
 
     switch ($this->_aRequest['action']) {
 
@@ -47,27 +48,20 @@ class Sessions extends Main {
         return $this->resendVerification();
 
         break;
-
-      default:
-      case 'show':
-
-        return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
-
-        break;
     }
   }
 
   /**
    * Create a session or show template instead.
-   * We must override the main method due to a diffent required user right.
+   * We must override the main method due to a diffent required user right policy.
    *
    * @access public
-   * @return string HTML content
+   * @return string HTML content or redirect to landing page.
    *
    */
   public function create() {
     if ($this->_aSession['user']['role'] > 0)
-      return Helper::errorMessage('', '/');
+      Helper::redirectTo('/');
 
     else
       return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
@@ -91,7 +85,7 @@ class Sessions extends Main {
       return $this->_showFormTemplate();
 
     elseif ($this->_oModel->create() === true) {
-      # clear the cache for users, since a new session updates some users last login date
+      # Clear the cache for users, since a new session updates some users last login date.
       $this->oSmarty->clearCacheForController('users');
       return Helper::successMessage(I18n::get('success.session.create'), '/');
     }
@@ -108,8 +102,8 @@ class Sessions extends Main {
    *
    */
   public function _showFormTemplate() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
@@ -155,25 +149,25 @@ class Sessions extends Main {
     if (isset($this->_aError))
       return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
-    $this->__autoload('Mails');
     $sNewPasswordClean = Helper::createRandomChar(10, true);
     $aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
+    $sRedirect = '/' . $this->_aRequest['controller'] . '/create';
 
-    if (!empty($aData)) {
-      $sContent = I18n::get('sessions.password.mail.body', $aData['name'], $sNewPasswordClean);
+    if (is_array($aData) && !empty($aData)) {
+      $this->__autoload('Mails');
 
       $bStatus = Mails::send(
               Helper::formatInput($this->_aRequest['email']),
               I18n::get('sessions.password.mail.subject'),
-              $sContent,
+              I18n::get('sessions.password.mail.body', $aData['name'], $sNewPasswordClean),
               WEBSITE_MAIL_NOREPLY);
 
       return $bStatus === true ?
-              Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller'] . '/create') :
-              Helper::errorMessage(I18n::get('error.mail.create'), '/' . $this->_aRequest['controller'] . '/create');
+              Helper::successMessage(I18n::get('success.mail.create'), $sRedirect) :
+              Helper::errorMessage(I18n::get('error.mail.create'), $sRedirect);
     }
     else
-      return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller'] . '/create');
+      return Helper::errorMessage(I18n::get('error.session.account'), $sRedirect);
   }
 
   /**
@@ -198,6 +192,7 @@ class Sessions extends Main {
    * If data is given, try to send mail.
    *
    * @access protected
+   * @param boolean $bShowCaptcha display Captcha?
    * @return string HTML
    *
    */
@@ -211,39 +206,40 @@ class Sessions extends Main {
       return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
     $this->__autoload('Mails');
-    $aData = & $this->_oModel->resendVerification();
+    $aData = $this->_oModel->resendVerification();
+    $sRedirect = '/' . $this->_aRequest['controller'] . '/create';
 
-    if (!empty($aData)) {
-      $sVerificationUrl = Helper::createLinkTo('users/' . $aData['verification_code'] . '/verification');
-
-      $sContent = I18n::get('sessions.verification.mail.body', $aData['name'], $sVerificationUrl);
-
+    if (is_array($aData) && !empty($aData)) {
       $bStatus = Mails::send(
               Helper::formatInput($this->_aRequest['email']),
               I18n::get('sessions.verification.mail.subject'),
-              $sContent,
+              I18n::get('sessions.verification.mail.body',
+                      $aData['name'],
+                      Helper::createLinkTo('users/' . $aData['verification_code'] . '/verification')),
               WEBSITE_MAIL_NOREPLY);
 
       return $bStatus === true ?
-              Helper::successMessage(I18n::get('success.mail.create'), '/' . $this->_aRequest['controller'] . '/create') :
-              Helper::errorMessage(I18n::get('error.mail.create'), '/' . $this->_aRequest['controller'] . '/create');
+              Helper::successMessage(I18n::get('success.mail.create'), $sRedirect) :
+              Helper::errorMessage(I18n::get('error.mail.create'), $sRedirect);
     }
     else
-      return Helper::errorMessage(I18n::get('error.session.account'), '/' . $this->_aRequest['controller'] . '/create');
+      return Helper::errorMessage(I18n::get('error.session.account'), $sRedirect);
   }
 
   /**
    * Build form template to resend verification or resend password.
    *
    * @access private
+   * @param boolean $bShowCaptcha display Captcha?
    * @return string HTML content
    *
    */
   private function _showCreateResendActionsTemplate($bShowCaptcha) {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'resend');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'resend');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'resend');
 
-    if ($bShowCaptcha) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
+    if ($bShowCaptcha)
+      $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);
@@ -272,11 +268,11 @@ class Sessions extends Main {
   public function destroy() {
     # Facebook logout
     if ($this->_aSession['user']['role'] == 2) {
-      $sFBLogoutUrl = $this->_aSession['facebook']->getLogoutUrl(array('next' => WEBSITE_URL . '/'));
       $this->_aSession['facebook']->destroySession();
-#      unset($this->_aSession['facebook']);
       unset($this->_aSession['user']);
-      return Helper::successMessage(I18n::get('success.session.destroy'), $sFBLogoutUrl);
+
+      return Helper::successMessage(I18n::get('success.session.destroy'),
+              $this->_aSession['facebook']->getLogoutUrl(array('next' => WEBSITE_URL . '/')));
     }
 
     # Standard member
@@ -286,6 +282,6 @@ class Sessions extends Main {
     }
 
     else
-      return Helper::errorMessage('', '/');
+      return Helper::redirectTo('/');
   }
 }

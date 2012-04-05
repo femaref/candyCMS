@@ -7,6 +7,7 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
 namespace CandyCMS\Core\Controllers;
@@ -34,11 +35,9 @@ class Rss extends Main {
    *
    */
   protected function _show() {
-    if ($this->_aRequest['section'] == 'galleries' && $this->_iId > 0)
-      $this->_showMedia();
-
-    else
-      $this->_showDefault();
+    return $this->_aRequest['section'] == 'galleries' && $this->_iId > 0 ?
+            $this->_showMedia() :
+            $this->_showDefault();
   }
 
   /**
@@ -53,11 +52,10 @@ class Rss extends Main {
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'default');
 
     $sModel = $this->__autoload('Blogs', true);
-    $oModel = & new $sModel($this->_aRequest, $this->_aSession);
+    $oModel = new $sModel($this->_aRequest, $this->_aSession);
 
-		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+		if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
 			$this->oSmarty->assign('data', $oModel->getData());
-		}
 
 		$this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -76,8 +74,8 @@ class Rss extends Main {
     $sTemplateFile	= Helper::getTemplateType($sTemplateDir, 'media');
 
     $sModel = $this->__autoload('Galleries', true);
-    $oModel = & new $sModel($this->_aRequest, $this->_aSession);
-    $aData = $oModel->getData($this->_iId, false, true);
+    $oModel = new $sModel($this->_aRequest, $this->_aSession);
+    $aData  = $oModel->getData($this->_iId, false, true);
 
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
       $aData = & $aData[$this->_iId]['files'];
