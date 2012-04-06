@@ -154,9 +154,9 @@ class Sessions extends Main {
     $sRedirect = '/' . $this->_aRequest['controller'] . '/create';
 
     if (is_array($aData) && !empty($aData)) {
-      $this->__autoload('Mails');
+      $sMails = $this->__autoload('Mails');
 
-      $bStatus = Mails::send(
+      $bStatus = $sMails::send(
               Helper::formatInput($this->_aRequest['email']),
               I18n::get('sessions.password.mail.subject'),
               I18n::get('sessions.password.mail.body', $aData['name'], $sNewPasswordClean),
@@ -205,12 +205,12 @@ class Sessions extends Main {
     if (isset($this->_aError))
       return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
-    $this->__autoload('Mails');
     $aData = $this->_oModel->resendVerification();
     $sRedirect = '/' . $this->_aRequest['controller'] . '/create';
 
     if (is_array($aData) && !empty($aData)) {
-      $bStatus = Mails::send(
+      $sMails = $this->__autoload('Mails');
+      $bStatus = $sMails::send(
               Helper::formatInput($this->_aRequest['email']),
               I18n::get('sessions.verification.mail.subject'),
               I18n::get('sessions.verification.mail.body',

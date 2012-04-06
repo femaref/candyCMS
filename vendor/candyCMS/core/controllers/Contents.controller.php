@@ -26,8 +26,8 @@ class Contents extends Main {
    */
   protected function _show() {
     if ($this->_iId) {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+      $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
@@ -46,8 +46,8 @@ class Contents extends Main {
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'overview');
+      $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
+      $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'overview');
 
       $this->setTitle(I18n::get('global.manager.content'));
 
@@ -66,19 +66,19 @@ class Contents extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
 
     if ($this->_iId) {
       $aData = $this->_oModel->getData($this->_iId, true);
       $this->setTitle($aData['title']);
     }
     else {
-      $aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['title']     = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
       $aData['teaser']    = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
       $aData['keywords']  = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $aData['published']  = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
+      $aData['content']   = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
     }
 
     foreach($aData as $sColumn => $sData)

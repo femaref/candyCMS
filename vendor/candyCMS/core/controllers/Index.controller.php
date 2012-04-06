@@ -91,8 +91,8 @@ class Index {
   public function __construct(&$aRequest, &$aSession = '', &$aFile = '', &$aCookie = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
-    $this->_aFile      = & $aFile;
-    $this->_aCookie    = & $aCookie;
+    $this->_aFile     = & $aFile;
+    $this->_aCookie   = & $aCookie;
 
     $this->getConfigFiles(array('Plugins'));
     $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);

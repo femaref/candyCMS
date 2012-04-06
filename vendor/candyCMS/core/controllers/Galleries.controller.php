@@ -153,11 +153,11 @@ class Galleries extends Main {
 
     if (file_exists($sUrl) || WEBSITE_MODE == 'test') {
       # Get image information
-      $aImageInfo = getimagesize($sUrl);
+      $aImageInfo       = getimagesize($sUrl);
 
-      $aData['url'] = Helper::addSlash($sUrl);
-      $aData['width'] = $aImageInfo[0];
-      $aData['height'] = $aImageInfo[1];
+      $aData['url']     = Helper::addSlash($sUrl);
+      $aData['width']   = $aImageInfo[0];
+      $aData['height']  = $aImageInfo[1];
 
       $this->oSmarty->assign('i', $aData);
 
@@ -180,7 +180,7 @@ class Galleries extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form_album');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form_album');
 
     if ($this->_iId) {
@@ -256,7 +256,7 @@ class Galleries extends Main {
    *
    */
   protected function _showFormFileTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form_file');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form_file');
 
     # Update
