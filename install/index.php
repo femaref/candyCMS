@@ -12,15 +12,15 @@
 
 namespace CandyCMS;
 
-use CandyCMS\Core\Controller\Index as Index;
-use CandyCMS\Core\Helper\Helper as Helper;
-use CandyCMS\Core\Helper\SmartySingleton as SmartySingleton;
-use CandyCMS\Core\Helper\I18n as I18n;
+use \CandyCMS\Core\Controllers\Index;
+use \CandyCMS\Core\Helpers\Helper;
+use \CandyCMS\Core\Helpers\SmartySingleton;
+use \CandyCMS\Core\Helpers\I18n;
 use PDO;
 
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
 
-require PATH_STANDARD . '/vendor/candyCMS/controllers/Index.controller.php';
+require PATH_STANDARD . '/vendor/candyCMS/core/controllers/Index.controller.php';
 
 class Install extends Index {
 
@@ -202,7 +202,7 @@ class Install extends Index {
 
           # Create tables
           try {
-            $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
+            $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
             $oDb->query($sData);
           }
           catch (\AdvancedException $e) {
@@ -244,9 +244,8 @@ class Install extends Index {
                             '');
           }
           else {
-            //TODO autoload?
-            require_once PATH_STANDARD . '/vendor/candyCMS/models/Users.model.php';
-            $oUsers = new \CandyCMS\Core\Model\Users($this->_aRequest, $this->_aSession);
+            $sUsers = \CandyCMS\Core\Models\Main::__autoload('Users');
+            $oUsers = new $sUsers($this->_aRequest, $this->_aSession);
             $bResult = $oUsers->create('', 4);
             Helper::redirectTo('/install/?action=install&step=5&result=' . ($bResult ? '1' : '0'));
           }

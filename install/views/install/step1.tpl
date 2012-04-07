@@ -100,17 +100,9 @@
     share them on social networks, integrate with services you already use, and
     track your results. It's like your own personal publishing platform.
   </p>
-  {if !$_configs_exist_.mailchimp}
-    <div class="alert alert-danger">
-      Copy <em>config/samples/Mailchimp.inc.php</em> to <em>config/Mailchimp.inc.php</em>
-      and set your information. Even if you don't want to use MailChimp, you still have
-      to create the Config-File.
-    </div>
-  {else}
-    <div class="alert alert-notice">
-      Don't forget to to set information at <em>config/Mailchimp.inc.php</em>!
-    </div>
-  {/if}
+  <div class="alert alert-notice">
+    Don't forget to to set your Mailchimp Information at <em>config/Candy.inc.php</em>!
+  </div>
   {if !$_has_errors_}
     <div class='form-actions right'>
 
