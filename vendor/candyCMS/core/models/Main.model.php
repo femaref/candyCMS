@@ -263,10 +263,10 @@ abstract class Main {
     else {
       # we dont have a user (comments) and format the user given data instead
       $aUserData = array(
-          'email'        => $aData['author_email'],
-          'id'           => $aData['author_id'],
+          'email'        => isset($aData['author_email']) ? $aData['author_email'] : WEBSITE_MAIL,
+          'id'           => isset($aData['author_id']) ? $aData['author_id'] : 0,
           'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : true,
-          'name'         => $aData['author_name'],
+          'name'         => isset($aData['author_name']) ? $aData['author_name'] : '',
           'surname'      => '',
           'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
           'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
