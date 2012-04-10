@@ -70,10 +70,10 @@ class Galleries extends Main {
     try {
       $oQuery = $this->_oDb->query("SELECT
                                       a.*,
-                                      u.id AS uid,
-                                      u.name,
-                                      u.surname,
-                                      u.email,
+                                      u.id AS user_id,
+                                      u.name AS user_name,
+                                      u.surname AS user_surname,
+                                      u.email AS user_email,
                                       COUNT(f.id) AS files_sum
                                     FROM
                                       " . SQL_PREFIX . "gallery_albums a
@@ -138,9 +138,10 @@ class Galleries extends Main {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         f.*,
-                                        u.name,
-                                        u.surname,
-                                        u.email
+                                        u.id AS user_id,
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email
                                       FROM
                                         " . SQL_PREFIX . "gallery_files f
                                       LEFT JOIN

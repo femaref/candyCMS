@@ -43,11 +43,11 @@ class Comments extends Main {
 
       $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
-                                        u.name,
-                                        u.surname,
                                         u.id AS user_id,
-                                        u.use_gravatar,
-                                        u.email
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email,
+                                        u.use_gravatar
                                       FROM
                                         " . SQL_PREFIX . "comments c
                                       LEFT JOIN

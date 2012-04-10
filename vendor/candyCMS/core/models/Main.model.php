@@ -249,28 +249,29 @@ abstract class Main {
     }
 
     # build the user data
-    if (isset($aData['author_id']) && $aData['author_id'])
-      $iUserId = $aData['author_id'];
-
-    else if (isset($aData['user_id']) && $aData['user_id'])
-      $iUserId = $aData['user_id'];
-
-    else if (isset($aData['uid']))
-      $iUserId = $aData['uid'];
-
-    else
-      $iUserId = $aData['id'];
-
-    $aUserData = array(
-        'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
-        'id'           => $iUserId,
-        'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
-        'name'         => (isset($aData['name']) && $aData['name']) ? $aData['name'] : $aData['author_name'],
-        'surname'      => (isset($aData['surname']) && $aData['surname']) ? $aData['surname'] : $aData['author_surname'],
-        'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
-        'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
-    );
-
+    if ($aData['user_id'] != 0) {
+      $aUserData = array(
+          'email'        => $aData['user_email'],
+          'id'           => $aData['user_id'],
+          'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
+          'name'         => $aData['user_name'],
+          'surname'      => $aData['user_surname'],
+          'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
+          'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
+      );
+    }
+    else {
+      # we dont have a user (comments) and format the user given data instead
+      $aUserData = array(
+          'email'        => $aData['author_email'],
+          'id'           => $aData['author_id'],
+          'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : true,
+          'name'         => $aData['author_name'],
+          'surname'      => '',
+          'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
+          'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
+      );
+    }
     $aData['author'] = $this->_formatForUserOutput($aUserData);
 
     # Encode data for SEO

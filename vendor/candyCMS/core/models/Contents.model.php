@@ -39,10 +39,10 @@ class Contents extends Main {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email
                                         FROM
                                           " . SQL_PREFIX . "contents c
                                         LEFT JOIN
@@ -70,10 +70,10 @@ class Contents extends Main {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email
                                         FROM
                                           " . SQL_PREFIX . "contents c
                                         LEFT JOIN

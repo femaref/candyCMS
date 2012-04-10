@@ -63,10 +63,10 @@ class Blogs extends Main {
       try {
         $oQuery = $this->_oDb->query("SELECT
                                         b.*,
-                                        u.id AS uid,
-                                        u.name,
-                                        u.surname,
-                                        u.email,
+                                        u.id AS user_id,
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email,
                                         u.use_gravatar,
                                         COUNT(c.id) AS comment_sum
                                       FROM
@@ -115,10 +115,10 @@ class Blogs extends Main {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           b.*,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email,
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email,
                                           u.use_gravatar,
                                           COUNT(c.id) AS comment_sum
                                         FROM

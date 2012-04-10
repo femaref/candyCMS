@@ -276,7 +276,7 @@ class Users extends Main {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
-                                        (  name,
+                                        ( name,
                                           surname,
                                           password,
                                           email,

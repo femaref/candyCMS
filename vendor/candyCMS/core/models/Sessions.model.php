@@ -83,7 +83,7 @@ class Sessions extends Main {
       try {
         $oQuery = $this->_oDb->prepare("INSERT INTO
                                           " . SQL_PREFIX . "sessions
-                                          (  user_id,
+                                          ( user_id,
                                             session,
                                             ip,
                                             date)

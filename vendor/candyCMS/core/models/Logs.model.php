@@ -46,10 +46,10 @@ class Logs extends Main {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         l.*,
-                                        u.id AS uid,
-                                        u.name,
-                                        u.surname,
-                                        u.email
+                                        u.id AS user_id,
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email
                                       FROM
                                         " . SQL_PREFIX . "logs l
                                       LEFT JOIN
