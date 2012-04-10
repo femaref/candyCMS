@@ -70,10 +70,10 @@ class Calendars extends Main {
 
     # Create
     else {
-      $aData['content']      = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['content']     = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
       $aData['end_date']    = isset($this->_aRequest['end_date']) ? $this->_aRequest['end_date'] : '';
       $aData['start_date']  = isset($this->_aRequest['start_date']) ? $this->_aRequest['start_date'] : '';
-      $aData['title']        = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['title']       = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     foreach ($aData as $sColumn => $sData)

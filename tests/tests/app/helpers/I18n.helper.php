@@ -26,7 +26,7 @@ class UnitTestOfI18nHelper extends CandyUnitTest {
 
   function testGetArray() {
     $this->assertIsA(I18n::getArray(), 'array');
-    $this->assertEqual(count(I18n::getArray('website')), 2);
+    $this->assertEqual(count(I18n::getArray('website')), 3);
   }
 
   function testGetJson() {

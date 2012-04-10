@@ -104,19 +104,15 @@ class Blogs extends Main {
    *
    */
   private function _setBlogsTitle() {
-    # Create blog entry.
-    if (isset($this->_aRequest['action']) && 'create' == $this->_aRequest['action'])
-      return $this->_aRequest['title'];
-
     # Show overview by blog tag
-    elseif (isset($this->_aRequest['search']) && $this->_aRequest['search'] !== 'page')
+    if (isset($this->_aRequest['search']) && $this->_aRequest['search'] !== 'page')
       return I18n::get('global.tag') . ': ' . $this->_aRequest['search'];
 
-    # default blog entry
+    # Default blog entry
     elseif ($this->_iId)
       return $this->_removeHighlight($this->_aData[1]['title']) . ' - ' . Helper::singleize(I18n::get('global.blogs'));
 
-    # show overview with pages
+    # Show overview with pages
     else {
       $iPage = isset($this->_aRequest['page']) ? (int) $this->_aRequest['page'] : 1;
       return $iPage > 1 ?
@@ -133,8 +129,8 @@ class Blogs extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
     if ($this->_iId) {
@@ -144,13 +140,13 @@ class Blogs extends Main {
 
     # Create
     else {
-      $aData['content'] = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $aData['keywords'] = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $aData['language'] = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
+      $aData['content']   = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['keywords']  = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $aData['language']  = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
       $aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
-      $aData['tags'] = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
-      $aData['teaser'] = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['tags']      = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+      $aData['teaser']    = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $aData['title']     = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
@@ -159,6 +155,7 @@ class Blogs extends Main {
     $aData['languages'] = array();
     $oPathDir = opendir(PATH_STANDARD . '/app/languages');
     while ($sFile = readdir($oPathDir)) {
+      # Skip extra german languages.
       if (substr($sFile, 0, 1) == '.' || substr($sFile, 0, 3) == 'de_')
         continue;
 
