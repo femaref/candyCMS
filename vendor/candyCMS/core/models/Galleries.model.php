@@ -163,22 +163,21 @@ class Galleries extends Main {
       exit('SQL error.');
     }
 
+    $aSizes = array('32', 'popup', 'original', 'thumb');
     $iLoop = 0;
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
+
       $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/galleries/' . $aRow['album_id']);
-      $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
-      $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
-      $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
-      $sUrlThumb     = $sUrlUpload . '/thumbnail/' . $aRow['file'];
 
       $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, $aInts);
       $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
-      $this->_aThumbs[$iId]['url_32']       = $sUrl32;
+
+      foreach ($aSizes as $sSize)
+        $this->_aThumbs[$iId]['url_' . $sSize] = $sUrlUpload . '/' . $sSize . '/' . $aRow['file'];
+
       $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;
-      $this->_aThumbs[$iId]['url_popup']    = $sUrlPopup;
-      $this->_aThumbs[$iId]['url_original'] = $sUrlOriginal;
-      $this->_aThumbs[$iId]['url_thumb']    = $sUrlThumb;
+      $this->_aThumbs[$iId]['url_thumb']    = $sUrlUpload . '/thumbnail/' . $aRow['file'];
       # /{$_REQUEST.controller}/{$f.id}/updatefile
       $this->_aThumbs[$iId]['url_update']   = $this->_aThumbs[$iId]['url_update'] . 'file';
       # /{$_REQUEST.controller}/{$f.id}/destroyfile?album_id={$_REQUEST.id}
@@ -189,10 +188,9 @@ class Galleries extends Main {
       # We want to get the image dimension of the original image
       # This function is not set to default due its long processing time
       if ($bAdvancedImageInformation == true) {
-        $aPopupSize = getimagesize(Helper::removeSlash($sUrlPopup));
-        $aThumbSize = getimagesize(Helper::removeSlash($sUrlThumb));
-        $iImageSize = filesize(Helper::removeSlash(PATH_UPLOAD . '/galleries/' .
-                $aRow['album_id'] . '/popup/' . $aRow['file']));
+        $aPopupSize = getimagesize(Helper::removeSlash($this->_aThumbs[$iId]['url_popup']));
+        $aThumbSize = getimagesize(Helper::removeSlash($this->_aThumbs[$iId]['url_thumb']));
+        $iImageSize = filesize(Helper::removeSlash($this->_aThumbs[$iId]['url_popup']));
 
         $this->_aThumbs[$iId]['popup_width']  = $aPopupSize[0];
         $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];
