@@ -25,8 +25,8 @@ class Blogs extends Main {
    *
    */
   protected function _show() {
-    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
     if ($this->_iId) {
       $this->_aData = $this->_oModel->getData($this->_iId);
@@ -133,7 +133,7 @@ class Blogs extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
@@ -144,13 +144,13 @@ class Blogs extends Main {
 
     # Create
     else {
-      $aData['content'] = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $aData['keywords'] = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
-      $aData['language'] = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
+      $aData['content']   = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['keywords']  = isset($this->_aRequest['keywords']) ? $this->_aRequest['keywords'] : '';
+      $aData['language']  = isset($this->_aRequest['language']) ? $this->_aRequest['language'] : '';
       $aData['published'] = isset($this->_aRequest['published']) ? $this->_aRequest['published'] : '';
-      $aData['tags'] = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
-      $aData['teaser'] = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
-      $aData['title'] = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['tags']      = isset($this->_aRequest['tags']) ? $this->_aRequest['tags'] : '';
+      $aData['teaser']    = isset($this->_aRequest['teaser']) ? $this->_aRequest['teaser'] : '';
+      $aData['title']     = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_tags_', $this->_oModel->getTypeaheadData('blogs', 'tags', true));
@@ -167,13 +167,13 @@ class Blogs extends Main {
     closedir($oPathDir);
 
     foreach ($aData as $sColumn => $sData)
-      $this->oSmarty->assign($sColumn, $sData);
+			$this->oSmarty->assign($sColumn, $sData);
 
-    if ($this->_aError)
-      $this->oSmarty->assign('error', $this->_aError);
+		if ($this->_aError)
+			$this->oSmarty->assign('error', $this->_aError);
 
-    $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		$this->oSmarty->setTemplateDir($sTemplateDir);
+		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**
