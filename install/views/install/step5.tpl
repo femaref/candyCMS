@@ -1,16 +1,25 @@
-<form action='/' method='post' class='form-horizontal'>
+<form action='/sessions/create' method='post' class='form-horizontal'>
   {if $_result_ == 'success'}
-  <div>
-    Your Installation was successful. Please delete the installation folder and
-    click next to login!
-  </div>
+    <div class='alert alert-success'>
+      <h4 class='alert-heading'>
+        Congratulations!
+      </h4>
+      <p>
+        Your installation was successful. You can now delete the install folder and
+        click next to login!
+      </p>
+    </div>
   {else}
-  <div>
-    The Admin Account could not be created, you might have to add an Account manually
-    using your favourite SQL-Editor (e.g. PhpMySql).
-  </div>
+    <div class='alert alert-danger'>
+      <h4 class='alert-heading'>
+        Ooops!
+      </h4>
+      <p>
+        The admin account could not be created. Please restart the installation.
+      </p>
+    </div>
   {/if}
   <div class='form-actions right'>
-    <input type='submit' class='btn' value='Your New Installation' />
+    <input type='submit' class='btn' value='Login &rarr;' />
   </div>
 </form>

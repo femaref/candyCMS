@@ -9,13 +9,14 @@
   </p>
   <ul>
     {foreach $_folder_checks_ as $folder=>$check}
-      <li style='color:{if $check}green{else}red{/if}'>{$folder}</li>
+      <li style='color:{if $check}green{else}red{/if}'>
+        {if !$check}<strong>{/if}
+          {$folder}
+        {if !$check}</strong>{/if}
+      </li>
     {/foreach}
   </ul>
-  {if !$_has_errors_}
-    <div class='form-actions right'>
-
-      <input type='submit' class='btn' value='Create database' />
-    </div>
-  {/if}
+  <div class='form-actions right'>
+    <input type='submit' class='btn' value='Step 3: Create database &rarr;' />
+  </div>
 </form>

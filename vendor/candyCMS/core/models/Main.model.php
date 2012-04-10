@@ -261,6 +261,7 @@ abstract class Main {
     else
       $iUserId = $aData['id'];
 
+    # @todo: This still has too many error!
     $aUserData = array(
         'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
         'id'           => $iUserId,
