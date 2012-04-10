@@ -34,10 +34,12 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $('#js-commments').infinitescroll({
-          navSelector  : "div.pagination",
-          nextSelector : "div.pagination a:first",
-          itemSelector : "#js-commments article",
-          loading : { msgText : '', img: "{$_PATH.images}/candy.global/loading.gif", loadingText  : '', finishedMsg  : '' }
+          navSelector   : 'div.pagination',
+          nextSelector  : 'div.pagination a:first',
+          itemSelector  : '#js-commments article',
+          loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
+          animate       : true,
+          bufferPx      : 120
         });
       });
     </script>

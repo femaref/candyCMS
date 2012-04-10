@@ -3,6 +3,7 @@
 /**
  * Parent class for most other models. Handles also DB insertations.
  *
+ * @abstract
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
@@ -205,7 +206,7 @@ abstract class Main {
       $aData['time']     = Helper::formatTimestamp($aData['date_raw'], 2);
       $aData['date']     = Helper::formatTimestamp($aData['date_raw'], 1);
 
-      $aData['datetime'] = Helper::formatTimestamp($aData['date_raw']);
+      $aData['datetime']     = Helper::formatTimestamp($aData['date_raw']);
       $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
       $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
 
