@@ -109,7 +109,9 @@ class Users extends Main {
                                               FROM
                                                 " . SQL_PREFIX . "users
                                               WHERE
-                                                email = :email");
+                                                email = :email
+                                              AND
+                                                verification_code != ''");
 
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
       $oQuery->execute();
@@ -134,23 +136,22 @@ class Users extends Main {
    *
    */
   public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
-    if (empty(parent::$_oDbStatic))
-      parent::connectToDatabase();
+    $oDB = parent::connectToDatabase();
 
     $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
 
     try {
-      $oQuery = parent::$_oDbStatic->prepare("UPDATE
-                                                " . SQL_PREFIX . "users
-                                              SET
-                                                password = :password
-                                              WHERE
-                                                email = :email");
+      $oQuery = $oDB->prepare("UPDATE
+                                " . SQL_PREFIX . "users
+                              SET
+                                `password` = :password
+                              WHERE
+                                `email` = :email");
 
       $oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
 
-      return ($oQuery->execute() && $oQuery->rowCount());
+      return ($oQuery->execute() && $oQuery->rowCount() == 1);
     }
     catch (\PDOException $p) {
       try {

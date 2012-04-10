@@ -150,10 +150,10 @@ class Sessions extends Main {
       return $this->_showCreateResendActionsTemplate($bShowCaptcha);
 
     $sNewPasswordClean = Helper::createRandomChar(10, true);
-    $aData = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
+    $bReturn = $this->_oModel->resendPassword(md5(RANDOM_HASH . $sNewPasswordClean));
     $sRedirect = '/' . $this->_aRequest['controller'] . '/create';
 
-    if (is_array($aData) && !empty($aData)) {
+    if ($bReturn == true) {
       $sMails = $this->__autoload('Mails');
 
       $bStatus = $sMails::send(

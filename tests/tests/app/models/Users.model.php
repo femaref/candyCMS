@@ -28,13 +28,49 @@ class UnitTestOfUserModel extends CandyUnitTest {
         'name'          => 'Name',
         'content'       => 'Content',
         'surname'       => 'Surname',
-        'receive_newsltter' => 0,
+        'receive_newsletter' => 0,
         'role'          => 0,
         'use_gravatar'  => 0,
         'controller'    => 'users');
 
     $this->oObject = new Users($this->aRequest, $this->aSession);
     $this->oSession = new Sessions($this->aRequest, $this->aSession);
+  }
+
+  function testGetExistingUser() {
+    # get existing User
+    $this->assertTrue($this->oObject->getExistingUser('admin@example.com'));
+    $this->assertFalse($this->oObject->getExistingUser('adsfadsfsda@fghfghfgfg.com'));
+  }
+
+  function testGetData() {
+    # get test Data
+    $aData = $this->oObject->getData(2);
+    $this->assertIsA($aData, 'array');
+    $this->assertEqual(count($aData), 1);
+    $this->assertTrue(isset($aData[1]['name']));
+    $this->assertTrue(isset($aData[1]['email']));
+    $this->assertIsA($this->oObject->getData(), 'array');
+  }
+
+  function testSetPassword() {
+    # Set to default password.
+    $this->assertTrue($this->oObject->setPassword('moderator@example.com', 'funkypass', true));
+    $this->assertFalse($this->oObject->setPassword('notexisting@example.com', 'funkypass', true));
+    # unverified should not be able to reset their passwords
+    $this->assertTrue($this->oObject->setPassword('unverified@example.com', 'funkypass', true));
+    # reset the password, so we can still login later on in tests
+    $this->assertTrue($this->oObject->setPassword('moderator@example.com', 'test', true));
+  }
+
+  function testGetVerificationData() {
+    $aData = $this->oObject->getVerificationData('unverified@example.com');
+    $this->assertIsA($aData, 'array');
+    $this->assertTrue(isset($aData['verification_code']));
+    # not existing users should get false
+    $this->assertFalse($this->oObject->getVerificationData('notexisting@example.com'));
+    # already verified users should get false
+    $this->assertFalse($this->oObject->getVerificationData('moderator@example.com'));
   }
 
   function testFullFeaturedUserCreationVerificationAndDeletion() {
@@ -44,22 +80,8 @@ class UnitTestOfUserModel extends CandyUnitTest {
     $this->assertIsA($this->iLastInsertId, 'integer', 'User #' . $this->iLastInsertId . ' created.');
     $this->aRequest['id'] = $this->iLastInsertId;
 
-    # get test Data
-    $this->assertIsA($this->oObject->getData(0), 'array');
-    $this->assertIsA($this->oObject->getData(), 'array');
-
-    # get existing User
-    $this->assertTrue($this->oObject->getExistingUser($this->aRequest['email']));
-    $this->assertFalse($this->oObject->getExistingUser('adsfadsfsda@fghfghfgfg.com'));
-
     # Get the Username and Email
     $this->assertIsA($this->oObject->getUserNamesAndEmail($this->iLastInsertId), 'array');
-
-    # Get the verification data.
-    $this->assertIsA($this->oObject->getVerificationData($this->aRequest['email']), 'array');
-
-    # Set to default password.
-    $this->assertTrue($this->oObject->setPassword($this->aRequest['email'], $this->aRequest['password'], true), 'array');
 
     # Fetch the login data.
     $this->assertIsA($this->oObject->getLoginData(), 'array');
