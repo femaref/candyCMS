@@ -64,8 +64,7 @@
           navSelector   : 'div.pagination',
           nextSelector  : 'div.pagination a:first',
           itemSelector  : '#js-commments article',
-          loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
-          animate       : true
+          loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
         });
       });
     </script>
