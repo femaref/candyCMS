@@ -17,7 +17,7 @@ use CandyCMS\Core\Helpers\Helper;
 class Sitemaps extends Main {
 
   /**
-   * Show the sitemap as XML. Site is cached for one hour.
+   * Show the sitemap as XML.
    *
    * @access protected
    * @return string XML content
@@ -34,13 +34,12 @@ class Sitemaps extends Main {
       $this->_getSitemap();
     }
 
-    $this->oSmarty->setCacheLifetime(3600);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
   }
 
   /**
-   * Show the sitemap as HTML. Site is cached for one minute.
+   * Show the sitemap as HTML.
    *
    * @access protected
    * @return string HTML content
@@ -53,7 +52,6 @@ class Sitemaps extends Main {
     if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
       $this->_getSitemap();
 
-    $this->oSmarty->setCacheLifetime(300);
     $this->oSmarty->setTemplateDir($sTemplateDir);
     return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
