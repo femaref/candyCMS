@@ -37,7 +37,7 @@
         <td>{$c.datetime}</td>
         <td>
           <a href='{$c.author.url}'>
-            {$c.full_name}
+            {$c.author.full_name}
           </a>
         </td>
         {if $_SESSION.user.role >= 3}

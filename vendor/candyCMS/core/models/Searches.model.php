@@ -30,7 +30,7 @@ class Searches extends Main {
    * @return array $this->_aData search data
    *
    */
-  public function getData($sSearch, $aTables = '', $sOrderBy = 'date DESC') {
+  public function getData($sSearch, $aTables = '', $sOrderBy = 't.date DESC') {
     $aInts = array('id', 'author_id');
 
     if (empty($aTables))
@@ -39,13 +39,21 @@ class Searches extends Main {
     foreach ($aTables as $sTable) {
       try {
         $this->oQuery = $this->_oDb->query("SELECT
-                                              *
+                                              t.*,
+                                              u.id as user_id,
+                                              u.name as user_name,
+                                              u.surname as user_surname,
+                                              u.email as user_email
                                             FROM
-                                              " . SQL_PREFIX . $sTable . "
+                                              " . SQL_PREFIX . $sTable . " t
+                                            JOIN
+                                              " . SQL_PREFIX . "users u
+                                            ON
+                                              u.id = t.author_id
                                             WHERE
-                                              title LIKE '%" . $sSearch . "%'
+                                              t.title LIKE '%" . $sSearch . "%'
                                             OR
-                                              content LIKE '%" . $sSearch . "%'
+                                              t.content LIKE '%" . $sSearch . "%'
                                             ORDER BY
                                               " . (string) $sOrderBy);
 
@@ -83,7 +91,7 @@ class Searches extends Main {
   }
 
   /**
-   * Ther is no delete in this Model
+   * There is no delete in this Model
    *
    * @access public
    * @param integer $iId ID to delete

@@ -252,10 +252,10 @@ abstract class Main {
     if (isset($aData['author_id']) && $aData['author_id'])
       $iUserId = $aData['author_id'];
 
-    else if (isset($aData['user_id']) && $aData['user_id'])
+    elseif (isset($aData['user_id']) && $aData['user_id'])
       $iUserId = $aData['user_id'];
 
-    else if (isset($aData['uid']))
+    elseif (isset($aData['uid']))
       $iUserId = $aData['uid'];
 
     else

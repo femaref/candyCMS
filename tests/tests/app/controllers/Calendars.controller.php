@@ -55,8 +55,7 @@ class WebTestOfCalendarsController extends CandyWebTest {
 
     //get a missing entry
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/42'));
-    $this->assertResponse(200);
-    $this->assertText(I18n::get('error.missing.id'));
+    $this->assert404();
   }
 
   function testCreate() {

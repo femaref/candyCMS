@@ -31,7 +31,7 @@ class WebTestOfBlogController extends CandyWebTest {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('hs24br55e2');
-		$this->assertNoText('1d2275e170');
+		$this->assertNoText('1d2275e170'); #not visible since different language
 
     # Short ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));

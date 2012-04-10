@@ -47,7 +47,7 @@ class AllFileTests extends TestSuite {
       die('not in testing mode');
 
     else {
-      new \CandyCMS\Core\Helpers\I18n(WEBSITE_LANGUAGE);
+      new \CandyCMS\Core\Helpers\I18n(WEBSITE_LANGUAGE, $_SESSION);
 
       # All Tests
       $aTests = array(
