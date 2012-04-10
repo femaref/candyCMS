@@ -61,6 +61,7 @@ class UnitTestOfUserModel extends CandyUnitTest {
     $this->assertTrue($this->oObject->setPassword('unverified@example.com', 'funkypass', true));
     # reset the password, so we can still login later on in tests
     $this->assertTrue($this->oObject->setPassword('moderator@example.com', 'test', true));
+    $this->assertTrue($this->oObject->setPassword('unverified@example.com', 'test', true));
   }
 
   function testGetVerificationData() {
