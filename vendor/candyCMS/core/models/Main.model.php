@@ -111,7 +111,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
-    # not unsetting the database, because it is unset by index.controller
+    # Not unsetting the database, because it is unset by Index.controller.php.
   }
 
   /**
@@ -250,7 +250,6 @@ abstract class Main {
     }
 
     if ($aData['user_id'] != 0) {
-
       $aUserData = array(
           'email'         => $aData['user_email'],
           'id'            => $aData['user_id'],
@@ -262,7 +261,7 @@ abstract class Main {
       );
     }
     else {
-      # we dont have a user (comments) and format the user given data instead
+      # We dont have a user (comments) and format the user given data instead.
       $aUserData = array(
           'email'         => isset($aData['author_email']) ? $aData['author_email'] : WEBSITE_MAIL,
           'id'            => isset($aData['author_id']) ? $aData['author_id'] : 0,
