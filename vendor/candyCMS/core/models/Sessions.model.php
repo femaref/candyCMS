@@ -121,14 +121,12 @@ class Sessions extends Main {
    *
    * @access public
    * @param string $sPassword new password if we want to resend it
-   * @return boolean|array status of query or user array
+   * @return boolean status of query
    *
    */
   public function resendPassword($sPassword = '') {
-    $sModel = $this->__autoload('Users');
-    $aData  = $sModel::setPassword($this->_aRequest['email'], $sPassword);
-
-    return empty($aData['name']) ? false : $aData;
+    $sModel  = $this->__autoload('Users');
+    return $sModel::setPassword($this->_aRequest['email'], $sPassword);
   }
 
   /**
