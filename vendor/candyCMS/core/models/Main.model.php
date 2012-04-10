@@ -3,6 +3,7 @@
 /**
  * Parent class for most other models. Handles also DB insertations.
  *
+ * @abstract
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
@@ -110,7 +111,7 @@ abstract class Main {
    *
    */
   public function __destruct() {
-    # not unsetting the database, because it is unset by index.controller
+    # Not unsetting the database, because it is unset by Index.controller.php.
   }
 
   /**
@@ -205,7 +206,7 @@ abstract class Main {
       $aData['time']     = Helper::formatTimestamp($aData['date_raw'], 2);
       $aData['date']     = Helper::formatTimestamp($aData['date_raw'], 1);
 
-      $aData['datetime'] = Helper::formatTimestamp($aData['date_raw']);
+      $aData['datetime']     = Helper::formatTimestamp($aData['date_raw']);
       $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
       $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
 
@@ -248,28 +249,29 @@ abstract class Main {
       }
     }
 
-    # build the user data
-    if (isset($aData['author_id']) && $aData['author_id'])
-      $iUserId = $aData['author_id'];
-
-    else if (isset($aData['user_id']) && $aData['user_id'])
-      $iUserId = $aData['user_id'];
-
-    else if (isset($aData['uid']))
-      $iUserId = $aData['uid'];
-
-    else
-      $iUserId = $aData['id'];
-
-    $aUserData = array(
-        'email'        => isset($aData['author_email']) ? $aData['author_email'] : $aData['email'],
-        'id'           => $iUserId,
-        'use_gravatar' => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
-        'name'         => (isset($aData['name']) && $aData['name']) ? $aData['name'] : $aData['author_name'],
-        'surname'      => (isset($aData['surname']) && $aData['surname']) ? $aData['surname'] : $aData['author_surname'],
-        'facebook_id'  => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
-        'ip'           => isset($aData['author_ip']) ? $aData['author_ip'] : '',
-    );
+    if ($aData['user_id'] != 0) {
+      $aUserData = array(
+          'email'         => $aData['user_email'],
+          'id'            => $aData['user_id'],
+          'use_gravatar'  => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : false,
+          'name'          => $aData['user_name'],
+          'surname'       => $aData['user_surname'],
+          'facebook_id'   => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
+          'ip'            => isset($aData['author_ip']) ? $aData['author_ip'] : '',
+      );
+    }
+    else {
+      # We dont have a user (comments) and format the user given data instead.
+      $aUserData = array(
+          'email'         => isset($aData['author_email']) ? $aData['author_email'] : WEBSITE_MAIL,
+          'id'            => isset($aData['author_id']) ? $aData['author_id'] : 0,
+          'use_gravatar'  => isset($aData['use_gravatar']) ? (bool) $aData['use_gravatar'] : true,
+          'name'          => isset($aData['author_name']) ? $aData['author_name'] : '',
+          'surname'       => '',
+          'facebook_id'   => isset($aData['author_facebook_id']) ? $aData['author_facebook_id'] : '',
+          'ip'            => isset($aData['author_ip']) ? $aData['author_ip'] : '',
+      );
+    }
 
     $aData['author'] = $this->_formatForUserOutput($aUserData);
 

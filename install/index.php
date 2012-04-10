@@ -21,9 +21,20 @@ use PDO;
 define('PATH_STANDARD', dirname(__FILE__) . '/..');
 
 require PATH_STANDARD . '/vendor/candyCMS/core/controllers/Index.controller.php';
+require PATH_STANDARD . '/vendor/candyCMS/plugins/Cronjob/Cronjob.controller.php';
 
 class Install extends Index {
 
+  /**
+   * Set up setup ;)
+   *
+   * @access public
+   * @param array $aRequest
+   * @param array $aSession
+   * @param array $aFile
+   * @param array $aCookie
+   *
+   */
   public function __construct(&$aRequest, &$aSession = '', &$aFile = '', &$aCookie = '') {
     $this->_aRequest = & $aRequest;
     $this->_aSession = & $aSession;
@@ -37,68 +48,66 @@ class Install extends Index {
       $this->getConfigFiles(array('Plugins'));
 
     $this->_defines();
-    # $this->_aPlugins = $this->getPlugins(ALLOW_PLUGINS);
     $this->getLanguage();
-    $this->getCronjob();
-
-    # Load cronjob and start it.
-    # TODO: enable
-    #$this->getCronjob(true);
+    $this->getCronjob(true);
 
     $this->oSmarty = SmartySingleton::getInstance();
     $this->oSmarty->template_dir = PATH_STANDARD . '/install/views';
     $this->oSmarty->setCaching(SmartySingleton::CACHING_OFF);
     $this->oSmarty->setCompileCheck(true);
+
     # Direct actions
     if (isset($this->_aRequest['action']) && 'install' == $this->_aRequest['action'])
-      $this->showInstall();
+      $this->showInstallation();
 
     elseif (isset($this->_aRequest['action']) && 'migrate' == $this->_aRequest['action'])
-      $this->showStart();
+      $this->showMigration();
 
     else
       $this->showIndex();
   }
 
+  /**
+   * Set constants.
+   *
+   * @access private
+   *
+   */
   private function _defines() {
     if (!defined('WEBSITE_URL'))
       define('WEBSITE_URL', 'http://' . $_SERVER['SERVER_NAME']);
-    define('VERSION', '20111114');
-    define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
-    define('MOBILE', false);
-    define('MOBILE_DEVICE', false);
+
     if (!defined('CACHE_DIR'))
       define('CACHE_DIR', 'cache');
+
     if (!defined('COMPILE_DIR'))
       define('COMPILE_DIR', 'compile');
 
-    # check for extensions?
-    define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
+    define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
+    define('EXTENSION_CHECK', false);
+    define('MOBILE', false);
+    define('MOBILE_DEVICE', false);
+    define('VERSION', '20120410');
   }
 
   /**
    * Create all Folders specified in given Array
    *
+   * @access private
    * @param array $aFolders array of Folders to create, can also contain subarrays
    * @param string $sPrefix prefix for folder creations, default: '/'
    * @param string $iPermissions the permissions to create the folders with, default: 0777
+   *
    */
   private function _createFoldersIfNotExistent($aFolders, $sPrefix = '/', $iPermissions = 0777) {
     foreach ($aFolders as $sKey => $mFolder) {
       # create multiple folders
-      if (is_array($mFolder)) {
-        # create root folder
-        # not needed since mkdir has recursive flag set to true
-        //$this->_createFoldersIfNotExistent(array($sKey), $sPrefix, $iPermissions);
-
-        # and create all subfolders
+      if (is_array($mFolder))
         $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/', $iPermissions);
-      }
 
       # create single Folder
-      else
-        if (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
-          @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $iPermissions, true);
+      elseif (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
+        @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $iPermissions, true);
     }
   }
 
@@ -109,9 +118,11 @@ class Install extends Index {
    * @param array $aReturn array of bool return values for smarty
    * @param string $sPrefix prefix for assigns and checks, default: '/'
    * @param string $sPermissions the permissions to create the folders with, default: '0777'
+   *
    */
   private function _checkFoldersAndAssign($aFolders, &$aReturn, $sPrefix = '/', $sPermissions = '0777') {
     $bReturn = true;
+
     foreach ($aFolders as $sKey => $mFolder) {
 
       # check multiple folders
@@ -130,27 +141,35 @@ class Install extends Index {
         $bReturn = $bReturn && $aReturn[$sPrefix . $mFolder];
       }
     }
+
     return $bReturn;
   }
 
-  public function showInstall() {
+  /**
+   * Show installation steps.
+   *
+   * @access public
+   *
+   */
+  public function showInstallation() {
     switch ($this->_aRequest['step']) {
 
       default:
       case '1':
 
         $aHasConfigFiles = array(
-            'main'      => file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'),
-            'plugins'   => file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'));
-
-        $this->oSmarty->assign('_configs_exist_', $aHasConfigFiles);
+            'main'    => file_exists(PATH_STANDARD . '/app/config/Candy.inc.php'),
+            'plugins' => file_exists(PATH_STANDARD . '/app/config/Plugins.inc.php'));
 
         $bRandomHashChanged = defined('RANDOM_HASH') && RANDOM_HASH !== '';
         $this->oSmarty->assign('_hash_changed_', $bRandomHashChanged);
+        $this->oSmarty->assign('_configs_exist_', $aHasConfigFiles);
 
         $bHasNoErrors = $bRandomHashChanged;
+
         foreach ($aHasConfigFiles as $bConfigFileExists)
           $bHasNoErrors = $bHasNoErrors && $bConfigFileExists;
+
         $this->oSmarty->assign('_has_errors_', !$bHasNoErrors);
 
         $this->oSmarty->assign('title', 'Installation - Step 1 - Preparation');
@@ -164,8 +183,8 @@ class Install extends Index {
         $sUpload = Helper::removeSlash(PATH_UPLOAD);
         $aFolders = array(
             'app/backup',
-            'app/' . Helper::removeSlash(CACHE_DIR),
-            'app/' . Helper::removeSlash(COMPILE_DIR),
+            Helper::removeSlash(CACHE_DIR),
+            Helper::removeSlash(COMPILE_DIR),
             'app/logs',
             $sUpload => array(
                 'galleries',
@@ -174,8 +193,8 @@ class Install extends Index {
                     'medias', 'bbcode'),
                 'users' => array(
                     '32', '64', '100', 'thumbnail', 'popup', 'original')
-                )
-            );
+            )
+        );
 
         $this->_createFoldersIfNotExistent($aFolders);
 
@@ -183,10 +202,9 @@ class Install extends Index {
         $bHasNoErrors = $this->_checkFoldersAndAssign($aFolders, $aFolderChecks);
 
         $this->oSmarty->assign('_folder_checks_', $aFolderChecks);
-
         $this->oSmarty->assign('_has_errors_', !$bHasNoErrors);
 
-        $this->oSmarty->assign('title', 'Installation - Step 2 - Folder Rights');
+        $this->oSmarty->assign('title', 'Installation - Step 2 - Folder rights');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step2.tpl'));
 
         break;
@@ -195,9 +213,11 @@ class Install extends Index {
 
         $sUrl = PATH_STANDARD . '/install/sql/install/tables.sql';
         $bHasErrors = true;
+
         if (file_exists($sUrl)) {
           $oFo = fopen($sUrl, 'r');
-          $sData = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize($sUrl)));
+          $sData = str_replace('%SQL_PREFIX%', SQL_PREFIX, stream_get_contents($oFo));
+          fclose($oFo);
           $bHasErrors = false;
 
           # Create tables
@@ -206,13 +226,12 @@ class Install extends Index {
             $oDb->query($sData);
           }
           catch (\AdvancedException $e) {
-            $bHasErrors = true;
             die($e->getMessage());
           }
         }
 
         $this->oSmarty->assign('_has_errors_', $bHasErrors);
-        $this->oSmarty->assign('title', 'Installation - Step 3 - Create Database');
+        $this->oSmarty->assign('title', 'Installation - Step 3 - Create database');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step3.tpl'));
 
         break;
@@ -228,18 +247,15 @@ class Install extends Index {
           if ($this->_aError) {
             $this->oSmarty->assign('error', $this->_aError);
 
-            $this->oSmarty->assign('name',
-                    isset($this->_aRequest['name']) ?
+            $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
                             Helper::formatInput($this->_aRequest['name']) :
                             '');
 
-            $this->oSmarty->assign('surname',
-                    isset($this->_aRequest['surname']) ?
+            $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
                             Helper::formatInput($this->_aRequest['surname']) :
                             '');
 
-            $this->oSmarty->assign('email',
-                    isset($this->_aRequest['email']) ?
+            $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
                             Helper::formatInput($this->_aRequest['email']) :
                             '');
           }
@@ -251,7 +267,7 @@ class Install extends Index {
           }
         }
 
-        $this->oSmarty->assign('title', 'Installation - Step 4 - Create Admin User');
+        $this->oSmarty->assign('title', 'Installation - Step 4 - Create admin');
         $this->oSmarty->assign('content', $this->oSmarty->fetch('install/step4.tpl'));
 
         break;
@@ -299,20 +315,34 @@ class Install extends Index {
     return $this;
   }
 
+  /**
+   *
+   * @access public
+   *
+   */
   public function showIndex() {
     $this->oSmarty->assign('title', 'Welcome!');
     $this->oSmarty->assign('content', $this->oSmarty->fetch('index.tpl'));
   }
 
+  /**
+   * @access public
+   * @return string HTML
+   *
+   */
   public function show() {
     return $this->oSmarty->fetch('layout.tpl');
   }
 
+  /**
+   * @access private
+   *
+   */
   private function _showMigrations() {
-    $sDir = 'sql/migrate/';
+    $sDir = PATH_STANDARD . '/install/sql/migrate/';
     $oDir = opendir($sDir);
 
-    $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
+    $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
 
     $iI = 0;
     $aFiles = array();
@@ -355,23 +385,28 @@ class Install extends Index {
     $this->oSmarty->assign('content', $this->oSmarty->fetch('migrate/index.tpl'));
   }
 
-  private function _doMigration($file) {
-    $oFo = fopen('migrate/sql/' .$_REQUEST['file'], 'r');
-    $sQuery = str_replace('%SQL_PREFIX%', SQL_PREFIX, fread($oFo, filesize('migrate/sql/' .$_REQUEST['file'])));
+  /**
+   *
+   * @access private
+   *
+   */
+  private function _doMigration() {
+    $oFo = fopen(PATH_STANDARD . '/install/sql/migrate/' .$_REQUEST['file'], 'rb');
 
     try {
-      $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
-      $bResult = $oDb->query($sQuery);
-    } catch (\AdvancedException $e) {
-      $oDb->rollBack();
-      $e->getMessage();
+      $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
+      $bResult = $oDb->query(str_replace('%SQL_PREFIX%', SQL_PREFIX, @stream_get_contents($oFo)));
+      fclose($oFo);
+    }
+    catch (\AdvancedException $e) {
+      Core\Helpers\AdvancedException::reportBoth($e->getMessage());
     }
 
     # Write migration into table
-    if($bResult == true) {
+    if($bResult) {
       try {
-        $oDb = \CandyCMS\Core\Model\Main::connectToDatabase();
-        $oQuery = $oDb->prepare("INSERT INTO
+        $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
+        $oQuery = $oDb->prepare(" INSERT INTO
                                     " . SQL_PREFIX . "migrations (file, date)
                                   VALUES
                                     ( :file, :date )");
@@ -384,19 +419,15 @@ class Install extends Index {
         $oDb->rollBack();
       }
     }
-    die(json_encode(array('result' => true)));
   }
 
   /**
-   * Migrate
+   *
+   * @access public
+   *
    */
-  public function showStart() {
-    if ($this->_aRequest['file']) {
-      return $this->_doMigration($this->_aRequest['file']);
-    }
-    else {
-      return $this->_showMigrations();
-    }
+  public function showMigration() {
+    return isset($this->_aRequest['file']) ? $this->_doMigration($this->_aRequest['file']) : $this->_showMigrations();
   }
 }
 

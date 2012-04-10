@@ -109,7 +109,9 @@ class Users extends Main {
                                               FROM
                                                 " . SQL_PREFIX . "users
                                               WHERE
-                                                email = :email");
+                                                email = :email
+                                              AND
+                                                verification_code != ''");
 
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
       $oQuery->execute();
@@ -134,23 +136,22 @@ class Users extends Main {
    *
    */
   public static function setPassword($sEmail, $sPassword, $bEncrypt = false) {
-    if (empty(parent::$_oDbStatic))
-      parent::connectToDatabase();
+    $oDB = parent::connectToDatabase();
 
     $sPassword = $bEncrypt == true ? md5(RANDOM_HASH . $sPassword) : $sPassword;
 
     try {
-      $oQuery = parent::$_oDbStatic->prepare("UPDATE
-                                                " . SQL_PREFIX . "users
-                                              SET
-                                                password = :password
-                                              WHERE
-                                                email = :email");
+      $oQuery = $oDB->prepare("UPDATE
+                                " . SQL_PREFIX . "users
+                              SET
+                                `password` = :password
+                              WHERE
+                                `email` = :email");
 
       $oQuery->bindParam(':password', $sPassword, PDO::PARAM_STR);
       $oQuery->bindParam(':email', Helper::formatInput($sEmail), PDO::PARAM_STR);
 
-      return $oQuery->execute();
+      return ($oQuery->execute() && $oQuery->rowCount() == 1);
     }
     catch (\PDOException $p) {
       try {
@@ -172,11 +173,11 @@ class Users extends Main {
    * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bForceNoId Override ID to show user overview
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit user overview limit
+   * @param integer $iLimit user overview limit, -1 is no limit
    * @return array data from _setData
    *
    */
-  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
+  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = -1) {
     $aInts  = array('id', 'role');
     $aBools = array('use_gravatar', 'receive_newsletter');
 
@@ -185,6 +186,9 @@ class Users extends Main {
 
     if (empty($iId)) {
       try {
+        # TODO pagination and offset
+        # $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
+        $sLimit = $iLimit === -1 ? '' : 'LIMIT :limit';
         $oQuery = $this->_oDb->prepare("SELECT
                                           u.id,
                                           u.name,
@@ -204,10 +208,10 @@ class Users extends Main {
                                           s.user_id = u.id
                                         ORDER BY
                                           u.id ASC
-                                        LIMIT
-                                          :limit");
+                                        " . $sLimit);
 
-        $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
+        if ($iLimit !== -1)
+          $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -276,7 +280,7 @@ class Users extends Main {
     try {
       $oQuery = $this->_oDb->prepare("INSERT INTO
                                         " . SQL_PREFIX . "users
-                                        (  name,
+                                        ( name,
                                           surname,
                                           password,
                                           email,

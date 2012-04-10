@@ -53,21 +53,21 @@
     </div>
     {if $_SESSION.user.role < 4}
       <div id='js-modal' class='modal hide fade'>
-        <div class="modal-header">
-          <a class="close" data-dismiss="modal">×</a>
+        <div class='modal-header'>
+          <a class='close' data-dismiss='modal'>×</a>
           <h3>{$lang.global.terms.terms}</h3>
         </div>
-        <div class="modal-body">
+        <div class='modal-body'>
           <p>{$lang.website.terms}</p>
         </div>
       </div>
-      <div class="control-group{if isset($error.disclaimer)} alert alert-error{/if}">
-        <label for='input-terms'>{$lang.global.terms.terms} <span title="{$lang.global.required}">*</span></label>
+      <div class='control-group{if isset($error.disclaimer)} alert alert-error{/if}'>
+        <label for='input-terms'>{$lang.global.terms.terms} <span title='{$lang.global.required}'>*</span></label>
           {* Absolute URL due to fancybox bug *}
           <div class='controls'>
             <label class='checkbox'>
               <input name='disclaimer' value='disclaimer' type='checkbox' id='input-terms' required />
-              <a href='#js-modal' data-toggle="modal">
+              <a href='#js-modal' data-toggle='modal'>
                 {$lang.global.terms.read}
               </a>
             </label>

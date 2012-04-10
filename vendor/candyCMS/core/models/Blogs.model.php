@@ -27,7 +27,7 @@ class Blogs extends Main {
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit blog post limit, -1 is the infinite limit
    * @return array data from _setData
    *
    */
@@ -61,12 +61,13 @@ class Blogs extends Main {
       }
 
       try {
-        $oQuery = $this->_oDb->query("SELECT
+        $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
+        $oQuery = $this->_oDb->prepare("SELECT
                                         b.*,
-                                        u.id AS uid,
-                                        u.name,
-                                        u.surname,
-                                        u.email,
+                                        u.id AS user_id,
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email,
                                         u.use_gravatar,
                                         COUNT(c.id) AS comment_sum
                                       FROM
@@ -79,15 +80,18 @@ class Blogs extends Main {
                                         " . SQL_PREFIX . "comments c
                                       ON
                                         c.parent_id=b.id
-                                        " . $sWhere . "
+                                      " . $sWhere . "
                                       GROUP BY
                                         b.id
                                       ORDER BY
                                         b.date DESC
-                                      LIMIT
-                                        " . $this->oPagination->getOffset() . ",
-                                        " . $this->oPagination->getLimit());
+                                      " . $sLimit);
 
+        if ($iLimit !== -1) {
+          $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+          $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+        }
+        $oQuery->execute();
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
@@ -115,10 +119,10 @@ class Blogs extends Main {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           b.*,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email,
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email,
                                           u.use_gravatar,
                                           COUNT(c.id) AS comment_sum
                                         FROM

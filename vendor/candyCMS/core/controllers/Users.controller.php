@@ -123,7 +123,7 @@ class Users extends Main {
    *
    */
   protected function _showFormTemplate($bUseRequest = false) {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Set user id of person to update

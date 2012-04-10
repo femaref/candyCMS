@@ -133,6 +133,7 @@ class Index {
       try {
         if (!file_exists(PATH_STANDARD . '/app/config/' . ucfirst($sConfig) . '.inc.php'))
           throw new AdvancedException('Missing ' . ucfirst($sConfig) . ' config file.');
+
         else
           require_once PATH_STANDARD . '/app/config/' . ucfirst($sConfig) . '.inc.php';
       }
@@ -248,16 +249,14 @@ class Index {
 
     # There is no request, but there might be a cookie instead.
     else {
-      $aRequest  = isset($this->_aCookie) && is_array($this->_aCookie) ?
+      $aRequest = isset($this->_aCookie) && is_array($this->_aCookie) ?
               array_merge($this->_aRequest, $this->_aCookie) :
               $this->_aRequest;
 
-      if (isset($aRequest['default_language']) &&
-              file_exists(PATH_STANDARD . '/app/languages/' . strtolower((string) $aRequest['default_language']) . '.language.yml'))
-              $sLanguage = strtolower((string) $aRequest['default_language']);
-      else
-        $sLanguage = strtolower(DEFAULT_LANGUAGE);
-
+      $sLanguage = isset($aRequest['default_language']) &&
+              file_exists(PATH_STANDARD . '/app/languages/' . strtolower((string) $aRequest['default_language']) . '.language.yml') ?
+              strtolower((string) $aRequest['default_language']) :
+              strtolower(DEFAULT_LANGUAGE);
     }
 
     # Set iso language codes
@@ -306,7 +305,7 @@ class Index {
   public function getCronjob($bForceAction = false) {
     if (class_exists('\CandyCMS\Plugins\Cronjob')) {
       if (Cronjob::getNextUpdate() == true || $bForceAction === true) {
-        $oCronjob = new Cronjob($this->_aSession['user']['id']);
+        $oCronjob = new Cronjob(isset($this->_aSession['user']['id']) ? (int) $this->_aSession['user']['id'] : 0);
         $oCronjob->cleanup(array('medias', 'bbcode'));
         $oCronjob->optimize();
         $oCronjob->backup();
@@ -331,6 +330,7 @@ class Index {
           'secret' => PLUGIN_FACEBOOK_SECRET,
           'cookie' => true
           ));
+
       return $this->_aSession['facebook'];
     }
   }

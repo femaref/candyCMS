@@ -37,7 +37,7 @@ class Galleries extends Main {
    * @param integer $iId Album-ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
    * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit blog post limit, -1 is the infinite limit
    * @return array data from _setData
    *
    */
@@ -68,12 +68,13 @@ class Galleries extends Main {
     $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
 
     try {
-      $oQuery = $this->_oDb->query("SELECT
+      $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
+      $oQuery = $this->_oDb->prepare("SELECT
                                       a.*,
-                                      u.id AS uid,
-                                      u.name,
-                                      u.surname,
-                                      u.email,
+                                      u.id AS user_id,
+                                      u.name AS user_name,
+                                      u.surname AS user_surname,
+                                      u.email AS user_email,
                                       COUNT(f.id) AS files_sum
                                     FROM
                                       " . SQL_PREFIX . "gallery_albums a
@@ -90,10 +91,13 @@ class Galleries extends Main {
                                       a.id
                                     ORDER BY
                                       a.id DESC
-                                    LIMIT
-                                      " . $this->oPagination->getOffset() . ",
-                                      " . $this->oPagination->getLimit());
+                                    " . $sLimit);
 
+      if ($iLimit !== -1) {
+        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+      }
+      $oQuery->execute();
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {
@@ -138,9 +142,10 @@ class Galleries extends Main {
     try {
       $oQuery = $this->_oDb->prepare("SELECT
                                         f.*,
-                                        u.name,
-                                        u.surname,
-                                        u.email
+                                        u.id AS user_id,
+                                        u.name AS user_name,
+                                        u.surname AS user_surname,
+                                        u.email AS user_email
                                       FROM
                                         " . SQL_PREFIX . "gallery_files f
                                       LEFT JOIN
@@ -162,22 +167,21 @@ class Galleries extends Main {
       exit('SQL error.');
     }
 
+    $aSizes = array('32', 'popup', 'original', 'thumb');
     $iLoop = 0;
     foreach ($aResult as $aRow) {
       $iId           = $aRow['id'];
+
       $sUrlUpload    = Helper::addSlash(PATH_UPLOAD . '/galleries/' . $aRow['album_id']);
-      $sUrl32        = $sUrlUpload . '/32/' . $aRow['file'];
-      $sUrlPopup     = $sUrlUpload . '/popup/' . $aRow['file'];
-      $sUrlOriginal  = $sUrlUpload . '/original/' . $aRow['file'];
-      $sUrlThumb     = $sUrlUpload . '/thumbnail/' . $aRow['file'];
 
       $this->_aThumbs[$iId]                 = $this->_formatForOutput($aRow, $aInts);
       $this->_aThumbs[$iId]['url']          = '/galleries/' . $aRow['album_id'] . '/image/' . $iId;
-      $this->_aThumbs[$iId]['url_32']       = $sUrl32;
+
+      foreach ($aSizes as $sSize)
+        $this->_aThumbs[$iId]['url_' . $sSize] = $sUrlUpload . '/' . $sSize . '/' . $aRow['file'];
+
       $this->_aThumbs[$iId]['url_upload']   = $sUrlUpload;
-      $this->_aThumbs[$iId]['url_popup']    = $sUrlPopup;
-      $this->_aThumbs[$iId]['url_original'] = $sUrlOriginal;
-      $this->_aThumbs[$iId]['url_thumb']    = $sUrlThumb;
+      $this->_aThumbs[$iId]['url_thumb']    = $sUrlUpload . '/thumbnail/' . $aRow['file'];
       # /{$_REQUEST.controller}/{$f.id}/updatefile
       $this->_aThumbs[$iId]['url_update']   = $this->_aThumbs[$iId]['url_update'] . 'file';
       # /{$_REQUEST.controller}/{$f.id}/destroyfile?album_id={$_REQUEST.id}
@@ -188,10 +192,9 @@ class Galleries extends Main {
       # We want to get the image dimension of the original image
       # This function is not set to default due its long processing time
       if ($bAdvancedImageInformation == true) {
-        $aPopupSize = getimagesize(Helper::removeSlash($sUrlPopup));
-        $aThumbSize = getimagesize(Helper::removeSlash($sUrlThumb));
-        $iImageSize = filesize(Helper::removeSlash(PATH_UPLOAD . '/galleries/' .
-                $aRow['album_id'] . '/popup/' . $aRow['file']));
+        $aPopupSize = getimagesize(Helper::removeSlash($this->_aThumbs[$iId]['url_popup']));
+        $aThumbSize = getimagesize(Helper::removeSlash($this->_aThumbs[$iId]['url_thumb']));
+        $iImageSize = filesize(Helper::removeSlash($this->_aThumbs[$iId]['url_popup']));
 
         $this->_aThumbs[$iId]['popup_width']  = $aPopupSize[0];
         $this->_aThumbs[$iId]['popup_height'] = $aPopupSize[1];

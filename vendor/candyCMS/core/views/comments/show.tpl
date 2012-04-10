@@ -12,8 +12,8 @@
             <img class='thumbnail' src='{$c.author.avatar_64}' width='40' height='40' alt='' />
             {if $c.author.id > 0}
               <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
-            {elseif $c.author.name}
-              {$c.author.name}
+            {elseif $c.author.full_name}
+              {$c.author.full_name}
             {else}
               <em style='text-decoration:line-through'>{$lang.global.deleted_user}</em>
             {/if}
@@ -61,10 +61,10 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $('#js-commments').infinitescroll({
-          navSelector  : "div.pagination",
-          nextSelector : "div.pagination a:first",
-          itemSelector : "#js-commments article",
-          loading : { msgText : '', img: "{$_PATH.images}/candy.global/loading.gif", loadingText  : '', finishedMsg  : '' }
+          navSelector   : 'div.pagination',
+          nextSelector  : 'div.pagination a:first',
+          itemSelector  : '#js-commments article',
+          loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
         });
       });
     </script>

@@ -11,11 +11,11 @@
   </div>
   <div class='control-group{if isset($error.surname)} alert alert-error{/if}'>
     <label for='input-surname' class='control-label'>
-      Surname</span>
+      {$lang.global.surname} <span title='{$lang.global.required}'>*</span>
     </label>
     <div class='controls'>
       <input class='span4' name='surname'
-             value='{$surname}' type='text' id='input-surname' type='text' required />
+              value='{$surname}' id='input-surname' type='text'  />
       {if isset($error.surname)}<span class='help-inline'>{$error.surname}</span>{/if}
     </div>
   </div>
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class='form-actions right'>
-    <input type='submit' class='btn' value='Install admin user' />
+    <input type='submit' class='btn' value='Step 5: Install admin user &rarr;' />
     <input type='hidden' value='formdata' name='create_admin' />
   </div>
 </form>

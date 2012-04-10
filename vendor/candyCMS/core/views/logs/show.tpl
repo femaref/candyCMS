@@ -60,10 +60,11 @@
   <script type='text/javascript'>
     $(document).ready(function(){
       $('table').infinitescroll({
-        navSelector  : 'div.pagination',
-        nextSelector : 'div.pagination a:first',
-        itemSelector : 'table tbody tr',
-        loading : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' }
+        navSelector   : 'div.pagination',
+        nextSelector  : 'div.pagination a:first',
+        itemSelector  : 'table tbody tr',
+        loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
+        animate       : true
       });
     });
 

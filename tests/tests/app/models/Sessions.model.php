@@ -16,11 +16,12 @@ use \CandyCMS\Core\Models\Sessions;
 
 class TestOfSessionsModel extends UnitTestCase {
 
-  function testConstructor() {
+  function setUp() {
+    parent::setUp();
 
     $this->aRequest = array(
-        'email'       => 'email@example.com',
-        'password'    => 'Password',
+        'email'       => 'unknownemailaddress@example.com',
+        'password'    => 'test',
         'controller'  => 'sessions');
 
     $this->oObject = new Sessions($this->aRequest, $this->aSession);
@@ -28,8 +29,15 @@ class TestOfSessionsModel extends UnitTestCase {
 
   # Create a new session.
   function testCreate() {
+    # fails due to not verified...
+    $this->aRequest['email'] = 'unverified@example.com';
     $this->assertFalse($this->oObject->create());
-  }
+
+    # but verified users works
+    $this->aRequest['email'] = 'moderator@example.com';
+    $this->assertTrue($this->oObject->create());
+    $this->oObject->destroy(session_id());
+   }
 
   # Session will not be found, so we expect no return.
   function testGetUserBySession() {

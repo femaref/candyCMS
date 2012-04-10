@@ -31,7 +31,7 @@ class WebTestOfBlogController extends CandyWebTest {
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller']));
 		$this->assertResponse(200);
 		$this->assertText('hs24br55e2');
-		$this->assertNoText('1d2275e170');
+		$this->assertNoText('1d2275e170'); #not visible since different language
 
     # Short ID
 		$this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/1'));
@@ -44,11 +44,13 @@ class WebTestOfBlogController extends CandyWebTest {
 
   function testShowWithAPIToken() {
     # Overview with correct token
+    # @todo this must be JSON
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '?api_token=c2f9619961'));
     $this->assertResponse(200);
     $this->assertText(I18n::get('global.create.entry'));
 
     # Overview with wrong token
+    # @todo this must be JSON
     $this->assertTrue($this->get(WEBSITE_URL . '/' . $this->aRequest['controller'] . '?api_token=notatoken'));
     $this->assertResponse(200);
     $this->assertNoText(I18n::get('global.create.entry'));

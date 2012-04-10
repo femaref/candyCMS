@@ -44,10 +44,10 @@ class Calendars extends Main {
                                           YEAR(c.start_date) AS start_year,
                                           UNIX_TIMESTAMP(c.start_date) AS start_date,
                                           UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email
                                         FROM
                                           " . SQL_PREFIX . "calendars c
                                         LEFT JOIN
@@ -69,10 +69,10 @@ class Calendars extends Main {
                                           YEAR(c.start_date) AS start_year,
                                           UNIX_TIMESTAMP(c.start_date) AS start_date,
                                           UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                          u.id AS uid,
-                                          u.name,
-                                          u.surname,
-                                          u.email
+                                          u.id AS user_id,
+                                          u.name AS user_name,
+                                          u.surname AS user_surname,
+                                          u.email AS user_email
                                         FROM
                                           " . SQL_PREFIX . "calendars c
                                         LEFT JOIN

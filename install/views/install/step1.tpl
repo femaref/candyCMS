@@ -3,33 +3,35 @@
     1. Create your Configuration.
   </h2>
   <p>
-    Copy <em>Candy.inc.php</em> and <em>Plugins.inc.php</em>
-    from <em>config/samples/</em> to <em>config/</em>,
+    Copy <code>Candy.inc.php</code> and <code>Plugins.inc.php</code>
+    from <code>app/config/samples/</code> to <code>app/config/</code>,
     read each description carefully and modify the software to your needs.
   </p>
   <div class='alert alert-danger'>
-    <h4 class='alert-heading'>Important information</h4>
+    <h3 class='alert-heading'>
+      Important information
+    </h3>
     <ul>
       {if !$_configs_exist_.main}
         <li>
-          Copy <em>config/samples/Candy.inc.php</em> to <em>config/Candy.inc.php</em>,
+          Copy <code>app/config/samples/Candy.inc.php</code> to <code>app/config/Candy.inc.php</code>,
           read each description carefully and modify the software for your needs.
         </li>
       {/if}
       {if !$_configs_exist_.plugins}
         <li>
-          Copy <em>config/samples/Plugins.inc.php</em> to <em>config/Plugins.inc.php</em>,
-          and modify the defines for all your Plugins (ALLOWED_PLUGINS in <em>config/Candy.inc.php</em>).
+          Copy <code>app/config/samples/Plugins.inc.php</code> to <code>app/config/Plugins.inc.php</code>,
+          and modify the defines for all your Plugins (ALLOWED_PLUGINS in <code>config/Candy.inc.php</code>).
         </li>
       {/if}
       {if !$_hash_changed_}
         <li>
-          Make sure, you set a random hash at RANDOM_HASH and NEVER change it again.
+          Make sure, you set a random hash at <code>RANDOM_HASH</code> and NEVER change it again.
         </li>
       {/if}
       {if $WEBSITE_MODE != 'production'}
         <li>
-          The WEBSITE_MODE is very important. For security reasons never run a
+          The <code>WEBSITE_MODE</code> is very important. For security reasons never run a
           productive system with a state different than 'production'!
         </li>
       {/if}
@@ -38,8 +40,9 @@
         are allowed.
       </li>
       <li>
-        Try to avoid changes to THUMB_DEFAULT_X and THUMB_DEFAULT_Y after the first
-        images have been uploaded. That might cause problems.
+        Try to avoid changes to <code>THUMB_DEFAULT_X</code> and
+        <code>THUMB_DEFAULT_Y</code> after the first images have been uploaded.
+        That might cause problems.
       </li>
     </ul>
   </div>
@@ -49,9 +52,9 @@
     2. Edit your website title and slogan.
   </h2>
   <p>
-    Go to <em>languages/yourlanguage.language.yml</em> and edit WEBSITE_TITLE and
-    WEBSITE_SLOGAN. This helps you to provide individual information about your
-    website for each language.
+    Go to <code>app/languages/yourlanguage.language.yml</code> and edit <code>WEBSITE_TITLE</code> and
+    <code>WEBSITE_SLOGAN</code>. This helps you to provide individual information about your
+    website for each language and might be good for SEO.
   </p>
   <hr />
 
@@ -69,12 +72,16 @@
     program can read distorted text as well as humans can, so bots cannot navigate
     sites protected by CAPTCHAs.
   </p>
-  <p class='alert alert-notice'>
-    CAPTCHAs can be enabled / disabled via adding Recaptcha as plugin at ALLOWED_PLUGINS
-    in <em>config/Candy.inc.php</em>.
-    Also your public and private key have to be added to <em>config/Plugins.inc.php</em>
-    (PLUGIN_RECAPTCHA_PUBLIC_KEY & PLUGIN_RECAPTCHA_PRIVATE_KEY).
-  </p>
+  <div class='alert alert-notice'>
+    <p>
+      CAPTCHAs can be enabled / disabled via adding Recaptcha as plugin at ALLOWED_PLUGINS
+      in <code>app/config/Candy.inc.php</code>.
+    </p>
+    <p>
+      Also your public and private key have to be added to <code>app/config/Plugins.inc.php</code>
+      (<code>PLUGIN_RECAPTCHA_PUBLIC_KEY</code> & <code>PLUGIN_RECAPTCHA_PRIVATE_KEY</code>).
+    </p>
+  </div>
   <hr class="clearfix" />
 
   <h2>
@@ -87,8 +94,8 @@
     Facebook Connect.
   </p>
   <div class="alert alert-notice">
-    Don't forget to enter your App ID and Secret into <em>config/Plugins.inc.php</em>
-    and add Facebook as plugin at ALLOWED_PLUGINS in the <em>config/Candy.inc.php</em>!
+    Don't forget to enter your App ID and Secret into <code>config/Plugins.inc.php</code>
+    and add Facebook as plugin at <code>ALLOWED_PLUGINS</code> in the <code>config/Candy.inc.php</code>!
   </div>
   <hr />
 
@@ -101,12 +108,9 @@
     track your results. It's like your own personal publishing platform.
   </p>
   <div class="alert alert-notice">
-    Don't forget to to set your Mailchimp Information at <em>config/Candy.inc.php</em>!
+    You must set your Mailchimp information in the <code>config/Candy.inc.php</code>!
   </div>
-  {if !$_has_errors_}
-    <div class='form-actions right'>
-
-      <input type='submit' class='btn' value='Create Folder Structure' />
-    </div>
-  {/if}
+  <div class='form-actions right'>
+    <input type='submit' class='btn' value='Step 2: Create folder structure &rarr;' />
+  </div>
 </form>
