@@ -25,11 +25,11 @@ class Contents extends Main {
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit blog post limit, -1 is infinite the limit
    * @return array $this->_aData
    *
    */
-  public function getData($iId = '', $bUpdate = false, $iLimit = 1000) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = -1) {
     $aInts  = array('id', 'uid', 'author_id');
     $aBools = array('published');
 
@@ -37,6 +37,9 @@ class Contents extends Main {
 
     if (empty($iId)) {
       try {
+        # TODO pagination
+        $sLimit = $iLimit === -1 ? '' : 'LIMIT :limit';
+        #$sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
         $oQuery = $this->_oDb->prepare("SELECT
                                           c.*,
                                           u.id AS user_id,
@@ -53,10 +56,11 @@ class Contents extends Main {
                                           published >= :published
                                         ORDER BY
                                           c.title ASC
-                                        LIMIT :limit");
+                                        " . $sLimit);
 
         $oQuery->bindParam('published', $iPublished, PDO::PARAM_INT);
-        $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
+        if ($iLimit !== -1)
+          $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);

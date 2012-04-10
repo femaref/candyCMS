@@ -26,7 +26,7 @@ class Comments extends Main {
    * @access public
    * @param integer $iId blog ID to load data from
    * @param integer $iEntries number of comments for this blog ID
-   * @param integer $iLimit comment limit
+   * @param integer $iLimit comment limit, -1 is infinite
    * @return array data from _setData
    *
    */
@@ -40,6 +40,7 @@ class Comments extends Main {
       $sOrder = defined('COMMENTS_SORTING') && (COMMENTS_SORTING == 'ASC' || COMMENTS_SORTING == 'DESC') ?
               COMMENTS_SORTING :
               'ASC';
+      $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
 
       $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
@@ -59,13 +60,13 @@ class Comments extends Main {
                                       ORDER BY
                                         c.date " . $sOrder . ",
                                         c.id " . $sOrder . "
-                                      LIMIT
-                                        :offset,
-                                        :limit");
+                                      " . $sLimit);
 
       $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
-      $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-      $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+      if ($iLimit !== -1) {
+        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+      }
       $oQuery->execute();
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
