@@ -56,7 +56,7 @@
           {if $b.tags[0]}
             <p>
               {$lang.global.tags.tags}:
-              {foreach from=$b.tags item=t name=tags}
+              {foreach $b.tags as $t}
                 <a title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>{$t}</a>
                 {if !$t@last}, {/if}
               {/foreach}

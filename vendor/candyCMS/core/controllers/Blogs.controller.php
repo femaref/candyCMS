@@ -25,8 +25,8 @@ class Blogs extends Main {
    *
    */
   protected function _show() {
-    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir  = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
 
     if ($this->_iId) {
       $this->_aData = $this->_oModel->getData($this->_iId);
@@ -164,13 +164,13 @@ class Blogs extends Main {
     closedir($oPathDir);
 
     foreach ($aData as $sColumn => $sData)
-      $this->oSmarty->assign($sColumn, $sData);
+			$this->oSmarty->assign($sColumn, $sData);
 
-    if ($this->_aError)
-      $this->oSmarty->assign('error', $this->_aError);
+		if ($this->_aError)
+			$this->oSmarty->assign('error', $this->_aError);
 
-    $this->oSmarty->setTemplateDir($sTemplateDir);
-    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+		$this->oSmarty->setTemplateDir($sTemplateDir);
+		return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

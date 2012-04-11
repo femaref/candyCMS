@@ -25,12 +25,13 @@ $.fn.toggleOpacity = function (t) {
 
 /* Quote comment */
 function quote(sName, sDivId) {
-  var sOldMessage = $('#js-create_commment_text').val();
+  var oTextField = $('#js-create_commment_text');
+  var sOldMessage = oTextField.val();
   var sQuote = $('#' + sDivId).html();
   var sNewMessage = "[quote=" + sName + "]" + sQuote + "[/quote]\n";
-  $('#js-create_commment_text').val(sOldMessage + sNewMessage);
+  oTextField.val(sOldMessage + sNewMessage);
   if ($.mobile)
-    $.mobile.silentScroll(1000);
+    $.mobile.silentScroll(oTextField.offset().top);
   return false;
 }
 

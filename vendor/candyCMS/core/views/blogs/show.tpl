@@ -55,14 +55,16 @@
         {$b.content}
         <footer class='row'>
           <div class='span4 tags'>
-            {$lang.global.tags.tags}:
             {if $b.tags[0]}
-              {foreach from=$b.tags item=t name=tags}
+              {$lang.global.tags.tags}:
+              {foreach $b.tags as $t}
                 <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>
                   {$t}
                 </a>
                 {if !$t@last}, {/if}
               {/foreach}
+            {else}
+              &nbsp;
             {/if}
           </div>
           <div class='span4 comments right'>
