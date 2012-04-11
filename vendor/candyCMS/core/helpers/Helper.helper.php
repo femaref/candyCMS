@@ -28,6 +28,7 @@ class Helper {
    * @param string $sMessage message to provide
    * @param string $sRedirectTo site to redirect to
    * @return boolean true
+   * @todo store in main session object
    *
    */
   public static function successMessage($sMessage, $sRedirectTo = '') {
@@ -47,6 +48,7 @@ class Helper {
    * @param string $sMessage message to provide
    * @param string $sRedirectTo site to redirect to
    * @return boolean false
+   * @todo store in main session object
    *
    */
   public static function errorMessage($sMessage, $sRedirectTo = '') {
