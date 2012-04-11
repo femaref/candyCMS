@@ -17,6 +17,7 @@ It provides...
 - file management
 - newsletter management (uses [Mailchimp API](http://mailchimp.com))
 - a full log system
+- and many more!
 
 
 Additional reasons, why CandyCMS might be interesting for you
@@ -26,7 +27,7 @@ Additional reasons, why CandyCMS might be interesting for you
 - uses the [Smarty template engine](http://smarty.org) and lots of HTML5
 - supports [reCAPTCHA](http://recaptcha.org)
 - completely object oriented and use of MVC
-- easy to use addons or to modify the code
+- easy to extend
 - supports templates
 - clean URLs due to mod_rewrite
 - full Facebook integration
@@ -39,28 +40,30 @@ Additional reasons, why CandyCMS might be interesting for you
 
 Requirements
 ------------------------------------------------------------------------------------------------------------------------
-- at least PHP 5.1 & PDO supported database
+- at least PHP 5.1 & PDO supported database (PHP 5.3 recommended)
 - Imagemagick, GD2 and mod_rewrite
 - an account at http://recaptcha.org to use captchas
 - an account at http://mailchimp.com to use the newsletter management
-- about 5MB webspace
+- about 10MB webspace
 
 
 Setup
 ------------------------------------------------------------------------------------------------------------------------
-Configure your website settings at "config/Candy.inc.php, upload all files and execute the "/install/index.php" file.
-Follow the instructions and make sure, you delete the install dir after installation.
+Configure your website settings at "app/config/Candy.inc.php, upload all files and execute the "/install/index.php" file.
+Follow the instructions and make sure, you delete the install dir after installation. **If you don't use an official
+download package, you have to install Composer (http://getcomposer.org/) and update your packages.**
 
 To upgrade CandyCMS, upload the install folder, run "/install/index.php" and click on "migrate". Make sure you override
-the existing "app", "lib" and "plugin" folders before. Please also take a look at the release notes.
+the existing "vendor/*", folders before. Please also take a look at the release notes.
 
 
 Credits
 ------------------------------------------------------------------------------------------------------------------------
-Icons were created by [icondock.com](http://icondock.com) and [famfamfam.com](http://famfamfam.com). Big thanks to
-Hauke Schade who gave great feedback and built many impressive features.
+Icons were created by [famfamfam.com](http://famfamfam.com). Big thanks to Hauke Schade who gave great feedback and
+built many impressive features.
 
 
 License
 ------------------------------------------------------------------------------------------------------------------------
-CandyCMS is licensed under MIT license.
+CandyCMS is licensed under MIT license. All of its components should be Open Source and free to use, too.
+Note that [fancyBox](http://fancyapps.com/fancybox/) needs a license for commercial projects.
