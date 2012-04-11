@@ -12,6 +12,7 @@
 
 namespace CandyCMS\Core\Helpers;
 
+use CandyCMS\Core\Controllers\Main;
 use CandyCMS\Core\Helpers\AdvancedException;
 use CandyCMS\Plugins\Bbcode;
 use CandyCMS\Plugins\FormatTimestamp;
