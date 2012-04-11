@@ -1,15 +1,16 @@
 <?php
 
-/*
+/**
+ * The cronjob keeps your software backuped, fast and clean. Set up the execution
+ * intervals in the "app/config/Candy.inc.php" and lean back.
+ *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- * @todo refactor
  * @todo documentation
+ * @license MIT
+ * @since 1.5
+ *
  */
-
-# The cronjob keeps your software backuped, fast and clean. Set up the execution
-# intervals in the "config/Candy.inc.php" and lean back.
-# Fix for install script
 
 namespace CandyCMS\Plugins;
 
@@ -24,13 +25,20 @@ use PDO;
 final class Cronjob {
 
   /**
-   * The Id of the Cronjobs Log Entry, that is created for the execution
+   * The Id of the Cronjobs log entry, that is created for the execution
+   *
+   * @access private
    * @var int
+   *
    */
   private $_iLogId = -1;
+
   /**
-   * The User Id of the user, that is running the Cronjob
+   * The user id of the user, that is running the Cronjob.
+   *
+   * @access private
    * @var int
+   *
    */
   private $_iUserId;
 
@@ -60,13 +68,15 @@ final class Cronjob {
   /**
    * start the execution of the Cronjob, so there wont be other simultanious executions
    *
+   * @final
    * @access private
+   *
    */
   private final function _startCronjob() {
     $oPDO = Main::$_oDbStatic;
     $oPDO->beginTransaction();
 
-    # create log entry, so other calls won't start aswell
+    # Create log entry, so other calls won't start aswell.
     $iTime = time();
     Logs::insert('cronjob', 'execute', 0, $this->_iUserId, $iTime, $iTime);
 
@@ -79,6 +89,7 @@ final class Cronjob {
   /**
    * Cleanup our temp folders.
    *
+   * @final
    * @access public
    * @param array $aFolders temp folders to clean
    *
@@ -131,10 +142,13 @@ final class Cronjob {
   /**
    * Create a Backup of one Table
    *
+   * @final
+   * @access private
    * @param string $sTable the Table Name
    * @param string $sFileText the string to write the backup to
    * @return integer number of Columns
    * @throws AdvancedException
+   *
    */
   private final function _backupTableInfo($sTable, &$sFileText) {
     $oQuery = Main::$_oDbStatic->query('SHOW COLUMNS FROM ' . $sTable);
@@ -230,12 +244,15 @@ EOD;
   }
 
   /**
-   * get the Table Data and write it to $sFileText
+   * Get the table data and write it to $sFileText
    *
+   * @final
+   * @access public
    * @param string $sTable the table to get the data from
    * @param string $sFileText the result string
    * @return int number of rows backed up
    * @throws AdvancedException
+   *
    */
   private final function _backupTableData($sTable, &$sFileText, $iColumns) {
     # fetch content
@@ -273,6 +290,7 @@ EOD;
   /**
    * Create a SQL backup.
    *
+   * @final
    * @access public
    *
    */

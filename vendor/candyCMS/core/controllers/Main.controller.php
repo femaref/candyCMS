@@ -182,7 +182,7 @@ abstract class Main {
    * @param string $sClass name of class to load
    * @param boolean $bModel load a model file
    * @return string class name
-   * @todo refactor to use CandyCMS\Model\Main::__autoload
+   * @todo refactor to use CandyCMS\Model\Main::__autoload?
    *
    */
   public static function __autoload($sClass, $bModel = false) {

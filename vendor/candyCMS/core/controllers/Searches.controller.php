@@ -37,9 +37,7 @@ class Searches extends Main {
       return $this->_create();
 
     else {
-      $sEnd = substr(CURRENT_URL, -strlen($this->_aRequest['controller']));
-
-      if ($sEnd == $this->_aRequest['controller'])
+      if (substr(CURRENT_URL, -strlen($this->_aRequest['controller'])) == $this->_aRequest['controller'])
         return Helper::redirectTo ('/' . $this->_aRequest['controller'] . '/' . $this->_aRequest['search']);
 
       $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
@@ -66,7 +64,6 @@ class Searches extends Main {
    *
    * @access protected
    * @return string HTML content.
-   * @todo extension check
    *
    */
   protected function _create() {
@@ -82,7 +79,7 @@ class Searches extends Main {
    *
    */
   protected function _formTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->setTitle(I18n::get('global.search'));

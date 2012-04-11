@@ -56,13 +56,13 @@ if (WEBSITE_MODE == 'production' && is_file('composer.phar'))
 # Override the system variables in development mode.
 if (WEBSITE_MODE == 'test') {
   ini_set('display_errors', 0);
-	ini_set('error_reporting', 0);
-	ini_set('log_errors', 1);
+  ini_set('error_reporting', 0);
+  ini_set('log_errors', 1);
 }
 else {
   ini_set('display_errors', 1);
-	ini_set('error_reporting', 1);
-	ini_set('log_errors', 1);
+  ini_set('error_reporting', 1);
+  ini_set('log_errors', 1);
 }
 
 # Define current url
@@ -72,7 +72,6 @@ define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['R
 @session_start();
 
 # Do we have a mobile device?
-# *********************************************
 if(isset($_SERVER['HTTP_USER_AGENT'])) {
   $bMobile    = preg_match('/Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ||
               	preg_match('/Symb/i', $_SERVER['HTTP_USER_AGENT']) ||

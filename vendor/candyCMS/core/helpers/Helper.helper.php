@@ -411,7 +411,7 @@ class Helper {
    * @return string $sStr formatted string
    *
    */
-  public static function formatOutput($mStr, $sHighlight = '') {
+  public final static function formatOutput($mStr, $sHighlight = '') {
     if ($sHighlight)
       $mStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $mStr);
 

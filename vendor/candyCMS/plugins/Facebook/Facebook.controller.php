@@ -10,7 +10,6 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 2.0
- * @todo docs
  *
  */
 
@@ -25,13 +24,19 @@ final class FacebookCMS extends Facebook {
 
   /**
    * Identifier for Template Replacements
+   *
+   * @var contant
+   *
    */
   const IDENTIFIER = 'facebook';
 
   /**
+   * Get user data.
    *
-   * @param type $sKey
-   * @return type
+   * @final
+   * @access public
+   * @param string $sKey
+   * @return array
    *
    */
   public final function getUserData($sKey = '') {
@@ -39,36 +44,35 @@ final class FacebookCMS extends Facebook {
       try {
         $iUid = $this->getUser();
         $aApiCall = array(
-            'method' => 'users.getinfo',
-            'uids' => $iUid,
-            'fields' => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
+            'method'  => 'users.getinfo',
+            'uids'    => $iUid,
+            'fields'  => 'uid, first_name, last_name, profile_url, pic, pic_square_with_logo, locale, email, website'
         );
 
         $aData = $this->api($aApiCall);
         return !empty($sKey) ? $aData[$sKey] : $aData;
       }
       catch (AdvancedException $e) {
-        die($e->getMessage());
+        AdvancedException::reportBoth($e->getMessage());
+        exit('Error');
       }
     }
   }
 
   /**
    *
-   * Get the Facebook Avatar Info for all given Uids, load from cache, if cache is specified
+   * Get the Facebook avatar Info for all given Uids, load from cache, if cache is specified
    *
+   * @final
+   * @access public
    * @param array $aUids
    * @param array $aSession
-   * @return type
+   * @return array
    *
    */
   public final function getUserAvatars($aUids, &$aSession = null) {
     try {
-      # get the cache
-      if ($aSession)
-        $aFacebookAvatarCache = &$aSession['facebookavatars'];
-      else
-        $aFacebookAvatarCache = array();
+      $aFacebookAvatarCache = $aSession ? $aSession['facebookavatars'] : array();
 
       # only query for ids we don't know
       $sUids = '';
@@ -98,10 +102,21 @@ final class FacebookCMS extends Facebook {
       return $aFacebookAvatarCache;
     }
     catch (AdvancedException $e) {
-      die($e->getMessage());
+      AdvancedException::reportBoth($e->getMessage());
+      exit('Error');
     }
   }
 
+  /**
+   * Show FB JavaScript code.
+   *
+   * @final
+   * @access public
+   * @param array $aRequest
+   * @param array $aSession
+   * @return string HTML
+   *
+   */
   public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('facebook', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
@@ -112,7 +127,7 @@ final class FacebookCMS extends Facebook {
 
     $sCacheId = WEBSITE_MODE . '|plugins|' . WEBSITE_LOCALE . '|facebook';
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
-      $oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', defined('PLUGIN_FACEBOOK_APP_ID')? PLUGIN_FACEBOOK_APP_ID : '');
+      $oSmarty->assign('PLUGIN_FACEBOOK_APP_ID', defined('PLUGIN_FACEBOOK_APP_ID') ? PLUGIN_FACEBOOK_APP_ID : '');
       $oSmarty->assign('WEBSITE_LOCALE', WEBSITE_LOCALE);
     }
 

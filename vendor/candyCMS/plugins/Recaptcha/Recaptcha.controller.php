@@ -99,7 +99,10 @@ final class Recaptcha {
   }
 
   /**
-   * @todo documentation
+   * Include the needed lib.
+   *
+   * @access public
+   *
    */
   public function __construct() {
     require PATH_STANDARD . '/vendor/recaptcha/recaptchalib.php';
