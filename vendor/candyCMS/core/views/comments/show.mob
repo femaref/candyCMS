@@ -39,6 +39,8 @@
           itemSelector  : '#js-commments article',
           loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
           bufferPx      : 120
+        }, function() {
+          $('#js-commments article').find('footer a').buttonMarkup();
         });
       });
     </script>
