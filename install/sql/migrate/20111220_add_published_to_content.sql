@@ -1,0 +1,1 @@
+ALTER TABLE `%SQL_PREFIX%contents` ADD `published` TINYINT(1)  NOT NULL  DEFAULT '0'  AFTER `date`;

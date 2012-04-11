@@ -1,0 +1,35 @@
+# Define the landing page
+"/": blogs
+
+# Special behaviour
+"blogs/(:num)/(update|destroy)": controller=blogs&id=$1&action=$2&page=1
+"calendars/(:num)/archive": controller=calendars&action=archive&id=$1
+"galleries/(:num)/(createfile|updatefile|destroyfile)": controller=galleries&action=$2&id=$1
+"galleries/(:num)/image/(:num)": controller=galleries&action=image&album_id=$1&id=$2
+"language/(:alpha)": language=$1
+"mails/(:num)/create": controller=mails&action=create&id=$1
+"medias/(:any)/destroy": controller=medias&action=destroy&file=$1
+"rss/(:alpha)": controller=rss&section=$1&id=$2
+"rss/(:alpha)/(:num)": controller=rss&section=$1&id=$2
+"searches/(:any)": controller=searches&search=$1
+"sessions/(password|verification|destroy)": controller=sessions&action=$1
+"sites/(:alnum)": controller=sites&site=$1
+"sitemap.xml": controller=sitemaps&action=xml&ajax=1
+"users/(:num)/token": controller=users&action=token&id=$1&ajax=1
+"users/(:alnum)/verification": controller=users&action=verification&code=$1
+"users/(:num)/(:alpha)": controller=users&action=$2&id=$1
+
+# Shared behaviour
+"(:alpha)/?": controller=$1&page=1
+"(:alpha)/page/(:num)": controller=$1&page=$2
+"(:alpha)/create": controller=$1&action=create
+"(:alpha)/(:num)/(update|destroy)": controller=$1&id=$2&action=$3
+"(:alpha)/(:num)/(highlight|page)/(:any)": controller=$1&id=$2&$3=$4
+
+# Magic rule
+"(:alpha)/(:num)": controller=$1&id=$2&page=1
+"(:alpha)/(:num)/(:any)": controller=$1&id=$2&seo_title=$3&page=1
+"(:alpha).xml": controller=$1&action=xml&ajax=1
+
+# Fixes
+"blogs/(:any)": controller=blogs&search=$1

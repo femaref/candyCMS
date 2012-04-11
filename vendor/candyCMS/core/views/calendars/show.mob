@@ -1,0 +1,53 @@
+{strip}
+  {if $_SESSION.user.role >= 3}
+    <p class='create'>
+      <a href='/{$_REQUEST.controller}/create' data-role='button' data-theme='b' data-icon='plus'>
+        {$lang.global.create.entry}
+      </a>
+    </p>
+  {/if}
+  {if isset($_REQUEST.id)}
+    <p class='center'>
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id - 1}/archive' rel='prev'>
+        &laquo; {$_REQUEST.id - 1}
+      </a>
+      &nbsp;&nbsp;
+      <strong>{$_REQUEST.id}</strong>
+      &nbsp;&nbsp;
+      <a href='/{$_REQUEST.controller}/{$_REQUEST.id + 1}/archive' rel='next'>
+        {$_REQUEST.id + 1} &raquo;
+      </a>
+    </p>
+  {/if}
+  {foreach $calendar as $c}
+    <ul data-role='listview' data-inset='true' {if $_SESSION.user.role >= 3}data-split-theme='a' data-split-icon='gear'{/if}>
+      <li data-role='list-divider'>
+        {$c.month} {$c.year}
+      </li>
+      {foreach $c.dates as $d}
+        <li data-icon='calendar-add' data-iconpos="left">
+          <a href='{$d.url}' title='{$d.content}' data-ajax='false'>
+            <h2>
+              {$d.title}
+            </h2>
+            <p>
+              {$d.start_date}
+              {if $d.end_date > 1}
+              -
+              {$d.end_date}
+              {/if}
+            </p>
+            {if $d.content}
+              <p>
+                {$d.content}
+              </p>
+            {/if}
+          </a>
+        </li>
+      {/foreach}
+    </ul>
+  {/foreach}
+  {if !isset($_REQUEST.action)}
+    <a href="/{$_REQUEST.controller}/{$smarty.now|date_format:'%Y'}/archive" data-role='button'>{$lang.global.archive}</a>
+  {/if}
+{/strip}

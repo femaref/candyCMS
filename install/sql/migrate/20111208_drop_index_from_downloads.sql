@@ -1,0 +1,1 @@
+ALTER TABLE `%SQL_PREFIX%downloads` DROP INDEX `title`;

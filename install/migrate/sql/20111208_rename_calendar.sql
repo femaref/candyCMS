@@ -1,1 +1,0 @@
-RENAME TABLE `calendar` TO `calendars`;

@@ -1,0 +1,1 @@
+ALTER TABLE `%SQL_PREFIX%users` ADD `api_token` VARCHAR(32)  NOT NULL  DEFAULT '';

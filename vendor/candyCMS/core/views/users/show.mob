@@ -1,0 +1,24 @@
+{strip}
+  {foreach $user as $u}
+    <h1 class='center'>
+      {$u.full_name}
+    </h1>
+    <p class='center'>
+      <img alt='{$u.full_name}' src='{$u.avatar_100}' />
+    </p>
+    <ul data-role='listview' data-inset='true'>
+      <li>
+        {$lang.users.label.registered_since}: <span class='ui-li-aside'>{$u.date}</span>
+      </li>
+      <li>
+        {$lang.users.label.last_login}: <span class='ui-li-aside'>{$u.last_login}</span>
+      </li>
+      {if !empty($u.content)}
+        <li>{$u.content}</li>
+      {/if}
+    </ul>
+    <a href='{$WEBSITE_URL}/mails/{$_REQUEST.id}/create' data-role='button'>
+      {$lang.users.contact_via_email|replace:'%s':$u.name}
+    </a>
+  {/foreach}
+{/strip}

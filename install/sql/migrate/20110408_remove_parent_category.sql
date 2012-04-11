@@ -1,0 +1,1 @@
+ALTER TABLE `%SQL_PREFIX%comments` DROP `parent_category`;

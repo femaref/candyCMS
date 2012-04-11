@@ -1,0 +1,11 @@
+{strip}
+  {foreach $contents as $c}
+    <header>
+      <h1>{$c.title}</h1>
+    </header>
+    {if $c.teaser}
+      <h3>{$c.teaser}</h3>
+    {/if}
+    {$c.content}
+  {/foreach}
+{/strip}

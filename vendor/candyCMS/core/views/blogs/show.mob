@@ -1,0 +1,78 @@
+{strip}
+  {if $_SESSION.user.role >= 3}
+    <p class="create">
+      <a href='/{$_REQUEST.controller}/create' data-role="button" data-theme="b" data-icon="plus">
+        {$lang.global.create.entry}
+      </a>
+    </p>
+  {/if}
+  {* blogs overview *}
+  {if !$_REQUEST.id}
+    {if !$blogs}
+      <div class='alert alert-warning'>
+        <h4>{$lang.error.missing.entries}</h4>
+      </div>
+    {else}
+      {foreach $blogs as $b}
+        <ul data-role='listview' data-inset='true'>
+          <li role='heading' data-role='list-divider'>
+            {$b.datetime}
+            {if $b.date_modified != ''}
+              - {$lang.global.last_update}: {$b.date_modified}
+            {/if}
+          </li>
+          <li>
+            <a href='{$b.url}' title='{$b.title}'>
+              <h3>{$b.title}</h3>
+              {if $b.teaser}
+                <p>
+                  {$b.teaser}
+                </p>
+              {else}
+                {$b.content}
+              {/if}
+              <span class="ui-li-count">{$b.comment_sum}</span>
+            </a>
+          </li>
+        </ul>
+      {/foreach}
+    {/if}
+  {* single blogs entry *}
+  {else}
+    {foreach $blogs as $b}
+      {if !$b.id}
+        <div class='error' title='{$lang.error.missing.entry}'>
+          <h4>{$lang.global.missing.entry}</h4>
+        </div>
+      {else}
+        <header>
+          <h1>{$b.title}</h1>
+        </header>
+        {if $b.teaser}
+          <h3>{$b.teaser}</h3>
+        {/if}
+        {$b.content}
+        <footer>
+          {if $b.tags[0]}
+            <p>
+              {$lang.global.tags.tags}:
+              {foreach from=$b.tags item=t name=tags}
+                <a title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>{$t}</a>
+                {if !$t@last}, {/if}
+              {/foreach}
+            </p>
+          {/if}
+        </footer>
+      {/if}
+    {/foreach}
+  {/if}
+  {$_blog_footer_}
+  <script type="text/javascript">
+    $('.js-media').each(function(e) {
+      var $this = $(this);
+      $.getJSON(this.title, function(data) {
+        $this.html(data['html']);
+      });
+    });
+  </script>
+{/strip}

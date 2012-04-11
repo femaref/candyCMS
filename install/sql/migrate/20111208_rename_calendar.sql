@@ -1,0 +1,1 @@
+RENAME TABLE `%SQL_PREFIX%calendar` TO `calendars`;

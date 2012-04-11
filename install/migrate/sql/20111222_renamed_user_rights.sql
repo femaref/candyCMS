@@ -1,1 +1,0 @@
-ALTER TABLE `users` CHANGE `user_right` `role` TINYINT(1)  NOT NULL  DEFAULT '1';

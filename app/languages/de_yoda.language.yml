@@ -1,0 +1,423 @@
+website:
+  description: Free, fast and simple PHP CMS.
+  keywords: PHP, CMS, Free CMS, Open Source CMS
+  terms: AGB...
+
+global:
+  about: Über
+  action: Aktion
+  album: Album
+  albums: Alben
+  api_token: API-Token
+  archive: Archiv
+  author: Autor
+  backup: Backup
+  bbcode:
+    help: Weiterführende Informationen zur Verwendung von BB-Code.
+  blog: Blog
+  blogs: Blogeinträge
+  by: von
+  category: Kategorie
+  calendar: Kalender
+  captcha: Captcha
+  close: Schließen
+  comments: Kommentare
+  contact: Kontakt
+  content: Text
+  contents: Seiten
+  create:
+    bookmark: Lesezeichen hinzufügen
+    create: Erstellen
+    entry: Eintrag hinzufügen
+  created_at: Hinzugefügt am
+  cronjob_exec: Datenbank optimieren, sichern und temporäre Dateien löschen.
+  currently: momentan
+  cut: Schnitt
+  date:
+    date: Datum
+    end: Enddatum
+    start: Startdatum
+  deleted_user: Gelöschte Person
+  description: Beschreibung
+  destroy:
+    destroy: Löschen
+    entry: Eintrag löschen
+  disclaimer: Impressum
+  download: Download
+  downloads: Downloads
+  email:
+    email: E-Mail-Adresse
+    send: E-Mail versenden
+    verification: E-Mail-Adresse bestätigen
+  event: Termin
+  file: Datei
+  files: Dateien
+  gallery: Galerie
+  galleries: Galerien
+  headlines: Überschriften
+  id: ID
+  image:
+    click_to_enlarge: "Um es auf %d x %d Pixel zu vergrößern, klicken auf das Bild, du musst!"
+    image: Bild
+  in: in
+  keywords: Schlagworte
+  language: Sprache
+  last_update: letzte Änderung
+  location: Ort
+  login: Login
+  logs: Logs
+  logout: Logout
+  manager:
+    content: Seitenmanagement
+    media: Dateimanager
+    user: Benutzermanagement
+  months:
+    1: Januar
+    2: Februar
+    3: März
+    4: April
+    5: Mai
+    6: Juni
+    7: Juli
+    8: August
+    9: September
+    10: Oktober
+    11: November
+    12: Dezember
+  name: Name
+  newsletter: Newsletter
+  not_published: Nicht veröffentlicht
+  optional: optional
+  overview: Übersicht
+  page: Seite
+  password:
+    password: Passwort
+    repeat: Passwort wiederholen
+  published: Veröffentlicht?
+  quote:
+    by: Zitat von
+    quote: Zitat
+  register: Registrieren
+  registration: Registrierung
+  report:
+    error: Fehler melden
+    report: Melden
+  reply_to: Antwort an
+  reset: Zurücksetzen
+  required: benötigt
+  rss: RSS-Feed
+  search: Suche
+  section: Bereich
+  settings: Einstellungen
+  share: Teilen
+  sitemap: Sitemap
+  size: Größe
+  submit: Absenden
+  subject: Betreff
+  surname: Nachname
+  system: System
+  tag: Tag
+  tags:
+    info: Suchen nach ähnlichen Einträgen
+    tags: Tags
+  teaser: Teaser
+  terms:
+    terms: Bedingungen
+    read: Nutzungsbedingungen gelesen, du hast?
+  time:
+    am: Uhr
+    pm: Uhr
+    time: Zeit
+  title: Titel
+  today: Heute
+  update:
+    at: Aktualisiert am
+    available: Ein Update (#%s) für diese Software verfügbar, es ist. Besuchen %s für weitere Informationen, du musst.
+    show: Update anzeigen?
+    update: Bearbeiten
+  upload:
+    at: Datum des Hochladens
+    upload: Upload
+  user:
+    role: Userrecht
+    roles:
+      0: Gast
+      1: Mitglied
+      2: Facebook-Nutzer
+      3: Moderator
+      4: Administrator
+    user: User
+  view:
+    mobile: Mobile Version
+    web: Webansicht
+  welcome: Hallo
+  yesterday: Gestern
+
+javascript:
+  loading: Lade...
+  confirm_destroy: Diesen Eintrag oder diese Datei wirklich löschen, du willst? Diese Aktion nicht rückgängig machen, du kannst!
+
+success:
+  create: Der Eintrag erfolgreich hinzugefügt, wurde!
+  destroy: Der Eintra erfolgreich gelöscht, wurde!
+  file:
+    upload: Datei erfolgreich hochgeladen!
+    destroy: Datei erfolgreich gelöscht!
+  update: Update erfolgreich!
+  upload: Datei(en) erfolgreich hochgeladen!
+  newsletter:
+    create: Vielen Dank für dein Interesse an unserem Newsletter. In wenigen Minuten, eine E-Mail zur Bestätigung der E-Mail-Adresse erhalten, du solltest.
+  mail:
+    create: E-Mail erfolgreich verschickt!
+  session:
+    create: Login erfolgreich!
+    destroy: Logout erfolgreich!
+  password:
+    create: Dein neues Passwort erfolgreich per E-Mail zugeschickt, dir wurde!
+  user:
+    create: "Erfolgreich registriert du wurdest und eine E-Mail erhalten haben du solltest, über die die Echtheit deiner E-Mail-Adresse bestätigten du kannst. Ebenfalls automatisch für den Newsletter eingetragen du wurdest. Um abzumelden dich, auf auf 'Einstellungen', 'Persönliche Daten' gehen du musst und auf 'Newsletter kündigen' klicken du kannst."
+    verification: Vielen Dank für die Bestätigung deiner E-Mail-Adresse.
+
+error:
+  404:
+    info: Die angeforderte URL nicht gefunden wurde. Entweder auf einen fehlerhaften Link geklickt Sie haben, die Seite gelöscht wurde oder die URL falsch eingegeben wurde.
+    title: Error 404 - URL nicht gefunden
+  captcha:
+    incorrect: Der Code leider nicht korrekt war!
+    loading: Captcha nicht geladen werden konnte, aktivieren Javascript du musst!
+  file:
+    destroy: Die Datei nicht gelöscht werden konnte!
+    size: Maximale Dateigröße von 400KB erreicht!
+    type: Ein falscher Dateityp hochgeladen wurde!
+    upload: Einen Fehler beim Upload es gab!
+  form:
+    title: "Folgende Felder ausfüllen du musst:"
+    missing:
+      category: Eine Kategorie wählen du musst!
+      content: Den Inhalt füllen du musst!
+      email: Deine E-Mail-Adresse angeben du musst!
+      file: Eine Datei zum Hochladen angeben du musst!
+      name: Deinen Namen angeben du musst!
+      surname: Geben Sie bitte Ihren Nachnamen an.
+      terms: Den Nutzungsbedingungen zustimmen du musst!
+      title: Einen Titel angeben du musst!
+      password: Ein Passwort angeben du musst!
+      subject: Einen Betreff eingeben du musst!
+  mail:
+    create: Die E-Mail nicht verschickt werden konnte. Ggf. deine E-Mail-Adresse ist falsch oder den Admin kontaktieren du musst.
+    format: Keine gültige E-Mail-Adresse dies ist!
+  missing:
+    action: Die Aktion  aufgrund von fehlenden Parametern nicht durchgeführt werden konnte!
+    id: Falsche oder keine ID angegeben, du hast.
+    entries: Noch keine Einträge, es existieren!
+    entry: Eintrag nicht vorhanden!
+    flash: Den Flashplayer downloaden du musst, damit um angucken dieses Video du kannst!
+    file: Datei nicht verfügbar.
+    files: Noch keine Dateien hochgeladen, es wurden.
+    permission: Keine Berechtigung diese Aktion auszuführen, du hast!
+    template: Keine passendes Template gefunden, es konnte!
+  passwords: Zwei identische Passwörter angeben, du musst!
+  session:
+    account: Kein Nutzer mit dieser E-Mail-Adresse gefunden, es wurde!
+    create: E-Mail-Adresse und Passwort nicht übereinstimmen, sie tun. Falls deine E-Mail-Adresse noch nicht bestätigt, du hast, das bitte vor dem Login du tun musst.
+    create_first: Dich zuerst einloggen, du musst!
+  standard: Es trat ein Fehler auf!
+  sql: Einen Fehler beim Verarbeiten des SQL-Statements, es gab.
+  user:
+    create:
+      email: Bereits ein Nutzer mit dieser E-Mail-Adresse vorhanden, es ist!
+    destroy:
+      password: Dein eingegebenes Passwort nicht stimmt. Der Account nicht gelöscht werden konnte.
+    update:
+      terms: Das Bild hochladen dürfen, du müssen!
+      password:
+        new:
+          empty: Dein neues Passwort eintragen du musst!
+          match: Du scheinst dich beim neuen Passwort zu haben vertippt. Zweimal eintippen das gleiche Passwort, du musst!
+        old:
+          empty: Dein altes Passwort eintragen du musst!
+          wrong: Dein altes Passwort leider nicht stimmt!
+    verification: Nicht freigeschaltet werden, du konntest. Kein Account mit einem solchen Code gefunden werden konnte!
+
+blogs:
+  description:
+    show: Blog
+  info:
+    keywords: Die wichtigsten Schlagworte dieses Eintrags eingeben du musst.
+    tag: Kategorien durch Komma u. Leerzeichen ("Tag, Tag2") trennen du musst.
+    teaser: Einen Teaser um den Blogeintrag interessanter zu machen du schreiben kannst!
+  label:
+    date: Datum aktualisieren du willst?
+  title:
+    create: Blogeintrag hinzufügen
+    destroy: Blogeintrag löschen
+    update: '"%s" bearbeiten'
+
+calendars:
+  description:
+    show: Kalender
+  info:
+    date_format: 'Datumsformat: "YYYY-MM-DD"'
+    ics: 'Diesen Termin herunterladen und hinzufügen zu deiner Kalendar-Anwendung du kannst'
+  title:
+    create: Termin hinzufügen
+    update: Termin bearbeiten
+    destroy: Termin löschen
+
+comments:
+  info:
+    email: Die E-Mail-Adresse nicht veröffentlicht, sie wird.
+  title:
+    create: Kommentar erstellen
+    destroy: Kommentar löschen
+
+content:
+  description:
+    show: Seitenübersicht
+  info:
+    keywords: Die wichtigsten Schlagworte dieser Seite angeben du musst.
+    teaser: Eine Zusammenfassung für die Suchmaschinen schreiben du musst.
+  title:
+    create: Seite erstellen
+    destroy: Seite löschen
+    update: Bearbeiten
+
+downloads:
+  description:
+    show: Downloads
+  label:
+    choose: Datei auswählen
+  title:
+    create: Download erstellen
+    destroy: Download löschen
+    update: Download bearbeiten
+
+cronjob:
+  mail:
+    body: Ihre Sicherungskopie erfolreich erstellt wurde und im Anhang sie sich befindet.\r\n
+    subject: '[%%WEBSITE_NAME] Sicherungskopie vom %d'
+
+galleries:
+  albums:
+    description:
+      show: Albenübersicht
+    title:
+      create: Album erstellen
+      destroy: Album löschen
+      update: 'Album "%s" bearbeiten'
+  files:
+    description:
+      show: Galerie-Bilder.
+    label:
+      choose: Datei(en) auswählen
+      cut: Bild quadratisch zuschneiden
+      resize: Bild proportional verkleinern
+    title:
+      create: Bild(er) hochladen
+      destroy: Bild löschen
+      update: Bild bearbeiten
+
+mails:
+  body:
+    no_reply: <p>(Dies ist eine autogenerierte E-Mail - bitte nicht beantworten!)</p>
+    signature: <p>Viel Spaß wünscht das Team von<br /><a href="%%WEBSITE_URL">%%WEBSITE_NAME</a></p>
+  description:
+    show: E-Mail schreiben an %s du machen sollen.
+  info:
+    title: "Vielen Dank für Deine Kontaktaufnahme!"
+    redirect: Du wirst in 15 Sekunden auf die Startseite weitergeleitet.
+  subject:
+    by: Neue Nachricht von %s
+
+medias:
+  info:
+    upload: Dir bewusst du musst, dass virenbefallene Dateien oder anderweitig für Missbrauch verwendbare Dateien den Server ggf. zerstören sie können! Gleichnamige Dateien beim Upload überschrieben, sie werden.
+  label:
+    choose: Datei auswählen
+    rename: Datei umbenennen
+  title:
+    create: Datei hochladen
+    destroy: Datei löschen
+
+newsletters:
+  description:
+    subscribe: Abonniere unseren Newsletter um über Neuigkeiten informiert zu werden.
+  info:
+    subscribe: Deine E-Mail-Adresse eintragen du kannst. Nach dem Absenden umgehend eine E-Mail mit einem Link du erhältst, durch den die Echtheit deiner E-Mail-Adresse bestätigen du kannst. Den Newsletter abbestellen du möchtest, so am Ende eines Newsletters austragen, du dich kannst.
+  title:
+    subscribe: Newsletter abonnieren
+
+pages:
+  next: Ältere Beiträge
+  previous: Neuere Beiträge
+
+searches:
+  description:
+    show: Suchergebnisse für "%s"
+  label:
+    terms: Suchbegriffe
+  title:
+    create: Suche
+    show: Suchergebnisse für "%s"
+  info:
+    fail: "Keine Einträge zu dem Begriff: '<strong>%b</strong>' gefunden wurden."
+    research: Erneut suchen du darfst.
+
+sessions:
+  password:
+    description: Auf dieser Seite neues Passwort anfordern du kannst.
+    info: Deine registrierte E-Mail Adresse eintragen du musst. Dir ein neues Passwort innerhalb der nächsten Minuten zuschicken, wir tun.
+    label: Passwort anfordern
+    mail:
+      body: "Hallo %s!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %%SIGNATURE %%NOREPLY"
+      subject: Dein neues Passwort
+    title: Passwort vergessen?
+  verification:
+    description: Falls du keine E-Mail zur Bestätigung deiner Daten erhalten hast, sende sie dir hier erneut zu.
+    info: Dir jetzt erneut eine E-Mail mit Bestätigungslink an deine Adresse zuschicken lassen, du kannst.
+    label:
+      create: Bestätigungslink zuschicken
+    mail:
+      body: "Hallo %s!\r\n\r\nBitte klicke auf diesen Link, um deine E-Mail-Adresse zu bestätigen: %s %%SIGNATURE %%NOREPLY"
+      subject: Deine E-Mail-Bestätigung für %%WEBSITE_NAME
+    title: E-Mail-Bestätigung erneut zusenden
+
+users:
+  contact_via_email: "Klicke hier, um %s eine E-Mail zu schicken!"
+  description:
+    create: Nutzerkonto du erstellen können hier.
+    show: Nutzerprofil von %s.
+  info:
+    destroy_account: Zur eigenen Sicherheit dein aktuelles Passwort noch einmal eingeben, du musst. Sobald du auf "Account löschen" klicken du tust, dein Zugang gelöscht und nicht wiederherstellbar, er ist!
+    gravatar: Wenn du aktivierst dieses Kästchen, automatisch nach einem von dir auf <a href="http://gravatar.com" target="_blank">Gravatar.com</a> hinterlegten Profilbild (s.o.) gesucht, es wird. Alternativ aber auch direkt ein Bild hochladen, du kannst.
+    image: Nur Bilder mit einer Größe von bis zu 400KB hochladen, du darfst!
+  label:
+    account:
+      destroy: Account löschen
+    content:
+      show: Über %s
+      update: Über dich
+    gravatar: Gravatar verwenden?
+    image:
+      choose: Bild auswählen
+      terms: Das Bild hochladen ich darf und keine Rechte Dritter ich verletze.
+      update: Userbild ändern?
+    last_login: Letzter Login
+    newsletter: Newsletter abonnieren?
+    password:
+      create: Passwort ändern
+      new: Neues Passwort
+      old: Altes Passwort
+    registered_since: Registriert seit
+    update: Profil aktualisieren
+  mail:
+    body: "Hallo %s!\r\n\r\nDanke für deine Registrierung auf %%WEBSITE_NAME. Um dich einloggen zu können, musst du noch die Echtheit deiner E-Mail-Adresse über diesen Link bestätigen: %s %%SIGNATURE %%NOREPLY"
+    subject: Deine Registrierung auf %%WEBSITE_NAME.
+  title:
+    account: Account löschen
+    create: Benutzer hinzufügen
+    image: Profilbild ändern
+    overview: Benutzerübersicht
+    password: Passwort ändern
+    personal_data: Persönliche Daten
+    update: Einstellungen bearbeiten

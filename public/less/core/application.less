@@ -1,0 +1,204 @@
+/**
+ * This file generates all the CSS code that we need. Change all the variables
+ * at "bootstrap/variables.less" or override them below.
+ *
+ * Use this for development only. For production use please compile this file
+ * for performance reasons as a CSS file. Here is some information about
+ * compiling LESS: http://twitter.github.com/bootstrap/less.html#compiling
+ *
+ * @link http://github.com/marcoraddatz/candyCMS
+ * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
+ *
+ */
+
+/* Bootstrap */
+@import "../plugins/bootstrap/bootstrap.less";
+
+/* CandyCMS requirements */
+@import "jquery.capty.less";
+@import "jquery.fancybox.less";
+@import "jquery.socialshareprivacy.less";
+@import "candy.less";
+
+/* Bootstrap fixes */
+// No margin at BBCode images
+figure.image {
+  margin:0px;
+}
+
+// Make sure that help is really displayed as a block
+#user-image .help-block, #medias .help-block {
+  display:block;
+}
+
+// No center tooltips if they are large
+.tooltip-inner {
+  text-align:left;
+  max-width:300px;
+}
+
+/* Own styles */
+// Avoid conflicts with navbar
+body {
+  padding-top:60px;
+}
+
+// Remove outlines on Firefox and Opera
+a:active, a:link {
+  outline:none;
+}
+
+// Mark active tablesorter th
+th.headerSortUp, th.headerSortDown {
+  background-color: @grayLighter;
+}
+
+// Display the columns as clickable
+th:hover, th:hover {
+  cursor:pointer;
+}
+
+// Fix whitespaces
+.tags a:first-child,
+h1 small,
+h1 img,
+h2 img,
+#searches .btn {
+  margin-left:5px;
+}
+
+p.center img,
+.btn {
+  margin-right:5px;
+}
+
+// Mail popup
+#create_mail {
+  min-width:600px;
+}
+
+.summary {
+  font-weight:bold;
+}
+
+//
+p img,
+footer img {
+  vertical-align:bottom;
+}
+
+#blogs .blogs {
+  margin-bottom:50px;
+
+  h2 {
+    font-size:30px;
+  }
+
+  .page-header {
+    padding-bottom:0px;
+  }
+}
+
+#calendars {
+  .column-date {
+    width:30%;
+  }
+
+  .column-description {
+    width:55%;
+  }
+
+  .column-actions {
+    width:15%;
+  }
+}
+
+#comments {
+  clear:both;
+  padding:10px 0px;
+
+  a {
+    font-weight: bold;
+  }
+
+  article {
+    display: table;
+    margin-bottom:50px;
+    text-align:left;
+    width:100%;
+
+    header {
+      display: table-cell;
+      width: 50%;
+
+      img {
+        float:left;
+        margin: 3px 10px 0px 0px;
+      }
+
+      a.count {
+        font-size: 24px;
+        color: #CCCCCC;
+        width: 50px;
+        float:left;
+        margin-top: 10px;
+        text-align:center;
+      }
+    }
+
+    footer {
+      text-align: right;
+    }
+  }
+
+  .from_author {
+    border-left: 3px solid @grayLighter;
+  }
+}
+
+// Fix column width at download tables
+#downloads {
+  .column-file, .column-actions {
+    width:10%;
+  }
+
+  .column-title {
+    width:50%;
+  }
+
+  .column-date, .column-size {
+    width:15%;
+  }
+}
+
+// Action icon get a margin to top
+#galleries .thumbnails .center {
+  margin-top:10px;
+}
+
+// inputs for copy use
+#medias {
+  .copybox {
+    display:block;
+    width:98%;
+    padding:0px 4px;
+    font-size:80%;
+    margin:3px 0px 0px;
+  }
+
+  .thumbnail {
+    display:inline;
+  }
+}
+
+// Remove border at user details view
+#users table.table.unstyled th, #users table.table.unstyled td {
+  border:none;
+}
+
+// Mark first field at user details table
+#users table td:first-child {
+  font-weight:bold;
+}

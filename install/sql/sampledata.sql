@@ -1,4 +1,0 @@
-INSERT INTO contents (`id`, `author_id`, `title`, `content`, `date`) VALUES
-(1, 1, 'Impressum', '', 1255512147),
-(2, 1, 'Infos zur Registration', 'Neben dem [site=/Disclaimer]Disclaimer[/site] gibt es noch folgendes zu sagen:\r\n\r\n1. Das Angebot ist kostenlos. Haftung für Schäden aller Art wird generell nicht übernommen, ebenso gibt es keine Gewährleistungspflicht der Verfügbarkeit unseres Angebots gegenüber unseren Benutzern.\r\n\r\n2. Private Daten werden von uns niemals weitergegeben werden. Alle Passwörter sind zudem verschlüsselt gespeichert und somit auch für uns nicht einsehbar.\r\n\r\n3. Der Account kann ganz einfach per Mail gelöscht werden. Einfach eine E-Mail mit dem Betreff "DELETE" und des Usernamens, sowie der UserID an devdelete [at] planetk4 [dot] de schicken.', 1219404007),
-(3, 1, 'Über diese Seite', '', 1219404007);

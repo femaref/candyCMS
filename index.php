@@ -7,146 +7,111 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @version 2.0
  * @since 1.0
+ *
  */
-
 
 namespace CandyCMS;
 
-use CandyCMS\Controller\Index as Index;
-
-/**
- * Override separator due to W3C compatibility.
- */
+# Override separator due to W3C compatibility.
 ini_set('arg_separator.output', '&amp;');
 
-/**
- * Compress output.
- */
+# Compress output.
 ini_set('zlib.output_compression', "On");
 ini_set('zlib.output_compression_level', 9);
 
-/**
- * Set standard timezone for PHP5.
- */
+# Set standard timezone for PHP5.
 date_default_timezone_set('Europe/Berlin');
 
-/**
- * Current version we are working with.
- */
+# Current version we are working with.
 define('VERSION', '20111114');
 
-/*
- * Load main classes.
- */
+# Define a standard path
+define('PATH_STANDARD', dirname(__FILE__));
+
+# Initialize software
 try {
-  if (!file_exists('app/models/Main.model.php') ||
-      !file_exists('app/controllers/Main.controller.php') ||
-      !file_exists('app/controllers/Session.controller.php') ||
-      !file_exists('app/controllers/Index.controller.php') ||
-      !file_exists('app/controllers/Log.controller.php') ||
-      !file_exists('app/helpers/AdvancedException.helper.php') ||
-      !file_exists('app/helpers/Section.helper.php') ||
-      !file_exists('app/helpers/Helper.helper.php') ||
-      !file_exists('app/helpers/I18n.helper.php') ||
-      !file_exists('lib/smarty/Smarty.class.php')
-  )
-    throw new \Exception('Could not load required classes.');
-  else {
-    require 'app/models/Main.model.php';
-    require 'app/controllers/Main.controller.php';
-    require 'app/controllers/Session.controller.php';
-    require 'app/controllers/Index.controller.php';
-    require 'app/controllers/Log.controller.php';
-    require 'app/helpers/AdvancedException.helper.php';
-    require 'app/helpers/Section.helper.php';
-    require 'app/helpers/Helper.helper.php';
-    require 'app/helpers/I18n.helper.php';
-    require 'lib/smarty/Smarty.class.php';
-  }
+  require PATH_STANDARD . '/app/config/Candy.inc.php';
+  require PATH_STANDARD . '/vendor/candyCMS/core/controllers/Index.controller.php';
 }
-catch (\CandyCMS\Helper\AdvancedException $e) {
+catch (Exception $e) {
   die($e->getMessage());
 }
 
-# If this is an ajax request, no layout is loaded
-$iAjax = isset($_REQUEST['ajax']) ? 1 : 0;
-define('AJAX_REQUEST', (int) $iAjax);
-
-# Clear cache if needed
-define('CLEAR_CACHE', isset($_REQUEST['clearcache']) ? true : false);
-
-@session_start();
-
-# Initialize software
-$oIndex = new Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
-
-$oIndex->getConfigFiles(array('Candy', 'Plugins', 'Facebook', 'Mailchimp'));
-$oIndex->getPlugins(ALLOW_PLUGINS);
-$oIndex->getLanguage();
-$oIndex->getCronjob();
-$oIndex->getFacebookExtension();
-$oIndex->setUser();
-$oIndex->setTemplate();
-
-# Define current url
-if($_SERVER['HTTP_HOST'] !== WEBSITE_URL && WEBSITE_DEV == false && $_SERVER['REQUEST_URI'] == '/')
-  \CandyCMS\Helper\Helper::redirectTo(WEBSITE_URL . '/' . WEBSITE_LANDING_PAGE);
-
-define('CURRENT_URL', WEBSITE_URL . $_SERVER['REQUEST_URI']);
-
-# Override the system variables in development mode.
-if (WEBSITE_DEV == true) {
-  ini_set('display_errors', 1);
-  error_reporting(E_ALL);
-}
-else {
-  ini_set('display_errors', 0);
-  error_reporting(E_NONE);
-}
-
 # If we are on a productive enviroment, make sure that we can't override the system.
-# *********************************************
-if (is_dir('install') && WEBSITE_DEV == false)
+if (WEBSITE_MODE == 'production' && is_dir('install'))
   exit('Please install software via <strong>install/</strong> and delete the folder afterwards.');
 
 # Also disable tools to avoid system crashes.
-# *********************************************
-if (is_dir('tools') && WEBSITE_DEV == false)
+if (WEBSITE_MODE == 'production' && is_dir('tools'))
   exit('Please delete the tools folder.');
 
 # Disable tests on productive system.
-# *********************************************
-if (is_file('tests.php') && WEBSITE_DEV == false)
+if (WEBSITE_MODE == 'production' && is_dir('tests'))
   exit('Please delete the tests enviroment (tests.php).');
+
+# Disable the use of composer.
+if (WEBSITE_MODE == 'production' && is_file('composer.phar'))
+  exit('Please delete the composer.phar.');
+
+# Override the system variables in development mode.
+if (WEBSITE_MODE == 'test') {
+  ini_set('display_errors', 0);
+	ini_set('error_reporting', 0);
+	ini_set('log_errors', 1);
+}
+else {
+  ini_set('display_errors', 1);
+	ini_set('error_reporting', 1);
+	ini_set('log_errors', 1);
+}
+
+# Define current url
+define('CURRENT_URL', isset($_SERVER['REQUEST_URI']) ? WEBSITE_URL . $_SERVER['REQUEST_URI'] : WEBSITE_URL);
+
+# Start user session.
+@session_start();
 
 # Do we have a mobile device?
 # *********************************************
-$sUserAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-$bMobile    = preg_match('/Opera Mini/i', $sUserAgent) ||
-              preg_match('/Symb/i', $sUserAgent) ||
-              preg_match('/Windows CE/i', $sUserAgent) ||
-              preg_match('/IEMobile/i', $sUserAgent) ||
-              preg_match('/iPhone/i', $sUserAgent) ||
-              preg_match('/iPod/i', $sUserAgent) ||
-              preg_match('/Blackberry/i', $sUserAgent) ||
-              preg_match('/Android/i', $sUserAgent) ?
-              true :
-              false;
+if(isset($_SERVER['HTTP_USER_AGENT'])) {
+  $bMobile    = preg_match('/Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/Symb/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/Windows CE/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/IEMobile/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/iPhone/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/iPod/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/Blackberry/i', $_SERVER['HTTP_USER_AGENT']) ||
+              	preg_match('/Android/i', $_SERVER['HTTP_USER_AGENT']) ?
+              	true :
+              	false;
+}
+else
+  $bMobile = false;
 
 # Allow mobile access
 if(!isset($_REQUEST['mobile']))
-  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : true;
+  $_SESSION['mobile'] = isset($_SESSION['mobile']) ? $_SESSION['mobile'] : $bMobile;
 
 # Override current session if there is a request.
 else
   $_SESSION['mobile'] = (boolean) $_REQUEST['mobile'];
 
-# Spread this information.
-define('MOBILE', $bMobile === true && $_SESSION['mobile'] == true ? true : false);
+define('MOBILE', $_SESSION['mobile'] == true ? true : false);
 define('MOBILE_DEVICE', $bMobile);
+
+# page called by crawler?
+define('CRAWLER', defined('CRAWLERS') ?
+              preg_match('/' . CRAWLERS . '/', $_SERVER['HTTP_USER_AGENT']) > 0 :
+              false);
+
+# Check for extensions?
+define('EXTENSION_CHECK', ALLOW_EXTENSIONS === true || WEBSITE_MODE == 'development' || WEBSITE_MODE == 'test');
+
+# Initialize software
+# @todo extension check
+$oIndex = new \CandyCMS\Core\Controllers\Index(array_merge($_GET, $_POST), $_SESSION, $_FILES, $_COOKIE);
 
 # Print out HTML
 echo $oIndex->show();
-unset($_SESSION)
 
 ?>

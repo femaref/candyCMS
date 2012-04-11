@@ -1,0 +1,6 @@
+{
+  "require": {
+    "symfony/yaml": "master",
+    "facebook/php-sdk": "dev-master"
+  }
+}

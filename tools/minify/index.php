@@ -7,11 +7,10 @@
  * @author Marco Raddatz <http://marcoraddatz.com>
  * @license MIT
  * @since 1.0
+ *
  */
 
-#require_once '../../config/Candy.inc.php';
-
-function search($sPath, $sType, $bCombine = false) {
+function search($sPath, $sType) {
   $sHtml = '';
   $sPath = $sPath . '/' . $sType;
   $sFileContent = '';

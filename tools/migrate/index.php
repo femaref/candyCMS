@@ -1,13 +1,13 @@
 <?php
 
-require_once '../../config/Candy.inc.php';
+require_once '../../app/config/Candy.inc.php';
 
-require_once '../../app/helpers/Helper.helper.php';
-require_once '../../app/helpers/Image.helper.php';
+require_once '../../vendor/candyCMS/helpers/Helper.helper.php';
+require_once '../../vendor/candyCMS/helpers/Image.helper.php';
 
 define('CREATE_IMAGES', false);
 
-class AddonImage extends \CandyCMS\Helper\Image {
+class ExtensionImage extends \CandyCMS\Core\Helper\Image {
 
 	public function resizeDefault($iWidth, $iMaxHeight = '', $sFolder = '') {
 		if (empty($sFolder))
@@ -295,8 +295,8 @@ class Convert {
 			if (CREATE_IMAGES === true) {
 				if (is_file($sOldPath)) {
 					copy($sOldPath, $sNewPath);
-					$oImage = new AddonImage(substr($aRow['file_name'], 0, -4), 'gallery/' . $aRow['aid'], $sNewPath, $sExtension);
-					$oImage->resizeAndCut(THUMB_DEFAULT_X);
+					$oImage = new ExtensionImage(substr($aRow['file_name'], 0, -4), 'gallery/' . $aRow['aid'], $sNewPath, $sExtension);
+					$oImage->resizeAndCut(THUMB_DEFAULT_X, 'thumbnail');
 					$oImage->resizeDefault(POPUP_DEFAULT_X, POPUP_DEFAULT_Y, 'popup');
 					$oImage->resizeAndCut('32');
 

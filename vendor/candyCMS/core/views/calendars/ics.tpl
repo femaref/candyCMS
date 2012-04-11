@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+X-WR-CALNAME:{$calendar.title}
+METHOD:PUBLISH
+PRODID:{$WEBSITE_URL}
+BEGIN:VEVENT
+UID:{$calendar.id}
+CREATED:{$calendar.date}
+SUMMARY:{$calendar.title}
+DESCRIPTION:{$calendar.content}
+DTSTART;VALUE=DATE:{$calendar.start_date}
+DTEND;VALUE=DATE:{$calendar.end_date}
+DTSTAMP:{$calendar.date}
+END:VEVENT
+END:VCALENDAR

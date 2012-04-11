@@ -1,1 +1,0 @@
-ALTER TABLE `comments` DROP `parent_category`;

@@ -1,0 +1,13 @@
+{strip}
+  <div class='pagination center'>
+    <a href="{$_PAGE.controller}/page/{$_REQUEST.page + 1}" style='display:none'></a>
+    <div data-role='controlgroup' data-type='horizontal'>
+      {section pages start=1 loop=$_PAGE.last+1 step=1}
+        <a href='{$_PAGE.controller}/page/{$smarty.section.pages.index}' data-role='button'
+           {if $_REQUEST.page == $smarty.section.pages.index && $_PAGE.last > 1} data-theme='b'{/if}>
+          {$smarty.section.pages.index}
+        </a>
+      {/section}
+    </div>
+  </div>
+{/strip}

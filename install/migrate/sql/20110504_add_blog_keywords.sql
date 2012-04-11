@@ -1,1 +1,0 @@
-ALTER TABLE `blogs` ADD `keywords` varchar(160) NULL DEFAULT NULL  AFTER `tags`;

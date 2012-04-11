@@ -1,0 +1,46 @@
+{strip}
+  <div id="comments">
+    <div id="js-commments">
+      {foreach $comments as $c}
+        <article class='{if $author_id == $c.author.id}from_author{/if}'>
+          <header>
+            <img class="avatar" src="{$c.author.avatar_64}" width="40" height="40" alt="" />
+            {if $c.user_id > 0}
+              <a href='{$c.author.url}' rel='author'>{$c.author.full_name}</a>
+            {elseif $c.author.name}
+              {$c.author.name}
+            {else}
+              <em style="text-decoration:line-through">{$lang.global.deleted_user}</em>
+            {/if}
+            <br />
+            <time datetime="{$c.datetime_w3c}">{$c.datetime}</time>
+          </header>
+          <div id="js-comment_{$c.id}">
+            {$c.content}
+          </div>
+          <footer>
+            {* Scroll to bottom when quote is clicked *}
+            <a href='#' onclick="quote('{$c.author.full_name}', 'js-comment_{$c.id}')"
+                data-role='button' data-inline='true' data-icon='quote' data-iconpos='notext' data-ajax='false'>
+            </a>
+          </footer>
+        </article>
+      {/foreach}
+    </div>
+  </div>
+  {$_pages_}
+  {if $_COMMENT_AUTOLOAD_}
+    <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#js-commments').infinitescroll({
+          navSelector   : 'div.pagination',
+          nextSelector  : 'div.pagination a:first',
+          itemSelector  : '#js-commments article',
+          loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
+          bufferPx      : 120
+        });
+      });
+    </script>
+  {/if}
+{/strip}

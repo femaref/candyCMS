@@ -1,0 +1,113 @@
+/**
+ * This file generates all the CSS code that we need. Change all the variables
+ * at "bootstrap/variables.less" or override them below.
+ *
+ * Use this for development only. For production use please compile this file
+ * for performance reasons as a CSS file. Here is some information about
+ * compiling LESS: http://twitter.github.com/bootstrap/less.html#compiling
+ *
+ * @link http://github.com/marcoraddatz/candyCMS
+ * @author Marco Raddatz <http://marcoraddatz.com>
+ * @license MIT
+ * @since 2.0
+ *
+ */
+
+@import "jquery.mobile.less";
+@import "candy.less";
+
+.center {
+  text-align: center;
+}
+
+a, a:hover {
+  text-decoration: none;
+}
+
+p.create {
+  margin: 0px 0px 30px;
+}
+
+/* Comments */
+#comments {
+  clear:both;
+  padding:10px 0px;
+
+  a {
+    font-weight: bold;
+    color: #000;
+  }
+
+  article {
+    margin-top:30px;
+    text-align:left;
+    padding:10px;
+    background:#eee;
+    -webkit-border-radius: .6em;
+    -moz-border-radius: .6em;
+    border-radius: .6em;
+
+    header {
+      line-height:1.5em;
+      border-bottom:1px solid #ccc;
+      padding-bottom:8px;
+
+      img {
+        float:left;
+        margin: 3px 10px 0px 0px;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+    }
+
+    p {
+      font-size:90%;
+
+      &.center {
+        font-size:80%;
+        text-align:center;
+      }
+    }
+
+    footer {
+      text-align:right;
+    }
+
+    &.from_author {
+      background: #E3E3E3;
+    }
+  }
+}
+
+#downloads .ui-link-inherit {
+  padding-left:50px;
+}
+
+#galleries li a div img {
+  margin-right:5px;
+}
+
+p.center {
+  clear:both;
+}
+
+/* Quotes */
+blockquote {
+  padding:0px 15px;
+  margin:10px auto;
+  text-align:left;
+  border-left:5px solid #ccc;
+}
+
+blockquote h3 {
+  margin-top:0px;
+  margin-bottom:0px;
+  font-size:90%;
+}
+
+/* hide the descriptions in forms */
+form .control-group .controls .help-block {
+  display: none;
+}

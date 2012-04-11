@@ -1,1 +1,0 @@
-ALTER TABLE `downloads` DROP INDEX `title`;
