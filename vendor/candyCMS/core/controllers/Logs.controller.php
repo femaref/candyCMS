@@ -53,13 +53,13 @@ class Logs extends Main {
    * @param integer $iTimeStart starting timestamp of the entry
    * @param integer $iTimeEnd ending timestamp of the entry
    * @return boolean status of query
-   * @todo extension check
    *
    */
   public static function insert($sControllerName, $sActionName, $iActionId = 0, $iUserId = 0, $iTimeStart = '', $iTimeEnd = '') {
     require_once PATH_STANDARD . '/vendor/candyCMS/core/models/Logs.model.php';
 
-    $bReturn = \CandyCMS\Core\Models\Logs::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
+    $sModel  = Main::__autoload('Logs', true);
+    $bReturn = $sModel::insert($sControllerName, $sActionName, $iActionId, $iUserId, $iTimeStart, $iTimeEnd);
 
     if ($bReturn)
       \CandyCMS\Core\Helpers\SmartySingleton::getInstance()->clearCacheForController('logs');
@@ -94,7 +94,6 @@ class Logs extends Main {
    * @param integer $iLogsId id of log entry to update
    * @param integer $iEndTime the new Timestamp
    * @return boolean status of query
-   * @todo extension check
    *
    */
   public static function updateEndTime($iLogsId, $iEndTime = null) {
@@ -103,7 +102,8 @@ class Logs extends Main {
     if ($iEndTime == null)
       $iEndTime = time();
 
-    $bReturn = \CandyCMS\Core\Models\Logs::setEndTime($iLogsId, $iEndTime);
+    $sModel  = Main::__autoload('Logs', true);
+    $bReturn = $sModel::setEndTime($iLogsId, $iEndTime);
 
     if ($bReturn)
       \CandyCMS\Core\Helpers\SmartySingleton::getInstance()->clearCacheForController('logs');

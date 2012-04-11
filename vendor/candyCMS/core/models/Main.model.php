@@ -434,13 +434,16 @@ abstract class Main {
    *
    * @access public
    * @param integer $iId ID to destroy
+   * @param string $sController controller to use
    * @return boolean status of query
    *
    */
-  public function destroy($iId) {
+  public function destroy($iId, $sController = '') {
+    $sController = $sController ? (string) $sController : (string) $this->_aRequest['controller'];
+
     try {
       $oQuery = $this->_oDb->prepare("DELETE FROM
-                                        " . SQL_PREFIX . $this->_aRequest['controller'] . "
+                                        " . SQL_PREFIX . $sController . "
                                       WHERE
                                         id = :id
                                       LIMIT

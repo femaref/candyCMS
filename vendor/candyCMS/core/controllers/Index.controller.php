@@ -107,7 +107,6 @@ class Index {
    * Reset all data
    *
    * @access public
-   * @todo model extension check
    *
    */
   public function __destruct() {
@@ -115,8 +114,9 @@ class Index {
     if (WEBSITE_MODE == 'development')
       I18n::unsetLanguage();
 
-    # close database connection
-    \CandyCMS\Core\Models\Main::disconnectFromDatabase();
+    # Close database connection
+    $sModel = Main::__autoload('Main', true);
+    $sModel::disconnectFromDatabase();
   }
 
   /**

@@ -6,7 +6,7 @@
       </h4>
       <p>
         Your installation was successful. You can now delete the install folder and
-        click next to login!
+        <a href='/sessions/create'>login</a>!
       </p>
     </div>
   {else}

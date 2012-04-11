@@ -407,11 +407,11 @@ class Helper {
    * @access public
    * @param mixed $mStr string to format
    * @param string $sHighlight string to highlight
-   * @see plugins/controllers/Bbcode.controller.php
    * @return string $sStr formatted string
+   * @see plugins/controllers/Bbcode.controller.php
    *
    */
-  public final static function formatOutput($mStr, $sHighlight = '') {
+  public static function formatOutput($mStr, $sHighlight = '') {
     if ($sHighlight)
       $mStr = str_ireplace($sHighlight, '<mark>' . $sHighlight . '</mark>', $mStr);
 
@@ -430,12 +430,12 @@ class Helper {
    * @access public
    * @param string $sTable table to fetch data from
    * @return integer latest ID
-   * @todo model extension check
    *
    */
   public static function getLastEntry($sTable) {
     try {
-      $oDb = \CandyCMS\Core\Models\Main::connectToDatabase();
+      $sModel = Main::__autoload('Main', true);
+      $oDb = $sModel::connectToDatabase();
       $oQuery = $oDb->query("SELECT id FROM " . SQL_PREFIX . $sTable . " ORDER BY id DESC LIMIT 1");
       $aRow = $oQuery->fetch();
 

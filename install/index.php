@@ -49,7 +49,6 @@ class Install extends Index {
 
     $this->_defines();
     $this->getLanguage();
-    $this->getCronjob(true);
 
     $this->oSmarty = SmartySingleton::getInstance();
     $this->oSmarty->template_dir = PATH_STANDARD . '/install/views';
@@ -427,6 +426,7 @@ class Install extends Index {
    *
    */
   public function showMigration() {
+    $this->getCronjob(true);
     return isset($this->_aRequest['file']) ? $this->_doMigration($this->_aRequest['file']) : $this->_showMigrations();
   }
 }

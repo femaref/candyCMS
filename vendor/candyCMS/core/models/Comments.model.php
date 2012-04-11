@@ -227,4 +227,17 @@ class Comments extends Main {
       exit('SQL error.');
     }
   }
+
+  /**
+   * Delete a comment.
+   *
+   * @static
+   * @access public
+   * @param integer $iId ID to delete
+   * @return boolean status of query
+   *
+   */
+  public function destroy($iId) {
+    return parent::destroy($iId, 'comments');
+  }
 }

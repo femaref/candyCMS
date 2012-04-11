@@ -6,7 +6,6 @@
  *
  * @link http://github.com/marcoraddatz/candyCMS
  * @author Marco Raddatz <http://marcoraddatz.com>
- * @todo documentation
  * @license MIT
  * @since 1.5
  *
@@ -110,27 +109,43 @@ final class Cronjob {
 
 
   /**
-   * Optimize tables.
+   * Optimize tables and delete old sessions.
    *
+   * @final
    * @access public
-   * @todo clean up sessions table and remove old entries
    *
    */
   public final function optimize() {
     try {
       Main::$_oDbStatic->query("OPTIMIZE TABLE
-                                " . SQL_PREFIX . "blogs,
-                                " . SQL_PREFIX . "comments,
-                                " . SQL_PREFIX . "calendars,
-                                " . SQL_PREFIX . "contents,
-                                " . SQL_PREFIX . "downloads,
-                                " . SQL_PREFIX . "gallery_albums,
-                                " . SQL_PREFIX . "gallery_files,
-                                " . SQL_PREFIX . "migrations,
-                                " . SQL_PREFIX . "logs,
-                                " . SQL_PREFIX . "sessions,
-                                " . SQL_PREFIX . "users");
+                                  " . SQL_PREFIX . "blogs,
+                                  " . SQL_PREFIX . "comments,
+                                  " . SQL_PREFIX . "calendars,
+                                  " . SQL_PREFIX . "contents,
+                                  " . SQL_PREFIX . "downloads,
+                                  " . SQL_PREFIX . "gallery_albums,
+                                  " . SQL_PREFIX . "gallery_files,
+                                  " . SQL_PREFIX . "migrations,
+                                  " . SQL_PREFIX . "logs,
+                                  " . SQL_PREFIX . "sessions,
+                                  " . SQL_PREFIX . "users");
+    }
+    catch (AdvancedException $e) {
+      Main::$_oDbStatic->rollBack();
+      AdvancedException::reportBoth('0109 - ' . $e->getMessage());
+      exit('SQL error.');
+    }
 
+    try {
+      $oQuery = Main::$_oDbStatic->prepare("DELETE FROM
+                                              " . SQL_PREFIX . "sessions
+                                            WHERE
+                                              date < :date");
+
+      # Half a year
+      $iDate = time() - 15552000;
+      $oQuery->bindParam('date', $iDate, PDO::PARAM_INT);
+      return $oQuery->execute();
     }
     catch (AdvancedException $e) {
       Main::$_oDbStatic->rollBack();
@@ -210,7 +225,8 @@ EOD;
       }
     }
     catch (AdvancedException $e) {
-      # @todo exception
+      AdvancedException::reportBoth('0108 - ' . $e->getMessage());
+      exit('SQL error.');
     }
 
     # Closing bracket
@@ -233,7 +249,8 @@ EOD;
       $sFileText .= $iRows + 1;
     }
     catch (AdvancedException $e) {
-      # @todo exception
+      AdvancedException::reportBoth('0109 - ' . $e->getMessage());
+      exit('SQL error.');
     }
 
     # We also use this as count for data entries
@@ -335,14 +352,16 @@ EOD;
           $this->_backupTableData($aTable[0], $sFileText, $iColumns);
         }
         catch (AdvancedException $e) {
-          # @todo exception?
+          AdvancedException::reportBoth('0110 - ' . $e->getMessage());
           continue;
         }
       }
     }
     catch (AdvancedException $e) {
-      # @todo exception
+      AdvancedException::reportBoth('0111 - ' . $e->getMessage());
+      exit('SQL error.');
     }
+
     # Write into file
     $oFile = @fopen($sBackupPath, 'a+');
     @fwrite($oFile, $sFileText);
@@ -360,9 +379,8 @@ EOD;
     }
 
     # Send the backup via mail
-    # @todo test if this works
     if (PLUGIN_CRONJOB_SEND_PER_MAIL === true) {
-      $sMails = \CandyCMS\Core\Controller\Main::__autoload('Mails');
+      $sMails = \CandyCMS\Core\Controllers\Main::__autoload('Mails');
       $sMails::send(WEBSITE_MAIL,
               I18n::get('cronjob.mail.subject', $sBackupName),
               I18n::get('cronjob.mail.body'),
@@ -370,9 +388,7 @@ EOD;
               $sBackupPath);
     }
 
-    # @todo return status of backup?!
-
-    # rollback, since we did only read statements
+    # Rollback, since we did only read statements
     Main::$_oDbStatic->rollBack();
   }
 
@@ -404,11 +420,8 @@ EOD;
                                               1");
       $oQuery->execute();
       $aResult = $oQuery->fetch(PDO::FETCH_ASSOC);
-      # no previous cronjob execution found
-      if (!$aResult)
-        return true;
-      else
-        return (int)$aResult['time_end'] + $iInterval < time();
+
+      return !$aResult ? true : (int)$aResult['time_end'] + $iInterval < time();
     }
     catch (AdvancedException $e) {
       AdvancedException::reportBoth('0108 - ' . $e->getMessage());
