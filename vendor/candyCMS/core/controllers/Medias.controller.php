@@ -42,7 +42,7 @@ class Medias extends Main {
             $bAllTrue = false;
         }
 
-         return $bAllTrue === true ?
+        return $bAllTrue === true ?
                 Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller']) :
                 Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller']);
 
@@ -60,7 +60,7 @@ class Medias extends Main {
    *
    */
   private function _showUploadFileTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -100,7 +100,7 @@ class Medias extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->setTitle(I18n::get('global.manager.media'));
@@ -118,7 +118,7 @@ class Medias extends Main {
           continue;
 
         $sFileType  = strtolower(substr(strrchr($sPath, '.'), 1));
-        $iNameLen    = strlen($sFile) - 4;
+        $iNameLen   = strlen($sFile) - 4;
 
         if ($sFileType == 'jpeg')
           $iNameLen--;

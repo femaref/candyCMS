@@ -159,7 +159,7 @@ class Sessions extends Main {
       $bStatus = $sMails::send(
               Helper::formatInput($this->_aRequest['email']),
               I18n::get('sessions.password.mail.subject'),
-              I18n::get('sessions.password.mail.body', $aData['name'], $sNewPasswordClean),
+              I18n::get('sessions.password.mail.body', $sNewPasswordClean),
               WEBSITE_MAIL_NOREPLY);
 
       return $bStatus === true ?

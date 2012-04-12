@@ -24,6 +24,7 @@ abstract class Main {
    *
    * @var array
    * @access protected
+   *
    */
   protected $_aRequest = array();
 
@@ -32,6 +33,7 @@ abstract class Main {
    *
    * @var array
    * @access protected
+   *
    */
   protected $_aSession = array();
 
@@ -40,6 +42,7 @@ abstract class Main {
    *
    * @var array
    * @access protected
+   *
    */
   protected $_aData = array();
 
@@ -48,6 +51,7 @@ abstract class Main {
    *
    * @var integer
    * @access protected
+   *
    */
   protected $_iId;
 
@@ -56,6 +60,7 @@ abstract class Main {
    *
    * @var object
    * @access protected
+   *
    */
   protected $_oDb;
 
@@ -64,6 +69,7 @@ abstract class Main {
    *
    * @var object
    * @access public
+   *
    */
   public $oPagination;
 

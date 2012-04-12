@@ -37,7 +37,7 @@ class Galleries extends Main {
    * @param integer $iId Album-ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
    * @param boolean $bAdvancedImageInformation provide image with advanced information (MIME_TYPE etc.)
-   * @param integer $iLimit blog post limit, -1 is the infinite limit
+   * @param integer $iLimit blog post limit
    * @return array data from _setData
    *
    */
@@ -68,7 +68,6 @@ class Galleries extends Main {
     $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
 
     try {
-      $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
       $oQuery = $this->_oDb->prepare("SELECT
                                       a.*,
                                       u.id AS user_id,
@@ -91,13 +90,13 @@ class Galleries extends Main {
                                       a.id
                                     ORDER BY
                                       a.id DESC
-                                    " . $sLimit);
+                                    LIMIT
+                                      :offset, :limit");
 
-      if ($iLimit !== -1) {
-        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
-      }
+      $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
+
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
     }
     catch (\PDOException $p) {

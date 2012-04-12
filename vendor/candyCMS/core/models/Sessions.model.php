@@ -25,7 +25,7 @@ class Sessions extends Main {
    * @static
    * @access public
    * @return array $aResult user data
-   * @see app/controllers/Index.controller.php
+   * @see vendor/candyCMS/core/controllers/Index.controller.php
    *
    */
   public static function getUserBySession() {
@@ -125,7 +125,7 @@ class Sessions extends Main {
    *
    */
   public function resendPassword($sPassword = '') {
-    $sModel  = $this->__autoload('Users');
+    $sModel = $this->__autoload('Users');
     return $sModel::setPassword($this->_aRequest['email'], $sPassword);
   }
 

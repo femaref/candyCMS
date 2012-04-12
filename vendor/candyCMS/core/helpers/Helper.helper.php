@@ -378,7 +378,7 @@ class Helper {
    * @access public
    * @param integer $iTime timestamp
    * @param integer $iOptions options see above
-   * @see plugins/controllers/FormatTimestamp.controller.php
+   * @see vendor/candyCMS/plugins/FormatTimestamp/FormatTimestamp.controller.php
    * @return string formatted timestamp
    *
    */
@@ -411,7 +411,7 @@ class Helper {
    * @param mixed $mStr string to format
    * @param string $sHighlight string to highlight
    * @return string $sStr formatted string
-   * @see plugins/controllers/Bbcode.controller.php
+   * @see vendor/candyCMS/core/Bbcode/Bbcode.controller.php
    *
    */
   public static function formatOutput($mStr, $sHighlight = '') {
@@ -541,7 +541,7 @@ class Helper {
    * @access public
    * @param string $sStr
    * @return string singleize string
-   * @see app/controllers/Main.controller.php
+   * @see vendor/candyCMS/core/controllers/Main.controller.php
    *
    */
   public static function singleize($sStr) {

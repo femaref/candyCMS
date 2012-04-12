@@ -24,9 +24,9 @@ final class Recaptcha {
   /**
    * ReCaptcha public key.
    *
-   * @var string
    * @access protected
-   * @see config/Plugins.inc.php
+   * @var string
+   * @see app/config/Plugins.inc.php
    *
    */
   protected $_sPublicKey = PLUGIN_RECAPTCHA_PUBLIC_KEY;
@@ -34,9 +34,9 @@ final class Recaptcha {
   /**
    * ReCaptcha private key.
    *
-   * @var string
    * @access protected
-   * @see config/Plugins.inc.php
+   * @var string
+   * @see app/config/Plugins.inc.php
    *
    */
   protected $_sPrivateKey = PLUGIN_RECAPTCHA_PRIVATE_KEY;
@@ -109,19 +109,23 @@ final class Recaptcha {
   }
 
   /**
-   * Get The HTML-Code for the Recaptcha Form.
+   * Get the HTML-Code for the Recaptcha form.
    *
+   * @final
    * @access public
+   * @param array $aRequest
+   * @param array $aSession
    * @return string HTML
    *
    */
-  public function show(&$aRequest, &$aSession) {
+  public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('recaptcha', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
-    # no caching for this very dynamic form
+
+    # No caching for this very dynamic form
     $oSmarty->setCaching(SmartySingleton::CACHING_OFF);
 
     $oSmarty->assign('WEBSITE_MODE', WEBSITE_MODE);
@@ -137,7 +141,9 @@ final class Recaptcha {
   /**
    * Check if the entered captcha is correct.
    *
+   * @final
    * @access public
+   * @param array $aRequest
    * @return boolean status of recpatcha check
    *
    */

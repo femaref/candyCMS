@@ -28,7 +28,10 @@ final class Piwik {
   /**
    * Get The HTML-Code for Piwik.
    *
+   * @final
    * @access public
+   * @param array $aRequest
+   * @param array $aSession
    * @return string HTML
    *
    */

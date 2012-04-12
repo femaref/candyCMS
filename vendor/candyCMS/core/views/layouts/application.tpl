@@ -169,29 +169,6 @@
             {/if}
           </div>
         </div>
-
-        <!--
-        <footer id="footer" class="row">
-          <section id="about" class="span8">
-            <ul>
-              <li>
-                <a href='/sitemap'>{$lang.global.sitemap}</a>
-              </li>
-            </ul>
-          </section>
-          <section id="settings" class="span8">
-            <ul>
-              {if $_SESSION.user.role < 1}
-                <li>
-                  <a href='/newsletters' title='{$lang.newsletters.title.subscribe}'>
-                    {$lang.newsletters.title.subscribe}
-                  </a>
-                </li>
-              {/if}
-            </ul>
-          </section>
-        </footer>
-        -->
       </div>
 
       {* Add bootstrap support *}

@@ -151,8 +151,8 @@ abstract class Main {
   public function __construct(&$aRequest, &$aSession, &$aFile = '', &$aCookie = '') {
     $this->_aRequest  = & $aRequest;
     $this->_aSession  = & $aSession;
-    $this->_aFile      = & $aFile;
-    $this->_aCookie    = & $aCookie;
+    $this->_aFile     = & $aFile;
+    $this->_aCookie   = & $aCookie;
 
     # Load config files if not already done (important for unit testing)
     if (!defined('WEBSITE_URL'))
@@ -172,8 +172,7 @@ abstract class Main {
    * @access public
    *
    */
-  public function __destruct() {
-  }
+  public function __destruct() {}
 
   /**
    * Dynamically load classes.
@@ -182,22 +181,14 @@ abstract class Main {
    * @param string $sClass name of class to load
    * @param boolean $bModel load a model file
    * @return string class name
-   * @todo refactor to use CandyCMS\Model\Main::__autoload?
    *
    */
   public static function __autoload($sClass, $bModel = false) {
     $sClass = (string) ucfirst(strtolower($sClass));
 
-    if ($bModel === true) {
-      if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php')) {
-        require_once PATH_STANDARD . '/app/extensions/models/' . $sClass . '.model.php';
-        return '\CandyCMS\Models\\' . $sClass;
-      }
-      elseif (file_exists(PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php')) {
-        require_once PATH_STANDARD . '/vendor/candyCMS/core/models/' . $sClass . '.model.php';
-        return '\CandyCMS\Core\Models\\' . $sClass;
-      }
-    }
+    if ($bModel === true)
+      return \CandyCMS\Core\Models\Main::__autoload($sClass);
+
     else {
       if (EXTENSION_CHECK && file_exists(PATH_STANDARD . '/app/extensions/controllers/' . $sClass . '.controller.php')) {
         require_once PATH_STANDARD . '/app/extensions/controllers/' . $sClass . '.controller.php';
@@ -531,10 +522,10 @@ abstract class Main {
       if ($mAdditionalCaches)
         $this->_clearCaches($mAdditionalCaches);
 
-      Logs::insert($this->_aRequest['controller'],
-              $this->_aRequest['action'],
-              $this->_oModel->getLastInsertId($this->_aRequest['controller']),
-              $this->_aSession['user']['id']);
+      Logs::insert( $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    $this->_oModel->getLastInsertId($this->_aRequest['controller']),
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller']);
     }
@@ -568,10 +559,10 @@ abstract class Main {
       if ($mAdditionalCaches)
         $this->_clearCaches($mAdditionalCaches);
 
-      Logs::insert($this->_aRequest['controller'],
-              $this->_aRequest['action'],
-              (int) $this->_aRequest['id'],
-              $this->_aSession['user']['id']);
+      Logs::insert( $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    (int) $this->_aRequest['id'],
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.update'), $sRedirectURL);
     }
@@ -598,10 +589,10 @@ abstract class Main {
       if ($mAdditionalCaches)
         $this->_clearCaches($mAdditionalCaches);
 
-      Logs::insert($this->_aRequest['controller'],
-              $this->_aRequest['action'],
-              $this->_iId,
-              $this->_aSession['user']['id']);
+      Logs::insert( $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    $this->_iId,
+                    $this->_aSession['user']['id']);
 
       return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller']);
     }
@@ -624,10 +615,10 @@ abstract class Main {
 
     $oMCAPI = new MCAPI(MAILCHIMP_API_KEY);
     return $oMCAPI->listSubscribe(MAILCHIMP_LIST_ID,
-              $aData['email'],
-              array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']),
-              '',
-              $bDoubleOptIn);
+            $aData['email'],
+            array('FNAME' => $aData['name'], 'LNAME' => $aData['surname']),
+            '',
+            $bDoubleOptIn);
   }
 
   /**

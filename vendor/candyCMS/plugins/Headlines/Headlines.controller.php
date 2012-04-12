@@ -28,6 +28,7 @@ final class Headlines {
   /**
    * Show the (cached) headlines.
    *
+   * @final
    * @access public
    * @param array $aRequest
    * @param array $aSession
@@ -35,8 +36,8 @@ final class Headlines {
    *
    */
   public final function show(&$aRequest, &$aSession) {
-    $sTemplateDir = Helper::getPluginTemplateDir('headlines', 'show');
-    $sTemplateFile = Helper::getTemplateType($sTemplateDir, 'show');
+    $sTemplateDir   = Helper::getPluginTemplateDir('headlines', 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
     $oSmarty = SmartySingleton::getInstance();
     $oSmarty->setTemplateDir($sTemplateDir);
@@ -45,7 +46,7 @@ final class Headlines {
     $sCacheId = WEBSITE_MODE . '|blogs|' . WEBSITE_LOCALE . '|headlines|' . substr(md5($aSession['user']['role']), 0 , 10);
     if (!$oSmarty->isCached($sTemplateFile, $sCacheId)) {
       $sBlogsModel = \CandyCMS\Core\Models\Main::__autoload('Blogs');
-      $oModel = & new $sBlogsModel($aRequest, $aSession);
+      $oModel = new $sBlogsModel($aRequest, $aSession);
 
       $oSmarty->assign('data', $oModel->getData('', false, PLUGIN_HEADLINES_LIMIT));
     }

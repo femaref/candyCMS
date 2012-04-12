@@ -351,7 +351,7 @@ class Users extends Main {
    *
    */
   protected function _showCreateUserTemplate($bShowCaptcha) {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
     if ($this->_aSession['user']['role'] == 4)
@@ -395,8 +395,7 @@ class Users extends Main {
     if ($this->_aSession['user']['id'] == 0)
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions/create');
 
-    # Bugfix
-    elseif ($this->_aSession['user']['id'] <> $this->_iId && $this->_aSession['user']['role'] < 4)
+    elseif ($this->_aSession['user']['id'] !== $this->_iId && $this->_aSession['user']['role'] < 4)
       return Helper::errorMessage(I18n::get('error.missing.permission'));
 
     else

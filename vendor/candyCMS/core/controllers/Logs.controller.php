@@ -29,7 +29,7 @@ class Logs extends Main {
       return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       $this->oSmarty->assign('logs', $this->_oModel->getData());

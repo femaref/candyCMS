@@ -151,7 +151,7 @@ class Index {
    * @static
    * @access public
    * @param string $sAllowedPlugins comma separated plugin names
-   * @see config/Candy.inc.php
+   * @see app/config/Candy.inc.php
    * @return boolean true if no errors occurred.
    *
    */
@@ -188,7 +188,7 @@ class Index {
    * Read the routes from Routes.yml and set request params.
    *
    * @access public
-   * @see config/Routes.yml
+   * @see app/config/Routes.yml
    *
    */
   public function getRoutes() {
@@ -230,7 +230,7 @@ class Index {
    * Sets the language. This can be done via a language request and be temporarily saved in a cookie.
    *
    * @access public
-   * @see config/Candy.inc.php
+   * @see app/config/Candy.inc.php
    *
    */
   public function getLanguage() {
@@ -299,7 +299,7 @@ class Index {
    *
    * @access public
    * @param boolean $bForceAction force the cronjob to be executed.
-   * @see config/Candy.inc.php
+   * @see app/config/Candy.inc.php
    *
    */
   public function getCronjob($bForceAction = false) {
@@ -318,8 +318,8 @@ class Index {
    * Give the users the ability to interact with facebook. Facebook is used as a plugin and loaded in the method above.
    *
    * @access public
-   * @see config/Candy.inc.php
-   * @see plugins/controllers/Facebook.controller.php
+   * @see app/config/Candy.inc.php
+   * @see vendor/candyCMS/plugins/Facebook/Facebook.controller.php
    * @return object FacebookCMS
    *
    */
@@ -339,7 +339,7 @@ class Index {
    * Store and show flash status messages in the application.
    *
    * @access protected
-   * @see config/Candy.inc.php
+   * @see app/config/Candy.inc.php
    * @return array $aFlashMessage The message, its type and the headline of the message.
    *
    */

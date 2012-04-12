@@ -18,10 +18,14 @@ use CandyCMS\Core\Helpers\I18n;
 final class FormatTimestamp {
 
   /**
+   * Format timestamp
    *
-   * @param type $iTime
-   * @param type $iOptions
-   * @return type
+   * @final
+   * @access private
+   * @param integer $iTime
+   * @param integer $iOptions
+   * @return string
+   *
    */
   private final function _setDate($iTime, $iOptions) {
     if(!$iTime)
@@ -53,7 +57,15 @@ final class FormatTimestamp {
       return $sDay . ', ' . $sTime;
   }
 
-  public final function getDate($iTime, $bDateOnly) {
-    return $this->_setDate($iTime, $bDateOnly);
+  /**
+   * @final
+   * @access public
+   * @param integer $iTime
+   * @param integer $iOptions
+   * @return string
+   *
+   */
+  public final function getDate($iTime, $iOptions) {
+    return $this->_setDate($iTime, $iOptions);
   }
 }

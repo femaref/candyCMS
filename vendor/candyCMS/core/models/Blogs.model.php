@@ -308,7 +308,6 @@ class Blogs extends Main {
    *
    */
   public function destroy($iId) {
-
     $bResult = parent::destroy($iId);
 
     try {

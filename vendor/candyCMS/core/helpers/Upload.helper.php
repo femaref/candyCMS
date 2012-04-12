@@ -69,9 +69,9 @@ class Upload {
    *
    */
   public function __construct(&$aRequest, &$aSession, &$aFile) {
-    $this->_aRequest = & $aRequest;
-    $this->_aSession = & $aSession;
-    $this->_aFile = & $aFile;
+    $this->_aRequest  = & $aRequest;
+    $this->_aSession  = & $aSession;
+    $this->_aFile     = & $aFile;
 
     require_once PATH_STANDARD . '/vendor/candyCMS/core/helpers/Image.helper.php';
   }
@@ -82,7 +82,7 @@ class Upload {
    * @access public
    * @param string $sFolder name of upload folder
    * @param boolean $bFilenameHashes whether a hash should be used as the filename
-   * @see app/controller/Medias.controller.php
+   * @see vendor/candyCMS/core/controllers/Medias.controller.php
    * @return array(boolean) status of uploads.
    *
    */
@@ -133,8 +133,8 @@ class Upload {
    *
    * @access public
    * @param string $sResize cut or resize the images?!
-   * @see app/controller/Galleries.controller.php
    * @return array boolean status of each upload
+   * @see vendor/candyCMS/core/controllers/Galleries.controller.php
    *
    */
   public function uploadGalleryFiles($sResize = '') {
@@ -143,7 +143,7 @@ class Upload {
 
     $aUploads = $this->uploadFiles($this->_sUploadFolder . '/original', true);
 
-    //do cuts and or resizes
+    # Do cuts and or resizes
     $iFileCount = count($aUploads);
     for ($iI = 0; $iI < $iFileCount; $iI++) {
       if ($aUploads[$iI] === true) {
@@ -171,7 +171,7 @@ class Upload {
    *
    * @access public
    * @param boolean $bReturnPath return path information?!
-   * @see app/controller/Users.controller.php
+   * @see vendor/candyCMS/core/controllers/Users.controller.php
    * @return string|boolean user avatar path or boolean status of upload.
    *
    */
@@ -216,7 +216,7 @@ class Upload {
    */
   public static function destroyAvatarFiles($sFileName) {
     $aFileTypes = array('jpg', 'png', 'gif');
-    $aFolders = array('original', 'popup', 'thumbnail', '100', '64', '32');
+    $aFolders   = array('original', 'popup', 'thumbnail', '100', '64', '32');
 
     foreach ($aFileTypes as &$sExtension) {
       foreach ($aFolders as &$sFolder) {

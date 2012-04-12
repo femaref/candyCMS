@@ -95,7 +95,7 @@ class Users extends Main {
    * @access public
    * @param string $sEmail email address to search user from.
    * @return array user data.
-   * @see app/models/Session.model.php
+   * @see vendor/candyCMS/core/models/Session.model.php
    *
    */
   public static function getVerificationData($sEmail) {
@@ -173,11 +173,11 @@ class Users extends Main {
    * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bForceNoId Override ID to show user overview
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit user overview limit, -1 is no limit
+   * @param integer $iLimit user overview limit
    * @return array data from _setData
    *
    */
-  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = -1) {
+  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 0) {
     $aInts  = array('id', 'role');
     $aBools = array('use_gravatar', 'receive_newsletter');
 
@@ -186,9 +186,6 @@ class Users extends Main {
 
     if (empty($iId)) {
       try {
-        # TODO pagination and offset
-        # $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
-        $sLimit = $iLimit === -1 ? '' : 'LIMIT :limit';
         $oQuery = $this->_oDb->prepare("SELECT
                                           u.id,
                                           u.name,
@@ -208,10 +205,10 @@ class Users extends Main {
                                           s.user_id = u.id
                                         ORDER BY
                                           u.id ASC
-                                        " . $sLimit);
+                                        LIMIT
+                                          :limit");
 
-        if ($iLimit !== -1)
-          $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
+        $oQuery->bindParam('limit', $iLimit, PDO::PARAM_INT);
         $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -339,8 +336,7 @@ class Users extends Main {
     $iUseGravatar = isset($this->_aRequest['use_gravatar']) ? 1 : 0;
 
     # Set other peoples user roles
-    # There was a bug with "$iId !== $this->_aSession['user']['id']". Why didn't it work?
-    if ($iId <> $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4)
+    if ($iId!== $this->_aSession['user']['id'] && $this->_aSession['user']['role'] == 4)
       $iUserRole = isset($this->_aRequest['role']) && !empty($this->_aRequest['role']) ?
               (int) $this->_aRequest['role'] :
               1;
@@ -611,7 +607,7 @@ class Users extends Main {
    * @access public
    * @param string $sApiToken API token
    * @return array $aResult user data
-   * @see app/controllers/Index.controller.php
+   * @see vendor/candyCMS/core/controllers/Index.controller.php
    *
    */
   public static function getUserByToken($sApiToken) {

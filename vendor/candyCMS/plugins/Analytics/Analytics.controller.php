@@ -19,9 +19,20 @@ final class Analytics {
 
   /**
    * Identifier for Template Replacements
+   *
+   * @var constant
+   *
    */
   const IDENTIFIER = 'analytics';
 
+  /**
+   * @final
+   * @access public
+   * @param array $aRequest
+   * @param array $aSession
+   * @return string HTML content
+   * 
+   */
   public final function show(&$aRequest, &$aSession) {
     $sTemplateDir   = Helper::getPluginTemplateDir('analytics', 'show');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');

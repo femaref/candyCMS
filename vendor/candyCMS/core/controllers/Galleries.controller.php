@@ -167,7 +167,6 @@ class Galleries extends Main {
       $this->oSmarty->setTemplateDir($sTemplateDir);
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
-
     else
       Helper::redirectTo('/errors/404');
   }
@@ -241,7 +240,6 @@ class Galleries extends Main {
 
       return Helper::successMessage(I18n::get('success.create'), '/' . $this->_aRequest['controller'] . '/' . $iId);
     }
-
     else
       return Helper::errorMessage(I18n::get('error.sql'), '/' . $this->_aRequest['controller']);
   }
@@ -252,7 +250,7 @@ class Galleries extends Main {
    *
    * @access protected
    * @return string HTML content
-   * @see vendor/candyCMS/helper/Image.helper.php
+   * @see vendor/candyCMS/core/helper/Image.helper.php
    *
    */
   protected function _showFormFileTemplate() {
@@ -325,35 +323,32 @@ class Galleries extends Main {
 
       $aReturnValues = $oUploadFile->uploadGalleryFiles();
 
-      $aIds = $oUploadFile->getIds(false);
-      $aExts = $oUploadFile->getExtensions();
+      $aIds   = $oUploadFile->getIds(false);
+      $aExts  = $oUploadFile->getExtensions();
 
       $iFileCount = count($aReturnValues);
-      $bReturnVal = true;
+      $bReturnValue = true;
 
       for ($iI = 0; $iI < $iFileCount; $iI++)
-        $bReturnVal = $aReturnValues[$iI] === true ?
-                $bReturnVal && $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]) :
+        $bReturnValue = $aReturnValues[$iI] === true ?
+                $bReturnValue && $this->_oModel->createFile($aIds[$iI] . '.' . $aExts[$iI], $aExts[$iI]) :
                 false;
 
-      if ($bReturnVal) {
+      if ($bReturnValue) {
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
         $this->oSmarty->clearCacheForController('rss');
 
         # Log uploaded image. Request ID = album id
-        Logs::insert($this->_aRequest['controller'],
-                'createfile',
-                (int) $this->_aRequest['id'],
-                $this->_aSession['user']['id']);
+        Logs::insert( $this->_aRequest['controller'],
+                      'createfile',
+                      (int) $this->_aRequest['id'],
+                      $this->_aSession['user']['id']);
 
-
-        return Helper::successMessage(I18n::get('success.file.upload'),
-                        '/' . $this->_aRequest['controller'] .
+        return Helper::successMessage(I18n::get('success.file.upload'), '/' . $this->_aRequest['controller'] .
                         '/' . $this->_iId);
       }
       else
-          return Helper::errorMessage(I18n::get('error.file.upload'),
-                        '/' . $this->_aRequest['controller'] .
+          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
                         '/' . $this->_iId . '/createfile');
     }
   }
@@ -361,7 +356,7 @@ class Galleries extends Main {
   /**
    * Update a gallery entry.
    *
-   * calls _updateFile if data is given, otherwise calls _showFormFileTemplate()
+   * Calls _updateFile if data is given, otherwise calls _showFormFileTemplate()
    *
    * @access public
    * @return string|boolean HTML content (string) or returned status of model action (boolean).
@@ -440,10 +435,10 @@ class Galleries extends Main {
       $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
       $this->oSmarty->clearCacheForController('rss');
 
-      Logs::insert($this->_aRequest['controller'],
-                  $this->_aRequest['action'],
-                  (int) $this->_iId,
-                  $this->_aSession['user']['id']);
+      Logs::insert( $this->_aRequest['controller'],
+                    $this->_aRequest['action'],
+                    (int) $this->_iId,
+                    $this->_aSession['user']['id']);
 
       unset($this->_iId);
       return Helper::successMessage(I18n::get('success.destroy'), '/' . $this->_aRequest['controller'] . '/' .

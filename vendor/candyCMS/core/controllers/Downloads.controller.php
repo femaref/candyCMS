@@ -49,7 +49,7 @@ class Downloads extends Main {
       exit(readfile(Helper::removeSlash(PATH_UPLOAD . '/' . $this->_aRequest['controller'] . '/' . $sFile)));
     }
     else {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
@@ -68,7 +68,7 @@ class Downloads extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     # Update
@@ -77,9 +77,9 @@ class Downloads extends Main {
 
     # Create
     else {
-      $aData['category']   = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
-      $aData['content']    = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
-      $aData['title']      = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
+      $aData['category']  = isset($this->_aRequest['category']) ? $this->_aRequest['category'] : '';
+      $aData['content']   = isset($this->_aRequest['content']) ? $this->_aRequest['content'] : '';
+      $aData['title']     = isset($this->_aRequest['title']) ? $this->_aRequest['title'] : '';
     }
 
     $this->oSmarty->assign('_categories_', $this->_oModel->getTypeaheadData('downloads', 'category'));
@@ -121,13 +121,13 @@ class Downloads extends Main {
                                 Helper::formatInput($this->_aRequest['title']));
 
       # File is up so insert data into database
-      $aRetVals = $oUploadFile->uploadFiles('downloads');
-      if ($aRetVals[0] === true) {
+      $aReturnValues = $oUploadFile->uploadFiles('downloads');
+      if ($aReturnValues[0] === true) {
         $this->oSmarty->clearCacheForController($this->_aRequest['controller']);
         $this->oSmarty->clearCacheForController('searches');
 
-        $aIds = $oUploadFile->getIds(false);
-        $aExts = $oUploadFile->getExtensions();
+        $aIds   = $oUploadFile->getIds(false);
+        $aExts  = $oUploadFile->getExtensions();
 
         if ($this->_oModel->create($aIds[0] . '.' . $aExts[0], $aExts[0]) === true) {
           Logs::insert($this->_aRequest['controller'],
@@ -166,5 +166,4 @@ class Downloads extends Main {
   protected function _destroy() {
     return parent::_destroy('searches');
   }
-
 }

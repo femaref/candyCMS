@@ -72,7 +72,7 @@
               {else}
                 <a href='{$f.url}'>
                   <img src='{$_PATH.images}/candy.global/spacer.png'
-                       class="icon-download js-tooltip"
+                       class='icon-download js-tooltip'
                        alt='{$lang.global.download}'
                        title='{$lang.global.download}'
                        width="32" height="32" />

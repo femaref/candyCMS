@@ -89,16 +89,4 @@ class Searches extends Main {
 
     return $this->_aData;
   }
-
-  /**
-   * There is no delete in this Model
-   *
-   * @access public
-   * @param integer $iId ID to delete
-   * @return boolean status of query
-   *
-   */
-  public function destroy($iId) {
-    die(I18n::get('error.standard'));
-  }
 }

@@ -39,53 +39,53 @@ class Calendars extends Main {
                   date('Y');
 
           $oQuery = $this->_oDb->prepare("SELECT
-                                          c.*,
-                                          MONTH(c.start_date) AS start_month,
-                                          YEAR(c.start_date) AS start_year,
-                                          UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                          UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                          u.id AS user_id,
-                                          u.name AS user_name,
-                                          u.surname AS user_surname,
-                                          u.email AS user_email
-                                        FROM
-                                          " . SQL_PREFIX . "calendars c
-                                        LEFT JOIN
-                                          " . SQL_PREFIX . "users u
-                                        ON
-                                          c.author_id=u.id
-                                        WHERE
-                                          YEAR(c.start_date) = :year
-                                        ORDER BY
-                                          c.start_date ASC,
-                                          c.title ASC");
+                                            c.*,
+                                            MONTH(c.start_date) AS start_month,
+                                            YEAR(c.start_date) AS start_year,
+                                            UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                            UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                            u.id AS user_id,
+                                            u.name AS user_name,
+                                            u.surname AS user_surname,
+                                            u.email AS user_email
+                                          FROM
+                                            " . SQL_PREFIX . "calendars c
+                                          LEFT JOIN
+                                            " . SQL_PREFIX . "users u
+                                          ON
+                                            c.author_id=u.id
+                                          WHERE
+                                            YEAR(c.start_date) = :year
+                                          ORDER BY
+                                            c.start_date ASC,
+                                            c.title ASC");
 
           $oQuery->bindParam('year', $iYear, PDO::PARAM_INT);
         }
         else {
           $oQuery = $this->_oDb->prepare("SELECT
-                                          c.*,
-                                          MONTH(c.start_date) AS start_month,
-                                          YEAR(c.start_date) AS start_year,
-                                          UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                          UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                          u.id AS user_id,
-                                          u.name AS user_name,
-                                          u.surname AS user_surname,
-                                          u.email AS user_email
-                                        FROM
-                                          " . SQL_PREFIX . "calendars c
-                                        LEFT JOIN
-                                          " . SQL_PREFIX . "users u
-                                        ON
-                                          c.author_id=u.id
-                                        WHERE
-                                          c.start_date >= NOW()
-                                        OR
-                                          c.end_date >= NOW()
-                                        ORDER BY
-                                          c.start_date ASC,
-                                          c.title ASC");
+                                            c.*,
+                                            MONTH(c.start_date) AS start_month,
+                                            YEAR(c.start_date) AS start_year,
+                                            UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                            UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                            u.id AS user_id,
+                                            u.name AS user_name,
+                                            u.surname AS user_surname,
+                                            u.email AS user_email
+                                          FROM
+                                            " . SQL_PREFIX . "calendars c
+                                          LEFT JOIN
+                                            " . SQL_PREFIX . "users u
+                                          ON
+                                            c.author_id=u.id
+                                          WHERE
+                                            c.start_date >= NOW()
+                                          OR
+                                            c.end_date >= NOW()
+                                          ORDER BY
+                                            c.start_date ASC,
+                                            c.title ASC");
         }
 
         $oQuery->execute();
@@ -103,7 +103,7 @@ class Calendars extends Main {
         $sDate = $sMonth . $sYear;
 
         $this->_aData[$sDate]['month']  = $sMonth;
-        $this->_aData[$sDate]['year']    = $sYear;
+        $this->_aData[$sDate]['year']   = $sYear;
 
         $this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $aInts);
         $this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
@@ -124,7 +124,7 @@ class Calendars extends Main {
 
         $oQuery->bindParam('id', $iId);
         $oQuery->execute();
-        $aRow = & $oQuery->fetch(PDO::FETCH_ASSOC);
+        $aRow = $oQuery->fetch(PDO::FETCH_ASSOC);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0012 - ' . $p->getMessage());
@@ -138,11 +138,11 @@ class Calendars extends Main {
         $this->_aData = $this->_formatForOutput($aRow, $aInts);
 
         # Overide for iCalendar specs
+        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His', $aRow['date']) . 'Z';
         $this->_aData['start_date'] = str_replace('-', '', $aRow['start_date']);
         $this->_aData['end_date']   = $aRow['end_date'] == '0000-00-00' ?
                 str_replace('-', '', $this->_aData['start_date']) :
                 str_replace('-', '', $aRow['ics_end_date']);
-        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His', $aRow['date']) . 'Z';
       }
     }
 

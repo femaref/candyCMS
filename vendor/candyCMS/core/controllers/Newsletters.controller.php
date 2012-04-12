@@ -67,7 +67,7 @@ class Newsletters extends Main {
    *
    */
   protected function _showFormTemplate() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], '_form');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, '_form');
 
     $this->oSmarty->assign('name', isset($this->_aRequest['name']) ? (string) $this->_aRequest['name'] : '');

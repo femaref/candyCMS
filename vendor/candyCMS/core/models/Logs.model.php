@@ -25,7 +25,7 @@ class Logs extends Main {
    * Get log overview data.
    *
    * @access public
-   * @param integer $iLimit page limit, -1 is infinite
+   * @param integer $iLimit page limit
    * @return array $this->_aData
    *
    */
@@ -44,7 +44,6 @@ class Logs extends Main {
     $this->oPagination = new Pagination($this->_aRequest, $iResult, $iLimit);
 
     try {
-      $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
       $oQuery = $this->_oDb->prepare("SELECT
                                         l.*,
                                         u.id AS user_id,
@@ -59,12 +58,11 @@ class Logs extends Main {
                                         l.user_id=u.id
                                       ORDER BY
                                         l.time_end DESC
-                                      " . $sLimit);
+                                      LIMIT
+                                      :offset, :limit");
 
-      if ($iLimit !== -1) {
-        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
-      }
+      $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+      $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
       $oQuery->execute();
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -104,7 +102,7 @@ class Logs extends Main {
       parent::connectToDatabase();
 
     $iTimeStart = empty($iTimeStart) ? time() : $iTimeStart;
-    $iTimeEnd = empty($iTimeEnd) ? time() : $iTimeEnd;
+    $iTimeEnd   = empty($iTimeEnd) ? time() : $iTimeEnd;
 
     try {
       $oQuery = parent::$_oDbStatic->prepare("INSERT INTO

@@ -20,6 +20,9 @@ final class Archive {
 
   /**
    * Identifier for Template Replacements
+   *
+   * @var constant
+   *
    */
   const IDENTIFIER = 'archive';
 
@@ -28,6 +31,7 @@ final class Archive {
    *
    * We use a new Smarty instance to avoid parsing the Main.controller due to performance reasons.
    *
+   * @final
    * @access public
    * @param array $aRequest
    * @param array $aSession

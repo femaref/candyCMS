@@ -46,9 +46,10 @@ class SmartySingleton extends Smarty {
   /**
    * Assign the Session and the Request Object to Smarty
    *
-   * @param array $aRequest the Request Array
-   * @param array $aSession  the Session Array
    * @access public
+   * @param array $aRequest the $_REQUEST array
+   * @param array $aSession the $_SESSION array
+   *
    */
   public function setRequestAndSession(&$aRequest = null, &$aSession = null) {
     $this->assignByRef('_REQUEST', $aRequest);

@@ -29,14 +29,14 @@ final class Bbcode {
   /**
    * Search and replace BB code.
    *
+   * @final
    * @static
-   * @access public
+   * @access private
    * @param string $sStr HTML to replace
    * @return string $sStr HTML with formated code
    *
    */
   private final static function _setFormatedText($sStr) {
-
     # BBCode
     $sStr = str_replace('[hr]', '<hr />', $sStr);
     $sStr = preg_replace('/\[center\](.*)\[\/center]/isU', '<div style=\'text-align:center\'>\1</div>', $sStr);
@@ -163,6 +163,7 @@ final class Bbcode {
   /**
    * Return the formatted code.
    *
+   * @final
    * @static
    * @access public
    * @param string $sStr

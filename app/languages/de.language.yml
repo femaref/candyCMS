@@ -218,7 +218,7 @@ error:
     template: Es wurde keine passendes Template gefunden!
   passwords: Bitte geben Sie zwei identische Passwörter an!
   session:
-    account: Es wurde kein Nutzer mit dieser E-Mail-Adresse gefunden!
+    account: Es wurde kein Nutzer mit dieser E-Mail-Adresse gefunden.
     create: E-Mail-Adresse und Passwort stimmen nicht überein. Falls Sie Ihre E-Mail-Adresse noch nicht bestätigt haben, machen Sie dies bitte vor dem Login.
     create_first: Bitte loggen Sie sich zuerst ein!
   standard: Es trat ein Fehler auf!
@@ -369,7 +369,7 @@ sessions:
     info: Tragen Sie hier Ihre registrierte E-Mail Adresse ein und wir schicken Ihnen ein neues Passwort innerhalb der nächsten Minuten zu.
     label: Passwort anfordern
     mail:
-      body: "Hallo %s!\r\n\r\nSie können sich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %%SIGNATURE %%NOREPLY"
+      body: "Hallo!\r\n\r\nSie können sich ab sofort mit folgendem Passwort einloggen: <em>%s</em>. Bitte ändern Sie dieses nach dem Login. %%SIGNATURE %%NOREPLY"
       subject: Ihr neues Passwort
     title: Passwort vergessen?
   verification:

@@ -63,7 +63,7 @@ class Mails extends Main {
    *
    */
   protected function _showCreateMailTemplate($bShowCaptcha) {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
     $oUser = $this->__autoload('Users', true);
@@ -129,7 +129,7 @@ class Mails extends Main {
       # Select user name and surname
       $oClass = $this->__autoload('Users', true);
       $sModel = new $oClass($this->_aRequest, $this->_aSession);
-      $aRow = $sModel::getUserNamesAndEmail($this->_iId);
+      $aRow   = $sModel::getUserNamesAndEmail($this->_iId);
 
       # if id is specified, but user not found => 404
       if (!$aRow && $this->_iId)
@@ -166,7 +166,7 @@ class Mails extends Main {
    *
    */
   private function _showSuccessPage() {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'success');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'success');
 
     $this->setTitle(I18n::get('mails.success_page.title'));
@@ -184,8 +184,8 @@ class Mails extends Main {
    * @param string $sMessage mail message
    * @param string $sReplyTo email address the user can reply to
    * @param string $sAttachment path to the attachment
-   * @return type
-   * @see lib/phpmailer/class.phpmailer.php
+   * @return boolean mail status
+   * @see vendor/phpmailer/class.phpmailer.php
    *
    */
   public static function send($sTo, $sSubject, $sMessage, $sReplyTo = WEBSITE_MAIL, $sAttachment = '') {

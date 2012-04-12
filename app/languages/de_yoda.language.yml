@@ -369,7 +369,7 @@ sessions:
     info: Deine registrierte E-Mail Adresse eintragen du musst. Dir ein neues Passwort innerhalb der nächsten Minuten zuschicken, wir tun.
     label: Passwort anfordern
     mail:
-      body: "Hallo %s!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em> %%SIGNATURE %%NOREPLY"
+      body: "Hallo!\r\n\r\nDu kannst dich ab sofort mit folgendem Passwort einloggen: <em>%s</em>. Bitte ändern nach Login du sollen. %%SIGNATURE %%NOREPLY"
       subject: Dein neues Passwort
     title: Passwort vergessen?
   verification:
