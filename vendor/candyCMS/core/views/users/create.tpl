@@ -62,17 +62,18 @@
         </div>
       </div>
       <div class='control-group{if isset($error.disclaimer)} alert alert-error{/if}'>
-        <label for='input-terms'>{$lang.global.terms.terms} <span title='{$lang.global.required}'>*</span></label>
-          {* Absolute URL due to fancybox bug *}
-          <div class='controls'>
-            <label class='checkbox'>
-              <input name='disclaimer' value='disclaimer' type='checkbox' id='input-terms' required />
-              <a href='#js-modal' data-toggle='modal'>
-                {$lang.global.terms.read}
-              </a>
-            </label>
-            {if isset($error.disclaimer)}<span class='help-inline'>{$error.disclaimer}</span>{/if}
-          </div>
+        <label for='input-terms' class='control-label'>
+          {$lang.global.terms.terms} <span title='{$lang.global.required}'>*</span>
+        </label>
+        <div class='controls'>
+          <label class='checkbox'>
+            <input name='disclaimer' value='disclaimer' type='checkbox' id='input-terms' required />
+            <a href='#js-modal' data-toggle='modal'>
+              {$lang.global.terms.read}
+            </a>
+          </label>
+          {if isset($error.disclaimer)}<span class='help-inline'>{$error.disclaimer}</span>{/if}
+        </div>
       </div>
     {/if}
     {if isset($_captcha_)}{$_captcha_}{/if}
