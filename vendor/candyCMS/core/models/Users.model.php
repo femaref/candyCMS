@@ -627,7 +627,7 @@ class Users extends Main {
       $oQuery->bindParam('api_token', $sApiToken, PDO::PARAM_STR);
       $oQuery->execute();
 
-      return $oQuery->fetch(PDO::FETCH_ASSOC);
+      return parent::_formatForUserOutput($oQuery->fetch(PDO::FETCH_ASSOC));
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0096 - ' . $p->getMessage());

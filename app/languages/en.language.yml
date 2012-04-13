@@ -369,7 +369,7 @@ sessions:
     info: Enter your email and we will send you a new password within a few minutes.
     label: Send password
     mail:
-      body: "Hello %s!\r\n\r\nYou can login via following password: <em>%s</em> %%SIGNATURE %%NOREPLY"
+      body: "Hello!\r\n\r\nYou can login via following password: <em>%s</em> %%SIGNATURE %%NOREPLY"
       subject: Your new password
     title: Lost password?
   verification:

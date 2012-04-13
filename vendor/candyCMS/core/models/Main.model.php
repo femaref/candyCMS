@@ -314,6 +314,10 @@ abstract class Main {
    *
    */
   protected function _formatForUserOutput(&$aData) {
+    # Set up ints first
+    $aData['id']    = (int) $aData['id'];
+    $aData['role']  = (int) $aData['role'];
+
     # Create avatars
     Helper::createAvatarURLs($aData,
             $aData['id'],

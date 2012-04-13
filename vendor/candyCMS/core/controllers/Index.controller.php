@@ -389,11 +389,11 @@ class Index {
     return array(
         'email' => '',
         'facebook_id' => NULL,
-        'id' => 0,
+        'id' => (int) 0,
         'name' => '',
         'surname' => '',
         'password' => '',
-        'role' => 0,
+        'role' => (int) 0,
         'full_name' => ''
     );
   }
