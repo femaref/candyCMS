@@ -79,14 +79,14 @@ class Users extends Main {
    */
   protected function _show() {
     if ($this->_iId) {
-      $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
 
        if (!isset($aData) || !$aData[1]['id'])
-          Helper::redirectTo('/errors/404');
+          return Helper::redirectTo('/errors/404');
 
         $this->oSmarty->assign('user', $aData);
 
@@ -102,7 +102,7 @@ class Users extends Main {
         return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
       else {
-        $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
+        $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'overview');
         $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'overview');
 
         $this->oSmarty->assign('user', $this->_oModel->getData());
@@ -275,9 +275,13 @@ class Users extends Main {
             $this->_aSession['user']['role'] == 0 && SHOW_CAPTCHA :
             false;
 
-    return isset($this->_aRequest['create_users']) ?
-            $this->_create($bShowCaptcha) :
-            $this->_showCreateUserTemplate($bShowCaptcha);
+    if($this->_aSession['user']['role'] > 0 && $this->_aSession['user']['role'] < 4)
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
+
+    else
+      return isset($this->_aRequest['create_users']) ?
+              $this->_create($bShowCaptcha) :
+              $this->_showCreateUserTemplate($bShowCaptcha);
   }
 
   /**
@@ -396,7 +400,7 @@ class Users extends Main {
       return Helper::errorMessage(I18n::get('error.session.create_first'), '/sessions/create');
 
     elseif ($this->_aSession['user']['id'] !== $this->_iId && $this->_aSession['user']['role'] < 4)
-      return Helper::errorMessage(I18n::get('error.missing.permission'));
+      return Helper::errorMessage(I18n::get('error.missing.permission'), '/');
 
     else
       return isset($this->_aRequest['update_users']) ? $this->_update() : $this->_showFormTemplate();

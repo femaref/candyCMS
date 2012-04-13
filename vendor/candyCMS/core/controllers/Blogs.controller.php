@@ -32,7 +32,7 @@ class Blogs extends Main {
       $this->_aData = $this->_oModel->getData($this->_iId);
 
       if (!$this->_aData[1]['id'])
-        Helper::redirectTo('/errors/404');
+        return Helper::redirectTo('/errors/404');
 
       $sClass = $this->__autoload('Comments');
       $oComments = new $sClass($this->_aRequest, $this->_aSession);

@@ -168,7 +168,7 @@ class Galleries extends Main {
       return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
     }
     else
-      Helper::redirectTo('/errors/404');
+      return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -348,8 +348,8 @@ class Galleries extends Main {
                         '/' . $this->_iId);
       }
       else
-          return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
-                        '/' . $this->_iId . '/createfile');
+        return Helper::errorMessage(I18n::get('error.file.upload'), '/' . $this->_aRequest['controller'] .
+                      '/' . $this->_iId . '/createfile');
     }
   }
 

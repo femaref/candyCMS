@@ -84,7 +84,7 @@ class Sitemaps extends Main {
    *
    */
   public function create() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -94,7 +94,7 @@ class Sitemaps extends Main {
    *
    */
   public function update() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -104,6 +104,6 @@ class Sitemaps extends Main {
    *
    */
   public function destroy() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 }

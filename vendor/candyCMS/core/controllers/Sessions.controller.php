@@ -29,7 +29,7 @@ class Sessions extends Main {
    */
   public function show() {
     if (!isset($this->_aRequest['action']))
-      Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
+      return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/create');
 
     switch ($this->_aRequest['action']) {
 
@@ -61,7 +61,7 @@ class Sessions extends Main {
    */
   public function create() {
     if ($this->_aSession['user']['role'] > 0)
-      Helper::redirectTo('/');
+      return Helper::redirectTo('/');
 
     else
       return isset($this->_aRequest['create_sessions']) ? $this->_create() : $this->_showFormTemplate();
@@ -123,11 +123,16 @@ class Sessions extends Main {
    *
    */
   public function resendPassword() {
-    $bShowCaptcha = class_exists('\CandyCMS\Plugins\Recaptcha') ? SHOW_CAPTCHA : false;
+    if ($this->_aSession['user']['role'] > 0)
+      return Helper::redirectTo('/');
 
-    return isset($this->_aRequest['email']) ?
-            $this->_resendPassword($bShowCaptcha) :
-            $this->_showCreateResendActionsTemplate($bShowCaptcha);
+    else {
+      $bShowCaptcha = class_exists('\CandyCMS\Plugins\Recaptcha') ? SHOW_CAPTCHA : false;
+
+      return isset($this->_aRequest['email']) ?
+              $this->_resendPassword($bShowCaptcha) :
+              $this->_showCreateResendActionsTemplate($bShowCaptcha);
+    }
   }
 
   /**
@@ -178,11 +183,16 @@ class Sessions extends Main {
    *
    */
   public function resendVerification() {
-    $bShowCaptcha = class_exists('\CandyCMS\Plugins\Recaptcha') ? SHOW_CAPTCHA : false;
+    if ($this->_aSession['user']['role'] > 0)
+      return Helper::redirectTo('/');
 
-    return isset($this->_aRequest['email']) ?
-            $this->_resendVerification($bShowCaptcha) :
-            $this->_showCreateResendActionsTemplate($bShowCaptcha);
+    else {
+      $bShowCaptcha = class_exists('\CandyCMS\Plugins\Recaptcha') ? SHOW_CAPTCHA : false;
+
+      return isset($this->_aRequest['email']) ?
+              $this->_resendVerification($bShowCaptcha) :
+              $this->_showCreateResendActionsTemplate($bShowCaptcha);
+    }
   }
 
   /**
@@ -255,7 +265,7 @@ class Sessions extends Main {
    *
    */
   public function update() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**

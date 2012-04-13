@@ -30,7 +30,7 @@ class Calendars extends Main {
       $aData = $this->_oModel->getData($this->_iId);
 
       if (!$aData['id'])
-        Helper::redirectTo('/errors/404');
+        return Helper::redirectTo('/errors/404');
 
       header('Content-type: text/calendar; charset=utf-8');
       header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');

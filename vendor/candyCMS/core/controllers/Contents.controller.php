@@ -33,7 +33,7 @@ class Contents extends Main {
         $aData = $this->_oModel->getData($this->_iId);
 
         if (!isset($aData) || !$aData[$this->_iId]['id'])
-          Helper::redirectTo('/errors/404');
+          return Helper::redirectTo('/errors/404');
 
         $this->setDescription($aData[$this->_iId]['teaser']);
         $this->setKeywords($aData[$this->_iId]['keywords']);

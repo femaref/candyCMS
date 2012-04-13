@@ -32,7 +32,7 @@ class Downloads extends Main {
 
       # if file not found, redirect user to overview
       if (!$sFile)
-        Helper::redirectTo ('/errors/404');
+        return Helper::redirectTo ('/errors/404');
 
       # Update download count
       $this->_oModel->updateDownloadCount($this->_iId);

@@ -26,7 +26,7 @@ class Mails extends Main {
    *
    */
   public function show() {
-    Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . $this->_iId . '/create');
+    return Helper::redirectTo('/' . $this->_aRequest['controller'] . '/' . $this->_iId . '/create');
   }
 
   /**
@@ -71,7 +71,7 @@ class Mails extends Main {
 
     if (!$aUser) {
       if ($this->_iId)
-        Helper::redirectTo('/errors/404');
+        return Helper::redirectTo('/errors/404');
 
       else
         $aUser['name'] = I18n::get('global.system');
@@ -133,7 +133,7 @@ class Mails extends Main {
 
       # if id is specified, but user not found => 404
       if (!$aRow && $this->_iId)
-        Helper::redirectTo('/errors/404');
+        return Helper::redirectTo('/errors/404');
 
       $sSendersName = isset($this->_aSession['user']['name']) ?
               $this->_aSession['user']['name'] :
@@ -249,7 +249,7 @@ class Mails extends Main {
    *
    */
   public function update() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -259,6 +259,6 @@ class Mails extends Main {
    *
    */
   public function destroy() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 }

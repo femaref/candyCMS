@@ -188,6 +188,7 @@ class Index {
    * Read the routes from Routes.yml and set request params.
    *
    * @access public
+   * @return array $this->_aRequest
    * @see app/config/Routes.yml
    *
    */
@@ -230,6 +231,7 @@ class Index {
    * Sets the language. This can be done via a language request and be temporarily saved in a cookie.
    *
    * @access public
+   * @return string language
    * @see app/config/Candy.inc.php
    *
    */
@@ -244,7 +246,7 @@ class Index {
             !isset($this->_aRequest['controller'])) {
       $sLanguage = (string) $this->_aRequest['language'];
       setcookie('default_language', (string) $this->_aRequest['language'], time() + 2592000, '/');
-      Helper::redirectTo('/');
+      return Helper::redirectTo('/');
     }
 
     # There is no request, but there might be a cookie instead.
@@ -509,7 +511,7 @@ class Index {
 
     # HTML with template
     else {
-      $sTemplateDir    = Helper::getTemplateDir('layouts', 'application');
+      $sTemplateDir   = Helper::getTemplateDir('layouts', 'application');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'application');
 
       # Get flash messages (success and error)

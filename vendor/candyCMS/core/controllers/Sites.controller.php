@@ -32,7 +32,7 @@ class Sites extends Main {
     $sSite = isset($this->_aRequest['site']) ? (string) $this->_aRequest['site'] : '';
 
     if (!file_exists(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl'))
-      Helper::redirectTo('/errors/404');
+      return Helper::redirectTo('/errors/404');
 
     $this->setTitle(ucfirst($sSite));
     return $this->oSmarty->fetch(PATH_STATIC_TEMPLATES . '/' . $sSite . '.tpl');

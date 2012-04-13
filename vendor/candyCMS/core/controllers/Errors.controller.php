@@ -25,7 +25,7 @@ class Errors extends Main {
    *
    */
   protected function _show($sError = '404') {
-    $sTemplateDir    = Helper::getTemplateDir($this->_aRequest['controller'], $sError);
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], $sError);
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, $sError);
 
     $this->oSmarty->setTemplateDir($sTemplateDir);
@@ -39,7 +39,7 @@ class Errors extends Main {
    *
    */
   public function create() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -49,7 +49,7 @@ class Errors extends Main {
    *
    */
   public function update() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 
   /**
@@ -59,6 +59,6 @@ class Errors extends Main {
    *
    */
   public function destroy() {
-    Helper::redirectTo('/errors/404');
+    return Helper::redirectTo('/errors/404');
   }
 }
