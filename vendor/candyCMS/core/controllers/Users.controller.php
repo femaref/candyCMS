@@ -358,26 +358,40 @@ class Users extends Main {
     $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
-    if ($this->_aSession['user']['role'] == 4)
+    if ($this->_aSession['user']['role'] == 4) {
       $this->setTitle(I18n::get('users.title.create'));
 
-    else
+      $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
+                      Helper::formatInput($this->_aRequest['name']) :
+                      '');
+
+      $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+                      Helper::formatInput($this->_aRequest['surname']) :
+                      '');
+
+      $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+                      Helper::formatInput($this->_aRequest['email']) :
+                      '');
+    }
+    else {
       $this->setTitle(I18n::get('global.registration'));
       $this->setDescription(I18n::get('users.description.create'));
 
-    if ($bShowCaptcha) $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
+      if ($bShowCaptcha)
+        $this->oSmarty->assign('_captcha_', Recaptcha::getInstance()->show());
 
-    $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
-                    Helper::formatInput($this->_aRequest['name']) :
-                    $this->_aSession['user']['name']);
+      $this->oSmarty->assign('name', isset($this->_aRequest['name']) ?
+                      Helper::formatInput($this->_aRequest['name']) :
+                      $this->_aSession['user']['name']);
 
-    $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
-                    Helper::formatInput($this->_aRequest['surname']) :
-                    $this->_aSession['user']['surname']);
+      $this->oSmarty->assign('surname', isset($this->_aRequest['surname']) ?
+                      Helper::formatInput($this->_aRequest['surname']) :
+                      $this->_aSession['user']['surname']);
 
-    $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
-                    Helper::formatInput($this->_aRequest['email']) :
-                    $this->_aSession['user']['email']);
+      $this->oSmarty->assign('email', isset($this->_aRequest['email']) ?
+                      Helper::formatInput($this->_aRequest['email']) :
+                      $this->_aSession['user']['email']);
+    }
 
     if ($this->_aError)
       $this->oSmarty->assign('error', $this->_aError);

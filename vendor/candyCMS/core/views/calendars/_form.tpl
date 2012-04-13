@@ -5,7 +5,7 @@
   <form method='post' class='form-horizontal'
         action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}{$_REQUEST.action}'>
      <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
-      <label for='input-title'>
+      <label for='input-title' class='control-label'>
         {$lang.global.title} <span title='{$lang.global.required}'>*</span>
       </label>
       <div class='controls'>

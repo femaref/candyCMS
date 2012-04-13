@@ -175,9 +175,10 @@ class Users extends Main {
    * @param boolean $bUpdate prepare data for update
    * @param integer $iLimit user overview limit
    * @return array data from _setData
+   * @todo pagination
    *
    */
-  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 0) {
+  public function getData($iId = '', $bForceNoId = false, $bUpdate = false, $iLimit = 1000) {
     $aInts  = array('id', 'role');
     $aBools = array('use_gravatar', 'receive_newsletter');
 
