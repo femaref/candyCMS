@@ -29,7 +29,7 @@ class Logs extends Main {
    * @return array $this->_aData
    *
    */
-  public function getData($iLimit = 50) {
+  public function getData($iLimit = 100) {
     $aInts = array('id', 'uid', 'user_id', 'action_id');
 
     try {

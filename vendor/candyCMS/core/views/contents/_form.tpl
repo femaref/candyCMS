@@ -10,82 +10,80 @@
   </div>
   <form method='post' class='form-horizontal'
         action='/{$_REQUEST.controller}/{if isset($_REQUEST.id)}{$_REQUEST.id}/{/if}{$_REQUEST.action}'>
-    <fieldset>
-      <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
-        <label for='input-title' class='control-label'>
-          {$lang.global.title} <span title='{$lang.global.required}'>*</span>
-        </label>
-        <div class='controls'>
-          <input type='text' name='title' class='span4 required focused'
-                value="{$title}" id='input-title' autofocus required />
-          <span class='help-inline'>
-            {if isset($error.title)}
-              {$error.title}
-            {/if}
-          </span>
-        </div>
-      </div>
-      <div class='control-group'>
-        <label for='input-teaser'>
-          {$lang.global.teaser}
-        </label>
-        <div class='controls'>
-          <input name='teaser' value="{$teaser}" type='text' class='span4'
-                id='input-teaser' />
-          <span class='help-inline'></span>
-          <p class='help-block'>
-            {$lang.blogs.info.teaser}
-          </p>
-        </div>
-      </div>
-      <div class='control-group'>
-        <label for='input-keywords' class='control-label'>
-          {$lang.global.keywords}
-        </label>
-        <div class='controls'>
-          <input name='keywords' value="{$keywords}" type='text'
-                class='span4' id='input-keywords' />
-          <p class='help-block'>
-            {$lang.contents.info.keywords}
-          </p>
-        </div>
-      </div>
-      <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
-        <label for='input-content' class='control-group'>
-          {$lang.global.content} <span title='{$lang.global.required}'>*</span>
-        </label>
-        <div class='controls'>
-          <textarea name='content' class='js-tinymce required span4' id='input-content'>
-            {$content}
-          </textarea>
-          {if isset($error.content)}
-            <span class='help-inline'>
-              {$error.content}
-            </span>
+    <div class='control-group{if isset($error.title)} alert alert-error{/if}'>
+      <label for='input-title' class='control-label'>
+        {$lang.global.title} <span title='{$lang.global.required}'>*</span>
+      </label>
+      <div class='controls'>
+        <input type='text' name='title' class='span4 required focused'
+              value="{$title}" id='input-title' autofocus required />
+        <span class='help-inline'>
+          {if isset($error.title)}
+            {$error.title}
           {/if}
-        </div>
+        </span>
       </div>
-      <div class='control-group'>
-        <label for='input-published' class='control-label'>
-          {$lang.global.published}
-        </label>
-        <div class='controls'>
-          <input name='published' value='1' type='checkbox' class='checkbox'
-                id='input-published' {if $published == true}checked{/if} />
-        </div>
+    </div>
+    <div class='control-group'>
+      <label for='input-teaser' class='control-label'>
+        {$lang.global.teaser}
+      </label>
+      <div class='controls'>
+        <input name='teaser' value="{$teaser}" type='text' class='span4'
+              id='input-teaser' />
+        <span class='help-inline'></span>
+        <p class='help-block'>
+          {$lang.blogs.info.teaser}
+        </p>
       </div>
-      <div class='form-actions'>
-        <input type='submit' class='btn btn-primary'
-              value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
-        <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
-        {if $_REQUEST.action == 'update'}
-          <input type='button' class='btn btn-danger' value='{$lang.contents.title.destroy}'
-                onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
-          <input type='reset' class='btn' value='{$lang.global.reset}' />
-          <input type='hidden' value='{$_REQUEST.id}' name='id' />
+    </div>
+    <div class='control-group'>
+      <label for='input-keywords' class='control-label'>
+        {$lang.global.keywords}
+      </label>
+      <div class='controls'>
+        <input name='keywords' value="{$keywords}" type='text'
+              class='span4' id='input-keywords' />
+        <p class='help-block'>
+          {$lang.contents.info.keywords}
+        </p>
+      </div>
+    </div>
+    <div class='control-group{if isset($error.content)} alert alert-error{/if}'>
+      <label for='input-content' class='control-label'>
+        {$lang.global.content} <span title='{$lang.global.required}'>*</span>
+      </label>
+      <div class='controls'>
+        <textarea name='content' class='js-tinymce required span4' id='input-content'>
+          {$content}
+        </textarea>
+        {if isset($error.content)}
+          <span class='help-inline'>
+            {$error.content}
+          </span>
         {/if}
       </div>
-    </fieldset>
+    </div>
+    <div class='control-group'>
+      <label for='input-published' class='control-label'>
+        {$lang.global.published}
+      </label>
+      <div class='controls'>
+        <input name='published' value='1' type='checkbox' class='checkbox'
+              id='input-published' {if $published == true}checked{/if} />
+      </div>
+    </div>
+    <div class='form-actions'>
+      <input type='submit' class='btn btn-primary'
+            value="{if $_REQUEST.action == 'create'}{$lang.global.create.create}{else}{$lang.global.update.update}{/if}" />
+      <input type='hidden' value='formdata' name='{$_REQUEST.action}_{$_REQUEST.controller}' />
+      {if $_REQUEST.action == 'update'}
+        <input type='button' class='btn btn-danger' value='{$lang.contents.title.destroy}'
+              onclick="confirmDestroy('/{$_REQUEST.controller}/{$_REQUEST.id}/destroy')" />
+        <input type='reset' class='btn' value='{$lang.global.reset}' />
+        <input type='hidden' value='{$_REQUEST.id}' name='id' />
+      {/if}
+    </div>
   </form>
   <script type='text/javascript' src='/vendor/tiny_mce/jquery.tinymce.js'></script>
   <script type='text/javascript'>

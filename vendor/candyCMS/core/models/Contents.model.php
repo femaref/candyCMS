@@ -30,7 +30,7 @@ class Contents extends Main {
    * @todo pagination
    *
    */
-  public function getData($iId = '', $bUpdate = false, $iLimit = 0) {
+  public function getData($iId = '', $bUpdate = false, $iLimit = 100) {
     $aInts  = array('id', 'uid', 'author_id');
     $aBools = array('published');
 

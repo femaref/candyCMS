@@ -159,11 +159,11 @@ javascript:
 
 success:
   create: Entry has been created!
-  destroy: Entry has been deleted!
+  destroy: Successfully destroyed!
   file:
     upload: Files successfully uploaded!
     destroy: Files successfully deleted!
-  update: Entry has been updated!
+  update: Update successful!
   upload: Upload successful!
   newsletter:
     create: Thank you for your interest in our newsletter. You should recive an email within a few minutes containing a link to verify your account.

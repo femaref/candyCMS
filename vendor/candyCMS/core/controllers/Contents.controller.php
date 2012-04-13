@@ -101,7 +101,7 @@ class Contents extends Main {
   protected function _create() {
     $this->_setError('content');
 
-    return parent::_create('searches', 'sitemaps');
+    return parent::_create(array('searches', 'sitemaps'));
   }
 
   /**
@@ -114,7 +114,7 @@ class Contents extends Main {
   protected function _update() {
     $this->_setError('content');
 
-    return parent::_update('searches', 'sitemaps');
+    return parent::_update(array('searches', 'sitemaps'));
   }
 
   /**
@@ -125,6 +125,6 @@ class Contents extends Main {
    *
    */
   protected function _destroy() {
-    return parent::_destroy('searches', 'sitemaps');
+    return parent::_destroy(array('searches', 'sitemaps'));
   }
 }
