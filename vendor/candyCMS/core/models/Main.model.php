@@ -180,10 +180,11 @@ abstract class Main {
   /**
    * Format necessary datetime stamps and add them to $aData
    *
+   * @static
    * @param array $aData array with the timestamp stored in 'date'
    * @return array reference to $aData
    */
-  protected function _formatDates(&$aData) {
+  protected static function _formatDates(&$aData) {
     if (isset($aData['date'])) {
       $aData['date_raw']      = (int) $aData['date'];
       $aData['time']          = Helper::formatTimestamp($aData['date_raw'], 2);
@@ -225,7 +226,7 @@ abstract class Main {
           $aData[$sIdent] = (bool) $aData[$sIdent];
 
     # Format data
-    $this->_formatDates($aData);
+    self::_formatDates($aData);
 
     if (isset($aData['date_raw'])) {
       $iTimestampNow = time();
@@ -291,7 +292,7 @@ abstract class Main {
       );
     }
 
-    $aData['author'] = $this->_formatForUserOutput($aUserData);
+    $aData['author'] = self::_formatForUserOutput($aUserData);
 
     # Encode data for SEO
     $aData['encoded_title'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['author']['encoded_full_name'];
@@ -320,15 +321,17 @@ abstract class Main {
    * Formats / adds all relevant Information for displaying a user.
    *
    * @access protected
+   * @static
    * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
-   * @todo tests
    *
    */
-  protected function _formatForUserOutput(&$aData) {
+  protected static function _formatForUserOutput(&$aData) {
     # Set up ints first
     $aData['id']    = (int) $aData['id'];
     $aData['role']  = (int) isset($aData['role']) ? $aData['role'] : 0;
+
+    self::_formatDates($aData);
 
     # Create avatars
     Helper::createAvatarURLs($aData,
@@ -351,8 +354,6 @@ abstract class Main {
 
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
     $aData['url_update']  = $aData['url_clean'] . '/update';
-
-    $this->_formatDates($aData);
 
     return $aData;
   }
