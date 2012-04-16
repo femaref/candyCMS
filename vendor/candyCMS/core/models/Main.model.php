@@ -180,10 +180,12 @@ abstract class Main {
   /**
    * Format necessary datetime stamps and add them to $aData
    *
+   * @static
    * @param array $aData array with the timestamp stored in 'date'
    * @return array reference to $aData
+   * 
    */
-  protected function _formatDates(&$aData) {
+  protected static function _formatDates(&$aData) {
     if (isset($aData['date'])) {
       $aData['date_raw']      = (int) $aData['date'];
       $aData['time']          = Helper::formatTimestamp($aData['date_raw'], 2);
@@ -193,6 +195,7 @@ abstract class Main {
       $aData['datetime_w3c']  = date('Y-m-d\TH:i:sP', $aData['date_raw']);
       $aData['date_w3c']      = date('Y-m-d', $aData['date_raw']);
     }
+
     return $aData;
   }
 
@@ -319,13 +322,14 @@ abstract class Main {
   /**
    * Formats / adds all relevant Information for displaying a user.
    *
+   * @static
    * @access protected
    * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
    * @todo tests
    *
    */
-  protected function _formatForUserOutput(&$aData) {
+  protected static function _formatForUserOutput(&$aData) {
     # Set up ints first
     $aData['id']    = (int) $aData['id'];
     $aData['role']  = (int) isset($aData['role']) ? $aData['role'] : 0;
@@ -352,7 +356,7 @@ abstract class Main {
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
     $aData['url_update']  = $aData['url_clean'] . '/update';
 
-    $this->_formatDates($aData);
+    self::_formatDates($aData);
 
     return $aData;
   }
