@@ -27,17 +27,22 @@ class Calendars extends Main {
   protected function _show() {
      # Show .ics
     if ($this->_iId && !isset($this->_aRequest['action'])) {
-      $aData = $this->_oModel->getData($this->_iId);
+      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'ics');
+      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'ics');
 
-      if (!$aData['id'])
-        return Helper::redirectTo('/errors/404');
+      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+        $aData = $this->_oModel->getData($this->_iId);
+        $this->oSmarty->assign('calendar', $aData);
+
+        if (!$aData['id'])
+          return Helper::redirectTo('/errors/404');
+      }
 
       header('Content-type: text/calendar; charset=utf-8');
       header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
 
-      $this->oSmarty->assign('calendar', $aData);
-      $this->oSmarty->setTemplateDir(Helper::getTemplateDir($this->_aRequest['controller'], 'ics'));
-      exit($this->oSmarty->display('ics.tpl', UNIQUE_ID));
+      $this->oSmarty->setTemplateDir($sTemplateDir);
+      exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
     }
 
     # Show overview
