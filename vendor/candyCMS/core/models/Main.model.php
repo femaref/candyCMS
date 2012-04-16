@@ -178,6 +178,25 @@ abstract class Main {
   }
 
   /**
+   * Format necessary datetime stamps and add them to $aData
+   *
+   * @param array $aData array with the timestamp stored in 'date'
+   * @return array reference to $aData
+   */
+  protected function _formatDates(&$aData) {
+    if (isset($aData['date'])) {
+      $aData['date_raw']      = (int) $aData['date'];
+      $aData['time']          = Helper::formatTimestamp($aData['date_raw'], 2);
+      $aData['date']          = Helper::formatTimestamp($aData['date_raw'], 1);
+      $aData['datetime']      = Helper::formatTimestamp($aData['date_raw']);
+      $aData['datetime_rss']  = date('D, d M Y H:i:s O', $aData['date_raw']);
+      $aData['datetime_w3c']  = date('Y-m-d\TH:i:sP', $aData['date_raw']);
+      $aData['date_w3c']      = date('Y-m-d', $aData['date_raw']);
+    }
+    return $aData;
+  }
+
+  /**
    * Format data correctly.
    *
    * @access protected
@@ -206,16 +225,9 @@ abstract class Main {
           $aData[$sIdent] = (bool) $aData[$sIdent];
 
     # Format data
-    if (isset($aData['date'])) {
-      $aData['date_raw'] = (int) $aData['date'];
-      $aData['date_w3c'] = date('Y-m-d', $aData['date_raw']);
-      $aData['time']     = Helper::formatTimestamp($aData['date_raw'], 2);
-      $aData['date']     = Helper::formatTimestamp($aData['date_raw'], 1);
+    $this->_formatDates($aData);
 
-      $aData['datetime']     = Helper::formatTimestamp($aData['date_raw']);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
-
+    if (isset($aData['date_raw'])) {
       $iTimestampNow = time();
 
       # Entry is less than a day old
@@ -316,7 +328,7 @@ abstract class Main {
   protected function _formatForUserOutput(&$aData) {
     # Set up ints first
     $aData['id']    = (int) $aData['id'];
-    $aData['role']  = (int) $aData['role'];
+    $aData['role']  = (int) isset($aData['role']) ? $aData['role'] : 0;
 
     # Create avatars
     Helper::createAvatarURLs($aData,
@@ -340,17 +352,7 @@ abstract class Main {
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
     $aData['url_update']  = $aData['url_clean'] . '/update';
 
-    if (isset($aData['date'])) {
-      $aData['date_raw'] = (int) $aData['date'];
-      $aData['date_w3c'] = date('Y-m-d', $aData['date_raw']);
-
-      $aData['datetime'] = Helper::formatTimestamp($aData['date_raw']);
-      $aData['datetime_rss'] = date('D, d M Y H:i:s O', $aData['date_raw']);
-      $aData['datetime_w3c'] = date('Y-m-d\TH:i:sP', $aData['date_raw']);
-
-      $aData['time'] = Helper::formatTimestamp($aData['date_raw'], 2);
-      $aData['date'] = Helper::formatTimestamp($aData['date_raw'], 1);
-    }
+    $this->_formatDates($aData);
 
     return $aData;
   }
