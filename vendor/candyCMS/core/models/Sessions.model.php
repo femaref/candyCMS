@@ -56,11 +56,7 @@ class Sessions extends Main {
         self::destroy();
 
       $mData = $oQuery->fetch(PDO::FETCH_ASSOC);
-
-      if ($mData)
-        return parent::_formatForUserOutput($mData);
-      else
-        return $mData;
+      return $mData ? parent::_formatForUserOutput($mData) : $mData;
     }
     catch (\PDOException $p) {
       AdvancedException::reportBoth('0072 - ' . $p->getMessage());

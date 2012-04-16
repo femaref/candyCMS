@@ -181,8 +181,10 @@ abstract class Main {
    * Format necessary datetime stamps and add them to $aData
    *
    * @static
+   * @access protected
    * @param array $aData array with the timestamp stored in 'date'
    * @return array reference to $aData
+   *
    */
   protected static function _formatDates(&$aData) {
     if (isset($aData['date'])) {
@@ -194,6 +196,7 @@ abstract class Main {
       $aData['datetime_w3c']  = date('Y-m-d\TH:i:sP', $aData['date_raw']);
       $aData['date_w3c']      = date('Y-m-d', $aData['date_raw']);
     }
+
     return $aData;
   }
 
@@ -320,8 +323,8 @@ abstract class Main {
   /**
    * Formats / adds all relevant Information for displaying a user.
    *
-   * @access protected
    * @static
+   * @access protected
    * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
    *
