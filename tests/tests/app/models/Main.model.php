@@ -40,7 +40,7 @@ class MyMain extends Main {
   }
 }
 
-class UnitTestOfBlogModel extends CandyUnitTest {
+class UnitTestOfMainModel extends CandyUnitTest {
 
   function setUp() {
     $this->aRequest = array(
