@@ -32,10 +32,11 @@ class Calendars extends Main {
 
       if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
         $aData = $this->_oModel->getData($this->_iId);
-        $this->oSmarty->assign('calendar', $aData);
 
-        if (!$aData['id'])
+        if (!isset($aData) || !$aData['id'])
           return Helper::redirectTo('/errors/404');
+
+        $this->oSmarty->assign('calendar', $aData);
       }
 
       header('Content-type: text/calendar; charset=utf-8');
