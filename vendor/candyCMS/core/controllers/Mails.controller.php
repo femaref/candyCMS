@@ -66,8 +66,8 @@ class Mails extends Main {
     $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'create');
     $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'create');
 
-    $oUser = $this->__autoload('Users', true);
-    $aUser = $oUser::getUserNamesAndEmail($this->_iId);
+    $sUser = $this->__autoload('Users', true);
+    $aUser = $sUser::getUserNamesAndEmail($this->_iId);
 
     if (!$aUser) {
       if ($this->_iId)

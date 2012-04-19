@@ -205,13 +205,17 @@ abstract class Main {
    * Method to include the model files.
    *
    * @access public
+   * @param string $sController optional controller to load
+   * @return object $this->_oModel
    *
    */
-  public function __init() {
-    $sModel = $this->__autoload($this->_aRequest['controller'], true);
+  public function __init($sController = '') {
+    $sModel = $this->__autoload($sController ? $sController : $this->_aRequest['controller'], true);
 
     if ($sModel)
       $this->_oModel = new $sModel($this->_aRequest, $this->_aSession);
+
+    return $this->_oModel;
   }
 
   /**

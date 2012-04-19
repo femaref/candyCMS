@@ -40,7 +40,7 @@ class Calendars extends Main {
       }
 
       header('Content-type: text/calendar; charset=utf-8');
-      header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
+      header('Content-Disposition: inline; filename=' . $aData['title_encoded'] . '.ics');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
