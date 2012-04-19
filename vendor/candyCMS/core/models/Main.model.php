@@ -296,7 +296,7 @@ abstract class Main {
     }
 
     # There might be extensions without user information
-    if (isset($aData['author_id']) ||  isset($aData['user_id']))
+    if (isset($aData['author_id']) || isset($aData['user_id']))
       $aData['author'] = self::_formatForUserOutput($aUserData);
 
     # Encode data for SEO
