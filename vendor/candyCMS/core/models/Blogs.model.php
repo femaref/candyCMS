@@ -34,7 +34,7 @@ class Blogs extends Main {
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
     $aBools = array('published', 'use_gravatar');
-      $iLimit = 0;
+
     if(WEBSITE_MODE == 'test' && $iLimit != 0)
       $iLimit = 2;
 
@@ -53,7 +53,10 @@ class Blogs extends Main {
       try {
         $oQuery  = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
-        $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iResult);
+        if ($iLimit != 0)
+          $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
+        else
+          $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iResult);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());
@@ -61,7 +64,7 @@ class Blogs extends Main {
       }
 
       try {
-        $sLimit = $iLimit != 0 ? ' LIMIT :offset, :limit' : '';
+        $sLimit = $iLimit != 0 ? ' LIMIT '.$this->oPagination->getOffset().', '.$this->oPagination->getLimit() : '';
         $oQuery = $this->_oDb->prepare("SELECT
                                           b.*,
                                           u.id AS user_id,
@@ -87,10 +90,6 @@ class Blogs extends Main {
                                           b.date DESC"
                                         . $sLimit);
 
-        if ($iLimit != 0) {
-          $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-          $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
-        }
         $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
