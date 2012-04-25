@@ -181,8 +181,10 @@ abstract class Main {
    * Format necessary datetime stamps and add them to $aData
    *
    * @static
+   * @access protected
    * @param array $aData array with the timestamp stored in 'date'
    * @return array reference to $aData
+   *
    */
   protected static function _formatDates(&$aData) {
     if (isset($aData['date'])) {
@@ -194,6 +196,7 @@ abstract class Main {
       $aData['datetime_w3c']  = date('Y-m-d\TH:i:sP', $aData['date_raw']);
       $aData['date_w3c']      = date('Y-m-d', $aData['date_raw']);
     }
+
     return $aData;
   }
 
@@ -279,8 +282,8 @@ abstract class Main {
           'ip'            => isset($aData['author_ip']) ? $aData['author_ip'] : '',
       );
     }
+    # We dont have a user (comments) and format the user given data instead.
     else {
-      # We dont have a user (comments) and format the user given data instead.
       $aUserData = array(
           'email'         => isset($aData['author_email']) ? $aData['author_email'] : WEBSITE_MAIL,
           'id'            => isset($aData['author_id']) ? $aData['author_id'] : 0,
@@ -292,15 +295,17 @@ abstract class Main {
       );
     }
 
-    $aData['author'] = self::_formatForUserOutput($aUserData);
+    # There might be extensions without user information
+    if (isset($aData['author_id']) || isset($aData['user_id']))
+      $aData['author'] = self::_formatForUserOutput($aUserData);
 
     # Encode data for SEO
-    $aData['encoded_title'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['author']['encoded_full_name'];
+    $aData['title_encoded'] = isset($aData['title']) ? urlencode($aData['title']) : $aData['author']['encoded_full_name'];
 
     # URL to entry
     $aData['url_clean']   = WEBSITE_URL . '/' . $sController . '/' . $aData['id'];
-    $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_title'];
-    $aData['encoded_url'] = urlencode($aData['url']); #SEO
+    $aData['url']         = $aData['url_clean'] . '/' . $aData['title_encoded'];
+    $aData['url_encoded'] = urlencode($aData['url']); #SEO
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
     $aData['url_update']  = $aData['url_clean'] . '/update';
 
@@ -320,8 +325,8 @@ abstract class Main {
   /**
    * Formats / adds all relevant Information for displaying a user.
    *
-   * @access protected
    * @static
+   * @access protected
    * @param array $aData array of given userdata, required fields are 'email', 'id', 'name', 'surname' and 'use_gravatar'
    * @return array $aData returns reference of $aData
    *
@@ -350,7 +355,7 @@ abstract class Main {
     # URL to entry
     $aData['url_clean']   = WEBSITE_URL . '/users/' . $aData['id'];
     $aData['url']         = $aData['url_clean'] . '/' . $aData['encoded_full_name'];
-    $aData['encoded_url'] = urlencode($aData['url']);
+    $aData['url_encoded'] = urlencode($aData['url']);
 
     $aData['url_destroy'] = $aData['url_clean'] . '/destroy';
     $aData['url_update']  = $aData['url_clean'] . '/update';

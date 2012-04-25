@@ -26,7 +26,7 @@ class Calendars extends Main {
    */
   protected function _show() {
      # Show .ics
-    if ($this->_iId && !isset($this->_aRequest['action']) || $this->_aRequest['action'] == 'ics') {
+    if ($this->_iId && !isset($this->_aRequest['action'])) {
       $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'ics');
       $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'ics');
 
@@ -39,7 +39,7 @@ class Calendars extends Main {
       }
 
       header('Content-type: text/calendar; charset=utf-8');
-      header('Content-Disposition: inline; filename=' . $aData['encoded_title'] . '.ics');
+      header('Content-Disposition: inline; filename=' . $aData['title_encoded'] . '.ics');
 
       $this->oSmarty->setTemplateDir($sTemplateDir);
       exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));

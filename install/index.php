@@ -105,8 +105,11 @@ class Install extends Index {
         $this->_createFoldersIfNotExistent($mFolder, $sPrefix . $sKey . '/', $iPermissions);
 
       # create single Folder
-      elseif (!is_dir(PATH_STANDARD . $sPrefix . $mFolder))
+      elseif (!is_dir(PATH_STANDARD . $sPrefix . $mFolder)) {
+        $oldUMask = umask(0);
         @mkdir(PATH_STANDARD . $sPrefix . $mFolder, $iPermissions, true);
+        umask($oldUMask);
+      }
     }
   }
 
