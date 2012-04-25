@@ -1,27 +1,19 @@
 {strip}
-  <section id='archive'>
+  <section id='tags'>
     <ul>
-      {foreach from=$data item=d key=month}
+      {foreach from=$data item=t}
         <li>
-          <a href='#{$month}' name='archive-{$month}' class='js-archive_month'>{$month} ({$d|@count})</a>
-          <ul style='display:none'>
-          {foreach from=$d item=entry}
-            <li>
-              <a href='{$entry.url}' title='{$entry.date}' class='js-tooltip'>
-                {$entry.title}
-              </a>
-            </li>
-          {/foreach}
-          </ul>
+          {if $t.amount == 1}
+            <a href='{$t.blogentries[0].url}' title='{$t.blogentries[0].title}' class='js-tooltip'>
+              {$t.title}
+            </a>
+          {else}
+            <a href='{$t.url}' title='{$t.title}' class='js-tooltip'>
+              {$t.title}
+            </a>
+          {/if}
         </li>
       {/foreach}
     </ul>
   </section>
-  <script type='text/javascript'>
-    if($('.js-archive_month')) {
-      $('.js-archive_month').click(function(){
-        $(this).next().toggle();
-      });
-    };
-  </script>
 {/strip}

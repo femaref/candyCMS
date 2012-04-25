@@ -117,6 +117,7 @@ global:
   surname: Nachname
   system: System
   tag: Tag
+  tagcloud: Tag Cloud
   tags:
     info: Suche nach ähnlichen Einträgen
     tags: Tags

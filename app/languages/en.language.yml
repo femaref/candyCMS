@@ -117,6 +117,7 @@ global:
   surname: Surname
   system: System
   tag: Tag
+  tagcloud: Tag Cloud
   tags:
     info: Search for more entries with this tag
     tags: Tags

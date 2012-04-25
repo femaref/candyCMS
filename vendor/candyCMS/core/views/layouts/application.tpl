@@ -164,6 +164,8 @@
             <!-- plugin:headlines -->
             <h3>{$lang.global.archive}</h3>
             <!-- plugin:archive -->
+            <h3>{$lang.global.tagcloud}</h3>
+            <!-- plugin:tagcloud -->
             {if $MOBILE_DEVICE == true}
               <a href='/?mobile=1' ref='nofollow'>{$lang.global.view.mobile}</a>
             {/if}
