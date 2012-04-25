@@ -27,15 +27,15 @@ class Blogs extends Main {
    * @access public
    * @param integer $iId ID to load data from. If empty, show overview.
    * @param boolean $bUpdate prepare data for update
-   * @param integer $iLimit blog post limit
+   * @param integer $iLimit blog post limit, 0 for infinite
    * @return array data from _setData
    *
    */
   public function getData($iId = '', $bUpdate = false, $iLimit = LIMIT_BLOG) {
     $aInts  = array('id', 'uid', 'author_id', 'comment_sum');
     $aBools = array('published', 'use_gravatar');
-
-    if(WEBSITE_MODE == 'test')
+      $iLimit = 0;
+    if(WEBSITE_MODE == 'test' && $iLimit != 0)
       $iLimit = 2;
 
     if (empty($iId)) {
@@ -53,7 +53,7 @@ class Blogs extends Main {
       try {
         $oQuery  = $this->_oDb->query("SELECT COUNT(*) FROM " . SQL_PREFIX . "blogs " . $sWhere);
         $iResult = $oQuery->fetchColumn();
-        $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iLimit);
+        $this->oPagination = new Pagination($this->_aRequest, (int) $iResult, $iResult);
       }
       catch (\PDOException $p) {
         AdvancedException::reportBoth('0043 - ' . $p->getMessage());
@@ -61,6 +61,7 @@ class Blogs extends Main {
       }
 
       try {
+        $sLimit = $iLimit != 0 ? ' LIMIT :offset, :limit' : '';
         $oQuery = $this->_oDb->prepare("SELECT
                                           b.*,
                                           u.id AS user_id,
@@ -83,12 +84,13 @@ class Blogs extends Main {
                                         GROUP BY
                                           b.id
                                         ORDER BY
-                                          b.date DESC
-                                        LIMIT
-                                          :offset, :limit");
+                                          b.date DESC"
+                                        . $sLimit);
 
-        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+        if ($iLimit != 0) {
+          $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
+          $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
+        }
         $oQuery->execute();
 
         $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);
