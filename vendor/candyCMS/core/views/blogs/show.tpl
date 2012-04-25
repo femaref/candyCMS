@@ -55,7 +55,7 @@
         {$b.content}
         <footer class='row'>
           <div class='span4 tags'>
-            {if $b.tags[0]}
+            {if $b.tags|@count > 0}
               {$lang.global.tags.tags}:
               {foreach $b.tags as $t}
                 <a class='js-tooltip' title='{$lang.global.tags.info}: {$t}' href='/{$_REQUEST.controller}/{$t}'>

@@ -106,7 +106,9 @@ class Blogs extends Main {
         # We need to specify 'blogs' because this might also be called for rss
         $this->_aData[$iDate] = $this->_formatForOutput($aRow, $aInts, $aBools, 'blogs');
         $this->_aData[$iDate]['tags_raw']       = $aRow['tags'];
-        $this->_aData[$iDate]['tags']           = explode(', ', $aRow['tags']);
+        //FIXME trim spaces, redundant, if those get removed at blog creation/editing
+        //explode using ',' and filter empty items (since explode always gives at least one item)
+        $this->_aData[$iDate]['tags']           = array_filter( array_map("trim", explode(',', $aRow['tags'])) );
         $this->_aData[$iDate]['date_modified']  = !empty($aRow['date_modified']) ?
                 Helper::formatTimestamp($aRow['date_modified']) :
                 '';

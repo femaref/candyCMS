@@ -53,7 +53,7 @@
         {/if}
         {$b.content}
         <footer>
-          {if $b.tags[0]}
+          {if $b.tags|@count > 0}
             <p>
               {$lang.global.tags.tags}:
               {foreach $b.tags as $t}

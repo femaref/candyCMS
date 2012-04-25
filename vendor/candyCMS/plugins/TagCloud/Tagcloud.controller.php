@@ -55,17 +55,15 @@ final class Tagcloud {
       $aData = $oModel->getData('', false, 0);
       foreach ($aData as $aRow) {
         foreach ($aRow['tags'] as $sTag) {
-          if ($sTag) {
-            // initialize, if tag did not appear before
-            if (!$aTags[$sTag]) {
-              $aTags[$sTag] = array($aRow);
-              $aSortableTags[$sTag] = 1;
-            }
-            else {
-              // update counter
-              $aSortableTags[$sTag] = $aSortableTags[$sTag] + 1;
-              $aTags[$sTag][] = $aRow;
-            }
+          // initialize, if tag did not appear before
+          if (!$aTags[$sTag]) {
+            $aTags[$sTag] = array($aRow);
+            $aSortableTags[$sTag] = 1;
+          }
+          else {
+            // update counter
+            $aSortableTags[$sTag] = $aSortableTags[$sTag] + 1;
+            $aTags[$sTag][] = $aRow;
           }
         }
       }
