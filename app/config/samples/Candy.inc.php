@@ -180,10 +180,14 @@ define('LIMIT_ALBUMS', 10);
 # DEFAULT: ASC
 define('COMMENTS_SORTING', 'ASC');
 
-# Automatically load next Page of Comments when scrolling down
+# Automatically load next Page when scrolling down
 # OPTIONS: true,false
 # DEFAULT: true
-define('COMMENTS_AUTOLOAD', true);
+define('AUTOLOAD', true);
+
+# Stop Loading of next pages after x Times
+# DEFAULT: 3
+define('AUTOLOAD_TIMES', 3);
 
 # ------------------------------------------------------------------------------
 

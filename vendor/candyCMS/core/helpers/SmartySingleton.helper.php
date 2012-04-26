@@ -118,6 +118,13 @@ class SmartySingleton extends Smarty {
         'json_language'         => I18n::getJson()));
 
     $this->assign('lang', I18n::getArray());
+
+    # Do we want autoloading of pages?
+    $aAutoload = array(
+        'enabled' => !defined('AUTOLOAD') || AUTOLOAD ? true : false,
+        'times'   => !defined('AUTOLOAD_TIMES') ? 3 : AUTOLOAD_TIMES
+    );
+    $this->assign('_AUTOLOAD_', $aAutoload);
   }
 
   /**

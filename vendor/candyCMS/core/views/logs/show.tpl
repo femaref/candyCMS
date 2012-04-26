@@ -55,19 +55,41 @@
     {/foreach}
   </table>
   {$_pages_}
-  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
   <script type='text/javascript' src='{$_PATH.js}/core/jquery.tablesorter{$_SYSTEM.compress_files_suffix}.js'></script>
+  <script src='{$_PATH.js}/core/jquery.infiniteScroll{$_SYSTEM.compress_files_suffix}.js' type='text/javascript'></script>
   <script type='text/javascript'>
-    $(document).ready(function(){
-      $('table').infinitescroll({
-        navSelector   : 'div.pagination',
-        nextSelector  : 'div.pagination a:first',
-        itemSelector  : 'table tbody tr',
-        loading       : { msgText : '', img: '{$_PATH.images}/candy.global/loading.gif', loadingText  : '', finishedMsg  : '' },
-        animate       : true
+    {if $_AUTOLOAD_.enabled}
+      var iCounter = 0;
+      $(document).ready(function(){
+        $('table').infinitescroll({
+          navSelector   : 'div.pagination',
+          nextSelector  : 'div.pagination a:first',
+          itemSelector  : 'table tbody tr',
+          loading       : { msgText : '',
+            img         : '{$_PATH.images}/candy.global/loading.gif',
+            finishedMsg : '',
+            selector    : 'div.js-pagination',
+            finished    : function(opts){
+              opts.loading.msg.fadeOut(opts.loading.speed);
+              iCounter = iCounter + 1;
+              if (iCounter % {$_AUTOLOAD_.times} == 0){
+                /** if we did load a few times, we want to stop and display a resume button **/
+                opts.contentSelector.infinitescroll('pause');
+                var a = $('<a alt="{$lang.pages.more}" data-role="button" class="btn">{$lang.pages.more}</a>');
+                a.click(function(){
+                  $(this).fadeOut( opts.loading.speed, function(){
+                    opts.contentSelector.infinitescroll('resume');
+                  });
+                });
+                $(opts.loading.selector).append(a);
+              }
+              return true;
+            }
+          },
+          animate       : true
+        });
       });
-    });
-
+    {/if}
     $('table').tablesorter();
   </script>
 {/strip}
