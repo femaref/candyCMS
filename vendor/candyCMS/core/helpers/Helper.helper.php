@@ -204,14 +204,15 @@ class Helper {
    * @param integer $iUserId user ID
    * @param string $sEmail email address to search gravatar for
    * @param boolean $bUseGravatar do we want to use gravatar?
+   * @param string $sPrefix optional prefix to prepend to keys
    * @return array $aData with all avatarURLs added
    *
    */
-  public static function createAvatarURLs(&$aData, $iUserId, $sEmail, $bUseGravatar = false) {
-    $aData['avatar_32']     = Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
-    $aData['avatar_64']     = Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
-    $aData['avatar_100']    = Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);
-    $aData['avatar_popup']  = Helper::getAvatar('popup', $iUserId, $sEmail, $bUseGravatar);
+  public static function createAvatarURLs(&$aData, $iUserId, $sEmail, $bUseGravatar = false, $sPrefix = '') {
+    $aData[$sPrefix . 'avatar_32']    = Helper::getAvatar(32, $iUserId, $sEmail, $bUseGravatar);
+    $aData[$sPrefix . 'avatar_64']    = Helper::getAvatar(64, $iUserId, $sEmail, $bUseGravatar);
+    $aData[$sPrefix . 'avatar_100']   = Helper::getAvatar(100, $iUserId, $sEmail, $bUseGravatar);
+    $aData[$sPrefix . 'avatar_popup'] = Helper::getAvatar('popup', $iUserId, $sEmail, $bUseGravatar);
 
     return $aData;
   }

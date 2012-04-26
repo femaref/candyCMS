@@ -69,12 +69,12 @@
                    id='input-use_gravatar'
                    {if $use_gravatar == 1}checked{/if} />
             <div class='help-inline'>
-              <a href='{$avatar_popup}'
+              <a href='{$gravatar_avatar_popup}'
                 class='thumbnail js-fancybox'
                 title='{$full_name}'
                 id='js-gravatar'
                 style='{if $use_gravatar == 0}opacity:0.25{/if}'>
-                <img alt='{$name} {$surname}' src='{$avatar_32}' width='32' height='32' />
+                <img alt='{$name} {$surname}' src='{$gravatar_avatar_32}' width='32' height='32' />
               </a>
             </div>
             <p id='js-gravatar_help' class='help-block{if $use_gravatar == 1} hide{/if}'>
@@ -174,6 +174,15 @@
       <form enctype='multipart/form-data' method='post' action='/{$_REQUEST.controller}/{$uid}/avatar'
             class='form-horizontal'>
         <div class='control-group{if isset($error.image)} alert alert-error{/if}'>
+          {if $normal_avatar_popup !== $gravatar_avatar_popup}
+            <div class='pull-right'>
+              <a href='{$normal_avatar_popup}'
+                class='thumbnail js-fancybox'
+                title='{$full_name}'>
+                <img alt='{$name} {$surname}' src='{$normal_avatar_64}' width='64' height='64' />
+              </a>
+            </div>
+          {/if}
           <label for='input-image' class='control-label'>
             {$lang.users.label.image.choose}
           </label>
