@@ -55,7 +55,7 @@
                 </a>
               {/if}
               <input type='text' class='copybox' value='{$_PATH.upload}/{$_REQUEST.controller}/{$f.name}'
-                    onclick='this.focus();this.select();' />
+                    onclick='this.focus();this.select();' readonly='readonly' />
             </td>
             <td>
               {$f.size}
