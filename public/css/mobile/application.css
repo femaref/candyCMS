@@ -567,7 +567,7 @@ a.ui-link-inherit { text-decoration:none !important; }
 .ui-icon, .ui-icon-searchfield:after {
   background:#666666;
   background:rgba(0,0,0,0.4);
-  background-image:url(images/icons-18-white.png);
+  background-image:url(../../images/jquery.mobile/icons-18-white.png);
   background-repeat:no-repeat;
   -moz-border-radius:9px;
   -webkit-border-radius:9px;
@@ -576,20 +576,20 @@ a.ui-link-inherit { text-decoration:none !important; }
 .ui-icon-alt {
   background:#ffffff;
   background:rgba(255,255,255,0.3);
-  background-image:url(images/icons-18-black.png);
+  background-image:url(../../images/jquery.mobile/icons-18-black.png);
   background-repeat:no-repeat;
 }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (min--moz-device-pixel-ratio: 1.5),
        only screen and (min-resolution: 240 dpi) {
   .ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r, .ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check, .ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back, .ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after, .ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
-    background-image:url(images/icons-36-white.png);
+    background-image:url(../../images/jquery.mobile/icons-36-white.png);
     -moz-background-size:776px 18px;
     -o-background-size:776px 18px;
     -webkit-background-size:776px 18px;
     background-size:776px 18px;
   }
-  .ui-icon-alt { background-image:url(images/icons-36-black.png); }
+  .ui-icon-alt { background-image:url(../../images/jquery.mobile/icons-36-black.png); }
 }
 .ui-icon-plus { background-position:-0 50%; }
 .ui-icon-minus { background-position:-36px 50%; }
@@ -621,7 +621,7 @@ a.ui-link-inherit { text-decoration:none !important; }
 .ui-icon-checkbox-off, .ui-icon-radio-off { background-color:transparent; }
 .ui-checkbox-on .ui-icon, .ui-radio-on .ui-icon { background-color:#4596ce; }
 .ui-icon-loading {
-  background:url(images/ajax-loader.gif);
+  background:url(../../images/jquery.mobile/ajax-loader.gif);
   background-size:46px 46px;
 }
 .ui-btn-corner-tl {
