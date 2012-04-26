@@ -11,7 +11,7 @@
     <ul data-role="listview">
       {foreach $files as $f}
         <li>
-          <a href='{$f.url}' title='{$f.content}' data-ajax="false">
+          <a href='{$f.url_popup}' title='{$f.content}' data-ajax="false">
             <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' />
             {if isset($f.content)}
               <h3>{$f.content}</h3>
@@ -26,4 +26,9 @@
     <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'
        data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false'></a>
   </p>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#galleries ul li div div a').photoSwipe();
+    });
+  </script>
 {/strip}
