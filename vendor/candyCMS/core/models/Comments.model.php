@@ -40,7 +40,7 @@ class Comments extends Main {
       $sOrder = defined('COMMENTS_SORTING') && (COMMENTS_SORTING == 'ASC' || COMMENTS_SORTING == 'DESC') ?
               COMMENTS_SORTING :
               'ASC';
-      $sLimit = $iLimit === -1 ? '' : 'LIMIT :offset, :limit';
+      $sLimit = $iLimit === -1 ? '' : 'LIMIT ' . $this->oPagination->getOffset() . ', ' . $this->oPagination->getLimit();
 
       $oQuery = $this->_oDb->prepare("SELECT
                                         c.*,
@@ -63,10 +63,6 @@ class Comments extends Main {
                                       " . $sLimit);
 
       $oQuery->bindParam('parent_id', $iId, PDO::PARAM_INT);
-      if ($iLimit !== -1) {
-        $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
-        $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
-      }
       $oQuery->execute();
 
       $aResult = $oQuery->fetchAll(PDO::FETCH_ASSOC);

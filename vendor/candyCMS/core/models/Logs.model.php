@@ -59,7 +59,7 @@ class Logs extends Main {
                                       ORDER BY
                                         l.time_end DESC
                                       LIMIT
-                                      :offset, :limit");
+                                        :offset, :limit");
 
       $oQuery->bindParam('limit', $this->oPagination->getLimit(), PDO::PARAM_INT);
       $oQuery->bindParam('offset', $this->oPagination->getOffset(), PDO::PARAM_INT);
