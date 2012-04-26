@@ -166,7 +166,7 @@ class WebTestOfBlogController extends CandyWebTest {
 
   function testCreateAndDestroyWithAPIToken() {
     $sTimestamp = '' . time();
-    $sContent = 'Content created at : ' . $sTimestamp;
+    $sContent = 'Funky API Content';
     #try to create without valid api_token
     $this->assertTrue($this->post(WEBSITE_URL . '/' . $this->aRequest['controller'] . '/create?api_token=notatoken',
                                   array('content' => $sContent,
