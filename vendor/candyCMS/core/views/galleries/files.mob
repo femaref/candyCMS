@@ -1,20 +1,18 @@
 {strip}
-  <ul data-role="listview">
-    <li data-role="list-divider">
-      <h1>{$gallery_name}</h3>
-      {if $gallery_content}
-        <p>{$gallery_content}</p>
-      {/if}
-    </li>
-    {if !$files}
-      <div class='alert alert-warning' title="{$lang.error.missing.files}">
-        <h4>{$lang.error.missing.files}</h4>
-      </div>
-    {else}
+  <h1>{$gallery_name}</h3>
+  {if $gallery_content}
+    <p>{$gallery_content}</p>
+  {/if}
+  {if !$files}
+    <div class='alert alert-warning' title="{$lang.error.missing.files}">
+      <h4>{$lang.error.missing.files}</h4>
+    </div>
+  {else}
+    <ul data-role="listview">
       {foreach $files as $f}
         <li>
           <a href='{$f.url}' title='{$f.content}' data-ajax="false">
-            <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' height="80" width="80" />
+            <img src='{$f.url_thumb}' alt='{$f.content}' title='{$f.content}' />
             {if isset($f.content)}
               <h3>{$f.content}</h3>
             {/if}
@@ -22,8 +20,8 @@
           </a>
         </li>
       {/foreach}
-    {/if}
-  </ul>
+    </ul>
+  {/if}
   <p class="center">
     <a href='/rss/{$_REQUEST.controller}/{$_REQUEST.id}'
        data-role='button' data-inline='true' data-icon='rss' data-iconpos='notext' data-ajax='false'></a>
