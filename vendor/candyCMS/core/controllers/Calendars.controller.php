@@ -21,41 +21,85 @@ class Calendars extends Main {
    * Show calendar overview.
    *
    * @access protected
-   * @return string HTML content
+   * @return string HTML content or exit if action does ics output
    *
    */
   protected function _show() {
-     # Show .ics
+     # Show single .ics file
     if ($this->_iId && !isset($this->_aRequest['action'])) {
-      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'ics');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'ics');
-
-      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
-        $aData = $this->_oModel->getData($this->_iId);
-        $this->oSmarty->assign('calendar', $aData);
-
-        if (!$aData['id'])
-          return Helper::redirectTo('/errors/404');
-      }
-
-      header('Content-type: text/calendar; charset=utf-8');
-      header('Content-Disposition: inline; filename=' . $aData['title_encoded'] . '.ics');
-
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+      exit($this->_showEntry());
     }
-
     # Show overview
-    else {
-      $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
-      $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
-
-      if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
-        $this->oSmarty->assign('calendar', $this->_oModel->getData($this->_iId));
-
-      $this->oSmarty->setTemplateDir($sTemplateDir);
-      return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+    else  if ($this->_aRequest['action'] == 'icalfeed') {
+      exit($this->_showIcalFeed());
     }
+    else {
+      return $this->_showOverview();
+    }
+  }
+
+  /**
+   * show single event as ics file
+   * this needs to be specified as ajax, since there should be no surrounding templates
+   *
+   * @return string ICS-File
+   */
+  private function _showEntry() {
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'ics');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'ics');
+
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID)) {
+      $aData = $this->_oModel->getData($this->_iId);
+      $this->oSmarty->assign('calendar', $aData);
+
+      if (!$aData['id'])
+        return Helper::redirectTo('/errors/404');
+    }
+
+    header('Content-type: text/calendar; charset=utf-8');
+    header('Content-Disposition: inline; filename=' . $aData['title_encoded'] . '.ics');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return ($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+  }
+
+  /**
+   * show the overview
+   *
+   * @return string HTML content
+   */
+  private function _showOverview() {
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'show');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'show');
+
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      $this->oSmarty->assign('calendar', $this->_oModel->getData());
+
+    // add the current year when in archive mode
+    if ($this->_aRequest['action'] === 'archive')
+      $this->_aRequest['id'] = $this->_aRequest['id'] ? $this->_aRequest['id'] : date('Y');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
+  }
+
+  /**
+   * show the overview
+   *
+   * @return string HTML content
+   */
+  private function _showIcalFeed() {
+    $sTemplateDir   = Helper::getTemplateDir($this->_aRequest['controller'], 'icalfeed');
+    $sTemplateFile  = Helper::getTemplateType($sTemplateDir, 'icalfeed');
+
+    if (!$this->oSmarty->isCached($sTemplateFile, UNIQUE_ID))
+      $this->oSmarty->assign('calendar', $this->_oModel->getData());
+
+    header('Content-type: text/calendar; charset=utf-8');
+    header('Content-Disposition: inline; filename=' . WEBSITE_NAME . '.ics');
+
+    $this->oSmarty->setTemplateDir($sTemplateDir);
+    return $this->oSmarty->fetch($sTemplateFile, UNIQUE_ID);
   }
 
   /**

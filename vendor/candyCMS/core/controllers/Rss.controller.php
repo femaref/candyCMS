@@ -35,9 +35,9 @@ class Rss extends Main {
    *
    */
   protected function _show() {
-    return $this->_aRequest['section'] == 'galleries' && $this->_iId > 0 ?
-            $this->_showMedia() :
-            $this->_showDefault();
+    exit($this->_aRequest['section'] == 'galleries' && $this->_iId > 0 ?
+          $this->_showMedia() :
+          $this->_showDefault());
   }
 
   /**
@@ -59,7 +59,7 @@ class Rss extends Main {
 
     $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+    return $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
   }
 
   /**
@@ -92,7 +92,7 @@ class Rss extends Main {
 
     $this->oSmarty->setCacheLifetime(60);
     $this->oSmarty->setTemplateDir($sTemplateDir);
-    exit($this->oSmarty->display($sTemplateFile, UNIQUE_ID));
+    return $this->oSmarty->display($sTemplateFile, UNIQUE_ID);
   }
 
   /**

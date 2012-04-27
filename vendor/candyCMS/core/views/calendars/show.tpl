@@ -16,6 +16,15 @@
       {if isset($_REQUEST.action) && $_REQUEST.action == 'archive'}
         -
         {$lang.global.archive}
+      {else}
+        &nbsp;
+        <a href='/{$_REQUEST.controller}/icalfeed'>
+          <img src='{$_PATH.images}/candy.global/spacer.png'
+              class='icon-calendar_add js-tooltip'
+              alt='{$lang.calendars.info.icsfeed}'
+              title='{$lang.calendars.info.icsfeed}'
+              width='16' height='16' />
+        </a>
       {/if}
     </h1>
   </div>

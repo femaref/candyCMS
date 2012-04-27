@@ -20,6 +20,99 @@ use PDO;
 class Calendars extends Main {
 
   /**
+   * build the PDO-Statement for getting entries for the specified year
+   *
+   * @return PDOStatement the PDOStatement to execute
+   */
+  private function _getPreparedArchiveStatement() {
+    $iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
+            (int) $this->_aRequest['id'] :
+            date('Y');
+
+    $oQuery = $this->_oDb->prepare("SELECT
+                                      c.*,
+                                      MONTH(c.start_date) AS start_month,
+                                      YEAR(c.start_date) AS start_year,
+                                      UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                      UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                      u.id AS user_id,
+                                      u.name AS user_name,
+                                      u.surname AS user_surname,
+                                      u.email AS user_email
+                                    FROM
+                                      " . SQL_PREFIX . "calendars c
+                                    LEFT JOIN
+                                      " . SQL_PREFIX . "users u
+                                    ON
+                                      c.author_id=u.id
+                                    WHERE
+                                      YEAR(c.start_date) = :year
+                                    ORDER BY
+                                      c.start_date ASC,
+                                      c.title ASC");
+    $oQuery->bindParam('year', $iYear, PDO::PARAM_INT);
+    return $oQuery;
+  }
+
+  /**
+   * build the PDO-Statement for getting all future entries
+   *
+   * @return PDOStatement the PDOStatement to execute
+   */
+  private function _getPreparedOverviewStatement() {
+    return $this->_oDb->prepare("SELECT
+                                    c.*,
+                                    MONTH(c.start_date) AS start_month,
+                                    YEAR(c.start_date) AS start_year,
+                                    UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                    UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                    u.id AS user_id,
+                                    u.name AS user_name,
+                                    u.surname AS user_surname,
+                                    u.email AS user_email
+                                  FROM
+                                    " . SQL_PREFIX . "calendars c
+                                  LEFT JOIN
+                                    " . SQL_PREFIX . "users u
+                                  ON
+                                    c.author_id=u.id
+                                  WHERE
+                                    c.start_date >= NOW()
+                                  OR
+                                    c.end_date >= NOW()
+                                  ORDER BY
+                                    c.start_date ASC,
+                                    c.title ASC");
+  }
+
+  /**
+   * build the PDO-Statement for getting all entries
+   *
+   * @return PDOStatement the PDOStatement to execute
+   */
+  private function _getPreparedIcalFeedStatement() {
+    return $this->_oDb->prepare("SELECT
+                                    c.*,
+                                    MONTH(c.start_date) AS start_month,
+                                    YEAR(c.start_date) AS start_year,
+                                    UNIX_TIMESTAMP(c.start_date) AS start_date,
+                                    UNIX_TIMESTAMP(c.end_date) AS end_date,
+                                    u.id AS user_id,
+                                    u.name AS user_name,
+                                    u.surname AS user_surname,
+                                    u.email AS user_email
+                                  FROM
+                                    " . SQL_PREFIX . "calendars c
+                                  LEFT JOIN
+                                    " . SQL_PREFIX . "users u
+                                  ON
+                                    c.author_id=u.id
+                                  ORDER BY
+                                    c.start_date ASC,
+                                    c.title ASC");
+  }
+
+  /**
    * Get calendar data.
    *
    * @access private
@@ -31,61 +124,16 @@ class Calendars extends Main {
   public function getData($iId = '', $bUpdate = false) {
     $aInts = array('id', 'author_id');
 
-    if (empty($iId) || (isset($this->_aRequest['action']) && 'archive' == $this->_aRequest['action'])) {
+    if (empty($iId) || isset($this->_aRequest['action'])) {
       try {
-        if (isset($this->_aRequest['action']) && $this->_aRequest['action'] == 'archive') {
-          $iYear = isset($this->_aRequest['id']) && !empty($this->_aRequest['id']) ?
-                  (int) $this->_aRequest['id'] :
-                  date('Y');
-
-          $oQuery = $this->_oDb->prepare("SELECT
-                                            c.*,
-                                            MONTH(c.start_date) AS start_month,
-                                            YEAR(c.start_date) AS start_year,
-                                            UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                            UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                            u.id AS user_id,
-                                            u.name AS user_name,
-                                            u.surname AS user_surname,
-                                            u.email AS user_email
-                                          FROM
-                                            " . SQL_PREFIX . "calendars c
-                                          LEFT JOIN
-                                            " . SQL_PREFIX . "users u
-                                          ON
-                                            c.author_id=u.id
-                                          WHERE
-                                            YEAR(c.start_date) = :year
-                                          ORDER BY
-                                            c.start_date ASC,
-                                            c.title ASC");
-
-          $oQuery->bindParam('year', $iYear, PDO::PARAM_INT);
+        if ($this->_aRequest['action'] == 'archive') {
+          $oQuery = $this->_getPreparedArchiveStatement();
+        }
+        else if ($this->_aRequest['action'] == 'icalfeed') {
+          $oQuery = $this->_getPreparedIcalFeedStatement();
         }
         else {
-          $oQuery = $this->_oDb->prepare("SELECT
-                                            c.*,
-                                            MONTH(c.start_date) AS start_month,
-                                            YEAR(c.start_date) AS start_year,
-                                            UNIX_TIMESTAMP(c.start_date) AS start_date,
-                                            UNIX_TIMESTAMP(c.end_date) AS end_date,
-                                            u.id AS user_id,
-                                            u.name AS user_name,
-                                            u.surname AS user_surname,
-                                            u.email AS user_email
-                                          FROM
-                                            " . SQL_PREFIX . "calendars c
-                                          LEFT JOIN
-                                            " . SQL_PREFIX . "users u
-                                          ON
-                                            c.author_id=u.id
-                                          WHERE
-                                            c.start_date >= NOW()
-                                          OR
-                                            c.end_date >= NOW()
-                                          ORDER BY
-                                            c.start_date ASC,
-                                            c.title ASC");
+          $oQuery = $this->_getPreparedOverviewStatement();
         }
 
         $oQuery->execute();
@@ -106,16 +154,20 @@ class Calendars extends Main {
         $this->_aData[$sDate]['year']   = $sYear;
 
         $this->_aData[$sDate]['dates'][$iId] = $this->_formatForOutput($aRow, $aInts);
-        $this->_aData[$sDate]['dates'][$iId]['start_date'] = Helper::formatTimestamp($aRow['start_date'], 1);
+        $this->_aData[$sDate]['dates'][$iId]['start_date_raw']  = $aRow['start_date'];
+        $this->_aData[$sDate]['dates'][$iId]['start_date']      = Helper::formatTimestamp($aRow['start_date'], 1);
 
+        $this->_aData[$sDate]['dates'][$iId]['end_date_raw']    = $aRow['end_date'];
         if ($aRow['end_date'] > 0)
-          $this->_aData[$sDate]['dates'][$iId]['end_date'] = Helper::formatTimestamp($aRow['end_date'], 1);
+          $this->_aData[$sDate]['dates'][$iId]['end_date']      = Helper::formatTimestamp($aRow['end_date'], 1);
       }
     }
     else {
       try {
         $oQuery = $this->_oDb->prepare("SELECT
                                           *,
+                                          UNIX_TIMESTAMP(start_date),
+                                          UNIX_TIMESTAMP(end_date),
                                           DATE_ADD(end_date, INTERVAL 1 DAY) as ics_end_date
                                         FROM
                                           " . SQL_PREFIX . "calendars
@@ -138,9 +190,11 @@ class Calendars extends Main {
         $this->_aData = $this->_formatForOutput($aRow, $aInts);
 
         # Overide for iCalendar specs
-        $this->_aData['date']       = date('Ymd', $aRow['date']) . 'T' . date('His', $aRow['date']) . 'Z';
-        $this->_aData['start_date'] = str_replace('-', '', $aRow['start_date']);
-        $this->_aData['end_date']   = $aRow['end_date'] == '0000-00-00' ?
+        $this->_aData['date']           = date('Ymd', $aRow['date']) . 'T' . date('His', $aRow['date']) . 'Z';
+        $this->_aData['start_date_raw'] = $aRow['start_date'];
+        $this->_aData['start_date']     = str_replace('-', '', $aRow['start_date']);
+        $this->_aData['end_date_raw']   = $aRow['end_date'];
+        $this->_aData['end_date']       = $aRow['end_date'] == '0000-00-00' ?
                 str_replace('-', '', $this->_aData['start_date']) :
                 str_replace('-', '', $aRow['ics_end_date']);
       }

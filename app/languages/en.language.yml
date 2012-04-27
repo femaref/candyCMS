@@ -260,6 +260,7 @@ calendars:
   info:
     date_format: 'Date format: "YYYY-MM-DD"'
     ics: 'Download this event and add it to your calendar application'
+    icsfeed: Download this calendar and add it to your calendar application or directly subscribe to it using this url
   title:
     create: Add appointment
     update: Update appointment
